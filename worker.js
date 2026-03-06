@@ -686,16 +686,16 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 .logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(29,78,216,0.35);flex-shrink:0}
 .logo-name{display:flex;flex-direction:column;line-height:1.15}
-.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0F2044}
+.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0A1628}
 .logo-main em{font-style:normal;color:var(--sky)}
-.logo-sub{font-size:10px;color:rgba(15,32,68,0.45);font-weight:600;letter-spacing:3px}
+.logo-sub{font-size:10px;color:rgba(15,32,68,0.6);font-weight:700;letter-spacing:3px}
 .vpill{border:1px solid rgba(255,255,255,0.15);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(255,255,255,0.06)}
-.vpill .vl{font-size:10px;color:rgba(15,32,68,0.5);font-weight:500}
+.vpill .vl{font-size:10px;color:#374151;font-weight:600}
 .vpill .vc{font-size:15px;font-weight:900;color:var(--sky);letter-spacing:-0.5px}
 .gnb{margin-left:auto;display:flex;align-items:center;gap:2px}
 .gi{position:relative}
-.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:600;color:rgba(15,32,68,0.8);border-radius:8px;transition:all .18s;white-space:nowrap}
-.gb:hover{background:rgba(15,32,68,0.08);color:#0F2044}
+.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap}
+.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}
 .arr{width:14px;height:14px;transition:transform .2s;color:rgba(255,255,255,0.4)}
 .gi:hover .arr{transform:rotate(180deg);color:var(--sky)}
 .drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:var(--navy);border-radius:12px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}
