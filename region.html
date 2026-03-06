@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지역별 과외 안내 | 올케어스터디</title>
+<meta name="description" content="전국 지역별 1:1 맞춤 과외 정보. 서울, 경기, 충청, 경상, 전라, 제주 내 지역 검증된 선생님을 찾아보세요.">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{--navy:#0F2044;--navy-mid:#1E3A6E;--blue:#3B82F6;--blue-pale:#EFF6FF;--blue-border:#BFDBFE;--sky:#60A5FA;--text-dark:#0F2044;--text-mid:#374151;--text-muted:#9CA3AF;--bg:#F8FAFF;--white:#FFFFFF;--border:#E5E7EB;--shadow:0 4px 24px rgba(0,0,0,0.09);--radius:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}
+a{text-decoration:none;color:inherit}
+header{background:var(--navy);padding:0 48px;height:64px;display:flex;align-items:center;gap:20px}
+.logo{font-size:18px;font-weight:900;color:white}.logo em{font-style:normal;color:var(--sky)}
+.gnav{margin-left:auto;display:flex;gap:20px}
+.gnav a{font-size:13px;color:rgba(255,255,255,.6);font-weight:500;transition:color .2s}
+.gnav a:hover,.gnav a.on{color:white;font-weight:700}
+
+/* HERO */
+.hero{background:linear-gradient(130deg,#0F2044,#1E3A6E 60%,#1D4ED8);padding:52px 48px;color:white}
+.hw{max-width:1100px;margin:0 auto}
+.bc{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:14px}
+.bc a{color:rgba(255,255,255,.5)}.bc span{color:var(--sky)}
+h1{font-size:clamp(22px,3vw,36px);font-weight:900;letter-spacing:-1px;margin-bottom:10px}
+h1 em{font-style:normal;color:var(--sky)}
+.hero-desc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7}
+
+/* REGION TABS */
+.region-tabs{background:white;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.rtw{max-width:1100px;margin:0 auto;padding:0 48px;display:flex;gap:4px}
+.rt{padding:14px 22px;font-size:14px;font-weight:700;color:var(--text-muted);border:none;background:none;cursor:pointer;font-family:inherit;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap}
+.rt.on{color:var(--blue);border-bottom-color:var(--blue)}
+.rt:hover:not(.on){color:var(--text-dark)}
+
+/* CONTENT */
+.content{max-width:1100px;margin:0 auto;padding:52px 48px}
+.panel{display:none}.panel.on{display:block}
+
+/* SECTION */
+.sec{margin-bottom:52px}
+.sec-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--blue-pale);display:flex;align-items:center;gap:8px}
+.sec-title span{font-size:13px;font-weight:500;color:var(--text-muted);margin-left:4px}
+
+/* AREA BUTTONS */
+.area-grid{display:flex;flex-wrap:wrap;gap:8px}
+.area-btn{padding:12px 22px;border-radius:10px;font-size:15px;font-weight:700;color:var(--text-mid);background:white;border:1.5px solid var(--border);cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block}
+.area-btn:hover{background:var(--blue);color:white;border-color:var(--blue);transform:translateY(-1px);box-shadow:0 4px 12px rgba(59,130,246,.3)}
+
+/* CTA */
+.cta-bar{background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:20px;padding:36px 44px;display:flex;align-items:center;justify-content:space-between;margin-top:60px;gap:24px}
+.cta-text h3{font-size:20px;font-weight:900;color:white;margin-bottom:6px}
+.cta-text p{font-size:13px;color:rgba(255,255,255,.6)}
+.cta-btns{display:flex;gap:10px;flex-shrink:0}
+.btn-p{background:var(--blue);color:white;border:none;padding:13px 26px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.btn-p:hover{background:#2563EB;transform:translateY(-2px)}
+.btn-o{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.3);padding:13px 22px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.btn-o:hover{background:rgba(255,255,255,.2)}
+
+footer{background:var(--navy);padding:28px 48px;margin-top:80px}
+.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.fl{font-size:14px;font-weight:900;color:white}.fl em{font-style:normal;color:var(--sky)}
+.fr{font-size:12px;color:rgba(255,255,255,.35)}
+.floats{position:fixed;right:24px;bottom:40px;display:flex;flex-direction:column;gap:10px;z-index:500}
+.fbtn{display:flex;align-items:center;gap:10px;padding:13px 20px;border-radius:999px;border:none;font-size:13px;font-weight:700;box-shadow:0 8px 32px rgba(15,32,68,.2);transition:all .25s;cursor:pointer;white-space:nowrap}
+.fbtn:hover{transform:translateX(-4px) scale(1.03)}
+.fb1{background:var(--blue);color:white}.fb2{background:var(--navy);color:white}
+
+@media(max-width:768px){
+  header{padding:0 16px}
+  .hero{padding:36px 16px}
+  .rtw{padding:0 8px;overflow-x:auto}
+  .rt{padding:12px 14px;font-size:13px}
+  .content{padding:36px 16px}
+  .cta-bar{flex-direction:column;padding:24px 20px;text-align:center}
+  .cta-btns{flex-direction:column;width:100%}
+  footer{padding:20px 16px}
+  .fi{flex-direction:column;gap:8px;text-align:center}
+  .floats{right:12px;bottom:20px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo"><em>올케어</em>스터디</a>
+  <nav class="gnav">
+    <a href="/">홈</a>
+    <a href="/region.html" class="on">지역별수업</a>
+    <a href="#">과목수업</a>
+    <a href="#">학원수업</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hw">
+    <div class="bc"><a href="/">홈</a> / <span>지역별 과외</span></div>
+    <h1>내 지역 딱 맞는 <em>1:1 맞춤 과외</em></h1>
+    <p class="hero-desc">지역을 선택하면 해당 지역의 상세 과외 정보를 확인할 수 있습니다</p>
+  </div>
+</div>
+
+<!-- 지역 탭 -->
+<div class="region-tabs">
+  <div class="rtw">
+    <button class="rt on" onclick="showRegion('seoul',this)">📍 서울특별시</button>
+    <button class="rt" onclick="showRegion('gyeonggi',this)">🌿 경기도</button>
+    <button class="rt" onclick="showRegion('chungcheong',this)">🌾 충청도</button>
+    <button class="rt" onclick="showRegion('gyeongsang',this)">🌊 경상도</button>
+    <button class="rt" onclick="showRegion('jeolla',this)">🍀 전라도</button>
+    <button class="rt" onclick="showRegion('jeju',this)">🌺 제주도</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- 서울 -->
+  <div class="panel on" id="panel-seoul">
+    <div class="sec">
+      <div class="sec-title">🗺 서울특별시 <span>25개 구</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">강남구</a><a class="area-btn" href="#">강동구</a><a class="area-btn" href="#">강북구</a><a class="area-btn" href="#">강서구</a><a class="area-btn" href="#">관악구</a><a class="area-btn" href="#">광진구</a><a class="area-btn" href="#">구로구</a><a class="area-btn" href="#">금천구</a><a class="area-btn" href="#">노원구</a><a class="area-btn" href="#">도봉구</a><a class="area-btn" href="#">동대문구</a><a class="area-btn" href="#">동작구</a><a class="area-btn" href="#">마포구</a><a class="area-btn" href="#">서대문구</a><a class="area-btn" href="#">서초구</a><a class="area-btn" href="#">성동구</a><a class="area-btn" href="#">성북구</a><a class="area-btn" href="#">송파구</a><a class="area-btn" href="#">양천구</a><a class="area-btn" href="#">영등포구</a><a class="area-btn" href="#">용산구</a><a class="area-btn" href="#">은평구</a><a class="area-btn" href="#">종로구</a><a class="area-btn" href="#">중구</a><a class="area-btn" href="#">중랑구</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 경기도 -->
+  <div class="panel" id="panel-gyeonggi">
+    <div class="sec">
+      <div class="sec-title">🌿 경기도 <span>31개 시·군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">가평군</a><a class="area-btn" href="#">고양시</a><a class="area-btn" href="#">과천시</a><a class="area-btn" href="#">광명시</a><a class="area-btn" href="#">광주시</a><a class="area-btn" href="#">구리시</a><a class="area-btn" href="#">군포시</a><a class="area-btn" href="#">김포시</a><a class="area-btn" href="#">남양주시</a><a class="area-btn" href="#">동두천시</a><a class="area-btn" href="#">부천시</a><a class="area-btn" href="#">성남시</a><a class="area-btn" href="#">수원시</a><a class="area-btn" href="#">시흥시</a><a class="area-btn" href="#">안산시</a><a class="area-btn" href="#">안성시</a><a class="area-btn" href="#">안양시</a><a class="area-btn" href="#">양주시</a><a class="area-btn" href="#">양평군</a><a class="area-btn" href="#">여주시</a><a class="area-btn" href="#">연천군</a><a class="area-btn" href="#">오산시</a><a class="area-btn" href="#">용인시</a><a class="area-btn" href="#">의왕시</a><a class="area-btn" href="#">의정부시</a><a class="area-btn" href="#">이천시</a><a class="area-btn" href="#">파주시</a><a class="area-btn" href="#">평택시</a><a class="area-btn" href="#">포천시</a><a class="area-btn" href="#">하남시</a><a class="area-btn" href="#">화성시</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">✈️ 인천광역시 <span>8개 구·군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">강화군</a><a class="area-btn" href="#">계양구</a><a class="area-btn" href="#">남동구</a><a class="area-btn" href="#">동구</a><a class="area-btn" href="#">미추홀구</a><a class="area-btn" href="#">부평구</a><a class="area-btn" href="#">서구</a><a class="area-btn" href="#">연수구</a><a class="area-btn" href="#">옹진군</a><a class="area-btn" href="#">중구</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 충청도 -->
+  <div class="panel" id="panel-chungcheong">
+    <div class="sec">
+      <div class="sec-title">🌻 대전광역시 <span>5개 구</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">대덕구</a><a class="area-btn" href="#">동구</a><a class="area-btn" href="#">서구</a><a class="area-btn" href="#">유성구</a><a class="area-btn" href="#">중구</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">🌱 세종특별자치시</div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">세종시</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">🌾 충청북도 <span>3시 8군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">청주시</a><a class="area-btn" href="#">충주시</a><a class="area-btn" href="#">제천시</a><a class="area-btn" href="#">보은군</a><a class="area-btn" href="#">옥천군</a><a class="area-btn" href="#">영동군</a><a class="area-btn" href="#">증평군</a><a class="area-btn" href="#">진천군</a><a class="area-btn" href="#">괴산군</a><a class="area-btn" href="#">음성군</a><a class="area-btn" href="#">단양군</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">🌾 충청남도 <span>8시 7군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">천안시</a><a class="area-btn" href="#">공주시</a><a class="area-btn" href="#">보령시</a><a class="area-btn" href="#">아산시</a><a class="area-btn" href="#">서산시</a><a class="area-btn" href="#">논산시</a><a class="area-btn" href="#">계룡시</a><a class="area-btn" href="#">당진시</a><a class="area-btn" href="#">금산군</a><a class="area-btn" href="#">부여군</a><a class="area-btn" href="#">서천군</a><a class="area-btn" href="#">청양군</a><a class="area-btn" href="#">홍성군</a><a class="area-btn" href="#">예산군</a><a class="area-btn" href="#">태안군</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 경상도 -->
+  <div class="panel" id="panel-gyeongsang">
+    <div class="sec">
+      <div class="sec-title">🌊 부산광역시 <span>15구 1군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">강서구</a><a class="area-btn" href="#">금정구</a><a class="area-btn" href="#">기장군</a><a class="area-btn" href="#">남구</a><a class="area-btn" href="#">동구</a><a class="area-btn" href="#">동래구</a><a class="area-btn" href="#">부산진구</a><a class="area-btn" href="#">북구</a><a class="area-btn" href="#">사상구</a><a class="area-btn" href="#">사하구</a><a class="area-btn" href="#">서구</a><a class="area-btn" href="#">수영구</a><a class="area-btn" href="#">연제구</a><a class="area-btn" href="#">영도구</a><a class="area-btn" href="#">중구</a><a class="area-btn" href="#">해운대구</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">🍎 대구광역시 <span>7구 1군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">남구</a><a class="area-btn" href="#">달서구</a><a class="area-btn" href="#">달성군</a><a class="area-btn" href="#">동구</a><a class="area-btn" href="#">북구</a><a class="area-btn" href="#">서구</a><a class="area-btn" href="#">수성구</a><a class="area-btn" href="#">중구</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">🏭 울산광역시 <span>4구 1군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">남구</a><a class="area-btn" href="#">동구</a><a class="area-btn" href="#">북구</a><a class="area-btn" href="#">울주군</a><a class="area-btn" href="#">중구</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">🌅 경상북도 <span>10시 13군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">포항시</a><a class="area-btn" href="#">경주시</a><a class="area-btn" href="#">김천시</a><a class="area-btn" href="#">안동시</a><a class="area-btn" href="#">구미시</a><a class="area-btn" href="#">영주시</a><a class="area-btn" href="#">영천시</a><a class="area-btn" href="#">상주시</a><a class="area-btn" href="#">문경시</a><a class="area-btn" href="#">경산시</a><a class="area-btn" href="#">군위군</a><a class="area-btn" href="#">의성군</a><a class="area-btn" href="#">청송군</a><a class="area-btn" href="#">영양군</a><a class="area-btn" href="#">영덕군</a><a class="area-btn" href="#">청도군</a><a class="area-btn" href="#">고령군</a><a class="area-btn" href="#">성주군</a><a class="area-btn" href="#">칠곡군</a><a class="area-btn" href="#">예천군</a><a class="area-btn" href="#">봉화군</a><a class="area-btn" href="#">울진군</a><a class="area-btn" href="#">울릉군</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">🌸 경상남도 <span>8시 10군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">창원시</a><a class="area-btn" href="#">진주시</a><a class="area-btn" href="#">통영시</a><a class="area-btn" href="#">사천시</a><a class="area-btn" href="#">김해시</a><a class="area-btn" href="#">밀양시</a><a class="area-btn" href="#">거제시</a><a class="area-btn" href="#">양산시</a><a class="area-btn" href="#">의령군</a><a class="area-btn" href="#">함안군</a><a class="area-btn" href="#">창녕군</a><a class="area-btn" href="#">고성군</a><a class="area-btn" href="#">남해군</a><a class="area-btn" href="#">하동군</a><a class="area-btn" href="#">산청군</a><a class="area-btn" href="#">함양군</a><a class="area-btn" href="#">거창군</a><a class="area-btn" href="#">합천군</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 전라도 -->
+  <div class="panel" id="panel-jeolla">
+    <div class="sec">
+      <div class="sec-title">🌿 광주광역시 <span>5개 구</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">광산구</a><a class="area-btn" href="#">남구</a><a class="area-btn" href="#">동구</a><a class="area-btn" href="#">북구</a><a class="area-btn" href="#">서구</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">🍀 전라북도 <span>6시 8군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">전주시</a><a class="area-btn" href="#">군산시</a><a class="area-btn" href="#">익산시</a><a class="area-btn" href="#">정읍시</a><a class="area-btn" href="#">남원시</a><a class="area-btn" href="#">김제시</a><a class="area-btn" href="#">완주군</a><a class="area-btn" href="#">진안군</a><a class="area-btn" href="#">무주군</a><a class="area-btn" href="#">장수군</a><a class="area-btn" href="#">임실군</a><a class="area-btn" href="#">순창군</a><a class="area-btn" href="#">고창군</a><a class="area-btn" href="#">부안군</a>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">🌻 전라남도 <span>5시 17군</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">목포시</a><a class="area-btn" href="#">여수시</a><a class="area-btn" href="#">순천시</a><a class="area-btn" href="#">나주시</a><a class="area-btn" href="#">광양시</a><a class="area-btn" href="#">담양군</a><a class="area-btn" href="#">곡성군</a><a class="area-btn" href="#">구례군</a><a class="area-btn" href="#">고흥군</a><a class="area-btn" href="#">보성군</a><a class="area-btn" href="#">화순군</a><a class="area-btn" href="#">장흥군</a><a class="area-btn" href="#">강진군</a><a class="area-btn" href="#">해남군</a><a class="area-btn" href="#">영암군</a><a class="area-btn" href="#">무안군</a><a class="area-btn" href="#">함평군</a><a class="area-btn" href="#">영광군</a><a class="area-btn" href="#">장성군</a><a class="area-btn" href="#">완도군</a><a class="area-btn" href="#">진도군</a><a class="area-btn" href="#">신안군</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제주 -->
+  <div class="panel" id="panel-jeju">
+    <div class="sec">
+      <div class="sec-title">🌺 제주특별자치도 <span>2개 시</span></div>
+      <div class="area-grid">
+        <a class="area-btn" href="#">제주시</a><a class="area-btn" href="#">서귀포시</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-bar">
+    <div class="cta-text">
+      <h3>원하는 지역을 못 찾으셨나요?</h3>
+      <p>전문 상담사가 내 지역 맞춤 선생님을 직접 찾아드립니다</p>
+    </div>
+    <div class="cta-btns">
+      <button class="btn-p" onclick="window.location.href='tel:01068348080'">📞 전화 상담</button>
+      <button class="btn-o" onclick="window.open('https://naver.me/IMZ9N0ST','_blank')">✨ 무료상담 신청</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fi">
+    <div class="fl"><em>올케어</em>스터디</div>
+    <div class="fr">© 2026 올케어스터디. All rights reserved.</div>
+  </div>
+</footer>
+
+<div class="floats">
+  <button class="fbtn fb1" onclick="window.location.href='tel:01068348080'">📞 전화상담</button>
+  <button class="fbtn fb2" onclick="window.open('https://naver.me/IMZ9N0ST','_blank')">✨ 무료상담</button>
+</div>
+
+<script>
+function showRegion(id, btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.rt').forEach(b=>b.classList.remove('on'));
+  document.getElementById('panel-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+// URL 파라미터로 탭 자동 선택
+const r = new URLSearchParams(location.search).get('r');
+const map = {'서울':'seoul','경기':'gyeonggi','충청':'chungcheong','경상':'gyeongsang','전라':'jeolla','제주':'jeju'};
+if(r && map[r]){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.rt').forEach(b=>b.classList.remove('on'));
+  document.getElementById('panel-'+map[r]).classList.add('on');
+  document.querySelectorAll('.rt')[Object.keys(map).indexOf(r)].classList.add('on');
+}
+</script>
+</body>
+</html>

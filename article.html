@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">강남구 과외 | 대치·압구정·청담 맞춤 과외 - 올케어스터디</title>
+<meta name="description" id="page-desc" content="강남구 과외 정보. 대치동, 압구정, 청담 지역 검증된 선생님을 올케어스터디에서 찾아보세요.">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{--navy:#0F2044;--navy-mid:#1E3A6E;--blue:#3B82F6;--blue-pale:#EFF6FF;--blue-border:#BFDBFE;--sky:#60A5FA;--text-dark:#0F2044;--text-mid:#374151;--text-muted:#9CA3AF;--bg:#F8FAFF;--white:#FFFFFF;--border:#E5E7EB;--shadow:0 4px 24px rgba(0,0,0,0.09);--radius:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}
+a{text-decoration:none;color:inherit}
+header{background:var(--navy);padding:0 48px;height:64px;display:flex;align-items:center;gap:20px}
+.logo{font-size:18px;font-weight:900;color:white}.logo em{font-style:normal;color:var(--sky)}
+.gnav{margin-left:auto;display:flex;gap:20px}
+.gnav a{font-size:13px;color:rgba(255,255,255,.6);font-weight:500}
+.gnav a:hover{color:white}
+
+/* LAYOUT */
+.wrap{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+
+/* BREADCRUMB */
+.bc{font-size:12px;color:var(--text-muted);margin-bottom:20px;display:flex;align-items:center;gap:6px}
+.bc a{color:var(--text-muted)}.bc a:hover{color:var(--blue)}
+.bc-sep{color:var(--border)}
+
+/* ARTICLE HEADER */
+.art-header{margin-bottom:32px}
+.art-tag{display:inline-block;background:var(--blue-pale);color:var(--blue);font-size:12px;font-weight:700;padding:4px 12px;border-radius:6px;margin-bottom:14px}
+.art-title{font-size:clamp(24px,3.5vw,36px);font-weight:900;letter-spacing:-1px;color:var(--navy);line-height:1.25;margin-bottom:16px}
+.art-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-muted)}
+.art-meta span{display:flex;align-items:center;gap:5px}
+
+/* THUMB */
+.art-thumb{width:100%;height:320px;object-fit:cover;border-radius:var(--radius);margin-bottom:36px;background:linear-gradient(135deg,#E0E8F8,#C7D2FE)}
+.art-thumb-placeholder{width:100%;height:320px;border-radius:var(--radius);margin-bottom:36px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);display:flex;align-items:center;justify-content:center;font-size:64px}
+
+/* ARTICLE BODY */
+.art-body h2{font-size:20px;font-weight:900;color:var(--navy);margin:36px 0 14px;padding-bottom:10px;border-bottom:2px solid var(--blue-pale)}
+.art-body h3{font-size:16px;font-weight:800;color:var(--navy);margin:24px 0 10px}
+.art-body p{font-size:15px;color:var(--text-mid);line-height:1.85;margin-bottom:14px}
+.art-body strong{color:var(--navy);font-weight:800}
+
+/* DONG TAGS */
+.dong-area{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:20px 0}
+.dong-area-title{font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:12px;letter-spacing:1px}
+.dong-tags{display:flex;flex-wrap:wrap;gap:8px}
+.dong-tag{padding:7px 16px;background:var(--blue-pale);border:1px solid var(--blue-border);border-radius:8px;font-size:13px;font-weight:600;color:var(--blue);cursor:pointer;transition:all .2s}
+.dong-tag:hover{background:var(--blue);color:white}
+
+/* SUBJECT LINKS */
+.subject-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
+.subject-link{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:700;color:var(--text-dark);cursor:pointer;transition:all .2s}
+.subject-link:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-pale)}
+.subject-link .arr{color:var(--text-muted);font-size:16px}
+
+/* CTA BOX */
+.cta-box{background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:20px;padding:36px 40px;text-align:center;margin:48px 0}
+.cta-box h3{font-size:22px;font-weight:900;color:white;margin-bottom:8px}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.65);margin-bottom:24px}
+.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-p{background:var(--blue);color:white;border:none;padding:14px 28px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-o{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.3);padding:14px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+
+/* RELATED */
+.related{margin-top:48px}
+.related-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:20px}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.related-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:all .2s}
+.related-card:hover{border-color:var(--blue-border);transform:translateY(-2px);box-shadow:var(--shadow)}
+.rc-tag{font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px}
+.rc-title{font-size:14px;font-weight:800;color:var(--navy);line-height:1.4}
+
+footer{background:var(--navy);padding:28px 48px;margin-top:80px}
+.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.fl{font-size:14px;font-weight:900;color:white}.fl em{font-style:normal;color:var(--sky)}
+.fr{font-size:12px;color:rgba(255,255,255,.35)}
+.floats{position:fixed;right:24px;bottom:40px;display:flex;flex-direction:column;gap:10px;z-index:500}
+.fbtn{display:flex;align-items:center;gap:10px;padding:13px 20px;border-radius:999px;border:none;font-size:13px;font-weight:700;box-shadow:0 8px 32px rgba(15,32,68,.2);transition:all .25s;cursor:pointer;white-space:nowrap}
+.fbtn:hover{transform:translateX(-4px) scale(1.03)}
+.fb1{background:var(--blue);color:white}.fb2{background:var(--navy);color:white}
+
+@media(max-width:768px){
+  header{padding:0 16px}
+  .gnav{display:none}
+  .wrap{padding:32px 16px 60px}
+  .art-thumb-placeholder{height:200px;font-size:48px}
+  .subject-grid{grid-template-columns:1fr}
+  .related-grid{grid-template-columns:1fr 1fr}
+  .cta-box{padding:24px 20px}
+  footer{padding:20px 16px}
+  .fi{flex-direction:column;gap:6px;text-align:center}
+  .floats{right:12px;bottom:20px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo"><em>올케어</em>스터디</a>
+  <nav class="gnav">
+    <a href="/">홈</a>
+    <a href="/region.html">지역별수업</a>
+    <a href="#">과목수업</a>
+    <a href="#">학원수업</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <!-- 브레드크럼 -->
+  <div class="bc">
+    <a href="/">홈</a><span class="bc-sep">›</span>
+    <a href="/region.html">지역별과외</a><span class="bc-sep">›</span>
+    <a href="/region.html?r=서울" id="bc-region">서울특별시</a><span class="bc-sep">›</span>
+    <span id="bc-area">강남구</span>
+  </div>
+
+  <!-- 아티클 헤더 -->
+  <div class="art-header">
+    <div class="art-tag" id="art-tag">지역교육</div>
+    <h1 class="art-title" id="art-title">강남구 과외 | 대치·압구정·청담 맞춤 과외</h1>
+    <div class="art-meta">
+      <span>✏️ 올케어스터디 편집팀</span>
+      <span>📅 <span id="art-date">2026년 3월 6일</span></span>
+      <span>⏱ 3분</span>
+    </div>
+  </div>
+
+  <!-- 썸네일 -->
+  <div class="art-thumb-placeholder" id="art-thumb">📚</div>
+
+  <!-- 본문 -->
+  <div class="art-body">
+    <h2 id="sec1-title">강남구 과외 안내</h2>
+    <p id="sec1-content">강남구는 대한민국 최고의 교육 특구입니다. 대치동 학원가를 중심으로 전국 최고 수준의 교육 인프라가 갖춰져 있으며, 학교 내신 난이도도 전국 최상위권입니다.</p>
+
+    <h3>강남구 주요 지역</h3>
+    <div class="dong-area">
+      <div class="dong-area-title">동별 과외 정보 보기</div>
+      <div class="dong-tags" id="dong-tags">
+        <span class="dong-tag">대치동</span>
+        <span class="dong-tag">압구정동</span>
+        <span class="dong-tag">청담동</span>
+        <span class="dong-tag">역삼동</span>
+        <span class="dong-tag">개포동</span>
+        <span class="dong-tag">도곡동</span>
+        <span class="dong-tag">삼성동</span>
+        <span class="dong-tag">일원동</span>
+        <span class="dong-tag">수서동</span>
+        <span class="dong-tag">세곡동</span>
+      </div>
+    </div>
+
+    <p id="sec1-detail"><strong>대치동</strong>: 대치1동, 대치2동, 대치4동 - 대명중, 은광중, 휘문고, 단대부고 학군 &nbsp;<strong>압구정동</strong>: 현대아파트, 압구정로데오 인근 - 압구정중, 신사중 학군 &nbsp;<strong>청담동</strong>: 청담동 일대 - 청담중 학군</p>
+
+    <h2 id="sec2-title">강남구 학교 특징</h2>
+    <p id="sec2-content">강남구 학교들은 내신 시험 난이도가 매우 높습니다. 경시대회 수준 문제가 출제되고, 시간이 매우 부족하게 설계됩니다. 학원만으로는 개별 케어가 어려워 1:1 과외를 병행하는 학생이 많습니다.</p>
+    <p>아래에서 과목별, 학년별 과외 정보를 확인하세요.</p>
+
+    <div class="subject-grid" id="subject-grid">
+      <div class="subject-link"><span>강남구 고등 수학과외</span><span class="arr">→</span></div>
+      <div class="subject-link"><span>강남구 고등 영어과외</span><span class="arr">→</span></div>
+      <div class="subject-link"><span>강남구 고등 국어과외</span><span class="arr">→</span></div>
+      <div class="subject-link"><span>강남구 고등 과학과외</span><span class="arr">→</span></div>
+      <div class="subject-link"><span>강남구 중등 수학과외</span><span class="arr">→</span></div>
+      <div class="subject-link"><span>강남구 중등 영어과외</span><span class="arr">→</span></div>
+      <div class="subject-link"><span>강남구 중등 국어과외</span><span class="arr">→</span></div>
+      <div class="subject-link"><span>강남구 초등 수학과외</span><span class="arr">→</span></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>강남구 맞춤 과외 선생님 찾기</h3>
+    <p>지금 바로 무료 상담을 신청하시면 전문 코디네이터가 연결해드립니다</p>
+    <div class="cta-btns">
+      <button class="btn-p" onclick="window.location.href='tel:01068348080'">📞 전화 상담 010-6834-8080</button>
+      <button class="btn-o" onclick="window.open('https://naver.me/IMZ9N0ST','_blank')">✨ 무료상담 신청</button>
+    </div>
+  </div>
+
+  <!-- 관련 페이지 -->
+  <div class="related">
+    <div class="related-title">🔗 관련 지역 과외 정보</div>
+    <div class="related-grid" id="related-grid">
+      <div class="related-card"><div class="rc-tag">서울 · 서초구</div><div class="rc-title">서초구 과외 | 방배·반포·잠원 맞춤 과외</div></div>
+      <div class="related-card"><div class="rc-tag">서울 · 송파구</div><div class="rc-title">송파구 과외 | 잠실·문정·가락 맞춤 과외</div></div>
+      <div class="related-card"><div class="rc-tag">서울 · 마포구</div><div class="rc-title">마포구 과외 | 합정·홍대·상수 맞춤 과외</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fi">
+    <div class="fl"><em>올케어</em>스터디</div>
+    <div class="fr">© 2026 올케어스터디. All rights reserved.</div>
+  </div>
+</footer>
+
+<div class="floats">
+  <button class="fbtn fb1" onclick="window.location.href='tel:01068348080'">📞 전화상담</button>
+  <button class="fbtn fb2" onclick="window.open('https://naver.me/IMZ9N0ST','_blank')">✨ 무료상담</button>
+</div>
+
+<script>
+// URL 파라미터로 지역 동적 로딩
+const params = new URLSearchParams(location.search);
+const area = params.get('area') || '강남구';
+const region = params.get('region') || '서울';
+
+// 지역별 데이터 (추후 확장)
+const data = {
+  '강남구': {
+    tag:'서울 · 강남구', region:'서울', regionParam:'서울',
+    title:'강남구 과외 | 대치·압구정·청담 맞춤 과외',
+    desc:'강남구 과외 정보. 대치동, 압구정, 청담 지역 검증된 선생님을 찾아보세요.',
+    intro:'강남구는 대한민국 최고의 교육 특구입니다. 대치동 학원가를 중심으로 전국 최고 수준의 교육 인프라가 갖춰져 있으며, 학교 내신 난이도도 전국 최상위권입니다.',
+    detail:'<strong>대치동</strong>: 대치1·2·4동 - 대명중, 은광중, 휘문고, 단대부고 학군 &nbsp;<strong>압구정동</strong>: 현대아파트, 압구정로데오 인근 - 압구정중, 신사중 학군 &nbsp;<strong>청담동</strong>: 청담동 일대 - 청담중 학군',
+    char:'강남구 학교들은 내신 시험 난이도가 매우 높습니다. 경시대회 수준 문제가 출제되고 시간이 매우 부족하게 설계됩니다. 학원만으로는 개별 케어가 어려워 1:1 과외를 병행하는 학생이 많습니다.',
+    dongs:['대치동','압구정동','청담동','역삼동','개포동','도곡동','삼성동','일원동','수서동','세곡동'],
+    emoji:'🏙',
+    related:[{region:'서울 · 서초구',title:'서초구 과외 | 방배·반포·잠원 맞춤 과외'},{region:'서울 · 송파구',title:'송파구 과외 | 잠실·문정·가락 맞춤 과외'},{region:'서울 · 마포구',title:'마포구 과외 | 합정·홍대·상수 맞춤 과외'}]
+  },
+  '서초구': {
+    tag:'서울 · 서초구', region:'서울', regionParam:'서울',
+    title:'서초구 과외 | 방배·반포·잠원 맞춤 과외',
+    desc:'서초구 과외 정보. 방배동, 반포동, 잠원 지역 검증된 선생님을 찾아보세요.',
+    intro:'서초구는 강남구와 함께 서울 최고의 교육 지역입니다. 반포, 방배, 잠원 지역에 우수한 학교와 학원들이 밀집해 있습니다.',
+    detail:'<strong>방배동</strong>: 방배1·2·3·4동 - 서문여중, 서초중 학군 &nbsp;<strong>반포동</strong>: 반포1·2·3·4동 - 반포고, 세화고 학군 &nbsp;<strong>잠원동</strong>: 잠원동 일대 - 신반포중 학군',
+    char:'서초구 학교들은 강남구와 함께 내신 경쟁이 매우 치열합니다. 상위권 학생들이 많아 내신 1등급 확보가 어렵고, 수능과 내신을 동시에 준비하는 학생들이 많습니다.',
+    dongs:['방배동','반포동','잠원동','서초동','양재동','우면동','내곡동'],
+    emoji:'🌿',
+    related:[{region:'서울 · 강남구',title:'강남구 과외 | 대치·압구정·청담 맞춤 과외'},{region:'서울 · 송파구',title:'송파구 과외 | 잠실·문정·가락 맞춤 과외'},{region:'서울 · 동작구',title:'동작구 과외 | 사당·상도·노량진 맞춤 과외'}]
+  }
+};
+
+function loadPage(){
+  const d = data[area];
+  if(!d) return;
+  document.getElementById('page-title').textContent = d.title + ' - 올케어스터디';
+  document.getElementById('page-desc').setAttribute('content', d.desc);
+  document.getElementById('bc-region').textContent = d.region + (d.region==='서울'?'특별시':'도');
+  document.getElementById('bc-region').href = '/region.html?r=' + d.regionParam;
+  document.getElementById('bc-area').textContent = area;
+  document.getElementById('art-tag').textContent = d.tag;
+  document.getElementById('art-title').textContent = d.title;
+  document.getElementById('art-thumb').textContent = d.emoji;
+  document.getElementById('sec1-title').textContent = area + ' 과외 안내';
+  document.getElementById('sec1-content').textContent = d.intro;
+  document.getElementById('sec1-detail').innerHTML = d.detail;
+  document.getElementById('sec2-title').textContent = area + ' 학교 특징';
+  document.getElementById('sec2-content').textContent = d.char;
+  // 동 태그
+  const dt = document.getElementById('dong-tags');
+  dt.innerHTML = d.dongs.map(dong=>`<span class="dong-tag">${dong}</span>`).join('');
+  // 과목 링크
+  const sg = document.getElementById('subject-grid');
+  const subjects = ['수학','영어','국어','과학','사회','코딩','논술'];
+  const grades = ['고등','중등','초등'];
+  let links = '';
+  grades.forEach(g => subjects.slice(0,4).forEach(s => {
+    links += `<div class="subject-link"><span>${area} ${g} ${s}과외</span><span class="arr">→</span></div>`;
+  }));
+  sg.innerHTML = links.slice(0, 16*sg.children.length) || sg.innerHTML;
+  // 관련 카드
+  const rg = document.getElementById('related-grid');
+  rg.innerHTML = d.related.map(r=>`<div class="related-card"><div class="rc-tag">${r.region}</div><div class="rc-title">${r.title}</div></div>`).join('');
+}
+loadPage();
+</script>
+</body>
+</html>
