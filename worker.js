@@ -226,9 +226,9 @@ const SUBJECTS = {
 const CSS = `
 :root{--navy:#0F2044;--navy-mid:#1E3A6E;--blue:#3B82F6;--blue-pale:#EFF6FF;--blue-border:#BFDBFE;--sky:#60A5FA;--text-dark:#0F2044;--text-mid:#374151;--text-muted:#9CA3AF;--bg:#F8FAFF;--border:#E5E7EB;--shadow:0 4px 24px rgba(0,0,0,0.09);--radius:14px}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}a{text-decoration:none;color:inherit}
-header{background:var(--navy);padding:0 48px;height:64px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:200}
-.logo{font-size:18px;font-weight:900;color:white}.logo em{font-style:normal;color:var(--sky)}
-.gnav{margin-left:auto;display:flex;gap:20px}.gnav a{font-size:13px;color:rgba(255,255,255,.6);font-weight:500}.gnav a:hover{color:white}
+header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}
+
+
 .wrap{max-width:900px;margin:0 auto;padding:48px 24px 80px}
 .bc{font-size:12px;color:var(--text-muted);margin-bottom:20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .bc a{color:var(--text-muted)}.bc a:hover{color:var(--blue)}
@@ -274,28 +274,117 @@ footer{background:var(--navy);padding:28px 48px;margin-top:60px}
 .fbtn{display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;border:none;font-size:13px;font-weight:700;box-shadow:0 8px 32px rgba(15,32,68,.2);transition:all .25s;cursor:pointer;white-space:nowrap;text-decoration:none}
 .fbtn:hover{transform:translateX(-4px)}.fb1{background:var(--blue);color:white}.fb2{background:var(--navy);color:white}
 @media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}}
+header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}
+.hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(29,78,216,0.35);flex-shrink:0}
+.logo-name{display:flex;flex-direction:column;line-height:1.15}
+.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0A1628}
+.logo-main em{font-style:normal;color:var(--sky)}
+.logo-sub{font-size:10px;color:rgba(15,32,68,0.6);font-weight:700;letter-spacing:3px}
+.vpill{border:1px solid rgba(255,255,255,0.15);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(255,255,255,0.06)}
+.vpill .vl{font-size:10px;color:#374151;font-weight:600}
+.vpill .vc{font-size:15px;font-weight:900;color:var(--sky);letter-spacing:-0.5px}
+.gnb{margin-left:auto;display:flex;align-items:center;gap:2px}
+.gi{position:relative}
+.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap}
+.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}
+.arr{width:14px;height:14px;transition:transform .2s;color:rgba(255,255,255,0.4)}
+.gi:hover .arr{transform:rotate(180deg);color:var(--sky)}
+.gi:hover .drop{opacity:1;visibility:visible}
+.gi:hover .mega-drop{opacity:1;visibility:visible}
+.hw{padding:0 16px;height:56px;gap:10px}
+.logo-sub{display:none}
+.logo-main{font-size:15px}
+.logo-mark{width:32px;height:32px}
+.vpill{padding:4px 10px}
+.vpill .vc{font-size:13px}
+.vpill .vl{font-size:9px}
+.gnb{display:none}
 `;
 
-const HEADER = `<header style="position:sticky;top:0;z-index:300;background:rgba(15,32,68,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08)">
-  <div style="max-width:1280px;margin:0 auto;padding:0 48px;height:72px;display:flex;align-items:center;gap:24px">
-    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
-      <div style="width:36px;height:36px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(29,78,216,0.3)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+const HEADER = `<header>
+  <div class="hw">
+    <a href="/" class="logo">
+      <div class="logo-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
-      <div style="display:flex;flex-direction:column;line-height:1.2">
-        <span style="font-size:18px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span>
-        <span style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.45);font-weight:600">ALLCARE STUDY</span>
+      <div class="logo-name">
+        <span class="logo-main"><em>올케어</em>스터디</span>
+        <span class="logo-sub">ALLCARE STUDY</span>
       </div>
     </a>
-    <div style="border:1.5px solid rgba(255,255,255,0.2);border-radius:999px;padding:6px 16px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(255,255,255,0.06)">
-      <span style="font-size:10px;color:rgba(255,255,255,0.5);font-weight:600">누적 방문자</span>
-      <span style="font-size:15px;font-weight:900;color:#60A5FA;letter-spacing:-0.5px">353,112명</span>
+
+    <div class="vpill">
+      <span class="vl">누적 방문자</span>
+      <span class="vc" id="vc">353,112명</span>
     </div>
-    <nav style="margin-left:auto;display:flex;gap:4px">
-      <a href="/seoul" style="padding:8px 18px;border:none;background:none;font-size:14px;font-weight:700;color:rgba(255,255,255,0.8);border-radius:8px;text-decoration:none;transition:all .18s">지역별수업</a>
-      <a href="/seoul/gangnam/daichi/high/math" style="padding:8px 18px;border:none;background:none;font-size:14px;font-weight:700;color:rgba(255,255,255,0.8);border-radius:8px;text-decoration:none;transition:all .18s">과목수업</a>
-      <a href="/" style="padding:8px 18px;border:none;background:none;font-size:14px;font-weight:700;color:rgba(255,255,255,0.8);border-radius:8px;text-decoration:none;transition:all .18s">학원수업</a>
+
+    <nav class="gnb">
+      <!-- 지역별수업 메가메뉴 -->
+      <div class="gi" id="gi-region">
+        <button class="gb" onclick="toggleMega('region')">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="mega-drop" id="mega-region">
+          <div class="mega-tabs">
+            <button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button>
+            <button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button>
+            <button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button>
+          </div>
+          <!-- 지역별 -->
+          <div class="mega-panel on" id="region-local">
+            <div class="mega-btns">
+              <a class="mega-btn" href="/seoul">📍 서울특별시</a>
+              <a class="mega-btn" href="/gyeonggi">🌿 경기도</a>
+              <a class="mega-btn" href="/chungcheong">🌾 충청도</a>
+              <a class="mega-btn" href="/gyeongsang">🌊 경상도</a>
+              <a class="mega-btn" href="/jeolla">🍀 전라도</a>
+              <a class="mega-btn" href="/jeju">🌺 제주도</a>
+            </div>
+          </div>
+          <!-- 학년별 -->
+          <div class="mega-panel" id="region-grade">
+            <div class="mega-rt">초등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">초등 1학년</a><a class="mega-btn" href="#">초등 2학년</a><a class="mega-btn" href="#">초등 3학년</a><a class="mega-btn" href="#">초등 4학년</a><a class="mega-btn" href="#">초등 5학년</a><a class="mega-btn" href="#">초등 6학년</a>
+            </div>
+            <div class="mega-rt">중학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">중학교 1학년</a><a class="mega-btn" href="#">중학교 2학년</a><a class="mega-btn" href="#">중학교 3학년</a>
+            </div>
+            <div class="mega-rt">고등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">고등 1학년</a><a class="mega-btn" href="#">고등 2학년</a><a class="mega-btn" href="#">고등 3학년</a><a class="mega-btn" href="#">수능 준비</a>
+            </div>
+          </div>
+          <!-- 학교별 -->
+          <div class="mega-panel" id="region-school">
+            <div class="mega-btns">
+              <a class="mega-btn" href="/seoul">학교별 과외 전체 보기 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 과목수업 -->
+      <div class="gi">
+        <button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a></div>
+      </div>
+      <!-- 학원수업 -->
+      <div class="gi">
+        <button class="gb">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="#">학원 찾기</a><a href="#">학원 비교</a><a href="#">학원 후기</a></div>
+      </div>
     </nav>
+
+    <button class="hsearch">
+      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+    <!-- 모바일 햄버거 -->
+    <button class="hburg" id="hburg" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>`;
 
