@@ -1,4 +1,57 @@
 // ============================================================
+// ── URL 영문 매핑 ─────────────────────────────────────────
+const SIDO_MAP = {
+  'seoul':'서울','gyeonggi':'경기','incheon':'인천',
+  'busan':'부산','daegu':'대구','gwangju':'광주','daejeon':'대전'
+};
+const SIDO_EN = Object.fromEntries(Object.entries(SIDO_MAP).map(([k,v])=>[v,k]));
+
+const DISTRICT_MAP = {
+  'gangnam':'강남구','seocho':'서초구','songpa':'송파구','gangdong':'강동구',
+  'mapo':'마포구','yangcheon':'양천구','nowon':'노원구','gangseo':'강서구',
+  'dongjak':'동작구','gwanak':'관악구','seongbuk':'성북구','yongsan':'용산구',
+  'suwon':'수원시','seongnam':'성남시','yongin':'용인시','goyang':'고양시',
+  'bucheon':'부천시','anyang':'안양시','hwaseong':'화성시','namyangju':'남양주시',
+  'yeonsu':'연수구','namdong':'남동구','bupyeong':'부평구',
+  'haeundae':'해운대구','suyeong':'수영구','dongrae':'동래구',
+  'suseong':'수성구','dalseo':'달서구'
+};
+const DISTRICT_EN = Object.fromEntries(Object.entries(DISTRICT_MAP).map(([k,v])=>[v,k]));
+
+const DONG_MAP = {
+  'gaepo':'개포동','nonhyeon':'논현동','daichi':'대치동','dogok':'도곡동',
+  'samsung':'삼성동','segok':'세곡동','suseo':'수서동','sinsa':'신사동',
+  'apgujeong':'압구정동','yeoksam':'역삼동','ilwon':'일원동','jagok':'자곡동',
+  'cheongdam':'청담동','yulhyeon':'율현동'
+};
+const DONG_EN = Object.fromEntries(Object.entries(DONG_MAP).map(([k,v])=>[v,k]));
+
+const GRADE_MAP = {'elementary':'초등','middle':'중등','high':'고등'};
+const GRADE_EN = Object.fromEntries(Object.entries(GRADE_MAP).map(([k,v])=>[v,k]));
+
+const SUBJECT_MAP = {
+  'math':'수학','english':'영어','korean':'국어','science':'과학',
+  'social':'사회','coding':'코딩','essay':'논술'
+};
+const SUBJECT_EN = Object.fromEntries(Object.entries(SUBJECT_MAP).map(([k,v])=>[v,k]));
+
+function toKr(sido,district,dong,grade,subject){
+  return {
+    sido: SIDO_MAP[sido]||sido,
+    district: DISTRICT_MAP[district]||district,
+    dong: dong ? (DONG_MAP[dong]||dong) : null,
+    grade: GRADE_MAP[grade]||grade,
+    subject: SUBJECT_MAP[subject]||subject,
+  };
+}
+function enUrl(sido,district,dong,grade,subject){
+  const s=SIDO_EN[sido]||sido, d=DISTRICT_EN[district]||district,
+        dg=dong?(DONG_EN[dong]||dong):null,
+        g=GRADE_EN[grade]||grade, sb=SUBJECT_EN[subject]||subject;
+  if(dg) return `/${s}/${d}/${dg}/${g}/${sb}`;
+  return `/${s}/${d}/${g}/${sb}`;
+}
+
 // 올케어스터디 Cloudflare Worker v3
 // 강남구 전체 동 × 학년 × 과목 SEO 페이지 자동 생성
 // ============================================================
@@ -211,8 +264,8 @@ const HEADER = `<header>
   <a href="/" class="logo"><em>올케어</em>스터디</a>
   <nav class="gnav">
     <a href="/">홈</a>
-    <a href="/서울/강남구">서울 강남구</a>
-    <a href="/서울">서울</a>
+    <a href="/seoul/gangnam">서울 강남구</a>
+    <a href="/seoul">서울</a>
   </nav>
 </header>`;
 
@@ -464,7 +517,7 @@ function makeAreaPage(rk, ak) {
     `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/high/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} 고등 ${s}과외</span><span>→</span></a>`
   ).join('');
   const relAreas = Object.keys(region.areas).filter(a => a !== ak).slice(0, 3)
-    .map(a => `<a class="rel-card" href="/${rk}/${a}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} 과외 | ${a} 맞춤 과외</div></a>`).join('');
+    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[a]||a}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} 과외 | ${a} 맞춤 과외</div></a>`).join('');
 
   const title = `${ak} 과외 | ${region.label} ${ak} 맞춤 1:1 과외 - 올케어스터디`;
   const desc = `${ak} 과외 전문. ${area.feature} 수학, 영어 등 전과목 검증된 선생님. 무료 상담 010-6834-8080`;
