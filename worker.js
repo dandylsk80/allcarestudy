@@ -10,6 +10,10 @@ const DISTRICT_MAP = {
   'gangnam':'강남구','seocho':'서초구','songpa':'송파구','gangdong':'강동구',
   'mapo':'마포구','yangcheon':'양천구','nowon':'노원구','gangseo':'강서구',
   'dongjak':'동작구','gwanak':'관악구','seongbuk':'성북구','yongsan':'용산구',
+  'junggu':'중구','jongno':'종로구','jungnang':'중랑구','gwangjin':'광진구',
+  'dongdaemun':'동대문구','seongdong':'성동구','eunpyeong':'은평구',
+  'seodaemun':'서대문구','dobong':'도봉구','gangbuk':'강북구',
+  'geumcheon':'금천구','guro':'구로구',
   'suwon':'수원시','seongnam':'성남시','yongin':'용인시','goyang':'고양시',
   'bucheon':'부천시','anyang':'안양시','hwaseong':'화성시','namyangju':'남양주시',
   'yeonsu':'연수구','namdong':'남동구','bupyeong':'부평구',
@@ -151,6 +155,18 @@ const REGIONS = {
       '관악구': { dongs:['신림동','봉천동','낙성대동'], feature:'서울대 인근 교육 밀집 지역.', schools:'관악고, 인헌고' },
       '성북구': { dongs:['돈암동','길음동','정릉동','석관동'], feature:'고려대·성신여대 인근 교육 특화 지역.', schools:'성북고, 고려고' },
       '용산구': { dongs:['이태원동','한남동','서빙고동','이촌동'], feature:'한남·이촌 고급 주거지. 외국어 교육 수요 높음.', schools:'용산고, 용문고' },
+      '중구': { dongs:['명동','충무로','신당동','황학동','을지로'], feature:'서울 도심 중심부. 역사·문화·상업이 공존하는 교육 지역.', schools:'중구고, 이화여고' },
+      '종로구': { dongs:['혜화동','명륜동','창신동','부암동'], feature:'서울 대학로 인근. 예술·인문 특화 교육 수요 높음.', schools:'경복고, 종로고' },
+      '중랑구': { dongs:['면목동','신내동','묵동','망우동'], feature:'동북권 주거 밀집 지역. 실용적 교육 수요 높음.', schools:'중랑고, 면목고' },
+      '광진구': { dongs:['화양동','군자동','구의동','자양동'], feature:'건국대·세종대 인근. 대학가 주변 교육 인프라 발달.', schools:'광진고, 건대부고' },
+      '동대문구': { dongs:['회기동','전농동','답십리동','장안동'], feature:'경희대·한국외대 인근. 어학·인문계 과외 수요 높음.', schools:'동대문고, 장안고' },
+      '성동구': { dongs:['왕십리동','행당동','금호동','옥수동'], feature:'한양대 인근 교육 특화 지역. 성수동 성장으로 젊은층 유입 증가.', schools:'성동고, 한대부고' },
+      '은평구': { dongs:['응암동','녹번동','불광동','수색동'], feature:'서북권 주거 밀집 지역. 실속형 1:1 과외 수요 꾸준.', schools:'은평고, 대진고' },
+      '서대문구': { dongs:['신촌동','홍제동','북가좌동','남가좌동'], feature:'연세대·이화여대·서강대 인근. 어학·이공계 과외 수요 높음.', schools:'서대문고, 연희고' },
+      '도봉구': { dongs:['쌍문동','방학동','창동','도봉동'], feature:'강북 주거 밀집 지역. 내신 관리 중심 과외 수요 꾸준.', schools:'도봉고, 창동고' },
+      '강북구': { dongs:['미아동','수유동','번동','우이동'], feature:'북부 주거 지역. 학원 접근성 낮아 1:1 방문 과외 선호도 높음.', schools:'강북고, 미양고' },
+      '금천구': { dongs:['가산동','독산동','시흥동'], feature:'G밸리 인근 산업지역. IT 코딩 과외 수요 빠르게 성장.', schools:'금천고, 시흥고' },
+      '구로구': { dongs:['구로동','신도림동','개봉동','오류동'], feature:'디지털단지 인접. 다양한 교육 수요가 공존하는 지역.', schools:'구로고, 개봉고' },
     }
   },
   '경기': {
@@ -261,7 +277,15 @@ footer{background:var(--navy);padding:28px 48px;margin-top:60px}
 `;
 
 const HEADER = `<header>
-  <a href="/" class="logo"><em>올케어</em>스터디</a>
+  <a href="/" class="logo" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+    <div style="width:36px;height:36px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(29,78,216,0.3)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div style="display:flex;flex-direction:column;line-height:1.2">
+      <span style="font-size:18px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span>
+      <span style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.5);font-weight:600">ALLCARE STUDY</span>
+    </div>
+  </a>
   <nav class="gnav">
     <a href="/">홈</a>
     <a href="/seoul/gangnam">서울 강남구</a>
@@ -269,10 +293,46 @@ const HEADER = `<header>
   </nav>
 </header>`;
 
-const FOOTER = `<footer><div class="fi">
-  <div class="fl"><em>올케어</em>스터디</div>
-  <div class="fr">© 2026 올케어스터디. All rights reserved. | 010-6834-8080</div>
-</div></footer>
+const FOOTER = `<footer style="background:#0F2044;padding:48px 0 28px">
+  <div style="max-width:1100px;margin:0 auto;padding:0 48px">
+    <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px">
+      <span>⚠️</span><span>안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</span>
+    </div>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.5fr;gap:40px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <div>
+        <div style="font-size:20px;font-weight:900;color:white;margin-bottom:8px"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p>
+      </div>
+      <div>
+        <h5 style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:14px">지역별수업</h5>
+        <a href="/seoul" style="display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-decoration:none">서울 과외</a>
+        <a href="/gyeonggi" style="display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-decoration:none">경기 과외</a>
+        <a href="/incheon" style="display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-decoration:none">인천 과외</a>
+      </div>
+      <div>
+        <h5 style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:14px">과목수업</h5>
+        <a href="/seoul/gangnam/daichi/high/math" style="display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-decoration:none">수학</a>
+        <a href="/seoul/gangnam/daichi/high/english" style="display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-decoration:none">영어</a>
+        <a href="/seoul/gangnam/daichi/high/science" style="display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-decoration:none">과학</a>
+      </div>
+      <div>
+        <h5 style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:14px">고객지원</h5>
+        <a href="https://naver.me/IMZ9N0ST" target="_blank" style="display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-decoration:none">무료 상담</a>
+        <a href="#" style="display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-decoration:none">이용약관</a>
+        <a href="#" style="display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-decoration:none">개인정보처리방침</a>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px">📞 무료 상담 전화</div>
+        <div style="font-size:26px;font-weight:900;color:white;letter-spacing:-0.5px">010-6834-8080</div>
+        <a href="tel:01068348080" style="display:inline-block;margin-top:10px;background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">전화 상담</a>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:20px;font-size:11px;color:rgba(255,255,255,0.3);flex-wrap:wrap;gap:8px">
+      <span>© 2026 올케어스터디. All rights reserved.</span>
+      <span>사업자등록번호: 000-00-00000</span>
+    </div>
+  </div>
+</footer>
 <div class="floats">
   <a class="fbtn fb1" href="tel:01068348080">📞 전화상담</a>
   <a class="fbtn fb2" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담</a>
@@ -475,27 +535,42 @@ function makeGangnamPage() {
 function makeSidoPage(rk) {
   const r = REGIONS[rk];
   if (!r) return null;
-  const distCards = Object.keys(r.areas).map(dist =>
-    `<a href="/${rk}/${dist}" class="tag" style="font-size:14px;padding:10px 20px">${dist}</a>`
-  ).join('');
+  const distCards = Object.keys(r.areas).map(dist => {
+    const en = DISTRICT_EN[dist]||dist;
+    return `<a href="/${SIDO_EN[rk]||rk}/${en}" style="display:inline-block;padding:10px 18px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:700;color:var(--text-dark);text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dark)'">${dist}</a>`;
+  }).join('');
   const title = `${r.label} 과외 | ${r.label} 지역별 맞춤 1:1 과외 - 올케어스터디`;
   const desc = `${r.label} 과외 전문. ${r.label} 전 지역 검증된 선생님. 수학, 영어, 국어, 과학 내신·수능 완벽 대비. 무료 상담 010-6834-8080`;
+  const heroImg = rk==='서울' ? 'https://images.unsplash.com/photo-1538485399081-7191377e8241?w=900&q=80' : 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=900&q=80';
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <span>${r.label}</span></div>
   <div class="art-tag">${r.emoji} ${r.label}</div>
   <h1 class="art-title">${r.label} 과외 | 지역별 맞춤 1:1 과외 안내</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
-  <div class="art-thumb">${r.emoji}</div>
-  <div class="art-body">
-    <h2>지역 선택</h2>
-    <div class="tag-wrap"><div class="tag-label">📍 구/군 선택</div><div class="tags">${distCards}</div></div>
+  <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
+    <img src="${heroImg}" alt="${r.label} 과외" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.6),transparent);display:flex;align-items:center;padding:32px">
+      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">${r.label} 전 지역</div><div style="font-size:28px;font-weight:900">${r.label} 과외</div></div>
+    </div>
   </div>
-  <div class="cta-box">
-    <h3>${r.label} 맞춤 과외 신청</h3>
-    <p>무료 상담을 신청하시면 전문 코디네이터가 연결해드립니다</p>
-    <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담 신청</a>
+  <div class="art-body">
+    <h2>구/군 선택</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin:20px 0">${distCards}</div>
+  </div>
+  <div style="background:linear-gradient(135deg,#0F2044,#1E3A6E);border-radius:20px;padding:40px 48px;margin:48px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px">
+    <div>
+      <div style="font-size:22px;font-weight:900;color:white;margin-bottom:6px">${r.label} 맞춤 과외 신청</div>
+      <div style="font-size:14px;color:rgba(255,255,255,.6)">무료 상담을 신청하시면 전문 코디네이터가 연결해드립니다</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="text-align:right">
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:2px">📞 무료 상담 전화</div>
+        <div style="font-size:24px;font-weight:900;color:white">010-6834-8080</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <a href="tel:01068348080" style="background:#3B82F6;color:white;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap">📞 전화 상담</a>
+        <a href="https://naver.me/IMZ9N0ST" target="_blank" style="background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;text-align:center">✨ 무료상담 신청</a>
+      </div>
     </div>
   </div>
 </div>`;
