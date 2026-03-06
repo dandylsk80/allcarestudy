@@ -276,21 +276,27 @@ footer{background:var(--navy);padding:28px 48px;margin-top:60px}
 @media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}}
 `;
 
-const HEADER = `<header>
-  <a href="/" class="logo" style="display:flex;align-items:center;gap:10px;text-decoration:none">
-    <div style="width:36px;height:36px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(29,78,216,0.3)">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+const HEADER = `<header style="position:sticky;top:0;z-index:300;background:rgba(15,32,68,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08)">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px;height:72px;display:flex;align-items:center;gap:24px">
+    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
+      <div style="width:36px;height:36px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(29,78,216,0.3)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="display:flex;flex-direction:column;line-height:1.2">
+        <span style="font-size:18px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span>
+        <span style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.45);font-weight:600">ALLCARE STUDY</span>
+      </div>
+    </a>
+    <div style="border:1.5px solid rgba(255,255,255,0.2);border-radius:999px;padding:6px 16px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(255,255,255,0.06)">
+      <span style="font-size:10px;color:rgba(255,255,255,0.5);font-weight:600">누적 방문자</span>
+      <span style="font-size:15px;font-weight:900;color:#60A5FA;letter-spacing:-0.5px">353,112명</span>
     </div>
-    <div style="display:flex;flex-direction:column;line-height:1.2">
-      <span style="font-size:18px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span>
-      <span style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.5);font-weight:600">ALLCARE STUDY</span>
-    </div>
-  </a>
-  <nav class="gnav">
-    <a href="/">홈</a>
-    <a href="/seoul/gangnam">서울 강남구</a>
-    <a href="/seoul">서울</a>
-  </nav>
+    <nav style="margin-left:auto;display:flex;gap:4px">
+      <a href="/seoul" style="padding:8px 18px;border:none;background:none;font-size:14px;font-weight:700;color:rgba(255,255,255,0.8);border-radius:8px;text-decoration:none;transition:all .18s">지역별수업</a>
+      <a href="/seoul/gangnam/daichi/high/math" style="padding:8px 18px;border:none;background:none;font-size:14px;font-weight:700;color:rgba(255,255,255,0.8);border-radius:8px;text-decoration:none;transition:all .18s">과목수업</a>
+      <a href="/" style="padding:8px 18px;border:none;background:none;font-size:14px;font-weight:700;color:rgba(255,255,255,0.8);border-radius:8px;text-decoration:none;transition:all .18s">학원수업</a>
+    </nav>
+  </div>
 </header>`;
 
 const FOOTER = `<footer style="background:#0F2044;padding:48px 0 28px">
@@ -424,7 +430,12 @@ function makeDongArticle(dong, grade, subject) {
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담 신청</div></div>
   </div>
 
-  <div class="art-thumb">${SUBJECTS[subject].emoji}</div>
+  <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
+    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80" alt="${dong} ${grade} ${subject}과외" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.6),transparent);display:flex;align-items:center;padding:32px">
+      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">강남구 · ${dong} · ${grade}</div><div style="font-size:26px;font-weight:900">${dong} ${subject}과외</div></div>
+    </div>
+  </div>
 
   <div class="art-body">
     <h2>${dong} ${grade} ${subject}과외 안내</h2>
@@ -449,6 +460,20 @@ function makeDongArticle(dong, grade, subject) {
     <h2>강남구 ${dong} 학습 환경</h2>
     <p>강남구는 전국에서 가장 높은 교육열을 자랑하는 지역으로, ${dong}도 예외가 아닙니다. 우수한 학생들이 밀집해 있어 내신 등급 경쟁이 매우 치열하며, 학원 수업만으로는 개별적인 약점 보완이 어렵습니다.</p>
     <p>1:1 과외는 이러한 환경에서 <strong>가장 효과적인 학습 방법</strong>입니다. 선생님이 학생 한 명에게만 집중하여 이해도를 즉각 확인하고, 모르는 부분을 바로 짚어줄 수 있기 때문입니다. 올케어스터디의 ${subject} 선생님들은 강남구 학교들의 시험 경향을 누구보다 잘 알고 있습니다.</p>
+
+    <h2>${dong} ${subject}과외 수업 방식</h2>
+    <p>올케어스터디는 단순히 선생님을 연결하는 것을 넘어, <strong>학생의 성적 향상</strong>을 목표로 수업 전 과정을 체계적으로 관리합니다. 첫 상담에서 학생의 현재 학력 수준과 목표를 정확히 파악한 뒤, 최적의 선생님을 매칭합니다.</p>
+    <p>수업은 주 2~3회 진행되며, 학생의 학교 일정과 학원 스케줄을 고려하여 유연하게 조정합니다. 매 수업 후 선생님이 수업 내용과 학생의 이해도를 기록하여 학부모님께 공유드립니다. 시험 전에는 집중 특강 형태로 내신 대비를 강화합니다.</p>
+
+    <h2>${grade} ${subject} 과외 비용 안내</h2>
+    <p>강남구 ${dong} 지역 ${grade} ${subject} 과외 비용은 선생님의 경력, 학력, 수업 방식에 따라 다릅니다. 올케어스터디는 학부모님의 예산과 학생의 필요에 맞는 선생님을 합리적인 비용으로 연결해드립니다.</p>
+    <p>수업 시작 전 선생님과 충분히 상담하여 수업료를 협의하며, 숨겨진 추가 비용 없이 투명하게 운영됩니다. 첫 상담은 완전히 무료이며, 매칭 후에도 수업이 맞지 않으면 부담 없이 선생님을 교체할 수 있습니다.</p>
+
+    <h2>자주 묻는 질문 (FAQ)</h2>
+    <p><strong>Q. 첫 수업 전에 선생님을 미리 만나볼 수 있나요?</strong><br>네, 가능합니다. 정식 수업 전 무료 체험 수업을 통해 선생님의 수업 방식과 학생과의 케미를 확인하실 수 있습니다.</p>
+    <p><strong>Q. ${dong}에서 ${subject} 선생님을 찾는 데 얼마나 걸리나요?</strong><br>보통 상담 신청 후 24시간 이내에 코디네이터가 연락드리며, 빠르면 당일에도 매칭이 가능합니다.</p>
+    <p><strong>Q. 학교 교과서 외에 추가 교재가 필요한가요?</strong><br>기본적으로 학교 교과서와 기출문제를 활용합니다. 필요에 따라 선생님이 추가 교재를 추천해드리지만 강요하지 않습니다.</p>
+    <p><strong>Q. ${grade} ${subject} 성적이 많이 낮아도 괜찮나요?</strong><br>물론입니다. 오히려 기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 매칭해드립니다.</p>
 
     <h2>다른 과목도 함께 준비하세요</h2>
     <div class="subj-grid">${otherSubjects}</div>
@@ -506,7 +531,12 @@ function makeGangnamPage() {
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담 신청</div></div>
   </div>
 
-  <div class="art-thumb">🏙</div>
+  <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
+    <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=900&q=80" alt="강남구 과외" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.65),transparent);display:flex;align-items:center;padding:32px">
+      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">서울특별시 · 강남구</div><div style="font-size:28px;font-weight:900">강남구 과외</div></div>
+    </div>
+  </div>
 
   <div class="art-body">
     <h2>강남구 과외 안내</h2>
