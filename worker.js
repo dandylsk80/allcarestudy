@@ -289,6 +289,62 @@ function makeArticlePage(rk,ak,gk,sk){
   return wrap(title,desc,canonical,body);
 }
 
+function makeHomePage(){
+  const regionCards = Object.entries(REGIONS).map(([sido,r])=>
+    `<a href="/${sido}" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:white;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-weight:700;color:var(--text-dark);text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='var(--text-dark)'"><span style="font-size:24px">${r.emoji}</span><span>${r.label}</span></a>`
+  ).join('');
+  const title = '올케어스터디 - 지역별 과외·학원 정보 No.1';
+  const desc = '전국 지역별 1:1 맞춤 과외·학원 정보 플랫폼. 서울, 경기, 인천 등 내 지역 검증된 선생님 12,400명+.';
+  return `<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${title}</title>
+<meta name="description" content="${desc}">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://allcarestudy.com/">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>${CSS}</style>
+</head><body>
+<header style="background:var(--navy);padding:0 48px;height:64px;display:flex;align-items:center;gap:20px">
+  <a href="/" style="font-size:18px;font-weight:900;color:white;text-decoration:none"><em style="font-style:normal;color:var(--sky)">올케어</em>스터디</a>
+  <nav style="margin-left:auto;display:flex;gap:20px">
+    <a href="/" style="font-size:13px;color:rgba(255,255,255,.6);font-weight:500;text-decoration:none">홈</a>
+    <a href="/서울" style="font-size:13px;color:rgba(255,255,255,.6);font-weight:500;text-decoration:none">지역별수업</a>
+  </nav>
+</header>
+<div style="background:linear-gradient(130deg,#0F2044,#1E3A6E 60%,#1D4ED8);padding:64px 48px;text-align:center">
+  <div style="display:inline-block;background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:700;color:#60A5FA;margin-bottom:20px">No.1 지역별 과외 플랫폼</div>
+  <h1 style="font-size:clamp(28px,4vw,48px);font-weight:900;color:white;letter-spacing:-1.5px;line-height:1.2;margin-bottom:16px">내 지역 최고의<br><span style="color:#60A5FA">1:1 맞춤 과외</span></h1>
+  <p style="font-size:15px;color:rgba(255,255,255,.65);margin-bottom:32px">전국 검증된 선생님 12,400명+ · 지역별·과목별·학년별 맞춤 수업</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="/서울/강남구" style="background:#3B82F6;color:white;padding:14px 28px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none">지역별 과외 찾기 →</a>
+    <a href="https://naver.me/IMZ9N0ST" target="_blank" style="background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.3);padding:14px 24px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none">✨ 무료상담 신청</a>
+  </div>
+</div>
+<div class="wrap">
+  <h2 style="font-size:24px;font-weight:900;color:var(--navy);margin-bottom:24px;text-align:center">📍 지역별 과외 정보</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:48px">${regionCards}</div>
+  <div style="background:linear-gradient(135deg,var(--navy),#1E3A6E);border-radius:20px;padding:36px;text-align:center">
+    <h3 style="font-size:22px;font-weight:900;color:white;margin-bottom:8px">무료 상담 신청</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,.65);margin-bottom:24px">전문 코디네이터가 최적의 선생님을 연결해드립니다</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="tel:01068348080" style="background:#3B82F6;color:white;padding:14px 28px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none">📞 010-6834-8080</a>
+      <a href="https://naver.me/IMZ9N0ST" target="_blank" style="background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.3);padding:14px 24px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none">✨ 네이버 상담</a>
+    </div>
+  </div>
+</div>
+<footer style="background:var(--navy);padding:28px 48px;margin-top:60px">
+  <div style="max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div style="font-size:14px;font-weight:900;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.35)">© 2026 올케어스터디. All rights reserved.</div>
+  </div>
+</footer>
+<div style="position:fixed;right:24px;bottom:40px;display:flex;flex-direction:column;gap:10px;z-index:500">
+  <a href="tel:01068348080" style="display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:#3B82F6;color:white;font-size:13px;font-weight:700;text-decoration:none;box-shadow:0 8px 32px rgba(15,32,68,.2)">📞 전화상담</a>
+  <a href="https://naver.me/IMZ9N0ST" target="_blank" style="display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:#0F2044;color:white;font-size:13px;font-weight:700;text-decoration:none;box-shadow:0 8px 32px rgba(15,32,68,.2)">✨ 무료상담</a>
+</div>
+</body></html>`;
+}
+
 export default {
   async fetch(request) {
     const url = new URL(request.url);
@@ -296,6 +352,10 @@ export default {
     const parts = path.split('/').filter(Boolean);
     const headers = {'Content-Type':'text/html;charset=UTF-8','Cache-Control':'public,max-age=3600'};
 
+    // 홈 (/)
+    if(parts.length===0){
+      return new Response(makeHomePage(),{headers});
+    }
     // /지역/구/학년/과목/
     if(parts.length===4){
       const page=makeArticlePage(parts[0],parts[1],parts[2],parts[3]);
