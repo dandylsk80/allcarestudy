@@ -681,14 +681,14 @@ a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:inherit}
 
 /* HEADER */
-header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(255,255,255,0.08)}
+header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}
 .hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}
 .logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.logo-mark{width:38px;height:38px;background:linear-gradient(135deg,var(--blue),var(--sky));border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(59,130,246,0.4)}
+.logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(29,78,216,0.35);flex-shrink:0}
 .logo-name{display:flex;flex-direction:column;line-height:1.15}
-.logo-main{font-size:18px;font-weight:900;letter-spacing:-0.5px;color:#0F2044}
+.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0F2044}
 .logo-main em{font-style:normal;color:var(--sky)}
-.logo-sub{font-size:10px;color:rgba(15,32,68,0.4);font-weight:500;letter-spacing:0.5px}
+.logo-sub{font-size:10px;color:rgba(15,32,68,0.45);font-weight:600;letter-spacing:3px}
 .vpill{border:1px solid rgba(255,255,255,0.15);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(255,255,255,0.06)}
 .vpill .vl{font-size:10px;color:rgba(15,32,68,0.5);font-weight:500}
 .vpill .vc{font-size:15px;font-weight:900;color:var(--sky);letter-spacing:-0.5px}
