@@ -550,7 +550,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
 .mob-cta button:last-child{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.2)}
 
 /* FADE UP */
-.fu{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fu{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}
 .fu.vis{opacity:1;transform:translateY(0)}
 
 /* ══ MOBILE ══ */
@@ -999,6 +999,7 @@ function toggleMobileMenu(){
   b.classList.toggle('on');
 }
 
+function switchTab(menu,tab){
   document.querySelectorAll('#mega-'+menu+' .mega-tab').forEach((t,i)=>t.classList.remove('on'));
   document.querySelectorAll('#mega-'+menu+' .mega-panel').forEach(p=>p.classList.remove('on'));
   event.target.classList.add('on');
