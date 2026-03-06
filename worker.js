@@ -300,7 +300,12 @@ const FOOTER = `<footer style="background:#0F2044;padding:48px 0 28px">
     </div>
     <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.5fr;gap:40px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.08)">
       <div>
-        <div style="font-size:20px;font-weight:900;color:white;margin-bottom:8px"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span style="font-size:20px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span>
+        </div>
         <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p>
       </div>
       <div>
@@ -323,7 +328,7 @@ const FOOTER = `<footer style="background:#0F2044;padding:48px 0 28px">
       </div>
       <div style="text-align:right">
         <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px">📞 무료 상담 전화</div>
-        <div style="font-size:26px;font-weight:900;color:white;letter-spacing:-0.5px">010-6834-8080</div>
+        <div style="font-size:20px;font-weight:900;color:white;letter-spacing:0;white-space:nowrap">010-6834-8080</div>
         <a href="tel:01068348080" style="display:inline-block;margin-top:10px;background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">전화 상담</a>
       </div>
     </div>
@@ -541,7 +546,7 @@ function makeSidoPage(rk) {
   }).join('');
   const title = `${r.label} 과외 | ${r.label} 지역별 맞춤 1:1 과외 - 올케어스터디`;
   const desc = `${r.label} 과외 전문. ${r.label} 전 지역 검증된 선생님. 수학, 영어, 국어, 과학 내신·수능 완벽 대비. 무료 상담 010-6834-8080`;
-  const heroImg = rk==='서울' ? 'https://images.unsplash.com/photo-1538485399081-7191377e8241?w=900&q=80' : 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=900&q=80';
+  const heroImg = rk==='서울' ? 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=900&q=80' : 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80';
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <span>${r.label}</span></div>
   <div class="art-tag">${r.emoji} ${r.label}</div>
