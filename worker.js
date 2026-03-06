@@ -343,7 +343,7 @@ function makeDongArticle(dong, grade, subject) {
   const keywordTags = keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('');
 
   const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/서울">서울특별시</a> › <a href="/서울/강남구">강남구</a> › <a href="/서울/강남구/${dong}/${grade}">${dong} ${grade}</a> › <span>${subject}과외</span></div>
+  <div class="bc"><a href="/">홈</a> › <a href="/seoul">서울특별시</a> › <a href="/seoul/gangnam">강남구</a> › <a href="/seoul/gangnam/${DONG_EN[dong]||dong}/${GRADE_EN[grade]||grade}">${dong} ${grade}</a> › <span>${subject}과외</span></div>
 
   <div class="art-tag">${SUBJECTS[subject].emoji} 강남구 · ${dong} · ${grade} · ${subject}</div>
   <h1 class="art-title">${dong} ${grade} ${subject}과외 | 강남구 ${dong} ${gInfo.label} ${subject} 맞춤 1:1 과외</h1>
@@ -429,7 +429,7 @@ function makeGangnamPage() {
   const desc = '강남구 과외 전문. 대치동, 압구정동, 역삼동, 청담동 등 강남구 전 지역 검증된 선생님. 수학, 영어, 국어, 과학 내신·수능 완벽 대비. 무료 상담 010-6834-8080';
 
   const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/서울">서울특별시</a> › <span>강남구</span></div>
+  <div class="bc"><a href="/">홈</a> › <a href="/seoul">서울특별시</a> › <span>강남구</span></div>
 
   <div class="art-tag">🏙 서울특별시 · 강남구</div>
   <h1 class="art-title">강남구 과외 | 대치동·압구정·역삼 맞춤 1:1 과외</h1>
