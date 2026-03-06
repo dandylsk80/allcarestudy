@@ -259,16 +259,16 @@ function makeDongArticle(dong, grade, subject) {
 
   const title = `${dong} ${grade} ${subject}과외 | 강남구 ${dong} ${gInfo.label} ${subject} 맞춤 1:1 과외 - 올케어스터디`;
   const desc = `${dong} ${grade} ${subject}과외 전문. 강남구 ${dong} 지역 ${gInfo.label} ${subject} 검증된 선생님과 1:1 맞춤 수업. 내신·수능 완벽 대비. 무료 상담 010-6834-8080`;
-  const canonical = `/서울/강남구/${dong}/${grade}/${subject}`;
+  const canonical = `/seoul/gangnam/${DONG_EN[dong]||dong}/${GRADE_EN[grade]||grade}/${SUBJECT_EN[subject]||subject}`;
 
   // 관련 과목 링크
   const otherSubjects = Object.keys(SUBJECTS).filter(s => s !== subject).slice(0, 6)
-    .map(s => `<a class="subj-link" href="/서울/강남구/${dong}/${grade}/${s}"><span>${SUBJECTS[s].emoji} ${dong} ${grade} ${s}과외</span><span>→</span></a>`)
+    .map(s => `<a class="subj-link" href="/seoul/gangnam/${DONG_EN[dong]||dong}/${GRADE_EN[grade]||grade}/${SUBJECT_EN[s]||s}"><span>${SUBJECTS[s].emoji} ${dong} ${grade} ${s}과외</span><span>→</span></a>`)
     .join('');
 
   // 관련 동 링크
   const otherDongs = GANGNAM_DONGS.filter(d => d !== dong).slice(0, 3)
-    .map(d => `<a class="rel-card" href="/서울/강남구/${d}/${grade}/${subject}"><div class="rc-tag">강남구 · ${d}</div><div class="rc-title">${d} ${grade} ${subject}과외 | 강남구 맞춤 1:1 과외</div></a>`)
+    .map(d => `<a class="rel-card" href="/seoul/gangnam/${DONG_EN[d]||d}/${GRADE_EN[grade]||grade}/${SUBJECT_EN[subject]||subject}"><div class="rc-tag">강남구 · ${d}</div><div class="rc-title">${d} ${grade} ${subject}과외 | 강남구 맞춤 1:1 과외</div></a>`)
     .join('');
 
   // 학년 태그
@@ -361,15 +361,15 @@ function makeDongArticle(dong, grade, subject) {
 
 function makeGangnamPage() {
   const gradeLinks = Object.keys(GRADES).map(g =>
-    `<a href="/서울/강남구/${g}" class="tag" style="font-size:14px;padding:10px 20px">${g}</a>`
+    `<a href="/seoul/gangnam/${GRADE_EN[g]||g}" class="tag" style="font-size:14px;padding:10px 20px">${g}</a>`
   ).join('');
 
   const dongCards = GANGNAM_DONGS.map(dong =>
-    `<a href="/서울/강남구/${dong}/고등/수학" class="rel-card"><div class="rc-tag">강남구 · ${dong}</div><div class="rc-title">${dong} 과외 | 강남구 ${dong} 맞춤 1:1 과외</div></a>`
+    `<a href="/seoul/gangnam/${DONG_EN[dong]||dong}/high/math" class="rel-card"><div class="rc-tag">강남구 · ${dong}</div><div class="rc-title">${dong} 과외 | 강남구 ${dong} 맞춤 1:1 과외</div></a>`
   ).join('');
 
   const subjLinks = Object.entries(SUBJECTS).map(([s, v]) =>
-    `<a class="subj-link" href="/서울/강남구/대치동/고등/${s}"><span>${v.emoji} 강남구 고등 ${s}과외</span><span>→</span></a>`
+    `<a class="subj-link" href="/seoul/gangnam/daichi/high/${SUBJECT_EN[s]||s}"><span>${v.emoji} 강남구 고등 ${s}과외</span><span>→</span></a>`
   ).join('');
 
   const title = '강남구 과외 | 서울 강남구 대치동·압구정·역삼 맞춤 1:1 과외 - 올케어스터디';
@@ -446,7 +446,7 @@ function makeSidoPage(rk) {
     </div>
   </div>
 </div>`;
-  return wrap(title, desc, `/${rk}`, body);
+  return wrap(title, desc, `/${SIDO_EN[rk]||rk}`, body);
 }
 
 // ── 구/군 페이지 ──────────────────────────────────────────
@@ -461,7 +461,7 @@ function makeAreaPage(rk, ak) {
 
   const dongTags = area.dongs.map(d => `<span class="tag">${d}</span>`).join('');
   const subjLinks = Object.entries(SUBJECTS).slice(0, 6).map(([s, v]) =>
-    `<a class="subj-link" href="/${rk}/${ak}/고등/${s}"><span>${v.emoji} ${ak} 고등 ${s}과외</span><span>→</span></a>`
+    `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/high/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} 고등 ${s}과외</span><span>→</span></a>`
   ).join('');
   const relAreas = Object.keys(region.areas).filter(a => a !== ak).slice(0, 3)
     .map(a => `<a class="rel-card" href="/${rk}/${a}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} 과외 | ${a} 맞춤 과외</div></a>`).join('');
@@ -498,7 +498,7 @@ function makeAreaPage(rk, ak) {
   <div class="related-title">🔗 주변 지역 과외</div>
   <div class="related-grid">${relAreas}</div>
 </div>`;
-  return wrap(title, desc, `/${rk}/${ak}`, body);
+  return wrap(title, desc, `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`, body);
 }
 
 // ── 기존 구/학년/과목 페이지 (강남구 외) ─────────────────────
@@ -511,9 +511,9 @@ function makeArticlePage(rk, ak, gk, sk) {
   if (!region || !area || !grade || !subj) return null;
 
   const otherSubj = Object.entries(SUBJECTS).filter(([s]) => s !== sk).slice(0, 6)
-    .map(([s, v]) => `<a class="subj-link" href="/${rk}/${ak}/${gk}/${s}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`).join('');
+    .map(([s, v]) => `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`).join('');
   const relLinks = Object.keys(region.areas).filter(a => a !== ak).slice(0, 3)
-    .map(a => `<a class="rel-card" href="/${rk}/${a}/${gk}/${sk}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} ${gk} ${sk}과외</div></a>`).join('');
+    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[a]||a}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[sk]||sk}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} ${gk} ${sk}과외</div></a>`).join('');
   const yearTags = grade.years.map(y => `<span class="tag">${y}</span>`).join('');
 
   const title = `${ak} ${gk} ${sk}과외 | ${region.label} ${ak} ${grade.label} ${sk} 맞춤 과외 - 올케어스터디`;
@@ -560,7 +560,7 @@ function makeArticlePage(rk, ak, gk, sk) {
 
 function makeHomePage() {
   const regionCards = Object.entries(REGIONS).map(([sido, r]) =>
-    `<a href="/${sido}" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:white;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-weight:700;color:var(--text-dark);text-decoration:none;transition:all .2s"><span style="font-size:24px">${r.emoji}</span><span>${r.label}</span></a>`
+    `<a href="/${SIDO_EN[sido]||sido}" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:white;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-weight:700;color:var(--text-dark);text-decoration:none;transition:all .2s"><span style="font-size:24px">${r.emoji}</span><span>${r.label}</span></a>`
   ).join('');
 
   return `<!DOCTYPE html><html lang="ko"><head>
@@ -913,16 +913,16 @@ function serveSitemap() {
   for (const dong of GANGNAM_DONGS) {
     for (const grade of Object.keys(GRADES)) {
       for (const subj of Object.keys(SUBJECTS)) {
-        urls.push(`<url><loc>https://allcarestudy.com/서울/강남구/${dong}/${grade}/${subj}</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>`);
+        urls.push(`<url><loc>https://allcarestudy.com/seoul/gangnam/${DONG_EN[dong]||dong}/${GRADE_EN[grade]||grade}/${SUBJECT_EN[subj]||subj}</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>`);
       }
     }
   }
 
   // 기타 지역
   for (const [sido, r] of Object.entries(REGIONS)) {
-    urls.push(`<url><loc>https://allcarestudy.com/${sido}</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>`);
+    urls.push(`<url><loc>https://allcarestudy.com/${SIDO_EN[sido]||sido}</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>`);
     for (const ak of Object.keys(r.areas)) {
-      urls.push(`<url><loc>https://allcarestudy.com/${sido}/${ak}</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>`);
+      urls.push(`<url><loc>https://allcarestudy.com/${SIDO_EN[sido]||sido}/${DISTRICT_EN[ak]||ak}</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>`);
     }
   }
 
@@ -945,50 +945,56 @@ export default {
     // 홈
     if (parts.length === 0) return new Response(makeHomePage(), { headers: h });
 
-    // /서울/강남구/대치동/고등/수학 (동 포함 5단계)
-    if (parts.length === 5 && parts[0] === '서울' && parts[1] === '강남구') {
-      const [, , dong, grade, subject] = parts;
-      const page = makeDongArticle(dong, grade, subject);
+    // 영문 URL 파싱
+    // /seoul/gangnam/daichi/high/math (5단계 - 동 포함)
+    if (parts.length === 5) {
+      const kr = toKr(parts[0], parts[1], parts[2], parts[3], parts[4]);
+      if (kr.sido === '서울' && kr.district === '강남구') {
+        const page = makeDongArticle(kr.dong, kr.grade, kr.subject);
+        if (page) return new Response(page, { headers: h });
+      }
+    }
+
+    // /seoul/gangnam/high/math (4단계)
+    if (parts.length === 4) {
+      const kr = toKr(parts[0], parts[1], null, parts[2], parts[3]);
+      const page = makeArticlePage(kr.sido, kr.district, kr.grade, kr.subject);
       if (page) return new Response(page, { headers: h });
     }
 
-    // /서울/강남구/고등 (3단계 - 학년 선택)
+    // /seoul/gangnam/high (3단계 - 학년 선택)
     if (parts.length === 3) {
-      const [rk, ak, gk] = parts;
-      if (REGIONS[rk]?.areas[ak] && GRADES[gk]) {
-        const region = REGIONS[rk];
-        const area = region.areas[ak];
-        const grade = GRADES[gk];
-        const subjLinks = Object.entries(SUBJECTS).map(([s, v]) =>
-          `<a class="subj-link" href="/${rk}/${ak}/${gk}/${s}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`
-        ).join('');
+      const kr = toKr(parts[0], parts[1], null, parts[2], null);
+      const rk = kr.sido; const ak = kr.district; const gk = kr.grade;
+      const region = REGIONS[rk]; const area = region?.areas[ak]; const grade = GRADES[gk];
+      if (region && area && grade) {
+        const subjLinks = Object.entries(SUBJECTS).map(([s, v]) => {
+          const url = enUrl(rk, ak, null, gk, s);
+          return `<a class="subj-link" href="${url}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`;
+        }).join('');
         const body = `<div class="wrap">
-<div class="bc"><a href="/">홈</a> › <a href="/${rk}">${region.label}</a> › <a href="/${rk}/${ak}">${ak}</a> › <span>${gk}</span></div>
+<div class="bc"><a href="/">홈</a> › <a href="/${SIDO_EN[rk]||rk}">${region.label}</a> › <a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}">${ak}</a> › <span>${gk}</span></div>
 <h1 class="art-title">${ak} ${gk} 과외 | 과목 선택</h1>
 <div class="art-body"><h2>과목을 선택하세요</h2><div class="subj-grid">${subjLinks}</div></div>
 <div class="cta-box"><h3>${ak} ${gk} 맞춤 과외</h3><p>무료 상담 신청</p>
 <div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담</a></div></div>
 </div>`;
-        return new Response(wrap(`${ak} ${gk} 과외`, `${ak} ${gk} 과목별 과외`, `/${rk}/${ak}/${gk}`, body), { headers: h });
+        const canon = `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${GRADE_EN[gk]||gk}`;
+        return new Response(wrap(`${ak} ${gk} 과외`, `${ak} ${gk} 과목별 과외`, canon, body), { headers: h });
       }
     }
 
-    // /서울/강남구/고등/수학 (4단계)
-    if (parts.length === 4) {
-      const [rk, ak, gk, sk] = parts;
-      const page = makeArticlePage(rk, ak, gk, sk);
-      if (page) return new Response(page, { headers: h });
-    }
-
-    // /서울/강남구 (2단계)
+    // /seoul/gangnam (2단계)
     if (parts.length === 2) {
-      const page = makeAreaPage(parts[0], parts[1]);
+      const kr = toKr(parts[0], parts[1], null, null, null);
+      const page = makeAreaPage(kr.sido, kr.district);
       if (page) return new Response(page, { headers: h });
     }
 
-    // /서울 (1단계)
+    // /seoul (1단계)
     if (parts.length === 1) {
-      const page = makeSidoPage(parts[0]);
+      const kr = toKr(parts[0], null, null, null, null);
+      const page = makeSidoPage(kr.sido);
       if (page) return new Response(page, { headers: h });
     }
 
