@@ -985,12 +985,12 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
           <!-- 지역별 -->
           <div class="mega-panel on" id="region-local">
             <div class="mega-btns">
-              <a class="mega-btn" href="/region.html?r=서울">📍 서울특별시</a>
-              <a class="mega-btn" href="/region.html?r=경기">🌿 경기도</a>
-              <a class="mega-btn" href="/region.html?r=충청">🌾 충청도</a>
-              <a class="mega-btn" href="/region.html?r=경상">🌊 경상도</a>
-              <a class="mega-btn" href="/region.html?r=전라">🍀 전라도</a>
-              <a class="mega-btn" href="/region.html?r=제주">🌺 제주도</a>
+              <a class="mega-btn" href="/seoul">📍 서울특별시</a>
+              <a class="mega-btn" href="/gyeonggi">🌿 경기도</a>
+              <a class="mega-btn" href="/chungcheong">🌾 충청도</a>
+              <a class="mega-btn" href="/gyeongsang">🌊 경상도</a>
+              <a class="mega-btn" href="/jeolla">🍀 전라도</a>
+              <a class="mega-btn" href="/jeju">🌺 제주도</a>
             </div>
           </div>
           <!-- 학년별 -->
@@ -1011,7 +1011,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
           <!-- 학교별 -->
           <div class="mega-panel" id="region-school">
             <div class="mega-btns">
-              <a class="mega-btn" href="/region.html?t=school">학교별 과외 전체 보기 →</a>
+              <a class="mega-btn" href="/seoul">학교별 과외 전체 보기 →</a>
             </div>
           </div>
         </div>
@@ -1044,12 +1044,12 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
     <div class="mob-section">
       <div class="mob-title">📍 지역별수업</div>
       <div class="mob-links">
-        <a href="/region.html?r=서울">서울특별시</a>
-        <a href="/region.html?r=경기">경기도</a>
-        <a href="/region.html?r=충청">충청도</a>
-        <a href="/region.html?r=경상">경상도</a>
-        <a href="/region.html?r=전라">전라도</a>
-        <a href="/region.html?r=제주">제주도</a>
+        <a href="/seoul">서울특별시</a>
+        <a href="/gyeonggi">경기도</a>
+        <a href="/chungcheong">충청도</a>
+        <a href="/gyeongsang">경상도</a>
+        <a href="/jeolla">전라도</a>
+        <a href="/jeju">제주도</a>
       </div>
     </div>
     <div class="mob-section">
@@ -1082,7 +1082,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
           <h1 class="stitle">내 지역 최고의<br><span class="hl">1:1 맞춤 과외</span><br>지금 찾아보세요</h1>
           <p class="sdesc">전국 검증된 선생님 12,400명+<br>지역별·과목별·학년별로 딱 맞는 수업 연결</p>
           <div class="sbtns">
-            <button class="bph" onclick="window.location.href='/region.html'">지역별 과외 찾기 →</button>
+            <button class="bph" onclick="window.location.href='/seoul'">지역별 과외 찾기 →</button>
             <button class="bps" onclick="window.open('https://naver.me/IMZ9N0ST','_blank')">무료 상담 신청</button>
           </div>
         </div>
