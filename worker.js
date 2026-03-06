@@ -388,6 +388,92 @@ const HEADER = `<header>
   </div>
 </header>`;
 
+
+const HEADER_DARK = `<header>
+  <div class="hw">
+    <a href="/" class="logo">
+      <div class="logo-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="logo-name">
+        <span class="logo-main" style="color:white"><em style="color:#60A5FA">올케어</em>스터디</span>
+        <span class="logo-sub" style="color:rgba(255,255,255,0.45)">ALLCARE STUDY</span>
+      </div>
+    </a>
+
+    <div class="vpill" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06)">
+      <span class="vl" style="color:rgba(255,255,255,0.5)">누적 방문자</span>
+      <span class="vc" id="vc">353,112명</span>
+    </div>
+
+    <nav class="gnb">
+      <!-- 지역별수업 메가메뉴 -->
+      <div class="gi" id="gi-region">
+        <button class="gb" onclick="toggleMega('region')">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="mega-drop" id="mega-region">
+          <div class="mega-tabs">
+            <button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button>
+            <button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button>
+            <button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button>
+          </div>
+          <!-- 지역별 -->
+          <div class="mega-panel on" id="region-local">
+            <div class="mega-btns">
+              <a class="mega-btn" href="/seoul">📍 서울특별시</a>
+              <a class="mega-btn" href="/gyeonggi">🌿 경기도</a>
+              <a class="mega-btn" href="/chungcheong">🌾 충청도</a>
+              <a class="mega-btn" href="/gyeongsang">🌊 경상도</a>
+              <a class="mega-btn" href="/jeolla">🍀 전라도</a>
+              <a class="mega-btn" href="/jeju">🌺 제주도</a>
+            </div>
+          </div>
+          <!-- 학년별 -->
+          <div class="mega-panel" id="region-grade">
+            <div class="mega-rt">초등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">초등 1학년</a><a class="mega-btn" href="#">초등 2학년</a><a class="mega-btn" href="#">초등 3학년</a><a class="mega-btn" href="#">초등 4학년</a><a class="mega-btn" href="#">초등 5학년</a><a class="mega-btn" href="#">초등 6학년</a>
+            </div>
+            <div class="mega-rt">중학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">중학교 1학년</a><a class="mega-btn" href="#">중학교 2학년</a><a class="mega-btn" href="#">중학교 3학년</a>
+            </div>
+            <div class="mega-rt">고등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">고등 1학년</a><a class="mega-btn" href="#">고등 2학년</a><a class="mega-btn" href="#">고등 3학년</a><a class="mega-btn" href="#">수능 준비</a>
+            </div>
+          </div>
+          <!-- 학교별 -->
+          <div class="mega-panel" id="region-school">
+            <div class="mega-btns">
+              <a class="mega-btn" href="/seoul">학교별 과외 전체 보기 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 과목수업 -->
+      <div class="gi">
+        <button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a></div>
+      </div>
+      <!-- 학원수업 -->
+      <div class="gi">
+        <button class="gb">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="#">학원 찾기</a><a href="#">학원 비교</a><a href="#">학원 후기</a></div>
+      </div>
+    </nav>
+
+    <button class="hsearch">
+      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+    <!-- 모바일 햄버거 -->
+    <button class="hburg" id="hburg" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>`;
+
 const FOOTER = `<footer style="background:#0F2044;padding:48px 0 28px">
   <div style="max-width:1100px;margin:0 auto;padding:0 48px">
     <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px">
@@ -458,6 +544,13 @@ function wrap(title, desc, canonical, body){
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
 </head><body>${HEADER}${body}${FOOTER}</body></html>`;
+}
+
+function wrapDark(title,desc,canonical,body){
+  const page = wrap(title,desc,canonical,body);
+  return page
+    .replace('background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)', 
+             'background:rgba(15,32,68,0.97);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(16px)');
 }
 
 // ── 강남구 동별 × 학년 × 과목 SEO 아티클 (2000자) ──────────────
@@ -586,7 +679,7 @@ function makeDongArticle(dong, grade, subject) {
   <div class="related-grid">${otherDongs}</div>
 </div>`;
 
-  return wrap(title, desc, canonical, body);
+  return wrapDark(title, desc, canonical, body);
 }
 
 // ── 강남구 페이지 ──────────────────────────────────────────
