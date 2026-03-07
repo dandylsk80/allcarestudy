@@ -229,7 +229,7 @@ const CSS = `
 header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}
 
 
-.wrap{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+.wrap{max-width:900px;margin:0 auto;padding:160px 24px 80px}
 .bc{font-size:12px;color:var(--text-muted);margin-bottom:20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .bc a{color:var(--text-muted)}.bc a:hover{color:var(--blue)}
 .art-tag{display:inline-block;background:var(--blue-pale);color:var(--blue);font-size:12px;font-weight:700;padding:4px 12px;border-radius:6px;margin-bottom:14px}
@@ -544,7 +544,7 @@ function makeDongArticle(dong, grade, subject) {
   <div class="related-grid">${otherDongs}</div>
 </div>`;
 
-  return wrapDark(title, desc, canonical, body);
+  return wrap(title, desc, canonical, body);
 }
 
 // ── 강남구 페이지 ──────────────────────────────────────────
@@ -1239,7 +1239,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
           <h1 class="stitle">내 지역 최고의<br><span class="hl">1:1 맞춤 과외</span><br>지금 찾아보세요</h1>
           <p class="sdesc">전국 검증된 선생님 12,400명+<br>지역별·과목별·학년별로 딱 맞는 수업 연결</p>
           <div class="sbtns">
-            <button class="bph" onclick="window.location.href='/seoul'">지역별 과외 찾기 →</button>
+            <button class="bph" onclick="document.getElementById('region-section').scrollIntoView({behavior:'smooth'})">지역별 과외 찾기 →</button>
             <button class="bps" onclick="window.open('https://naver.me/IMZ9N0ST','_blank')">무료 상담 신청</button>
           </div>
         </div>
@@ -1342,7 +1342,27 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
   </div>
 </section>
 
+<!-- REGION SELECT -->
+<section id="region-section" style="padding:60px 48px;background:white;border-bottom:1px solid #E5E7EB">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:36px">
+      <div style="font-size:12px;font-weight:700;color:#3B82F6;letter-spacing:2px;margin-bottom:10px">FIND YOUR AREA</div>
+      <h2 style="font-size:28px;font-weight:900;color:#0F2044">지역별 과외 찾기</h2>
+      <p style="font-size:14px;color:#9CA3AF;margin-top:8px">원하는 지역을 선택하세요</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+      <a href="/seoul" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🏙</span>서울특별시</a>
+      <a href="/gyeonggi" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🌿</span>경기도</a>
+      <a href="/incheon" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🌊</span>인천광역시</a>
+      <a href="/busan" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🐟</span>부산광역시</a>
+      <a href="/daegu" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🍎</span>대구광역시</a>
+      <a href="/daejeon" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🌾</span>대전광역시</a>
+    </div>
+  </div>
+</section>
+
 <!-- REVIEWS -->
+
 <section class="reviews">
   <div class="sw">
     <div class="sh fu">
