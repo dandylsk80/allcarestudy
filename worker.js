@@ -989,7 +989,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
 .fbtn{display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;border:none;font-size:14px;font-weight:700;box-shadow:var(--shadow-lg);transition:all .25s;white-space:nowrap}
 .fbtn:hover{transform:translateX(-4px) scale(1.03)}
 .fb1{background:var(--blue);color:white}
-.fb2c{background:var(--navy);color:white}
+
 
 /* MEGA MENU */
 .mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:var(--navy);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}
@@ -1484,8 +1484,8 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
 </footer>
 
 <div class="floats">
-  <button class="fbtn fb1" onclick="window.location.href='tel:01068348080'">📞 전화상담</button>
-  <button class="fbtn fb2c" onclick="window.open('https://naver.me/IMZ9N0ST','_blank')">✨ 무료상담 신청</button>
+  <a class="fbtn fb1" href="tel:01068348080">📞 전화상담</a>
+  <a class="fbtn fb2" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담</a>
 </div>
 
 <script>
