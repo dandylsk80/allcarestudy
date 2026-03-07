@@ -66,6 +66,23 @@ const GANGNAM_DONGS = [
   '청담동','율현동'
 ];
 
+const DONG_IMAGES = {
+  '개포동': 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=900&q=80',
+  '논현동': 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80',
+  '대치동': 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80',
+  '도곡동': 'https://images.unsplash.com/photo-1532153955177-f59af40d6472?w=900&q=80',
+  '삼성동': 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=900&q=80',
+  '세곡동': 'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=900&q=80',
+  '수서동': 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=900&q=80',
+  '신사동': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80',
+  '압구정동': 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=900&q=80',
+  '역삼동': 'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=900&q=80',
+  '일원동': 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=900&q=80',
+  '자곡동': 'https://images.unsplash.com/photo-1598620617148-c9e8ddee4b27?w=900&q=80',
+  '청담동': 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80',
+  '율현동': 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=900&q=80',
+};
+
 const GANGNAM_DONG_INFO = {
   '대치동': '대치동은 전국 최고의 교육특구로, 수백 개의 학원이 밀집한 대치동 학원가를 중심으로 치열한 학업 경쟁이 펼쳐집니다. 대명중, 은광중, 휘문고, 단대부고 등 명문 학교들이 포진해 있으며, 내신 시험 난이도가 전국 최상위권입니다.',
   '압구정동': '압구정동은 현대아파트와 갤러리아 백화점 인근의 고급 주거지역으로, 압구정중, 신사중 학군이 형성되어 있습니다. 학부모들의 교육열이 매우 높으며 외국어·예술 계열 과외 수요도 풍부합니다.',
@@ -478,7 +495,7 @@ function makeDongArticle(dong, grade, subject) {
   </div>
 
   <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
-    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80" alt="${dong} ${grade} ${subject}과외" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+    <img src="${DONG_IMAGES[dong] || 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80'}" alt="${dong} ${grade} ${subject}과외" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
     <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.6),transparent);display:flex;align-items:center;padding:32px">
       <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">강남구 · ${dong} · ${grade}</div><div style="font-size:26px;font-weight:900">${dong} ${subject}과외</div></div>
     </div>
@@ -846,8 +863,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 .logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0A1628}
 .logo-main em{font-style:normal;color:var(--sky)}
 .logo-sub{font-size:10px;color:rgba(15,32,68,0.6);font-weight:700;letter-spacing:3px}
-.vpill{border:1px solid rgba(255,255,255,0.15);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(255,255,255,0.06)}
-.vpill .vl{font-size:10px;color:#374151;font-weight:600}
+.vpill{border:1.5px solid rgba(15,32,68,0.2);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(15,32,68,0.04)}
+.vpill .vl{font-size:10px;color:rgba(15,32,68,0.5);font-weight:600}
 .vpill .vc{font-size:15px;font-weight:900;color:var(--sky);letter-spacing:-0.5px}
 .gnb{margin-left:auto;display:flex;align-items:center;gap:2px}
 .gi{position:relative}
