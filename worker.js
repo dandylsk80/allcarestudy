@@ -861,7 +861,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 .hsearch:hover{border-color:var(--sky);color:var(--sky)}
 
 /* HERO */
-.hero{margin-top:160px;position:relative;overflow:hidden}
+.hero{margin-top:136px;position:relative;overflow:hidden}
 .hslider{display:flex;transition:transform .65s cubic-bezier(.4,0,.2,1)}
 .slide{min-width:100%;height:460px;display:flex;align-items:center}
 .s1{background:linear-gradient(130deg,#0F2044 0%,#1E3A6E 50%,#1D4ED8 100%)}
@@ -1033,7 +1033,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
 /* ══ MOBILE ══ */
 @media(max-width:768px){
   /* HEADER */
-  .hw{padding:0 16px;height:56px;gap:10px}
+  .hw{padding:0 16px;height:72px;gap:10px}
   .logo-sub{display:none}
   .logo-main{font-size:15px}
   .logo-mark{width:32px;height:32px}
@@ -1045,7 +1045,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
   .hburg{display:flex}
 
   /* HERO */
-  .hero{margin-top:160px}
+  .hero{margin-top:72px}
   .slide{height:auto;min-height:420px;padding:32px 0 24px}
   .sin{grid-template-columns:1fr;padding:0 20px;gap:24px}
   .svis{display:none}
@@ -1097,6 +1097,11 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
   /* FLOATS */
   .floats{right:12px;bottom:24px;gap:8px}
   .fbtn{padding:12px 16px;font-size:13px}
+  .diag-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  #region-section{padding:40px 20px}
+  #region-section h2{font-size:22px}
+  #region-section > div > div:last-child{grid-template-columns:repeat(3,1fr);gap:8px}
+  #region-section a{padding:10px 12px;font-size:13px}
 }
 
 @media(max-width:400px){
@@ -1341,20 +1346,31 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
 </section>
 
 <!-- REGION SELECT -->
-<section id="region-section" style="padding:60px 48px;background:white;border-bottom:1px solid #E5E7EB">
+<section id="region-section" style="padding:56px 48px;background:white;border-bottom:1px solid #E5E7EB">
   <div style="max-width:1100px;margin:0 auto">
-    <div style="text-align:center;margin-bottom:36px">
+    <div style="text-align:center;margin-bottom:32px">
       <div style="font-size:12px;font-weight:700;color:#3B82F6;letter-spacing:2px;margin-bottom:10px">FIND YOUR AREA</div>
-      <h2 style="font-size:28px;font-weight:900;color:#0F2044">지역별 과외 찾기</h2>
-      <p style="font-size:14px;color:#9CA3AF;margin-top:8px">원하는 지역을 선택하세요</p>
+      <h2 style="font-size:26px;font-weight:900;color:#0F2044">지역별 과외 찾기</h2>
+      <p style="font-size:14px;color:#9CA3AF;margin-top:6px">원하는 지역을 선택하세요</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
-      <a href="/seoul" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🏙</span>서울특별시</a>
-      <a href="/gyeonggi" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🌿</span>경기도</a>
-      <a href="/incheon" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🌊</span>인천광역시</a>
-      <a href="/busan" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🐟</span>부산광역시</a>
-      <a href="/daegu" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🍎</span>대구광역시</a>
-      <a href="/daejeon" style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:22px">🌾</span>대전광역시</a>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <a href="/seoul" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🏙</span>서울특별시</a>
+      <a href="/gyeonggi" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🌿</span>경기도</a>
+      <a href="/incheon" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🌊</span>인천광역시</a>
+      <a href="/busan" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🐟</span>부산광역시</a>
+      <a href="/daegu" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🍎</span>대구광역시</a>
+      <a href="/daejeon" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🌾</span>대전광역시</a>
+      <a href="/gwangju" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🌸</span>광주광역시</a>
+      <a href="/ulsan" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">⚙️</span>울산광역시</a>
+      <a href="/sejong" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🏛</span>세종특별시</a>
+      <a href="/gangwon" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🏔</span>강원도</a>
+      <a href="/chungbuk" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🌻</span>충청북도</a>
+      <a href="/chungnam" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🌊</span>충청남도</a>
+      <a href="/jeonbuk" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🌾</span>전라북도</a>
+      <a href="/jeonnam" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🍵</span>전라남도</a>
+      <a href="/gyeongbuk" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🍎</span>경상북도</a>
+      <a href="/gyeongnam" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🌊</span>경상남도</a>
+      <a href="/jeju" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'"><span style="font-size:20px">🌺</span>제주특별자치도</a>
     </div>
   </div>
 </section>
