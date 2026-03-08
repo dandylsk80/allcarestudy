@@ -1466,19 +1466,18 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
     <div class="fnotice">⚠️ 안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</div>
     <div class="ft">
       <div>
-        <div class="flm"><em>올케어</em>스터디</div>
+        <div class="flm" style="display:flex;align-items:center;gap:10px">
+          <div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span style="letter-spacing:2px"><em>올케어</em>스터디</span>
+        </div>
         <p class="fdesc">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p>
-      </div>
-      <div class="flinks">
-        <div class="fc"><h5>지역별수업</h5><a href="#">서울 과외</a><a href="#">경기 과외</a><a href="#">인천 과외</a></div>
-        <div class="fc"><h5>과목수업</h5><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a></div>
-        <div class="fc"><h5>고객지원</h5><a href="#">무료 상담</a><a href="#">이용약관</a><a href="#">개인정보처리방침</a></div>
       </div>
       <div class="fph"><span>📞 무료 상담 전화</span><strong>010-6834-8080</strong></div>
     </div>
     <div class="fb2">
       <span>© 2026 올케어스터디. All rights reserved.</span>
-      <span>사업자등록번호: 000-00-00000</span>
     </div>
   </div>
 </footer>
