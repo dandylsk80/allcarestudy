@@ -1179,12 +1179,17 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
       <!-- 과목수업 -->
       <div class="gi">
         <button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a></div>
+        <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a><a href="#">코딩</a><a href="#">검정고시</a><a href="#">코칭 수업</a></div>
       </div>
       <!-- 학원수업 -->
       <div class="gi">
         <button class="gb">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="drop"><a href="#">학원 찾기</a><a href="#">학원 비교</a><a href="#">학원 후기</a></div>
+      </div>
+      <!-- 회화수업 -->
+      <div class="gi">
+        <button class="gb">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a></div>
       </div>
     </nav>
 
@@ -1215,13 +1220,19 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
     <div class="mob-section">
       <div class="mob-title">📚 과목수업</div>
       <div class="mob-links">
-        <a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a>
+        <a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a><a href="#">코딩</a><a href="#">검정고시</a><a href="#">코칭 수업</a>
       </div>
     </div>
     <div class="mob-section">
       <div class="mob-title">🏫 학원수업</div>
       <div class="mob-links">
         <a href="#">학원 찾기</a><a href="#">학원 비교</a><a href="#">학원 후기</a>
+      </div>
+    </div>
+    <div class="mob-section">
+      <div class="mob-title">🗣 회화수업</div>
+      <div class="mob-links">
+        <a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a>
       </div>
     </div>
     <div class="mob-cta">
