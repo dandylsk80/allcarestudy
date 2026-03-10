@@ -388,7 +388,7 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
 </footer>
 <div class="floats">
   <a class="fbtn fb1" href="tel:01068348080">📞 전화상담</a>
-  <a class="fbtn fb2" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담</a>
+  <a class="fbtn fb2" href="/contact">✉️ 문의하기</a>
 </div>`;
 
 function today(){
@@ -536,7 +536,7 @@ function makeDongArticle(dong, grade, subject) {
     <p>지금 상담 신청 시 전문 코디네이터가 24시간 내 최적의 선생님을 연결해드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담 신청</a>
+      <a class="btn-o" href="/contact">✉️ 문의하기</a>
     </div>
   </div>
 
@@ -604,7 +604,7 @@ function makeGangnamPage() {
     <p>지금 바로 무료 상담을 신청하시면 전문 코디네이터가 연결해드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담 신청</a>
+      <a class="btn-o" href="/contact">✉️ 문의하기</a>
     </div>
   </div>
 </div>`;
@@ -651,7 +651,7 @@ function makeSidoPage(rk) {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px">
         <a href="tel:01068348080" style="background:#3B82F6;color:white;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap">📞 전화 상담</a>
-        <a href="https://naver.me/IMZ9N0ST" target="_blank" style="background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;text-align:center">✨ 무료상담 신청</a>
+        <a href="/contact" style="background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;text-align:center">✉️ 문의하기</a>
       </div>
     </div>
   </div>
@@ -702,7 +702,7 @@ function makeAreaPage(rk, ak) {
     <p>무료 상담을 신청하시면 전문 코디네이터가 연결해드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담 신청</a>
+      <a class="btn-o" href="/contact">✉️ 문의하기</a>
     </div>
   </div>
   <div class="related-title">🔗 주변 지역 과외</div>
@@ -757,7 +757,7 @@ function makeArticlePage(rk, ak, gk, sk) {
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담 신청</a>
+      <a class="btn-o" href="/contact">✉️ 문의하기</a>
     </div>
   </div>
   <div class="related-title">🔗 주변 지역 ${sk}과외</div>
@@ -836,7 +836,7 @@ function makeAcademyPage(sidoEn) {
         ${c.target_mid ? `<div style="font-size:12px;color:#374151;display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;background:#DCFCE7;color:#16A34A;padding:1px 6px;border-radius:4px;font-weight:700;font-size:11px">중등</span><span>${c.target_mid}</span></div>` : ''}
         ${c.target_high ? `<div style="font-size:12px;color:#374151;display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;background:#EFF6FF;color:#2563EB;padding:1px 6px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span>${c.target_high}</span></div>` : ''}
       </div>` : ''}
-      <a href="https://naver.me/IMZ9N0ST" target="_blank" style="display:block;text-align:center;background:#1D4ED8;color:white;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none">무료 상담 신청</a>
+      <a href="/contact" style="display:block;text-align:center;background:#1D4ED8;color:white;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none">✉️ 문의하기</a>
     </div>`).join('');
 
   const body = `
@@ -947,7 +947,7 @@ function makeContactPage() {
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <a href="tel:01068348080" style="background:white;color:#1D4ED8;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none">전화 상담</a>
-        <a href="https://naver.me/IMZ9N0ST" target="_blank" style="background:#3B82F6;color:white;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none">✨ 무료상담</a>
+        <a href="/contact" style="background:#3B82F6;color:white;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none">✉️ 문의하기</a>
       </div>
     </div>
   </div>
@@ -957,6 +957,7 @@ function makeContactPage() {
     var name = document.getElementById('cf-name').value.trim();
     var grade = document.getElementById('cf-grade').value;
     var phone = document.getElementById('cf-phone').value.trim();
+    var address = document.getElementById('cf-address').value.trim();
     var message = document.getElementById('cf-message').value.trim();
     var agree = document.getElementById('cf-agree').checked;
     var err = document.getElementById('cf-error');
@@ -973,11 +974,29 @@ function makeContactPage() {
     btn.textContent = '제출 중...';
     btn.style.opacity = '0.7';
 
-    // 실제 제출 시뮬레이션 (실제 환경에선 fetch로 백엔드 전송)
-    setTimeout(function() {
-      document.getElementById('contact-form').style.display = 'none';
-      document.getElementById('contact-success').style.display = 'block';
-    }, 800);
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, grade: grade, phone: phone, address: address, message: message })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.ok) {
+        document.getElementById('contact-form').style.display = 'none';
+        document.getElementById('contact-success').style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btn.textContent = '✉️ 문의 제출하기';
+        btn.style.opacity = '1';
+        showErr('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      }
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = '✉️ 문의 제출하기';
+      btn.style.opacity = '1';
+      showErr('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    });
   }
   function showErr(msg) {
     var el = document.getElementById('cf-error');
@@ -1470,7 +1489,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
     </div>
     <div class="mob-cta">
       <button onclick="window.location.href='tel:01068348080'">📞 전화상담</button>
-      <button onclick="window.open('https://naver.me/IMZ9N0ST','_blank')">✨ 무료상담 신청</button>
+      <button onclick="window.location.href='/contact'">✉️ 문의하기</button>
     </div>
   </div>
 </div>
@@ -1487,7 +1506,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
           <p class="sdesc">전국 검증된 선생님 12,400명+<br>지역별·과목별·학년별로 딱 맞는 수업 연결</p>
           <div class="sbtns">
             <button class="bph" onclick="document.getElementById('region-section').scrollIntoView({behavior:'smooth'})">지역별 과외 찾기 →</button>
-            <button class="bps" onclick="window.open('https://naver.me/IMZ9N0ST','_blank')">무료 상담 신청</button>
+            <button class="bps" onclick="window.location.href='/contact'">✉️ 문의하기</button>
           </div>
         </div>
         <div class="svis">
@@ -1811,7 +1830,7 @@ function switchFind(tab){
 
 <div class="floats" id="floats">
   <a class="fbtn fb1" href="tel:01068348080">📞 전화상담</a>
-  <a class="fbtn fb2" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담</a>
+  <a class="fbtn fb2" href="/contact">✉️ 문의하기</a>
 </div>
 <script>
 (function(){
@@ -1894,6 +1913,56 @@ export default {
     const parts = path.split('/').filter(Boolean);
     const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'public,max-age=3600' };
 
+    // ── 문의 API ──────────────────────────────────────
+    if (path === '/api/contact' && request.method === 'POST') {
+      try {
+        const body = await request.json();
+        const { name, grade, phone, address, message } = body;
+        if (!name || !grade || !phone || !message) {
+          return new Response(JSON.stringify({ ok: false, error: '필수 항목 누락' }), { headers: { 'Content-Type': 'application/json' } });
+        }
+        const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+        const emailBody = [
+          `📬 올케어스터디 문의가 접수되었습니다`,
+          `─────────────────────────`,
+          `접수일시: ${now}`,
+          `이름: ${name}`,
+          `학년/나이: ${grade}`,
+          `연락처: ${phone}`,
+          `거주지역: ${address || '미입력'}`,
+          `─────────────────────────`,
+          `문의내용:`,
+          message,
+          `─────────────────────────`,
+          `allcarestudy.com 자동발송`
+        ].join('\n');
+
+        // MailChannels API (Cloudflare Workers에서 무료 사용 가능)
+        const mailRes = await fetch('https://api.mailchannels.net/tx/v1/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            personalizations: [{ to: [{ email: 'dandylsk@naver.com', name: '올케어스터디' }] }],
+            from: { email: 'noreply@allcarestudy.com', name: '올케어스터디 문의' },
+            reply_to: { email: 'dandylsk@naver.com' },
+            subject: `[올케어스터디 문의] ${name} / ${grade} / ${phone}`,
+            content: [{ type: 'text/plain', value: emailBody }]
+          })
+        });
+
+        if (mailRes.status === 202 || mailRes.status === 200) {
+          return new Response(JSON.stringify({ ok: true }), { headers: { 'Content-Type': 'application/json' } });
+        } else {
+          const errText = await mailRes.text();
+          console.error('MailChannels error:', mailRes.status, errText);
+          return new Response(JSON.stringify({ ok: false, error: 'mail_failed' }), { headers: { 'Content-Type': 'application/json' } });
+        }
+      } catch (e) {
+        console.error('contact api error:', e);
+        return new Response(JSON.stringify({ ok: false, error: e.message }), { headers: { 'Content-Type': 'application/json' } });
+      }
+    }
+
     if (path === '/sitemap.xml') return serveSitemap();
 
     // 문의하기
@@ -1941,7 +2010,7 @@ export default {
 <h1 class="art-title">${ak} ${gk} 과외 | 과목 선택</h1>
 <div class="art-body"><h2>과목을 선택하세요</h2><div class="subj-grid">${subjLinks}</div></div>
 <div class="cta-box"><h3>${ak} ${gk} 맞춤 과외</h3><p>무료 상담 신청</p>
-<div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="https://naver.me/IMZ9N0ST" target="_blank">✨ 무료상담</a></div></div>
+<div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact">✉️ 문의하기</a></div></div>
 </div>`;
         const canon = `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${GRADE_EN[gk]||gk}`;
         return new Response(wrap(`${ak} ${gk} 과외`, `${ak} ${gk} 과목별 과외`, canon, body), { headers: h });
