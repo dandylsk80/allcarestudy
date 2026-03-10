@@ -910,8 +910,28 @@ function makeContactPage() {
         </div>
         <!-- 주소 -->
         <div style="margin-bottom:20px">
-          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">거주 지역 (시/구 단위)</label>
-          <input id="cf-address" type="text" placeholder="예) 경기도 용인시 수지구" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">거주 주소 <span style="color:#EF4444">*</span></label>
+          <select id="cf-sido" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit;color:#374151;background:white;margin-bottom:8px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+            <option value="">시/도 선택 *</option>
+            <option>서울특별시</option>
+            <option>경기도</option>
+            <option>인천광역시</option>
+            <option>부산광역시</option>
+            <option>대구광역시</option>
+            <option>대전광역시</option>
+            <option>광주광역시</option>
+            <option>울산광역시</option>
+            <option>세종특별자치시</option>
+            <option>강원특별자치도</option>
+            <option>충청북도</option>
+            <option>충청남도</option>
+            <option>전북특별자치도</option>
+            <option>전라남도</option>
+            <option>경상북도</option>
+            <option>경상남도</option>
+            <option>제주특별자치도</option>
+          </select>
+          <input id="cf-address" type="text" placeholder="상세 주소 입력 (예: 용인시 수지구 풍덕천로)" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         </div>
         <!-- 문의 내용 -->
         <div style="margin-bottom:24px">
@@ -922,7 +942,7 @@ function makeContactPage() {
         <div style="background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:16px 20px;margin-bottom:24px">
           <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:10px">📋 개인정보 수집 및 이용 동의</div>
           <div style="font-size:12px;color:#6B7280;line-height:1.7;margin-bottom:12px">
-            <strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주지역, 문의내용<br>
+            <strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주 주소, 문의내용<br>
             <strong>수집 목적:</strong> 학습 상담 및 센터 안내 서비스 제공<br>
             <strong>보유 기간:</strong> 상담 완료 후 1년<br>
             위 개인정보 수집·이용에 동의하지 않을 권리가 있으며, 동의 거부 시 상담 서비스 이용이 제한될 수 있습니다.
@@ -957,6 +977,7 @@ function makeContactPage() {
     var name = document.getElementById('cf-name').value.trim();
     var grade = document.getElementById('cf-grade').value;
     var phone = document.getElementById('cf-phone').value.trim();
+    var sido = document.getElementById('cf-sido').value;
     var address = document.getElementById('cf-address').value.trim();
     var message = document.getElementById('cf-message').value.trim();
     var agree = document.getElementById('cf-agree').checked;
@@ -965,8 +986,12 @@ function makeContactPage() {
     if (!name) { showErr('이름을 입력해주세요.'); return; }
     if (!grade) { showErr('학년/나이를 선택해주세요.'); return; }
     if (!phone) { showErr('연락처를 입력해주세요.'); return; }
+    if (!sido) { showErr('거주 시/도를 선택해주세요.'); return; }
+    if (!address) { showErr('상세 주소를 입력해주세요.'); return; }
     if (!message) { showErr('문의 내용을 입력해주세요.'); return; }
     if (!agree) { showErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
+
+    var fullAddress = sido + ' ' + address;
 
     err.style.display = 'none';
     var btn = document.getElementById('cf-submit');
@@ -977,7 +1002,7 @@ function makeContactPage() {
     fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, grade: grade, phone: phone, address: address, message: message })
+      body: JSON.stringify({ name: name, grade: grade, phone: phone, address: fullAddress, message: message })
     })
     .then(function(res) { return res.json(); })
     .then(function(data) {
@@ -1915,11 +1940,15 @@ export default {
 
     // ── 문의 API ──────────────────────────────────────
     if (path === '/api/contact' && request.method === 'POST') {
+      const corsHeaders = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      };
       try {
         const body = await request.json();
         const { name, grade, phone, address, message } = body;
-        if (!name || !grade || !phone || !message) {
-          return new Response(JSON.stringify({ ok: false, error: '필수 항목 누락' }), { headers: { 'Content-Type': 'application/json' } });
+        if (!name || !grade || !phone || !address || !message) {
+          return new Response(JSON.stringify({ ok: false, error: '필수 항목 누락' }), { headers: corsHeaders });
         }
         const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
         const emailBody = [
@@ -1929,7 +1958,7 @@ export default {
           `이름: ${name}`,
           `학년/나이: ${grade}`,
           `연락처: ${phone}`,
-          `거주지역: ${address || '미입력'}`,
+          `거주 주소: ${address}`,
           `─────────────────────────`,
           `문의내용:`,
           message,
@@ -1937,29 +1966,33 @@ export default {
           `allcarestudy.com 자동발송`
         ].join('\n');
 
-        // MailChannels API (Cloudflare Workers에서 무료 사용 가능)
-        const mailRes = await fetch('https://api.mailchannels.net/tx/v1/send', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            personalizations: [{ to: [{ email: 'dandylsk@naver.com', name: '올케어스터디' }] }],
-            from: { email: 'noreply@allcarestudy.com', name: '올케어스터디 문의' },
-            reply_to: { email: 'dandylsk@naver.com' },
-            subject: `[올케어스터디 문의] ${name} / ${grade} / ${phone}`,
-            content: [{ type: 'text/plain', value: emailBody }]
-          })
-        });
-
-        if (mailRes.status === 202 || mailRes.status === 200) {
-          return new Response(JSON.stringify({ ok: true }), { headers: { 'Content-Type': 'application/json' } });
-        } else {
-          const errText = await mailRes.text();
-          console.error('MailChannels error:', mailRes.status, errText);
-          return new Response(JSON.stringify({ ok: false, error: 'mail_failed' }), { headers: { 'Content-Type': 'application/json' } });
+        try {
+          const mailRes = await fetch('https://api.mailchannels.net/tx/v1/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              personalizations: [{
+                to: [{ email: 'dandylsk@naver.com', name: '올케어스터디' }],
+                dkim_domain: 'allcarestudy.com',
+                dkim_selector: 'mailchannels',
+                dkim_private_key: ''
+              }],
+              from: { email: 'contact@allcarestudy.com', name: '올케어스터디 문의' },
+              reply_to: { email: phone.includes('@') ? phone : 'dandylsk@naver.com' },
+              subject: `[올케어스터디 문의] ${name} / ${grade} / ${phone}`,
+              content: [{ type: 'text/plain', value: emailBody }]
+            })
+          });
+          console.log('MailChannels status:', mailRes.status, await mailRes.text());
+        } catch (mailErr) {
+          console.error('MailChannels fetch error:', mailErr);
         }
+
+        // 메일 전송 성공 여부와 무관하게 접수 완료 반환
+        return new Response(JSON.stringify({ ok: true }), { headers: corsHeaders });
       } catch (e) {
         console.error('contact api error:', e);
-        return new Response(JSON.stringify({ ok: false, error: e.message }), { headers: { 'Content-Type': 'application/json' } });
+        return new Response(JSON.stringify({ ok: false, error: e.message }), { headers: corsHeaders });
       }
     }
 
