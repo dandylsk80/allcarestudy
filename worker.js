@@ -861,6 +861,135 @@ function makeAcademyPage(sidoEn) {
   return wrap(title, desc, `/academy/${sidoEn}`, body);
 }
 
+// ── 문의하기 페이지 ──────────────────────────
+function makeContactPage() {
+  const body = `
+  <div style="max-width:720px;margin:0 auto;padding:140px 24px 80px">
+    <div style="margin-bottom:8px;font-size:13px;color:#9CA3AF"><a href="/" style="color:#9CA3AF;text-decoration:none">홈</a> › <span>문의하기</span></div>
+    <h1 style="font-size:32px;font-weight:900;color:#0F2044;margin-bottom:8px">문의하기</h1>
+    <p style="font-size:15px;color:#6B7280;margin-bottom:40px">궁금하신 사항을 남겨주시면 빠르게 답변드리겠습니다.</p>
+
+    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:20px;padding:40px">
+      <div id="contact-success" style="display:none;text-align:center;padding:40px 0">
+        <div style="font-size:56px;margin-bottom:16px">✅</div>
+        <h2 style="font-size:22px;font-weight:900;color:#0F2044;margin-bottom:8px">문의가 접수되었습니다!</h2>
+        <p style="color:#6B7280;font-size:15px;margin-bottom:24px">빠른 시일 내에 연락드리겠습니다.</p>
+        <a href="/" style="display:inline-block;background:#1D4ED8;color:white;padding:12px 28px;border-radius:10px;font-weight:700;text-decoration:none;font-size:14px">홈으로 돌아가기</a>
+      </div>
+
+      <div id="contact-form">
+        <!-- 이름 -->
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">이름 <span style="color:#EF4444">*</span></label>
+          <input id="cf-name" type="text" placeholder="홍길동" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+        </div>
+        <!-- 학년(나이) -->
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">학년 / 나이 <span style="color:#EF4444">*</span></label>
+          <select id="cf-grade" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;background:white;font-family:inherit;cursor:pointer;color:#374151" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+            <option value="">선택해주세요</option>
+            <optgroup label="초등학생">
+              <option>초등 1학년</option><option>초등 2학년</option><option>초등 3학년</option>
+              <option>초등 4학년</option><option>초등 5학년</option><option>초등 6학년</option>
+            </optgroup>
+            <optgroup label="중학생">
+              <option>중학 1학년</option><option>중학 2학년</option><option>중학 3학년</option>
+            </optgroup>
+            <optgroup label="고등학생">
+              <option>고등 1학년</option><option>고등 2학년</option><option>고등 3학년</option>
+            </optgroup>
+            <optgroup label="기타">
+              <option>성인 / 기타</option>
+            </optgroup>
+          </select>
+        </div>
+        <!-- 연락처 -->
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">연락처 <span style="color:#EF4444">*</span></label>
+          <input id="cf-phone" type="tel" placeholder="010-0000-0000" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+        </div>
+        <!-- 주소 -->
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">거주 지역 (시/구 단위)</label>
+          <input id="cf-address" type="text" placeholder="예) 경기도 용인시 수지구" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+        </div>
+        <!-- 문의 내용 -->
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">문의 내용 <span style="color:#EF4444">*</span></label>
+          <textarea id="cf-message" rows="5" placeholder="문의하실 내용을 자유롭게 적어주세요.&#10;(예: 수학 과외 상담, 센터 위치 문의, 수업 방식 등)" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;resize:vertical;transition:border-color .2s;font-family:inherit;line-height:1.6" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
+        </div>
+        <!-- 개인정보 수집 동의 -->
+        <div style="background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:16px 20px;margin-bottom:24px">
+          <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:10px">📋 개인정보 수집 및 이용 동의</div>
+          <div style="font-size:12px;color:#6B7280;line-height:1.7;margin-bottom:12px">
+            <strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주지역, 문의내용<br>
+            <strong>수집 목적:</strong> 학습 상담 및 센터 안내 서비스 제공<br>
+            <strong>보유 기간:</strong> 상담 완료 후 1년<br>
+            위 개인정보 수집·이용에 동의하지 않을 권리가 있으며, 동의 거부 시 상담 서비스 이용이 제한될 수 있습니다.
+          </div>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+            <input type="checkbox" id="cf-agree" style="width:18px;height:18px;accent-color:#1D4ED8;cursor:pointer;flex-shrink:0">
+            <span style="font-size:13px;font-weight:700;color:#0F2044">개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span>
+          </label>
+        </div>
+        <!-- 에러 메시지 -->
+        <div id="cf-error" style="display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:16px"></div>
+        <!-- 제출 버튼 -->
+        <button id="cf-submit" onclick="submitContact()" style="width:100%;background:linear-gradient(135deg,#1D4ED8,#3B82F6);color:white;padding:16px;border-radius:12px;font-size:16px;font-weight:900;border:none;cursor:pointer;transition:opacity .2s;font-family:inherit;letter-spacing:1px">✉️ 문의 제출하기</button>
+      </div>
+    </div>
+
+    <!-- 빠른 상담 배너 -->
+    <div style="margin-top:32px;background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:16px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:4px">전화로 빠른 상담 원하시면</div>
+        <div style="font-size:24px;font-weight:900;color:white">📞 010-6834-8080</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="tel:01068348080" style="background:white;color:#1D4ED8;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none">전화 상담</a>
+        <a href="https://naver.me/IMZ9N0ST" target="_blank" style="background:#3B82F6;color:white;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none">✨ 무료상담</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  function submitContact() {
+    var name = document.getElementById('cf-name').value.trim();
+    var grade = document.getElementById('cf-grade').value;
+    var phone = document.getElementById('cf-phone').value.trim();
+    var message = document.getElementById('cf-message').value.trim();
+    var agree = document.getElementById('cf-agree').checked;
+    var err = document.getElementById('cf-error');
+
+    if (!name) { showErr('이름을 입력해주세요.'); return; }
+    if (!grade) { showErr('학년/나이를 선택해주세요.'); return; }
+    if (!phone) { showErr('연락처를 입력해주세요.'); return; }
+    if (!message) { showErr('문의 내용을 입력해주세요.'); return; }
+    if (!agree) { showErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
+
+    err.style.display = 'none';
+    var btn = document.getElementById('cf-submit');
+    btn.disabled = true;
+    btn.textContent = '제출 중...';
+    btn.style.opacity = '0.7';
+
+    // 실제 제출 시뮬레이션 (실제 환경에선 fetch로 백엔드 전송)
+    setTimeout(function() {
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('contact-success').style.display = 'block';
+    }, 800);
+  }
+  function showErr(msg) {
+    var el = document.getElementById('cf-error');
+    el.textContent = '⚠️ ' + msg;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  </script>`;
+
+  return wrap('문의하기 | 올케어스터디', '올케어스터디에 학습 상담 및 센터 관련 문의를 남겨주세요. 빠르게 답변드리겠습니다.', '/contact', body);
+}
+
 function makeHomePage(){
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -1276,15 +1405,18 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
         <button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a><a href="#">코딩</a><a href="#">검정고시</a><a href="#">코칭 수업</a></div>
       </div>
-      <!-- 학원수업 -->
+      <!-- 학원수업 - 바로 이동 -->
       <div class="gi">
-        <button class="gb">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/academy/all">학원 찾기</a><a href="#">학원 비교</a><a href="#">학원 후기</a></div>
+        <a href="/academy/all" class="gb" style="text-decoration:none;display:flex;align-items:center">학원수업</a>
       </div>
       <!-- 회화수업 -->
       <div class="gi">
         <button class="gb">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="drop"><a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a></div>
+      </div>
+      <!-- 문의하기 -->
+      <div class="gi">
+        <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
       </div>
     </nav>
 
@@ -1321,13 +1453,19 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
     <div class="mob-section">
       <div class="mob-title">🏫 학원수업</div>
       <div class="mob-links">
-        <a href="/academy/all">학원 찾기</a><a href="/academy/gyeonggi">경기 센터</a><a href="/academy/seoul">서울 센터</a>
+        <a href="/academy/all">전체 센터</a><a href="/academy/gyeonggi">경기</a><a href="/academy/seoul">서울</a>
       </div>
     </div>
     <div class="mob-section">
       <div class="mob-title">🗣 회화수업</div>
       <div class="mob-links">
         <a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a>
+      </div>
+    </div>
+    <div class="mob-section">
+      <div class="mob-title">✉️ 문의하기</div>
+      <div class="mob-links">
+        <a href="/contact">문의 양식</a>
       </div>
     </div>
     <div class="mob-cta">
@@ -1465,6 +1603,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
       <button onclick="switchFind('subject')" id="ftab-subject" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">📚 과목별 과외</button>
       <button onclick="switchFind('academy')" id="ftab-academy" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">🏫 학원 찾기</button>
       <button onclick="switchFind('conv')" id="ftab-conv" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">🗣 회화수업</button>
+      <button onclick="window.location.href='/contact'" id="ftab-contact" style="padding:10px 22px;border-radius:999px;border:1.5px solid #1D4ED8;background:white;color:#1D4ED8;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;font-family:inherit">✉️ 문의하기</button>
     </div>
     <!-- 패널 -->
     <div id="fpanel-region">
@@ -1501,15 +1640,22 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
     </div>
     </div>
     <div id="fpanel-academy" style="display:none">
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-      <a href="/academy/all" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🏫 전체 센터 <span style="font-size:12px;color:#3B82F6;font-weight:700">205곳</span></a>
-      <a href="/academy/seoul" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🏙️ 서울 <span style="font-size:12px;color:#3B82F6;font-weight:700">24곳</span></a>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+      <a href="/academy/seoul" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🏙 서울 <span style="font-size:12px;color:#3B82F6;font-weight:700">24곳</span></a>
       <a href="/academy/gyeonggi" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌿 경기 <span style="font-size:12px;color:#3B82F6;font-weight:700">100곳</span></a>
       <a href="/academy/incheon" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊 인천 <span style="font-size:12px;color:#3B82F6;font-weight:700">10곳</span></a>
-      <a href="/academy/daegu" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🏔️ 대구 <span style="font-size:12px;color:#3B82F6;font-weight:700">16곳</span></a>
-      <a href="/academy/busan" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊 부산 <span style="font-size:12px;color:#3B82F6;font-weight:700">5곳</span></a>
+      <a href="/academy/busan" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🐟 부산 <span style="font-size:12px;color:#3B82F6;font-weight:700">5곳</span></a>
+      <a href="/academy/daegu" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🍎 대구 <span style="font-size:12px;color:#3B82F6;font-weight:700">16곳</span></a>
       <a href="/academy/daejeon" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌾 대전 <span style="font-size:12px;color:#3B82F6;font-weight:700">9곳</span></a>
       <a href="/academy/gwangju" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌸 광주 <span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
+      <a href="/academy/ulsan" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">⚙️ 울산 <span style="font-size:12px;color:#3B82F6;font-weight:700">4곳</span></a>
+      <a href="/academy/gangwon" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🏔 강원 <span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
+      <a href="/academy/chungbuk" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌻 충북 <span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
+      <a href="/academy/chungnam" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊 충남 <span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
+      <a href="/academy/jeonbuk" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌾 전북 <span style="font-size:12px;color:#3B82F6;font-weight:700">3곳</span></a>
+      <a href="/academy/gyeongbuk" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🍎 경북 <span style="font-size:12px;color:#3B82F6;font-weight:700">5곳</span></a>
+      <a href="/academy/gyeongnam" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊 경남 <span style="font-size:12px;color:#3B82F6;font-weight:700">3곳</span></a>
+      <a href="/academy/jeju" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌺 제주 <span style="font-size:12px;color:#3B82F6;font-weight:700">1곳</span></a>
     </div>
     </div>
     <div id="fpanel-conv" style="display:none">
@@ -1534,6 +1680,9 @@ function switchFind(tab){
       btn.style.background='white';btn.style.color='#374151';btn.style.borderColor='#E5E7EB';
     }
   });
+  // 문의하기 버튼 스타일 유지
+  var cbtn = document.getElementById('ftab-contact');
+  if(cbtn){ cbtn.style.background='white';cbtn.style.color='#1D4ED8';cbtn.style.borderColor='#1D4ED8'; }
 }
 </script>
 
@@ -1746,6 +1895,9 @@ export default {
     const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'public,max-age=3600' };
 
     if (path === '/sitemap.xml') return serveSitemap();
+
+    // 문의하기
+    if (path === '/contact') return new Response(makeContactPage(), { headers: h });
 
     // 학원 찾기
     if (path === '/academy' || path.startsWith('/academy/')) {
