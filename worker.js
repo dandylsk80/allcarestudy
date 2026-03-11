@@ -770,98 +770,215 @@ function makeArticlePage(rk, ak, gk, sk) {
 
 // ── 학원 찾기 페이지 ──────────────────────────
 function makeAcademyPage(sidoEn) {
-  const SIDO_KR = {
-    seoul:'서울',gyeonggi:'경기',incheon:'인천',busan:'부산',daegu:'대구',
-    daejeon:'대전',gwangju:'광주',ulsan:'울산',sejong:'세종',gangwon:'강원',
-    chungbuk:'충청북도',chungnam:'충청남도',jeonbuk:'전라북도',jeonnam:'전라남도',
-    gyeongbuk:'경상북도',gyeongnam:'경상남도',jeju:'제주'
+  const SIDO_ORDER = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','강원','제주'];
+  const SIDO_EN_MAP = {
+    '서울':'seoul','경기':'gyeonggi','인천':'incheon','대전':'daejeon','세종':'sejong',
+    '대구':'daegu','광주':'gwangju','울산':'ulsan','부산':'busan','충북':'chungbuk',
+    '충남':'chungnam','경북':'gyeongbuk','경남':'gyeongnam','전북':'jeonbuk','강원':'gangwon','제주':'jeju'
   };
   const SIDO_LABEL = {
-    seoul:'서울특별시',gyeonggi:'경기도',incheon:'인천광역시',busan:'부산광역시',
-    daegu:'대구광역시',daejeon:'대전광역시',gwangju:'광주광역시',ulsan:'울산광역시',
-    sejong:'세종특별시',gangwon:'강원도',chungbuk:'충청북도',chungnam:'충청남도',
-    jeonbuk:'전라북도',jeonnam:'전라남도',gyeongbuk:'경상북도',gyeongnam:'경상남도',jeju:'제주특별자치도'
+    seoul:'서울특별시',gyeonggi:'경기도',incheon:'인천광역시',daejeon:'대전광역시',sejong:'세종특별시',
+    daegu:'대구광역시',gwangju:'광주광역시',ulsan:'울산광역시',busan:'부산광역시',chungbuk:'충청북도',
+    chungnam:'충청남도',gyeongbuk:'경상북도',gyeongnam:'경상남도',jeonbuk:'전북특별자치도',gangwon:'강원특별자치도',jeju:'제주특별자치도'
   };
 
-  const sidoKr = SIDO_KR[sidoEn] || '';
-  const sidoLabel = SIDO_LABEL[sidoEn] || '전체';
+  const sidoLabel = sidoEn === 'all' ? '전체' : (SIDO_LABEL[sidoEn] || '전체');
+  const filtered = sidoEn === 'all' ? CENTERS : CENTERS.filter(c => c.sido_en === sidoEn);
 
-  // 지역 필터링
-  const filtered = sidoEn === 'all'
-    ? CENTERS
-    : CENTERS.filter(c => c.sido_en === sidoEn);
+  // 현재 시도의 구/시 목록 (센터 많은 순)
+  const districtMap = {};
+  filtered.forEach(c => { districtMap[c.district] = (districtMap[c.district]||0)+1; });
+  const districts = Object.entries(districtMap).sort((a,b)=>b[1]-a[1]);
 
-  // 지역 탭 목록
-  const sidoList = [
-    {en:'all', label:'전체'},
-    {en:'seoul', label:'서울'},
-    {en:'gyeonggi', label:'경기'},
-    {en:'incheon', label:'인천'},
-    {en:'busan', label:'부산'},
-    {en:'daegu', label:'대구'},
-    {en:'daejeon', label:'대전'},
-    {en:'gwangju', label:'광주'},
-    {en:'ulsan', label:'울산'},
-    {en:'gangwon', label:'강원'},
-    {en:'chungbuk', label:'충북'},
-    {en:'chungnam', label:'충남'},
-    {en:'jeonbuk', label:'전북'},
-    {en:'jeonnam', label:'전남'},
-    {en:'gyeongbuk', label:'경북'},
-    {en:'gyeongnam', label:'경남'},
-    {en:'jeju', label:'제주'},
-  ];
+  // 시도 탭 (지정 순서, 센터 있는 것만)
+  const existingSido = new Set(CENTERS.map(c => c.sido));
+  const sidoTabs = SIDO_ORDER.filter(s => existingSido.has(s)).map(s => {
+    const en = SIDO_EN_MAP[s];
+    const cnt = CENTERS.filter(c=>c.sido===s).length;
+    const active = en === sidoEn;
+    return `<a href="/academy/${en}" style="display:inline-flex;align-items:center;gap:4px;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;border:1.5px solid ${active?'#1D4ED8':'#E5E7EB'};${active?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">${s}<span style="font-size:11px;opacity:0.7">${cnt}</span></a>`;
+  });
+  // 전체 탭 앞에 추가
+  const totalActive = sidoEn === 'all';
+  sidoTabs.unshift(`<a href="/academy/all" style="display:inline-flex;align-items:center;gap:4px;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;border:1.5px solid ${totalActive?'#1D4ED8':'#E5E7EB'};${totalActive?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">전체<span style="font-size:11px;opacity:0.7">${CENTERS.length}</span></a>`);
 
-  const tabs = sidoList.map(s => {
-    const cnt = s.en === 'all' ? CENTERS.length : CENTERS.filter(c=>c.sido_en===s.en).length;
-    if(cnt === 0) return '';
-    const active = s.en === sidoEn;
-    return `<a href="/academy/${s.en}" style="display:inline-flex;align-items:center;gap:4px;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s;${active?'background:#1D4ED8;color:white;':'background:#F1F5F9;color:#374151;'}">${s.label}<span style="font-size:11px;opacity:0.7">${cnt}</span></a>`;
+  // 구/시 서브탭 (2개 이상일 때만)
+  let districtBar = '';
+  if (districts.length >= 2) {
+    const btns = [`<a href="/academy/${sidoEn}" style="padding:5px 14px;border-radius:999px;border:1.5px solid ${sidoEn&&!filtered.some(c=>false)?'#93C5FD':'#E5E7EB'};background:#EFF6FF;color:#1D4ED8;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap">전체 (${filtered.length})</a>`];
+    districts.forEach(([d,cnt]) => {
+      btns.push(`<a href="/academy/${sidoEn}?d=${encodeURIComponent(d)}" style="padding:5px 14px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap">${d} (${cnt})</a>`);
+    });
+    districtBar = `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;padding:14px 16px;background:white;border-radius:12px;border:1px solid #E5E7EB">${btns.join('')}</div>`;
+  }
+
+  const cards = filtered.map((c,i) => {
+    const dirHtml = c.directions
+      ? `<div id="dir-${i}" style="display:none;font-size:11px;color:#374151;line-height:1.6;background:#F8FAFC;border-radius:8px;padding:8px 10px;margin-top:6px;white-space:pre-line">${c.directions.replace(/</g,'&lt;')}</div><button onclick="var d=document.getElementById('dir-${i}');var b=document.getElementById('dirb-${i}');if(d.style.display==='none'){d.style.display='block';b.textContent='📍 위치안내 접기'}else{d.style.display='none';b.textContent='📍 위치안내 보기'}" id="dirb-${i}" style="margin-top:4px;background:none;border:none;color:#3B82F6;font-size:11px;font-weight:700;cursor:pointer;padding:0">📍 위치안내 보기</button>`
+      : '';
+    const cname = (c.officialName||c.name).replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    return `<div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:20px 22px;display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,0.10)';this.style.borderColor='#93C5FD'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#E5E7EB'">
+      <div style="margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:3px">${c.sido} ${c.district}</div>
+        <div style="font-size:16px;font-weight:900;color:#0F2044;line-height:1.3">${c.officialName||c.name}</div>
+        ${c.regNo?`<div style="font-size:10px;color:#9CA3AF;margin-top:2px">${c.regNo}</div>`:''}
+      </div>
+      <div style="font-size:11px;color:#6B7280;line-height:1.5;display:flex;gap:5px;align-items:flex-start;margin-bottom:6px"><span style="flex-shrink:0">📍</span><span>${c.address}</span></div>
+      ${dirHtml}
+      <div style="margin-top:auto;padding-top:12px;border-top:1px solid #F1F5F9;display:flex;flex-direction:column;gap:6px">
+        ${c.target_elem?`<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#FEF3C7;color:#D97706;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">초등</span><span style="font-size:12px;color:#374151;line-height:1.5">${c.target_elem}</span></div>`:''}
+        ${c.target_mid?`<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#DCFCE7;color:#16A34A;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">중등</span><span style="font-size:12px;color:#374151;line-height:1.5">${c.target_mid}</span></div>`:''}
+        ${c.target_high?`<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#EFF6FF;color:#2563EB;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span style="font-size:12px;color:#374151;line-height:1.5">${c.target_high}</span></div>`:''}
+        ${!c.target_elem&&!c.target_mid&&!c.target_high?'<div style="font-size:11px;color:#D1D5DB">대상학교 정보 없음</div>':''}
+      </div>
+      <button onclick="openContactModal('${c.sido}','${c.district}','${cname}')" style="display:block;width:100%;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-top:14px;border:none;cursor:pointer;font-family:inherit">✉️ 문의하기</button>
+    </div>`;
   }).join('');
 
-  const cards = filtered.map(c => `
-    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;transition:all .2s;display:flex;flex-direction:column;gap:12px">
-      <div>
-        <div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:4px">${c.sido} ${c.district}</div>
-        <div style="font-size:17px;font-weight:900;color:#0F2044">${c.officialName || c.name}</div>
-        ${c.regNo ? `<div style="font-size:11px;color:#9CA3AF;margin-top:2px">등록번호: ${c.regNo}</div>` : ''}
+  const modalHtml = `
+  <!-- 문의 모달 -->
+  <div id="contact-modal-bg" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center" onclick="if(event.target===this)closeContactModal()">
+    <div style="background:white;border-radius:20px;padding:32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;margin:16px">
+      <div style="font-size:20px;font-weight:900;color:#0F2044;margin-bottom:4px">✉️ 문의하기</div>
+      <div id="modal-center-info" style="font-size:13px;color:#3B82F6;font-weight:700;margin-bottom:20px"></div>
+
+      <div id="modal-success" style="display:none;text-align:center;padding:32px 0">
+        <div style="font-size:48px;margin-bottom:12px">✅</div>
+        <div style="font-size:18px;font-weight:900;color:#0F2044;margin-bottom:6px">문의가 접수되었습니다!</div>
+        <div style="font-size:14px;color:#6B7280">빠른 시일 내에 연락드리겠습니다.</div>
       </div>
-      <div style="font-size:12px;color:#6B7280;line-height:1.5;display:flex;align-items:flex-start;gap:6px">
-        <span>📍</span><span>${c.address}</span>
+
+      <div id="modal-form">
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">이름 <span style="color:#EF4444">*</span></label>
+        <input id="m-name" type="text" placeholder="홍길동" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">학년 / 나이 <span style="color:#EF4444">*</span></label>
+        <select id="m-grade" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;background:white;font-family:inherit;color:#374151;margin-bottom:16px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+          <option value="">선택해주세요</option>
+          <optgroup label="초등학생"><option>초등 1학년</option><option>초등 2학년</option><option>초등 3학년</option><option>초등 4학년</option><option>초등 5학년</option><option>초등 6학년</option></optgroup>
+          <optgroup label="중학생"><option>중학 1학년</option><option>중학 2학년</option><option>중학 3학년</option></optgroup>
+          <optgroup label="고등학생"><option>고등 1학년</option><option>고등 2학년</option><option>고등 3학년</option></optgroup>
+          <optgroup label="기타"><option>성인 / 기타</option></optgroup>
+        </select>
+
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">연락처 <span style="color:#EF4444">*</span></label>
+        <input id="m-phone" type="tel" placeholder="010-0000-0000" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">거주 주소 <span style="color:#EF4444">*</span></label>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <input id="m-addr-road" type="text" placeholder="도로명 주소 (검색 또는 직접 입력)" style="flex:1;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+          <button type="button" onclick="searchAddress()" style="padding:11px 14px;background:#1D4ED8;color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">🔍 검색</button>
+        </div>
+        <input id="m-addr-detail" type="text" placeholder="상세 주소 (예: 101동 502호)" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">문의 내용 <span style="color:#EF4444">*</span></label>
+        <textarea id="m-message" rows="4" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;resize:vertical;margin-bottom:16px;font-family:inherit;line-height:1.6" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
+
+        <div style="background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:14px 16px;margin-bottom:16px">
+          <div style="font-size:12px;color:#6B7280;line-height:1.7;margin-bottom:10px"><strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주주소, 문의내용<br><strong>수집 목적:</strong> 학습 상담 및 센터 안내<br><strong>보유 기간:</strong> 상담 완료 후 1년</div>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="m-agree" style="width:16px;height:16px;accent-color:#1D4ED8;flex-shrink:0">
+            <span style="font-size:13px;font-weight:700;color:#0F2044">개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span>
+          </label>
+        </div>
+
+        <div id="m-error" style="display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:12px"></div>
+
+        <div style="display:flex;gap:10px">
+          <button onclick="closeContactModal()" style="flex:1;padding:13px;border-radius:10px;border:1.5px solid #E5E7EB;background:white;font-size:14px;font-weight:700;cursor:pointer;color:#6B7280;font-family:inherit">취소</button>
+          <button onclick="submitModalContact()" style="flex:2;padding:13px;border-radius:10px;border:none;background:#1D4ED8;color:white;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">✉️ 문의 제출하기</button>
+        </div>
       </div>
-      ${c.directions ? `<div style="font-size:12px;color:#374151;line-height:1.6;background:#F8FAFC;border-radius:8px;padding:8px 10px;display:flex;gap:6px;align-items:flex-start"><span>🗺️</span><span style="white-space:pre-line">${c.directions.replace(/\n/g,'<br>')}</span></div>` : ''}
-      ${(c.target_elem||c.target_mid||c.target_high) ? `
-      <div style="border-top:1px solid #F1F5F9;padding-top:10px;display:flex;flex-direction:column;gap:6px">
-        ${c.target_elem ? `<div style="font-size:12px;color:#374151;display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;background:#FEF3C7;color:#D97706;padding:1px 6px;border-radius:4px;font-weight:700;font-size:11px">초등</span><span>${c.target_elem}</span></div>` : ''}
-        ${c.target_mid ? `<div style="font-size:12px;color:#374151;display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;background:#DCFCE7;color:#16A34A;padding:1px 6px;border-radius:4px;font-weight:700;font-size:11px">중등</span><span>${c.target_mid}</span></div>` : ''}
-        ${c.target_high ? `<div style="font-size:12px;color:#374151;display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;background:#EFF6FF;color:#2563EB;padding:1px 6px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span>${c.target_high}</span></div>` : ''}
-      </div>` : ''}
-      <a href="/contact" style="display:block;text-align:center;background:#1D4ED8;color:white;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none">✉️ 문의하기</a>
-    </div>`).join('');
+    </div>
+  </div>
+
+  <script>
+  function openContactModal(sido, district, name) {
+    document.getElementById('modal-center-info').textContent = sido + ' ' + district + ' · ' + name;
+    document.getElementById('m-message').value = '[' + sido + ' ' + district + ' ' + name + '] ';
+    document.getElementById('modal-success').style.display = 'none';
+    document.getElementById('modal-form').style.display = 'block';
+    document.getElementById('m-error').style.display = 'none';
+    document.getElementById('contact-modal-bg').style.display = 'flex';
+    document.getElementById('m-name').focus();
+  }
+  function closeContactModal() {
+    document.getElementById('contact-modal-bg').style.display = 'none';
+  }
+  function searchAddress() {
+    function open() {
+      new daum.Postcode({
+        oncomplete: function(data) {
+          document.getElementById('m-addr-road').value = data.roadAddress || data.jibunAddress;
+          document.getElementById('m-addr-detail').focus();
+        }
+      }).open();
+    }
+    if (typeof daum !== 'undefined' && daum.Postcode) { open(); }
+    else {
+      var s = document.createElement('script');
+      s.src = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+      s.onload = open;
+      document.head.appendChild(s);
+    }
+  }
+  function submitModalContact() {
+    var name    = document.getElementById('m-name').value.trim();
+    var grade   = document.getElementById('m-grade').value;
+    var phone   = document.getElementById('m-phone').value.trim();
+    var road    = document.getElementById('m-addr-road').value.trim();
+    var detail  = document.getElementById('m-addr-detail').value.trim();
+    var message = document.getElementById('m-message').value.trim();
+    var agree   = document.getElementById('m-agree').checked;
+    if (!name)    { showMErr('이름을 입력해주세요.'); return; }
+    if (!grade)   { showMErr('학년/나이를 선택해주세요.'); return; }
+    if (!phone)   { showMErr('연락처를 입력해주세요.'); return; }
+    if (!road)    { showMErr('거주 주소를 입력해주세요.'); return; }
+    if (!message) { showMErr('문의 내용을 입력해주세요.'); return; }
+    if (!agree)   { showMErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
+    var address = road + (detail ? ' ' + detail : '');
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({name, grade, phone, address, message})
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.ok) {
+        document.getElementById('modal-form').style.display = 'none';
+        document.getElementById('modal-success').style.display = 'block';
+      } else { showMErr('전송 중 오류가 발생했습니다.'); }
+    })
+    .catch(() => showMErr('네트워크 오류가 발생했습니다.'));
+  }
+  function showMErr(msg) {
+    var el = document.getElementById('m-error');
+    el.textContent = '⚠️ ' + msg;
+    el.style.display = 'block';
+  }
+  <\/script>`;
 
   const body = `
   <div style="max-width:1100px;margin:0 auto;padding:160px 48px 80px">
     <div style="margin-bottom:8px;font-size:13px;color:#9CA3AF"><a href="/" style="color:#9CA3AF;text-decoration:none">홈</a> › <a href="/academy/all" style="color:#9CA3AF;text-decoration:none">학원 찾기</a>${sidoEn!=='all'?` › ${sidoLabel}`:''}</div>
     <h1 style="font-size:32px;font-weight:900;color:#0F2044;margin-bottom:6px">${sidoLabel} 코칭센터</h1>
-    <p style="font-size:15px;color:#6B7280;margin-bottom:32px">총 <strong style="color:#1D4ED8">${filtered.length}개</strong> 센터</p>
-
-    <!-- 지역 탭 -->
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid #E5E7EB">
-      ${tabs}
+    <p style="font-size:15px;color:#6B7280;margin-bottom:24px">총 <strong style="color:#1D4ED8">${filtered.length}개</strong> 센터</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #E5E7EB">
+      ${sidoTabs.join('')}
     </div>
-
-    <!-- 카드 그리드 -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    ${districtBar}
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch">
       ${cards || '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#9CA3AF">해당 지역 센터가 없습니다</div>'}
     </div>
-  </div>`;
+  </div>
+  ${modalHtml}`;
 
   const title = `${sidoLabel} 코칭센터 | 올케어스터디 학원 찾기`;
   const desc = `${sidoLabel} 지역 올케어스터디 코칭센터 ${filtered.length}곳. 초중고 맞춤 1:1 학습코칭.`;
   return wrap(title, desc, `/academy/${sidoEn}`, body);
 }
 
-// ── 문의하기 페이지 ──────────────────────────
+
 function makeContactPage() {
   const body = `
   <div style="max-width:720px;margin:0 auto;padding:140px 24px 80px">
@@ -911,27 +1028,11 @@ function makeContactPage() {
         <!-- 주소 -->
         <div style="margin-bottom:20px">
           <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">거주 주소 <span style="color:#EF4444">*</span></label>
-          <select id="cf-sido" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit;color:#374151;background:white;margin-bottom:8px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-            <option value="">시/도 선택 *</option>
-            <option>서울특별시</option>
-            <option>경기도</option>
-            <option>인천광역시</option>
-            <option>부산광역시</option>
-            <option>대구광역시</option>
-            <option>대전광역시</option>
-            <option>광주광역시</option>
-            <option>울산광역시</option>
-            <option>세종특별자치시</option>
-            <option>강원특별자치도</option>
-            <option>충청북도</option>
-            <option>충청남도</option>
-            <option>전북특별자치도</option>
-            <option>전라남도</option>
-            <option>경상북도</option>
-            <option>경상남도</option>
-            <option>제주특별자치도</option>
-          </select>
-          <input id="cf-address" type="text" placeholder="상세 주소 입력 (예: 용인시 수지구 풍덕천로)" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <input id="cf-sido" type="text" placeholder="도로명 주소 (검색 또는 직접 입력)" style="flex:1;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+            <button type="button" onclick="searchContactAddress()" style="padding:12px 16px;background:#1D4ED8;color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">🔍 검색</button>
+          </div>
+          <input id="cf-address" type="text" placeholder="상세 주소 (예: 101동 502호)" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         </div>
         <!-- 문의 내용 -->
         <div style="margin-bottom:24px">
@@ -973,6 +1074,23 @@ function makeContactPage() {
   </div>
 
   <script>
+  function searchContactAddress() {
+    function open() {
+      new daum.Postcode({
+        oncomplete: function(data) {
+          document.getElementById('cf-sido').value = data.roadAddress || data.jibunAddress;
+          document.getElementById('cf-address').focus();
+        }
+      }).open();
+    }
+    if (typeof daum !== 'undefined' && daum.Postcode) { open(); }
+    else {
+      var s = document.createElement('script');
+      s.src = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+      s.onload = open;
+      document.head.appendChild(s);
+    }
+  }
   function submitContact() {
     var name = document.getElementById('cf-name').value.trim();
     var grade = document.getElementById('cf-grade').value;
@@ -986,12 +1104,11 @@ function makeContactPage() {
     if (!name) { showErr('이름을 입력해주세요.'); return; }
     if (!grade) { showErr('학년/나이를 선택해주세요.'); return; }
     if (!phone) { showErr('연락처를 입력해주세요.'); return; }
-    if (!sido) { showErr('거주 시/도를 선택해주세요.'); return; }
-    if (!address) { showErr('상세 주소를 입력해주세요.'); return; }
+    if (!sido) { showErr('거주 주소를 입력해주세요.'); return; }
     if (!message) { showErr('문의 내용을 입력해주세요.'); return; }
     if (!agree) { showErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
 
-    var fullAddress = sido + ' ' + address;
+    var fullAddress = sido + (address ? ' ' + address : '');
 
     err.style.display = 'none';
     var btn = document.getElementById('cf-submit');
