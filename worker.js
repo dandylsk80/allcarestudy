@@ -1950,46 +1950,21 @@ export default {
         if (!name || !grade || !phone || !address || !message) {
           return new Response(JSON.stringify({ ok: false, error: '필수 항목 누락' }), { headers: corsHeaders });
         }
-        const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-        const emailBody = [
-          `📬 올케어스터디 문의가 접수되었습니다`,
-          `─────────────────────────`,
-          `접수일시: ${now}`,
-          `이름: ${name}`,
-          `학년/나이: ${grade}`,
-          `연락처: ${phone}`,
-          `거주 주소: ${address}`,
-          `─────────────────────────`,
-          `문의내용:`,
-          message,
-          `─────────────────────────`,
-          `allcarestudy.com 자동발송`
-        ].join('\n');
 
-        try {
-          const mailRes = await fetch('https://api.mailchannels.net/tx/v1/send', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              personalizations: [{
-                to: [{ email: 'dandylsk@naver.com', name: '올케어스터디' }],
-                dkim_domain: 'allcarestudy.com',
-                dkim_selector: 'mailchannels',
-                dkim_private_key: ''
-              }],
-              from: { email: 'contact@allcarestudy.com', name: '올케어스터디 문의' },
-              reply_to: { email: phone.includes('@') ? phone : 'dandylsk@naver.com' },
-              subject: `[올케어스터디 문의] ${name} / ${grade} / ${phone}`,
-              content: [{ type: 'text/plain', value: emailBody }]
-            })
-          });
-          console.log('MailChannels status:', mailRes.status, await mailRes.text());
-        } catch (mailErr) {
-          console.error('MailChannels fetch error:', mailErr);
+        // Google Apps Script로 전송 (시트 기록 + 네이버 메일 발송)
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbxWr1XcAQVsxPKgH9FbUaUcKAYCNzDoA-ngykhJ2ae4sCk562rT7bBe2sO7ym5-KdI2/exec';
+        const gasRes = await fetch(GAS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, grade, phone, address, message })
+        });
+        const gasData = await gasRes.json();
+        if (gasData.ok) {
+          return new Response(JSON.stringify({ ok: true }), { headers: corsHeaders });
+        } else {
+          console.error('GAS error:', gasData.error);
+          return new Response(JSON.stringify({ ok: false, error: gasData.error }), { headers: corsHeaders });
         }
-
-        // 메일 전송 성공 여부와 무관하게 접수 완료 반환
-        return new Response(JSON.stringify({ ok: true }), { headers: corsHeaders });
       } catch (e) {
         console.error('contact api error:', e);
         return new Response(JSON.stringify({ ok: false, error: e.message }), { headers: corsHeaders });
