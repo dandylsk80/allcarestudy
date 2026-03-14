@@ -1444,6 +1444,8 @@ ${introBody}
 </html>`;
 }
 
+
+
 function makeAcademyPage() {
   const SIDO_ORDER = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','강원','제주'];
 
@@ -1482,8 +1484,9 @@ function makeAcademyPage() {
           <optgroup label="초등학생"><option>초등 1학년</option><option>초등 2학년</option><option>초등 3학년</option><option>초등 4학년</option><option>초등 5학년</option><option>초등 6학년</option></optgroup>
           <optgroup label="중학생"><option>중학 1학년</option><option>중학 2학년</option><option>중학 3학년</option></optgroup>
           <optgroup label="고등학생"><option>고등 1학년</option><option>고등 2학년</option><option>고등 3학년</option></optgroup>
-          <optgroup label="기타"><option>성인 / 기타</option></optgroup>
         </select>
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">관심 센터</label>
+        <input id="m-center" type="text" readonly placeholder="" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit;background:#F8FAFC;color:#1D4ED8;font-weight:700">
         <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">연락처 <span style="color:#EF4444">*</span></label>
         <input id="m-phone" type="tel" placeholder="010-0000-0000" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">거주 주소 <span style="color:#EF4444">*</span></label>
@@ -1492,7 +1495,7 @@ function makeAcademyPage() {
           <button type="button" onclick="searchAddress()" style="padding:11px 14px;background:#1D4ED8;color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">🔍 검색</button>
         </div>
         <input id="m-addr-detail" type="text" placeholder="상세 주소 (예: 101동 502호)" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">문의 내용 <span style="color:#EF4444">*</span></label>
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">문의 내용</label>
         <textarea id="m-message" rows="4" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;resize:vertical;margin-bottom:16px;font-family:inherit;line-height:1.6" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
         <div style="background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:14px 16px;margin-bottom:16px">
           <div style="font-size:12px;color:#6B7280;line-height:1.7;margin-bottom:10px"><strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주주소, 문의내용<br><strong>수집 목적:</strong> 학습 상담 및 센터 안내<br><strong>보유 기간:</strong> 상담 완료 후 1년</div>
@@ -1579,7 +1582,7 @@ function makeAcademyPage() {
           \${c.target_high?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#EFF6FF;color:#2563EB;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.target_high+'</span></div>':''}
           \${!c.target_elem&&!c.target_mid&&!c.target_high?'<div style="font-size:11px;color:#D1D5DB">대상학교 정보 없음</div>':''}
         </div>
-        <button onclick="openContactModal('\${c.sido}','\${c.district}','\${cname}')" style="display:block;width:100%;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;margin-top:14px;border:none;cursor:pointer;font-family:inherit">✉️ 문의하기</button>
+        <button onclick="location.href='/contact?center='+encodeURIComponent('\${cname}')" style="display:block;width:100%;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;margin-top:14px;border:none;cursor:pointer;font-family:inherit">✉️ 문의하기</button>
       </div>\`;
     }).join('') : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#9CA3AF">해당 지역 센터가 없습니다</div>';
   }
@@ -1599,7 +1602,8 @@ function makeAcademyPage() {
 
   function openContactModal(sido, district, name) {
     document.getElementById('modal-center-info').textContent = sido+' '+district+' · '+name;
-    document.getElementById('m-message').value = '['+sido+' '+district+' '+name+'] ';
+    document.getElementById('m-center').value = name;
+    document.getElementById('m-message').value = '';
     document.getElementById('modal-success').style.display='none';
     document.getElementById('modal-form').style.display='block';
     document.getElementById('m-error').style.display='none';
@@ -1631,7 +1635,6 @@ function makeAcademyPage() {
     if (!grade)   { showMErr('학년/나이를 선택해주세요.'); return; }
     if (!phone)   { showMErr('연락처를 입력해주세요.'); return; }
     if (!road)    { showMErr('거주 주소를 입력해주세요.'); return; }
-    if (!message) { showMErr('문의 내용을 입력해주세요.'); return; }
     if (!agree)   { showMErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
     fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:road+(detail?' '+detail:''),message})})
     .then(r=>r.json()).then(data=>{
@@ -1653,174 +1656,520 @@ function makeAcademyPage() {
 
 function makeContactPage() {
   const body = `
-  <div style="max-width:720px;margin:0 auto;padding:140px 24px 80px">
-    <div style="margin-bottom:8px;font-size:13px;color:#9CA3AF"><a href="/" style="color:#9CA3AF;text-decoration:none">홈</a> › <span>문의하기</span></div>
-    <h1 style="font-size:32px;font-weight:900;color:#0F2044;margin-bottom:8px">문의하기</h1>
-    <p style="font-size:15px;color:#6B7280;margin-bottom:40px">궁금하신 사항을 남겨주시면 빠르게 답변드리겠습니다.</p>
+  <style>
+  .cf-page{max-width:1100px;margin:0 auto;padding:140px 24px 80px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
+  .info-badge{display:inline-flex;align-items:center;gap:8px;background:#DBEAFE;color:#1D4ED8;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:16px}
+  .cf-info-title{font-size:38px;font-weight:900;color:#0F2044;line-height:1.2;margin-bottom:14px;letter-spacing:-1px}
+  .cf-info-title em{color:#1D4ED8;font-style:normal}
+  .cf-info-sub{font-size:15px;color:#6B7280;line-height:1.8;margin-bottom:40px}
+  .cf-contact-cards{display:flex;flex-direction:column;gap:14px;margin-bottom:40px}
+  .cf-contact-card{background:white;border:1px solid #E5E7EB;border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:16px;transition:.2s}
+  .cf-contact-card:hover{border-color:#93C5FD;box-shadow:0 4px 20px rgba(29,78,216,.08)}
+  .cc-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .cc-blue{background:#EFF6FF}.cc-green{background:#F0FDF4}.cc-orange{background:#FFF7ED}
+  .cc-label{font-size:12px;color:#9CA3AF;margin-bottom:3px;font-weight:600}
+  .cc-value{font-size:16px;font-weight:800;color:#0F2044}
+  .cc-desc{font-size:12px;color:#6B7280;margin-top:2px}
+  .cf-process-title{font-size:15px;font-weight:800;color:#0F2044;margin-bottom:16px}
+  .cf-steps{display:flex;flex-direction:column;gap:0}
+  .cf-step{display:flex;gap:14px;align-items:flex-start;position:relative}
+  .cf-step:not(:last-child)::after{content:'';position:absolute;left:15px;top:34px;width:2px;height:calc(100% - 10px);background:#E5E7EB}
+  .cf-step-num{width:32px;height:32px;border-radius:50%;background:#0F2044;color:white;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1}
+  .cf-step-body{padding-bottom:24px}
+  .cf-step-title{font-size:14px;font-weight:800;color:#0F2044;margin-bottom:3px}
+  .cf-step-desc{font-size:13px;color:#6B7280;line-height:1.6}
+  .cf-form-card{background:white;border-radius:24px;padding:40px 36px;box-shadow:0 8px 48px rgba(15,32,68,.10),0 2px 8px rgba(0,0,0,.04)}
+  .cf-form-title{font-size:22px;font-weight:900;color:#0F2044;margin-bottom:4px}
+  .cf-form-sub{font-size:13px;color:#9CA3AF;margin-bottom:24px}
+  .cf-field{margin-bottom:18px}
+  .cf-field label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:7px}
+  .cf-field input,.cf-field select,.cf-field textarea{width:100%;padding:13px 16px;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s,box-shadow .2s;background:white;color:#1F2937;box-sizing:border-box}
+  .cf-field input:focus,.cf-field select:focus,.cf-field textarea:focus{border-color:#3B82F6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+  .cf-field textarea{resize:vertical;line-height:1.6}
+  .cf-field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .cf-addr-row{display:flex;gap:8px;margin-bottom:8px}
+  .cf-addr-row input{flex:1}
+  .cf-search-btn{padding:13px 16px;background:#0F2044;color:white;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s}
+  .cf-search-btn:hover{background:#1D4ED8}
+  .cf-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .cf-chip{padding:8px 14px;border:1.5px solid #E5E7EB;border-radius:999px;font-size:13px;font-weight:600;color:#6B7280;cursor:pointer;transition:.2s;background:white}
+  .cf-chip:hover{border-color:#93C5FD;color:#1D4ED8}
+  .cf-chip.active{background:#EFF6FF;border-color:#3B82F6;color:#1D4ED8;font-weight:800}
+  .cf-agree-box{background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 18px;margin-bottom:20px}
+  .cf-agree-title{font-size:12px;font-weight:800;color:#374151;margin-bottom:8px}
+  .cf-agree-content{font-size:11px;color:#9CA3AF;line-height:1.7;margin-bottom:12px}
+  .cf-agree-check{display:flex;align-items:center;gap:10px;cursor:pointer}
+  .cf-agree-check input{width:16px;height:16px;accent-color:#1D4ED8;flex-shrink:0}
+  .cf-agree-check span{font-size:13px;font-weight:700;color:#0F2044}
+  .cf-error{display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:14px}
+  .cf-submit-btn{width:100%;padding:16px;background:linear-gradient(135deg,#0F2044,#1D4ED8);color:white;border:none;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;transition:.2s;font-family:inherit;letter-spacing:.5px;box-shadow:0 4px 16px rgba(29,78,216,.3)}
+  .cf-submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,78,216,.4)}
+  .cf-success{display:none;text-align:center;padding:40px 0}
+  @media(max-width:900px){.cf-page{grid-template-columns:1fr;padding:120px 16px 60px}.cf-field-row{grid-template-columns:1fr}.cf-form-card{padding:28px 20px}}
+  </style>
 
-    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:20px;padding:40px">
-      <div id="contact-success" style="display:none;text-align:center;padding:40px 0">
-        <div style="font-size:56px;margin-bottom:16px">✅</div>
-        <h2 style="font-size:22px;font-weight:900;color:#0F2044;margin-bottom:8px">문의가 접수되었습니다!</h2>
-        <p style="color:#6B7280;font-size:15px;margin-bottom:24px">빠른 시일 내에 연락드리겠습니다.</p>
-        <a href="/" style="display:inline-block;background:#1D4ED8;color:white;padding:12px 28px;border-radius:10px;font-weight:700;text-decoration:none;font-size:14px">홈으로 돌아가기</a>
+  <div class="cf-page">
+    <!-- 좌측 안내 -->
+    <div>
+      <div class="info-badge">✉️ 문의하기</div>
+      <h1 class="cf-info-title">궁금한 점을<br><em>편하게 남겨주세요</em></h1>
+      <p class="cf-info-sub">올케어스터디 전문 상담사가<br>빠른 시일 내에 연락드리겠습니다.</p>
+
+      <div class="cf-contact-cards">
+        <div class="cf-contact-card">
+          <div class="cc-icon cc-blue">📞</div>
+          <div>
+            <div class="cc-label">전화 상담</div>
+            <div class="cc-value">010-6834-8080</div>
+          </div>
+        </div>
+        <div class="cf-contact-card" id="cf-card-center">
+          <div class="cc-icon cc-green">📍</div>
+          <div>
+            <div class="cc-label">센터 방문 상담</div>
+            <div class="cc-value">전국 200여 개 직영센터</div>
+            <div class="cc-desc">가까운 센터를 찾아보세요</div>
+          </div>
+        </div>
+        <div class="cf-contact-card">
+          <div class="cc-icon cc-orange">⏱️</div>
+          <div>
+            <div class="cc-label">평균 응답 시간</div>
+            <div class="cc-value">30분 이내</div>
+          </div>
+        </div>
       </div>
 
-      <div id="contact-form">
-        <!-- 이름 -->
-        <div style="margin-bottom:20px">
-          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">이름 <span style="color:#EF4444">*</span></label>
-          <input id="cf-name" type="text" placeholder="홍길동" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-        </div>
-        <!-- 학년(나이) -->
-        <div style="margin-bottom:20px">
-          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">학년 / 나이 <span style="color:#EF4444">*</span></label>
-          <select id="cf-grade" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;background:white;font-family:inherit;cursor:pointer;color:#374151" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-            <option value="">선택해주세요</option>
-            <optgroup label="초등학생">
-              <option>초등 1학년</option><option>초등 2학년</option><option>초등 3학년</option>
-              <option>초등 4학년</option><option>초등 5학년</option><option>초등 6학년</option>
-            </optgroup>
-            <optgroup label="중학생">
-              <option>중학 1학년</option><option>중학 2학년</option><option>중학 3학년</option>
-            </optgroup>
-            <optgroup label="고등학생">
-              <option>고등 1학년</option><option>고등 2학년</option><option>고등 3학년</option>
-            </optgroup>
-            <optgroup label="기타">
-              <option>성인 / 기타</option>
-            </optgroup>
-          </select>
-        </div>
-        <!-- 연락처 -->
-        <div style="margin-bottom:20px">
-          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">연락처 <span style="color:#EF4444">*</span></label>
-          <input id="cf-phone" type="tel" placeholder="010-0000-0000" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-        </div>
-        <!-- 주소 -->
-        <div style="margin-bottom:20px">
-          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">거주 주소 <span style="color:#EF4444">*</span></label>
-          <div style="display:flex;gap:8px;margin-bottom:8px">
-            <input id="cf-sido" type="text" placeholder="도로명 주소 (검색 또는 직접 입력)" style="flex:1;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-            <button type="button" onclick="searchContactAddress()" style="padding:12px 16px;background:#1D4ED8;color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">🔍 검색</button>
-          </div>
-          <input id="cf-address" type="text" placeholder="상세 주소 (예: 101동 502호)" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-        </div>
-        <!-- 문의 내용 -->
-        <div style="margin-bottom:24px">
-          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">문의 내용 <span style="color:#EF4444">*</span></label>
-          <textarea id="cf-message" rows="5" placeholder="문의하실 내용을 자유롭게 적어주세요.&#10;(예: 수학 과외 상담, 센터 위치 문의, 수업 방식 등)" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;resize:vertical;transition:border-color .2s;font-family:inherit;line-height:1.6" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
-        </div>
-        <!-- 개인정보 수집 동의 -->
-        <div style="background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:16px 20px;margin-bottom:24px">
-          <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:10px">📋 개인정보 수집 및 이용 동의</div>
-          <div style="font-size:12px;color:#6B7280;line-height:1.7;margin-bottom:12px">
-            <strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주 주소, 문의내용<br>
-            <strong>수집 목적:</strong> 학습 상담 및 센터 안내 서비스 제공<br>
-            <strong>보유 기간:</strong> 상담 완료 후 1년<br>
-            위 개인정보 수집·이용에 동의하지 않을 권리가 있으며, 동의 거부 시 상담 서비스 이용이 제한될 수 있습니다.
-          </div>
-          <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
-            <input type="checkbox" id="cf-agree" style="width:18px;height:18px;accent-color:#1D4ED8;cursor:pointer;flex-shrink:0">
-            <span style="font-size:13px;font-weight:700;color:#0F2044">개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span>
-          </label>
-        </div>
-        <!-- 에러 메시지 -->
-        <div id="cf-error" style="display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:16px"></div>
-        <!-- 제출 버튼 -->
-        <button id="cf-submit" onclick="submitContact()" style="width:100%;background:linear-gradient(135deg,#1D4ED8,#3B82F6);color:white;padding:16px;border-radius:12px;font-size:16px;font-weight:900;border:none;cursor:pointer;transition:opacity .2s;font-family:inherit;letter-spacing:1px">✉️ 문의 제출하기</button>
+      <div class="cf-process-title">📋 상담 진행 순서</div>
+      <div class="cf-steps">
+        <div class="cf-step"><div class="cf-step-num">1</div><div class="cf-step-body"><div class="cf-step-title">문의 접수</div><div class="cf-step-desc">양식 작성 후 제출하시면 즉시 접수됩니다</div></div></div>
+        <div class="cf-step"><div class="cf-step-num">2</div><div class="cf-step-body"><div class="cf-step-title">담당자 배정</div><div class="cf-step-desc" id="cf-step2-desc">교육컨설턴트가 배정됩니다</div></div></div>
+        <div class="cf-step"><div class="cf-step-num">3</div><div class="cf-step-body"><div class="cf-step-title">1:1 맞춤 상담</div><div class="cf-step-desc">학생 상황에 맞는 학습 방향을 안내드립니다</div></div></div>
+        <div class="cf-step"><div class="cf-step-num">4</div><div class="cf-step-body"><div class="cf-step-title" id="cf-step4-text">센터 등록</div><div class="cf-step-desc" id="cf-step4-desc">원하시면 가까운 센터 등록으로 연결됩니다</div></div></div>
       </div>
     </div>
 
-    <!-- 빠른 상담 배너 -->
-    <div style="margin-top:32px;background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:16px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
-      <div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:4px">전화로 빠른 상담 원하시면</div>
-        <div style="font-size:24px;font-weight:900;color:white">📞 010-6834-8080</div>
+    <!-- 우측 폼 -->
+    <div class="cf-form-card">
+      <div id="contact-success" class="cf-success">
+        <div style="font-size:64px;margin-bottom:16px">✅</div>
+        <div style="font-size:22px;font-weight:900;color:#0F2044;margin-bottom:8px">문의가 접수되었습니다!</div>
+        <div style="font-size:14px;color:#6B7280;margin-bottom:24px;line-height:1.7">담당자가 확인 후<br>빠른 시일 내에 연락드리겠습니다.</div>
+        <a href="/" style="display:inline-block;background:#0F2044;color:white;padding:13px 28px;border-radius:12px;font-weight:700;text-decoration:none;font-size:14px">홈으로 돌아가기</a>
       </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <a href="tel:01068348080" style="background:white;color:#1D4ED8;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none">전화 상담</a>
-        <a href="/contact" style="background:#3B82F6;color:white;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none">✉️ 문의하기</a>
+
+      <div id="contact-form">
+        <div class="cf-form-title">📝 상담 신청서</div>
+        <div class="cf-form-sub">* 표시 항목은 필수입니다</div>
+
+        <!-- 문의 유형 탭 -->
+        <div style="display:flex;border:1.5px solid #E5E7EB;border-radius:12px;overflow:hidden;margin-bottom:24px">
+          <button id="tab-academy" onclick="cfSwitchType('academy')" style="flex:1;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:none;background:#0F2044;color:white;font-family:inherit;transition:.2s">🏫 학원 상담</button>
+          <button id="tab-tutoring" onclick="cfSwitchType('tutoring')" style="flex:1;padding:13px;font-size:14px;font-weight:700;cursor:pointer;border:none;background:white;color:#6B7280;font-family:inherit;transition:.2s">👨‍🏫 과외 상담</button>
+        </div>
+
+        <!-- 이름 + 연락처 -->
+        <div class="cf-field-row">
+          <div class="cf-field">
+            <label>이름 <span style="color:#EF4444">*</span></label>
+            <input id="cf-name" type="text" placeholder="홍길동" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+          </div>
+          <div class="cf-field">
+            <label>연락처 <span style="color:#EF4444">*</span></label>
+            <input id="cf-phone" type="tel" placeholder="010-0000-0000" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+          </div>
+        </div>
+
+        <!-- 학년 칩 -->
+        <div class="cf-field">
+          <label>학년 / 나이 <span style="color:#EF4444">*</span></label>
+          <div class="cf-chips">
+            <div class="cf-chip" onclick="cfSelectGrade(this,'초등 1학년')">초1</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'초등 2학년')">초2</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'초등 3학년')">초3</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'초등 4학년')">초4</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'초등 5학년')">초5</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'초등 6학년')">초6</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'중학 1학년')">중1</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'중학 2학년')">중2</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'중학 3학년')">중3</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'고등 1학년')">고1</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'고등 2학년')">고2</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'고등 3학년')">고3</div>
+            <div class="cf-chip" id="cf-chip-adult" onclick="cfSelectGrade(this,'성인')" style="display:none">성인</div>
+          </div>
+          <input type="hidden" id="cf-grade">
+        </div>
+
+        <!-- 주소 -->
+        <div class="cf-field">
+          <label>거주 주소 <span style="color:#EF4444">*</span></label>
+          <div class="cf-addr-row">
+            <input id="cf-sido" type="text" placeholder="도로명 주소 (검색 또는 직접 입력)" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+            <button class="cf-search-btn" onclick="searchContactAddress()">🔍 검색</button>
+          </div>
+          <input id="cf-address" type="text" placeholder="상세 주소 (예: 101동 502호)" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+        </div>
+
+        <!-- 학원 전용 -->
+        <div id="cf-fields-academy">
+          <div class="cf-field">
+            <label>관심 센터 이름</label>
+            <input id="cf-center" type="text" placeholder="예: 수지점" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+          </div>
+          <div class="cf-field">
+            <label>원하는 수업 과목</label>
+            <div class="cf-chips">
+              <div class="cf-chip" onclick="this.classList.toggle('active')">수학</div>
+              <div class="cf-chip" onclick="this.classList.toggle('active')">영어</div>
+              <div class="cf-chip" onclick="this.classList.toggle('active')">국어</div>
+              <div class="cf-chip" onclick="this.classList.toggle('active')">과학</div>
+              <div class="cf-chip" onclick="this.classList.toggle('active')">사회</div>
+              <div class="cf-chip" onclick="this.classList.toggle('active')">전과목</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 과외 전용 -->
+        <div id="cf-fields-tutoring" style="display:none">
+          <div class="cf-field-row">
+            <div class="cf-field">
+              <label>희망 과목</label>
+              <select id="cf-subject" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+                <option value="">선택해주세요</option>
+                <option>수학</option><option>영어</option><option>국어</option><option>과학</option><option>사회</option><option>전과목</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <label>수업 방식</label>
+              <select id="cf-method" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+                <option value="">선택해주세요</option>
+                <option>대면 (오프라인)</option><option>온라인</option><option>상관없음</option>
+              </select>
+            </div>
+          </div>
+          <div class="cf-field-row">
+            <div class="cf-field">
+              <label>선생님 성별 선호</label>
+              <select id="cf-gender" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+                <option value="">상관없음</option>
+                <option>남자 선생님</option><option>여자 선생님</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <label>주당 희망 수업 횟수</label>
+              <select id="cf-times" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+                <option value="">선택해주세요</option>
+                <option>주 1회</option><option>주 2회</option><option>주 3회</option><option>주 4회 이상</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 문의 내용 -->
+        <div class="cf-field">
+          <label>문의 내용</label>
+          <textarea id="cf-message" rows="4" placeholder="센터 위치, 수업 방식, 등록 절차 등 궁금한 점을 적어주세요." onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
+        </div>
+
+        <!-- 개인정보 동의 -->
+        <div class="cf-agree-box">
+          <div class="cf-agree-title">🔒 개인정보 수집 및 이용 동의</div>
+          <div class="cf-agree-content">
+            <strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주 주소, 문의내용<br>
+            <strong>수집 목적:</strong> 학습 상담 및 센터 안내 서비스 제공<br>
+            <strong>보유 기간:</strong> 상담 완료 후 1년
+          </div>
+          <label class="cf-agree-check">
+            <input type="checkbox" id="cf-agree">
+            <span>개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span>
+          </label>
+        </div>
+
+        <div class="cf-error" id="cf-error"></div>
+        <button class="cf-submit-btn" id="cf-submit" onclick="submitContact()">✉️ 문의 제출하기</button>
       </div>
     </div>
   </div>
 
   <script>
+  function cfSwitchType(type) {
+    document.getElementById('cf-fields-academy').style.display = type==='academy'?'block':'none';
+    document.getElementById('cf-fields-tutoring').style.display = type==='tutoring'?'block':'none';
+    document.getElementById('tab-academy').style.cssText = 'flex:1;padding:13px;font-size:14px;font-weight:'+(type==='academy'?'800':'700')+';cursor:pointer;border:none;background:'+(type==='academy'?'#0F2044':'white')+';color:'+(type==='academy'?'white':'#6B7280')+';font-family:inherit;transition:.2s';
+    document.getElementById('tab-tutoring').style.cssText = 'flex:1;padding:13px;font-size:14px;font-weight:'+(type==='tutoring'?'800':'700')+';cursor:pointer;border:none;background:'+(type==='tutoring'?'#0F2044':'white')+';color:'+(type==='tutoring'?'white':'#6B7280')+';font-family:inherit;transition:.2s';
+    document.getElementById('cf-message').placeholder = type==='academy'
+      ? '센터 위치, 수업 방식, 등록 절차 등 궁금한 점을 적어주세요.'
+      : '원하시는 과외 방향, 학습 목표 등을 자유롭게 적어주세요.';
+    var adultChip = document.getElementById('cf-chip-adult');
+    if(adultChip) adultChip.style.display = type==='tutoring' ? 'inline-block' : 'none';
+    var step4 = document.getElementById('cf-step4-text');
+    if(step4) step4.textContent = type==='academy' ? '센터 등록' : '교사 배정';
+    var step4d = document.getElementById('cf-step4-desc');
+    if(step4d) step4d.textContent = type==='academy' ? '원하시면 가까운 센터 등록으로 연결됩니다' : '적합한 선생님을 매칭하여 수업을 연결해드립니다';
+    var centerCard = document.getElementById('cf-card-center');
+    if(centerCard) centerCard.style.display = type==='tutoring' ? 'none' : 'flex';
+  }
+  function cfSelectGrade(el, val) {
+    document.querySelectorAll('.cf-chip').forEach(c => { if(c.dataset.gradeChip) c.classList.remove('active'); });
+    el.dataset.gradeChip = '1';
+    el.classList.add('active');
+    document.getElementById('cf-grade').value = val;
+  }
+  (function(){
+    var p = new URLSearchParams(window.location.search);
+    var cn = p.get('center');
+    if(cn) {
+      var el = document.getElementById('cf-center');
+      if(el) { el.value = cn; el.style.borderColor='#3B82F6'; }
+    }
+  })();
   function searchContactAddress() {
     function open() {
-      new daum.Postcode({
-        oncomplete: function(data) {
-          document.getElementById('cf-sido').value = data.roadAddress || data.jibunAddress;
-          document.getElementById('cf-address').focus();
-        }
-      }).open();
+      new daum.Postcode({ oncomplete: function(data) {
+        document.getElementById('cf-sido').value = data.roadAddress || data.jibunAddress;
+        document.getElementById('cf-address').focus();
+      }}).open();
     }
-    if (typeof daum !== 'undefined' && daum.Postcode) { open(); }
-    else {
-      var s = document.createElement('script');
-      s.src = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
-      s.onload = open;
-      document.head.appendChild(s);
-    }
+    if (typeof daum !== 'undefined' && daum.Postcode) open();
+    else { var s=document.createElement('script'); s.src='https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'; s.onload=open; document.head.appendChild(s); }
   }
   function submitContact() {
-    var name = document.getElementById('cf-name').value.trim();
-    var grade = document.getElementById('cf-grade').value;
-    var phone = document.getElementById('cf-phone').value.trim();
-    var sido = document.getElementById('cf-sido').value;
-    var address = document.getElementById('cf-address').value.trim();
-    var message = document.getElementById('cf-message').value.trim();
-    var agree = document.getElementById('cf-agree').checked;
-    var err = document.getElementById('cf-error');
-
-    if (!name) { showErr('이름을 입력해주세요.'); return; }
-    if (!grade) { showErr('학년/나이를 선택해주세요.'); return; }
-    if (!phone) { showErr('연락처를 입력해주세요.'); return; }
-    if (!sido) { showErr('거주 주소를 입력해주세요.'); return; }
-    if (!message) { showErr('문의 내용을 입력해주세요.'); return; }
-    if (!agree) { showErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
-
+    var name=document.getElementById('cf-name').value.trim();
+    var grade=document.getElementById('cf-grade').value;
+    var phone=document.getElementById('cf-phone').value.trim();
+    var sido=document.getElementById('cf-sido').value.trim();
+    var address=document.getElementById('cf-address').value.trim();
+    var message=document.getElementById('cf-message').value.trim();
+    var agree=document.getElementById('cf-agree').checked;
+    if (!name)    { showErr('이름을 입력해주세요.'); return; }
+    if (!grade)   { showErr('학년/나이를 선택해주세요.'); return; }
+    if (!phone)   { showErr('연락처를 입력해주세요.'); return; }
+    if (!sido)    { showErr('거주 주소를 입력해주세요.'); return; }
+    if (!agree)   { showErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
+    var btn=document.getElementById('cf-submit');
+    btn.disabled=true; btn.textContent='제출 중...'; btn.style.opacity='.7';
     var fullAddress = sido + (address ? ' ' + address : '');
-
-    err.style.display = 'none';
-    var btn = document.getElementById('cf-submit');
-    btn.disabled = true;
-    btn.textContent = '제출 중...';
-    btn.style.opacity = '0.7';
-
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, grade: grade, phone: phone, address: fullAddress, message: message })
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data.ok) {
-        document.getElementById('contact-form').style.display = 'none';
-        document.getElementById('contact-success').style.display = 'block';
-      } else {
-        btn.disabled = false;
-        btn.textContent = '✉️ 문의 제출하기';
-        btn.style.opacity = '1';
-        showErr('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      }
-    })
-    .catch(function() {
-      btn.disabled = false;
-      btn.textContent = '✉️ 문의 제출하기';
-      btn.style.opacity = '1';
-      showErr('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-    });
+    fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:fullAddress,message})})
+    .then(r=>r.json()).then(data=>{
+      if(data.ok){ document.getElementById('contact-form').style.display='none'; document.getElementById('contact-success').style.display='block'; }
+      else { btn.disabled=false; btn.textContent='✉️ 문의 제출하기'; btn.style.opacity='1'; showErr('전송 중 오류가 발생했습니다.'); }
+    }).catch(()=>{ btn.disabled=false; btn.textContent='✉️ 문의 제출하기'; btn.style.opacity='1'; showErr('네트워크 오류가 발생했습니다.'); });
   }
   function showErr(msg) {
-    var el = document.getElementById('cf-error');
-    el.textContent = '⚠️ ' + msg;
-    el.style.display = 'block';
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var el=document.getElementById('cf-error');
+    el.textContent='⚠️ '+msg; el.style.display='block';
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    document.getElementById('cf-submit').disabled=false;
+    document.getElementById('cf-submit').textContent='✉️ 문의 제출하기';
+    document.getElementById('cf-submit').style.opacity='1';
   }
   </script>`;
 
-  return wrap('문의하기 | 올케어스터디', '올케어스터디에 학습 상담 및 센터 관련 문의를 남겨주세요. 빠르게 답변드리겠습니다.', '/contact', body);
+  return wrap('문의하기 | 올케어스터디', '올케어스터디에 학습 상담 및 센터 관련 문의를 남겨주세요.', '/contact', body);
+}
+
+function makeContactPage() {
+  const body = `
+  <style>
+  .cf-page{max-width:1100px;margin:0 auto;padding:140px 24px 80px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
+  .info-badge2{display:inline-flex;align-items:center;gap:8px;background:#DBEAFE;color:#1D4ED8;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:16px}
+  .cf-info-title{font-size:38px;font-weight:900;color:#0F2044;line-height:1.2;margin-bottom:14px;letter-spacing:-1px}
+  .cf-info-title em{color:#1D4ED8;font-style:normal}
+  .cf-info-sub{font-size:15px;color:#6B7280;line-height:1.8;margin-bottom:40px}
+  .cf-contact-cards{display:flex;flex-direction:column;gap:14px;margin-bottom:40px}
+  .cf-contact-card{background:white;border:1px solid #E5E7EB;border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:16px;transition:.2s}
+  .cf-contact-card:hover{border-color:#93C5FD;box-shadow:0 4px 20px rgba(29,78,216,.08)}
+  .ccc-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .ccc-blue{background:#EFF6FF}.ccc-green{background:#F0FDF4}.ccc-orange{background:#FFF7ED}
+  .ccc-label{font-size:12px;color:#9CA3AF;margin-bottom:3px;font-weight:600}
+  .ccc-value{font-size:16px;font-weight:800;color:#0F2044}
+  .ccc-desc{font-size:12px;color:#6B7280;margin-top:2px}
+  .cf-proc-title{font-size:15px;font-weight:800;color:#0F2044;margin-bottom:16px}
+  .cf-steps{display:flex;flex-direction:column;gap:0}
+  .cf-step{display:flex;gap:14px;align-items:flex-start;position:relative}
+  .cf-step:not(:last-child)::after{content:'';position:absolute;left:15px;top:34px;width:2px;height:calc(100% - 10px);background:#E5E7EB}
+  .cf-step-num{width:32px;height:32px;border-radius:50%;background:#0F2044;color:white;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1}
+  .cf-step-body{padding-bottom:24px}
+  .cf-step-t{font-size:14px;font-weight:800;color:#0F2044;margin-bottom:3px}
+  .cf-step-d{font-size:13px;color:#6B7280;line-height:1.6}
+  .cf-form-card{background:white;border-radius:24px;padding:40px 36px;box-shadow:0 8px 48px rgba(15,32,68,.10),0 2px 8px rgba(0,0,0,.04)}
+  .cf-form-title{font-size:22px;font-weight:900;color:#0F2044;margin-bottom:4px}
+  .cf-form-sub{font-size:13px;color:#9CA3AF;margin-bottom:24px}
+  .cf-field{margin-bottom:18px}
+  .cf-field label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:7px}
+  .cf-input{width:100%;padding:13px 16px;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s,box-shadow .2s;background:white;color:#1F2937;box-sizing:border-box}
+  .cf-input:focus{border-color:#3B82F6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+  .cf-field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .cf-addr-row{display:flex;gap:8px;margin-bottom:8px}
+  .cf-addr-row .cf-input{flex:1}
+  .cf-search-btn{padding:13px 16px;background:#0F2044;color:white;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s}
+  .cf-search-btn:hover{background:#1D4ED8}
+  .cf-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .cf-chip{padding:8px 14px;border:1.5px solid #E5E7EB;border-radius:999px;font-size:13px;font-weight:600;color:#6B7280;cursor:pointer;transition:.2s;background:white;user-select:none}
+  .cf-chip:hover{border-color:#93C5FD;color:#1D4ED8}
+  .cf-chip.active{background:#EFF6FF;border-color:#3B82F6;color:#1D4ED8;font-weight:800}
+  .cf-agree-box{background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 18px;margin-bottom:20px}
+  .cf-agree-title{font-size:12px;font-weight:800;color:#374151;margin-bottom:8px}
+  .cf-agree-content{font-size:11px;color:#9CA3AF;line-height:1.7;margin-bottom:12px}
+  .cf-agree-check{display:flex;align-items:center;gap:10px;cursor:pointer}
+  .cf-agree-check input{width:16px;height:16px;accent-color:#1D4ED8;flex-shrink:0}
+  .cf-agree-check span{font-size:13px;font-weight:700;color:#0F2044}
+  .cf-error-msg{display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:14px}
+  .cf-submit-btn{width:100%;padding:16px;background:linear-gradient(135deg,#0F2044,#1D4ED8);color:white;border:none;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;transition:.2s;font-family:inherit;letter-spacing:.5px;box-shadow:0 4px 16px rgba(29,78,216,.3)}
+  .cf-submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,78,216,.4)}
+  @media(max-width:900px){.cf-page{grid-template-columns:1fr;padding:120px 16px 60px}.cf-field-row{grid-template-columns:1fr}.cf-form-card{padding:28px 20px}}
+  </style>
+
+  <div style="background:#F0F4FF;min-height:100vh">
+  <div class="cf-page">
+    <div>
+      <div class="info-badge2">✉️ 문의하기</div>
+      <h1 class="cf-info-title">궁금한 점을<br><em>편하게 남겨주세요</em></h1>
+      <p class="cf-info-sub">올케어스터디 전문 상담사가<br>빠른 시일 내에 연락드리겠습니다.</p>
+      <div class="cf-contact-cards">
+        <div class="cf-contact-card"><div class="ccc-icon ccc-blue">📞</div><div><div class="ccc-label">전화 상담</div><div class="ccc-value">010-6834-8080</div></div></div>
+        <div class="cf-contact-card" id="cf-card-center2"><div class="ccc-icon ccc-green">📍</div><div><div class="ccc-label">센터 방문 상담</div><div class="ccc-value">전국 200여 개 직영센터</div><div class="ccc-desc">가까운 센터를 찾아보세요</div></div></div>
+        <div class="cf-contact-card"><div class="ccc-icon ccc-orange">⏱️</div><div><div class="ccc-label">평균 응답 시간</div><div class="ccc-value">30분 이내</div></div></div>
+      </div>
+      <div class="cf-proc-title">📋 상담 진행 순서</div>
+      <div class="cf-steps">
+        <div class="cf-step"><div class="cf-step-num">1</div><div class="cf-step-body"><div class="cf-step-t">문의 접수</div><div class="cf-step-d">양식 작성 후 제출하시면 즉시 접수됩니다</div></div></div>
+        <div class="cf-step"><div class="cf-step-num">2</div><div class="cf-step-body"><div class="cf-step-t">담당자 배정</div><div class="cf-step-d" id="cf-step2-desc2">교육컨설턴트가 배정됩니다</div></div></div>
+        <div class="cf-step"><div class="cf-step-num">3</div><div class="cf-step-body"><div class="cf-step-t">1:1 맞춤 상담</div><div class="cf-step-d">학생 상황에 맞는 학습 방향을 안내드립니다</div></div></div>
+        <div class="cf-step"><div class="cf-step-num">4</div><div class="cf-step-body"><div class="cf-step-t" id="cf-step4-text2">센터 등록</div><div class="cf-step-d" id="cf-step4-desc2">원하시면 가까운 센터 등록으로 연결됩니다</div></div></div>
+      </div>
+    </div>
+
+    <div class="cf-form-card">
+      <div id="contact-success" style="display:none;text-align:center;padding:40px 0">
+        <div style="font-size:64px;margin-bottom:16px">✅</div>
+        <div style="font-size:22px;font-weight:900;color:#0F2044;margin-bottom:8px">문의가 접수되었습니다!</div>
+        <div style="font-size:14px;color:#6B7280;margin-bottom:24px;line-height:1.7">담당자가 확인 후<br>빠른 시일 내에 연락드리겠습니다.</div>
+        <a href="/" style="display:inline-block;background:#0F2044;color:white;padding:13px 28px;border-radius:12px;font-weight:700;text-decoration:none;font-size:14px">홈으로 돌아가기</a>
+      </div>
+      <div id="contact-form">
+        <div class="cf-form-title">📝 상담 신청서</div>
+        <div class="cf-form-sub">* 표시 항목은 필수입니다</div>
+        <div style="display:flex;border:1.5px solid #E5E7EB;border-radius:12px;overflow:hidden;margin-bottom:24px">
+          <button id="tab-academy" onclick="cfSwitchType('academy')" style="flex:1;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:none;background:#0F2044;color:white;font-family:inherit">🏫 학원 상담</button>
+          <button id="tab-tutoring" onclick="cfSwitchType('tutoring')" style="flex:1;padding:13px;font-size:14px;font-weight:700;cursor:pointer;border:none;background:white;color:#6B7280;font-family:inherit">👨‍🏫 과외 상담</button>
+        </div>
+        <div class="cf-field-row">
+          <div class="cf-field"><label>이름 <span style="color:#EF4444">*</span></label><input id="cf-name" type="text" placeholder="홍길동" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></div>
+          <div class="cf-field"><label>연락처 <span style="color:#EF4444">*</span></label><input id="cf-phone" type="tel" placeholder="010-0000-0000" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></div>
+        </div>
+        <div class="cf-field">
+          <label>학년 / 나이 <span style="color:#EF4444">*</span></label>
+          <div class="cf-chips">
+            <div class="cf-chip" onclick="cfSelectGrade(this,'초등 1학년')">초1</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 2학년')">초2</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 3학년')">초3</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 4학년')">초4</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 5학년')">초5</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 6학년')">초6</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'중학 1학년')">중1</div><div class="cf-chip" onclick="cfSelectGrade(this,'중학 2학년')">중2</div><div class="cf-chip" onclick="cfSelectGrade(this,'중학 3학년')">중3</div>
+            <div class="cf-chip" onclick="cfSelectGrade(this,'고등 1학년')">고1</div><div class="cf-chip" onclick="cfSelectGrade(this,'고등 2학년')">고2</div><div class="cf-chip" onclick="cfSelectGrade(this,'고등 3학년')">고3</div>
+            <div class="cf-chip" id="cf-chip-adult2" onclick="cfSelectGrade(this,'성인')" style="display:none">성인</div>
+          </div>
+          <input type="hidden" id="cf-grade">
+        </div>
+        <div class="cf-field">
+          <label>거주 주소 <span style="color:#EF4444">*</span></label>
+          <div class="cf-addr-row"><input id="cf-sido" type="text" placeholder="도로명 주소 (검색 또는 직접 입력)" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"><button class="cf-search-btn" onclick="searchContactAddress()">🔍 검색</button></div>
+          <input id="cf-address" type="text" placeholder="상세 주소 (예: 101동 502호)" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+        </div>
+        <div id="cf-fields-academy">
+          <div class="cf-field-row">
+            <div class="cf-field"><label>관심 센터 이름</label><input id="cf-center" type="text" placeholder="예: 수지점" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></div>
+          </div>
+          <div class="cf-field">
+            <label>원하는 수업 과목</label>
+            <div class="cf-chips"><div class="cf-chip" onclick="this.classList.toggle('active')">수학</div><div class="cf-chip" onclick="this.classList.toggle('active')">영어</div><div class="cf-chip" onclick="this.classList.toggle('active')">국어</div><div class="cf-chip" onclick="this.classList.toggle('active')">과학</div><div class="cf-chip" onclick="this.classList.toggle('active')">사회</div><div class="cf-chip" onclick="this.classList.toggle('active')">전과목</div></div>
+          </div>
+        </div>
+        <div id="cf-fields-tutoring" style="display:none">
+          <div class="cf-field-row">
+            <div class="cf-field"><label>희망 과목</label><select id="cf-subject" class="cf-input"><option value="">선택해주세요</option><option>수학</option><option>영어</option><option>국어</option><option>과학</option><option>사회</option><option>전과목</option></select></div>
+            <div class="cf-field"><label>수업 방식</label><select id="cf-method" class="cf-input"><option value="">선택해주세요</option><option>대면 (오프라인)</option><option>온라인</option><option>상관없음</option></select></div>
+          </div>
+          <div class="cf-field-row">
+            <div class="cf-field"><label>선생님 성별 선호</label><select id="cf-gender" class="cf-input"><option value="">상관없음</option><option>남자 선생님</option><option>여자 선생님</option></select></div>
+            <div class="cf-field"><label>주당 희망 수업 횟수</label><select id="cf-times" class="cf-input"><option value="">선택해주세요</option><option>주 1회</option><option>주 2회</option><option>주 3회</option><option>주 4회 이상</option></select></div>
+          </div>
+        </div>
+        <div class="cf-field">
+          <label>문의 내용</label>
+          <textarea id="cf-message" rows="4" class="cf-input" placeholder="센터 위치, 수업 방식, 등록 절차 등 궁금한 점을 적어주세요." onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
+        </div>
+        <div class="cf-agree-box">
+          <div class="cf-agree-title">🔒 개인정보 수집 및 이용 동의</div>
+          <div class="cf-agree-content"><strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주 주소, 문의내용<br><strong>수집 목적:</strong> 학습 상담 및 센터 안내 서비스 제공<br><strong>보유 기간:</strong> 상담 완료 후 1년</div>
+          <label class="cf-agree-check"><input type="checkbox" id="cf-agree"><span>개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span></label>
+        </div>
+        <div class="cf-error-msg" id="cf-error"></div>
+        <button class="cf-submit-btn" id="cf-submit" onclick="submitContact()">✉️ 문의 제출하기</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script>
+  function cfSwitchType(type) {
+    document.getElementById('cf-fields-academy').style.display = type==='academy'?'block':'none';
+    document.getElementById('cf-fields-tutoring').style.display = type==='tutoring'?'block':'none';
+    var ta=document.getElementById('tab-academy'), tt=document.getElementById('tab-tutoring');
+    ta.style.background=type==='academy'?'#0F2044':'white'; ta.style.color=type==='academy'?'white':'#6B7280'; ta.style.fontWeight=type==='academy'?'800':'700';
+    tt.style.background=type==='tutoring'?'#0F2044':'white'; tt.style.color=type==='tutoring'?'white':'#6B7280'; tt.style.fontWeight=type==='tutoring'?'800':'700';
+    document.getElementById('cf-message').placeholder = type==='academy'
+      ? '센터 위치, 수업 방식, 등록 절차 등 궁금한 점을 적어주세요.'
+      : '원하시는 과외 방향, 학습 목표 등을 자유롭게 적어주세요.';
+    var adultChip = document.getElementById('cf-chip-adult2');
+    if(adultChip) adultChip.style.display = type==='tutoring' ? 'inline-block' : 'none';
+    var step4 = document.getElementById('cf-step4-text2');
+    if(step4) step4.textContent = type==='academy' ? '센터 등록' : '교사 배정';
+    var step4d = document.getElementById('cf-step4-desc2');
+    if(step4d) step4d.textContent = type==='academy' ? '원하시면 가까운 센터 등록으로 연결됩니다' : '적합한 선생님을 매칭하여 수업을 연결해드립니다';
+    var centerCard = document.getElementById('cf-card-center2');
+    if(centerCard) centerCard.style.display = type==='tutoring' ? 'none' : 'flex';
+  }
+  function cfSelectGrade(el, val) {
+    document.querySelectorAll('.cf-chip[data-grade]').forEach(c => c.classList.remove('active'));
+    el.setAttribute('data-grade','1'); el.classList.add('active');
+    document.getElementById('cf-grade').value = val;
+  }
+  (function(){
+    var p = new URLSearchParams(window.location.search);
+    var cn = p.get('center');
+    if(cn) {
+      var el = document.getElementById('cf-center');
+      if(el) { el.value = cn; el.style.borderColor='#3B82F6'; }
+    }
+  })();
+  function searchContactAddress() {
+    function openDaum() { new daum.Postcode({ oncomplete: function(data) { document.getElementById('cf-sido').value = data.roadAddress||data.jibunAddress; document.getElementById('cf-address').focus(); }}).open(); }
+    if (typeof daum!=='undefined'&&daum.Postcode) openDaum();
+    else { var s=document.createElement('script'); s.src='https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'; s.onload=openDaum; document.head.appendChild(s); }
+  }
+  function submitContact() {
+    var name=document.getElementById('cf-name').value.trim();
+    var grade=document.getElementById('cf-grade').value;
+    var phone=document.getElementById('cf-phone').value.trim();
+    var sido=document.getElementById('cf-sido').value.trim();
+    var address=document.getElementById('cf-address').value.trim();
+    var message=document.getElementById('cf-message').value.trim();
+    var agree=document.getElementById('cf-agree').checked;
+    if (!name)    { showErr('이름을 입력해주세요.'); return; }
+    if (!grade)   { showErr('학년/나이를 선택해주세요.'); return; }
+    if (!phone)   { showErr('연락처를 입력해주세요.'); return; }
+    if (!sido)    { showErr('거주 주소를 입력해주세요.'); return; }
+    if (!agree)   { showErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
+    var btn=document.getElementById('cf-submit');
+    btn.disabled=true; btn.textContent='제출 중...'; btn.style.opacity='.7';
+    fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:sido+(address?' '+address:''),message})})
+    .then(r=>r.json()).then(data=>{
+      if(data.ok){document.getElementById('contact-form').style.display='none';document.getElementById('contact-success').style.display='block';}
+      else{btn.disabled=false;btn.textContent='✉️ 문의 제출하기';btn.style.opacity='1';showErr('전송 중 오류가 발생했습니다.');}
+    }).catch(()=>{btn.disabled=false;btn.textContent='✉️ 문의 제출하기';btn.style.opacity='1';showErr('네트워크 오류가 발생했습니다.');});
+  }
+  function showErr(msg){var el=document.getElementById('cf-error');el.textContent='⚠️ '+msg;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('cf-submit').disabled=false;document.getElementById('cf-submit').textContent='✉️ 문의 제출하기';document.getElementById('cf-submit').style.opacity='1';}
+  </script>`;
+  return wrap('문의하기 | 올케어스터디', '올케어스터디에 학습 상담 및 센터 관련 문의를 남겨주세요.', '/contact', body);
 }
 
 function makeHomePage(){
