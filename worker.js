@@ -289,7 +289,7 @@ footer{background:var(--navy);padding:28px 48px;margin-top:60px}
 .fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 .fl{font-size:14px;font-weight:900;color:white}.fl em{font-style:normal;color:var(--sky)}
 .fr{font-size:12px;color:rgba(255,255,255,.35)}
-.floats{position:fixed;right:24px;bottom:40px;display:flex;flex-direction:column;gap:10px;z-index:500}
+.floats{position:fixed;right:24px;bottom:60px;display:flex;flex-direction:column;gap:10px;z-index:500}
 .fbtn{display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;border:none;font-size:13px;font-weight:700;box-shadow:0 8px 32px rgba(15,32,68,.2);transition:all .25s;cursor:pointer;white-space:nowrap;text-decoration:none}
 .fbtn:hover{transform:translateX(-4px)}.fb1{background:var(--blue);color:white}.fb2{background:var(--navy);color:white}
 @media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}}
@@ -392,10 +392,34 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
     </div>
   </div>
 </footer>
-<div class="floats">
+<div class="floats" id="float-btns">
   <a class="fbtn fb1" href="tel:01068348080">📞 전화상담</a>
   <a class="fbtn fb2" href="/contact">✉️ 문의하기</a>
-</div>`;
+</div>
+<script>
+(function(){
+  var el = document.getElementById('float-btns');
+  var footer = document.querySelector('footer');
+  if(!el || !footer) return;
+  function update(){
+    var footerTop = footer.getBoundingClientRect().top;
+    var winH = window.innerHeight;
+    var gap = 40;
+    if(footerTop < winH){
+      el.style.position = 'absolute';
+      el.style.bottom = 'auto';
+      el.style.top = (window.scrollY + footerTop - el.offsetHeight - 60) + 'px';
+    } else {
+      el.style.position = 'fixed';
+      el.style.bottom = gap + 'px';
+      el.style.top = 'auto';
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update, {passive:true});
+  update();
+})();
+</script>`;
 
 function today(){
   const d=new Date();
@@ -1657,7 +1681,7 @@ function makeAcademyPage() {
 function makeContactPage() {
   const body = `
   <style>
-  .cf-page{max-width:1100px;margin:0 auto;padding:140px 24px 80px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
+  .cf-page{max-width:1100px;margin:0 auto;padding:180px 24px 0;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
   .info-badge2{display:inline-flex;align-items:center;gap:8px;background:#DBEAFE;color:#1D4ED8;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:16px}
   .cf-info-title{font-size:38px;font-weight:900;color:#0F2044;line-height:1.2;margin-bottom:14px;letter-spacing:-1px}
   .cf-info-title em{color:#1D4ED8;font-style:normal}
@@ -1703,10 +1727,10 @@ function makeContactPage() {
   .cf-error-msg{display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:14px}
   .cf-submit-btn{width:100%;padding:16px;background:linear-gradient(135deg,#0F2044,#1D4ED8);color:white;border:none;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;transition:.2s;font-family:inherit;letter-spacing:.5px;box-shadow:0 4px 16px rgba(29,78,216,.3)}
   .cf-submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,78,216,.4)}
-  @media(max-width:900px){.cf-page{grid-template-columns:1fr;padding:120px 16px 60px}.cf-field-row{grid-template-columns:1fr}.cf-form-card{padding:28px 20px}}
+  @media(max-width:900px){.cf-page{grid-template-columns:1fr;padding:160px 16px 60px}.cf-field-row{grid-template-columns:1fr}.cf-form-card{padding:28px 20px}}
   </style>
 
-  <div style="background:#F0F4FF;min-height:100vh">
+  <div style="background:#F0F4FF;padding-bottom:80px">
   <div class="cf-page">
     <div>
       <div class="info-badge2">✉️ 문의하기</div>
@@ -1760,8 +1784,8 @@ function makeContactPage() {
           <input id="cf-address" type="text" placeholder="상세 주소 (예: 101동 502호)" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         </div>
         <div id="cf-fields-academy">
-          <div class="cf-field-row">
-            <div class="cf-field"><label>관심 센터 이름</label><input id="cf-center" type="text" placeholder="예: 수지점" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></div>
+          <div class="cf-field">
+            <label>관심 센터 이름</label><input id="cf-center" type="text" placeholder="예: 수지점" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
           </div>
           <div class="cf-field">
             <label>원하는 수업 과목</label>
@@ -2689,9 +2713,9 @@ function switchFind(tab){
     var windowH = window.innerHeight;
     var floatsH = floats.offsetHeight;
     if(footerTop < windowH){
-      floats.style.bottom = (windowH - footerTop + 16) + 'px';
+      floats.style.bottom = (windowH - footerTop + 60) + 'px';
     } else {
-      floats.style.bottom = '40px';
+      floats.style.bottom = '60px';
     }
   }
   window.addEventListener('scroll', adjustFloats);
