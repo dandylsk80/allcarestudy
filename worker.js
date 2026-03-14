@@ -307,6 +307,12 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 .gnb{margin-left:auto;display:flex;align-items:center;gap:4px}
 .gnb-link{padding:8px 18px;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;text-decoration:none;transition:all .18s}
 .gnb-link:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}
+.gnb-drop-wrap{position:relative;display:inline-block}
+.gnb-drop{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:white;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);padding:8px;min-width:130px;z-index:1000}
+.gnb-drop::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:6px solid white}
+.gnb-drop-wrap:hover .gnb-drop{display:block}
+.gnb-drop-item{display:block;padding:9px 16px;font-size:13px;font-weight:700;color:#374151;text-decoration:none;border-radius:8px;white-space:nowrap}
+.gnb-drop-item:hover{background:#EFF6FF;color:#1D4ED8}
 @media(max-width:768px){.hw{padding:0 16px;height:72px;gap:10px}.logo-sub{display:none}.logo-main{font-size:15px}.logo-mark{width:32px;height:32px}.vpill{padding:4px 10px}.vpill .vc{font-size:13px}.gnb{display:none}}
 `;
 
@@ -330,7 +336,7 @@ const HEADER = `<header>
     <nav class="gnb">
       <a href="/seoul" class="gnb-link">지역별수업</a>
       <a href="/seoul/gangnam/daichi/high/math" class="gnb-link">과목수업</a>
-      <a href="/academy/all" class="gnb-link">학원수업</a>
+      <div class="gnb-drop-wrap"><a href="/academy/all" class="gnb-link gnb-has-drop">학원수업 <svg style="width:12px;height:12px;vertical-align:middle;margin-left:2px" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></a><div class="gnb-drop"><a href="/academy/intro" class="gnb-drop-item">학원소개</a><a href="/academy/all" class="gnb-drop-item">센터찾기</a></div></div>
     </nav>
   </div>
 </header>`;
@@ -355,7 +361,7 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
     <nav class="gnb">
       <a href="/seoul" class="gnb-link" style="color:rgba(255,255,255,0.85)">지역별수업</a>
       <a href="/seoul/gangnam/daichi/high/math" class="gnb-link" style="color:rgba(255,255,255,0.85)">과목수업</a>
-      <a href="/academy/all" class="gnb-link" style="color:rgba(255,255,255,0.85)">학원수업</a>
+      <div class="gnb-drop-wrap"><a href="/academy/all" class="gnb-link gnb-has-drop" style="color:rgba(255,255,255,0.85)">학원수업 <svg style="width:12px;height:12px;vertical-align:middle;margin-left:2px" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></a><div class="gnb-drop"><a href="/academy/intro" class="gnb-drop-item">학원소개</a><a href="/academy/all" class="gnb-drop-item">센터찾기</a></div></div>
     </nav>
   </div>
 </header>`;
@@ -769,89 +775,698 @@ function makeArticlePage(rk, ak, gk, sk) {
 // ── 홈페이지 ──────────────────────────────────────────────
 
 // ── 학원 찾기 페이지 ──────────────────────────
-function makeAcademyPage(sidoEn) {
-  const SIDO_ORDER = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','강원','제주'];
-  const SIDO_EN_MAP = {
-    '서울':'seoul','경기':'gyeonggi','인천':'incheon','대전':'daejeon','세종':'sejong',
-    '대구':'daegu','광주':'gwangju','울산':'ulsan','부산':'busan','충북':'chungbuk',
-    '충남':'chungnam','경북':'gyeongbuk','경남':'gyeongnam','전북':'jeonbuk','강원':'gangwon','제주':'jeju'
-  };
-  const SIDO_LABEL = {
-    seoul:'서울특별시',gyeonggi:'경기도',incheon:'인천광역시',daejeon:'대전광역시',sejong:'세종특별시',
-    daegu:'대구광역시',gwangju:'광주광역시',ulsan:'울산광역시',busan:'부산광역시',chungbuk:'충청북도',
-    chungnam:'충청남도',gyeongbuk:'경상북도',gyeongnam:'경상남도',jeonbuk:'전북특별자치도',gangwon:'강원특별자치도',jeju:'제주특별자치도'
-  };
 
-  const sidoLabel = sidoEn === 'all' ? '전체' : (SIDO_LABEL[sidoEn] || '전체');
-  const filtered = sidoEn === 'all' ? CENTERS : CENTERS.filter(c => c.sido_en === sidoEn);
+function makeAcademyIntroPage() {
+  const introStyle = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0F2044;--blue:#1D4ED8;--blue2:#3B82F6;--blue-light:#EFF6FF;--border:#E5E7EB;--gray:#6B7280;--light:#F8FAFC}
+body{font-family:'Noto Sans KR',sans-serif;color:#1F2937;background:#fff;overflow-x:hidden}
 
-  // 현재 시도의 구/시 목록 (센터 많은 순)
-  const districtMap = {};
-  filtered.forEach(c => { districtMap[c.district] = (districtMap[c.district]||0)+1; });
-  const districts = Object.entries(districtMap).sort((a,b)=>b[1]-a[1]);
+/* ─ 히어로 ─ */
+.hero{background:var(--navy);min-height:500px;padding:140px 48px 100px;text-align:center;position:relative;overflow:hidden}
 
-  // 시도 탭 (지정 순서, 센터 있는 것만)
-  const existingSido = new Set(CENTERS.map(c => c.sido));
-  const sidoTabs = SIDO_ORDER.filter(s => existingSido.has(s)).map(s => {
-    const en = SIDO_EN_MAP[s];
-    const cnt = CENTERS.filter(c=>c.sido===s).length;
-    const active = en === sidoEn;
-    return `<a href="/academy/${en}" style="display:inline-flex;align-items:center;gap:4px;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;border:1.5px solid ${active?'#1D4ED8':'#E5E7EB'};${active?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">${s}<span style="font-size:11px;opacity:0.7">${cnt}</span></a>`;
-  });
-  // 전체 탭 앞에 추가
-  const totalActive = sidoEn === 'all';
-  sidoTabs.unshift(`<a href="/academy/all" style="display:inline-flex;align-items:center;gap:4px;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;border:1.5px solid ${totalActive?'#1D4ED8':'#E5E7EB'};${totalActive?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">전체<span style="font-size:11px;opacity:0.7">${CENTERS.length}</span></a>`);
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:32px 32px}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(59,130,246,.25) 0%,transparent 70%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 18px;font-size:13px;color:rgba(255,255,255,.8);font-weight:600;margin-bottom:24px}
+.hero-badge b{color:#60A5FA}
+.hero-title{font-size:52px;font-weight:900;color:white;line-height:1.15;letter-spacing:-1.5px;margin-bottom:20px}
+.hero-title em{color:#60A5FA;font-style:normal}
+.hero-desc{font-size:17px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:36px}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-white{background:white;color:var(--navy);padding:14px 32px;border-radius:12px;font-size:15px;font-weight:800;border:none;cursor:pointer;transition:.2s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
+.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,.3);color:white;padding:14px 32px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s}
+.btn-outline:hover{background:rgba(255,255,255,.1)}
+.breadcrumb{background:white;padding:14px 48px;font-size:13px;color:#9CA3AF;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--blue)}
 
-  // 구/시 서브탭 (2개 이상일 때만)
-  let districtBar = '';
-  if (districts.length >= 2) {
-    const btns = [`<a href="/academy/${sidoEn}" style="padding:5px 14px;border-radius:999px;border:1.5px solid ${sidoEn&&!filtered.some(c=>false)?'#93C5FD':'#E5E7EB'};background:#EFF6FF;color:#1D4ED8;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap">전체 (${filtered.length})</a>`];
-    districts.forEach(([d,cnt]) => {
-      btns.push(`<a href="/academy/${sidoEn}?d=${encodeURIComponent(d)}" style="padding:5px 14px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap">${d} (${cnt})</a>`);
-    });
-    districtBar = `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;padding:14px 16px;background:white;border-radius:12px;border:1px solid #E5E7EB">${btns.join('')}</div>`;
+/* ─ 통계 ─ */
+.stats-wrap{background:white;padding:48px 48px 80px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;max-width:900px;margin:0 auto;background:white;box-shadow:0 8px 40px rgba(15,32,68,.08)}
+.stat{padding:36px 32px;text-align:center;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-num{font-size:42px;font-weight:900;color:var(--navy);line-height:1}
+.stat-num sup{font-size:20px;vertical-align:super}
+.stat-label{font-size:13px;color:var(--gray);margin-top:6px;font-weight:500}
+
+/* ─ 공통 태그/타이틀 ─ */
+.tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;letter-spacing:.5px;margin-bottom:14px}
+.sec-title{font-size:34px;font-weight:900;color:var(--navy);line-height:1.3;margin-bottom:16px;letter-spacing:-.5px}
+.sec-title em{color:var(--blue);font-style:normal}
+.sec-desc{font-size:15px;color:var(--gray);line-height:1.9}
+.sec-desc strong{color:var(--navy)}
+
+/* ─ 학습법: 좌텍스트 + 우포인트카드 ─ */
+.method-section{padding:100px 48px 80px;background:white}
+.method-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.method-cards{display:flex;flex-direction:column;gap:14px}
+.method-card{background:var(--light);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:.2s}
+.method-card:hover{border-color:#93C5FD;background:var(--blue-light)}
+.mc-icon{width:40px;height:40px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.mc-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.mc-desc{font-size:13px;color:var(--gray);line-height:1.6}
+
+/* ─ 차별화: 네이비 풀배경 3카드 ─ */
+.diff-section{background:var(--navy);padding:80px 48px}
+.diff-inner{max-width:1100px;margin:0 auto}
+.diff-header{text-align:center;margin-bottom:56px}
+.diff-title{font-size:36px;font-weight:900;color:white;line-height:1.3}
+.diff-title em{color:#60A5FA;font-style:normal}
+.diff-desc{font-size:16px;color:rgba(255,255,255,.6);margin-top:12px;line-height:1.8}
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.diff-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px 24px;transition:.2s}
+.diff-card:hover{background:rgba(255,255,255,.1);border-color:rgba(96,165,250,.4)}
+.diff-num{font-size:13px;font-weight:900;color:#60A5FA;margin-bottom:12px;letter-spacing:1px}
+.diff-card-title{font-size:18px;font-weight:900;color:white;margin-bottom:10px}
+.diff-card-desc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.75}
+
+/* ─ 학습목표: 회색 배경 3분할 ─ */
+.goal-section{padding:80px 48px;background:var(--light)}
+.goal-inner{max-width:1100px;margin:0 auto}
+.goal-header{text-align:center;margin-bottom:48px}
+.goal-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:20px;overflow:hidden}
+.goal-card{background:white;padding:40px 32px;text-align:center;position:relative}
+.goal-card::before{content:attr(data-num);position:absolute;top:24px;right:24px;font-size:11px;font-weight:900;color:#E5E7EB;letter-spacing:1px}
+.goal-icon{width:64px;height:64px;border-radius:16px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
+.goal-card-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:10px}
+.goal-card-desc{font-size:14px;color:var(--gray);line-height:1.75}
+
+/* ─ 4C 프로세스: 흰 배경, 좌텍스트+우그리드 ─ */
+.process-section{padding:80px 48px;background:white}
+.process-inner{max-width:1000px;margin:0 auto}
+.process-header{text-align:center;margin-bottom:48px}
+.process-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.process-text ul{margin-top:20px;display:flex;flex-direction:column;gap:10px;list-style:none}
+.process-text li{display:flex;gap:10px;font-size:14px;color:var(--gray);line-height:1.6}
+.process-text li::before{content:'';width:6px;height:6px;background:var(--blue);border-radius:50%;flex-shrink:0;margin-top:7px}
+.process-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative}
+.p-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88px;height:88px;background:white;border-radius:50%;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:var(--navy);text-align:center;line-height:1.3;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:2}
+.pc{border-radius:16px;padding:28px 22px;color:white}
+.pc-1{background:var(--navy)}.pc-2{background:#1E40AF}.pc-3{background:#1D4ED8}.pc-4{background:#2563EB}
+.pc-en{font-size:15px;font-weight:900;margin-bottom:4px}
+.pc-en span{opacity:.5}
+.pc-kr{font-size:13px;font-weight:700;opacity:.85}
+
+/* ─ 3대 관리: 회색 배경, 탭 전환 ─ */
+.manage-section{padding:80px 48px;background:var(--light)}
+.manage-inner{max-width:1000px;margin:0 auto}
+.manage-header{text-align:center;margin-bottom:40px}
+.manage-tabs{display:flex;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:28px;background:white}
+.mtab{flex:1;padding:16px;text-align:center;font-size:14px;font-weight:700;color:var(--gray);cursor:pointer;border:none;background:white;transition:.2s;border-right:1px solid var(--border)}
+.mtab:last-child{border-right:none}
+.mtab.active{background:var(--navy);color:white}
+.manage-panel{display:none;background:white;border:1.5px solid var(--border);border-radius:16px;padding:40px;gap:48px;align-items:start}
+.manage-panel.active{display:grid;grid-template-columns:1fr 1fr}
+.mp-tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+.mp-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:14px}
+.mp-desc{font-size:14px;color:var(--gray);line-height:1.9}
+.mp-desc strong{color:var(--navy)}
+.mp-visual{background:var(--light);border-radius:14px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:72px;border:1px solid var(--border)}
+.mp-points{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.mp-point{display:flex;gap:10px;font-size:13px;color:var(--gray)}
+.mp-point::before{content:'✓';color:var(--blue);font-weight:900;flex-shrink:0}
+.mp-img-grid{position:relative;border-radius:14px;overflow:hidden}
+.mp-img-grid .mslide{display:none;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px}
+.mp-img-grid .mslide.active{display:block}
+.mp-img-dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.mp-img-dots button{width:7px;height:7px;border-radius:50%;border:none;background:var(--border);cursor:pointer;padding:0;transition:.2s}
+.mp-img-dots button.active{background:var(--navy);width:20px;border-radius:4px}
+.mp-img-nav{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:2;transition:.2s}
+.mp-img-nav:hover{background:white;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.mp-img-nav.prev{left:8px}.mp-img-nav.next{right:8px}
+
+/* ─ AI: 다크 네이비, 배경 워터마크 ─ */
+.ai-section{padding:80px 48px;background:var(--navy);position:relative;overflow:hidden}
+.ai-section::before{content:'AI';position:absolute;right:-40px;top:50%;transform:translateY(-50%);font-size:280px;font-weight:900;color:rgba(255,255,255,.03);line-height:1;pointer-events:none}
+.ai-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.ai-header{margin-bottom:48px}
+.ai-title{font-size:40px;font-weight:900;color:white;letter-spacing:-1px;margin-bottom:10px}
+.ai-title span{color:#60A5FA}
+.ai-sub{font-size:15px;color:rgba(255,255,255,.55);line-height:1.8}
+.ai-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ai-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px 24px;transition:.2s}
+.ai-card:hover{background:rgba(255,255,255,.09);border-color:rgba(96,165,250,.3);transform:translateY(-3px)}
+.ai-card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.ai-card-icon{width:44px;height:44px;background:rgba(96,165,250,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.ai-card-name{font-size:18px;font-weight:900;color:white}
+.ai-card-range{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.ai-card-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:16px}
+.ai-steps{display:flex;gap:6px;flex-wrap:wrap}
+.ai-step{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,.7);font-weight:700}
+
+/* ─ 후기: 슬라이더 ─ */
+.review-section{padding:80px 0;background:white}
+.review-inner{max-width:900px;margin:0 auto;padding:0 48px}
+.review-header{text-align:center;margin-bottom:40px}
+.slider-wrap{position:relative;display:flex;align-items:center;gap:0;margin-bottom:24px}
+.slider-viewport{overflow:hidden;flex:1}
+.slider-track{display:flex;gap:20px;transition:transform .4s cubic-bezier(.4,0,.2,1);will-change:transform}
+.review-card{flex:0 0 calc(33.333% - 14px);border:1.5px solid var(--border);border-radius:16px;padding:28px 26px;transition:border-color .2s,box-shadow .2s;background:white}
+.review-card:hover{border-color:#93C5FD;box-shadow:0 4px 20px rgba(29,78,216,.08)}
+.review-quotes{font-size:48px;font-weight:900;color:#DBEAFE;line-height:.8;margin-bottom:8px;font-family:Georgia,serif}
+.review-badges{display:flex;gap:8px;margin-bottom:10px}
+.rb{padding:3px 12px;border-radius:999px;font-size:12px;font-weight:700}
+.rb-h{background:#FEE2E2;color:#DC2626}
+.rb-m{background:#DBEAFE;color:#1D4ED8}
+.rb-e{background:#FEF3C7;color:#D97706}
+.rb-s{background:var(--light);color:var(--gray)}
+.review-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.review-text{font-size:13px;color:var(--gray);line-height:1.8}
+.slider-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);background:white;font-size:16px;cursor:pointer;flex-shrink:0;transition:.2s;color:var(--navy);display:flex;align-items:center;justify-content:center;margin:0 12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.slider-btn:hover{background:var(--navy);color:white;border-color:var(--navy)}
+.slider-dots{display:flex;justify-content:center;gap:8px}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;border:none}
+.sdot.active{background:var(--navy);width:24px;border-radius:4px}
+
+/* ─ CTA ─ */
+.cta-section{background:linear-gradient(135deg,var(--navy) 0%,#1D4ED8 100%);padding:80px 48px;text-align:center}
+.cta-title{font-size:34px;font-weight:900;color:white;margin-bottom:10px;letter-spacing:-.5px}
+.cta-sub{font-size:16px;color:rgba(255,255,255,.65);margin-bottom:32px;line-height:1.7}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+@media(max-width:900px){
+  .hero{padding:100px 24px 80px}.hero-title{font-size:34px}
+  .stats-wrap{padding:0 24px 60px}.stats{grid-template-columns:1fr}
+  .stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}
+  .method-inner,.diff-grid,.ai-cards,.process-layout,.goal-cards{grid-template-columns:1fr}
+  .manage-panel.active{grid-template-columns:1fr}
+  .method-section,.diff-section,.goal-section,.process-section,.manage-section,.ai-section,.review-section,.cta-section{padding:60px 24px}
+  .breadcrumb{padding:14px 24px}
+}`;
+  const introScript = `function switchTab(idx){
+  document.querySelectorAll('.mtab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.manage-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+}
+
+// 이미지 슬라이더 (탭 내)
+function mslideGo(sid, idx) {
+  const wrap = document.getElementById('ms-'+sid);
+  const dotsWrap = document.getElementById('msd-'+sid);
+  if(!wrap) return;
+  const slides = wrap.querySelectorAll('.mslide');
+  const dots = dotsWrap.querySelectorAll('button');
+  slides.forEach((s,i) => s.classList.toggle('active', i===idx));
+  dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+  wrap._cur = idx;
+}
+function mslideMove(sid, dir) {
+  const wrap = document.getElementById('ms-'+sid);
+  if(!wrap) return;
+  const total = wrap.querySelectorAll('.mslide').length;
+  const cur = wrap._cur || 0;
+  const next = (cur + dir + total) % total;
+  mslideGo(sid, next);
+}
+// 자동 슬라이드
+['plan','study','life'].forEach(sid => {
+  let cur = 0;
+  setInterval(() => {
+    const wrap = document.getElementById('ms-'+sid);
+    if(!wrap) return;
+    const total = wrap.querySelectorAll('.mslide').length;
+    cur = (cur + 1) % total;
+    mslideGo(sid, cur);
+  }, 3000);
+});
+
+// 카운트업
+(function(){
+  const targets = [
+    {id:'cnt-1', end:200, duration:1800},
+    {id:'cnt-2', end:15,  duration:1200},
+    {id:'cnt-3', end:98,  duration:1600},
+  ];
+  let started = false;
+
+  function countUp(el, end, duration){
+    const start = performance.now();
+    function step(now){
+      const progress = Math.min((now - start) / duration, 1);
+      // ease out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(ease * end);
+      if(progress < 1) requestAnimationFrame(step);
+      else el.textContent = end;
+    }
+    requestAnimationFrame(step);
   }
 
-  const cards = filtered.map((c,i) => {
-    const dirHtml = c.directions
-      ? `<div id="dir-${i}" style="display:none;font-size:11px;color:#374151;line-height:1.6;background:#F8FAFC;border-radius:8px;padding:8px 10px;margin-top:6px;white-space:pre-line">${c.directions.replace(/</g,'&lt;')}</div><button onclick="var d=document.getElementById('dir-${i}');var b=document.getElementById('dirb-${i}');if(d.style.display==='none'){d.style.display='block';b.textContent='📍 위치안내 접기'}else{d.style.display='none';b.textContent='📍 위치안내 보기'}" id="dirb-${i}" style="margin-top:4px;background:none;border:none;color:#3B82F6;font-size:11px;font-weight:700;cursor:pointer;padding:0">📍 위치안내 보기</button>`
-      : '';
-    const cname = (c.officialName||c.name).replace(/'/g,"\\'").replace(/"/g,'&quot;');
-    return `<div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:20px 22px;display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,0.10)';this.style.borderColor='#93C5FD'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#E5E7EB'">
-      <div style="margin-bottom:10px">
-        <div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:3px">${c.sido} ${c.district}</div>
-        <div style="font-size:16px;font-weight:900;color:#0F2044;line-height:1.3">${c.officialName||c.name}</div>
-        ${c.regNo?`<div style="font-size:10px;color:#9CA3AF;margin-top:2px">${c.regNo}</div>`:''}
-      </div>
-      <div style="font-size:11px;color:#6B7280;line-height:1.5;display:flex;gap:5px;align-items:flex-start;margin-bottom:6px"><span style="flex-shrink:0">📍</span><span>${c.address}</span></div>
-      ${dirHtml}
-      <div style="margin-top:auto;padding-top:12px;border-top:1px solid #F1F5F9;display:flex;flex-direction:column;gap:6px">
-        ${c.target_elem?`<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#FEF3C7;color:#D97706;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">초등</span><span style="font-size:12px;color:#374151;line-height:1.5">${c.target_elem}</span></div>`:''}
-        ${c.target_mid?`<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#DCFCE7;color:#16A34A;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">중등</span><span style="font-size:12px;color:#374151;line-height:1.5">${c.target_mid}</span></div>`:''}
-        ${c.target_high?`<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#EFF6FF;color:#2563EB;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span style="font-size:12px;color:#374151;line-height:1.5">${c.target_high}</span></div>`:''}
-        ${!c.target_elem&&!c.target_mid&&!c.target_high?'<div style="font-size:11px;color:#D1D5DB">대상학교 정보 없음</div>':''}
-      </div>
-      <button onclick="openContactModal('${c.sido}','${c.district}','${cname}')" style="display:block;width:100%;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-top:14px;border:none;cursor:pointer;font-family:inherit">✉️ 문의하기</button>
-    </div>`;
-  }).join('');
+  function startAll(){
+    if(started) return;
+    started = true;
+    targets.forEach((t, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(t.id);
+        if(el) countUp(el, t.end, t.duration);
+      }, i * 150);
+    });
+  }
 
-  const modalHtml = `
+  // IntersectionObserver로 화면에 보일 때 시작
+  const statsEl = document.querySelector('.stats');
+  if(statsEl && 'IntersectionObserver' in window){
+    new IntersectionObserver((entries, obs) => {
+      if(entries[0].isIntersecting){ startAll(); obs.disconnect(); }
+    }, {threshold: 0.3}).observe(statsEl);
+  } else {
+    startAll();
+  }
+})();
+
+// 슬라이더
+(function(){
+  const track = document.getElementById('sliderTrack');
+  const dotsEl = document.getElementById('sliderDots');
+  if(!track) return;
+
+  const cards = track.querySelectorAll('.review-card');
+  const total = cards.length;
+  let perView = window.innerWidth < 700 ? 1 : window.innerWidth < 1000 ? 2 : 3;
+  let cur = 0;
+  const maxIdx = total - perView;
+
+  // 도트 생성
+  for(let i=0;i<=maxIdx;i++){
+    const d = document.createElement('button');
+    d.className = 'sdot' + (i===0?' active':'');
+    d.onclick = ()=>goTo(i);
+    dotsEl.appendChild(d);
+  }
+
+  function getCardW(){
+    const gap = 20;
+    const vw = track.parentElement.offsetWidth;
+    return (vw - gap*(perView-1)) / perView;
+  }
+
+  function goTo(idx){
+    cur = Math.max(0, Math.min(idx, maxIdx));
+    const w = getCardW() + 20;
+    track.style.transform = \`translateX(-\${cur * w}px)\`;
+    document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+  }
+
+  window.slideMove = function(dir){ goTo(cur+dir); };
+
+  // 카드 너비 동적 적용
+  function resize(){
+    perView = window.innerWidth < 700 ? 1 : window.innerWidth < 1000 ? 2 : 3;
+    const w = getCardW();
+    cards.forEach(c=>c.style.flex=\`0 0 \${w}px\`);
+    goTo(cur);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // 자동 슬라이드
+  let auto = setInterval(()=>{ cur >= maxIdx ? goTo(0) : goTo(cur+1); }, 4000);
+  track.parentElement.addEventListener('mouseenter',()=>clearInterval(auto));
+  track.parentElement.addEventListener('mouseleave',()=>{ auto=setInterval(()=>{ cur>=maxIdx?goTo(0):goTo(cur+1); },4000); });
+
+  // 터치 스와이프
+  let sx=0;
+  track.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  track.addEventListener('touchend',e=>{ const dx=sx-e.changedTouches[0].clientX; if(Math.abs(dx)>40) slideMove(dx>0?1:-1); },{passive:true});
+})();`;
+  const introBody = `<section class="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><b>학원소개</b> 올케어스터디 코칭센터</div>
+    <h1 class="hero-title">검증된 학습코칭으로<br><em>성과를 만듭니다</em></h1>
+    <p class="hero-desc">전국 200여 개 직영센터, 15년의 노하우.<br>올케어스터디가 검증한 학습코칭 시스템을 소개합니다.</p>
+    <div class="hero-btns">
+      <button class="btn-white">📍 센터 찾기</button>
+      <button class="btn-outline">✉️ 무료 상담</button>
+    </div>
+  </div>
+</section>
+
+<div class="breadcrumb"><a href="/">홈</a> &nbsp;/&nbsp; <a href="/academy/all">학원수업</a> &nbsp;/&nbsp; <span>학원소개</span></div>
+
+<!-- 통계 -->
+<div class="stats-wrap">
+  <div class="stats">
+    <div class="stat"><div class="stat-num"><span id="cnt-1">0</span><sup>+</sup></div><div class="stat-label">전국 직영 코칭센터</div></div>
+    <div class="stat"><div class="stat-num"><span id="cnt-2">0</span><sup>년+</sup></div><div class="stat-label">학습코칭 전문 노하우</div></div>
+    <div class="stat"><div class="stat-num"><span id="cnt-3">0</span><sup>%</sup></div><div class="stat-label">학부모 재등록률</div></div>
+  </div>
+</div>
+
+<!-- 학습법: 좌텍스트 + 우카드 -->
+<section class="method-section">
+  <div class="method-inner">
+    <div>
+      <div class="tag">개인별 최적 학습법</div>
+      <h2 class="sec-title">개별 진단 기반의<br><em>맞춤형 학습 설계</em></h2>
+      <p class="sec-desc">상위권 학생들의 공통점은 자신에게 맞는 학습 방법을 정확히 알고 있다는 것입니다.<br><br>올케어스터디는 <strong>개별 진단검사를 통해 학생의 학습 유형과 취약점을 분석</strong>하고, 데이터 기반의 최적 학습 방법을 설계합니다.</p>
+      <p style="margin-top:14px;font-size:13px;color:#9CA3AF">* 세부 운영 방식은 센터마다 다를 수 있습니다.</p>
+    </div>
+    <div class="method-cards">
+      <div class="method-card"><div class="mc-icon">🔍</div><div><div class="mc-title">학습 유형 진단</div><div class="mc-desc">시각형·청각형·읽기형 등 아이의 학습 스타일을 정밀 분석합니다.</div></div></div>
+      <div class="method-card"><div class="mc-icon">📊</div><div><div class="mc-title">취약점 데이터 분석</div><div class="mc-desc">단원별·유형별 취약점을 파악하여 집중 보완 전략을 수립합니다.</div></div></div>
+      <div class="method-card"><div class="mc-icon">✏️</div><div><div class="mc-title">맞춤 학습 루틴 설계</div><div class="mc-desc">분석 결과를 바탕으로 아이에게 최적화된 학습 일정을 설계합니다.</div></div></div>
+      <div class="method-card"><div class="mc-icon">📈</div><div><div class="mc-title">주기적 성과 모니터링</div><div class="mc-desc">월별 학습 성취도를 점검하고 방향을 지속적으로 보완합니다.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 차별화: 네이비 풀배경 -->
+<section class="diff-section">
+  <div class="diff-inner">
+    <div class="diff-header">
+      <div class="tag" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)">올케어스터디의 차별점</div>
+      <h2 class="diff-title">일반 학원과는<br><em>근본적으로 다릅니다</em></h2>
+      <p class="diff-desc">TLC 국가공인 자격을 취득한 전문 코치가<br>학습 습관 형성부터 성적 향상까지 체계적으로 관리합니다.</p>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card"><div class="diff-num">POINT 01</div><div class="diff-card-title">1:1 전문 코칭 시스템</div><div class="diff-card-desc">과외식 수업 방식을 도입해 개별 맞춤 교재를 활용한 1:1 학습 코칭을 제공합니다. 단순 진도 관리가 아닌 완전한 이해를 목표로 합니다.</div></div>
+      <div class="diff-card"><div class="diff-num">POINT 02</div><div class="diff-card-title">둥지형 참여 학습 구조</div><div class="diff-card-desc">교사를 중심으로 학생들이 둘러 앉는 둥지형 구조로 수업 참여도와 학습 몰입도를 실질적으로 향상시킵니다.</div></div>
+      <div class="diff-card"><div class="diff-num">POINT 03</div><div class="diff-card-title">전방위 생활 밀착 관리</div><div class="diff-card-desc">성적은 물론 수행평가, 생활 습관, 심리적 상태까지 관리합니다. 학교생활과 학습이 선순환 구조를 이루도록 지원합니다.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 학습목표: 회색 배경 3분할 -->
+<section class="goal-section">
+  <div class="goal-inner">
+    <div class="goal-header">
+      <div class="tag">학습목표</div>
+      <h2 class="sec-title" style="text-align:center">올바른 학습 습관 형성으로<br><em>자기주도적 학습 역량을 완성</em>합니다</h2>
+    </div>
+    <div class="goal-cards">
+      <div class="goal-card" data-num="01"><div class="goal-icon">🔍</div><div class="goal-card-title">나만의 공부 방법 완성</div><div class="goal-card-desc">학습 취약점 분석을 통한 최적 공부 스타일 완성</div></div>
+      <div class="goal-card" data-num="02"><div class="goal-icon">📖</div><div class="goal-card-title">자기주도학습 능력 강화</div><div class="goal-card-desc">1:1 맞춤 코칭으로 학습동기와 지속성 강화</div></div>
+      <div class="goal-card" data-num="03"><div class="goal-icon">🏆</div><div class="goal-card-title">학습 자신감 향상</div><div class="goal-card-desc">지속적 성취 경험을 통한 학습 자신감 및 도전 의식 고취</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4C 프로세스: 좌텍스트 + 우다이어그램 -->
+<section class="process-section">
+  <div class="process-inner">
+    <div class="process-header">
+      <div class="tag">4C 프로세스</div>
+      <h2 class="sec-title" style="text-align:center">관리가 되는 학원,<br><em>올케어스터디의 체계</em></h2>
+    </div>
+    <div class="process-layout">
+      <div class="process-text">
+        <p class="sec-desc">올케어스터디의 4C 프로세스는 <strong>학생 개개인의 학습 성향과 수준을 정밀 진단</strong>하여 최적화된 맞춤 학습을 설계하는 체계적인 관리 시스템입니다.</p>
+        <ul>
+          <li>주기적인 진단과 상담으로 학습 방향을 지속적으로 조정합니다</li>
+          <li>학생 스스로 학습의 주도권을 갖고 성장할 수 있도록 체계적으로 관리합니다</li>
+          <li>4단계가 순환되며 학습 완성도를 점진적으로 높여갑니다</li>
+        </ul>
+      </div>
+      <div class="process-grid">
+        <div class="pc pc-1"><div class="pc-en"><span>C</span>heck</div><div class="pc-kr">맞춤 진단</div></div>
+        <div class="pc pc-2"><div class="pc-en"><span>C</span>urriculum</div><div class="pc-kr">맞춤 처방</div></div>
+        <div class="pc pc-3"><div class="pc-en"><span>C</span>onsulting</div><div class="pc-kr">맞춤 상담</div></div>
+        <div class="pc pc-4"><div class="pc-en"><span>C</span>oaching</div><div class="pc-kr">맞춤 지도</div></div>
+        <div class="p-center">4C<br>프로세스</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3대 관리: 탭 전환 -->
+<section class="manage-section">
+  <div class="manage-inner">
+    <div class="manage-header">
+      <div class="tag">3대 관리 시스템</div>
+      <h2 class="sec-title" style="text-align:center">성과를 만드는<br><em>올케어스터디의 체계적 관리</em></h2>
+    </div>
+    <div class="manage-tabs">
+      <button class="mtab active" onclick="switchTab(0)">📋 플랜관리</button>
+      <button class="mtab" onclick="switchTab(1)">✏️ 학습관리</button>
+      <button class="mtab" onclick="switchTab(2)">💬 생활관리</button>
+    </div>
+    <div class="manage-panel active" id="tab-0">
+      <div>
+        <div class="mp-tag">계획 · 실행 · 점검</div>
+        <div class="mp-title">플랜관리</div>
+        <p class="mp-desc">단순히 공부를 독려하는 데 그치지 않습니다.<br><br>전담 코치가 학생과 함께 학습 목표를 설정하고 우선순위를 수립하여, <strong>학습 시간과 분량을 스스로 관리하는 역량</strong>을 체계적으로 길러줍니다.</p>
+        <div class="mp-points">
+          <div class="mp-point">주간 · 월간 학습 목표 공동 수립</div>
+          <div class="mp-point">계획-실행-점검 반복 사이클 운영</div>
+          <div class="mp-point">자기주도학습 핵심 역량 단계적 강화</div>
+        </div>
+      </div>
+      <div>
+        <div class="mp-img-grid" id="ms-plan">
+          <button class="mp-img-nav prev" onclick="mslideMove('plan',-1)">&#8592;</button>
+        <img class="mslide active" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/11.png" alt="img1">
+        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/12.png" alt="img2">
+        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/13.png" alt="img3">
+        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/14.png" alt="img4">
+          <button class="mp-img-nav next" onclick="mslideMove('plan',1)">&#8594;</button>
+        </div>
+        <div class="mp-img-dots" id="msd-plan">
+        <button class="active" onclick="mslideGo('plan',0)"></button>
+        <button class="" onclick="mslideGo('plan',1)"></button>
+        <button class="" onclick="mslideGo('plan',2)"></button>
+        <button class="" onclick="mslideGo('plan',3)"></button>
+        </div>
+      </div>
+    </div>
+    <div class="manage-panel" id="tab-1">
+      <div>
+        <div class="mp-tag">수준별 · 유형별 맞춤</div>
+        <div class="mp-title">학습관리</div>
+        <p class="mp-desc">학생의 현재 수준과 이해도에 정확히 맞춘 교재와 학습법을 적용합니다.<br><br><strong>기초부터 단계적으로 완성도 있게 지도</strong>하며, 취약 개념은 반복 학습을 통해 완전히 이해할 때까지 관리합니다.</p>
+        <div class="mp-points">
+          <div class="mp-point">개별 수준별 맞춤 교재 및 커리큘럼</div>
+          <div class="mp-point">오답노트 · 백지노트 · 마인드맵 활용</div>
+          <div class="mp-point">취약 개념 완전 이해까지 반복 관리</div>
+        </div>
+      </div>
+      <div>
+        <div class="mp-img-grid" id="ms-study">
+          <button class="mp-img-nav prev" onclick="mslideMove('study',-1)">&#8592;</button>
+        <img class="mslide active" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/21.png" alt="img1">
+        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/22.png" alt="img2">
+        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/23.png" alt="img3">
+        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/24.png" alt="img4">
+          <button class="mp-img-nav next" onclick="mslideMove('study',1)">&#8594;</button>
+        </div>
+        <div class="mp-img-dots" id="msd-study">
+        <button class="active" onclick="mslideGo('study',0)"></button>
+        <button class="" onclick="mslideGo('study',1)"></button>
+        <button class="" onclick="mslideGo('study',2)"></button>
+        <button class="" onclick="mslideGo('study',3)"></button>
+        </div>
+      </div>
+    </div>
+    <div class="manage-panel" id="tab-2">
+      <div>
+        <div class="mp-tag">학원 밖에서도 이어지는</div>
+        <div class="mp-title">생활관리</div>
+        <p class="mp-desc">학습 성과는 수업 시간만으로 완성되지 않습니다.<br><br><strong>학생과의 정기적 소통, 학부모와의 체계적 피드백</strong>을 통해 학습 습관, 생활 리듬, 심리적 상태까지 전방위로 관리합니다.</p>
+        <div class="mp-points">
+          <div class="mp-point">학생 일상 소통 및 심리 상태 모니터링</div>
+          <div class="mp-point">학부모 정기 피드백 리포트 제공</div>
+          <div class="mp-point">학교생활-학습 선순환 구조 지원</div>
+        </div>
+      </div>
+      <div>
+        <div class="mp-img-grid" id="ms-life">
+          <button class="mp-img-nav prev" onclick="mslideMove('life',-1)">&#8592;</button>
+        <img class="mslide active" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/31.png" alt="img1">
+        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/32.png" alt="img2">
+        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/33.png" alt="img3">
+        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/34.png" alt="img4">
+          <button class="mp-img-nav next" onclick="mslideMove('life',1)">&#8594;</button>
+        </div>
+        <div class="mp-img-dots" id="msd-life">
+        <button class="active" onclick="mslideGo('life',0)"></button>
+        <button class="" onclick="mslideGo('life',1)"></button>
+        <button class="" onclick="mslideGo('life',2)"></button>
+        <button class="" onclick="mslideGo('life',3)"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI 학습클래스 -->
+<section class="ai-section">
+  <div class="ai-inner">
+    <div class="ai-header">
+      <div class="tag" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)">AI 학습클래스</div>
+      <h2 class="ai-title"><span>AI</span> 학습클래스</h2>
+      <p class="ai-sub">데이터 기반 정밀 학습 설계와 전문 코치의 1:1 지도.<br>AI와 교사의 듀얼 케어로 학습 효율을 극대화합니다.</p>
+    </div>
+    <div class="ai-cards">
+      <div class="ai-card">
+        <div class="ai-card-head"><div class="ai-card-icon">📐</div><div><div class="ai-card-name">AI 수학</div><div class="ai-card-range">대상: 초1~고3</div></div></div>
+        <div class="ai-card-desc">성취도 기반 맞춤 문제·시험지 제작과 체계적 오답 클리닉을 통해 취약점을 신속히 보완하고 핵심 개념을 심화합니다.</div>
+        <div class="ai-steps"><span class="ai-step">01 진단</span><span class="ai-step">02 분석</span><span class="ai-step">03 트레이닝</span></div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-head"><div class="ai-card-icon">🔤</div><div><div class="ai-card-name">AI 영어</div><div class="ai-card-range">대상: 초1~고3</div></div></div>
+        <div class="ai-card-desc">레벨테스트 기반 영역별 정밀 진단으로 학생의 현재 수준을 파악하고, 맞춤 학습 설계를 통해 실질적인 영어 실력을 향상시킵니다.</div>
+        <div class="ai-steps"><span class="ai-step">01 진단</span><span class="ai-step">02 분석</span><span class="ai-step">03 트레이닝</span></div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-head"><div class="ai-card-icon">📝</div><div><div class="ai-card-name">AI 국어</div><div class="ai-card-range">대상: 중1~고3</div></div></div>
+        <div class="ai-card-desc">100만여 개 콘텐츠로 독서·문학·문법 전 영역을 커버하고, 학교별 기출 기반 실전 훈련으로 내신·수능 실력을 완성합니다.</div>
+        <div class="ai-steps"><span class="ai-step">01 진단</span><span class="ai-step">02 분석</span><span class="ai-step">03 예측</span><span class="ai-step">04 트레이닝</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 후기 -->
+<section class="review-section">
+  <div class="review-inner">
+    <div class="review-header">
+      <div class="tag">수강생 후기</div>
+      <h2 class="sec-title" style="text-align:center">학생들이 직접 전하는<br><em>올케어스터디 이야기</em></h2>
+    </div>
+  </div>
+
+  <!-- 슬라이더 -->
+  <div class="slider-wrap">
+    <button class="slider-btn slider-prev" onclick="slideMove(-1)">&#8592;</button>
+    <div class="slider-viewport" id="sliderViewport">
+      <div class="slider-track" id="sliderTrack">
+
+        <div class="review-card">
+          <div class="review-quotes">"</div>
+          <div class="review-badges"><span class="rb rb-h">고1</span><span class="rb rb-s">국어</span></div>
+          <div class="review-title">[글로리드 은평점] 서O윤</div>
+          <div class="review-text">처음 국어 공부를 시작할 때는 현대시가 너무 어려웠지만 선생님의 체계적인 지도와 밀착 코칭으로 극복할 수 있었습니다. 학습 동기와 진로 방향까지 함께 잡아 준 수업이 지금의 성적 향상에 큰 힘이 되었습니다.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quotes">"</div>
+          <div class="review-badges"><span class="rb rb-m">중3</span><span class="rb rb-s">국어</span></div>
+          <div class="review-title">[반월당점] 변O정</div>
+          <div class="review-text">올케어스터디를 다니며 스스로 계획을 세우고 실천하는 습관이 생겼고, 부족한 과목에 대한 자신감도 생겼어요. 선생님과의 1:1 소통을 통해 공부에 대한 태도가 달라지고, 자존감과 목표의식이 높아졌습니다.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quotes">"</div>
+          <div class="review-badges"><span class="rb rb-h">고3</span><span class="rb rb-s">수학</span></div>
+          <div class="review-title">[동탄호수점] 김O서</div>
+          <div class="review-text">평일 정규 수업뿐 아니라 주말 개별 수업, 코칭 시간, 시험 기간 자습 시간 등 부족한 부분을 보충할 수 있는 환경을 제공해 주는 게 정말 좋습니다. 학생 개개인을 진심으로 살펴주는 곳입니다.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quotes">"</div>
+          <div class="review-badges"><span class="rb rb-m">중2</span><span class="rb rb-s">수학</span></div>
+          <div class="review-title">[수지점] 이O준</div>
+          <div class="review-text">수학을 포기하려 했는데 선생님이 기초부터 차근차근 잡아주셨어요. 단원별로 약점을 짚어주고 오답 노트 작성하는 방법까지 알려주셔서 이번 중간고사에서 20점이나 올랐습니다.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quotes">"</div>
+          <div class="review-badges"><span class="rb rb-e">초6</span><span class="rb rb-s">영어</span></div>
+          <div class="review-title">[고양일산점] 박O연 학부모</div>
+          <div class="review-text">아이가 영어에 흥미가 없었는데 수준에 맞는 교재로 시작하니 거부감 없이 잘 따라가더라고요. 선생님과 매주 소통해 주셔서 부모로서 안심이 많이 됐습니다.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quotes">"</div>
+          <div class="review-badges"><span class="rb rb-h">고2</span><span class="rb rb-s">국어·영어</span></div>
+          <div class="review-title">[성북점] 최O현</div>
+          <div class="review-text">혼자 공부하면 계획만 세우다 끝났는데, 코치 선생님이 옆에서 같이 체크해 주니까 실제로 실행이 됩니다. 수행평가 준비도 학원에서 같이 도와주셔서 내신 관리가 훨씬 수월해졌어요.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quotes">"</div>
+          <div class="review-badges"><span class="rb rb-m">중1</span><span class="rb rb-s">수학</span></div>
+          <div class="review-title">[남양주점] 정O아 학부모</div>
+          <div class="review-text">중학교 올라가면서 수학이 갑자기 어려워졌는데, 선생님이 개념부터 다시 잡아주셨어요. 학원 다녀온 날은 아이가 표정이 달라요. 스스로 문제집 펴는 횟수가 눈에 띄게 늘었습니다.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quotes">"</div>
+          <div class="review-badges"><span class="rb rb-h">고1</span><span class="rb rb-s">수학·과학</span></div>
+          <div class="review-title">[부천점] 윤O빈</div>
+          <div class="review-text">고등학교 올라와서 처음엔 정말 막막했는데, 선생님이 공부 방법 자체를 바꿔 주셨어요. 어떻게 개념을 정리하고 문제에 적용하는지 체계가 생겼고, 첫 시험에서 기대 이상의 결과가 나왔습니다.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quotes">"</div>
+          <div class="review-badges"><span class="rb rb-m">중3</span><span class="rb rb-s">영어</span></div>
+          <div class="review-title">[대구달서점] 김O린</div>
+          <div class="review-text">내신 영어는 학교 시험에 딱 맞춰서 준비해 주시고, AI 영어로 부족한 어휘랑 독해도 같이 잡을 수 있어서 좋았어요. 한 곳에서 두 가지를 다 해결하는 느낌이라 효율적이었습니다.</div>
+        </div>
+
+      </div>
+    </div>
+    <button class="slider-btn slider-next" onclick="slideMove(1)">&#8594;</button>
+  </div>
+
+  <!-- 도트 -->
+  <div class="slider-dots" id="sliderDots"></div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="cta-title">지금 바로 가까운 센터에서<br>무료 상담을 받아보세요</h2>
+  <p class="cta-sub">전국 200여 개 직영센터에서 전문 코치와 1:1 학습 상담을 진행합니다.</p>
+  <div class="cta-btns">
+    <button class="btn-white">📍 센터 찾기</button>
+    <button class="btn-outline">✉️ 온라인 문의</button>
+  </div>
+</section>`;
+
+  const html = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학원소개 | 올케어스터디</title>
+<style>
+${introStyle}
+</style>
+</head>
+<body>
+${introBody}
+<script>
+${introScript}
+<\/script>
+</body>
+</html>`;
+
+  return html;
+}
+
+function makeAcademyPage() {
+  const SIDO_ORDER = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','강원','제주'];
+
+  const body = `
+  <div style="max-width:1100px;margin:0 auto;padding:160px 48px 80px">
+    <div style="margin-bottom:8px;font-size:13px;color:#9CA3AF"><a href="/" style="color:#9CA3AF;text-decoration:none">홈</a> › <span>학원 찾기</span></div>
+    <h1 style="font-size:32px;font-weight:900;color:#0F2044;margin-bottom:6px">코칭센터 찾기</h1>
+    <p style="font-size:15px;color:#6B7280;margin-bottom:24px">총 <strong style="color:#1D4ED8" id="total-count">${CENTERS.length}개</strong> 센터</p>
+
+    <!-- 시도 탭 -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #E5E7EB" id="sido-tabs"></div>
+
+    <!-- 구/시 서브탭 -->
+    <div id="district-bar" style="display:none;flex-wrap:wrap;gap:6px;margin-bottom:24px;padding:14px 16px;background:white;border-radius:12px;border:1px solid #E5E7EB"></div>
+
+    <!-- 카드 그리드 -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch" id="card-grid"></div>
+  </div>
+
   <!-- 문의 모달 -->
   <div id="contact-modal-bg" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center" onclick="if(event.target===this)closeContactModal()">
     <div style="background:white;border-radius:20px;padding:32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;margin:16px">
       <div style="font-size:20px;font-weight:900;color:#0F2044;margin-bottom:4px">✉️ 문의하기</div>
       <div id="modal-center-info" style="font-size:13px;color:#3B82F6;font-weight:700;margin-bottom:20px"></div>
-
       <div id="modal-success" style="display:none;text-align:center;padding:32px 0">
         <div style="font-size:48px;margin-bottom:12px">✅</div>
         <div style="font-size:18px;font-weight:900;color:#0F2044;margin-bottom:6px">문의가 접수되었습니다!</div>
         <div style="font-size:14px;color:#6B7280">빠른 시일 내에 연락드리겠습니다.</div>
       </div>
-
       <div id="modal-form">
         <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">이름 <span style="color:#EF4444">*</span></label>
         <input id="m-name" type="text" placeholder="홍길동" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-
         <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">학년 / 나이 <span style="color:#EF4444">*</span></label>
         <select id="m-grade" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;background:white;font-family:inherit;color:#374151;margin-bottom:16px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
           <option value="">선택해주세요</option>
@@ -860,20 +1475,16 @@ function makeAcademyPage(sidoEn) {
           <optgroup label="고등학생"><option>고등 1학년</option><option>고등 2학년</option><option>고등 3학년</option></optgroup>
           <optgroup label="기타"><option>성인 / 기타</option></optgroup>
         </select>
-
         <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">연락처 <span style="color:#EF4444">*</span></label>
         <input id="m-phone" type="tel" placeholder="010-0000-0000" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-
         <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">거주 주소 <span style="color:#EF4444">*</span></label>
         <div style="display:flex;gap:8px;margin-bottom:8px">
           <input id="m-addr-road" type="text" placeholder="도로명 주소 (검색 또는 직접 입력)" style="flex:1;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
           <button type="button" onclick="searchAddress()" style="padding:11px 14px;background:#1D4ED8;color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">🔍 검색</button>
         </div>
         <input id="m-addr-detail" type="text" placeholder="상세 주소 (예: 101동 502호)" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-
         <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">문의 내용 <span style="color:#EF4444">*</span></label>
         <textarea id="m-message" rows="4" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;resize:vertical;margin-bottom:16px;font-family:inherit;line-height:1.6" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
-
         <div style="background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:14px 16px;margin-bottom:16px">
           <div style="font-size:12px;color:#6B7280;line-height:1.7;margin-bottom:10px"><strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주주소, 문의내용<br><strong>수집 목적:</strong> 학습 상담 및 센터 안내<br><strong>보유 기간:</strong> 상담 완료 후 1년</div>
           <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
@@ -881,9 +1492,7 @@ function makeAcademyPage(sidoEn) {
             <span style="font-size:13px;font-weight:700;color:#0F2044">개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span>
           </label>
         </div>
-
         <div id="m-error" style="display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:12px"></div>
-
         <div style="display:flex;gap:10px">
           <button onclick="closeContactModal()" style="flex:1;padding:13px;border-radius:10px;border:1.5px solid #E5E7EB;background:white;font-size:14px;font-weight:700;cursor:pointer;color:#6B7280;font-family:inherit">취소</button>
           <button onclick="submitModalContact()" style="flex:2;padding:13px;border-radius:10px;border:none;background:#1D4ED8;color:white;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">✉️ 문의 제출하기</button>
@@ -893,89 +1502,143 @@ function makeAcademyPage(sidoEn) {
   </div>
 
   <script>
+  const CENTERS = ${JSON.stringify(CENTERS)};
+  const SIDO_ORDER = ${JSON.stringify(SIDO_ORDER)};
+  let currentSido = null;
+  let currentDistrict = '전체';
+
+  const existingSido = new Set(CENTERS.map(c => c.sido));
+  const sidoList = SIDO_ORDER.filter(s => existingSido.has(s));
+  const sidoCounts = {};
+  CENTERS.forEach(c => { sidoCounts[c.sido] = (sidoCounts[c.sido]||0)+1; });
+
+  function getDistricts(sido) {
+    const map = {};
+    CENTERS.filter(c => c.sido===sido).forEach(c => { map[c.district]=(map[c.district]||0)+1; });
+    return Object.entries(map).sort((a,b)=>b[1]-a[1]);
+  }
+
+  function renderSidoTabs() {
+    const el = document.getElementById('sido-tabs');
+    const allActive = currentSido === null;
+    let html = \`<button onclick="selectSido(null)" style="padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;border:1.5px solid \${allActive?'#1D4ED8':'#E5E7EB'};\${allActive?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">전체 <span style="font-size:11px;opacity:0.7">\${CENTERS.length}</span></button>\`;
+    sidoList.forEach(s => {
+      const active = s === currentSido;
+      html += \`<button onclick="selectSido('\${s}')" style="padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;border:1.5px solid \${active?'#1D4ED8':'#E5E7EB'};\${active?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">\${s} <span style="font-size:11px;opacity:0.7">\${sidoCounts[s]}</span></button>\`;
+    });
+    el.innerHTML = html;
+  }
+
+  function renderDistrictBar() {
+    const bar = document.getElementById('district-bar');
+    if (!currentSido) { bar.style.display='none'; return; }
+    const districts = getDistricts(currentSido);
+    if (districts.length <= 1) { bar.style.display='none'; return; }
+    const total = sidoCounts[currentSido];
+    let html = \`<button onclick="selectDistrict('전체')" style="padding:5px 14px;border-radius:999px;font-size:12px;font-weight:\${currentDistrict==='전체'?'800':'600'};cursor:pointer;white-space:nowrap;border:1.5px solid \${currentDistrict==='전체'?'#93C5FD':'#E5E7EB'};\${currentDistrict==='전체'?'background:#EFF6FF;color:#1D4ED8;':'background:white;color:#374151;'}">전체 (\${total})</button>\`;
+    districts.forEach(([d,cnt]) => {
+      const active = d===currentDistrict;
+      html += \`<button onclick="selectDistrict('\${d}')" style="padding:5px 14px;border-radius:999px;font-size:12px;font-weight:\${active?'800':'600'};cursor:pointer;white-space:nowrap;border:1.5px solid \${active?'#93C5FD':'#E5E7EB'};\${active?'background:#EFF6FF;color:#1D4ED8;':'background:white;color:#374151;'}">\${d} (\${cnt})</button>\`;
+    });
+    bar.style.display='flex';
+    bar.innerHTML = html;
+  }
+
+  function renderCards() {
+    const filtered = CENTERS.filter(c =>
+      (currentSido===null || c.sido===currentSido) &&
+      (currentDistrict==='전체' || c.district===currentDistrict)
+    );
+    document.getElementById('total-count').textContent = filtered.length+'개';
+    document.getElementById('card-grid').innerHTML = filtered.length ? filtered.map((c,i) => {
+      const uid = (currentSido||'all')+(currentDistrict||'')+i;
+      const cname = (c.officialName||c.name).replace(/'/g,"\\\\'");
+      const dirHtml = c.directions
+        ? \`<div id="d\${uid}" style="display:none;font-size:11px;color:#374151;line-height:1.6;background:#F8FAFC;border-radius:8px;padding:8px 10px;margin-top:6px;white-space:pre-line">\${c.directions.replace(/</g,'&lt;')}</div><button id="b\${uid}" onclick="var d=document.getElementById('d\${uid}');var b=document.getElementById('b\${uid}');if(d.style.display==='none'){d.style.display='block';b.textContent='📍 위치안내 접기'}else{d.style.display='none';b.textContent='📍 위치안내 보기'}" style="margin-top:4px;background:none;border:none;color:#3B82F6;font-size:11px;font-weight:700;cursor:pointer;padding:0">📍 위치안내 보기</button>\`
+        : '';
+      return \`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:20px 22px;display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,0.10)';this.style.borderColor='#93C5FD'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#E5E7EB'">
+        <div style="margin-bottom:10px">
+          <div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:3px">\${c.sido} \${c.district}</div>
+          <div style="font-size:16px;font-weight:900;color:#0F2044;line-height:1.3">\${c.officialName||c.name}</div>
+          \${c.regNo?'<div style="font-size:10px;color:#9CA3AF;margin-top:2px">'+c.regNo+'</div>':''}
+        </div>
+        <div style="font-size:11px;color:#6B7280;line-height:1.5;display:flex;gap:5px;align-items:flex-start;margin-bottom:6px"><span style="flex-shrink:0">📍</span><span>\${c.address}</span></div>
+        \${dirHtml}
+        <div style="margin-top:auto;padding-top:12px;border-top:1px solid #F1F5F9;display:flex;flex-direction:column;gap:6px">
+          \${c.target_elem?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#FEF3C7;color:#D97706;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">초등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.target_elem+'</span></div>':''}
+          \${c.target_mid?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#DCFCE7;color:#16A34A;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">중등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.target_mid+'</span></div>':''}
+          \${c.target_high?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#EFF6FF;color:#2563EB;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.target_high+'</span></div>':''}
+          \${!c.target_elem&&!c.target_mid&&!c.target_high?'<div style="font-size:11px;color:#D1D5DB">대상학교 정보 없음</div>':''}
+        </div>
+        <button onclick="openContactModal('\${c.sido}','\${c.district}','\${cname}')" style="display:block;width:100%;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;margin-top:14px;border:none;cursor:pointer;font-family:inherit">✉️ 문의하기</button>
+      </div>\`;
+    }).join('') : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#9CA3AF">해당 지역 센터가 없습니다</div>';
+  }
+
+  function selectSido(sido) {
+    currentSido = sido;
+    currentDistrict = '전체';
+    renderSidoTabs();
+    renderDistrictBar();
+    renderCards();
+  }
+  function selectDistrict(d) {
+    currentDistrict = d;
+    renderDistrictBar();
+    renderCards();
+  }
+
   function openContactModal(sido, district, name) {
-    document.getElementById('modal-center-info').textContent = sido + ' ' + district + ' · ' + name;
-    document.getElementById('m-message').value = '[' + sido + ' ' + district + ' ' + name + '] ';
-    document.getElementById('modal-success').style.display = 'none';
-    document.getElementById('modal-form').style.display = 'block';
-    document.getElementById('m-error').style.display = 'none';
-    document.getElementById('contact-modal-bg').style.display = 'flex';
+    document.getElementById('modal-center-info').textContent = sido+' '+district+' · '+name;
+    document.getElementById('m-message').value = '['+sido+' '+district+' '+name+'] ';
+    document.getElementById('modal-success').style.display='none';
+    document.getElementById('modal-form').style.display='block';
+    document.getElementById('m-error').style.display='none';
+    document.getElementById('contact-modal-bg').style.display='flex';
     document.getElementById('m-name').focus();
   }
   function closeContactModal() {
-    document.getElementById('contact-modal-bg').style.display = 'none';
+    document.getElementById('contact-modal-bg').style.display='none';
   }
   function searchAddress() {
     function open() {
-      new daum.Postcode({
-        oncomplete: function(data) {
-          document.getElementById('m-addr-road').value = data.roadAddress || data.jibunAddress;
-          document.getElementById('m-addr-detail').focus();
-        }
-      }).open();
+      new daum.Postcode({ oncomplete: function(data) {
+        document.getElementById('m-addr-road').value = data.roadAddress||data.jibunAddress;
+        document.getElementById('m-addr-detail').focus();
+      }}).open();
     }
-    if (typeof daum !== 'undefined' && daum.Postcode) { open(); }
-    else {
-      var s = document.createElement('script');
-      s.src = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
-      s.onload = open;
-      document.head.appendChild(s);
-    }
+    if (typeof daum!=='undefined'&&daum.Postcode) { open(); }
+    else { var s=document.createElement('script'); s.src='https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'; s.onload=open; document.head.appendChild(s); }
   }
   function submitModalContact() {
-    var name    = document.getElementById('m-name').value.trim();
-    var grade   = document.getElementById('m-grade').value;
-    var phone   = document.getElementById('m-phone').value.trim();
-    var road    = document.getElementById('m-addr-road').value.trim();
-    var detail  = document.getElementById('m-addr-detail').value.trim();
-    var message = document.getElementById('m-message').value.trim();
-    var agree   = document.getElementById('m-agree').checked;
+    var name=document.getElementById('m-name').value.trim();
+    var grade=document.getElementById('m-grade').value;
+    var phone=document.getElementById('m-phone').value.trim();
+    var road=document.getElementById('m-addr-road').value.trim();
+    var detail=document.getElementById('m-addr-detail').value.trim();
+    var message=document.getElementById('m-message').value.trim();
+    var agree=document.getElementById('m-agree').checked;
     if (!name)    { showMErr('이름을 입력해주세요.'); return; }
     if (!grade)   { showMErr('학년/나이를 선택해주세요.'); return; }
     if (!phone)   { showMErr('연락처를 입력해주세요.'); return; }
     if (!road)    { showMErr('거주 주소를 입력해주세요.'); return; }
     if (!message) { showMErr('문의 내용을 입력해주세요.'); return; }
     if (!agree)   { showMErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
-    var address = road + (detail ? ' ' + detail : '');
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({name, grade, phone, address, message})
-    })
-    .then(r => r.json())
-    .then(data => {
-      if (data.ok) {
-        document.getElementById('modal-form').style.display = 'none';
-        document.getElementById('modal-success').style.display = 'block';
-      } else { showMErr('전송 중 오류가 발생했습니다.'); }
-    })
-    .catch(() => showMErr('네트워크 오류가 발생했습니다.'));
+    fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:road+(detail?' '+detail:''),message})})
+    .then(r=>r.json()).then(data=>{
+      if(data.ok){document.getElementById('modal-form').style.display='none';document.getElementById('modal-success').style.display='block';}
+      else showMErr('전송 중 오류가 발생했습니다.');
+    }).catch(()=>showMErr('네트워크 오류가 발생했습니다.'));
   }
-  function showMErr(msg) {
-    var el = document.getElementById('m-error');
-    el.textContent = '⚠️ ' + msg;
-    el.style.display = 'block';
-  }
+  function showMErr(msg){var el=document.getElementById('m-error');el.textContent='⚠️ '+msg;el.style.display='block';}
+
+  // 초기 렌더
+  renderSidoTabs();
+  renderDistrictBar();
+  renderCards();
   <\/script>`;
 
-  const body = `
-  <div style="max-width:1100px;margin:0 auto;padding:160px 48px 80px">
-    <div style="margin-bottom:8px;font-size:13px;color:#9CA3AF"><a href="/" style="color:#9CA3AF;text-decoration:none">홈</a> › <a href="/academy/all" style="color:#9CA3AF;text-decoration:none">학원 찾기</a>${sidoEn!=='all'?` › ${sidoLabel}`:''}</div>
-    <h1 style="font-size:32px;font-weight:900;color:#0F2044;margin-bottom:6px">${sidoLabel} 코칭센터</h1>
-    <p style="font-size:15px;color:#6B7280;margin-bottom:24px">총 <strong style="color:#1D4ED8">${filtered.length}개</strong> 센터</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #E5E7EB">
-      ${sidoTabs.join('')}
-    </div>
-    ${districtBar}
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch">
-      ${cards || '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#9CA3AF">해당 지역 센터가 없습니다</div>'}
-    </div>
-  </div>
-  ${modalHtml}`;
-
-  const title = `${sidoLabel} 코칭센터 | 올케어스터디 학원 찾기`;
-  const desc = `${sidoLabel} 지역 올케어스터디 코칭센터 ${filtered.length}곳. 초중고 맞춤 1:1 학습코칭.`;
-  return wrap(title, desc, `/academy/${sidoEn}`, body);
+  return wrap('코칭센터 찾기 | 올케어스터디', '전국 올케어스터디 코칭센터를 찾아보세요. 초중고 맞춤 1:1 학습코칭.', '/academy/all', body);
 }
 
 
@@ -1568,7 +2231,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
       </div>
       <!-- 학원수업 - 바로 이동 -->
       <div class="gi">
-        <a href="/academy/all" class="gb" style="text-decoration:none;display:flex;align-items:center">학원수업</a>
+        <button class="gb" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div>
       </div>
       <!-- 회화수업 -->
       <div class="gi">
@@ -1614,7 +2277,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
     <div class="mob-section">
       <div class="mob-title">🏫 학원수업</div>
       <div class="mob-links">
-        <a href="/academy/all">전체 센터</a><a href="/academy/gyeonggi">경기</a><a href="/academy/seoul">서울</a>
+        <a href="/academy/intro">🏫 학원소개</a><a href="/academy/all">📍 센터찾기</a>
       </div>
     </div>
     <div class="mob-section">
@@ -2093,10 +2756,12 @@ export default {
     // 문의하기
     if (path === '/contact') return new Response(makeContactPage(), { headers: h });
 
+    // 학원소개
+    if (path === '/academy/intro') return new Response(makeAcademyIntroPage(), { headers: h });
+
     // 학원 찾기
     if (path === '/academy' || path.startsWith('/academy/')) {
-      const sidoEn = parts[1] || 'all';
-      return new Response(makeAcademyPage(sidoEn), { headers: h });
+      return new Response(makeAcademyPage(), { headers: h });
     }
     if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\nSitemap: https://allcarestudy.com/sitemap.xml', { headers: { 'Content-Type': 'text/plain' } });
 
