@@ -314,7 +314,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 .gnb-drop-item{display:block;padding:9px 16px;font-size:13px;font-weight:700;color:#374151;text-decoration:none;border-radius:8px;white-space:nowrap}
 .gnb-drop-item:hover{background:#EFF6FF;color:#1D4ED8}
 @media(max-width:768px){.hw{padding:0 16px;height:72px;gap:10px}.logo-sub{display:none}.logo-main{font-size:15px}.logo-mark{width:32px;height:32px}.vpill{padding:4px 10px}.vpill .vc{font-size:13px}.gnb{display:none}}
-`;
+.gi{position:relative}.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap;cursor:pointer;font-family:inherit}.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}.arr{width:14px;height:14px;transition:transform .2s;color:rgba(15,32,68,0.4)}.gi:hover .arr{transform:rotate(180deg)}.drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:#0F2044;border-radius:12px;border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}.gi:hover .drop{opacity:1;visibility:visible}.drop a{display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);transition:all .15s}.drop a:hover{background:rgba(255,255,255,0.1);color:white}.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:#0F2044;border-radius:16px;border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}.gi:hover .mega-drop,.mega-drop.on{opacity:1;visibility:visible}.mega-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}.mega-tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:all .2s;font-family:inherit}.mega-tab.on{background:#3B82F6;color:white}.mega-tab:hover:not(.on){background:rgba(255,255,255,.08);color:white}.mega-panel{display:none}.mega-panel.on{display:block}.mega-rt{font-size:10px;font-weight:700;color:#60A5FA;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}.mega-btns{display:flex;flex-wrap:wrap;gap:6px}.mega-btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .18s;text-decoration:none}.mega-btn:hover{background:#3B82F6;color:white;border-color:#3B82F6}`;
 
 const HEADER = `<header>
   <div class="hw">
@@ -334,9 +334,71 @@ const HEADER = `<header>
       <span class="vc">353,112명</span>
     </div>
     <nav class="gnb">
-      <a href="/seoul" class="gnb-link">지역별수업</a>
-      <a href="/seoul/gangnam/daichi/high/math" class="gnb-link">과목수업</a>
-      <div class="gnb-drop-wrap"><a href="/academy/all" class="gnb-link gnb-has-drop">학원수업 <svg style="width:12px;height:12px;vertical-align:middle;margin-left:2px" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></a><div class="gnb-drop"><a href="/academy/intro" class="gnb-drop-item">학원소개</a><a href="/academy/all" class="gnb-drop-item">센터찾기</a></div></div>
+      <div class="gi" id="gi-region">
+        <button class="gb" onclick="toggleMega('region')">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="mega-drop" id="mega-region">
+          <div class="mega-tabs">
+            <button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button>
+            <button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button>
+            <button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button>
+          </div>
+          <div class="mega-panel on" id="region-local">
+            <div class="mega-btns">
+              <a class="mega-btn" href="/seoul">🏙 서울</a>
+              <a class="mega-btn" href="/gyeonggi">🌿 경기</a>
+              <a class="mega-btn" href="/incheon">🌊 인천</a>
+              <a class="mega-btn" href="/busan">🐟 부산</a>
+              <a class="mega-btn" href="/daegu">🍎 대구</a>
+              <a class="mega-btn" href="/daejeon">🌾 대전</a>
+              <a class="mega-btn" href="/gwangju">🌸 광주</a>
+              <a class="mega-btn" href="/ulsan">⚙️ 울산</a>
+              <a class="mega-btn" href="/sejong">🏛 세종</a>
+              <a class="mega-btn" href="/gangwon">🏔 강원</a>
+              <a class="mega-btn" href="/chungbuk">🌻 충북</a>
+              <a class="mega-btn" href="/chungnam">🌊 충남</a>
+              <a class="mega-btn" href="/jeonbuk">🌾 전북</a>
+              <a class="mega-btn" href="/jeonnam">🍵 전남</a>
+              <a class="mega-btn" href="/gyeongbuk">🍎 경북</a>
+              <a class="mega-btn" href="/gyeongnam">🌊 경남</a>
+              <a class="mega-btn" href="/jeju">🌺 제주</a>
+            </div>
+          </div>
+          <div class="mega-panel" id="region-grade">
+            <div class="mega-rt">초등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">초등 1학년</a><a class="mega-btn" href="#">초등 2학년</a><a class="mega-btn" href="#">초등 3학년</a><a class="mega-btn" href="#">초등 4학년</a><a class="mega-btn" href="#">초등 5학년</a><a class="mega-btn" href="#">초등 6학년</a>
+            </div>
+            <div class="mega-rt">중학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">중학교 1학년</a><a class="mega-btn" href="#">중학교 2학년</a><a class="mega-btn" href="#">중학교 3학년</a>
+            </div>
+            <div class="mega-rt">고등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">고등 1학년</a><a class="mega-btn" href="#">고등 2학년</a><a class="mega-btn" href="#">고등 3학년</a><a class="mega-btn" href="#">수능 준비</a>
+            </div>
+          </div>
+          <div class="mega-panel" id="region-school">
+            <div class="mega-btns">
+              <a class="mega-btn" href="/seoul">학교별 과외 전체 보기 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gi">
+        <button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a><a href="#">코딩</a><a href="#">검정고시</a><a href="#">코칭 수업</a></div>
+      </div>
+      <div class="gi">
+        <button class="gb" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div>
+      </div>
+      <div class="gi">
+        <button class="gb">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a></div>
+      </div>
+      <div class="gi">
+        <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
+      </div>
     </nav>
   </div>
 </header>`;
@@ -359,9 +421,71 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
       <span class="vc" style="color:#60A5FA">353,112명</span>
     </div>
     <nav class="gnb">
-      <a href="/seoul" class="gnb-link" style="color:rgba(255,255,255,0.85)">지역별수업</a>
-      <a href="/seoul/gangnam/daichi/high/math" class="gnb-link" style="color:rgba(255,255,255,0.85)">과목수업</a>
-      <div class="gnb-drop-wrap"><a href="/academy/all" class="gnb-link gnb-has-drop" style="color:rgba(255,255,255,0.85)">학원수업 <svg style="width:12px;height:12px;vertical-align:middle;margin-left:2px" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></a><div class="gnb-drop"><a href="/academy/intro" class="gnb-drop-item">학원소개</a><a href="/academy/all" class="gnb-drop-item">센터찾기</a></div></div>
+      <div class="gi" id="gi-region">
+        <button class="gb" onclick="toggleMega('region')" style="color:rgba(255,255,255,0.85)">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="mega-drop" id="mega-region">
+          <div class="mega-tabs">
+            <button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button>
+            <button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button>
+            <button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button>
+          </div>
+          <div class="mega-panel on" id="region-local">
+            <div class="mega-btns">
+              <a class="mega-btn" href="/seoul">🏙 서울</a>
+              <a class="mega-btn" href="/gyeonggi">🌿 경기</a>
+              <a class="mega-btn" href="/incheon">🌊 인천</a>
+              <a class="mega-btn" href="/busan">🐟 부산</a>
+              <a class="mega-btn" href="/daegu">🍎 대구</a>
+              <a class="mega-btn" href="/daejeon">🌾 대전</a>
+              <a class="mega-btn" href="/gwangju">🌸 광주</a>
+              <a class="mega-btn" href="/ulsan">⚙️ 울산</a>
+              <a class="mega-btn" href="/sejong">🏛 세종</a>
+              <a class="mega-btn" href="/gangwon">🏔 강원</a>
+              <a class="mega-btn" href="/chungbuk">🌻 충북</a>
+              <a class="mega-btn" href="/chungnam">🌊 충남</a>
+              <a class="mega-btn" href="/jeonbuk">🌾 전북</a>
+              <a class="mega-btn" href="/jeonnam">🍵 전남</a>
+              <a class="mega-btn" href="/gyeongbuk">🍎 경북</a>
+              <a class="mega-btn" href="/gyeongnam">🌊 경남</a>
+              <a class="mega-btn" href="/jeju">🌺 제주</a>
+            </div>
+          </div>
+          <div class="mega-panel" id="region-grade">
+            <div class="mega-rt">초등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">초등 1학년</a><a class="mega-btn" href="#">초등 2학년</a><a class="mega-btn" href="#">초등 3학년</a><a class="mega-btn" href="#">초등 4학년</a><a class="mega-btn" href="#">초등 5학년</a><a class="mega-btn" href="#">초등 6학년</a>
+            </div>
+            <div class="mega-rt">중학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">중학교 1학년</a><a class="mega-btn" href="#">중학교 2학년</a><a class="mega-btn" href="#">중학교 3학년</a>
+            </div>
+            <div class="mega-rt">고등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="#">고등 1학년</a><a class="mega-btn" href="#">고등 2학년</a><a class="mega-btn" href="#">고등 3학년</a><a class="mega-btn" href="#">수능 준비</a>
+            </div>
+          </div>
+          <div class="mega-panel" id="region-school">
+            <div class="mega-btns">
+              <a class="mega-btn" href="/seoul">학교별 과외 전체 보기 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gi">
+        <button class="gb" style="color:rgba(255,255,255,0.85)">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a><a href="#">코딩</a><a href="#">검정고시</a><a href="#">코칭 수업</a></div>
+      </div>
+      <div class="gi">
+        <button class="gb" style="color:rgba(255,255,255,0.85)" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div>
+      </div>
+      <div class="gi">
+        <button class="gb" style="color:rgba(255,255,255,0.85)">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a></div>
+      </div>
+      <div class="gi">
+        <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a>
+      </div>
     </nav>
   </div>
 </header>`;
@@ -404,14 +528,13 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
   function update(){
     var footerTop = footer.getBoundingClientRect().top;
     var winH = window.innerHeight;
-    var gap = 40;
     if(footerTop < winH){
       el.style.position = 'absolute';
       el.style.bottom = 'auto';
       el.style.top = (window.scrollY + footerTop - el.offsetHeight - 60) + 'px';
     } else {
       el.style.position = 'fixed';
-      el.style.bottom = gap + 'px';
+      el.style.bottom = '60px';
       el.style.top = 'auto';
     }
   }
@@ -419,6 +542,29 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
   window.addEventListener('resize', update, {passive:true});
   update();
 })();
+
+function toggleMega(id){
+  var el = document.getElementById('mega-'+id);
+  var gi = document.getElementById('gi-'+id);
+  if(!el) return;
+  var isOpen = el.classList.contains('on');
+  document.querySelectorAll('.mega-drop').forEach(function(d){ d.classList.remove('on'); });
+  document.querySelectorAll('.gi').forEach(function(g){ g.classList.remove('open'); });
+  if(!isOpen){ el.classList.add('on'); if(gi) gi.classList.add('open'); }
+}
+function switchTab(menu,tab){
+  document.querySelectorAll('#mega-'+menu+' .mega-tab').forEach(function(t){ t.classList.remove('on'); });
+  document.querySelectorAll('#mega-'+menu+' .mega-panel').forEach(function(p){ p.classList.remove('on'); });
+  event.target.classList.add('on');
+  var panel = document.getElementById(menu+'-'+tab);
+  if(panel) panel.classList.add('on');
+}
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.gi')) {
+    document.querySelectorAll('.mega-drop').forEach(function(d){ d.classList.remove('on'); });
+    document.querySelectorAll('.gi').forEach(function(g){ g.classList.remove('open'); });
+  }
+});
 </script>`;
 
 function today(){
@@ -816,11 +962,11 @@ body{font-family:'Noto Sans KR',sans-serif;color:#1F2937;background:#fff;overflo
 .hero-badge b{color:#60A5FA}
 .hero-title{font-size:52px;font-weight:900;color:white;line-height:1.15;letter-spacing:-1.5px;margin-bottom:20px}
 .hero-title em{color:#60A5FA;font-style:normal}
-.hero-desc{font-size:17px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:36px}
+.hero-desc{font-size:17px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:36px;word-break:keep-all}
 .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-white{background:white;color:var(--navy);padding:14px 32px;border-radius:12px;font-size:15px;font-weight:800;border:none;cursor:pointer;transition:.2s}
+.btn-white{background:white;color:var(--navy);padding:14px 32px;border-radius:12px;font-size:15px;font-weight:800;border:none;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center}
 .btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
-.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,.3);color:white;padding:14px 32px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s}
+.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,.3);color:white;padding:14px 32px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center}
 .btn-outline:hover{background:rgba(255,255,255,.1)}
 .breadcrumb{background:white;padding:14px 48px;font-size:13px;color:#9CA3AF;border-bottom:1px solid var(--border)}
 .breadcrumb a{color:var(--blue)}
@@ -1133,7 +1279,7 @@ function mslideMove(sid, dir) {
   <div class="hero-inner">
     <div class="hero-badge"><b>학원소개</b> 올케어스터디 코칭센터</div>
     <h1 class="hero-title">검증된 학습코칭으로<br><em>성과를 만듭니다</em></h1>
-    <p class="hero-desc">전국 200여 개 직영센터, 15년의 노하우.<br>올케어스터디가 검증한 학습코칭 시스템을 소개합니다.</p>
+    <p class="hero-desc">전국 200여 개 직영센터, 15년의 노하우. 올케어스터디가 검증한 학습코칭 시스템을 소개합니다.</p>
     <div class="hero-btns">
       <a href="/academy/all" class="btn-white">📍 센터 찾기</a>
       <a href="/contact" class="btn-outline">✉️ 무료 상담</a>
@@ -2263,12 +2409,23 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
           <!-- 지역별 -->
           <div class="mega-panel on" id="region-local">
             <div class="mega-btns">
-              <a class="mega-btn" href="/seoul">📍 서울특별시</a>
+              <a class="mega-btn" href="/seoul">🏙 서울</a>
               <a class="mega-btn" href="/gyeonggi">🌿 경기</a>
-              <a class="mega-btn" href="/chungcheong">🌾 충청도</a>
-              <a class="mega-btn" href="/gyeongsang">🌊 경상도</a>
-              <a class="mega-btn" href="/jeolla">🍀 전라도</a>
-              <a class="mega-btn" href="/jeju">🌺 제주도</a>
+              <a class="mega-btn" href="/incheon">🌊 인천</a>
+              <a class="mega-btn" href="/busan">🐟 부산</a>
+              <a class="mega-btn" href="/daegu">🍎 대구</a>
+              <a class="mega-btn" href="/daejeon">🌾 대전</a>
+              <a class="mega-btn" href="/gwangju">🌸 광주</a>
+              <a class="mega-btn" href="/ulsan">⚙️ 울산</a>
+              <a class="mega-btn" href="/sejong">🏛 세종</a>
+              <a class="mega-btn" href="/gangwon">🏔 강원</a>
+              <a class="mega-btn" href="/chungbuk">🌻 충북</a>
+              <a class="mega-btn" href="/chungnam">🌊 충남</a>
+              <a class="mega-btn" href="/jeonbuk">🌾 전북</a>
+              <a class="mega-btn" href="/jeonnam">🍵 전남</a>
+              <a class="mega-btn" href="/gyeongbuk">🍎 경북</a>
+              <a class="mega-btn" href="/gyeongnam">🌊 경남</a>
+              <a class="mega-btn" href="/jeju">🌺 제주</a>
             </div>
           </div>
           <!-- 학년별 -->
