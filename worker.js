@@ -154,6 +154,200 @@ const SUBJECT_INFO = {
   },
 };
 
+
+// ── 동별 이미지·설명 데이터 ──────────────────────────────────
+const DONG_DATA = {
+  '서울': {
+    '강남구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'강남구는 대한민국 교육의 중심지로, 전국에서 가장 높은 교육열과 촘촘한 학습 인프라를 자랑합니다. 대치동 학원가를 필두로 압구정·역삼·청담 등 각 동마다 특색 있는 교육 환경이 형성되어 있으며, 초등학교부터 고등학교까지 모든 단계에서 최상위 수준의 커리큘럼이 운영됩니다.<br><br>강남구 학교들의 내신 시험은 경시대회 수준의 문제가 출제됩니다. 단순 학원 수강만으로는 1등급 유지가 어렵기 때문에 1:1 과외를 통한 개별 취약점 보완이 특히 중요합니다.<br><br>올케어스터디는 강남구 각 학교의 기출 문제와 출제 경향을 꿰뚫고 있는 검증된 선생님을 연결해드립니다. 첫 상담과 체험 수업은 완전히 무료입니다.',
+    dongs: {
+      '개포동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'개포주공 재건축 완료 후 신축 아파트 단지 입주로 젊은 학부모층 대거 유입. 개포중·개포고 학군 중심으로 내신 관리 수요 급증.'},
+      '논현동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'강남 중심부 주거·상업 복합지역. 논현중 학군 형성. 다양한 계층 거주로 실속형 내신 관리 과외 수요 꾸준.'},
+      '대치동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'전국 최고 교육 특구. 수백 개 학원 밀집. 은마·대치·선경아파트 학부모 교육열 전국 최상위.'},
+      '도곡동':{'img':'https://images.unsplash.com/photo-1532153955177-f59af40d6472?w=600&q=80','desc':'타워팰리스 등 고급 아파트 밀집. 도곡중·숙명여고 학군. 학업 수준 높고 1:1 심화 과외 수요 풍부.'},
+      '삼성동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'코엑스 인근 업무·주거 복합지역. 영동중·삼성고 학군. 외국계 기업 밀집으로 영어 조기교육 수요 높음.'},
+      '세곡동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'강남구 남단 신흥 주거지. 신규 아파트 입주로 젊은 가족층 증가. 초등 수학·영어 기초 과외 수요 빠르게 성장.'},
+      '수서동':{'img':'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=600&q=80','desc':'강남 동부 주거지역. 수서중 학군. 재건축·재개발로 교육 환경 개선 중. 초등 조기교육 수요 증가.'},
+      '신사동':{'img':'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=600&q=80','desc':'가로수길 인근 감각적 주거지. 신사중 학군. 패션·디자인 업계 가정 많아 예체능·어학 과외 수요 높음.'},
+      '압구정동':{'img':'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80','desc':'현대아파트·갤러리아 인근 고급 주거지. 압구정중·신사중 학군. 학부모 교육열 매우 높으며 외국어·예술 과외 수요 풍부.'},
+      '역삼동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'강남 IT 업무지구와 주거 공존. 언주중·역삼중 학군. 테헤란로 인근 직장인 자녀 교육 수요 꾸준.'},
+      '일원동':{'img':'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&q=80','desc':'삼성서울병원 인근 의료·주거 복합지역. 일원중·중동고 학군. 의대 준비 학생들의 과학·수학 심화 과외 수요 높음.'},
+      '자곡동':{'img':'https://images.unsplash.com/photo-1598620617148-c9e8ddee4b27?w=600&q=80','desc':'강남구 남부 주택가. 집중적인 1:1 과외 선호. 초등·중등 기초 학력 강화 수요 높음.'},
+      '청담동':{'img':'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80','desc':'청담중 학군 중심 고급 주거지. 외국계 기업 임원 가정 많아 영어 원어민 수업 수요 높고 예술·문화 과외 활발.'},
+      '율현동':{'img':'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=80','desc':'강남구 조용한 주거 지역. 초등·중등 기초 학력 강화 수요 높음. 소규모 환경으로 선생님과 밀착 관리 가능.'},
+    }},
+    '서초구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'서초구는 강남구와 함께 서울 최고의 교육 명문 지역입니다. 반포·방배·잠원 일대에 우수한 학교들이 밀집해 있으며, 법조타운과 고급 주거단지를 중심으로 고학력 학부모 비율이 서울 내에서도 최상위권입니다.<br><br>서초구는 문·이과 모두 강세를 보이는 지역입니다. 논술·면접 등 수시 전형 대비에도 열성적이며, 법조계·의료계 진학을 목표로 한 학생들의 심화 학습 수요가 높아 국어·사회·과학 과외 시장이 발달해 있습니다.<br><br>올케어스터디는 서초구 주요 학교들의 내신 출제 패턴과 수능 연계를 동시에 분석해온 전문 선생님들을 보유하고 있습니다.',
+    dongs: {
+      '방배동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'방배중·방배고 학군 중심. 조용한 주거지로 1:1 개인 지도 선호. 예술·음악 계열 특기 교육 수요도 상당.'},
+      '반포동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'반포자이·래미안퍼스티지 등 최고급 아파트 밀집. 잠원중·반포고 학군. 수능·내신 동시 대비 심화 과외 수요 매우 높음.'},
+      '잠원동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'한강변 고급 주거지. 신반포중·잠원고 학군. 학부모 교육열 높고 방문 과외 선호도 강한 지역.'},
+      '서초동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'서초중·서초고 학군. 법원·검찰청 인근으로 법조계 종사자 가정 비율 높음. 논술·국어 과외 수요 특히 높음.'},
+      '양재동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'양재역 인근 산업·주거 복합지역. 양재중·언남고 학군. IT 기업 종사자 자녀 코딩·수학 과외 수요 꾸준히 증가.'},
+      '우면동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'서울 외곽 조용한 주거지. 신계중 학군. 아파트 단지 내 학부모 커뮤니티 중심으로 과외 선생님 소개 활발.'},
+      '내곡동':{'img':'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80','desc':'헌인마을 등 신규 아파트 단지 조성으로 젊은 가족 유입. 초등 저학년 기초 수학·영어 과외 수요 성장 중.'},
+    }},
+    '송파구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'송파구는 잠실을 중심으로 서울 동남권 최대의 교육 수요를 형성하고 있습니다. 문정·가락·위례 신도시가 급성장하며 젊은 학부모층이 대거 유입되었고, 초등 조기교육부터 수능 대비까지 전 단계에 걸친 과외 수요가 빠르게 증가하고 있습니다.<br><br>잠실 학군은 내신 경쟁이 치열하기로 유명합니다. 잠실고·방산고·송파고 등 명문 고등학교가 밀집해 있어 중학교 때부터 체계적인 내신 관리가 필수입니다.<br><br>올케어스터디는 송파구 학교들의 시험 경향을 파악하고 있는 지역 전문 선생님들을 연결해드립니다.',
+    dongs: {
+      '잠실동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'롯데타워·롯데월드 인근 대규모 주거지. 잠실중·잠실고 학군. 교육열 높은 학부모층 밀집으로 수학·영어 심화 과외 수요 최상위.'},
+      '문정동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'가락시장·문정법조타운 인근. 문정중·문정고 학군. 법조계·의료계 종사자 가정 비율 높고 논술·국어 과외 수요 높음.'},
+      '가락동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'가락시장 인근 대규모 주거지. 가락중 학군. 중등 수학·영어 기초부터 심화까지 고루 수요 있음.'},
+      '방이동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'올림픽공원 인근 조용한 주거지. 방이중·방산고 학군. 운동·예체능 특기 교육 수요와 함께 내신 관리 과외 병행 수요 높음.'},
+      '오금동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'오금중·오금고 학군. 중산층 가정 밀집 지역으로 합리적인 비용의 내신 대비 과외 수요 꾸준.'},
+      '거여동':{'img':'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=80','desc':'거여중·거여고 학군. 재건축 예정 단지 다수. 현재는 1:1 방문 과외 선호 경향.'},
+      '마천동':{'img':'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80','desc':'마천중 학군. 아파트 재건축 진행 중으로 젊은 가족층 유입 증가. 초등~중학생 기초 학력 강화 과외 수요 성장.'},
+    }},
+    '강동구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'강동구는 강남권과 인접한 서울 동부의 신흥 교육 명문 지역입니다. 고덕 신도시와 강일지구 개발 완성으로 젊은 학부모층이 대규모로 유입되었고, 올림픽파크포레온 입주로 수만 명의 신규 교육 수요가 형성되었습니다.<br><br>강동구는 중학교 내신 경쟁이 특히 치열합니다. 고덕·강일 신도시 학부모들의 교육열이 강남구에 뒤지지 않을 만큼 높으며, 초등학교 고학년부터 체계적으로 선행을 준비하는 가정이 많습니다.<br><br>올케어스터디는 강동구 주요 학교 기출 분석에 강한 선생님을 다수 보유하고 있습니다.',
+    dongs: {
+      '천호동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'강동구 대표 상권·주거 복합지역. 천호중·강동고 학군. 다양한 교육 수요 공존. 수학·영어 과외 수요 꾸준.'},
+      '암사동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'한강변 조용한 주거지역. 암사중 학군. 초등 고학년~중학생 내신 대비 과외 수요 높음. 방문 과외 선호도 강함.'},
+      '명일동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'명일중·명일여고 학군 중심. 조용한 주거환경 속 집중 1:1 과외 선호. 수능 영어·수학 심화 수요 높음.'},
+      '고덕동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'고덕신도시 대규모 개발로 신축 아파트 밀집. 고덕중·고덕고 학군. 젊은 부모 교육열 높고 초등 영재·수학 과외 수요 증가.'},
+      '강일동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'강일지구 신도시 입주 완료. 강일중 학군 신설. 초등학생 대상 수학·영어·코딩 조기교육 수요 빠르게 성장.'},
+      '둔촌동':{'img':'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80','desc':'올림픽파크포레온 입주로 대규모 주거지 형성. 둔촌중·둔촌고 학군. 신규 입주민 대상 과외 선생님 매칭 수요 폭증.'},
+    }},
+    '마포구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'마포구는 홍대·합정·연남·상암을 아우르는 문화·미디어 중심지로, 방송국·IT 기업·출판사 종사자 비율이 높고 외국어와 미디어·예술 계열 교육에 대한 관심이 서울에서도 특히 높은 편입니다.<br><br>마포구 학생들은 수능 중심의 일반 학습부터 예술고·특목고 진학, 방송·미디어 계열 준비까지 스펙트럼이 넓습니다. 수학·영어 내신 과외와 함께 논술·글쓰기·미디어 제작 관련 특기 과외 수요가 공존하는 특색 있는 교육 시장입니다.<br><br>올케어스터디는 마포구 각 학교의 내신 특성과 학생의 진로 방향에 맞는 선생님을 정밀 매칭해드립니다.',
+    dongs: {
+      '합정동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'홍대 인근 젊은 문화 중심지. 합정중 학군. 예술·음악·미디어 계열 특기 교육과 수능 기초 병행 수요 높음.'},
+      '망원동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'마포 최대 주거 밀집 지역. 망원중 학군. 중산층 가정 다수로 내신 관리·수능 대비 과외 수요 꾸준.'},
+      '연남동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'경의선 숲길 인근 트렌디한 주거지. 연남중 학군. 영어·중국어 회화 과외 수요 높음.'},
+      '상수동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'홍대 인접 주거지. 예술 특기자 비율 높고 음악·미술·체육 과외 수요 독특하게 형성. 내신도 병행 관리.'},
+      '상암동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'디지털미디어시티 인근. 방송·IT 업계 종사자 가정 많아 코딩·영어 과외 수요 높음. 상암중 학군 중심.'},
+    }},
+    '양천구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'양천구 목동은 강남 대치동과 함께 서울 양대 교육 특구로 꼽힙니다. 목동신시가지 14개 단지를 중심으로 수십 년간 축적된 교육 인프라와 학부모 커뮤니티가 형성되어 있습니다.<br><br>목동 학군의 내신 경쟁은 전국 최상위권입니다. 양천고·목동고·신목고 등 우수 고등학교가 밀집해 있어 중학교 때부터의 철저한 내신 대비가 필수이며, 1:1 과외를 병행하는 비율이 매우 높습니다.<br><br>올케어스터디는 목동 학군의 시험 경향을 잘 아는 선생님들을 다수 보유하고 있습니다. 수학·영어 심화부터 국어·과학 내신 대비까지 폭넓게 매칭 가능합니다.',
+    dongs: {
+      '목동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'서울 서부 최대 교육 특구. 목동중·목동고 학군. 목동학원가를 중심으로 수학·영어 심화 과외 수요 전국 최상위 수준.'},
+      '신정동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'목동 인접 대규모 주거지. 신정중 학군. 목동 학원가 이용과 함께 1:1 개인 과외 병행 수요 높음.'},
+      '신월동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'양천구 서부 주거지역. 신월중 학군. 합리적인 비용의 내신 관리 과외 수요 꾸준.'},
+    }},
+    '노원구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'노원구 중계동은 강북 최대의 학원가로, 서울 북부 교육의 중심지 역할을 합니다. 상계·중계·하계를 아우르는 대규모 아파트 단지에 수만 가구가 거주하며, 교육에 대한 투자 의지가 강한 중산층 가정이 밀집해 있습니다.<br><br>노원구 학생들은 학원 수업과 개인 과외를 병행하는 비율이 매우 높습니다. 1:1 과외로 취약 단원을 집중 보완하는 방식이 일반화되어 있으며, 불암고·노원고·을지고 등 명문 고등학교 진학을 위한 중학교 내신 관리 수요도 높습니다.<br><br>올케어스터디는 노원구 학교들의 기출 문제와 출제 경향을 분석한 선생님들을 연결해드립니다.',
+    dongs: {
+      '상계동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'노원구 최대 주거 단지. 상계중·상계고 학군. 중계학원가 인접으로 교육 인프라 우수. 수학·영어 심화 과외 수요 높음.'},
+      '중계동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'강북 최대 학원가 밀집 지역. 중계중·불암고 학군. 학원 수업과 병행한 1:1 취약점 보완 과외 수요 매우 높음.'},
+      '하계동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'하계중·을지고 학군. 재건축 아파트 입주로 젊은 가족층 유입. 초등 영재교육·수학올림피아드 준비 과외 수요 증가.'},
+      '공릉동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'서울과학기술대 인근. 이공계 진학 희망자 비율 높아 수학·과학 심화 과외 수요 특화. 공릉중 학군 중심.'},
+      '월계동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'인덕대·광운대 인근 교육 지역. 월계중 학군. 공학계열 진학 목표 학생들의 수학·물리 집중 과외 수요 높음.'},
+    }},
+    '강서구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'강서구는 마곡 산업단지 성장과 함께 교육 수요가 빠르게 증가하고 있는 지역입니다. LG사이언스파크 등 대기업 R&D센터와 IT 기업들이 집적되면서 고학력 맞벌이 가정이 대거 유입되었습니다.<br><br>강서구는 IT·공학 계열 종사자 자녀들의 코딩·수학 과외 수요와 함께 공항 인근 항공·외국어 계열 교육 수요도 특화되어 있습니다. 화곡·등촌 일대에서는 전통적인 내신 관리 과외 수요가 꾸준히 이어지고 있습니다.<br><br>올케어스터디는 강서구 각 지역의 특성에 맞는 다양한 전문 선생님들을 보유하고 있습니다.',
+    dongs: {
+      '화곡동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'강서구 최대 주거지역. 화곡중·화곡고 학군. 대단지 아파트 밀집으로 초등~고등 전 학년 과외 수요 골고루 높음.'},
+      '방화동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'김포공항 인근 주거지역. 방화중 학군. 공항 관련 종사자 자녀 영어·외국어 과외 수요 특화.'},
+      '마곡동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'LG사이언스파크·마곡산업단지 성장으로 IT·공학 인재 가족 대거 유입. 코딩·수학 과외 수요 급증.'},
+      '발산동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'마곡과 인접한 신흥 주거지. 발산중 학군. 젊은 부모들의 초등 영어·수학 조기교육 과외 수요 빠르게 증가.'},
+      '등촌동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'9호선 등촌역 인근 주거지역. 등촌중·강서고 학군. 강남 접근성 향상으로 수능 대비 심화 과외 수요 증가 추세.'},
+    }},
+    '동작구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'동작구는 서울 중남부의 교육 요충지입니다. 숭실대·중앙대 등 주요 대학이 인접해 있어 대학생·대학원생 과외 선생님의 공급이 풍부하고, 노량진 고시촌을 중심으로 수험 교육 인프라가 전국 최대 규모로 형성되어 있습니다.<br><br>동작구 학생들은 진학 목표 의식이 뚜렷한 편입니다. 의대·법대·SKY 목표 학생 비율이 서울 평균보다 높으며, 수학·과학 심화 과외와 논술·국어 과외 수요가 두드러집니다.<br><br>올케어스터디는 동작구 학교 내신부터 수능·논술 대비까지 전 과정을 커버하는 선생님을 연결해드립니다.',
+    dongs: {
+      '사당동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'사당중·서울고 학군. 지하철 환승 요충지로 학원 접근성 우수. 내신·수능 동시 대비 과외 수요 높음.'},
+      '상도동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'숭실대 인근 교육 지역. 상도중 학군. 대학가 분위기로 대입 준비 과외 수요 높음.'},
+      '노량진동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'전국 최대 공무원·고시 학원가. 중등·고등 수험 교육 수요 특화. 검정고시·편입 대비 등 다양한 수험 과외 수요 집중.'},
+      '대방동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'여의도 인접 주거지역. 대방중 학군. 금융·공공기관 종사자 가정 비율 높아 영어·논술 과외 수요 꾸준.'},
+      '흑석동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'중앙대 바로 옆 캠퍼스타운. 흑석중·동작고 학군. 대학생 과외 선생님 풍부. 의대·이공계 준비 과외 수요 높음.'},
+    }},
+    '관악구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'관악구는 서울대학교를 중심으로 전국 최고의 이공계 교육 인프라를 자랑합니다. 낙성대·신림·봉천 일대에 서울대 재학생과 대학원생이 대거 거주하며, 이들이 과외 선생님으로 활동하는 비율이 전국에서 가장 높습니다.<br><br>관악구 학생들은 이공계 진학에 대한 열망이 높습니다. 수학·과학 심화 과외 수요가 특히 강하며, 의대·공대 진학을 위한 집중 학습이 중학교 때부터 시작되는 경우가 많습니다.<br><br>올케어스터디는 관악구에서 서울대 출신 및 재학생 과외 선생님을 가장 빠르게 연결해드릴 수 있습니다.',
+    dongs: {
+      '신림동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'서울대 인근 최대 주거지역. 신림중 학군. 이공계 진학 희망자 수학·과학 심화 과외 수요 전국 최상위.'},
+      '봉천동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'관악산 인근 대규모 주거지. 봉현중·관악고 학군. 다양한 소득계층 거주로 맞춤형 가격대 과외 수요 폭넓게 분포.'},
+      '낙성대동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'서울대 정문 인근. 낙성대중 학군. 서울대 재학생·졸업생 과외 선생님 가장 밀집된 지역. 의대·SKY 목표 심화 과외 수요 높음.'},
+    }},
+    '성북구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'성북구는 고려대학교를 중심으로 인문·사회 계열 교육이 발달한 지역입니다. 돈암·길음 학원가가 강북권 교육 허브 역할을 하며, 성신여대·한성대 등 여러 대학이 인접해 있습니다.<br><br>성북구는 문과 계열 교육 수요가 특히 높습니다. 고려대 인접 영향으로 국어·사회·논술 과외 수요가 강하며, 길음뉴타운 재개발 완료 후 젊은 가족층 유입으로 초등 조기교육 과외 시장도 빠르게 성장하고 있습니다.<br><br>올케어스터디는 성북구 학교들의 내신 출제 특성을 분석한 선생님들을 보유하고 있습니다.',
+    dongs: {
+      '돈암동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'성신여대역 인근. 개운중·성신여중 학군. 고려대 인접으로 문과 계열 논술·국어 과외 수요 높음.'},
+      '길음동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'길음뉴타운 재개발 완료. 길음중·삼각산고 학군. 신규 입주 가정 증가로 초등~중학생 과외 수요 빠르게 성장.'},
+      '정릉동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'국민대 인근 주거지역. 정릉중 학군. 조용한 주거 환경 속 집중 1:1 과외 선호.'},
+      '석관동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'서울시립대 인근. 석관중 학군. 이공계 진학 목표 수학·과학 과외 수요 특화.'},
+    }},
+    '용산구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'용산구는 서울의 중심부에 위치한 고급 주거지역으로, 한남·이촌·서빙고 일대에 외국계 기업 임원, 외교관, 주재원 가족들이 다수 거주합니다. 영어·이중언어 교육 수요가 서울에서 가장 높은 지역 중 하나입니다.<br><br>용산구 학생들의 특성은 다양합니다. 국내 일반 내신 준비 학생부터 국제학교 재학생, 해외 유학 준비생까지 스펙트럼이 넓습니다. SAT·TOEFL·IB 과외 수요도 높습니다.<br><br>올케어스터디는 용산구의 글로벌 교육 수요를 충족하는 다양한 선생님을 연결해드립니다.',
+    dongs: {
+      '이태원동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'외국인 밀집 지역. 국제학교·외국어 교육 수요 전국 최상위. 원어민 영어·다국어 회화 과외 수요 매우 높음.'},
+      '한남동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'한남더힐 등 최고급 주거지. 한강중 학군. 외국 거주 경험 가정 비율 높아 영어·수학 원어민 수업 수요 높음.'},
+      '서빙고동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'한강변 고급 주거지. 이촌중 학군. 조용한 환경에서 집중 1:1 과외 선호. 내신·수능 동시 대비 수요 높음.'},
+      '이촌동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'한강 인접 고급 주거지. 이촌중·용산고 학군. 외교관·주재원 가족 비율 높아 영어·수학 영재교육 수요 풍부.'},
+    }},
+    '중구':    { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'서울 중구는 도심 한복판에 위치한 역사와 현대가 공존하는 지역입니다. 명동·을지로·충무로 등 서울 최대 업무지구가 자리하고 있어 맞벌이 가정 비율이 높으며, 방문 과외에 대한 선호도가 다른 지역보다 높은 편입니다.<br><br>중구는 이화여고·덕수고 등 전통 명문 학교가 포진해 있으며, 역사·문화에 대한 관심이 높아 사회·역사 계열 과외 수요가 특색 있게 형성되어 있습니다.<br><br>올케어스터디는 중구 학교들의 내신 특성에 맞는 선생님을 연결해드립니다.',
+    dongs: {
+      '명동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'서울 최대 상권 인근. 외국어·관광계열 특기 교육 수요 특화.'},
+      '신당동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'신당중 학군. 도심 주거지역으로 내신 관리 중심 과외 수요 꾸준. 이화여고 학군 인접으로 여학생 교육 수요 높음.'},
+      '황학동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'도심 재개발 진행 지역. 중구고 학군. 합리적 비용의 내신 관리 과외 수요 꾸준.'},
+      '을지로':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'도심 최대 업무지구. 맞벌이 부모 비율 높아 방문 과외 선호도 강함. 초등~중학생 영어·수학 집중 과외 수요 높음.'},
+    }},
+    '종로구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'종로구는 서울의 심장부로, 경복고·종로고 등 전통 명문 학교들이 밀집해 있습니다. 대학로·인사동·북촌 등 문화 예술의 중심지이기도 하여, 인문학적 소양과 예술 감수성을 중시하는 교육 문화가 형성되어 있습니다.<br><br>종로구는 문과 계열과 예술 계열 교육 수요가 특히 높습니다. 대학로 인근에서는 연극·음악·미술 특기 교육 수요가 활발하고, 고시·입시 학원이 많아 수험 교육 환경도 잘 갖춰져 있습니다.<br><br>올케어스터디는 종로구의 다양한 교육 수요를 만족시키는 선생님들을 보유하고 있습니다.',
+    dongs: {
+      '혜화동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'서울 대학로 인접. 연극·예술 특기 교육 수요 특화. 혜화중·경복고 학군. 문과 계열 논술·국어 과외 수요 높음.'},
+      '명륜동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'성균관대·이화여대 인근. 명륜중 학군. 전통 있는 교육 지역으로 내신·수능 대비 과외 수요 꾸준.'},
+      '창신동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'종로구 주거 밀집 지역. 창신중 학군. 다양한 소득계층 거주로 맞춤형 가격대 과외 수요 폭넓게 형성.'},
+      '부암동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'인왕산 인근 고급 주거지. 부암중 학군. 예술·인문계 관심 높은 가정 비율 높아 논술·예술 특기 과외 수요 높음.'},
+    }},
+    '중랑구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'중랑구는 서울 동북부 최대 주거 지역으로, 면목·신내·묵동 등 대규모 아파트 단지에 수십만 명이 거주합니다. 신내 택지지구 개발과 재개발 완료로 젊은 가족층 유입이 지속되고 있습니다.<br><br>중랑구 학부모들은 실용적이고 비용 효율적인 교육을 선호합니다. 학원보다 저렴하면서도 개인 맞춤형으로 진행되는 1:1 방문 과외의 선호도가 높으며, 중학생 취약 단원 집중 보완 과외 수요가 꾸준합니다.<br><br>올케어스터디는 중랑구 학생들의 예산과 수준에 맞는 선생님을 빠르게 연결해드립니다.',
+    dongs: {
+      '면목동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'중랑구 최대 주거지역. 면목중·면목고 학군. 실용적 내신 관리 과외 수요 높음.'},
+      '신내동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'신내 택지지구 개발 완료. 신내중 학군. 신규 입주 젊은 가정 증가로 초등 조기교육 과외 수요 빠르게 성장.'},
+      '묵동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'묵동중 학군. 중산층 주거 밀집 지역. 내신 관리 중심 과외 수요 꾸준.'},
+      '망우동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'망우중 학군. 재건축·재개발 진행으로 교육 환경 개선 기대. 방문 과외 선호도 높음.'},
+    }},
+    '광진구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'광진구는 건국대학교·세종대학교와 인접한 교육 활성화 지역으로, 화양·군자·자양 일대 학원가가 성장하면서 강남에 버금가는 교육 인프라가 형성되고 있습니다.<br><br>광진구는 강남과의 접근성이 좋아 교육 수준과 기대치가 빠르게 높아지고 있습니다. 광남고·건대부고 진학을 위한 중학교 내신 관리와 수능 대비 심화 과외 수요가 급증하고 있습니다.<br><br>올케어스터디는 광진구 학교들의 내신 특성을 파악한 건국대·세종대 출신 선생님들을 우선 연결해드립니다.',
+    dongs: {
+      '화양동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'건국대 바로 앞. 화양중 학군. 대학생 과외 선생님 공급 풍부. 이공계 진학 목표 수학·과학 심화 과외 수요 높음.'},
+      '군자동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'군자중 학군. 세종대 인근으로 예·체능 계열 과외 수요 특화. 실용 영어·코딩 과외도 꾸준한 수요.'},
+      '구의동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'강남과 인접한 광진구 핵심 주거지. 구의중·광남고 학군. 강남 수준의 교육열 형성. 수능 수학·영어 심화 과외 수요 높음.'},
+      '자양동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'자양중 학군. 건대입구역 상권 인근. 학원가 집중 지역으로 1:1 과외 보완 수요 높음.'},
+    }},
+    '동대문구':{ hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'동대문구는 경희대학교·한국외국어대학교가 인접한 교육 특화 지역입니다. 외대 인근의 영향으로 외국어 교육에 대한 관심이 높으며, 영어는 물론 중국어·일본어·스페인어 등 제2외국어 과외 수요가 서울에서도 손꼽히는 수준입니다.<br><br>동대문구 학생들은 어학과 일반 학습을 균형 있게 준비하는 경우가 많습니다. 내신 관리 과외와 외국어 회화 과외를 병행하는 비율이 높으며, 경희대 진학을 목표로 한 의치한·이공계 입시 준비 과외도 활발합니다.<br><br>올케어스터디는 동대문구에서 외국어 특화 선생님과 일반 내신 선생님 모두를 빠르게 연결해드립니다.',
+    dongs: {
+      '회기동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'경희대 인접. 회기중 학군. 외국어대 인근으로 영어·중국어·일본어 회화 과외 수요 전국 상위.'},
+      '전농동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'전농중·동대문고 학군. 대규모 주거지로 내신 관리 중심 과외 수요 꾸준.'},
+      '답십리동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'답십리중 학군. 재개발 진행으로 신규 아파트 입주 증가. 젊은 가족층 유입으로 초등 조기교육 과외 수요 성장.'},
+      '장안동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'장안중·장안고 학군. 동대문구 최대 주거지역. 내신·수능 병행 과외 수요 높고 수학·국어 취약점 보완 과외 인기.'},
+    }},
+    '성동구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'성동구는 한양대학교를 중심으로 이공계 교육이 특화된 지역이며, 최근 성수동이 서울 최대의 젊은 직장인 밀집 지역으로 떠오르면서 교육 수요가 빠르게 변화하고 있습니다.<br><br>성동구 학생들은 이공계 진학 비율이 높습니다. 수학·과학 심화 과외 수요가 강하며, 성수동 IT 기업 종사자 자녀들을 중심으로 코딩 과외 수요도 빠르게 증가하고 있습니다.<br><br>올케어스터디는 성동구 학교들의 내신 특성을 파악한 한양대 출신 및 재학생 선생님을 우선 연결해드립니다.',
+    dongs: {
+      '왕십리동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'한양대 인근 교육 중심지. 무학중·성동고 학군. 이공계 진학 목표 수학·과학 심화 과외 수요 높음.'},
+      '행당동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'행당중 학군. 한양대 캠퍼스타운 형성으로 교육 환경 개선. 내신·수능 동시 대비 과외 수요 높음.'},
+      '금호동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'금호중 학군. 도심 인접 주거지역. 맞벌이 가정 비율 높아 방문 과외 선호. 영어·수학 집중 과외 수요 꾸준.'},
+      '옥수동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'한강변 고급 주거지. 옥수중 학군. 강남 접근성 우수로 강남 수준 교육열 형성. 수능 수학·영어 심화 과외 수요 높음.'},
+    }},
+    '은평구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'은평구는 서울 서북부 최대 주거 지역으로, 뉴타운 개발이 순차적으로 완료되면서 젊은 가족층이 빠르게 유입되고 있습니다. 학원가 접근성이 강남·목동 대비 다소 낮아 1:1 방문 과외 선호도가 특히 높습니다.<br><br>진관고·신도고 등 은평구 고등학교 내신 대비와 함께, 특목고·자사고 진학을 목표로 한 중학생 심화 학습 수요도 꾸준히 증가하고 있습니다.<br><br>올케어스터디는 은평구 학교들의 내신 특성을 분석한 선생님들을 보유하고 있습니다.',
+    dongs: {
+      '응암동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'응암중 학군. 은평구 최대 주거지역. 방문 과외 선호도 높고 수학·영어 내신 관리 수요 꾸준.'},
+      '녹번동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'은평뉴타운 개발로 신규 아파트 대거 입주. 녹번중 학군. 젊은 부모들의 초등 조기교육 과외 수요 빠르게 성장.'},
+      '불광동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'불광중·은평고 학군. 지하철 접근성 좋아 학원 이용 편리. 1:1 과외와 병행 학습 수요 높음.'},
+      '수색동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'수색중 학군. 재개발 완료 후 신규 입주 증가. 초등~중학생 기초 수학·영어 강화 과외 수요 성장 중.'},
+    }},
+    '서대문구':{ hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'서대문구는 연세대학교·이화여자대학교·서강대학교 등 국내 최고의 대학들이 밀집한 교육 명문 지역입니다. 신촌을 중심으로 세 대학의 재학생·대학원생이 풍부하게 거주하며, 이들이 과외 선생님으로 활동하는 비율이 전국에서 가장 높습니다.<br><br>서대문구 학생들은 SKY 진학에 대한 목표 의식이 강합니다. 영어·수학·논술 과외를 조기에 시작하는 경향이 강하며, 이화여대 부속 학교들 주변에서는 여학생 교육 수요가 특화되어 있습니다.<br><br>올케어스터디는 서대문구에서 연세대·이화여대·서강대 출신 및 재학생 선생님을 가장 빠르게 연결해드립니다.',
+    dongs: {
+      '신촌동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'연세대·이화여대 캠퍼스타운. 신촌중 학군. SKY 목표 수험생 과외 수요 전국 상위. 대학원생 과외 선생님 최대 밀집 지역.'},
+      '홍제동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'홍제중 학군. 서대문구 최대 주거지역. 내신 관리 중심 과외 수요 꾸준.'},
+      '북가좌동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'가좌중 학군. 재개발 완료 신규 아파트 밀집. 젊은 가족층 증가로 초등 조기교육 과외 수요 성장.'},
+      '남가좌동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'남가좌중 학군. 이화·서강 인접 영향으로 영어·논술 과외 수요 높음.'},
+    }},
+    '도봉구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'도봉구는 서울 북부의 대표적인 주거 지역으로, 최근 창동 역세권 개발이 진행되면서 교육 환경이 점차 개선되고 있습니다. 젊은 가족층 유입으로 초등 조기교육 수요가 꾸준히 증가하고 있습니다.<br><br>도봉구 학부모들은 합리적인 교육 투자를 선호합니다. 1:1 방문 과외를 통한 개인 맞춤형 학습 효과를 기대하는 경향이 강하며, 도봉고·창동고 등 지역 고등학교의 내신 대비와 함께 수능 기초 다지기 과외 수요도 높습니다.<br><br>올케어스터디는 도봉구 학교들의 내신 특성에 맞는 선생님을 빠르게 연결해드립니다.',
+    dongs: {
+      '쌍문동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'쌍문중·창동고 학군. 도봉구 최대 주거지역. 내신 관리 과외 수요 꾸준. 수학·영어 취약점 보완 수업 선호.'},
+      '방학동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'방학중 학군. 도봉산 인근 조용한 주거지. 집중력 높은 환경으로 1:1 방문 과외 선호도 높음.'},
+      '창동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'창동역세권 개발로 교육 환경 개선 중. 창동중·도봉고 학군. 미래 성장 지역으로 교육 수요 증가 추세.'},
+      '도봉동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'도봉중 학군. 아파트 재건축 진행 중. 방문 과외 선호도 높고 중학생 내신 관리 수요 꾸준.'},
+    }},
+    '강북구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'강북구는 서울 최북단에 위치한 주거 지역으로, 학원가 접근성이 상대적으로 낮아 1:1 방문 과외에 대한 선호도가 서울에서 가장 높은 지역 중 하나입니다.<br><br>강북구 학부모들은 가성비 높은 교육을 추구합니다. 대형 학원보다 저렴하면서도 개인 맞춤형으로 진행되는 방문 과외를 선호하며, 수학·영어 내신 관리부터 수능 기초 다지기까지 폭넓은 수요가 있습니다.<br><br>올케어스터디는 강북구 전 지역에 방문 과외 서비스를 제공합니다. 합리적인 비용으로 최고의 교육 효과를 경험하세요.',
+    dongs: {
+      '미아동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'미아중·강북고 학군. 강북구 최대 주거지역. 방문 과외 선호도 매우 높음. 수학·영어 내신 관리 과외 수요 꾸준.'},
+      '수유동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'수유중 학군. 재건축 완료 신규 입주 증가로 젊은 가족층 유입. 초등 기초 과외 수요 성장.'},
+      '번동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'번동중 학군. 조용한 주거 환경. 1:1 방문 과외 수요 높고 합리적 비용 과외 선호.'},
+      '우이동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'북한산 인근 전원형 주거지. 우이중 학군. 교육 환경은 조용하나 집중력 높은 1:1 과외 환경 우수.'},
+    }},
+    '금천구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'금천구는 서울 G밸리(가산·독산·시흥 디지털산업단지)를 품고 있는 IT·제조업 밀집 지역입니다. 수천 개의 IT 기업과 스타트업이 입주해 있어, IT 종사자 자녀들의 코딩·수학 과외 수요가 전국 최상위 수준을 형성하고 있습니다.<br><br>금천구 학생들은 이공계·IT 계열 진학에 대한 관심이 높습니다. 코딩·알고리즘 과외 수요가 특화되어 있으며, AI·빅데이터 계열 대학 진학을 목표로 한 심화 수학 과외 수요도 빠르게 증가하고 있습니다.<br><br>올케어스터디는 금천구에서 IT·코딩 특화 선생님과 내신 관리 전문 선생님 모두를 빠르게 연결해드립니다.',
+    dongs: {
+      '가산동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'G밸리 IT단지 중심. IT 종사자 자녀 코딩·수학 과외 수요 전국 상위. 가산중 학군.'},
+      '독산동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'독산중·금천고 학군. 금천구 최대 주거지역. 내신 관리 중심 과외 수요 꾸준.'},
+      '시흥동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'시흥중·시흥고 학군. 재개발 완료 신규 아파트 입주. 젊은 가족층 증가로 초등 조기교육 과외 수요 성장 중.'},
+    }},
+    '구로구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'구로구는 서울 디지털산업단지와 신도림 복합쇼핑타운을 품고 있는 역동적인 지역입니다. 2호선·1호선 환승역인 신도림역을 중심으로 교통 접근성이 우수하며, 다양한 배경의 가정들이 거주하고 있습니다.<br><br>구로구는 디지털단지 IT 종사자 자녀들의 코딩·수학 과외 수요와 함께, 다문화 가정의 한국어·영어 교육 수요도 특화되어 있습니다. 구로고·개봉고·신도림고 학군에서는 내신 관리 중심의 수학·영어 과외 수요가 꾸준합니다.<br><br>올케어스터디는 구로구의 다양한 교육 수요에 대응하는 폭넓은 선생님 풀을 보유하고 있습니다.',
+    dongs: {
+      '구로동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'구로디지털단지 인접. 구로중·구로고 학군. IT 종사자 자녀 코딩·수학 과외 수요 높음.'},
+      '신도림동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'신도림중 학군. 2호선·1호선 환승역 인근 교통 요충지. 학원 접근성 우수하고 1:1 과외 병행 수요 높음.'},
+      '개봉동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'개봉중·개봉고 학군. 구로구 서부 주거지역. 내신 관리 중심 과외 수요 꾸준.'},
+      '오류동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'오류중 학군. 조용한 주거 환경. 방문 과외 선호도 높고 합리적 비용 과외 수요 꾸준.'},
+    }},
+  },
+};
+
 const REGIONS = {
   '서울': {
     label: '서울특별시', emoji: '🏙',
@@ -292,6 +486,18 @@ footer{background:var(--navy);padding:28px 48px;margin-top:60px}
 .floats{position:fixed;right:24px;bottom:60px;display:flex;flex-direction:column;gap:10px;z-index:500}
 .fbtn{display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;border:none;font-size:13px;font-weight:700;box-shadow:0 8px 32px rgba(15,32,68,.2);transition:all .25s;cursor:pointer;white-space:nowrap;text-decoration:none}
 .fbtn:hover{transform:translateX(-4px)}.fb1{background:var(--blue);color:white}.fb2{background:var(--navy);color:white}
+
+.dong-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:24px 0}
+.dong-card{background:white;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .25s;display:block;text-decoration:none;color:inherit}
+.dong-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border)}
+.dong-card-img{width:100%;height:160px;object-fit:cover;display:block;background:linear-gradient(135deg,#EFF6FF,#DBEAFE)}
+.dong-card-body{padding:16px}
+.dong-card-tag{font-size:11px;font-weight:700;color:var(--blue);margin-bottom:6px}
+.dong-card-title{font-size:15px;font-weight:900;color:var(--navy);margin-bottom:8px;line-height:1.35}
+.dong-card-desc{font-size:13px;color:var(--text-mid);line-height:1.7}
+.dong-card-arrow{display:flex;align-items:center;gap:4px;margin-top:12px;font-size:12px;font-weight:700;color:var(--blue)}
+@media(max-width:768px){.dong-grid{grid-template-columns:1fr 1fr}.dong-card-img{height:130px}}
+@media(max-width:480px){.dong-grid{grid-template-columns:1fr}}
 @media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}}
 header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}
 .hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}
@@ -845,7 +1051,31 @@ function makeAreaPage(rk, ak) {
   // 강남구는 전용 페이지
   if (rk === '서울' && ak === '강남구') return makeGangnamPage();
 
-  const dongTags = area.dongs.map(d => `<span class="tag">${d}</span>`).join('');
+  const distDongData = (DONG_DATA[rk] && DONG_DATA[rk][ak]) ? DONG_DATA[rk][ak] : null;
+  const distDesc = distDongData ? distDongData.desc : area.feature;
+  const heroImg = distDongData ? distDongData.hero : 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80';
+
+  const dongCards = (() => {
+    if (distDongData && distDongData.dongs) {
+      return Object.entries(distDongData.dongs).map(([dname, dinfo]) => {
+        const en = DISTRICT_EN[ak]||ak;
+        const url = `/${SIDO_EN[rk]||rk}/${en}/${dname}/high/math`;
+        return `<a href="${url}" class="dong-card">
+  <img class="dong-card-img" src="${dinfo.img}" alt="${dname} 과외" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+  <div class="dong-card-body">
+    <div class="dong-card-tag">${ak} · ${dname}</div>
+    <div class="dong-card-title">${dname} 과외</div>
+    <div class="dong-card-desc">${dinfo.desc}</div>
+    <div class="dong-card-arrow">과외 보기 →</div>
+  </div>
+</a>`;
+      }).join('');
+    }
+    return area.dongs.map(d => `<a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${d}/high/math" class="dong-card">
+  <div class="dong-card-body"><div class="dong-card-tag">${ak} · ${d}</div><div class="dong-card-title">${d} 과외</div><div class="dong-card-arrow">과외 보기 →</div></div>
+</a>`).join('');
+  })();
+
   const subjLinks = Object.entries(SUBJECTS).slice(0, 6).map(([s, v]) =>
     `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/high/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} 고등 ${s}과외</span><span>→</span></a>`
   ).join('');
@@ -864,12 +1094,18 @@ function makeAreaPage(rk, ak) {
     <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
-  <div class="art-thumb">${region.emoji}</div>
+  <div style="width:100%;height:260px;border-radius:var(--radius);margin-bottom:36px;overflow:hidden;position:relative">
+    <img src="${heroImg}" alt="${ak} 과외" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.6),transparent);display:flex;align-items:center;padding:32px">
+      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">${region.label} · ${ak}</div><div style="font-size:26px;font-weight:900">${ak} 과외</div></div>
+    </div>
+  </div>
   <div class="art-body">
     <h2>${ak} 과외 안내</h2>
-    <p>${area.feature}</p>
+    ${distDesc.split('<br><br>').map(p => `<p>${p}</p>`).join('\n    ')}
     <h3>주요 학교: ${area.schools}</h3>
-    <div class="tag-wrap"><div class="tag-label">📍 동별 과외 정보</div><div class="tags">${dongTags}</div></div>
+    <h2>동별 과외 정보</h2>
+    <div class="dong-grid">${dongCards}</div>
     <h2>과목별 과외 바로가기</h2>
     <div class="subj-grid">${subjLinks}</div>
   </div>
@@ -1287,7 +1523,7 @@ function mslideMove(sid, dir) {
   </div>
 </section>
 
-<div class="breadcrumb"><a href="/">홈</a> &nbsp;/&nbsp; <a href="/academy/all">학원수업</a> &nbsp;/&nbsp; <span>학원소개</span></div>
+
 
 <!-- 통계 -->
 <div class="stats-wrap">
@@ -1320,7 +1556,7 @@ function mslideMove(sid, dir) {
 <section class="diff-section">
   <div class="diff-inner">
     <div class="diff-header">
-      <div class="tag" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)">올케어스터디의 차별점</div>
+      <div class="tag" style="background:#1D4ED8;color:white;padding:6px 16px;border-radius:999px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:14px">올케어스터디의 차별점</div>
       <h2 class="diff-title">일반 학원과는<br><em>근본적으로 다릅니다</em></h2>
       <p class="diff-desc">TLC 국가공인 자격을 취득한 전문 코치가<br>학습 습관 형성부터 성적 향상까지 체계적으로 관리합니다.</p>
     </div>
@@ -1478,7 +1714,7 @@ function mslideMove(sid, dir) {
   <div class="ai-stars"></div><div class="ai-glow1"></div><div class="ai-glow2"></div>
   <div class="ai-inner">
     <div class="ai-header">
-      <div class="tag" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)">AI 학습클래스</div>
+      <div class="tag" style="background:#1D4ED8;color:white;padding:6px 16px;border-radius:999px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:14px">AI 학습클래스</div>
       <h2 class="ai-title"><span>AI</span> 학습클래스</h2>
       <p class="ai-sub">데이터 기반 정밀 학습 설계와 전문 코치의 1:1 지도.<br>AI와 교사의 듀얼 케어로 학습 효율을 극대화합니다.</p>
     </div>
