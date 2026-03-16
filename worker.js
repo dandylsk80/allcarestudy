@@ -1186,7 +1186,8 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 <meta property="og:locale" content="ko_KR">
 <meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080"},"datePublished":"${isoDate}","dateModified":"${isoDate}","inLanguage":"ko-KR"}</script>
-${bcSchema}<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+${bcSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
 </head><body>${HEADER}${body}${FOOTER}</body></html>`;
 }
@@ -3637,6 +3638,73 @@ function serveSitemap() {
     { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 }
 
+// ── RSS 피드 ──────────────────────────────────────────────
+
+function serveRSS() {
+  const now = new Date();
+  const pubDate = now.toUTCString();
+  const isoDate = now.toISOString();
+
+  // 주요 지역 × 학년 × 과목 조합으로 최신 아이템 생성 (50개)
+  const items = [];
+
+  // 강남구 동별 최신 아이템
+  const dongSamples = ['대치동','압구정동','역삼동','청담동','개포동'];
+  for (const dong of dongSamples) {
+    for (const sk of ['수학','영어']) {
+      items.push({
+        title: `${dong} 고등 ${sk}과외 | 강남구 ${dong} 맞춤 1:1 과외`,
+        link: `https://allcarestudy.com/seoul/gangnam/${DONG_EN[dong]||dong}/high/${SUBJECT_EN[sk]||sk}`,
+        desc: `강남구 ${dong} 고등 ${sk}과외 전문. 내신·수능 기출 분석 검증 선생님. 1:1 방문 과외. 무료 상담 010-6834-8080`,
+      });
+    }
+  }
+
+  // 주요 시도 × 대표 구/군 × 수학/영어 아이템
+  const featured = [
+    ['서울','강남구'],['서울','서초구'],['서울','송파구'],['서울','노원구'],['서울','양천구'],
+    ['경기','성남시'],['경기','수원시'],['경기','용인시'],['경기','고양시'],['경기','화성시'],
+    ['인천','연수구'],['인천','부평구'],['부산','해운대구'],['부산','동래구'],
+    ['대구','수성구'],['광주','서구'],['대전','유성구'],['울산','남구'],
+    ['충남','천안시'],['전북','전주시'],['경북','포항시'],['경남','창원시'],
+  ];
+  for (const [sido, ak] of featured) {
+    for (const sk of ['수학','영어']) {
+      items.push({
+        title: `${ak} 고등 ${sk}과외 | ${REGIONS[sido].label} ${ak} 1:1 맞춤 과외`,
+        link: `https://allcarestudy.com/${SIDO_EN[sido]||sido}/${DISTRICT_EN[ak]||ak}/high/${SUBJECT_EN[sk]||sk}`,
+        desc: `${ak} 고등 ${sk}과외 전문. ${REGIONS[sido].areas[ak].schools} 기출 분석. 검증 선생님 1:1 방문 과외. 무료 상담 010-6834-8080`,
+      });
+    }
+  }
+
+  const itemXml = items.slice(0, 50).map(it => `
+  <item>
+    <title><![CDATA[${it.title}]]></title>
+    <link>${it.link}</link>
+    <description><![CDATA[${it.desc}]]></description>
+    <pubDate>${pubDate}</pubDate>
+    <guid isPermaLink="true">${it.link}</guid>
+  </item>`).join('');
+
+  const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>올케어스터디 - 전국 지역별 과외 안내</title>
+    <link>https://allcarestudy.com</link>
+    <description>전국 초·중·고 1:1 맞춤 과외 전문. 수학·영어·국어·과학 검증 선생님 연결.</description>
+    <language>ko</language>
+    <lastBuildDate>${pubDate}</lastBuildDate>
+    <atom:link href="https://allcarestudy.com/rss.xml" rel="self" type="application/rss+xml"/>
+    <managingEditor>contact@allcarestudy.com (올케어스터디)</managingEditor>
+    <webMaster>contact@allcarestudy.com (올케어스터디)</webMaster>
+    <ttl>720</ttl>${itemXml}
+  </channel>
+</rss>`;
+
+  return new Response(rss, { headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' } });
+}
+
 // ── 라우터 ────────────────────────────────────────────────
 
 export default {
@@ -3680,6 +3748,7 @@ export default {
     }
 
     if (path === '/sitemap.xml') return serveSitemap();
+    if (path === '/rss.xml' || path === '/feed' || path === '/feed.xml') return serveRSS();
 
     // 문의하기
     if (path === '/contact') return new Response(makeContactPage(), { headers: h });
@@ -3691,7 +3760,15 @@ export default {
     if (path === '/academy' || path.startsWith('/academy/')) {
       return new Response(makeAcademyPage(), { headers: h });
     }
-    if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\nSitemap: https://allcarestudy.com/sitemap.xml', { headers: { 'Content-Type': 'text/plain' } });
+    if (path === '/robots.txt') return new Response('User-agent: *
+Allow: /
+
+User-agent: Yeti
+Allow: /
+Crawl-delay: 1
+
+Sitemap: https://allcarestudy.com/sitemap.xml
+Sitemap: https://allcarestudy.com/rss.xml', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 
     // 홈
     if (parts.length === 0) return new Response(makeHomePage(), { headers: h });
