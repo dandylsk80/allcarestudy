@@ -1503,8 +1503,16 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   const _imgs = SUBJ_IMAGES[subject] || SUBJ_IMAGES['수학'];
   const thumbImg = _imgs[_dh2 % _imgs.length];
 
-  const otherSubjects = Object.entries(SUBJECTS).filter(([s])=>s!==subject).map(([s,v])=>
-    `<a class="subj-link" href="/${sidoEn}/${guEn}/${toRoman(dongName)}/${gradeEn}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${dong} ${s}과외</span><span>→</span></a>`
+  // 초등/중등/고등 × 7과목 = 21개 링크
+  const GRADE3_LIST = [
+    {en:'elementary', ko:'초등'},
+    {en:'middle',     ko:'중등'},
+    {en:'high',       ko:'고등'},
+  ];
+  const otherSubjects = GRADE3_LIST.map(({en:gEn, ko:gKo}) =>
+    Object.entries(SUBJECTS).map(([s,v]) =>
+      `<a class="subj-link" href="/${sidoEn}/${guEn}/${toRoman(dongName)}/${gEn}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${dong} ${gKo} ${s}과외</span><span>→</span></a>`
+    ).join('')
   ).join('');
 
   const relDongs = dongs.filter(d=>d!==dongName).slice(0,6).map(d=>
