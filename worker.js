@@ -3760,15 +3760,7 @@ export default {
     if (path === '/academy' || path.startsWith('/academy/')) {
       return new Response(makeAcademyPage(), { headers: h });
     }
-    if (path === '/robots.txt') return new Response('User-agent: *
-Allow: /
-
-User-agent: Yeti
-Allow: /
-Crawl-delay: 1
-
-Sitemap: https://allcarestudy.com/sitemap.xml
-Sitemap: https://allcarestudy.com/rss.xml', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 
     // 홈
     if (parts.length === 0) return new Response(makeHomePage(), { headers: h });
