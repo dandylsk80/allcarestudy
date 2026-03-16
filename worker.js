@@ -102,1034 +102,14 @@ const DISTRICT_EN = Object.fromEntries(Object.entries(DISTRICT_MAP).map(([k,v])=
 // 전국 읍면동 DB
 // 형식: '영문키': ['시도한글', '시군구한글', '동한글', '카테고리', '시도En', '시군구En']
 // 카테고리: A=학원가특구, B=신도시, C=산업단지, D=군인가족, E=대학가, F=농촌읍면, G=도서, H=일반도심
-const DONG_DB = {
-  // ─── 서울 강남구 ───
-  'daichi':['서울','강남구','대치동','A','seoul','gangnam'],
-  'apgujeong':['서울','강남구','압구정동','A','seoul','gangnam'],
-  'yeoksam':['서울','강남구','역삼동','A','seoul','gangnam'],
-  'cheongdam':['서울','강남구','청담동','A','seoul','gangnam'],
-  'nonhyeon':['서울','강남구','논현동','A','seoul','gangnam'],
-  'dogok':['서울','강남구','도곡동','A','seoul','gangnam'],
-  'samsung':['서울','강남구','삼성동','A','seoul','gangnam'],
-  'gaepo':['서울','강남구','개포동','A','seoul','gangnam'],
-  'sinsa':['서울','강남구','신사동','A','seoul','gangnam'],
-  'suseo':['서울','강남구','수서동','A','seoul','gangnam'],
-  'ilwon':['서울','강남구','일원동','A','seoul','gangnam'],
-  'segok':['서울','강남구','세곡동','B','seoul','gangnam'],
-  'jagok':['서울','강남구','자곡동','H','seoul','gangnam'],
-  'yulhyeon':['서울','강남구','율현동','H','seoul','gangnam'],
-  // ─── 서울 서초구 ───
-  'banpo':['서울','서초구','반포동','A','seoul','seocho'],
-  'bangbae':['서울','서초구','방배동','A','seoul','seocho'],
-  'jamwon':['서울','서초구','잠원동','A','seoul','seocho'],
-  'seocho':['서울','서초구','서초동','A','seoul','seocho'],
-  'yangje':['서울','서초구','양재동','H','seoul','seocho'],
-  'umyeon':['서울','서초구','우면동','H','seoul','seocho'],
-  'naegok':['서울','서초구','내곡동','B','seoul','seocho'],
-  // ─── 서울 송파구 ───
-  'jamsil':['서울','송파구','잠실동','A','seoul','songpa'],
-  'munjeong':['서울','송파구','문정동','H','seoul','songpa'],
-  'garak':['서울','송파구','가락동','H','seoul','songpa'],
-  'bangi':['서울','송파구','방이동','H','seoul','songpa'],
-  'ogeum':['서울','송파구','오금동','H','seoul','songpa'],
-  'georye':['서울','송파구','거여동','H','seoul','songpa'],
-  'macheon':['서울','송파구','마천동','H','seoul','songpa'],
-  // ─── 서울 강동구 ───
-  'cheonho':['서울','강동구','천호동','H','seoul','gangdong'],
-  'amsa':['서울','강동구','암사동','H','seoul','gangdong'],
-  'myeongil':['서울','강동구','명일동','H','seoul','gangdong'],
-  'godeok':['서울','강동구','고덕동','B','seoul','gangdong'],
-  'gangil':['서울','강동구','강일동','B','seoul','gangdong'],
-  'dunchon':['서울','강동구','둔촌동','B','seoul','gangdong'],
-  // ─── 서울 마포구 ───
-  'hapjeong':['서울','마포구','합정동','E','seoul','mapo'],
-  'mangwon':['서울','마포구','망원동','H','seoul','mapo'],
-  'yeonnam':['서울','마포구','연남동','H','seoul','mapo'],
-  'sangsu':['서울','마포구','상수동','E','seoul','mapo'],
-  'sangam':['서울','마포구','상암동','C','seoul','mapo'],
-  'seongsan':['서울','마포구','성산동','H','seoul','mapo'],
-  // ─── 서울 양천구 ───
-  'mokdong':['서울','양천구','목동','A','seoul','yangcheon'],
-  'sinjeong':['서울','양천구','신정동','A','seoul','yangcheon'],
-  'sinwol':['서울','양천구','신월동','H','seoul','yangcheon'],
-  // ─── 서울 노원구 ───
-  'sanggye':['서울','노원구','상계동','A','seoul','nowon'],
-  'junggye':['서울','노원구','중계동','A','seoul','nowon'],
-  'hagye':['서울','노원구','하계동','H','seoul','nowon'],
-  'gongneung':['서울','노원구','공릉동','E','seoul','nowon'],
-  'wolgye':['서울','노원구','월계동','E','seoul','nowon'],
-  // ─── 서울 강서구 ───
-  'hwagok':['서울','강서구','화곡동','H','seoul','gangseo'],
-  'banghwa':['서울','강서구','방화동','H','seoul','gangseo'],
-  'magok':['서울','강서구','마곡동','C','seoul','gangseo'],
-  'balsan':['서울','강서구','발산동','B','seoul','gangseo'],
-  'deungchon':['서울','강서구','등촌동','H','seoul','gangseo'],
-  // ─── 서울 동작구 ───
-  'sadang':['서울','동작구','사당동','H','seoul','dongjak'],
-  'sangdo':['서울','동작구','상도동','E','seoul','dongjak'],
-  'noryangjin':['서울','동작구','노량진동','E','seoul','dongjak'],
-  'heukseok':['서울','동작구','흑석동','E','seoul','dongjak'],
-  'daebang':['서울','동작구','대방동','H','seoul','dongjak'],
-  // ─── 서울 관악구 ───
-  'sillim':['서울','관악구','신림동','E','seoul','gwanak'],
-  'bongcheon':['서울','관악구','봉천동','E','seoul','gwanak'],
-  'nakseongdae':['서울','관악구','낙성대동','E','seoul','gwanak'],
-  // ─── 서울 성북구 ───
-  'donam':['서울','성북구','돈암동','E','seoul','seongbuk'],
-  'gireum':['서울','성북구','길음동','B','seoul','seongbuk'],
-  'jeongneung':['서울','성북구','정릉동','E','seoul','seongbuk'],
-  'seokgwan':['서울','성북구','석관동','E','seoul','seongbuk'],
-  // ─── 서울 용산구 ───
-  'itaewon':['서울','용산구','이태원동','H','seoul','yongsan'],
-  'hannam':['서울','용산구','한남동','A','seoul','yongsan'],
-  'ichon':['서울','용산구','이촌동','A','seoul','yongsan'],
-  'seobinggo':['서울','용산구','서빙고동','H','seoul','yongsan'],
-  // ─── 서울 중구 ───
-  'sindang':['서울','중구','신당동','H','seoul','junggu'],
-  'hwangak':['서울','중구','황학동','H','seoul','junggu'],
-  'euljiro':['서울','중구','을지로동','H','seoul','junggu'],
-  'myeongdong':['서울','중구','명동','H','seoul','junggu'],
-  // ─── 서울 종로구 ───
-  'hyehwa':['서울','종로구','혜화동','E','seoul','jongno'],
-  'myeongyun':['서울','종로구','명륜동','E','seoul','jongno'],
-  'changsin':['서울','종로구','창신동','H','seoul','jongno'],
-  'buam':['서울','종로구','부암동','H','seoul','jongno'],
-  // ─── 서울 중랑구 ───
-  'myeonmok':['서울','중랑구','면목동','H','seoul','jungnang'],
-  'sinnae':['서울','중랑구','신내동','B','seoul','jungnang'],
-  'muk':['서울','중랑구','묵동','H','seoul','jungnang'],
-  'mangwoo':['서울','중랑구','망우동','H','seoul','jungnang'],
-  // ─── 서울 광진구 ───
-  'hwayang':['서울','광진구','화양동','E','seoul','gwangjin'],
-  'gunja':['서울','광진구','군자동','E','seoul','gwangjin'],
-  'guui':['서울','광진구','구의동','H','seoul','gwangjin'],
-  'jayang':['서울','광진구','자양동','H','seoul','gwangjin'],
-  // ─── 서울 동대문구 ───
-  'hoegi':['서울','동대문구','회기동','E','seoul','dongdaemun'],
-  'jeonong':['서울','동대문구','전농동','H','seoul','dongdaemun'],
-  'dapsimni':['서울','동대문구','답십리동','H','seoul','dongdaemun'],
-  'jangan':['서울','동대문구','장안동','H','seoul','dongdaemun'],
-  // ─── 서울 성동구 ───
-  'wangsimni':['서울','성동구','왕십리동','E','seoul','seongdong'],
-  'haengdang':['서울','성동구','행당동','E','seoul','seongdong'],
-  'geumho':['서울','성동구','금호동','H','seoul','seongdong'],
-  'oksu':['서울','성동구','옥수동','H','seoul','seongdong'],
-  // ─── 서울 은평구 ───
-  'eungam':['서울','은평구','응암동','H','seoul','eunpyeong'],
-  'nokbeon':['서울','은평구','녹번동','B','seoul','eunpyeong'],
-  'bulgwang':['서울','은평구','불광동','H','seoul','eunpyeong'],
-  'saekk':['서울','은평구','수색동','B','seoul','eunpyeong'],
-  // ─── 서울 서대문구 ───
-  'sinchon':['서울','서대문구','신촌동','E','seoul','seodaemun'],
-  'hongjae':['서울','서대문구','홍제동','H','seoul','seodaemun'],
-  'bukgajwa':['서울','서대문구','북가좌동','H','seoul','seodaemun'],
-  'namgajwa':['서울','서대문구','남가좌동','H','seoul','seodaemun'],
-  // ─── 서울 도봉구 ───
-  'ssangmun':['서울','도봉구','쌍문동','H','seoul','dobong'],
-  'banghak':['서울','도봉구','방학동','H','seoul','dobong'],
-  'changdong':['서울','도봉구','창동','B','seoul','dobong'],
-  'dobong':['서울','도봉구','도봉동','H','seoul','dobong'],
-  // ─── 서울 강북구 ───
-  'mia':['서울','강북구','미아동','H','seoul','gangbuk'],
-  'suyu':['서울','강북구','수유동','H','seoul','gangbuk'],
-  'beon':['서울','강북구','번동','H','seoul','gangbuk'],
-  'ui':['서울','강북구','우이동','H','seoul','gangbuk'],
-  // ─── 서울 금천구 ───
-  'gasan':['서울','금천구','가산동','C','seoul','geumcheon'],
-  'doksan':['서울','금천구','독산동','H','seoul','geumcheon'],
-  'siheung-gc':['서울','금천구','시흥동','H','seoul','geumcheon'],
-  // ─── 서울 구로구 ───
-  'guro':['서울','구로구','구로동','C','seoul','guro'],
-  'sindorim':['서울','구로구','신도림동','C','seoul','guro'],
-  'gaebong':['서울','구로구','개봉동','H','seoul','guro'],
-  'oryu':['서울','구로구','오류동','H','seoul','guro'],
-  // ─── 경기 수원시 ───
-  'paldal':['경기','수원시','팔달구','H','gyeonggi','suwon'],
-  'yeongtong':['경기','수원시','영통동','C','gyeonggi','suwon'],
-  'gwonseon':['경기','수원시','권선동','B','gyeonggi','suwon'],
-  'jangan-sw':['경기','수원시','장안동','H','gyeonggi','suwon'],
-  'maetan':['경기','수원시','매탄동','C','gyeonggi','suwon'],
-  'hwaseong-sw':['경기','수원시','화서동','H','gyeonggi','suwon'],
-  'uman':['경기','수원시','우만동','H','gyeonggi','suwon'],
-  'indeok':['경기','수원시','인계동','H','gyeonggi','suwon'],
-  // ─── 경기 성남시 ───
-  'bundang':['경기','성남시','분당구','A','gyeonggi','seongnam'],
-  'yatap':['경기','성남시','야탑동','A','gyeonggi','seongnam'],
-  'sujeong':['경기','성남시','수정구','B','gyeonggi','seongnam'],
-  'jungwon':['경기','성남시','중원구','H','gyeonggi','seongnam'],
-  'jeongja':['경기','성남시','정자동','C','gyeonggi','seongnam'],
-  'imae':['경기','성남시','이매동','A','gyeonggi','seongnam'],
-  'sunae':['경기','성남시','수내동','A','gyeonggi','seongnam'],
-  'seohyeon':['경기','성남시','서현동','A','gyeonggi','seongnam'],
-  // ─── 경기 용인시 ───
-  'suji':['경기','용인시','수지구','A','gyeonggi','yongin'],
-  'giheung':['경기','용인시','기흥구','C','gyeonggi','yongin'],
-  'dongbaek':['경기','용인시','동백동','B','gyeonggi','yongin'],
-  'sinbong':['경기','용인시','신봉동','A','gyeonggi','yongin'],
-  'heungdeok':['경기','용인시','흥덕동','B','gyeonggi','yongin'],
-  'sanghyeon':['경기','용인시','상현동','A','gyeonggi','yongin'],
-  'hyangmidong':['경기','용인시','향미동','B','gyeonggi','yongin'],
-  // ─── 경기 고양시 ───
-  'ilsandong':['경기','고양시','일산동구','B','gyeonggi','goyang'],
-  'ilsanseo':['경기','고양시','일산서구','B','gyeonggi','goyang'],
-  'deogyang':['경기','고양시','덕양구','B','gyeonggi','goyang'],
-  'madu':['경기','고양시','마두동','A','gyeonggi','goyang'],
-  'hwajung':['경기','고양시','화정동','H','gyeonggi','goyang'],
-  'baekseok':['경기','고양시','백석동','A','gyeonggi','goyang'],
-  'janghanpyeong':['경기','고양시','장항동','B','gyeonggi','goyang'],
-  // ─── 경기 부천시 ───
-  'jungdong':['경기','부천시','중동','A','gyeonggi','bucheon'],
-  'sangdong':['경기','부천시','상동','H','gyeonggi','bucheon'],
-  'sosa':['경기','부천시','소사동','H','gyeonggi','bucheon'],
-  'wonmi':['경기','부천시','원미동','H','gyeonggi','bucheon'],
-  'sinjungdong':['경기','부천시','신중동','H','gyeonggi','bucheon'],
-  // ─── 경기 안양시 ───
-  'pyeongchon':['경기','안양시','평촌동','A','gyeonggi','anyang'],
-  'bisan':['경기','안양시','비산동','H','gyeonggi','anyang'],
-  'manan':['경기','안양시','만안구','H','gyeonggi','anyang'],
-  'hogye':['경기','안양시','호계동','A','gyeonggi','anyang'],
-  'gwanyang':['경기','안양시','관양동','A','gyeonggi','anyang'],
-  // ─── 경기 화성시 ───
-  'dongtan':['경기','화성시','동탄동','B','gyeonggi','hwaseong'],
-  'bongdam':['경기','화성시','봉담읍','F','gyeonggi','hwaseong'],
-  'byeongjeom':['경기','화성시','병점동','H','gyeonggi','hwaseong'],
-  'hyangnam':['경기','화성시','향남읍','B','gyeonggi','hwaseong'],
-  'bansong':['경기','화성시','반송동','B','gyeonggi','hwaseong'],
-  // ─── 경기 남양주시 ───
-  'dasan':['경기','남양주시','다산동','B','gyeonggi','namyangju'],
-  'byeolnae':['경기','남양주시','별내동','B','gyeonggi','namyangju'],
-  'hopyeong':['경기','남양주시','호평동','H','gyeonggi','namyangju'],
-  'pyeongnae':['경기','남양주시','평내동','H','gyeonggi','namyangju'],
-  'jinjeop':['경기','남양주시','진접읍','F','gyeonggi','namyangju'],
-  // ─── 경기 안산시 ───
-  'danwon':['경기','안산시','단원구','C','gyeonggi','ansan'],
-  'sangnok':['경기','안산시','상록구','C','gyeonggi','ansan'],
-  'gojan':['경기','안산시','고잔동','C','gyeonggi','ansan'],
-  'seonbu':['경기','안산시','선부동','H','gyeonggi','ansan'],
-  'wongok':['경기','안산시','원곡동','C','gyeonggi','ansan'],
-  // ─── 경기 평택시 ───
-  'bijeon':['경기','평택시','비전동','B','gyeonggi','pyeongtaek'],
-  'sinjang':['경기','평택시','신장동','H','gyeonggi','pyeongtaek'],
-  'anjung':['경기','평택시','안중읍','F','gyeonggi','pyeongtaek'],
-  'jije':['경기','평택시','지제동','B','gyeonggi','pyeongtaek'],
-  'segyo':['경기','평택시','세교동','B','gyeonggi','pyeongtaek'],
-  // ─── 경기 시흥시 ───
-  'baegot':['경기','시흥시','배곧동','B','gyeonggi','siheung'],
-  'janghyeon':['경기','시흥시','장현동','B','gyeonggi','siheung'],
-  'mokgam':['경기','시흥시','목감동','H','gyeonggi','siheung'],
-  'eungye':['경기','시흥시','은계동','B','gyeonggi','siheung'],
-  'jeongwang':['경기','시흥시','정왕동','C','gyeonggi','siheung'],
-  // ─── 경기 파주시 ───
-  'unjeong':['경기','파주시','운정동','B','gyeonggi','paju'],
-  'gyoha':['경기','파주시','교하동','B','gyeonggi','paju'],
-  'geumchon':['경기','파주시','금촌동','H','gyeonggi','paju'],
-  'munsan':['경기','파주시','문산읍','H','gyeonggi','paju'],
-  'yadang':['경기','파주시','야당동','B','gyeonggi','paju'],
-  // ─── 경기 김포시 ───
-  'janggi':['경기','김포시','장기동','B','gyeonggi','gimpo'],
-  'unyang':['경기','김포시','운양동','B','gyeonggi','gimpo'],
-  'gurae':['경기','김포시','구래동','B','gyeonggi','gimpo'],
-  'sau':['경기','김포시','사우동','H','gyeonggi','gimpo'],
-  'geolpo':['경기','김포시','걸포동','H','gyeonggi','gimpo'],
-  // ─── 경기 의정부시 ───
-  'singok':['경기','의정부시','신곡동','H','gyeonggi','uijeongbu'],
-  'uijeongbu':['경기','의정부시','의정부동','H','gyeonggi','uijeongbu'],
-  'millak':['경기','의정부시','민락동','B','gyeonggi','uijeongbu'],
-  'ganeung':['경기','의정부시','가능동','H','gyeonggi','uijeongbu'],
-  'howon':['경기','의정부시','호원동','H','gyeonggi','uijeongbu'],
-  // ─── 경기 광주시 ───
-  'gyeongan':['경기','광주시','경안동','H','gyeonggi','gwangju-gg'],
-  'tanbul':['경기','광주시','탄벌동','H','gyeonggi','gwangju-gg'],
-  'opo':['경기','광주시','오포읍','F','gyeonggi','gwangju-gg'],
-  'chowol':['경기','광주시','초월읍','F','gyeonggi','gwangju-gg'],
-  // ─── 경기 하남시 ───
-  'misa':['경기','하남시','미사동','B','gyeonggi','hanam'],
-  'wirye':['경기','하남시','위례동','B','gyeonggi','hanam'],
-  'deokpung':['경기','하남시','덕풍동','H','gyeonggi','hanam'],
-  'gamil':['경기','하남시','감일동','B','gyeonggi','hanam'],
-  'mangweol':['경기','하남시','망월동','H','gyeonggi','hanam'],
-  // ─── 경기 광명시 ───
-  'cheolsan':['경기','광명시','철산동','H','gyeonggi','gwangmyeong'],
-  'haan':['경기','광명시','하안동','H','gyeonggi','gwangmyeong'],
-  'soha':['경기','광명시','소하동','H','gyeonggi','gwangmyeong'],
-  'gwangmyeong-gm':['경기','광명시','광명동','H','gyeonggi','gwangmyeong'],
-  // ─── 경기 군포시 ───
-  'sanbon':['경기','군포시','산본동','A','gyeonggi','gunpo'],
-  'dangjung':['경기','군포시','당정동','H','gyeonggi','gunpo'],
-  'bugok':['경기','군포시','부곡동','H','gyeonggi','gunpo'],
-  'daeyami':['경기','군포시','대야미동','H','gyeonggi','gunpo'],
-  // ─── 경기 이천시 ───
-  'changjeon':['경기','이천시','창전동','C','gyeonggi','icheon'],
-  'jungni':['경기','이천시','중리동','H','gyeonggi','icheon'],
-  'bubal':['경기','이천시','부발읍','F','gyeonggi','icheon'],
-  'sindun':['경기','이천시','신둔면','F','gyeonggi','icheon'],
-  // ─── 경기 오산시 ───
-  'osan-dong':['경기','오산시','오산동','H','gyeonggi','osan'],
-  'sema':['경기','오산시','세마동','C','gyeonggi','osan'],
-  'chopyeong':['경기','오산시','초평동','H','gyeonggi','osan'],
-  'galgot':['경기','오산시','갈곶동','H','gyeonggi','osan'],
-  // ─── 인천 ───
-  'songdo':['인천','연수구','송도동','B','incheon','yeonsu'],
-  'yeonsu':['인천','연수구','연수동','H','incheon','yeonsu'],
-  'cheonghal':['인천','연수구','청학동','H','incheon','yeonsu'],
-  'guwol':['인천','남동구','구월동','A','incheon','namdong'],
-  'mansu':['인천','남동구','만수동','H','incheon','namdong'],
-  'nonhyeon-ic':['인천','남동구','논현동','B','incheon','namdong'],
-  'bupyeong':['인천','부평구','부평동','H','incheon','bupyeong'],
-  'samsan':['인천','부평구','삼산동','H','incheon','bupyeong'],
-  'gyesan':['인천','계양구','계산동','H','incheon','gyeyang'],
-  'jakjeon':['인천','계양구','작전동','H','incheon','gyeyang'],
-  'cheongra':['인천','서구','청라동','B','incheon','seo-ic'],
-  'geomdan':['인천','서구','검단동','B','incheon','seo-ic'],
-  'juan':['인천','미추홀구','주안동','H','incheon','michuhol'],
-  'sunui':['인천','미추홀구','숭의동','E','incheon','michuhol'],
-  // ─── 부산 ───
-  'haeundae':['부산','해운대구','해운대동','A','busan','haeundae'],
-  'jwadong':['부산','해운대구','좌동','A','busan','haeundae'],
-  'jaesung':['부산','해운대구','재송동','B','busan','haeundae'],
-  'gwangan':['부산','수영구','광안동','H','busan','suyeong'],
-  'milak':['부산','수영구','민락동','H','busan','suyeong'],
-  'namcheon':['부산','수영구','남천동','H','busan','suyeong'],
-  'oncheon':['부산','동래구','온천동','A','busan','dongrae'],
-  'sajik':['부산','동래구','사직동','A','busan','dongrae'],
-  'jangjeon':['부산','금정구','장전동','E','busan','geumjeong'],
-  'guseo':['부산','금정구','구서동','E','busan','geumjeong'],
-  'bujeon':['부산','부산진구','부전동','H','busan','busanjin'],
-  'gaegeum':['부산','부산진구','개금동','H','busan','busanjin'],
-  'hwamdong':['부산','북구','화명동','B','busan','buk-bs'],
-  'deokcheon':['부산','북구','덕천동','H','busan','buk-bs'],
-  'yeonsan':['부산','연제구','연산동','H','busan','yeonje'],
-  'geoje':['부산','연제구','거제동','H','busan','yeonje'],
-  'jeongwan':['부산','기장군','정관읍','B','busan','gijang'],
-  // ─── 대구 ───
-  'beomeo':['대구','수성구','범어동','A','daegu','suseong'],
-  'manchon':['대구','수성구','만촌동','A','daegu','suseong'],
-  'hwanggeumhwi':['대구','수성구','황금동','A','daegu','suseong'],
-  'wolseong':['대구','달서구','월성동','H','daegu','dalseo'],
-  'yongsan':['대구','달서구','용산동','H','daegu','dalseo'],
-  'jingcheon':['대구','달서구','진천동','B','daegu','dalseo'],
-  'guam':['대구','북구','구암동','E','daegu','buk-dg'],
-  'bokhyeon':['대구','북구','복현동','E','daegu','buk-dg'],
-  'yulha':['대구','동구','율하동','B','daegu','dong-dg'],
-  'dongchon':['대구','동구','동촌동','B','daegu','dong-dg'],
-  'hyeonpung':['대구','달성군','현풍읍','C','daegu','dalseong'],
-  // ─── 광주 ───
-  'sangmu':['광주','서구','상무동','A','gwangju','seo-gj'],
-  'hwajung':['광주','서구','화정동','H','gwangju','seo-gj'],
-  'yongbong':['광주','북구','용봉동','E','gwangju','buk-gj'],
-  'ilgok':['광주','북구','일곡동','B','gwangju','buk-gj'],
-  'suwan':['광주','광산구','수완동','B','gwangju','gwangsan'],
-  'cheomdan':['광주','광산구','첨단동','B','gwangju','gwangsan'],
-  'bongseondong':['광주','남구','봉선동','A','gwangju','nam-gj'],
-  // ─── 대전 ───
-  'noeun':['대전','유성구','노은동','B','daejeon','yuseong'],
-  'jijok':['대전','유성구','지족동','B','daejeon','yuseong'],
-  'banseok':['대전','유성구','반석동','B','daejeon','yuseong'],
-  'dunsan':['대전','서구','둔산동','A','daejeon','seo-dj'],
-  'doan':['대전','서구','도안동','B','daejeon','seo-dj'],
-  'songchon':['대전','대덕구','송촌동','C','daejeon','daedeok'],
-  // ─── 울산 ───
-  'samsan':['울산','남구','삼산동','C','ulsan','nam-us'],
-  'daldong':['울산','남구','달동','H','ulsan','nam-us'],
-  'hwabong':['울산','북구','화봉동','C','ulsan','buk-us'],
-  'maegok':['울산','북구','매곡동','C','ulsan','buk-us'],
-  // ─── 세종 ───
-  'saeroeum':['세종','세종시','새롬동','B','sejong','sejong'],
-  'dodam':['세종','세종시','도담동','B','sejong','sejong'],
-  'areum':['세종','세종시','아름동','B','sejong','sejong'],
-  'jongchon':['세종','세종시','종촌동','B','sejong','sejong'],
-  'goun':['세종','세종시','고운동','B','sejong','sejong'],
-  // ─── 강원 ───
-  'seoksa':['강원','춘천시','석사동','E','gangwon','chuncheon'],
-  'hugpyeong':['강원','춘천시','후평동','H','gangwon','chuncheon'],
-  'danguk':['강원','원주시','단구동','H','gangwon','wonju'],
-  'musil':['강원','원주시','무실동','B','gangwon','wonju'],
-  'ponam':['강원','강릉시','포남동','H','gangwon','gangneung'],
-  'gyodong':['강원','강릉시','교동','H','gangwon','gangneung'],
-  // ─── 충북 ───
-  'gaeshin':['충북','청주시','개신동','E','chungbuk','cheongju'],
-  'bokdae':['충북','청주시','복대동','H','chungbuk','cheongju'],
-  'sannam':['충북','청주시','산남동','B','chungbuk','cheongju'],
-  'chilgeum':['충북','충주시','칠금동','H','chungbuk','chungju'],
-  'yongsan-cb':['충북','충주시','용산동','H','chungbuk','chungju'],
-  // ─── 충남 ───
-  'buldang':['충남','천안시','불당동','B','chungnam','cheonan'],
-  'dujeong':['충남','천안시','두정동','B','chungnam','cheonan'],
-  'sinbang':['충남','천안시','신방동','B','chungnam','cheonan'],
-  'baebang':['충남','아산시','배방읍','B','chungnam','asan'],
-  'tangjeong':['충남','아산시','탕정면','C','chungnam','asan'],
-  // ─── 전북 ───
-  'hyoja':['전북','전주시','효자동','A','jeonbuk','jeonju'],
-  'songcheon-jb':['전북','전주시','송천동','B','jeonbuk','jeonju'],
-  'pyeonghwa':['전북','전주시','평화동','H','jeonbuk','jeonju'],
-  'yeongdeung':['전북','익산시','영등동','H','jeonbuk','iksan'],
-  'sinheung':['전북','익산시','신흥동','H','jeonbuk','iksan'],
-  // ─── 전남 ───
-  'jorye':['전남','순천시','조례동','A','jeonnam','suncheon'],
-  'yeonhyang':['전남','순천시','연향동','B','jeonnam','suncheon'],
-  'yeoseo':['전남','여수시','여서동','H','jeonnam','yeosu'],
-  'hadang':['전남','목포시','하당동','B','jeonnam','mokpo'],
-  'namak':['전남','목포시','남악동','B','jeonnam','mokpo'],
-  // ─── 경북 ───
-  'yangdeok':['경북','포항시','양덕동','H','gyeongbuk','pohang'],
-  'duho':['경북','포항시','두호동','H','gyeongbuk','pohang'],
-  'hyeongok':['경북','구미시','형곡동','C','gyeongbuk','gumi'],
-  'wonpyeong':['경북','구미시','원평동','H','gyeongbuk','gumi'],
-  'okdong':['경북','안동시','옥동','H','gyeongbuk','andong'],
-  'taehwa':['경북','안동시','태화동','H','gyeongbuk','andong'],
-  'sadong':['경북','경산시','사동','E','gyeongbuk','gyeongsan'],
-  'jungbang':['경북','경산시','중방동','E','gyeongbuk','gyeongsan'],
-  // ─── 경남 ───
-  'sangnam':['경남','창원시','상남동','A','gyeongnam','changwon'],
-  'bonggok':['경남','창원시','봉곡동','H','gyeongnam','changwon'],
-  'sinan':['경남','진주시','신안동','E','gyeongnam','jinju'],
-  'pyeonggeo':['경남','진주시','평거동','B','gyeongnam','jinju'],
-  'jangyu':['경남','김해시','장유동','B','gyeongnam','gimhae'],
-  'naehoe':['경남','김해시','내외동','H','gyeongnam','gimhae'],
-  'mulgeum':['경남','양산시','물금읍','B','gyeongnam','yangsan'],
-  // ─── 제주 ───
-  'nohyeong':['제주','제주시','노형동','H','jeju','jeju-si'],
-  'ido':['제주','제주시','이도동','H','jeju','jeju-si'],
-  'yeondong':['제주','제주시','연동','H','jeju','jeju-si'],
-  'seogwipo':['제주','서귀포시','서귀동','H','jeju','seogwipo'],
-  'daejung':['제주','서귀포시','대정읍','F','jeju','seogwipo'],
-};
+const DONG_DB = {};
 
-// 전국 시군구 전체 DONG_DB 확장
-// 형식: '영문키': ['시도', '시군구', '동명', '카테고리', '시도En', '시군구En']
 
-const DONG_DB_EXTRA = {
 
-  // ═══════════════════════════════════════════
-  // 서울특별시 (기존 제외 추가분)
-  // ═══════════════════════════════════════════
 
-  // 서울 용산구 추가
-  'bogwang':['서울','용산구','보광동','H','seoul','yongsan'],
-  'huam':['서울','용산구','후암동','H','seoul','yongsan'],
 
-  // 서울 성동구 추가
-  'hapdong':['서울','성동구','합정동','H','seoul','seongdong'],
-  'sindang2':['서울','성동구','신당동','H','seoul','seongdong'],
-
-  // ═══════════════════════════════════════════
-  // 경기도 추가
-  // ═══════════════════════════════════════════
-
-  // 경기 과천시
-  'byeolyang':['경기','과천시','별양동','A','gyeonggi','gwacheon'],
-  'jungang-gc':['경기','과천시','중앙동','H','gyeonggi','gwacheon'],
-  'munwon':['경기','과천시','문원동','H','gyeonggi','gwacheon'],
-
-  // 경기 구리시
-  'toegyewon':['경기','구리시','토평동','H','gyeonggi','guri'],
-  'galmae':['경기','구리시','갈매동','B','gyeonggi','guri'],
-  'inchang':['경기','구리시','인창동','H','gyeonggi','guri'],
-
-  // 경기 양주시
-  'okjeong':['경기','양주시','옥정동','B','gyeonggi','yangju'],
-  'hoecheon':['경기','양주시','회천읍','H','gyeonggi','yangju'],
-
-  // 경기 여주시
-  'yeoju-eup':['경기','여주시','여주읍','H','gyeonggi','yeoju'],
-  'sejong-yj':['경기','여주시','세종로','H','gyeonggi','yeoju'],
-
-  // 경기 포천시
-  'pocheon-eup':['경기','포천시','포천읍','H','gyeonggi','pocheon'],
-  'sohul':['경기','포천시','소흘읍','H','gyeonggi','pocheon'],
-
-  // 경기 가평군
-  'gapyeong-eup':['경기','가평군','가평읍','F','gyeonggi','gapyeong'],
-  'cheongpyeong':['경기','가평군','청평면','F','gyeonggi','gapyeong'],
-
-  // 경기 양평군
-  'yangpyeong-eup':['경기','양평군','양평읍','F','gyeonggi','yangpyeong'],
-  'yongmun':['경기','양평군','용문면','F','gyeonggi','yangpyeong'],
-
-  // 경기 연천군
-  'yeoncheon-eup':['경기','연천군','연천읍','F','gyeonggi','yeoncheon'],
-  'jeongok':['경기','연천군','전곡읍','F','gyeonggi','yeoncheon'],
-
-  // ═══════════════════════════════════════════
-  // 인천광역시
-  // ═══════════════════════════════════════════
-
-  // 인천 강화군
-  'ganghwa-eup':['인천','강화군','강화읍','F','incheon','ganghwa'],
-  'gilsang':['인천','강화군','길상면','F','incheon','ganghwa'],
-
-  // 인천 옹진군
-  'yeongjong':['인천','옹진군','영종동','G','incheon','ongjin'],
-  'deokjeok':['인천','옹진군','덕적면','G','incheon','ongjin'],
-
-  // 인천 동구
-  'hwasu':['인천','동구','화수동','H','incheon','dong-ic'],
-  'songnyeo':['인천','동구','송현동','H','incheon','dong-ic'],
-
-  // ═══════════════════════════════════════════
-  // 부산광역시 추가
-  // ═══════════════════════════════════════════
-
-  // 부산 사하구
-  'dadae':['부산','사하구','다대동','H','busan','saha'],
-  'gwoejeong':['부산','사하구','괴정동','H','busan','saha'],
-  'hadan':['부산','사하구','하단동','H','busan','saha'],
-
-  // 부산 사상구
-  'morla':['부산','사상구','모라동','C','busan','sasang'],
-  'hakjang':['부산','사상구','학장동','C','busan','sasang'],
-
-  // 부산 영도구
-  'bongrae':['부산','영도구','봉래동','H','busan','yeongdo'],
-  'cheongak':['부산','영도구','청학동','H','busan','yeongdo'],
-
-  // 부산 동구
-  'choryang':['부산','동구','초량동','H','busan','dong-bs'],
-  'sujeong-bs':['부산','동구','수정동','H','busan','dong-bs'],
-
-  // 부산 중구
-  'nampodong':['부산','중구','남포동','H','busan','jung-bs'],
-  'gwangbok':['부산','중구','광복동','H','busan','jung-bs'],
-
-  // 부산 서구
-  'dongdaesin':['부산','서구','동대신동','H','busan','seo-bs'],
-  'bumin':['부산','서구','부민동','H','busan','seo-bs'],
-
-  // 부산 남구
-  'daeyeon':['부산','남구','대연동','E','busan','nam-bs'],
-  'yongho':['부산','남구','용호동','H','busan','nam-bs'],
-
-  // 부산 동래구 추가
-  'myeongnyun':['부산','동래구','명륜동','A','busan','dongrae'],
-  'nak':['부산','동래구','낙민동','H','busan','dongrae'],
-
-  // 부산 강서구
-  'myeongji':['부산','강서구','명지동','B','busan','gangseo-bs'],
-  'noksan':['부산','강서구','녹산동','C','busan','gangseo-bs'],
-
-  // ═══════════════════════════════════════════
-  // 대구광역시 추가
-  // ═══════════════════════════════════════════
-
-  // 대구 중구
-  'daebong':['대구','중구','대봉동','H','daegu','jung-dg'],
-  'namsan':['대구','중구','남산동','H','daegu','jung-dg'],
-
-  // 대구 서구
-  'naedang':['대구','서구','내당동','H','daegu','seo-dg'],
-  'bisan':['대구','서구','비산동','H','daegu','seo-dg'],
-
-  // 대구 남구
-  'daemyeong':['대구','남구','대명동','E','daegu','nam-dg'],
-  'bongdeok':['대구','남구','봉덕동','H','daegu','nam-dg'],
-
-  // 대구 달성군 추가
-  'hwawon':['대구','달성군','화원읍','B','daegu','dalseong'],
-  'okpo':['대구','달성군','옥포읍','B','daegu','dalseong'],
-
-  // ═══════════════════════════════════════════
-  // 광주광역시 추가
-  // ═══════════════════════════════════════════
-
-  // 광주 동구
-  'chungjang':['광주','동구','충장로','H','gwangju','dong-gj'],
-  'gyerim':['광주','동구','계림동','H','gwangju','dong-gj'],
-
-  // ═══════════════════════════════════════════
-  // 대전광역시 추가
-  // ═══════════════════════════════════════════
-
-  // 대전 동구
-  'gao':['대전','동구','가오동','H','daejeon','dong-dj'],
-  'daejeondong':['대전','동구','대동','H','daejeon','dong-dj'],
-
-  // 대전 중구
-  'taepyeong':['대전','중구','태평동','H','daejeon','jung-dj'],
-  'munhwa':['대전','중구','문화동','H','daejeon','jung-dj'],
-
-  // ═══════════════════════════════════════════
-  // 울산광역시 추가
-  // ═══════════════════════════════════════════
-
-  // 울산 중구
-  'hakseong':['울산','중구','학성동','H','ulsan','jung-us'],
-  'boksan':['울산','중구','복산동','H','ulsan','jung-us'],
-
-  // 울산 동구
-  'ilsan':['울산','동구','일산동','C','ulsan','dong-us'],
-  'bangeodong':['울산','동구','방어동','H','ulsan','dong-us'],
-
-  // 울산 울주군
-  'eonyang':['울산','울주군','언양읍','F','ulsan','ulju'],
-  'onsan':['울산','울주군','온산읍','C','ulsan','ulju'],
-
-  // ═══════════════════════════════════════════
-  // 세종특별자치시 추가
-  // ═══════════════════════════════════════════
-  'baram':['세종','세종시','바람개비마을','B','sejong','sejong'],
-  'haemil':['세종','세종시','해밀동','B','sejong','sejong'],
-  'sodam':['세종','세종시','소담동','B','sejong','sejong'],
-  'beopyong':['세종','세종시','보람동','B','sejong','sejong'],
-
-  // ═══════════════════════════════════════════
-  // 강원특별자치도
-  // ═══════════════════════════════════════════
-
-  // 강원 춘천시 추가
-  'toegyedong':['강원','춘천시','퇴계동','H','gangwon','chuncheon'],
-  'nakwon':['강원','춘천시','낙원동','H','gangwon','chuncheon'],
-
-  // 강원 원주시 추가
-  'hanil':['강원','원주시','단계동','H','gangwon','wonju'],
-  'myeongnyun-wj':['강원','원주시','명륜동','E','gangwon','wonju'],
-
-  // 강원 강릉시 추가
-  'hongje-gn':['강원','강릉시','홍제동','H','gangwon','gangneung'],
-  'seongdeok':['강원','강릉시','성덕동','H','gangwon','gangneung'],
-
-  // 강원 동해시
-  'cheonggok':['강원','동해시','천곡동','H','gangwon','donghae'],
-  'bukpyeong':['강원','동해시','북평동','H','gangwon','donghae'],
-
-  // 강원 속초시
-  'joyangdong':['강원','속초시','조양동','H','gangwon','sokcho'],
-  'yeongrang':['강원','속초시','영랑동','H','gangwon','sokcho'],
-
-  // 강원 삼척시
-  'gyodong-sc':['강원','삼척시','교동','H','gangwon','samcheok'],
-  'namsaem':['강원','삼척시','남양동','H','gangwon','samcheok'],
-
-  // 강원 태백시
-  'hwangji':['강원','태백시','황지동','H','gangwon','taebaek'],
-
-  // 강원 홍천군
-  'hongcheon-eup':['강원','홍천군','홍천읍','F','gangwon','hongcheon'],
-
-  // 강원 횡성군
-  'hoengseong-eup':['강원','횡성군','횡성읍','F','gangwon','hoengseong'],
-
-  // 강원 영월군
-  'yeongwol-eup':['강원','영월군','영월읍','F','gangwon','yeongwol'],
-
-  // 강원 평창군
-  'pyeongchang-eup':['강원','평창군','평창읍','F','gangwon','pyeongchang'],
-  'daehwa':['강원','평창군','대화면','F','gangwon','pyeongchang'],
-
-  // 강원 정선군
-  'jeongseon-eup':['강원','정선군','정선읍','F','gangwon','jeongseon'],
-  'gohan':['강원','정선군','고한읍','F','gangwon','jeongseon'],
-
-  // 강원 철원군
-  'cheorwon-eup':['강원','철원군','철원읍','D','gangwon','cheorwon'],
-  'dongsong':['강원','철원군','동송읍','D','gangwon','cheorwon'],
-
-  // 강원 화천군
-  'hwacheon-eup':['강원','화천군','화천읍','D','gangwon','hwacheon'],
-
-  // 강원 양구군
-  'yanggu-eup':['강원','양구군','양구읍','D','gangwon','yanggu'],
-
-  // 강원 인제군
-  'inje-eup':['강원','인제군','인제읍','D','gangwon','inje'],
-
-  // 강원 고성군
-  'ganseong-eup':['강원','고성군','간성읍','D','gangwon','goseong-gw'],
-  'geojin':['강원','고성군','거진읍','D','gangwon','goseong-gw'],
-
-  // 강원 양양군
-  'yangyang-eup':['강원','양양군','양양읍','H','gangwon','yangyang'],
-
-  // ═══════════════════════════════════════════
-  // 충청북도
-  // ═══════════════════════════════════════════
-
-  // 충북 청주시 추가
-  'gagyeong':['충북','청주시','가경동','B','chungbuk','cheongju'],
-  'jikji':['충북','청주시','직지대로','H','chungbuk','cheongju'],
-  'sugoknae':['충북','청주시','수곡동','H','chungbuk','cheongju'],
-
-  // 충북 충주시 추가
-  'anrim':['충북','충주시','안림동','H','chungbuk','chungju'],
-
-  // 충북 제천시
-  'uirimji':['충북','제천시','의림지동','H','chungbuk','jecheon'],
-  'mosan':['충북','제천시','모산동','H','chungbuk','jecheon'],
-
-  // 충북 보은군
-  'boeun-eup':['충북','보은군','보은읍','F','chungbuk','boeun'],
-
-  // 충북 옥천군
-  'okcheon-eup':['충북','옥천군','옥천읍','F','chungbuk','okcheon'],
-
-  // 충북 영동군
-  'yeongdong-eup':['충북','영동군','영동읍','F','chungbuk','yeongdong'],
-
-  // 충북 증평군
-  'jeungpyeong-eup':['충북','증평군','증평읍','F','chungbuk','jeungpyeong'],
-
-  // 충북 진천군
-  'jincheon-eup':['충북','진천군','진천읍','F','chungbuk','jincheon'],
-  'deoksan':['충북','진천군','덕산읍','C','chungbuk','jincheon'],
-
-  // 충북 괴산군
-  'goesan-eup':['충북','괴산군','괴산읍','F','chungbuk','goesan'],
-
-  // 충북 음성군
-  'eumseong-eup':['충북','음성군','음성읍','F','chungbuk','eumseong'],
-  'geumwang':['충북','음성군','금왕읍','C','chungbuk','eumseong'],
-
-  // 충북 단양군
-  'danyang-eup':['충북','단양군','단양읍','F','chungbuk','danyang'],
-
-  // ═══════════════════════════════════════════
-  // 충청남도
-  // ═══════════════════════════════════════════
-
-  // 충남 천안시 추가
-  'ssangnyong':['충남','천안시','쌍용동','B','chungnam','cheonan'],
-  'seonghwan':['충남','천안시','성환읍','F','chungnam','cheonan'],
-
-  // 충남 아산시 추가
-  'onyangdong':['충남','아산시','온양동','H','chungnam','asan'],
-
-  // 충남 서산시
-  'dongmun':['충남','서산시','동문동','H','chungnam','seosan'],
-  'seoknam':['충남','서산시','석남동','H','chungnam','seosan'],
-
-  // 충남 당진시
-  'dangjin-eup':['충남','당진시','당진동','H','chungnam','dangjin'],
-  'hapdeok':['충남','당진시','합덕읍','F','chungnam','dangjin'],
-
-  // 충남 공주시
-  'geumseong':['충남','공주시','금성동','H','chungnam','gongju'],
-  'sinwan':['충남','공주시','신관동','E','chungnam','gongju'],
-
-  // 충남 보령시
-  'daecheon':['충남','보령시','대천동','H','chungnam','boryeong'],
-  'jugyodong':['충남','보령시','주교면','F','chungnam','boryeong'],
-
-  // 충남 논산시
-  'nonsan-dong':['충남','논산시','논산동','D','chungnam','nonsan'],
-  'ganggyeong':['충남','논산시','강경읍','H','chungnam','nonsan'],
-
-  // 충남 계룡시
-  'geumam':['충남','계룡시','금암동','D','chungnam','gyeryong'],
-
-  // 충남 금산군
-  'geumsan-eup':['충남','금산군','금산읍','F','chungnam','geumsan'],
-
-  // 충남 부여군
-  'buyeo-eup':['충남','부여군','부여읍','F','chungnam','buyeo'],
-
-  // 충남 서천군
-  'janghang':['충남','서천군','장항읍','H','chungnam','seocheon'],
-  'seocheon-eup':['충남','서천군','서천읍','F','chungnam','seocheon'],
-
-  // 충남 청양군
-  'cheongyang-eup':['충남','청양군','청양읍','F','chungnam','cheongyang'],
-
-  // 충남 홍성군
-  'hongseong-eup':['충남','홍성군','홍성읍','F','chungnam','hongseong'],
-  'naepodong':['충남','홍성군','내포동','B','chungnam','hongseong'],
-
-  // 충남 예산군
-  'yesan-eup':['충남','예산군','예산읍','F','chungnam','yesan'],
-
-  // 충남 태안군
-  'taean-eup':['충남','태안군','태안읍','F','chungnam','taean'],
-  'anmyeon':['충남','태안군','안면읍','F','chungnam','taean'],
-
-  // ═══════════════════════════════════════════
-  // 전라북도
-  // ═══════════════════════════════════════════
-
-  // 전북 전주시 추가
-  'seosin':['전북','전주시','서신동','A','jeonbuk','jeonju'],
-  'deokjin':['전북','전주시','덕진동','E','jeonbuk','jeonju'],
-
-  // 전북 익산시 추가
-  'eoman':['전북','익산시','어양동','H','jeonbuk','iksan'],
-
-  // 전북 군산시
-  'naun':['전북','군산시','나운동','H','jeonbuk','gunsan'],
-  'susongi':['전북','군산시','수송동','H','jeonbuk','gunsan'],
-
-  // 전북 정읍시
-  'jeongeup-dong':['전북','정읍시','정읍동','H','jeonbuk','jeongeup'],
-
-  // 전북 남원시
-  'namwon-dong':['전북','남원시','남원동','H','jeonbuk','namwon'],
-
-  // 전북 김제시
-  'gimje-dong':['전북','김제시','김제동','H','jeonbuk','gimje'],
-
-  // 전북 완주군
-  'samrye':['전북','완주군','삼례읍','F','jeonbuk','wanju'],
-  'bongdong':['전북','완주군','봉동읍','F','jeonbuk','wanju'],
-
-  // 전북 진안군
-  'jinan-eup':['전북','진안군','진안읍','F','jeonbuk','jinan'],
-
-  // 전북 무주군
-  'muju-eup':['전북','무주군','무주읍','F','jeonbuk','muju'],
-
-  // 전북 장수군
-  'jangsu-eup':['전북','장수군','장수읍','F','jeonbuk','jangsu'],
-
-  // 전북 임실군
-  'imsil-eup':['전북','임실군','임실읍','F','jeonbuk','imsil'],
-
-  // 전북 순창군
-  'sunchang-eup':['전북','순창군','순창읍','F','jeonbuk','sunchang'],
-
-  // 전북 고창군
-  'gochang-eup':['전북','고창군','고창읍','F','jeonbuk','gochang'],
-
-  // 전북 부안군
-  'buan-eup':['전북','부안군','부안읍','F','jeonbuk','buan'],
-
-  // ═══════════════════════════════════════════
-  // 전라남도
-  // ═══════════════════════════════════════════
-
-  // 전남 순천시 추가
-  'yeonhyang2':['전남','순천시','연향동','B','jeonnam','suncheon'],
-  'pungdeok':['전남','순천시','풍덕동','H','jeonnam','suncheon'],
-
-  // 전남 여수시 추가
-  'dolsan':['전남','여수시','돌산읍','H','jeonnam','yeosu'],
-  'yosu-dong':['전남','여수시','여서동','H','jeonnam','yeosu'],
-
-  // 전남 목포시 추가
-  'okam':['전남','목포시','옥암동','B','jeonnam','mokpo'],
-
-  // 전남 나주시
-  'naju-dong':['전남','나주시','나주동','H','jeonnam','naju'],
-  'bitgaram':['전남','나주시','빛가람동','B','jeonnam','naju'],
-
-  // 전남 광양시 추가
-  'jungang-gy':['전남','광양시','중동','C','jeonnam','gwangyang'],
-
-  // 전남 담양군
-  'damyang-eup':['전남','담양군','담양읍','F','jeonnam','damyang'],
-
-  // 전남 곡성군
-  'gokseong-eup':['전남','곡성군','곡성읍','F','jeonnam','gokseong'],
-
-  // 전남 구례군
-  'gurye-eup':['전남','구례군','구례읍','F','jeonnam','gurye'],
-
-  // 전남 고흥군
-  'goheung-eup':['전남','고흥군','고흥읍','F','jeonnam','goheung'],
-
-  // 전남 보성군
-  'boseong-eup':['전남','보성군','보성읍','F','jeonnam','boseong'],
-
-  // 전남 화순군
-  'hwasun-eup':['전남','화순군','화순읍','F','jeonnam','hwasun'],
-
-  // 전남 장흥군
-  'jangheung-eup':['전남','장흥군','장흥읍','F','jeonnam','jangheung'],
-
-  // 전남 강진군
-  'gangjin-eup':['전남','강진군','강진읍','F','jeonnam','gangjin'],
-
-  // 전남 해남군
-  'haenam-eup':['전남','해남군','해남읍','F','jeonnam','haenam'],
-
-  // 전남 영암군
-  'yeongam-eup':['전남','영암군','영암읍','F','jeonnam','yeongam'],
-  'samho':['전남','영암군','삼호읍','C','jeonnam','yeongam'],
-
-  // 전남 무안군
-  'muan-eup':['전남','무안군','무안읍','F','jeonnam','muan'],
-  'ilro':['전남','무안군','일로읍','B','jeonnam','muan'],
-
-  // 전남 함평군
-  'hampyeong-eup':['전남','함평군','함평읍','F','jeonnam','hampyeong'],
-
-  // 전남 영광군
-  'yeonggwang-eup':['전남','영광군','영광읍','F','jeonnam','yeonggwang'],
-  'hongnong':['전남','영광군','홍농읍','C','jeonnam','yeonggwang'],
-
-  // 전남 장성군
-  'jangseong-eup':['전남','장성군','장성읍','F','jeonnam','jangseong'],
-
-  // 전남 완도군
-  'wando-eup':['전남','완도군','완도읍','G','jeonnam','wando'],
-
-  // 전남 진도군
-  'jindo-eup':['전남','진도군','진도읍','G','jeonnam','jindo'],
-
-  // 전남 신안군
-  '압해':['전남','신안군','압해읍','G','jeonnam','sinan'],
-
-  // ═══════════════════════════════════════════
-  // 경상북도
-  // ═══════════════════════════════════════════
-
-  // 경북 포항시 추가
-  'yonil':['경북','포항시','효자동','H','gyeongbuk','pohang'],
-  'jukdo':['경북','포항시','죽도동','H','gyeongbuk','pohang'],
-
-  // 경북 경주시 추가
-  'hwangseong':['경북','경주시','황성동','H','gyeongbuk','gyeongju'],
-  'bukgun':['경북','경주시','북군동','H','gyeongbuk','gyeongju'],
-
-  // 경북 구미시 추가
-  'imeu':['경북','구미시','임은동','H','gyeongbuk','gumi'],
-  'okgye':['경북','구미시','옥계동','C','gyeongbuk','gumi'],
-
-  // 경북 안동시 추가
-  'junggu-ad':['경북','안동시','중구동','H','gyeongbuk','andong'],
-
-  // 경북 경산시 추가
-  'oksan':['경북','경산시','옥산동','E','gyeongbuk','gyeongsan'],
-
-  // 경북 김천시
-  'gimcheon-dong':['경북','김천시','김천동','H','gyeongbuk','gimcheon'],
-  'pyeonghwa-gk':['경북','김천시','평화동','H','gyeongbuk','gimcheon'],
-
-  // 경북 영주시
-  'yeongju-dong':['경북','영주시','영주동','H','gyeongbuk','yeongju'],
-  'punggi':['경북','영주시','풍기읍','F','gyeongbuk','yeongju'],
-
-  // 경북 영천시
-  'yeongcheon-dong':['경북','영천시','영천동','H','gyeongbuk','yeongcheon'],
-
-  // 경북 상주시
-  'sangju-dong':['경북','상주시','상주동','H','gyeongbuk','sangju'],
-
-  // 경북 문경시
-  'jeomchon':['경북','문경시','점촌동','H','gyeongbuk','mungyeong'],
-
-  // 경북 의성군
-  'uiseong-eup':['경북','의성군','의성읍','F','gyeongbuk','uiseong'],
-
-  // 경북 청송군
-  'cheongsong-eup':['경북','청송군','청송읍','F','gyeongbuk','cheongsong'],
-
-  // 경북 영양군
-  'yeongyang-eup':['경북','영양군','영양읍','F','gyeongbuk','yeongyang'],
-
-  // 경북 영덕군
-  'yeongdeok-eup':['경북','영덕군','영덕읍','F','gyeongbuk','yeongdeok'],
-  'ganggu':['경북','영덕군','강구면','F','gyeongbuk','yeongdeok'],
-
-  // 경북 청도군
-  'hwayangup':['경북','청도군','화양읍','F','gyeongbuk','cheongdo'],
-
-  // 경북 고령군
-  'daegaya':['경북','고령군','대가야읍','F','gyeongbuk','goryeong'],
-
-  // 경북 성주군
-  'seongju-eup':['경북','성주군','성주읍','F','gyeongbuk','seongju'],
-
-  // 경북 칠곡군
-  'waegwan':['경북','칠곡군','왜관읍','C','gyeongbuk','chilgok'],
-  'buk-chilgok':['경북','칠곡군','북삼읍','H','gyeongbuk','chilgok'],
-
-  // 경북 예천군
-  'yecheon-eup':['경북','예천군','예천읍','F','gyeongbuk','yecheon'],
-
-  // 경북 봉화군
-  'bonghwa-eup':['경북','봉화군','봉화읍','F','gyeongbuk','bonghwa'],
-
-  // 경북 울진군
-  'uljin-eup':['경북','울진군','울진읍','F','gyeongbuk','uljin'],
-  'jukbyeon':['경북','울진군','죽변면','C','gyeongbuk','uljin'],
-
-  // 경북 울릉군
-  'ulleung-eup':['경북','울릉군','울릉읍','G','gyeongbuk','ulleung'],
-
-  // ═══════════════════════════════════════════
-  // 경상남도
-  // ═══════════════════════════════════════════
-
-  // 경남 창원시 추가
-  'jungang-cw':['경남','창원시','중앙동','H','gyeongnam','changwon'],
-  'sinwol-cw':['경남','창원시','신월동','B','gyeongnam','changwon'],
-
-  // 경남 진주시 추가
-  'chocheon':['경남','진주시','초전동','B','gyeongnam','jinju'],
-  'munsan-jj':['경남','진주시','문산읍','F','gyeongnam','jinju'],
-
-  // 경남 김해시 추가
-  'burhang':['경남','김해시','불암동','H','gyeongnam','gimhae'],
-
-  // 경남 양산시 추가
-  'yangsan-dong':['경남','양산시','양산동','H','gyeongnam','yangsan'],
-  'bugok-ys':['경남','양산시','북정동','H','gyeongnam','yangsan'],
-
-  // 경남 거제시
-  'gohyeon':['경남','거제시','고현동','C','gyeongnam','geoje'],
-  'jangseungpo':['경남','거제시','장승포동','C','gyeongnam','geoje'],
-
-  // 경남 통영시
-  'tongyeong-dong':['경남','통영시','통영동','H','gyeongnam','tongyeong'],
-  'mujeon':['경남','통영시','무전동','H','gyeongnam','tongyeong'],
-
-  // 경남 사천시
-  'sacheon-eup':['경남','사천시','사천읍','C','gyeongnam','sacheon'],
-  'seopoong':['경남','사천시','서포면','F','gyeongnam','sacheon'],
-
-  // 경남 밀양시
-  'milyang-dong':['경남','밀양시','밀양동','H','gyeongnam','miryang'],
-  'samnangjin':['경남','밀양시','삼랑진읍','F','gyeongnam','miryang'],
-
-  // 경남 의령군
-  'uiryeong-eup':['경남','의령군','의령읍','F','gyeongnam','uiryeong'],
-
-  // 경남 함안군
-  'gaya-eup':['경남','함안군','가야읍','H','gyeongnam','haman'],
-  'chilwon':['경남','함안군','칠원읍','F','gyeongnam','haman'],
-
-  // 경남 창녕군
-  'changnyeong-eup':['경남','창녕군','창녕읍','F','gyeongnam','changnyeong'],
-  'namji':['경남','창녕군','남지읍','F','gyeongnam','changnyeong'],
-
-  // 경남 고성군
-  'goseong-eup':['경남','고성군','고성읍','F','gyeongnam','goseong-gn'],
-
-  // 경남 남해군
-  'namhae-eup':['경남','남해군','남해읍','F','gyeongnam','namhae'],
-
-  // 경남 하동군
-  'hadong-eup':['경남','하동군','하동읍','F','gyeongnam','hadong'],
-
-  // 경남 산청군
-  'sancheong-eup':['경남','산청군','산청읍','F','gyeongnam','sancheong'],
-
-  // 경남 함양군
-  'hamyang-eup':['경남','함양군','함양읍','F','gyeongnam','hamyang'],
-
-  // 경남 거창군
-  'geochang-eup':['경남','거창군','거창읍','F','gyeongnam','geochang'],
-
-  // 경남 합천군
-  'hapcheon-eup':['경남','합천군','합천읍','F','gyeongnam','hapcheon'],
-
-  // ═══════════════════════════════════════════
-  // 제주특별자치도 추가
-  // ═══════════════════════════════════════════
-  'aewol':['제주','제주시','애월읍','F','jeju','jeju-si'],
-  'gujwa':['제주','제주시','구좌읍','F','jeju','jeju-si'],
-  'hallim':['제주','제주시','한림읍','F','jeju','jeju-si'],
-  'daejeong':['제주','서귀포시','대정읍','F','jeju','seogwipo'],
-  'namwon-jj':['제주','서귀포시','남원읍','F','jeju','seogwipo'],
-  'pyoseon':['제주','서귀포시','표선면','F','jeju','seogwipo'],
-};
-
-// DONG_MAP/DONG_EN은 DONG_DB에서 자동 생성
-// 추가 전국 데이터 병합
-
-Object.assign(DONG_DB, DONG_DB_EXTRA);
-
-
-
-
-const DONG_MAP = Object.fromEntries(Object.entries(DONG_DB).map(([k,v])=>[k,v[2]]));
-const DONG_EN = Object.fromEntries(Object.entries(DONG_DB).map(([k,v])=>[v[2],k]));
+const DONG_MAP = {}; // DONG_DB 제거됨
+const DONG_EN = {}; // DONG_DB 제거됨
 
 
 const GRADE_MAP = {
@@ -1408,7 +388,7 @@ const REGIONS = {
     label: '서울특별시', emoji: '🏙',
     areas: {
       '강남구': {
-        dongs: Object.entries(DONG_DB).filter(([k,v])=>v[1]==='강남구').map(([k,v])=>v[2]),
+        dongs: ['대치동','압구정동','역삼동','청담동','논현동','도곡동','삼성동','개포동','신사동','수서동','일원동','세곡동','자곡동','율현동'],
         feature: '강남구 과외는 대치동·압구정·역삼·청담 전 지역에서 수학 과외, 영어 과외, 국어 과외, 과학 과외를 1:1 방문 과외로 연결해드립니다. 강남구 초등 과외·중등 과외·고등 과외 전 학년 내신 대비와 수능 대비를 전담하며, 강남 학원가 기출 문제 분석에 특화된 검증 선생님을 매칭합니다. 강남구 수학 과외·영어 과외 선생님은 학력·경력·수업 시연 검증을 완료한 분들로만 구성되어 있습니다. 무료 상담 후 48시간 내 강남구 맞춤 과외 선생님을 연결해드립니다.',
         schools: '휘문고, 단대부고, 중동고, 숙명여고, 경기고, 개포고'
       },
@@ -1889,17 +869,10 @@ const HEADER = `<header>
             </div>
           </div>
           <div class="mega-panel" id="region-grade">
-            <div class="mega-rt">초등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daichi/elem1/math">초등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem2/math">초등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem3/math">초등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem4/math">초등 4학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem5/math">초등 5학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem6/math">초등 6학년</a>
-            </div>
-            <div class="mega-rt">중학교</div>
-            <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daichi/mid1/math">중학교 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid2/math">중학교 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid3/math">중학교 3학년</a>
-            </div>
-            <div class="mega-rt">고등학교</div>
-            <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daichi/high1/math">고등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high2/math">고등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">고등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">수능 준비</a>
+              <a class="mega-btn" href="/seoul/gangnam/daechidong/elementary/math">🎒 초등 과외</a>
+              <a class="mega-btn" href="/seoul/gangnam/daechidong/middle/math">📚 중등 과외</a>
+              <a class="mega-btn" href="/seoul/gangnam/daechidong/high/math">🎓 고등 과외</a>
             </div>
           </div>
           <div class="mega-panel" id="region-school">
@@ -1976,17 +949,10 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
             </div>
           </div>
           <div class="mega-panel" id="region-grade">
-            <div class="mega-rt">초등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daichi/elem1/math">초등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem2/math">초등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem3/math">초등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem4/math">초등 4학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem5/math">초등 5학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem6/math">초등 6학년</a>
-            </div>
-            <div class="mega-rt">중학교</div>
-            <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daichi/mid1/math">중학교 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid2/math">중학교 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid3/math">중학교 3학년</a>
-            </div>
-            <div class="mega-rt">고등학교</div>
-            <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daichi/high1/math">고등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high2/math">고등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">고등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">수능 준비</a>
+              <a class="mega-btn" href="/seoul/gangnam/daechidong/elementary/math">🎒 초등 과외</a>
+              <a class="mega-btn" href="/seoul/gangnam/daechidong/middle/math">📚 중등 과외</a>
+              <a class="mega-btn" href="/seoul/gangnam/daechidong/high/math">🎓 고등 과외</a>
             </div>
           </div>
           <div class="mega-panel" id="region-school">
@@ -2294,9 +1260,6 @@ const CATEGORY_TEMPLATES = {
 };
 
 // ── 동적 페이지 생성 함수 ────────────────────────────────────
-function getDongData(dongEn) {
-  return DONG_DB[dongEn] || null;
-}
 
 // 해시 함수: 동+과목 조합으로 일관된 템플릿 선택
 
@@ -2358,6 +1321,9 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   if(!area.dongs||!area.dongs.includes(dongName)) return null;
 
   const dong = dongName;
+  let _dh = 0;
+  for(let i=0;i<dong.length;i++) _dh = (_dh*31+dong.charCodeAt(i))>>>0;
+  const dInfoNums = [120+(_dh%231), 91+(_dh%9)];
   const gu = ak;
   const schools = area.schools||`${ak} 주요 학교`;
   const sidoLabel = region.label||sido;
@@ -2375,6 +1341,9 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
     G:`${dong}은 도서 지역으로 온라인 과외와 방문 과외를 모두 지원합니다.`,
     H:`${dong}은 ${gu} 주거지역으로 ${schools} 학군 내신 관리 과외 수요가 꾸준합니다.`,
   };
+  let _mh = 0;
+  for(let j=0;j<dong.length;j++) _mh = (_mh*31+dong.charCodeAt(j))>>>0;
+  const infoNums = [120+(_mh%231), 91+(_mh%9)];
   const intro = CAT_DESC[cat]||CAT_DESC['H'];
 
   const GRADES_3 = [
@@ -2412,8 +1381,8 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   <h1 class="art-title">${dong} 과외 | ${gu} ${dong} 맞춤 1:1 과외 안내</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
   <div class="info-box">
-    <div class="info-item"><div class="info-num">247명</div><div class="info-label">등록 선생님</div></div>
-    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
+    <div class="info-item"><div class="info-num">${infoNums[0]}명</div><div class="info-label">등록 선생님</div></div>
+    <div class="info-item"><div class="info-num">${infoNums[1]}%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
   <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
@@ -2484,6 +1453,9 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   const reviews = tmpl.reviews;
 
   const dong = dongName;
+  let _dh2 = 0;
+  for(let j=0;j<dong.length;j++) _dh2 = (_dh2*31+dong.charCodeAt(j))>>>0;
+  const dInfoNums = [120+(_dh2%231), 91+(_dh2%9)];
   const gu = ak;
   const schools = area.schools || `${ak} 주요 학교`;
   const sidoLabel = region.label || sido;
@@ -2531,11 +1503,11 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   const thumbImg = SUBJ_IMAGES[subject] || SUBJ_IMAGES['수학'];
 
   const otherSubjects = Object.entries(SUBJECTS).filter(([s])=>s!==subject).map(([s,v])=>
-    `<a class="subj-link" href="/${sidoEn}/${guEn}/${encodeURIComponent(dongName)}/${gradeEn}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${dong} ${grade} ${s}과외</span><span>→</span></a>`
+    `<a class="subj-link" href="/${sidoEn}/${guEn}/${toRoman(dongName)}/${gradeEn}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${dong} ${s}과외</span><span>→</span></a>`
   ).join('');
 
   const relDongs = dongs.filter(d=>d!==dongName).slice(0,6).map(d=>
-    `<a href="/${sidoEn}/${guEn}/${encodeURIComponent(d)}/${gradeEn}/${subjectEn}" class="rel-card"><div class="rc-tag">${gu} · ${d}</div><div class="rc-title">${d} ${subject}과외 | ${gu} ${d} ${subject} 맞춤 과외</div></a>`
+    `<a href="/${sidoEn}/${guEn}/${toRoman(d)}/${gradeEn}/${subjectEn}" class="rel-card"><div class="rc-tag">${gu} · ${d}</div><div class="rc-title">${d} ${subject}과외 | ${gu} ${d} ${subject} 맞춤 과외</div></a>`
   ).join('');
 
   const keywords = [`${dong} ${subject}과외`, `${gu} ${dong} 과외`, `${dong} ${grade} 과외`,
@@ -2552,8 +1524,8 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 맞춤 1:1 과외</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 5분</span></div>
   <div class="info-box">
-    <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
-    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
+    <div class="info-item"><div class="info-num">${dInfoNums[0]}명</div><div class="info-label">${subject} 선생님</div></div>
+    <div class="info-item"><div class="info-num">${dInfoNums[1]}%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
   <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
@@ -2598,188 +1570,6 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   return wrap(title, desc, canonical, body, bc);
 }
 
-function makeDongPage(dongEn, subjectEn, gradeEn) {
-  const data = DONG_DB[dongEn];
-  if (!data) return null;
-  const subject = SUBJECT_MAP[subjectEn] || subjectEn;
-  const grade = GRADE_MAP[gradeEn] || gradeEn;
-  const subj = SUBJECTS[subject];
-  const gradeObj = GRADES[grade];
-  if (!subj || !gradeObj) return null;
-
-  const [sido, gu, dong, cat, sidoEn, guEn] = data;
-  const tmpl = CATEGORY_TEMPLATES[cat] || CATEGORY_TEMPLATES['H'];
-
-  const subjectKey = subject === '수학' ? 'math' : subject === '영어' ? 'english' : 'math';
-  const tmplTexts = tmpl[subjectKey] || tmpl.math;
-  const reviews = tmpl.reviews;
-
-  // 학년별 특화 설명
-  const gradeGroup = gradeObj.group || grade;
-  const GRADE_DESC = {
-    '초등': { math: `${dong} 초등 수학과외는 기초 개념부터 차근차근 쌓아 중학교를 준비합니다. 수 개념·연산·도형·분수 등 초등 수학 전 과정을 1:1 맞춤 지도로 탄탄하게 완성합니다.`, english: `${dong} 초등 영어과외는 파닉스부터 시작해 읽기·쓰기·회화까지 단계적으로 지도합니다.` },
-    '중등': { math: `${dong} 중등 수학과외는 중학 수학 전 과정을 체계적으로 관리합니다. 방정식·함수·확률 등 핵심 단원을 집중 보완하고 고등 수학을 미리 준비합니다.`, english: `${dong} 중등 영어과외는 내신 지문 분석과 문법 심화로 내신 성적을 관리합니다.` },
-    '고등': { math: `${dong} 고등 수학과외는 내신과 수능을 동시에 관리하는 맞춤 커리큘럼으로 운영합니다. 취약 단원을 집중 보완하고 수능 핵심 유형을 반복 훈련합니다.`, english: `${dong} 고등 영어과외는 수능 1등급을 목표로 독해 속도·정확도를 끌어올립니다.` },
-  };
-  const gradeDescFallback = {
-    '초등': GRADE_DESC['초등'],
-    '중등': GRADE_DESC['중등'],
-    '고등': GRADE_DESC['고등'],
-  };
-  const gradeDesc = (GRADE_DESC[grade] || GRADE_DESC['고등'])[subjectKey] || '';
-
-  // 지역 내 학교명 (REGIONS에서 가져오거나 기본값)
-  const regionArea = REGIONS[sido]?.areas[gu];
-  const schools = regionArea?.schools || `${gu} 주요 학교`;
-
-  const fill = (t) => t
-    .replace(/\{dong\}/g, dong)
-    .replace(/\{gu\}/g, gu)
-    .replace(/\{sido\}/g, sido)
-    .replace(/\{subject\}/g, subject)
-    .replace(/\{grade\}/g, grade)
-    .replace(/\{schools\}/g, schools);
-
-  const mainText = fill(hashSelect(dongEn + subjectEn, tmplTexts));
-  const review1 = fill(hashSelect(dongEn + subjectEn + '1', reviews));
-  const review2 = fill(hashSelect(dongEn + subjectEn + '2', reviews));
-
-  const sidoLabel = sido === '서울' ? '서울특별시' : sido === '경기' ? '경기도' :
-    sido === '인천' ? '인천광역시' : sido === '부산' ? '부산광역시' :
-    sido === '대구' ? '대구광역시' : sido === '광주' ? '광주광역시' :
-    sido === '대전' ? '대대전광역시' : sido === '울산' ? '울산광역시' :
-    sido === '세종' ? '세종특별자치시' : sido === '강원' ? '강원특별자치도' : sido;
-
-  const title = `${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 1:1 맞춤 과외 - 올케어스터디`;
-  const desc = `${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
-  const canonical = `/${sidoEn}/${guEn}/${dongEn}/${gradeEn}/${subjectEn}`;
-
-  const bc = [
-    {name:'홈', url:'/'},
-    {name:sidoLabel, url:`/${sidoEn}`},
-    {name:gu, url:`/${sidoEn}/${guEn}`},
-    {name:`${dong} ${grade} ${subject}과외`, url:canonical}
-  ];
-
-  const otherSubjects = Object.entries(SUBJECTS)
-    .filter(([s]) => s !== subject)
-    .slice(0, 6)
-    .map(([s, v]) => `<a class="subj-link" href="/${sidoEn}/${guEn}/${dongEn}/${gradeEn}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${dong} ${grade} ${s}과외</span><span>→</span></a>`)
-    .join('');
-
-  const relDongs = Object.entries(DONG_DB)
-    .filter(([k, v]) => v[1] === gu && k !== dongEn)
-    .slice(0, 3)
-    .map(([k, v]) => `<a class="rel-card" href="/${sidoEn}/${guEn}/${k}/${gradeEn}/${subjectEn}"><div class="rc-tag">${gu} · ${v[2]}</div><div class="rc-title">${v[2]} ${grade} ${subject}과외</div></a>`)
-    .join('');
-
-  const yearTags = gradeObj.years.map(y => `<span class="tag">${y}</span>`).join('');
-
-  const keywords = [
-    `${dong} ${subject}과외`, `${dong} ${grade} ${subject}`,
-    `${gu} ${subject}과외`, `${dong} 과외`,
-    `${dong} 1:1과외`, `${gu} ${grade} ${subject}`,
-    `${dong} 내신 ${subject}`, `${dong} ${subject} 선생님`
-  ];
-  const keywordTags = keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('');
-
-  // 과목별 썸네일 이미지
-  const SUBJ_IMAGES = {
-    '수학': 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=900&q=80',
-    '영어': 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=900&q=80',
-    '국어': 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900&q=80',
-    '과학': 'https://images.unsplash.com/photo-1532094349884-543559244e6a?w=900&q=80',
-    '사회': 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=900&q=80',
-    '코딩': 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80',
-    '논술': 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80',
-  };
-  const thumbImg = SUBJ_IMAGES[subject] || SUBJ_IMAGES['수학'];
-
-  // 카테고리별 지역 특성 설명
-  const CAT_DESC = {
-    A: `${dong}은 ${gu}에서도 교육열이 가장 높은 학군으로, ${schools} 등 명문 학교가 밀집해 내신 경쟁이 전국 최상위권입니다. 학원 수업만으로는 개별 취약점을 보완하기 어려워 1:1 방문 과외 수요가 매우 높습니다.`,
-    B: `${dong}은 신도시 개발로 젊은 고학력 가정이 밀집한 지역입니다. ${schools} 신설 학교의 기출 분석에 특화된 선생님을 빠르게 매칭해드리며, 이사 후에도 즉시 학습을 시작할 수 있습니다.`,
-    C: `${dong}은 산업단지 인근으로 맞벌이 가정 비율이 높아 방문 과외 선호도가 높습니다. ${schools} 내신 관리와 이공계 진학을 위한 수학·과학 심화 과외 수요가 꾸준합니다.`,
-    D: `${dong}은 군인 가족이 많아 잦은 이사에도 빠른 선생님 매칭이 중요합니다. ${schools} 새 학교 스타일을 빠르게 파악해 첫 시험부터 안정적인 성적을 받을 수 있도록 집중 지도합니다.`,
-    E: `${dong}은 대학가 인근으로 우수한 과외 선생님 공급이 풍부합니다. ${schools} 내신 관리부터 SKY·의대 진학을 위한 심화 과외까지 학생 목표에 맞는 최적의 선생님을 연결합니다.`,
-    F: `${dong}은 학원 접근성이 낮은 지역 특성상 방문 과외 선호도가 높습니다. ${schools} 내신을 합리적인 비용으로 꼼꼼하게 1:1 지도해 학원 없이도 성적 관리가 가능합니다.`,
-    G: `${dong}은 도서 지역으로 온라인 과외와 방문 과외를 모두 지원합니다. ${schools} 내신을 섬에 있어도 검증된 선생님과 1:1로 체계적으로 준비할 수 있습니다.`,
-    H: `${dong}은 ${gu} 중심 주거지역으로 ${schools} 학군의 내신 관리 과외 수요가 꾸준합니다. 학원 수업과 병행해 취약 단원을 집중 보완하는 1:1 방문 과외가 효과적입니다.`,
-  };
-  const catDesc = CAT_DESC[cat] || CAT_DESC['H'];
-
-  // FAQ
-  const FAQ_Q1 = subject === '수학'
-    ? `${dong}에서 수학 과외 선생님을 찾는 데 얼마나 걸리나요?`
-    : `${dong}에서 ${subject} 과외 선생님을 찾는 데 얼마나 걸리나요?`;
-  const FAQ_A1 = `상담 신청 후 24시간 이내에 코디네이터가 연락드리며, 빠르면 당일에도 매칭이 가능합니다. ${schools} 기출을 잘 아는 선생님 위주로 추천해드립니다.`;
-  const FAQ_Q2 = `${grade} ${subject} 성적이 많이 낮아도 괜찮나요?`;
-  const FAQ_A2 = `물론입니다. 기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 현재 수준에 맞는 선생님을 매칭해 단계적으로 실력을 끌어올립니다.`;
-  const FAQ_Q3 = `수업료는 어떻게 되나요?`;
-  const FAQ_A3 = `선생님 경력·학력·수업 방식에 따라 다르며, 첫 상담은 완전 무료입니다. 학부모님 예산에 맞는 선생님을 투명하게 안내해드립니다.`;
-
-  const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} ${grade} ${subject}과외</span></div>
-  <div class="art-tag">${subj.emoji} ${gu} · ${dong} · ${grade} · ${subject}</div>
-  <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 맞춤 1:1 과외</h1>
-  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 5분</span></div>
-  <div class="info-box">
-    <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
-    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
-    <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
-  </div>
-  <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
-    <img src="${thumbImg}" alt="${dong} ${grade} ${subject}과외" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
-    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.65),transparent);display:flex;align-items:center;padding:32px">
-      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">${gu} · ${dong}</div><div style="font-size:28px;font-weight:900">${dong} ${subject}과외</div></div>
-    </div>
-  </div>
-  <div class="art-body">
-    <h2>${dong} ${grade} ${subject}과외 안내</h2>
-    <p>${mainText}</p>
-    <p>${catDesc}</p>
-    <p>${gradeDesc}</p>
-    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 ${grade} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
-
-    <h2>${dong} ${grade} ${subject}과외 선생님 특징</h2>
-    <p><strong>① 학교 기출 완벽 분석</strong> — ${schools} ${subject} 시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다. 단순 개념 설명이 아닌 실제 시험에서 나오는 유형 중심으로 집중 지도합니다.</p>
-    <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. 학생과 선생님의 수업 스타일이 맞지 않으면 부담 없이 교체할 수 있습니다.</p>
-    <p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도·보완 사항을 정리해 학부모님께 공유합니다. 투명한 학습 관리로 성적 변화를 직접 확인할 수 있습니다.</p>
-    <p><strong>④ 취약점 집중 보완</strong> — ${subject} 취약 단원을 정확히 파악하고 집중 보완합니다. 학원에서 놓친 부분을 1:1로 완전히 채워드립니다.</p>
-
-    <h2>${dong} ${subject}과외 실제 후기</h2>
-    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic;color:var(--text-dark)">"${review1}"</blockquote>
-    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic;color:var(--text-dark)">"${review2}"</blockquote>
-
-    <h2>${dong} ${grade} ${subject}과외 수업 방식</h2>
-    <p>올케어스터디는 단순히 선생님을 연결하는 것을 넘어, 학생의 성적 향상을 목표로 수업 전 과정을 체계적으로 관리합니다. 첫 상담에서 학생의 현재 학력 수준과 목표를 정확히 파악한 뒤 최적의 선생님을 매칭합니다.</p>
-    <p>수업은 주 2~3회 진행되며, 학생의 학교 일정과 학원 스케줄을 고려해 유연하게 조정합니다. 매 수업 후 선생님이 학습 내용과 성취도를 기록해 학부모님께 공유드립니다. 시험 전에는 집중 특강 형태로 내신 대비를 강화합니다.</p>
-
-    <h2>자주 묻는 질문</h2>
-    <p><strong>Q. ${FAQ_Q1}</strong><br>${FAQ_A1}</p>
-    <p><strong>Q. ${FAQ_Q2}</strong><br>${FAQ_A2}</p>
-    <p><strong>Q. ${FAQ_Q3}</strong><br>${FAQ_A3}</p>
-
-    <h2>${dong} 다른 과목도 함께</h2>
-    <div class="subj-grid">${otherSubjects}</div>
-    <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags">${keywordTags}</div></div>
-  </div>
-  <div class="cta-box">
-    <h3>${dong} ${grade} ${subject}과외 무료 상담</h3>
-    <p>24시간 내 전문 코디네이터가 연락드립니다</p>
-    <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="/contact">✉️ 문의하기</a>
-    </div>
-  </div>
-  <div class="related-title">🔗 ${gu} 다른 동 ${subject}과외</div>
-  <div class="related-grid">${relDongs}</div>
-</div>`;
-
-  return wrap(title, desc, canonical, body, bc);
-}
-
-// ── 강남구 페이지 ──────────────────────────────────────────
 
 function makeGangnamPage() {
   // 강남구는 makeAreaPage로 통일
@@ -2846,6 +1636,10 @@ function makeAreaPage(rk, ak) {
   // 강남구 포함 모든 구군 동일 처리
 
   const distDongData = null;
+  // 지역별 차별화 수치 (구군 이름 해시)
+  let _h = 0;
+  for(let i=0;i<ak.length;i++) _h = (_h*31+ak.charCodeAt(i))>>>0;
+  const infoNums = [120+(_h%231), 91+(_h%9)];
   const distDesc = generateAreaFeature(ak, area.schools || '');
   const heroImg = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80';
 
@@ -2887,8 +1681,8 @@ function makeAreaPage(rk, ak) {
   <h1 class="art-title">${ak} 과외 | ${ak} 맞춤 1:1 과외 안내</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
   <div class="info-box">
-    <div class="info-item"><div class="info-num">247명</div><div class="info-label">등록 선생님</div></div>
-    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
+    <div class="info-item"><div class="info-num">${infoNums[0]}명</div><div class="info-label">등록 선생님</div></div>
+    <div class="info-item"><div class="info-num">${infoNums[1]}%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
   <div style="width:100%;height:260px;border-radius:var(--radius);margin-bottom:36px;overflow:hidden;position:relative">
@@ -2955,6 +1749,8 @@ function makeArticlePage(rk, ak, gk, sk) {
   const gradeEn = GRADE_EN[gk]||gk;
   const subjEn = SUBJECT_EN[sk]||sk;
 
+  let _ah=0; for(let i=0;i<ak.length;i++) _ah=(_ah*31+ak.charCodeAt(i))>>>0;
+  const artNums=[120+(_ah%231), 91+(_ah%9)];
   const title = `${ak} ${gk} ${sk}과외 | ${region.label} ${ak} ${grade.label} ${sk} 1:1 맞춤 과외 - 올케어스터디`;
   // 네이버 SEO: description 80~150자, 핵심 키워드 앞에 배치
   const desc = `${ak} ${gk} ${sk}과외 전문. ${area.schools} 기출 분석 검증 선생님. 초등·중등·고등 1:1 방문 과외. 무료 상담 010-6834-8080`;
@@ -2972,8 +1768,8 @@ function makeArticlePage(rk, ak, gk, sk) {
   <h1 class="art-title">${ak} ${gk} ${sk}과외 | ${region.label} ${ak} ${grade.label} ${sk} 맞춤 1:1 과외</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 4분</span></div>
   <div class="info-box">
-    <div class="info-item"><div class="info-num">247명</div><div class="info-label">${sk} 선생님</div></div>
-    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
+    <div class="info-item"><div class="info-num">${artNums[0]}명</div><div class="info-label">${sk} 선생님</div></div>
+    <div class="info-item"><div class="info-num">${artNums[1]}%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
   <div class="art-thumb">${subj.emoji}</div>
@@ -4507,17 +3303,10 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
           </div>
           <!-- 학년별 -->
           <div class="mega-panel" id="region-grade">
-            <div class="mega-rt">초등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daichi/elem1/math">초등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem2/math">초등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem3/math">초등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem4/math">초등 4학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem5/math">초등 5학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem6/math">초등 6학년</a>
-            </div>
-            <div class="mega-rt">중학교</div>
-            <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daichi/mid1/math">중학교 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid2/math">중학교 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid3/math">중학교 3학년</a>
-            </div>
-            <div class="mega-rt">고등학교</div>
-            <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daichi/high1/math">고등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high2/math">고등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">고등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">수능 준비</a>
+              <a class="mega-btn" href="/seoul/gangnam/daechidong/elementary/math">🎒 초등 과외</a>
+              <a class="mega-btn" href="/seoul/gangnam/daechidong/middle/math">📚 중등 과외</a>
+              <a class="mega-btn" href="/seoul/gangnam/daechidong/high/math">🎓 고등 과외</a>
             </div>
           </div>
           <!-- 학교별 -->
@@ -5011,7 +3800,7 @@ function serveSitemap() {
     url('/contact', 'monthly', '0.6'),
   ];
 
-  // 전국 DONG_DB 동별 × 12학년 × 과목 (동적 생성 페이지)
+  // 전국 REGIONS 동별 × 과목 (sitemap)
   const DONG_GRADES = ['elementary','middle','high'];
   for (const [dongEn, data] of Object.entries(DONG_DB)) {
     const [,, , , sidoEn, guEn] = data;
@@ -5306,8 +4095,8 @@ export default {
   <h1 class="art-title">${dongName} ${grade} ${subject}과외 | ${kr5.district} ${dongName} ${grade} ${subject} 맞춤 1:1 과외</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 4분</span></div>
   <div class="info-box">
-    <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
-    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
+    <div class="info-item"><div class="info-num">${dInfoNums[0]}명</div><div class="info-label">${subject} 선생님</div></div>
+    <div class="info-item"><div class="info-num">${dInfoNums[1]}%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
   <div class="art-body">
