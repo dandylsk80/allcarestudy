@@ -2342,6 +2342,108 @@ function hashSelect(str, arr) {
 }
 
 
+
+// ── 동 메인 페이지: /sidoEn/guEn/dongRoman ──────────────────────────────────
+function makeDongMainPage(sidoEn, guEn, dongName) {
+  let sido=null, ak=null, region=null, area=null;
+  for(const [s,reg] of Object.entries(REGIONS)){
+    if((SIDO_EN[s]||s)!==sidoEn) continue;
+    for(const [a,ar] of Object.entries(reg.areas)){
+      if((DISTRICT_EN[a]||a)!==guEn) continue;
+      sido=s; ak=a; region=reg; area=ar; break;
+    }
+    if(sido) break;
+  }
+  if(!sido||!area) return null;
+  if(!area.dongs||!area.dongs.includes(dongName)) return null;
+
+  const dong = dongName;
+  const gu = ak;
+  const schools = area.schools||`${ak} 주요 학교`;
+  const sidoLabel = region.label||sido;
+  const canonical = `/${sidoEn}/${guEn}/${toRoman(dong)}`;
+  const cat = area.cat||'H';
+  const tmpl = CATEGORY_TEMPLATES[cat]||CATEGORY_TEMPLATES['H'];
+
+  const CAT_DESC = {
+    A:`${dong}은 ${gu}에서 교육열이 높은 학군으로 1:1 방문 과외 수요가 매우 높습니다.`,
+    B:`${dong}은 신도시 지역으로 젊은 고학력 가정이 밀집해 있습니다.`,
+    C:`${dong}은 산업단지 인근으로 맞벌이 가정 비율이 높아 방문 과외 선호도가 높습니다.`,
+    D:`${dong}은 군인 가족이 많아 빠른 선생님 매칭이 중요합니다.`,
+    E:`${dong}은 대학가 인근으로 우수한 과외 선생님 공급이 풍부합니다.`,
+    F:`${dong}은 학원 접근성이 낮은 지역 특성상 1:1 방문 과외 선호도가 높습니다. 합리적인 비용으로 검증된 선생님을 연결해드립니다.`,
+    G:`${dong}은 도서 지역으로 온라인 과외와 방문 과외를 모두 지원합니다.`,
+    H:`${dong}은 ${gu} 주거지역으로 ${schools} 학군 내신 관리 과외 수요가 꾸준합니다.`,
+  };
+  const intro = CAT_DESC[cat]||CAT_DESC['H'];
+
+  const GRADES_3 = [
+    {en:'elementary',ko:'초등',label:'초등학교',desc:`초1~초6 전 학년 수학·영어·국어·과학 기초부터 탄탄하게 관리합니다.`},
+    {en:'middle',ko:'중등',label:'중학교',desc:`중1~중3 내신 관리와 고등학교 준비를 동시에 진행합니다.`},
+    {en:'high',ko:'고등',label:'고등학교',desc:`고1~고3 내신 등급 관리와 수능 대비를 체계적으로 진행합니다.`},
+  ];
+
+  const subjList = Object.entries(SUBJECTS);
+
+  // 학년별 × 과목별 링크 그리드
+  const gradeBlocks = GRADES_3.map(({en,ko,label,desc}) => {
+    const links = subjList.map(([subj,v]) =>
+      `<a class="subj-link" href="${canonical}/${en}/${SUBJECT_EN[subj]||subj}">
+        <span>${v.emoji} ${dong} ${ko} ${subj}과외</span><span>→</span>
+      </a>`
+    ).join('');
+    return `
+    <h2>${dong} ${label} 과외</h2>
+    <p>${desc}</p>
+    <div class="subj-grid">${links}</div>`;
+  }).join('');
+
+  // 인근 학교
+  const schoolsHtml = `<h2>인근 학교</h2>
+    <p>${dong} 인근 학교로는 ${schools} 등이 있습니다. 학교별 시험 특성에 맞춘 내신 대비 수업을 제공합니다.</p>`;
+
+  const title = `${dong} 과외 | ${gu} ${dong} 맞춤 1:1 과외 안내 - 올케어스터디`;
+  const desc = `${dong} 과외 전문. 초등·중등·고등 수학·영어·국어·과학 1:1 방문 과외. ${schools} 내신 기출 분석. 무료 상담 010-6834-8080`;
+  const bc = [{name:'홈',url:'/'},{name:sidoLabel,url:`/${sidoEn}`},{name:gu,url:`/${sidoEn}/${guEn}`},{name:`${dong} 과외`,url:canonical}];
+
+  const body = `<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} 과외</span></div>
+  <div class="art-tag">📍 ${gu} · ${dong}</div>
+  <h1 class="art-title">${dong} 과외 | ${gu} ${dong} 맞춤 1:1 과외 안내</h1>
+  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
+  <div class="info-box">
+    <div class="info-item"><div class="info-num">247명</div><div class="info-label">등록 선생님</div></div>
+    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
+    <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
+  </div>
+  <div class="art-body">
+    <h2>${dong} 과외 안내</h2>
+    <p>${intro}</p>
+    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <p>주요 학교: <strong>${schools}</strong></p>
+    ${schoolsHtml}
+    <h2>${dong} 과외 특징</h2>
+    <p><strong>① 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. 학생과 선생님의 수업 스타일이 맞지 않으면 부담 없이 교체 가능합니다.</p>
+    <p><strong>② 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도를 정리해 학부모님께 공유합니다. 투명한 학습 관리로 성적 변화를 직접 확인할 수 있습니다.</p>
+    <p><strong>③ 취약점 집중 보완</strong> — 단원별 취약점을 정확히 파악하고 집중 보완합니다. 학원 수업에서 놓친 부분을 1:1로 완전히 채워드립니다.</p>
+    <p><strong>④ 48시간 내 매칭</strong> — 상담 신청 후 48시간 내에 ${dong} 지역 맞춤 선생님을 연결해드립니다.</p>
+    <h2>과목별 과외</h2>
+    <p>아래에서 과목별 상세 정보를 확인하세요.</p>
+    ${gradeBlocks}
+  </div>
+  <div class="cta-box">
+    <h3>${dong} 과외 무료 상담</h3>
+    <p>24시간 내 전문 코디네이터가 연락드립니다</p>
+    <div class="cta-btns">
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-o" href="/contact">✉️ 문의하기</a>
+    </div>
+  </div>
+</div>`;
+
+  return wrap(title, desc, canonical, body, bc);
+}
+
 // ── REGIONS 기반 동 페이지 생성 (DONG_DB 불필요) ──────────────────────────
 function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   // REGIONS에서 시도+구군 찾기
@@ -5297,8 +5399,15 @@ export default {
       if (page) return new Response(page, { headers: h });
     }
 
-    // /seoul/gangnam/high (3단계 - 학년 선택)
+    // /sidoEn/guEn/dongRoman (3단계 - 동 메인 페이지) 또는 /sido/gu/grade (구버전)
     if (parts.length === 3) {
+      // 동 메인 페이지 먼저 시도 (로마자 → 한글 역변환)
+      const dongName3 = fromRoman(parts[0], parts[1], parts[2]);
+      if (dongName3) {
+        const page = makeDongMainPage(parts[0], parts[1], dongName3);
+        if (page) return new Response(page, { headers: h });
+      }
+      // 구버전 호환: /sido/gu/grade
       const kr = toKr(parts[0], parts[1], null, parts[2], null);
       const rk = kr.sido; const ak = kr.district; const gk = kr.grade;
       const region = REGIONS[rk]; const area = region?.areas[ak]; const grade = GRADES[gk];
