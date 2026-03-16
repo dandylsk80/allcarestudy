@@ -4872,7 +4872,19 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
     const path = decodeURIComponent(url.pathname);
-    const parts = path.split('/').filter(Boolean);
+    const rawParts = path.split('/').filter(Boolean);
+
+    // ── 구버전 URL 호환 처리 ──────────────────────────────────
+    // 1. 학년 통합키 → 세분화 (high→high2, middle→mid2, elementary→elem5)
+    const GRADE_COMPAT = {'high':'high2','middle':'mid2','elementary':'elem5','고등':'high2','중등':'mid2','초등':'elem5'};
+    // 2. 한글 동 이름 → 영문키
+    const parts = rawParts.map((p, i) => {
+      // 3번째 파트(동 이름)가 한글이면 영문으로 변환
+      if (i === 2 && DONG_EN[p]) return DONG_EN[p];
+      // 학년 파트 호환
+      if (GRADE_COMPAT[p]) return GRADE_COMPAT[p];
+      return p;
+    });
     const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'public,max-age=3600' };
 
     // ── 문의 API ──────────────────────────────────────
