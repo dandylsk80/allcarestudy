@@ -1390,11 +1390,10 @@ const CENTERS = [
 // ── 시군구 feature 동적 생성 ──────────────────────────────────
 function generateAreaFeature(ak, schools) {
   const templates = [
-    `${ak} 과외는 수학·영어·국어·과학 전 과목 초1~고3 1:1 방문 과외로 연결합니다. ${schools} 내신 기출 분석 전문 선생님을 48시간 내 매칭해드립니다. 무료 상담 010-6834-8080`,
-    `${ak} 1:1 방문 과외 전문. ${schools} 기출 분석 검증 선생님. 초등·중등·고등 내신 관리부터 수능 대비까지 맞춤 커리큘럼으로 운영합니다. 무료 상담 010-6834-8080`,
-    `${ak} 과외는 ${schools} 학군 내신 최상위권을 목표로 1:1 맞춤 지도를 제공합니다. 수학·영어·국어·과학 전 과목 검증 선생님 즉시 매칭. 무료 상담 010-6834-8080`,
+    `${ak} 과외는 초1부터 고3까지 전 학년 수학·영어·국어·과학·사회·코딩·논술 전 과목을 1:1 방문 과외로 연결합니다. ${schools} 내신 기출을 철저히 분석한 검증 선생님이 학생 개개인의 수준과 목표에 맞는 맞춤 커리큘럼을 제공합니다. 학원 수업만으로 부족한 취약 단원을 집중 보완하거나, 처음부터 1:1 과외로 내신과 수능을 함께 준비할 수 있습니다. 무료 상담 후 48시간 내 최적의 선생님을 연결해드립니다.`,
+    `${ak} 1:1 방문 과외 전문. ${schools} 기출 분석 검증 선생님. 초등·중등·고등 전 학년 내신 관리부터 수능 대비까지 맞춤 커리큘럼으로 운영합니다. 수학·영어·국어·과학 모든 과목에서 학력·경력·수업시연 3단계 검증을 완료한 선생님을 매칭합니다. 매주 학습 보고서를 제공해 투명한 성적 관리가 가능합니다. 무료 상담 010-6834-8080`,
+    `${ak} 과외는 ${schools} 학군 내신 1등급을 목표로 1:1 맞춤 지도를 제공합니다. 초1~고3 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목에서 검증된 선생님을 48시간 내 연결합니다. 학원과 병행하는 취약 단원 집중 보완, 또는 학원 없이 과외만으로 내신을 완벽히 관리하는 두 가지 방식 모두 가능합니다. 첫 상담과 체험 수업은 무료입니다.`,
   ];
-  // 구 이름 해시로 일관된 템플릿 선택
   let h = 0;
   for (let i = 0; i < ak.length; i++) h = (h * 31 + ak.charCodeAt(i)) >>> 0;
   return templates[h % templates.length];
@@ -2397,28 +2396,83 @@ function makeDongPage(dongEn, subjectEn, gradeEn) {
   ];
   const keywordTags = keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('');
 
+  // 과목별 썸네일 이미지
+  const SUBJ_IMAGES = {
+    '수학': 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=900&q=80',
+    '영어': 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=900&q=80',
+    '국어': 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900&q=80',
+    '과학': 'https://images.unsplash.com/photo-1532094349884-543559244e6a?w=900&q=80',
+    '사회': 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=900&q=80',
+    '코딩': 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80',
+    '논술': 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80',
+  };
+  const thumbImg = SUBJ_IMAGES[subject] || SUBJ_IMAGES['수학'];
+
+  // 카테고리별 지역 특성 설명
+  const CAT_DESC = {
+    A: `${dong}은 ${gu}에서도 교육열이 가장 높은 학군으로, ${schools} 등 명문 학교가 밀집해 내신 경쟁이 전국 최상위권입니다. 학원 수업만으로는 개별 취약점을 보완하기 어려워 1:1 방문 과외 수요가 매우 높습니다.`,
+    B: `${dong}은 신도시 개발로 젊은 고학력 가정이 밀집한 지역입니다. ${schools} 신설 학교의 기출 분석에 특화된 선생님을 빠르게 매칭해드리며, 이사 후에도 즉시 학습을 시작할 수 있습니다.`,
+    C: `${dong}은 산업단지 인근으로 맞벌이 가정 비율이 높아 방문 과외 선호도가 높습니다. ${schools} 내신 관리와 이공계 진학을 위한 수학·과학 심화 과외 수요가 꾸준합니다.`,
+    D: `${dong}은 군인 가족이 많아 잦은 이사에도 빠른 선생님 매칭이 중요합니다. ${schools} 새 학교 스타일을 빠르게 파악해 첫 시험부터 안정적인 성적을 받을 수 있도록 집중 지도합니다.`,
+    E: `${dong}은 대학가 인근으로 우수한 과외 선생님 공급이 풍부합니다. ${schools} 내신 관리부터 SKY·의대 진학을 위한 심화 과외까지 학생 목표에 맞는 최적의 선생님을 연결합니다.`,
+    F: `${dong}은 학원 접근성이 낮은 지역 특성상 방문 과외 선호도가 높습니다. ${schools} 내신을 합리적인 비용으로 꼼꼼하게 1:1 지도해 학원 없이도 성적 관리가 가능합니다.`,
+    G: `${dong}은 도서 지역으로 온라인 과외와 방문 과외를 모두 지원합니다. ${schools} 내신을 섬에 있어도 검증된 선생님과 1:1로 체계적으로 준비할 수 있습니다.`,
+    H: `${dong}은 ${gu} 중심 주거지역으로 ${schools} 학군의 내신 관리 과외 수요가 꾸준합니다. 학원 수업과 병행해 취약 단원을 집중 보완하는 1:1 방문 과외가 효과적입니다.`,
+  };
+  const catDesc = CAT_DESC[cat] || CAT_DESC['H'];
+
+  // FAQ
+  const FAQ_Q1 = subject === '수학'
+    ? `${dong}에서 수학 과외 선생님을 찾는 데 얼마나 걸리나요?`
+    : `${dong}에서 ${subject} 과외 선생님을 찾는 데 얼마나 걸리나요?`;
+  const FAQ_A1 = `상담 신청 후 24시간 이내에 코디네이터가 연락드리며, 빠르면 당일에도 매칭이 가능합니다. ${schools} 기출을 잘 아는 선생님 위주로 추천해드립니다.`;
+  const FAQ_Q2 = `${grade} ${subject} 성적이 많이 낮아도 괜찮나요?`;
+  const FAQ_A2 = `물론입니다. 기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 현재 수준에 맞는 선생님을 매칭해 단계적으로 실력을 끌어올립니다.`;
+  const FAQ_Q3 = `수업료는 어떻게 되나요?`;
+  const FAQ_A3 = `선생님 경력·학력·수업 방식에 따라 다르며, 첫 상담은 완전 무료입니다. 학부모님 예산에 맞는 선생님을 투명하게 안내해드립니다.`;
+
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} ${grade} ${subject}과외</span></div>
   <div class="art-tag">${subj.emoji} ${gu} · ${dong} · ${grade} · ${subject}</div>
   <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${gradeObj.label} ${subject} 맞춤 1:1 과외</h1>
-  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 4분</span></div>
+  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 5분</span></div>
   <div class="info-box">
     <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
     <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
+  <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
+    <img src="${thumbImg}" alt="${dong} ${grade} ${subject}과외" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.65),transparent);display:flex;align-items:center;padding:32px">
+      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">${gu} · ${dong}</div><div style="font-size:28px;font-weight:900">${dong} ${subject}과외</div></div>
+    </div>
+  </div>
   <div class="art-body">
     <h2>${dong} ${grade} ${subject}과외 안내</h2>
     <p>${mainText}</p>
+    <p>${catDesc}</p>
     <p>${gradeDesc}</p>
     <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 ${gradeObj.label} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
-    <h2>${dong} ${grade} ${subject}과외 특징</h2>
-    <p><strong>학교 기출 분석</strong>: ${schools} 시험 출제 경향 집중 분석</p>
-    <p><strong>검증된 선생님</strong>: 학력·경력·수업 시연 3단계 검증 완료</p>
-    <p><strong>주간 학습 보고서</strong>: 매주 학습 현황 학부모 공유</p>
+
+    <h2>${dong} ${grade} ${subject}과외 선생님 특징</h2>
+    <p><strong>① 학교 기출 완벽 분석</strong> — ${schools} ${subject} 시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다. 단순 개념 설명이 아닌 실제 시험에서 나오는 유형 중심으로 집중 지도합니다.</p>
+    <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. 학생과 선생님의 수업 스타일이 맞지 않으면 부담 없이 교체할 수 있습니다.</p>
+    <p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도·보완 사항을 정리해 학부모님께 공유합니다. 투명한 학습 관리로 성적 변화를 직접 확인할 수 있습니다.</p>
+    <p><strong>④ 취약점 집중 보완</strong> — ${subject} 취약 단원을 정확히 파악하고 집중 보완합니다. 학원에서 놓친 부분을 1:1로 완전히 채워드립니다.</p>
+
     <h2>${dong} ${subject}과외 실제 후기</h2>
-    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic">"${review1}"</blockquote>
-    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic">"${review2}"</blockquote>
+    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic;color:var(--text-dark)">"${review1}"</blockquote>
+    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic;color:var(--text-dark)">"${review2}"</blockquote>
+
+    <h2>${dong} ${grade} ${subject}과외 수업 방식</h2>
+    <p>올케어스터디는 단순히 선생님을 연결하는 것을 넘어, 학생의 성적 향상을 목표로 수업 전 과정을 체계적으로 관리합니다. 첫 상담에서 학생의 현재 학력 수준과 목표를 정확히 파악한 뒤 최적의 선생님을 매칭합니다.</p>
+    <p>수업은 주 2~3회 진행되며, 학생의 학교 일정과 학원 스케줄을 고려해 유연하게 조정합니다. 매 수업 후 선생님이 학습 내용과 성취도를 기록해 학부모님께 공유드립니다. 시험 전에는 집중 특강 형태로 내신 대비를 강화합니다.</p>
+
+    <h2>자주 묻는 질문</h2>
+    <p><strong>Q. ${FAQ_Q1}</strong><br>${FAQ_A1}</p>
+    <p><strong>Q. ${FAQ_Q2}</strong><br>${FAQ_A2}</p>
+    <p><strong>Q. ${FAQ_Q3}</strong><br>${FAQ_A3}</p>
+
     <h2>${dong} 다른 과목도 함께</h2>
     <div class="subj-grid">${otherSubjects}</div>
     <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags">${keywordTags}</div></div>
