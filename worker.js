@@ -1122,460 +1122,10 @@ const DONG_DB_EXTRA = {
 
 // DONG_MAP/DONG_EN은 DONG_DB에서 자동 생성
 // 추가 전국 데이터 병합
-// 누락 시군구 추가
-Object.assign(DONG_DB, {
-  'ansong-dong':['경기','안성시','안성동','H','gyeonggi','anseong'],
-  'gongdo':['경기','안성시','공도읍','B','gyeonggi','anseong'],
-  'naeui':['경기','의왕시','내손동','B','gyeonggi','uiwang'],
-  'bugok-uw':['경기','의왕시','부곡동','H','gyeonggi','uiwang'],
-  'dongducheon-dong':['경기','동두천시','지행동','H','gyeonggi','dongducheon'],
-  'sengol':['경기','동두천시','생연동','D','gyeonggi','dongducheon'],
-  'gunwi-eup':['대구','군위군','군위읍','F','daegu','gunwi'],
-});
+
 Object.assign(DONG_DB, DONG_DB_EXTRA);
 
-// ── REGIONS 누락 동 자동 추가 (439개) ──
-Object.assign(DONG_DB, {
-  'mapo-d1':['서울','마포구','홍대앞','H','seoul','mapo'],
-  'junggu-ulsan-d1':['서울','중구','충무로','H','seoul','junggu-ulsan'],
-  'junggu-ulsan-d2':['서울','중구','을지로','H','seoul','junggu-ulsan'],
-  'suwon-d1':['경기','수원시','영통구','H','gyeonggi','suwon'],
-  'suwon-d2':['경기','수원시','권선구','H','gyeonggi','suwon'],
-  'suwon-d3':['경기','수원시','장안구','H','gyeonggi','suwon'],
-  'yongin-d1':['경기','용인시','처인구','H','gyeonggi','yongin'],
-  'bucheon-d1':['경기','부천시','소사구','H','gyeonggi','bucheon'],
-  'bucheon-d2':['경기','부천시','오정구','H','gyeonggi','bucheon'],
-  'bucheon-d3':['경기','부천시','원미구','H','gyeonggi','bucheon'],
-  'anyang-d1':['경기','안양시','동안구','H','gyeonggi','anyang'],
-  'hwaseong-d1':['경기','화성시','동탄1신도시','H','gyeonggi','hwaseong'],
-  'hwaseong-d2':['경기','화성시','동탄2신도시','H','gyeonggi','hwaseong'],
-  'namyangju-d1':['경기','남양주시','화도읍','H','gyeonggi','namyangju'],
-  'namyangju-d2':['경기','남양주시','오남읍','H','gyeonggi','namyangju'],
-  'pyeongtaek-d1':['경기','평택시','팽성읍','H','gyeonggi','pyeongtaek'],
-  'uijeongbu-d1':['경기','의정부시','송산동','H','gyeonggi','uijeongbu'],
-  'gunpo-d1':['경기','군포시','대야동','F','gyeonggi','gunpo'],
-  'icheon-d1':['경기','이천시','장호원읍','H','gyeonggi','icheon'],
-  'osan-d1':['경기','오산시','궐동','H','gyeonggi','osan'],
-  'yangju-d1':['경기','양주시','광적면','H','gyeonggi','yangju'],
-  'yangju-d2':['경기','양주시','덕계동','H','gyeonggi','yangju'],
-  'guri-d1':['경기','구리시','수택동','H','gyeonggi','guri'],
-  'guri-d2':['경기','구리시','교문동','H','gyeonggi','guri'],
-  'anseong-d1':['경기','안성시','미양면','H','gyeonggi','anseong'],
-  'anseong-d2':['경기','안성시','보개면','H','gyeonggi','anseong'],
-  'uiwang-d1':['경기','의왕시','오전동','H','gyeonggi','uiwang'],
-  'uiwang-d2':['경기','의왕시','청계동','H','gyeonggi','uiwang'],
-  'uiwang-d3':['경기','의왕시','포일동','H','gyeonggi','uiwang'],
-  'yeoju-d1':['경기','여주시','오학동','H','gyeonggi','yeoju'],
-  'yeoju-d2':['경기','여주시','가남읍','H','gyeonggi','yeoju'],
-  'yeoju-d3':['경기','여주시','점동면','H','gyeonggi','yeoju'],
-  'dongducheon-d1':['경기','동두천시','중앙동','H','gyeonggi','dongducheon'],
-  'dongducheon-d2':['경기','동두천시','소요동','H','gyeonggi','dongducheon'],
-  'gwacheon-d1':['경기','과천시','과천동','H','gyeonggi','gwacheon'],
-  'gwacheon-d2':['경기','과천시','부림동','H','gyeonggi','gwacheon'],
-  'gapyeong-d1':['경기','가평군','설악면','F','gyeonggi','gapyeong'],
-  'gapyeong-d2':['경기','가평군','상면','F','gyeonggi','gapyeong'],
-  'yangpyeong-d1':['경기','양평군','강상면','F','gyeonggi','yangpyeong'],
-  'yangpyeong-d2':['경기','양평군','지평면','F','gyeonggi','yangpyeong'],
-  'yeoncheon-d1':['경기','연천군','청산면','F','gyeonggi','yeoncheon'],
-  'yeoncheon-d2':['경기','연천군','미산면','F','gyeonggi','yeoncheon'],
-  'pocheon-d1':['경기','포천시','군내면','H','gyeonggi','pocheon'],
-  'pocheon-d2':['경기','포천시','가산면','H','gyeonggi','pocheon'],
-  'yeonsu-d1':['인천','연수구','옥련동','H','incheon','yeonsu'],
-  'namdong-d1':['인천','남동구','간석동','H','incheon','namdong'],
-  'bupyeong-d1':['인천','부평구','삼산동','H','incheon','bupyeong'],
-  'bupyeong-d2':['인천','부평구','갈산동','H','incheon','bupyeong'],
-  'bupyeong-d3':['인천','부평구','산곡동','H','incheon','bupyeong'],
-  'michuhol-d1':['인천','미추홀구','학익동','H','incheon','michuhol'],
-  'michuhol-d2':['인천','미추홀구','용현동','H','incheon','michuhol'],
-  'gyeyang-d1':['인천','계양구','귤현동','H','incheon','gyeyang'],
-  'gyeyang-d2':['인천','계양구','박촌동','H','incheon','gyeyang'],
-  'seo-daejeon-d1':['인천','서구','루원시티','H','incheon','seo-daejeon'],
-  'seo-daejeon-d2':['인천','서구','왕길동','H','incheon','seo-daejeon'],
-  'ganghwa-d1':['인천','강화군','불은면','H','incheon','ganghwa'],
-  'ganghwa-d2':['인천','강화군','선원면','H','incheon','ganghwa'],
-  'ganghwa-d3':['인천','강화군','하점면','H','incheon','ganghwa'],
-  'ongjin-d1':['인천','옹진군','북도면','H','incheon','ongjin'],
-  'ongjin-d2':['인천','옹진군','자월면','H','incheon','ongjin'],
-  'ongjin-d3':['인천','옹진군','백령면','H','incheon','ongjin'],
-  'junggu-ulsan-d3':['인천','중구','신포동','H','incheon','junggu-ulsan'],
-  'junggu-ulsan-d4':['인천','중구','답동','H','incheon','junggu-ulsan'],
-  'junggu-ulsan-d5':['인천','중구','운서동','H','incheon','junggu-ulsan'],
-  'junggu-ulsan-d6':['인천','중구','영종도','H','incheon','junggu-ulsan'],
-  'dong-ulsan-d1':['인천','동구','금창동','H','incheon','dong-ulsan'],
-  'dong-ulsan-d2':['인천','동구','만석동','H','incheon','dong-ulsan'],
-  'haeundae-d1':['부산','해운대구','우동','H','busan','haeundae'],
-  'suyeong-d1':['부산','수영구','수영동','H','busan','suyeong'],
-  'dongrae-d1':['부산','동래구','동래동','H','busan','dongrae'],
-  'dongrae-d2':['부산','동래구','명장동','H','busan','dongrae'],
-  'yeonje-d1':['부산','연제구','연제동','H','busan','yeonje'],
-  'busanjin-d1':['부산','부산진구','전포동','H','busan','busanjin'],
-  'busanjin-d2':['부산','부산진구','범천동','H','busan','busanjin'],
-  'yeongdo-d1':['부산','영도구','동삼동','H','busan','yeongdo'],
-  'yeongdo-d2':['부산','영도구','신선동','H','busan','yeongdo'],
-  'sasang-d1':['부산','사상구','괘법동','H','busan','sasang'],
-  'sasang-d2':['부산','사상구','삼락동','H','busan','sasang'],
-  'saha-d1':['부산','사하구','당리동','H','busan','saha'],
-  'geumjeong-d1':['부산','금정구','부곡동','H','busan','geumjeong'],
-  'geumjeong-d2':['부산','금정구','금사동','H','busan','geumjeong'],
-  'gijang-d1':['부산','기장군','기장읍','H','busan','gijang'],
-  'gijang-d2':['부산','기장군','장안읍','H','busan','gijang'],
-  'gijang-d3':['부산','기장군','일광읍','H','busan','gijang'],
-  'nam-ulsan-d1':['부산','남구','문현동','H','busan','nam-ulsan'],
-  'nam-ulsan-d2':['부산','남구','감만동','H','busan','nam-ulsan'],
-  'dong-ulsan-d3':['부산','동구','좌천동','H','busan','dong-ulsan'],
-  'dong-ulsan-d4':['부산','동구','범일동','H','busan','dong-ulsan'],
-  'junggu-ulsan-d7':['부산','중구','중앙동','H','busan','junggu-ulsan'],
-  'junggu-ulsan-d8':['부산','중구','영주동','H','busan','junggu-ulsan'],
-  'seo-daejeon-d3':['부산','서구','서대신동','H','busan','seo-daejeon'],
-  'seo-daejeon-d4':['부산','서구','아미동','H','busan','seo-daejeon'],
-  'buk-ulsan-d1':['부산','북구','구포동','H','busan','buk-ulsan'],
-  'buk-ulsan-d2':['부산','북구','만덕동','H','busan','buk-ulsan'],
-  'gangseo-busan-d1':['부산','강서구','강동동','H','busan','gangseo-busan'],
-  'gangseo-busan-d2':['부산','강서구','가덕도','H','busan','gangseo-busan'],
-  'suseong-d1':['대구','수성구','수성동','H','daegu','suseong'],
-  'dalseo-d1':['대구','달서구','감삼동','H','daegu','dalseo'],
-  'dalseo-d2':['대구','달서구','죽전동','H','daegu','dalseo'],
-  'buk-ulsan-d3':['대구','북구','침산동','H','daegu','buk-ulsan'],
-  'buk-ulsan-d4':['대구','북구','칠성동','H','daegu','buk-ulsan'],
-  'dong-ulsan-d5':['대구','동구','안심동','H','daegu','dong-ulsan'],
-  'dong-ulsan-d6':['대구','동구','혁신도시','H','daegu','dong-ulsan'],
-  'junggu-ulsan-d9':['대구','중구','동성로','H','daegu','junggu-ulsan'],
-  'junggu-ulsan-d10':['대구','중구','수창동','H','daegu','junggu-ulsan'],
-  'junggu-ulsan-d11':['대구','중구','봉산동','H','daegu','junggu-ulsan'],
-  'seo-daejeon-d5':['대구','서구','평리동','H','daegu','seo-daejeon'],
-  'seo-daejeon-d6':['대구','서구','원대동','H','daegu','seo-daejeon'],
-  'nam-ulsan-d3':['대구','남구','이천동','H','daegu','nam-ulsan'],
-  'dalseong-d1':['대구','달성군','테크노폴리스','H','daegu','dalseong'],
-  'gunwi-d1':['대구','군위군','의흥면','H','daegu','gunwi'],
-  'gunwi-d2':['대구','군위군','효령면','H','daegu','gunwi'],
-  'gunwi-d3':['대구','군위군','부계면','H','daegu','gunwi'],
-  'seo-daejeon-d7':['광주','서구','상무지구','H','gwangju','seo-daejeon'],
-  'seo-daejeon-d8':['광주','서구','치평동','H','gwangju','seo-daejeon'],
-  'seo-daejeon-d9':['광주','서구','금호동','H','gwangju','seo-daejeon'],
-  'buk-ulsan-d5':['광주','북구','신용동','H','gwangju','buk-ulsan'],
-  'buk-ulsan-d6':['광주','북구','운암동','H','gwangju','buk-ulsan'],
-  'gwangsan-d1':['광주','광산구','수완지구','H','gwangju','gwangsan'],
-  'gwangsan-d2':['광주','광산구','첨단지구','H','gwangju','gwangsan'],
-  'gwangsan-d3':['광주','광산구','선운지구','H','gwangju','gwangsan'],
-  'gwangsan-d4':['광주','광산구','신창동','H','gwangju','gwangsan'],
-  'nam-ulsan-d4':['광주','남구','주월동','H','gwangju','nam-ulsan'],
-  'nam-ulsan-d5':['광주','남구','진월동','H','gwangju','nam-ulsan'],
-  'nam-ulsan-d6':['광주','남구','사직동','H','gwangju','nam-ulsan'],
-  'dong-ulsan-d7':['광주','동구','서석동','H','gwangju','dong-ulsan'],
-  'dong-ulsan-d8':['광주','동구','학동','H','gwangju','dong-ulsan'],
-  'yuseong-d1':['대전','유성구','관평동','H','daejeon','yuseong'],
-  'seo-daejeon-d10':['대전','서구','관저동','H','daejeon','seo-daejeon'],
-  'seo-daejeon-d11':['대전','서구','가수원동','H','daejeon','seo-daejeon'],
-  'daedeok-d1':['대전','대덕구','법동동','H','daejeon','daedeok'],
-  'daedeok-d2':['대전','대덕구','오정동','H','daejeon','daedeok'],
-  'daedeok-d3':['대전','대덕구','신탄진동','H','daejeon','daedeok'],
-  'junggu-ulsan-d12':['대전','중구','대흥동','H','daejeon','junggu-ulsan'],
-  'junggu-ulsan-d13':['대전','중구','중촌동','H','daejeon','junggu-ulsan'],
-  'dong-ulsan-d9':['대전','동구','판암동','H','daejeon','dong-ulsan'],
-  'dong-ulsan-d10':['대전','동구','성남동','H','daejeon','dong-ulsan'],
-  'dong-ulsan-d11':['대전','동구','용전동','H','daejeon','dong-ulsan'],
-  'nam-ulsan-d7':['울산','남구','무거동','H','ulsan','nam-ulsan'],
-  'nam-ulsan-d8':['울산','남구','신정동','H','ulsan','nam-ulsan'],
-  'buk-ulsan-d7':['울산','북구','송정동','H','ulsan','buk-ulsan'],
-  'buk-ulsan-d8':['울산','북구','창평동','H','ulsan','buk-ulsan'],
-  'buk-ulsan-d9':['울산','북구','연암동','H','ulsan','buk-ulsan'],
-  'dong-ulsan-d12':['울산','동구','전하동','H','ulsan','dong-ulsan'],
-  'dong-ulsan-d13':['울산','동구','화정동','H','ulsan','dong-ulsan'],
-  'junggu-ulsan-d14':['울산','중구','북정동','H','ulsan','junggu-ulsan'],
-  'junggu-ulsan-d15':['울산','중구','남외동','H','ulsan','junggu-ulsan'],
-  'ulju-d1':['울산','울주군','삼남읍','H','ulsan','ulju'],
-  'ulju-d2':['울산','울주군','범서읍','H','ulsan','ulju'],
-  'sejong-city-d1':['세종','세종시','대평동','H','sejong','sejong-city'],
-  'chuncheon-d1':['강원','춘천시','소양동','H','gangwon','chuncheon'],
-  'wonju-d1':['강원','원주시','혁신도시','H','gangwon','wonju'],
-  'donghae-d1':['강원','동해시','송정동','H','gangwon','donghae'],
-  'donghae-d2':['강원','동해시','묵호동','H','gangwon','donghae'],
-  'taebaek-d1':['강원','태백시','장성동','H','gangwon','taebaek'],
-  'taebaek-d2':['강원','태백시','문곡동','H','gangwon','taebaek'],
-  'taebaek-d3':['강원','태백시','철암동','H','gangwon','taebaek'],
-  'sokcho-d1':['강원','속초시','청호동','H','gangwon','sokcho'],
-  'sokcho-d2':['강원','속초시','노학동','H','gangwon','sokcho'],
-  'samcheok-d1':['강원','삼척시','성내동','H','gangwon','samcheok'],
-  'samcheok-d2':['강원','삼척시','근덕면','H','gangwon','samcheok'],
-  'hongcheon-d1':['강원','홍천군','화촌면','F','gangwon','hongcheon'],
-  'hongcheon-d2':['강원','홍천군','북방면','F','gangwon','hongcheon'],
-  'hongcheon-d3':['강원','홍천군','남면','F','gangwon','hongcheon'],
-  'hoengseong-d1':['강원','횡성군','우천면','F','gangwon','hoengseong'],
-  'hoengseong-d2':['강원','횡성군','안흥면','F','gangwon','hoengseong'],
-  'hoengseong-d3':['강원','횡성군','공근면','F','gangwon','hoengseong'],
-  'yeongwol-d1':['강원','영월군','김삿갓면','F','gangwon','yeongwol'],
-  'yeongwol-d2':['강원','영월군','상동읍','F','gangwon','yeongwol'],
-  'yeongwol-d3':['강원','영월군','남면','F','gangwon','yeongwol'],
-  'pyeongchang-d1':['강원','평창군','진부면','F','gangwon','pyeongchang'],
-  'pyeongchang-d2':['강원','평창군','봉평면','F','gangwon','pyeongchang'],
-  'jeongseon-d1':['강원','정선군','사북읍','F','gangwon','jeongseon'],
-  'jeongseon-d2':['강원','정선군','신동읍','F','gangwon','jeongseon'],
-  'cheorwon-d1':['강원','철원군','갈말읍','F','gangwon','cheorwon'],
-  'cheorwon-d2':['강원','철원군','근북면','F','gangwon','cheorwon'],
-  'hwacheon-d1':['강원','화천군','간동면','F','gangwon','hwacheon'],
-  'hwacheon-d2':['강원','화천군','하남면','F','gangwon','hwacheon'],
-  'hwacheon-d3':['강원','화천군','사내면','F','gangwon','hwacheon'],
-  'yanggu-d1':['강원','양구군','국토정중앙면','H','gangwon','yanggu'],
-  'yanggu-d2':['강원','양구군','방산면','H','gangwon','yanggu'],
-  'yanggu-d3':['강원','양구군','해안면','H','gangwon','yanggu'],
-  'inje-d1':['강원','인제군','북면','F','gangwon','inje'],
-  'inje-d2':['강원','인제군','기린면','F','gangwon','inje'],
-  'inje-d3':['강원','인제군','남면','F','gangwon','inje'],
-  'goseong-gn-d1':['강원','고성군','토성면','F','gangwon','goseong-gn'],
-  'goseong-gn-d2':['강원','고성군','죽왕면','F','gangwon','goseong-gn'],
-  'yangyang-d1':['강원','양양군','손양면','F','gangwon','yangyang'],
-  'yangyang-d2':['강원','양양군','현북면','F','gangwon','yangyang'],
-  'yangyang-d3':['강원','양양군','서면','F','gangwon','yangyang'],
-  'chungju-d1':['충북','충주시','연수동','H','chungbuk','chungju'],
-  'chungju-d2':['충북','충주시','봉방동','H','chungbuk','chungju'],
-  'jecheon-d1':['충북','제천시','청전동','H','chungbuk','jecheon'],
-  'jecheon-d2':['충북','제천시','신백동','H','chungbuk','jecheon'],
-  'boeun-d1':['충북','보은군','회인면','F','chungbuk','boeun'],
-  'boeun-d2':['충북','보은군','속리산면','F','chungbuk','boeun'],
-  'boeun-d3':['충북','보은군','마로면','F','chungbuk','boeun'],
-  'okcheon-d1':['충북','옥천군','청성면','F','chungbuk','okcheon'],
-  'okcheon-d2':['충북','옥천군','동이면','F','chungbuk','okcheon'],
-  'okcheon-d3':['충북','옥천군','군서면','F','chungbuk','okcheon'],
-  'yeongdong-d1':['충북','영동군','용산면','F','chungbuk','yeongdong'],
-  'yeongdong-d2':['충북','영동군','양강면','F','chungbuk','yeongdong'],
-  'yeongdong-d3':['충북','영동군','추풍령면','F','chungbuk','yeongdong'],
-  'jeungpyeong-d1':['충북','증평군','도안면','F','chungbuk','jeungpyeong'],
-  'jincheon-d1':['충북','진천군','이월면','F','chungbuk','jincheon'],
-  'jincheon-d2':['충북','진천군','백곡면','F','chungbuk','jincheon'],
-  'goesan-d1':['충북','괴산군','칠성면','F','chungbuk','goesan'],
-  'goesan-d2':['충북','괴산군','감물면','F','chungbuk','goesan'],
-  'goesan-d3':['충북','괴산군','장연면','F','chungbuk','goesan'],
-  'eumseong-d1':['충북','음성군','삼성면','F','chungbuk','eumseong'],
-  'eumseong-d2':['충북','음성군','생극면','F','chungbuk','eumseong'],
-  'danyang-d1':['충북','단양군','매포읍','F','chungbuk','danyang'],
-  'danyang-d2':['충북','단양군','적성면','F','chungbuk','danyang'],
-  'danyang-d3':['충북','단양군','대강면','F','chungbuk','danyang'],
-  'asan-d1':['충남','아산시','신창면','H','chungnam','asan'],
-  'seosan-d1':['충남','서산시','대산읍','H','chungnam','seosan'],
-  'seosan-d2':['충남','서산시','해미면','H','chungnam','seosan'],
-  'dangjin-d1':['충남','당진시','당진읍','H','chungnam','dangjin'],
-  'dangjin-d2':['충남','당진시','송악읍','H','chungnam','dangjin'],
-  'dangjin-d3':['충남','당진시','순성면','H','chungnam','dangjin'],
-  'gongju-d1':['충남','공주시','공주읍','H','chungnam','gongju'],
-  'gongju-d2':['충남','공주시','웅진동','H','chungnam','gongju'],
-  'gongju-d3':['충남','공주시','반포면','H','chungnam','gongju'],
-  'boryeong-d1':['충남','보령시','오천면','H','chungnam','boryeong'],
-  'boryeong-d2':['충남','보령시','청라면','H','chungnam','boryeong'],
-  'nonsan-d1':['충남','논산시','연무읍','H','chungnam','nonsan'],
-  'nonsan-d2':['충남','논산시','가야곡면','H','chungnam','nonsan'],
-  'gyeryong-d1':['충남','계룡시','두마면','H','chungnam','gyeryong'],
-  'gyeryong-d2':['충남','계룡시','신도안면','H','chungnam','gyeryong'],
-  'gyeryong-d3':['충남','계룡시','엄사면','H','chungnam','gyeryong'],
-  'geumsan-d1':['충남','금산군','추부면','F','chungnam','geumsan'],
-  'geumsan-d2':['충남','금산군','남이면','F','chungnam','geumsan'],
-  'geumsan-d3':['충남','금산군','진산면','F','chungnam','geumsan'],
-  'buyeo-d1':['충남','부여군','규암면','F','chungnam','buyeo'],
-  'buyeo-d2':['충남','부여군','은산면','F','chungnam','buyeo'],
-  'buyeo-d3':['충남','부여군','외산면','F','chungnam','buyeo'],
-  'seocheon-d1':['충남','서천군','마서면','F','chungnam','seocheon'],
-  'seocheon-d2':['충남','서천군','화양면','F','chungnam','seocheon'],
-  'cheongyang-d1':['충남','청양군','대치면','F','chungnam','cheongyang'],
-  'cheongyang-d2':['충남','청양군','화성면','F','chungnam','cheongyang'],
-  'cheongyang-d3':['충남','청양군','청남면','F','chungnam','cheongyang'],
-  'hongseong-d1':['충남','홍성군','광천읍','F','chungnam','hongseong'],
-  'hongseong-d2':['충남','홍성군','결성면','F','chungnam','hongseong'],
-  'hongseong-d3':['충남','홍성군','은하면','F','chungnam','hongseong'],
-  'yesan-d1':['충남','예산군','삽교읍','F','chungnam','yesan'],
-  'yesan-d2':['충남','예산군','대술면','F','chungnam','yesan'],
-  'yesan-d3':['충남','예산군','응봉면','F','chungnam','yesan'],
-  'taean-d1':['충남','태안군','소원면','F','chungnam','taean'],
-  'taean-d2':['충남','태안군','근흥면','F','chungnam','taean'],
-  'iksan-d1':['전북','익산시','팔봉동','H','jeonbuk','iksan'],
-  'gunsan-d1':['전북','군산시','조촌동','F','jeonbuk','gunsan'],
-  'gunsan-d2':['전북','군산시','미룡동','F','jeonbuk','gunsan'],
-  'jeongeup-d1':['전북','정읍시','수성동','H','jeonbuk','jeongeup'],
-  'jeongeup-d2':['전북','정읍시','연지동','H','jeonbuk','jeongeup'],
-  'jeongeup-d3':['전북','정읍시','시기동','H','jeonbuk','jeongeup'],
-  'namwon-d1':['전북','남원시','도통동','H','jeonbuk','namwon'],
-  'namwon-d2':['전북','남원시','향교동','H','jeonbuk','namwon'],
-  'namwon-d3':['전북','남원시','광한루원','H','jeonbuk','namwon'],
-  'gimje-d1':['전북','김제시','요촌동','H','jeonbuk','gimje'],
-  'gimje-d2':['전북','김제시','신풍동','H','jeonbuk','gimje'],
-  'gimje-d3':['전북','김제시','검산동','H','jeonbuk','gimje'],
-  'wanju-d1':['전북','완주군','이서면','F','jeonbuk','wanju'],
-  'wanju-d2':['전북','완주군','고산면','F','jeonbuk','wanju'],
-  'jinan-d1':['전북','진안군','마령면','F','jeonbuk','jinan'],
-  'jinan-d2':['전북','진안군','백운면','F','jeonbuk','jinan'],
-  'jinan-d3':['전북','진안군','안천면','F','jeonbuk','jinan'],
-  'muju-d1':['전북','무주군','설천면','F','jeonbuk','muju'],
-  'muju-d2':['전북','무주군','안성면','F','jeonbuk','muju'],
-  'muju-d3':['전북','무주군','부남면','F','jeonbuk','muju'],
-  'jangsu-d1':['전북','장수군','번암면','F','jeonbuk','jangsu'],
-  'jangsu-d2':['전북','장수군','장계면','F','jeonbuk','jangsu'],
-  'jangsu-d3':['전북','장수군','천천면','F','jeonbuk','jangsu'],
-  'imsil-d1':['전북','임실군','오수면','F','jeonbuk','imsil'],
-  'imsil-d2':['전북','임실군','관촌면','F','jeonbuk','imsil'],
-  'imsil-d3':['전북','임실군','신평면','F','jeonbuk','imsil'],
-  'sunchang-d1':['전북','순창군','팔덕면','F','jeonbuk','sunchang'],
-  'sunchang-d2':['전북','순창군','복흥면','F','jeonbuk','sunchang'],
-  'sunchang-d3':['전북','순창군','풍산면','F','jeonbuk','sunchang'],
-  'gochang-d1':['전북','고창군','흥덕면','F','jeonbuk','gochang'],
-  'gochang-d2':['전북','고창군','성송면','F','jeonbuk','gochang'],
-  'gochang-d3':['전북','고창군','아산면','F','jeonbuk','gochang'],
-  'buan-d1':['전북','부안군','줄포면','F','jeonbuk','buan'],
-  'buan-d2':['전북','부안군','변산면','F','jeonbuk','buan'],
-  'buan-d3':['전북','부안군','진서면','F','jeonbuk','buan'],
-  'suncheon-d1':['전남','순천시','왕지동','H','jeonnam','suncheon'],
-  'yeosu-d1':['전남','여수시','문수동','H','jeonnam','yeosu'],
-  'yeosu-d2':['전남','여수시','미평동','H','jeonnam','yeosu'],
-  'mokpo-d1':['전남','목포시','용해동','H','jeonnam','mokpo'],
-  'naju-d1':['전남','나주시','금천면','H','jeonnam','naju'],
-  'naju-d2':['전남','나주시','봉황면','H','jeonnam','naju'],
-  'gwangyang-d1':['전남','광양시','광양읍','H','jeonnam','gwangyang'],
-  'gwangyang-d2':['전남','광양시','금호동','H','jeonnam','gwangyang'],
-  'gwangyang-d3':['전남','광양시','태인동','H','jeonnam','gwangyang'],
-  'damyang-d1':['전남','담양군','봉산면','F','jeonnam','damyang'],
-  'damyang-d2':['전남','담양군','창평면','F','jeonnam','damyang'],
-  'damyang-d3':['전남','담양군','대전면','F','jeonnam','damyang'],
-  'gokseong-d1':['전남','곡성군','오곡면','F','jeonnam','gokseong'],
-  'gokseong-d2':['전남','곡성군','오산면','F','jeonnam','gokseong'],
-  'gokseong-d3':['전남','곡성군','입면','F','jeonnam','gokseong'],
-  'gurye-d1':['전남','구례군','토지면','H','jeonnam','gurye'],
-  'gurye-d2':['전남','구례군','마산면','H','jeonnam','gurye'],
-  'gurye-d3':['전남','구례군','산동면','H','jeonnam','gurye'],
-  'goheung-d1':['전남','고흥군','도양읍','F','jeonnam','goheung'],
-  'goheung-d2':['전남','고흥군','포두면','F','jeonnam','goheung'],
-  'goheung-d3':['전남','고흥군','두원면','F','jeonnam','goheung'],
-  'boseong-d1':['전남','보성군','벌교읍','F','jeonnam','boseong'],
-  'boseong-d2':['전남','보성군','조성면','F','jeonnam','boseong'],
-  'boseong-d3':['전남','보성군','득량면','F','jeonnam','boseong'],
-  'hwasun-d1':['전남','화순군','능주면','F','jeonnam','hwasun'],
-  'hwasun-d2':['전남','화순군','동면','F','jeonnam','hwasun'],
-  'hwasun-d3':['전남','화순군','이양면','F','jeonnam','hwasun'],
-  'jangheung-d1':['전남','장흥군','관산읍','F','jeonnam','jangheung'],
-  'jangheung-d2':['전남','장흥군','대덕읍','F','jeonnam','jangheung'],
-  'jangheung-d3':['전남','장흥군','안양면','F','jeonnam','jangheung'],
-  'gangjin-d1':['전남','강진군','칠량면','F','jeonnam','gangjin'],
-  'gangjin-d2':['전남','강진군','대구면','F','jeonnam','gangjin'],
-  'gangjin-d3':['전남','강진군','마량면','F','jeonnam','gangjin'],
-  'haenam-d1':['전남','해남군','화산면','F','jeonnam','haenam'],
-  'haenam-d2':['전남','해남군','북일면','F','jeonnam','haenam'],
-  'haenam-d3':['전남','해남군','산이면','F','jeonnam','haenam'],
-  'yeongam-d1':['전남','영암군','학산면','F','jeonnam','yeongam'],
-  'yeongam-d2':['전남','영암군','신북면','F','jeonnam','yeongam'],
-  'muan-d1':['전남','무안군','삼향읍','F','jeonnam','muan'],
-  'muan-d2':['전남','무안군','몽탄면','F','jeonnam','muan'],
-  'hampyeong-d1':['전남','함평군','나비면','F','jeonnam','hampyeong'],
-  'hampyeong-d2':['전남','함평군','신광면','F','jeonnam','hampyeong'],
-  'hampyeong-d3':['전남','함평군','해보면','F','jeonnam','hampyeong'],
-  'yeonggwang-d1':['전남','영광군','법성면','F','jeonnam','yeonggwang'],
-  'yeonggwang-d2':['전남','영광군','군서면','F','jeonnam','yeonggwang'],
-  'jangseong-d1':['전남','장성군','황룡면','F','jeonnam','jangseong'],
-  'jangseong-d2':['전남','장성군','북이면','F','jeonnam','jangseong'],
-  'jangseong-d3':['전남','장성군','삼서면','F','jeonnam','jangseong'],
-  'wando-d1':['전남','완도군','금일읍','F','jeonnam','wando'],
-  'wando-d2':['전남','완도군','노화읍','F','jeonnam','wando'],
-  'wando-d3':['전남','완도군','청산면','F','jeonnam','wando'],
-  'jindo-d1':['전남','진도군','의신면','F','jeonnam','jindo'],
-  'jindo-d2':['전남','진도군','군내면','F','jeonnam','jindo'],
-  'jindo-d3':['전남','진도군','임회면','F','jeonnam','jindo'],
-  'sinan-d1':['전남','신안군','지도읍','F','jeonnam','sinan'],
-  'sinan-d2':['전남','신안군','비금면','F','jeonnam','sinan'],
-  'sinan-d3':['전남','신안군','도초면','F','jeonnam','sinan'],
-  'pohang-d1':['경북','포항시','환호동','H','gyeongbuk','pohang'],
-  'pohang-d2':['경북','포항시','장성동','H','gyeongbuk','pohang'],
-  'gyeongju-d1':['경북','경주시','성건동','H','gyeongbuk','gyeongju'],
-  'gyeongju-d2':['경북','경주시','용강동','H','gyeongbuk','gyeongju'],
-  'gumi-d1':['경북','구미시','선주원남동','H','gyeongbuk','gumi'],
-  'andong-d1':['경북','안동시','풍천면','H','gyeongbuk','andong'],
-  'andong-d2':['경북','안동시','용상동','H','gyeongbuk','andong'],
-  'gyeongsan-d1':['경북','경산시','압량읍','H','gyeongbuk','gyeongsan'],
-  'gimcheon-d1':['경북','김천시','율곡동','H','gyeongbuk','gimcheon'],
-  'gimcheon-d2':['경북','김천시','농소면','H','gyeongbuk','gimcheon'],
-  'yeongju-d1':['경북','영주시','가흥동','H','gyeongbuk','yeongju'],
-  'yeongju-d2':['경북','영주시','상망동','H','gyeongbuk','yeongju'],
-  'yeongcheon-d1':['경북','영천시','완산동','H','gyeongbuk','yeongcheon'],
-  'yeongcheon-d2':['경북','영천시','금호읍','H','gyeongbuk','yeongcheon'],
-  'yeongcheon-d3':['경북','영천시','화산면','H','gyeongbuk','yeongcheon'],
-  'sangju-d1':['경북','상주시','낙동면','H','gyeongbuk','sangju'],
-  'sangju-d2':['경북','상주시','함창읍','H','gyeongbuk','sangju'],
-  'sangju-d3':['경북','상주시','공성면','H','gyeongbuk','sangju'],
-  'mungyeong-d1':['경북','문경시','문경읍','H','gyeongbuk','mungyeong'],
-  'mungyeong-d2':['경북','문경시','가은읍','H','gyeongbuk','mungyeong'],
-  'mungyeong-d3':['경북','문경시','산양면','H','gyeongbuk','mungyeong'],
-  'uiseong-d1':['경북','의성군','단촌면','F','gyeongbuk','uiseong'],
-  'uiseong-d2':['경북','의성군','봉양면','F','gyeongbuk','uiseong'],
-  'uiseong-d3':['경북','의성군','금성면','F','gyeongbuk','uiseong'],
-  'cheongsong-d1':['경북','청송군','진보면','F','gyeongbuk','cheongsong'],
-  'cheongsong-d2':['경북','청송군','현서면','F','gyeongbuk','cheongsong'],
-  'cheongsong-d3':['경북','청송군','파천면','F','gyeongbuk','cheongsong'],
-  'yeongyang-d1':['경북','영양군','일월면','F','gyeongbuk','yeongyang'],
-  'yeongyang-d2':['경북','영양군','입암면','F','gyeongbuk','yeongyang'],
-  'yeongyang-d3':['경북','영양군','수비면','F','gyeongbuk','yeongyang'],
-  'yeongdeok-d1':['경북','영덕군','병곡면','F','gyeongbuk','yeongdeok'],
-  'yeongdeok-d2':['경북','영덕군','지품면','F','gyeongbuk','yeongdeok'],
-  'cheongdo-d1':['경북','청도군','청도읍','F','gyeongbuk','cheongdo'],
-  'cheongdo-d2':['경북','청도군','각남면','F','gyeongbuk','cheongdo'],
-  'cheongdo-d3':['경북','청도군','풍각면','F','gyeongbuk','cheongdo'],
-  'goryeong-d1':['경북','고령군','개진면','F','gyeongbuk','goryeong'],
-  'goryeong-d2':['경북','고령군','성산면','F','gyeongbuk','goryeong'],
-  'goryeong-d3':['경북','고령군','쌍림면','F','gyeongbuk','goryeong'],
-  'seongju-d1':['경북','성주군','선남면','F','gyeongbuk','seongju'],
-  'seongju-d2':['경북','성주군','금수면','F','gyeongbuk','seongju'],
-  'seongju-d3':['경북','성주군','용암면','F','gyeongbuk','seongju'],
-  'chilgok-d1':['경북','칠곡군','가산면','F','gyeongbuk','chilgok'],
-  'chilgok-d2':['경북','칠곡군','동명면','F','gyeongbuk','chilgok'],
-  'chilgok-d3':['경북','칠곡군','지천면','F','gyeongbuk','chilgok'],
-  'yecheon-d1':['경북','예천군','호명면','F','gyeongbuk','yecheon'],
-  'yecheon-d2':['경북','예천군','지보면','F','gyeongbuk','yecheon'],
-  'yecheon-d3':['경북','예천군','풍양면','F','gyeongbuk','yecheon'],
-  'bonghwa-d1':['경북','봉화군','춘양면','F','gyeongbuk','bonghwa'],
-  'bonghwa-d2':['경북','봉화군','재산면','F','gyeongbuk','bonghwa'],
-  'bonghwa-d3':['경북','봉화군','명호면','F','gyeongbuk','bonghwa'],
-  'uljin-d1':['경북','울진군','평해읍','F','gyeongbuk','uljin'],
-  'uljin-d2':['경북','울진군','북면','F','gyeongbuk','uljin'],
-  'ulleung-d1':['경북','울릉군','서면','F','gyeongbuk','ulleung'],
-  'ulleung-d2':['경북','울릉군','북면','F','gyeongbuk','ulleung'],
-  'gimhae-d1':['경남','김해시','삼계동','H','gyeongnam','gimhae'],
-  'yangsan-d1':['경남','양산시','신기동','H','gyeongnam','yangsan'],
-  'geoje-d1':['경남','거제시','아주동','H','gyeongnam','geoje'],
-  'geoje-d2':['경남','거제시','수월동','H','gyeongnam','geoje'],
-  'tongyeong-d1':['경남','통영시','도천동','H','gyeongnam','tongyeong'],
-  'tongyeong-d2':['경남','통영시','미수동','H','gyeongnam','tongyeong'],
-  'sacheon-d1':['경남','사천시','용현면','H','gyeongnam','sacheon'],
-  'sacheon-d2':['경남','사천시','정동면','H','gyeongnam','sacheon'],
-  'sacheon-d3':['경남','사천시','향촌동','H','gyeongnam','sacheon'],
-  'miryang-d1':['경남','밀양시','삼문동','H','gyeongnam','miryang'],
-  'miryang-d2':['경남','밀양시','내이동','H','gyeongnam','miryang'],
-  'miryang-d3':['경남','밀양시','가곡동','H','gyeongnam','miryang'],
-  'miryang-d4':['경남','밀양시','상남면','H','gyeongnam','miryang'],
-  'uiryeong-d1':['경남','의령군','칠곡면','F','gyeongnam','uiryeong'],
-  'uiryeong-d2':['경남','의령군','대의면','F','gyeongnam','uiryeong'],
-  'uiryeong-d3':['경남','의령군','화정면','F','gyeongnam','uiryeong'],
-  'haman-d1':['경남','함안군','함안면','F','gyeongnam','haman'],
-  'haman-d2':['경남','함안군','칠원면','F','gyeongnam','haman'],
-  'haman-d3':['경남','함안군','군북면','F','gyeongnam','haman'],
-  'changnyeong-d1':['경남','창녕군','유어면','F','gyeongnam','changnyeong'],
-  'changnyeong-d2':['경남','창녕군','대지면','F','gyeongnam','changnyeong'],
-  'goseong-gn-d3':['경남','고성군','삼산면','F','gyeongnam','goseong-gn'],
-  'goseong-gn-d4':['경남','고성군','하이면','F','gyeongnam','goseong-gn'],
-  'goseong-gn-d5':['경남','고성군','거류면','F','gyeongnam','goseong-gn'],
-  'namhae-d1':['경남','남해군','설천면','F','gyeongnam','namhae'],
-  'namhae-d2':['경남','남해군','미조면','F','gyeongnam','namhae'],
-  'namhae-d3':['경남','남해군','삼동면','F','gyeongnam','namhae'],
-  'hadong-d1':['경남','하동군','금남면','F','gyeongnam','hadong'],
-  'hadong-d2':['경남','하동군','화개면','F','gyeongnam','hadong'],
-  'hadong-d3':['경남','하동군','악양면','F','gyeongnam','hadong'],
-  'sancheong-d1':['경남','산청군','단성면','F','gyeongnam','sancheong'],
-  'sancheong-d2':['경남','산청군','신안면','F','gyeongnam','sancheong'],
-  'sancheong-d3':['경남','산청군','금서면','F','gyeongnam','sancheong'],
-  'hamyang-d1':['경남','함양군','안의면','F','gyeongnam','hamyang'],
-  'hamyang-d2':['경남','함양군','수동면','F','gyeongnam','hamyang'],
-  'hamyang-d3':['경남','함양군','마천면','F','gyeongnam','hamyang'],
-  'geochang-d1':['경남','거창군','웅양면','F','gyeongnam','geochang'],
-  'geochang-d2':['경남','거창군','남상면','F','gyeongnam','geochang'],
-  'geochang-d3':['경남','거창군','가조면','F','gyeongnam','geochang'],
-  'hapcheon-d1':['경남','합천군','가야면','F','gyeongnam','hapcheon'],
-  'hapcheon-d2':['경남','합천군','묘산면','F','gyeongnam','hapcheon'],
-  'hapcheon-d3':['경남','합천군','봉산면','F','gyeongnam','hapcheon'],
-  'jeju-city-d1':['제주','제주시','아라동','H','jeju','jeju-city'],
-  'seogwipo-d1':['제주','서귀포시','성산읍','H','jeju','seogwipo']
-});
+
 
 
 const DONG_MAP = Object.fromEntries(Object.entries(DONG_DB).map(([k,v])=>[k,v[2]]));
@@ -1862,313 +1412,313 @@ const REGIONS = {
         feature: '강남구 과외는 대치동·압구정·역삼·청담 전 지역에서 수학 과외, 영어 과외, 국어 과외, 과학 과외를 1:1 방문 과외로 연결해드립니다. 강남구 초등 과외·중등 과외·고등 과외 전 학년 내신 대비와 수능 대비를 전담하며, 강남 학원가 기출 문제 분석에 특화된 검증 선생님을 매칭합니다. 강남구 수학 과외·영어 과외 선생님은 학력·경력·수업 시연 검증을 완료한 분들로만 구성되어 있습니다. 무료 상담 후 48시간 내 강남구 맞춤 과외 선생님을 연결해드립니다.',
         schools: '휘문고, 단대부고, 중동고, 숙명여고, 경기고, 개포고'
       },
-      '서초구': { dongs:['방배동','반포동','잠원동','서초동','양재동','우면동','내곡동'], feature:'', schools:'세화고, 반포고, 상문고' },
-      '송파구': { dongs:['잠실동','문정동','가락동','방이동','오금동','거여동','마천동'], feature:'', schools:'잠실고, 방산고, 송파고' },
-      '강동구': { dongs:['천호동','암사동','명일동','고덕동','강일동','둔촌동'], feature:'', schools:'한영고, 강동고' },
-      '마포구': { dongs:['합정동','홍대앞','상수동','망원동','연남동'], feature:'', schools:'마포고, 서강고' },
-      '양천구': { dongs:['목동','신정동','신월동'], feature:'', schools:'양천고, 목동고, 신목고' },
-      '노원구': { dongs:['상계동','중계동','하계동','공릉동','월계동'], feature:'', schools:'상계고, 불암고, 노원고' },
-      '강서구': { dongs:['화곡동','방화동','마곡동','발산동','등촌동'], feature:'', schools:'강서고, 공항고' },
-      '동작구': { dongs:['사당동','상도동','노량진동','대방동','흑석동'], feature:'', schools:'동작고, 중앙대부고' },
-      '관악구': { dongs:['신림동','봉천동','낙성대동'], feature:'', schools:'관악고, 인헌고' },
-      '성북구': { dongs:['돈암동','길음동','정릉동','석관동'], feature:'', schools:'성북고, 고려고' },
-      '용산구': { dongs:['이태원동','한남동','서빙고동','이촌동'], feature:'', schools:'용산고, 용문고' },
-      '중구': { dongs:['명동','충무로','신당동','황학동','을지로'], feature:'', schools:'중구고, 이화여고' },
-      '종로구': { dongs:['혜화동','명륜동','창신동','부암동'], feature:'', schools:'경복고, 종로고' },
-      '중랑구': { dongs:['면목동','신내동','묵동','망우동'], feature:'', schools:'중랑고, 면목고' },
-      '광진구': { dongs:['화양동','군자동','구의동','자양동'], feature:'', schools:'광진고, 건대부고' },
-      '동대문구': { dongs:['회기동','전농동','답십리동','장안동'], feature:'', schools:'동대문고, 장안고' },
-      '성동구': { dongs:['왕십리동','행당동','금호동','옥수동'], feature:'', schools:'성동고, 한대부고' },
-      '은평구': { dongs:['응암동','녹번동','불광동','수색동'], feature:'', schools:'은평고, 대진고' },
-      '서대문구': { dongs:['신촌동','홍제동','북가좌동','남가좌동'], feature:'', schools:'서대문고, 연희고' },
-      '도봉구': { dongs:['쌍문동','방학동','창동','도봉동'], feature:'', schools:'도봉고, 창동고' },
-      '강북구': { dongs:['미아동','수유동','번동','우이동'], feature:'', schools:'강북고, 미양고' },
-      '금천구': { dongs:['가산동','독산동','시흥동'], feature:'', schools:'금천고, 시흥고' },
-      '구로구': { dongs:['구로동','신도림동','개봉동','오류동'], feature:'', schools:'구로고, 개봉고' },
+      '서초구': { dongs:["개포동", "방배동", "양재동", "우면동", "원지동", "도곡동", "잠원동", "반포동", "서초동", "내곡동", "염곡동", "신원동", "역삼동", "신사동", "서초1동", "서초2동", "서초3동", "반포본동", "반포1동", "반포2동", "반포3동", "방배본동", "방배1동", "방배2동", "방배3동", "도곡1동", "도곡2동"], feature:'', schools:'세화고, 반포고, 상문고' },
+      '송파구': { dongs:["잠실동", "신천동", "풍납동", "송파동", "석촌동", "삼전동", "가락동", "문정동", "장지동", "이동", "방이동", "오금동", "거여동", "마천동"], feature:'', schools:'잠실고, 방산고, 송파고' },
+      '강동구': { dongs:["잠실동", "신천동", "풍납동", "송파동", "석촌동", "삼전동", "가락동", "문정동", "장지동", "방이동", "오금동", "거여동", "마천동", "이동", "명일동", "고덕동", "상일동", "하일동", "길동", "둔촌동", "암사동", "성내동", "천호동", "강일동"], feature:'', schools:'한영고, 강동고' },
+      '마포구': { dongs:["연희동", "남가좌동", "수색동", "율도동", "아현동", "공덕동", "신공덕동", "도화동", "용강동", "토정동", "마포동", "대흥동", "염리동", "노고산동", "신수동", "현석동", "구수동", "창전동", "상수동", "하중동", "신정동", "당인동", "하수동", "서교동", "동교동", "합정동", "망원동", "연남동", "성산동", "중동", "상암동", "아현1동", "아현2동", "아현3동", "공덕1동", "공덕2동", "도화1동", "도화2동", "망원1동", "망원2동", "성산1동", "성산2동"], feature:'', schools:'마포고, 서강고' },
+      '양천구': { dongs:["신정동", "목동", "신월동", "목1동", "목2동", "목3동", "목4동", "목5동", "신월1동", "신월2동", "신월3동", "신월4동", "신월5동", "신월6동", "신정1동", "신정2동", "신정3동", "신정4동", "신정5동", "신정6동"], feature:'', schools:'양천고, 목동고, 신목고' },
+      '노원구': { dongs:["창동", "월계동", "공릉동", "하계동", "상계동", "중계동", "도봉동", "도봉1동", "도봉2동", "창1동", "창2동", "창3동", "월계1동", "월계2동", "월계3동", "공릉1동", "공릉2동", "상계1동", "상계2동", "상계3동", "상계4동", "상계5동", "상계6동", "상계7동"], feature:'', schools:'상계고, 불암고, 노원고' },
+      '강서구': { dongs:["대저일동", "대저이동", "강동동", "명지동", "죽림동", "식만동", "죽동동", "봉림동", "송정동", "화전동", "녹산동", "생곡동", "구랑동", "지사동", "미음동", "범방동", "신호동", "동선동", "성북동", "눌차동", "천성동", "대항동", "가락동", "천가동", "대저1동", "대저2동"], feature:'', schools:'강서고, 공항고' },
+      '동작구': { dongs:["노량진동", "상도동", "상도1동", "본동", "흑석동", "동작동", "사당동", "대방동", "신대방동", "노량진1동", "노량진2동", "상도2동", "상도3동", "상도4동", "흑석1동", "흑석2동", "흑석3동", "사당1동", "사당2동", "사당3동", "사당4동", "신대방1동", "신대방2동"], feature:'', schools:'동작고, 중앙대부고' },
+      '관악구': { dongs:["대방동", "신대방동", "노량진동", "상도동", "본동", "흑석동", "동작동", "사당동", "방배동", "상도제1동", "봉천동", "신림동", "남현동", "봉천본동", "봉천1동", "봉천2동", "봉천3동", "봉천4동", "봉천5동", "봉천6동", "봉천7동", "봉천8동", "봉천9동", "봉천10동", "봉천11동", "신림본동", "신림1동", "신림2동", "신림3동", "신림4동", "신림5동", "신림6동", "신림7동", "신림8동", "신림9동", "신림10동", "신림11동"], feature:'', schools:'관악고, 인헌고' },
+      '성북구': { dongs:["미아동", "번동", "수유동", "우이동", "창동", "월계동", "쌍문동", "공릉동", "하계동", "상계동", "중계동", "도봉동", "방학동", "성북동2가", "동소문동8가", "성북동", "성북동1가", "돈암동", "동소문동1가", "동소문동2가", "동소문동3가", "동소문동4가", "동소문동5가", "동소문동6가", "동소문동7가", "삼선동1가", "삼선동2가", "삼선동3가", "삼선동4가", "삼선동5가", "동선동1가", "동선동2가", "동선동3가", "동선동4가", "동선동5가", "안암동1가", "안암동2가", "안암동3가", "안암동4가", "안암동5가", "보문동4가", "보문동5가", "보문동6가", "보문동7가", "보문동1가", "보문동2가", "보문동3가", "정릉동", "길음동", "종암동", "하월곡동", "상월곡동", "장위동", "석관동", "성북1동", "성북2동", "삼선1동", "삼선2동", "동선1동", "동선2동", "돈암1동", "돈암2동", "정릉1동", "정릉2동", "정릉3동", "정릉4동", "길음1동", "길음2동", "길음3동", "종암1동", "종암2동", "하월곡1동", "하월곡2동", "하월곡3동", "하월곡4동", "장위1동", "장위2동", "장위3동", "석관1동", "석관2동"], feature:'', schools:'성북고, 고려고' },
+      '용산구': { dongs:["옥수동", "도동1가", "도동2가", "만리동1가", "만리동2가", "후암동", "용산동2가", "용산동4가", "갈월동", "남영동", "용산동1가", "동자동", "서계동", "청파동1가", "청파동2가", "청파동3가", "원효로1가", "원효로2가", "신창동", "산천동", "청암동", "원효로3가", "원효로4가", "효창동", "도원동", "용문동", "문배동", "신계동", "한강로1가", "한강로2가", "용산동3가", "용산동5가", "한강로3가", "이촌동", "이태원동", "한남동", "동빙고동", "서빙고동", "주성동", "용산동6가", "보광동", "청파1동", "청파2동", "이촌1동", "이촌2동", "이태원1동", "이태원2동", "한남1동", "한남2동"], feature:'', schools:'용산고, 용문고' },
+      '중구': { dongs:["학성동", "학산동", "복산동", "북정동", "옥교동", "성남동", "교동", "우정동", "성안동", "유곡동", "태화동", "다운동", "동동", "서동", "남외동", "장현동", "약사동", "반구동"], feature:'', schools:'중구고, 이화여고' },
+      '종로구': { dongs:["청운동", "신교동", "궁정동", "효자동", "창성동", "통의동", "적선동", "통인동", "누상동", "누하동", "옥인동", "체부동", "필운동", "내자동", "사직동", "도렴동", "당주동", "내수동", "세종로", "신문로1가", "신문로2가", "청진동", "서린동", "수송동", "중학동", "종로1가", "공평동", "관훈동", "견지동", "와룡동", "권농동", "운니동", "익선동", "경운동", "관철동", "인사동", "낙원동", "종로2가", "팔판동", "삼청동", "안국동", "소격동", "화동", "사간동", "송현동", "가회동", "재동", "계동", "원서동", "훈정동", "묘동", "봉익동", "돈의동", "장사동", "관수동", "종로3가", "인의동", "예지동", "원남동", "연지동", "종로4가", "효제동", "종로5가", "종로6가", "이화동", "연건동", "충신동", "동숭동", "혜화동", "명륜1가", "명륜2가", "명륜4가", "명륜3가", "창신동", "숭인동", "교남동", "평동", "송월동", "홍파동", "교북동", "행촌동", "구기동", "평창동", "부암동", "홍지동", "신영동", "무악동", "창신1동", "창신2동", "창신3동", "숭인1동", "숭인2동"], feature:'', schools:'경복고, 종로고' },
+      '중랑구': { dongs:["면목동", "상봉동", "중화동", "묵동", "망우동", "신내동", "면목1동", "면목2동", "면목3동", "면목4동", "면목5동", "면목6동", "면목7동", "상봉1동", "상봉2동", "중화1동", "중화2동", "묵1동", "묵2동", "망우1동", "망우2동", "망우3동"], feature:'', schools:'중랑고, 면목고' },
+      '광진구': { dongs:["중곡동", "능동", "구의동", "광장동", "자양동", "노유동", "화양동", "모진동", "군자동"], feature:'', schools:'광진고, 건대부고' },
+      '동대문구': { dongs:["면목동", "상봉동", "중화동", "묵동", "망우동", "신내동", "중곡동", "능동", "군자동", "종암동", "안암동4가", "안암동5가", "석관동", "보문동1가", "보문동2가", "보문동3가", "보문동4가", "보문동5가", "보문동6가", "보문동7가", "창신동", "숭인동", "신설동", "용두동", "제기동", "전농동", "답십리동", "장안동", "청량리동", "회기동", "휘경동", "이문동", "용두1동", "용두2동", "제기1동", "제기2동", "전농1동", "전농2동", "전농3동", "전농4동", "답십리1동", "답십리2동", "답십리3동", "답십리4동", "답십리5동", "장안1동", "장안2동", "장안3동", "장안4동", "청량리1동", "청량리2동", "휘경1동", "휘경2동", "이문1동", "이문2동", "이문3동"], feature:'', schools:'동대문고, 장안고' },
+      '성동구': { dongs:["상일동", "길동", "둔촌동", "암사동", "성내동", "풍납동", "천호동", "송파동", "석촌동", "삼전동", "가락동", "이동", "오금동", "방이동", "문정동", "장지동", "거여동", "마천동", "잠실동", "신천동", "일원동", "수서동", "자곡동", "율현동", "세곡동", "역삼동", "포이동", "개포동", "도곡동", "논현동", "신사동", "학동", "압구정동", "청담동", "삼성동", "대치동", "염곡동", "내곡동", "신원동", "반포동", "잠원동", "서초동", "양재동", "우면동", "원지동", "황학동", "무학동", "흥인동", "신당동", "용두동", "답십리동", "면목동", "금호동", "명일동", "하일동", "고덕동", "상왕십리동", "하왕십리동", "홍익동", "도선동", "마장동", "사근동", "행당동", "응봉동", "금호동1가", "금호동2가", "금호동3가", "금호동4가", "옥수동", "성수동1가", "성수동2가", "화양동", "모진동", "송정동", "군자동", "중곡동", "능동", "용답동", "광장동", "구의동", "자양동", "왕십리1동", "왕십리2동", "행당1동", "행당2동", "중곡1동", "중곡2동", "중곡3동", "중곡4동", "옥수1동", "옥수2동", "성수1가1동", "성수1가2동", "성수2가1동", "성수2가2동", "성수2가3동", "성수2가4동", "자양1동", "자양2동", "자양3동", "구의1동", "구의2동"], feature:'', schools:'성동고, 한대부고' },
+      '은평구': { dongs:["수색동", "녹번동", "불광동", "갈현동", "구산동", "대조동", "응암동", "역촌동", "신사동", "증산동", "진관내동", "구파발동", "진관외동", "진관동", "불광1동", "불광2동", "불광3동", "응암1동", "응암2동", "응암3동", "역촌1동", "역촌2동", "응암4동"], feature:'', schools:'은평고, 대진고' },
+      '서대문구': { dongs:["평창동", "구기동", "부암동", "홍지동", "신영동", "행촌동", "송월동", "홍파동", "평동", "교남동", "교북동", "서소문동", "정동", "순화동", "의주로2가", "중림동", "의주로1가", "충정로1가", "노고산동", "만리동1가", "만리동2가", "상암동", "성산동", "수색동", "중동", "녹번동", "불광동", "갈현동", "역촌동", "신사동", "구파발동", "구산동", "진관내동", "진관외동", "응암동", "대조동", "증산동", "충정로2가", "충정로3가", "합동", "미근동", "냉천동", "천연동", "옥천동", "영천동", "현저동", "북아현동", "홍제동", "대현동", "대신동", "신촌동", "봉원동", "창천동", "연희동", "홍은동", "북가좌동", "남가좌동", "충정로동", "북아현1동", "북아현2동", "북아현3동", "연희1동", "연희2동", "연희3동", "홍제1동", "홍제2동", "홍제3동", "홍제4동", "홍은1동", "홍은2동", "홍은3동", "남가좌1동", "남가좌2동", "북가좌1동"], feature:'', schools:'서대문고, 연희고' },
+      '도봉구': { dongs:["상계동", "중계동", "하계동", "월계동", "공릉동", "미아동", "번동", "수유동", "우이동", "쌍문동", "방학동", "창동", "도봉동", "창1동", "창2동", "창3동", "도봉1동", "도봉2동", "미아1동", "미아2동", "미아3동", "미아4동", "미아5동", "미아6동", "미아7동", "미아8동", "번1동", "번2동", "수유1동", "수유2동", "수유3동", "수유4동", "수유5동", "쌍문1동", "쌍문2동", "쌍문3동", "방학1동", "방학2동", "방학3동"], feature:'', schools:'도봉고, 창동고' },
+      '강북구': { dongs:["미아동", "번동", "수유동", "우이동"], feature:'', schools:'강북고, 미양고' },
+      '금천구': { dongs:["가산동", "독산동", "시흥동"], feature:'', schools:'금천고, 시흥고' },
+      '구로구': { dongs:["신도림동", "구로동", "가리봉동", "독산동", "시흥동", "고척동", "개봉동", "오류동", "궁동", "온수동", "천왕동", "항동", "구로1동", "구로2동", "구로3동", "구로4동", "구로5동", "구로6동", "가리봉1동", "가리봉2동", "가리봉3동", "독산1동", "독산2동", "독산3동", "독산4동", "독산본동", "시흥본동", "시흥1동", "시흥2동", "시흥3동", "시흥4동", "시흥5동", "고척1동", "고척2동", "개봉1동", "개봉2동", "개봉3동", "오류1동", "오류2동", "수궁동"], feature:'', schools:'구로고, 개봉고' },
     }
   },
   '경기': {
     label: '경기도', emoji: '🌿',
     areas: {
-      '수원시': { dongs:['팔달구','영통구','권선구','장안구'], feature:'', schools:'수원고, 수원외고' },
-      '성남시': { dongs:['분당구','수정구','중원구'], feature:'', schools:'분당고, 낙생고' },
-      '용인시': { dongs:['수지구','기흥구','처인구'], feature:'', schools:'용인고, 흥덕고' },
-      '고양시': { dongs:['일산동구','일산서구','덕양구'], feature:'', schools:'고양고, 일산동고' },
-      '부천시': { dongs:['소사구','오정구','원미구'], feature:'', schools:'부천고, 부천북고' },
-      '안양시': { dongs:['만안구','동안구'], feature:'', schools:'안양고, 평촌고' },
-      '화성시': { dongs:['동탄1신도시','동탄2신도시','봉담읍'], feature:'', schools:'동탄고, 능동고' },
-      '남양주시': { dongs:['화도읍','다산동','별내동','오남읍'], feature:'', schools:'남양주고, 별내고' },
-      '안산시': { dongs:['단원구','상록구'], feature:'', schools:'안산고, 안산강서고, 초지고' },
-      '평택시': { dongs:['비전동','신장동','안중읍','팽성읍'], feature:'', schools:'비전고, 한광고, 한광여고' },
-      '시흥시': { dongs:['배곧동','장현동','목감동','은계동'], feature:'', schools:'시흥고, 능곡고, 배곧고' },
-      '파주시': { dongs:['교하동','운정동','금촌동','문산읍'], feature:'', schools:'교하고, 심학고, 문산제일고' },
-      '김포시': { dongs:['장기동','운양동','구래동','사우동'], feature:'', schools:'솔터고, 운양고, 제일고' },
-      '의정부시': { dongs:['의정부동','신곡동','송산동','가능동'], feature:'', schools:'의정부고, 효자고, 경민고' },
-      '광주시': { dongs:['경안동','탄벌동','오포읍','초월읍'], feature:'', schools:'광주고, 광주중앙고' },
-      '하남시': { dongs:['미사동','위례동','덕풍동','감일동'], feature:'', schools:'미사고, 강일고, 신장고' },
-      '광명시': { dongs:['철산동','하안동','소하동','광명동'], feature:'', schools:'광명고, 광문고, 소하고' },
-      '군포시': { dongs:['산본동','당정동','부곡동','대야동'], feature:'', schools:'산본고, 군포고, 흥진고' },
-      '이천시': { dongs:['창전동','중리동','부발읍','장호원읍'], feature:'', schools:'이천고, 이현고, 효양고' },
-      '오산시': { dongs:['오산동','세마동','초평동','궐동'], feature:'', schools:'오산고, 운천고, 세교고' },
-      '양주시': { dongs:['회천읍','광적면','옥정동','덕계동'], feature:'', schools:'양주고, 회암고' },
-      '구리시': { dongs:['갈매동','인창동','수택동','교문동'], feature:'', schools:'인창고, 수택고, 구리고' },
-      '안성시': { dongs:['공도읍','안성동','미양면','보개면'], feature:'', schools:'안성고, 안성여고' },
-      '의왕시': { dongs:['내손동','오전동','청계동','포일동'], feature:'', schools:'의왕고, 백운고' },
-      '여주시': { dongs:['여주읍','오학동','가남읍','점동면'], feature:'', schools:'세종고, 여주고, 여주여고' },
-      '동두천시': { dongs:['생연동','중앙동','지행동','소요동'], feature:'', schools:'동두천고, 동두천여고' },
-      '과천시': { dongs:['과천동','별양동','부림동','중앙동'], feature:'', schools:'과천고, 과천외고' },
-      '가평군': { dongs:['가평읍','청평면','설악면','상면'], feature:'', schools:'가평고, 청평고' },
-      '양평군': { dongs:['양평읍','용문면','강상면','지평면'], feature:'', schools:'양평고, 용문고' },
-      '연천군': { dongs:['연천읍','전곡읍','청산면','미산면'], feature:'', schools:'연천고, 전곡고' },
-      '포천시': { dongs:['포천읍','소흘읍','군내면','가산면'], feature:'', schools:'포천고, 포천일고' },
+      '수원시': { dongs:["반정동", "팔달로1가", "팔달로2가", "남창동", "팔달로3가", "영동", "중동", "구천동", "남수동", "매향동", "북수동", "장안동", "신풍동", "매교동", "교동", "세류동", "평동", "고색동", "오목천동", "평리동", "서둔동", "구운동", "탑동", "매산로1가", "매산로2가", "매산로3가", "고등동", "화서동", "파장동", "이목동", "율전동", "천천동", "정자동", "영화동", "조원동", "송죽동", "연무동", "상광교동", "하광교동", "지동", "우만동", "인계동", "매탄동", "원천동", "장지동", "대황교동", "곡반정동", "권선동", "이의동", "하동", "금곡동", "호매실동", "팔달동", "남향동", "신안동", "세류1동", "세류2동", "세류3동", "매산동", "화서1동", "화서2동", "송원동", "지만동", "곡선동"], feature:'', schools:'수원고, 수원외고' },
+      '성남시': { dongs:["신흥동", "태평동", "수진동", "성남동", "중동", "단대동", "은행동", "상대원동", "복정동", "창곡동", "여수동", "도촌동", "갈현동", "하대원동", "이매동", "서현동", "야탑동", "분당동", "정자동", "수내동", "율동", "신촌동", "오야동", "심곡동", "고등동", "상적동", "둔전동", "시흥동", "금토동", "사송동", "판교동", "삼평동", "백현동", "금곡동", "궁내동", "구미동", "동원동", "운중동", "대장동", "석운동", "하산운동", "신흥1동", "신흥2동", "신흥3동", "태평1동", "태평2동", "태평3동", "수진1동", "수진2동", "단대1동", "단대2동", "단대3동", "단대4동", "은행1동", "은행2동", "상대원1동", "상대원2동", "상대원3동"], feature:'', schools:'분당고, 낙생고' },
+      '용인시': { dongs:["김량장동", "역북동", "삼가동", "남동", "유방동", "고림동", "마평동", "운학동", "호동", "해곡동", "풍덕천동", "죽전동", "동천동", "고기동", "신봉동", "성복동", "상현동", "기흥읍", "수지읍", "구성읍", "포곡면", "모현면", "구성면", "남사면", "이동면", "원삼면", "백암면", "양지면"], feature:'', schools:'용인고, 흥덕고' },
+      '고양시': { dongs:["주교동", "식사동", "원당동", "신원동", "원흥동", "도내동", "성사동", "북한동", "효자동", "지축동", "오금동", "삼송동", "동산동", "용두동", "일산동", "주엽동", "장항동", "마두동", "백석동", "풍동", "산황동", "탄현동", "벽제동", "선유동", "고양동", "대자동", "관산동", "내유동", "사리현동", "지영동", "설문동", "문봉동", "성석동", "토당동", "내곡동", "대장동", "화정동", "강매동", "행주내동", "행주외동", "신평동", "행신동", "화전동", "현천동", "덕은동", "향동동", "대화동", "덕이동", "가좌동", "구산동", "법곳동"], feature:'', schools:'고양고, 일산동고' },
+      '부천시': { dongs:["심곡동", "소사동", "범박동", "옥길동", "계수동", "역곡동", "괴안동", "원미동", "춘의동", "여월동", "작동", "원종동", "고강동", "오정동", "대장동", "도당동", "약대동", "내동", "삼정동", "중동", "송내동", "상동", "소사본동", "심곡본동"], feature:'', schools:'부천고, 부천북고' },
+      '안양시': { dongs:["안양동", "비산동", "관양동", "평촌동", "호계동", "석수동", "박달동", "안양1동", "안양2동", "안양3동", "안양4동", "안양5동", "안양6동", "안양7동", "안양8동", "비산1동", "비산2동", "호계1동", "호계2동", "호계3동", "석수1동", "석수2동"], feature:'', schools:'안양고, 평촌고' },
+      '화성시': { dongs:["남양동", "신남동", "장덕동", "안석동", "활초동", "온석동", "무송동", "북양동", "송림동", "수화동", "장전동", "신외동", "문호동", "시동", "원천동", "진안동", "병점동", "능동", "기산동", "반월동", "반정동", "황계동", "배양동", "기안동", "송산동", "안녕동", "반송동", "석우동", "오산동", "청계동", "영천동", "중동", "신동", "목동", "산척동", "장지동", "송동", "방교동", "금곡동", "새솔동", "태안읍", "봉담읍", "우정읍", "향남읍", "남양읍", "매송면", "비봉면", "마도면", "송산면", "서신면", "팔탄면", "장안면", "우정면", "향남면", "양감면", "정남면", "동탄면"], feature:'', schools:'동탄고, 능동고' },
+      '남양주시': { dongs:["호평동", "평내동", "금곡동", "일패동", "이패동", "삼패동", "가운동", "수석동", "지금동", "도농동", "별내동", "다산동", "와부읍", "진접읍", "화도읍", "진건읍", "오남읍", "퇴계원읍", "별내면", "진건면", "수동면", "조안면", "퇴계원면", "오남면"], feature:'', schools:'남양주고, 별내고' },
+      '안산시': { dongs:["일동", "이동", "사동", "본오동", "팔곡이동", "양상동", "부곡동", "성포동", "월피동", "고잔동", "와동", "신길동", "성곡동", "목내동", "원시동", "초지동", "원곡동", "선부동", "팔곡일동", "건건동", "사사동", "동동", "북동", "남동", "선감동", "풍도동", "수암동", "장상동", "장하동", "화정동", "대부동동", "대부북동", "대부남동", "반월동", "중앙동", "군자동", "원초동"], feature:'', schools:'안산고, 안산강서고, 초지고' },
+      '평택시': { dongs:["서정동", "장당동", "모곡동", "칠괴동", "칠원동", "도일동", "가재동", "장안동", "이충동", "지산동", "독곡동", "신장동", "평택동", "통복동", "군문동", "유천동", "합정동", "비전동", "동삭동", "세교동", "지제동", "신대동", "소사동", "용이동", "월곡동", "청룡동", "죽백동", "고덕동", "팽성읍", "안중읍", "포승읍", "청북읍", "진위면", "서탄면", "고덕면", "오성면", "청북면", "포승면", "현덕면", "안중면", "신평동", "서부동", "비전1동", "비전2동"], feature:'', schools:'비전고, 한광고, 한광여고' },
+      '시흥시': { dongs:["대야동", "신천동", "방산동", "포동", "미산동", "은행동", "안현동", "매화동", "도창동", "금이동", "무지동", "과림동", "계수동", "수암동", "장상동", "장하동", "화정동", "능곡동", "하중동", "하상동", "광석동", "물왕동", "산현동", "조남동", "논곡동", "목감동", "거모동", "군자동", "장현동", "장곡동", "월곶동", "정왕동", "죽율동", "무지내동", "배곧동", "신관동", "안산동"], feature:'', schools:'시흥고, 능곡고, 배곧고' },
+      '파주시': { dongs:["금촌동", "아동동", "금능동", "야동동", "검산동", "맥금동", "교하동", "야당동", "다율동", "오도동", "상지석동", "산남동", "동패동", "당하동", "문발동", "송촌동", "목동동", "하지석동", "서패동", "신촌동", "연다산동", "와동동", "금릉동", "문산읍", "파주읍", "법원읍", "교하읍", "조리읍", "월롱면", "탄현면", "교하면", "조리면", "광탄면", "파평면", "적성면", "군내면", "장단면", "진동면", "진서면"], feature:'', schools:'교하고, 심학고, 문산제일고' },
+      '김포시': { dongs:["북변동", "걸포동", "운양동", "장기동", "감정동", "사우동", "풍무동", "마산동", "구래동", "통진읍", "고촌읍", "양촌읍", "고촌면", "양촌면", "통진면", "대곶면", "월곶면", "하성면"], feature:'', schools:'솔터고, 운양고, 제일고' },
+      '의정부시': { dongs:["의정부리", "호원리", "장암리", "신곡리", "용현리", "민락리", "낙양리", "자일리", "금오리", "가능리", "녹양리", "의정부동", "호원동", "장암동", "신곡동", "용현동", "민락동", "낙양동", "자일동", "금오동", "가능동", "녹양동", "고산동", "산곡동", "의정부1동", "의정부2동", "의정부3동", "의정부4동", "장곡동", "송산동", "자금동", "가능1동", "가능2동", "가능3동"], feature:'', schools:'의정부고, 효자고, 경민고' },
+      '광주시': { dongs:["경안동", "쌍령동", "송정동", "회덕동", "탄벌동", "목현동", "삼동", "중대동", "직동", "태전동", "장지동", "역동", "목동", "고산동", "신현동", "능평동", "문형동", "추자동", "매산동", "양벌동", "오포읍", "초월읍", "실촌읍", "곤지암읍", "초월면", "실촌면", "도척면", "퇴촌면", "남종면", "중부면", "남한산성면"], feature:'', schools:'광주고, 광주중앙고' },
+      '하남시': { dongs:["천현동", "하산곡동", "창우동", "배알미동", "상산곡동", "신장동", "당정동", "덕풍동", "망월동", "풍산동", "미사동", "선동", "감북동", "감일동", "감이동", "학암동", "교산동", "춘궁동", "하사창동", "상사창동", "항동", "초일동", "초이동", "광암동", "신장1동", "신장2동", "덕풍1동", "덕풍2동", "덕풍3동"], feature:'', schools:'미사고, 강일고, 신장고' },
+      '광명시': { dongs:["광명동", "철산동", "하안동", "소하동", "노온사동", "일직동", "가학동", "옥길동", "광명1동", "광명2동", "광명3동", "광명4동", "광명5동", "광명6동", "광명7동", "철산1동", "철산2동", "철산3동", "철산4동", "소하1동", "소하2동", "학온동"], feature:'', schools:'광명고, 광문고, 소하고' },
+      '군포시': { dongs:["당동", "당정동", "부곡동", "산본동", "금정동", "둔대동", "속달동", "대야미동", "도마교동", "군포1동", "군포2동", "산본1동", "산본2동"], feature:'', schools:'산본고, 군포고, 흥진고' },
+      '이천시': { dongs:["창전동", "관고동", "중리동", "증일동", "율현동", "진리동", "안흥동", "갈산동", "증포동", "송정동", "사음동", "단월동", "대포동", "고담동", "장록동", "장호원읍", "부발읍", "신둔면", "백사면", "호법면", "마장면", "대월면", "모가면", "설성면", "율면"], feature:'', schools:'이천고, 이현고, 효양고' },
+      '오산시': { dongs:["오산동", "부산동", "원동", "궐동", "청학동", "가장동", "금암동", "수청동", "은계동", "내삼미동", "외삼미동", "양산동", "세교동", "지곶동", "서랑동", "서동", "벌음동", "두곡동", "탑동", "누읍동", "가수동", "고현동", "청호동", "갈곶동", "중앙동", "역촌동", "남촌동", "신장동", "세마동", "초평동"], feature:'', schools:'오산고, 운천고, 세교고' },
+      '양주시': { dongs:["유양동", "어둔동", "남방동", "마전동", "산북동", "광사동", "만송동", "삼숭동", "고읍동", "덕정동", "봉양동", "회암동", "율정동", "옥정동", "고암동", "덕계동", "회정동", "백석읍", "은현면", "남면", "광적면", "장흥면"], feature:'', schools:'양주고, 회암고' },
+      '구리시': { dongs:["갈매동", "사노동", "인창동", "교문동", "수택동", "아천동", "토평동", "동구동", "수평동"], feature:'', schools:'인창고, 수택고, 구리고' },
+      '안성시': { dongs:["봉산동", "숭인동", "영동", "봉남동", "구포동", "동본동", "명륜동", "옥천동", "낙원동", "창전동", "성남동", "신흥동", "인지동", "금산동", "연지동", "대천동", "서인동", "석정동", "아양동", "금석동", "계동", "옥산동", "사곡동", "도기동", "당왕동", "가사동", "가현동", "신건지동", "신소현동", "신모산동", "현수동", "발화동", "중리동", "공도읍", "보개면", "금광면", "서운면", "미양면", "대덕면", "양성면", "공도면", "원곡면", "일죽면", "죽산면", "삼죽면", "고삼면"], feature:'', schools:'안성고, 안성여고' },
+      '의왕시': { dongs:["고천동", "이동", "삼동", "왕곡동", "오전동", "학의동", "내손동", "청계동", "포일동", "월암동", "초평동", "부곡동", "내손1동", "내손2동"], feature:'', schools:'의왕고, 백운고' },
+      '여주시': { dongs:["상동", "홍문동", "창동", "우만동", "단현동", "신진동", "하동", "교동", "월송동", "가업동", "연라동", "상거동", "하거동", "삼교동", "점봉동", "능현동", "멱곡동", "연양동", "매룡동", "천송동", "오학동", "현암동", "오금동", "가남읍", "점동면", "흥천면", "금사면", "능서면", "세종대왕면", "대신면", "북내면", "강천면", "산북면"], feature:'', schools:'세종고, 여주고, 여주여고' },
+      '동두천시': { dongs:["송내동", "지행동", "생연동", "광암동", "걸산동", "보산동", "동두천동", "안흥동", "상봉암동", "하봉암동", "탑동동", "상패동", "생연1동", "생연2동", "생연3동", "생연4동", "내행동", "동안동", "소요동"], feature:'', schools:'동두천고, 동두천여고' },
+      '과천시': { dongs:["관문동", "문원동", "갈현동", "막계동", "과천동", "주암동", "중앙동", "원문동", "별양동", "부림동"], feature:'', schools:'과천고, 과천외고' },
+      '가평군': { dongs:["가평면", "가평읍", "설악면", "외서면", "청평면", "상면", "하면", "조종면", "북면"], feature:'', schools:'가평고, 청평고' },
+      '양평군': { dongs:["양평면", "양평읍", "강상면", "강하면", "양서면", "옥천면", "서종면", "단월면", "청운면", "양동면", "지제면", "지평면", "용문면", "개군면"], feature:'', schools:'양평고, 용문고' },
+      '연천군': { dongs:["연천면", "전곡면", "관인면", "연천읍", "전곡읍", "군남면", "청산면", "백학면", "미산면", "왕징면", "신서면", "중면", "장남면"], feature:'', schools:'연천고, 전곡고' },
+      '포천시': { dongs:["신읍동", "어룡동", "자작동", "선단동", "설운동", "동교동", "소흘읍", "군내면", "내촌면", "가산면", "신북면", "창수면", "영중면", "일동면", "이동면", "영북면", "관인면", "화현면"], feature:'', schools:'포천고, 포천일고' },
     }
   },
   '인천': {
     label: '인천광역시', emoji: '✈️',
     areas: {
-      '연수구': { dongs:['송도동','연수동','청학동','옥련동'], feature:'', schools:'연수고, 인천외고' },
-      '남동구': { dongs:['구월동','만수동','논현동','간석동'], feature:'', schools:'남동고, 인명여고' },
-      '부평구': { dongs:['부평동','삼산동','갈산동','산곡동'], feature:'', schools:'부평고, 인천고' },
-      '미추홀구': { dongs:['주안동','숭의동','학익동','용현동'], feature:'', schools:'인하고, 인천고, 미추홀외고' },
-      '계양구': { dongs:['계산동','작전동','귤현동','박촌동'], feature:'', schools:'계양고, 인천계산고' },
-      '서구': { dongs:['검단동','청라동','루원시티','왕길동'], feature:'', schools:'청라고, 해원고, 신현고' },
-      '강화군': { dongs:['강화읍','불은면','선원면','하점면'], feature:'', schools:'강화고, 강화여고' },
-      '옹진군': { dongs:['북도면','자월면','덕적면','백령면'], feature:'', schools:'영흥고' },
-      '중구': { dongs:['신포동','답동','운서동','영종도'], feature:'', schools:'인천중구고, 인천항도고' },
-      '동구': { dongs:['화수동','송현동','금창동','만석동'], feature:'', schools:'인천동구고' },
+      '연수구': { dongs:["옥련동", "선학동", "연수동", "청학동", "동춘동", "송도동"], feature:'', schools:'연수고, 인천외고' },
+      '남동구': { dongs:["구월동", "간석동", "만수동", "장수동", "서창동", "운연동", "남촌동", "수산동", "도림동", "논현동", "고잔동", "선학동", "구월1동", "구월2동", "간석1동", "간석2동", "간석3동", "만수1동", "만수2동", "만수3동"], feature:'', schools:'남동고, 인명여고' },
+      '부평구': { dongs:["작전동", "효성동", "계산동", "서운동", "부평동", "십정동", "산곡동", "청천동", "삼산동", "갈산동", "부개동", "일신동", "구산동"], feature:'', schools:'부평고, 인천고' },
+      '미추홀구': { dongs:["숭의동", "용현동", "학익동", "도화동", "주안동", "관교동", "문학동"], feature:'', schools:'인하고, 인천고, 미추홀외고' },
+      '계양구': { dongs:["효성동", "계산동", "작전동", "서운동", "임학동", "용종동", "병방동", "방축동", "박촌동", "동양동", "귤현동", "상야동", "하야동", "평동", "노오지동", "선주지동", "이화동", "오류동", "갈현동", "둑실동", "목상동", "다남동", "장기동", "삼산동"], feature:'', schools:'계양고, 인천계산고' },
+      '서구': { dongs:["복수동", "변동", "도마동", "정림동", "용문동", "탄방동", "삼천동", "괴정동", "가장동", "내동", "갈마동", "둔산동", "월평동", "가수원동", "도안동", "관저동", "흑석동", "매노동", "산직동", "장안동", "평촌동", "오동", "우명동", "원정동", "용촌동", "봉곡동", "괴곡동", "만년동", "도마1동", "도마2동", "기성동"], feature:'', schools:'청라고, 해원고, 신현고' },
+      '강화군': { dongs:["강화읍", "선원면", "불은면", "길상면", "화도면", "양도면", "내가면", "하점면", "양사면", "송해면", "교동면", "삼산면", "서도면"], feature:'', schools:'강화고, 강화여고' },
+      '옹진군': { dongs:["북도면", "송림면", "백령면", "대청면", "덕적면", "영흥면", "자월면", "연평면"], feature:'', schools:'영흥고' },
+      '중구': { dongs:["학성동", "학산동", "복산동", "북정동", "옥교동", "성남동", "교동", "우정동", "성안동", "유곡동", "태화동", "다운동", "동동", "서동", "남외동", "장현동", "약사동", "반구동"], feature:'', schools:'인천중구고, 인천항도고' },
+      '동구': { dongs:["방어동", "화정동", "일산동", "전하동", "미포동", "주전동", "동부동", "서부동", "염포동"], feature:'', schools:'인천동구고' },
     }
   },
   '부산': {
     label: '부산광역시', emoji: '🌊',
     areas: {
-      '해운대구': { dongs:['해운대동','우동','좌동','재송동'], feature:'', schools:'해운대고, 센텀고' },
-      '수영구': { dongs:['광안동','민락동','수영동','남천동'], feature:'', schools:'수영고, 남천고' },
-      '동래구': { dongs:['동래동','온천동','사직동','명장동'], feature:'', schools:'동래고, 동래여고' },
-      '연제구': { dongs:['거제동','연산동','연제동'], feature:'', schools:'연제고, 연일고, 남여고' },
-      '부산진구': { dongs:['부전동','전포동','범천동','개금동'], feature:'', schools:'개금고, 부산진고, 데레사여고' },
-      '영도구': { dongs:['봉래동','청학동','동삼동','신선동'], feature:'', schools:'영선고, 대각고' },
-      '사상구': { dongs:['괘법동','모라동','삼락동','학장동'], feature:'', schools:'사상고, 모덕고' },
-      '사하구': { dongs:['괴정동','하단동','다대동','당리동'], feature:'', schools:'사하고, 구평고, 다대고' },
-      '금정구': { dongs:['구서동','장전동','부곡동','금사동'], feature:'', schools:'부산고, 금정고, 브니엘고' },
-      '기장군': { dongs:['기장읍','장안읍','정관읍','일광읍'], feature:'', schools:'정관고, 기장고' },
-      '남구': { dongs:['대연동','용호동','문현동','감만동'], feature:'', schools:'경남고, 부산남고, 성지여고' },
-      '동구': { dongs:['초량동','수정동','좌천동','범일동'], feature:'', schools:'개성고, 동성고' },
-      '중구': { dongs:['남포동','광복동','중앙동','영주동'], feature:'', schools:'부산중앙고, 경남상고' },
-      '서구': { dongs:['동대신동','서대신동','부민동','아미동'], feature:'', schools:'부산고, 경남여고' },
-      '북구': { dongs:['구포동','덕천동','화명동','만덕동'], feature:'', schools:'화명고, 성도고, 구포고' },
-      '강서구': { dongs:['명지동','강동동','녹산동','가덕도'], feature:'', schools:'명지고, 강서고' },
+      '해운대구': { dongs:["반송동", "석대동", "반여동", "재송동", "우동", "중동", "좌동", "송정동", "우1동", "우2동", "중1동", "중2동", "반여1동", "반여2동", "반여3동", "반송1동", "반송2동", "반송3동"], feature:'', schools:'해운대고, 센텀고' },
+      '수영구': { dongs:["망미동", "수영동", "민락동", "광안동", "남천동"], feature:'', schools:'수영고, 남천고' },
+      '동래구': { dongs:["금성동", "서동", "금사동", "회동", "오륜동", "부곡동", "장전동", "선동", "두구동", "노포동", "청용동", "남산동", "구서동", "우동", "중동", "좌동", "송정동", "반여동", "석대동", "반송동", "재송동", "수영동", "동상동", "명장동", "안락동", "칠산동", "낙민동", "복천동", "수안동", "명륜동", "온천동", "사직동", "거제동", "연산동", "수민동", "복산동", "명륜1동", "명륜2동", "온천1동", "온천2동", "온천3동", "사직1동", "사직2동", "사직3동", "거제1동", "거제2동", "거제3동", "거제4동", "연산1동", "연산2동", "연산3동", "연산4동", "연산5동", "연산6동", "연산7동", "연산8동", "연산9동", "안락1동", "안락2동"], feature:'', schools:'동래고, 동래여고' },
+      '연제구': { dongs:["거제동", "연산동"], feature:'', schools:'연제고, 연일고, 남여고' },
+      '부산진구': { dongs:["구포동", "금곡동", "화명동", "덕천동", "만덕동", "삼락동", "모라동", "덕포동", "괘법동", "감전동", "엄궁동", "주례동", "학장동", "금성동", "대연동", "용호동", "용당동", "감만동", "우암동", "남천동", "적기동2가", "문현동", "성지동", "동평동", "범일동", "양정동", "전포동", "부전동", "범천동", "범전동", "연지동", "초읍동", "부암동", "당감동", "가야동", "개금동", "부전1동", "부전2동", "양정1동", "양정2동", "양정3동", "양정4동", "전포1동", "전포2동", "전포3동", "전포4동", "부암1동", "부암2동", "부암3동", "당감1동", "당감2동", "당감3동", "당감4동", "가야1동", "가야2동", "가야3동", "개금1동", "개금2동", "개금3동", "범천1동", "범천2동", "범천3동"], feature:'', schools:'개금고, 부산진고, 데레사여고' },
+      '영도구': { dongs:["대교로4가", "대교로5가", "대교동1가", "대교동2가", "대평동1가", "대평동2가", "남항동1가", "남항동2가", "남항동3가", "영선동1가", "영선동2가", "영선동3가", "영선동4가", "신선동1가", "신선동2가", "신선동3가", "봉래동1가", "봉래동2가", "봉래동3가", "봉래동4가", "봉래동5가", "청학동", "동삼동", "청학1동", "청학2동", "동삼1동", "동삼2동"], feature:'', schools:'영선고, 대각고' },
+      '사상구': { dongs:["삼락동", "모라동", "덕포동", "괘법동", "감전동", "주례동", "학장동", "엄궁동"], feature:'', schools:'사상고, 모덕고' },
+      '사하구': { dongs:["괴정동", "당리동", "하단동", "신평동", "장림동", "다대동", "구평동", "감천동", "괴정1동", "괴정2동", "괴정3동", "괴정4동", "장림1동", "장림2동", "감천1동", "감천2동"], feature:'', schools:'사하고, 구평고, 다대고' },
+      '금정구': { dongs:["두구동", "노포동", "청룡동", "남산동", "선동", "오륜동", "구서동", "장전동", "부곡동", "서동", "금사동", "회동동", "금성동", "서1동", "서2동", "서3동", "서4동", "부곡1동", "부곡2동", "부곡3동", "장전1동", "장전2동", "장전3동", "청용동", "구서1동", "구서2동"], feature:'', schools:'부산고, 금정고, 브니엘고' },
+      '기장군': { dongs:["기장읍", "장안읍", "정관읍", "일광읍", "일광면", "정관면", "철마면"], feature:'', schools:'정관고, 기장고' },
+      '남구': { dongs:["무거동", "옥동", "두왕동", "신정동", "달동", "삼산동", "여천동", "야음동", "선암동", "상개동", "부곡동", "고사동", "성암동", "황성동", "용연동", "남화동", "용잠동", "장생포동", "매암동"], feature:'', schools:'경남고, 부산남고, 성지여고' },
+      '동구': { dongs:["방어동", "화정동", "일산동", "전하동", "미포동", "주전동", "동부동", "서부동", "염포동"], feature:'', schools:'개성고, 동성고' },
+      '중구': { dongs:["학성동", "학산동", "복산동", "북정동", "옥교동", "성남동", "교동", "우정동", "성안동", "유곡동", "태화동", "다운동", "동동", "서동", "남외동", "장현동", "약사동", "반구동"], feature:'', schools:'부산중앙고, 경남상고' },
+      '서구': { dongs:["복수동", "변동", "도마동", "정림동", "용문동", "탄방동", "삼천동", "괴정동", "가장동", "내동", "갈마동", "둔산동", "월평동", "가수원동", "도안동", "관저동", "흑석동", "매노동", "산직동", "장안동", "평촌동", "오동", "우명동", "원정동", "용촌동", "봉곡동", "괴곡동", "만년동", "도마1동", "도마2동", "기성동"], feature:'', schools:'부산고, 경남여고' },
+      '북구': { dongs:["창평동", "호계동", "매곡동", "가대동", "신천동", "중산동", "상안동", "천곡동", "달천동", "시례동", "무룡동", "구유동", "정자동", "신명동", "대안동", "당사동", "신현동", "산하동", "어물동", "명촌동", "진장동", "연암동", "효문동", "양정동", "화봉동", "송정동", "염포동"], feature:'', schools:'화명고, 성도고, 구포고' },
+      '강서구': { dongs:["대저일동", "대저이동", "강동동", "명지동", "죽림동", "식만동", "죽동동", "봉림동", "송정동", "화전동", "녹산동", "생곡동", "구랑동", "지사동", "미음동", "범방동", "신호동", "동선동", "성북동", "눌차동", "천성동", "대항동", "가락동", "천가동", "대저1동", "대저2동"], feature:'', schools:'명지고, 강서고' },
     }
   },
   '대구': {
     label: '대구광역시', emoji: '🔵',
     areas: {
-      '수성구': { dongs:['범어동','만촌동','황금동','수성동'], feature:'', schools:'경신고, 영남고' },
-      '달서구': { dongs:['월성동','용산동','감삼동','죽전동'], feature:'', schools:'달서고, 계성고' },
-      '북구': { dongs:['침산동','구암동','칠성동','복현동'], feature:'', schools:'구암고, 경명여고, 함지고' },
-      '동구': { dongs:['율하동','동촌동','안심동','혁신도시'], feature:'', schools:'영신고, 경상고, 강동고' },
-      '중구': { dongs:['동성로','수창동','대봉동','봉산동'], feature:'', schools:'사대부고, 경북여고, 신명고' },
-      '서구': { dongs:['내당동','비산동','평리동','원대동'], feature:'', schools:'성화여고, 대건고' },
-      '남구': { dongs:['대명동','봉덕동','이천동'], feature:'', schools:'대륜고, 경북예고' },
-      '달성군': { dongs:['현풍읍','테크노폴리스','화원읍','옥포읍'], feature:'', schools:'현풍고, 달성고' },
-      '군위군': { dongs:['군위읍','의흥면','효령면','부계면'], feature:'', schools:'군위고, 군위여고' },
+      '수성구': { dongs:["범어동", "만촌동", "수성동1가", "수성동2가", "수성동3가", "수성동4가", "황금동", "중동", "상동", "파동", "두산동", "지산동", "범물동", "시지동", "매호동", "성동", "사월동", "신매동", "욱수동", "노변동", "내환동", "삼덕동", "연호동", "이천동", "고모동", "가천동", "범어1동", "범어2동", "범어3동", "범어4동", "만촌1동", "만촌2동", "수성1가동", "수성4가동", "고산1동", "고산2동", "대흥동"], feature:'', schools:'경신고, 영남고' },
+      '달서구': { dongs:["성당동", "두류동", "파산동", "파호동", "호림동", "갈산동", "신당동", "이곡동", "장동", "장기동", "용산동", "죽전동", "감삼동", "본리동", "상인동", "도원동", "진천동", "유천동", "대천동", "월성동", "월암동", "송현동", "대곡동", "본동", "성당1동", "성당2동", "두류1동", "두류2동", "두류3동", "성서1동", "성서2동", "성서3동", "월배1동", "월배2동", "월배3동", "송현1동", "송현2동", "호산동"], feature:'', schools:'달서고, 계성고' },
+      '북구': { dongs:["창평동", "호계동", "매곡동", "가대동", "신천동", "중산동", "상안동", "천곡동", "달천동", "시례동", "무룡동", "구유동", "정자동", "신명동", "대안동", "당사동", "신현동", "산하동", "어물동", "명촌동", "진장동", "연암동", "효문동", "양정동", "화봉동", "송정동", "염포동"], feature:'', schools:'구암고, 경명여고, 함지고' },
+      '동구': { dongs:["방어동", "화정동", "일산동", "전하동", "미포동", "주전동", "동부동", "서부동", "염포동"], feature:'', schools:'영신고, 경상고, 강동고' },
+      '중구': { dongs:["학성동", "학산동", "복산동", "북정동", "옥교동", "성남동", "교동", "우정동", "성안동", "유곡동", "태화동", "다운동", "동동", "서동", "남외동", "장현동", "약사동", "반구동"], feature:'', schools:'사대부고, 경북여고, 신명고' },
+      '서구': { dongs:["복수동", "변동", "도마동", "정림동", "용문동", "탄방동", "삼천동", "괴정동", "가장동", "내동", "갈마동", "둔산동", "월평동", "가수원동", "도안동", "관저동", "흑석동", "매노동", "산직동", "장안동", "평촌동", "오동", "우명동", "원정동", "용촌동", "봉곡동", "괴곡동", "만년동", "도마1동", "도마2동", "기성동"], feature:'', schools:'성화여고, 대건고' },
+      '남구': { dongs:["무거동", "옥동", "두왕동", "신정동", "달동", "삼산동", "여천동", "야음동", "선암동", "상개동", "부곡동", "고사동", "성암동", "황성동", "용연동", "남화동", "용잠동", "장생포동", "매암동"], feature:'', schools:'대륜고, 경북예고' },
+      '달성군': { dongs:["화원읍", "논공읍", "다사읍", "유가읍", "옥포읍", "현풍읍", "가창면", "다사면", "하빈면", "옥포면", "논공면", "현풍면", "유가면", "구지면"], feature:'', schools:'현풍고, 달성고' },
+      '군위군': { dongs:["군위읍", "소보면", "효령면", "부계면", "우보면", "의흥면", "산성면", "삼국유사면"], feature:'', schools:'군위고, 군위여고' },
     }
   },
   '광주': {
     label: '광주광역시', emoji: '🌸',
     areas: {
-      '서구': { dongs:['상무지구','치평동','화정동','금호동'], feature:'', schools:'전남고, 상무고, 광주여고' },
-      '북구': { dongs:['용봉동','일곡동','신용동','운암동'], feature:'', schools:'광덕고, 숭일고, 동신고' },
-      '광산구': { dongs:['수완지구','첨단지구','선운지구','신창동'], feature:'', schools:'수완고, 장덕고, 숭덕고' },
-      '남구': { dongs:['봉선동','주월동','진월동','사직동'], feature:'', schools:'전남여고, 동아여고, 광주고' },
-      '동구': { dongs:['충장로','서석동','계림동','학동'], feature:'', schools:'조선대부고, 금호중앙여고' },
+      '서구': { dongs:["복수동", "변동", "도마동", "정림동", "용문동", "탄방동", "삼천동", "괴정동", "가장동", "내동", "갈마동", "둔산동", "월평동", "가수원동", "도안동", "관저동", "흑석동", "매노동", "산직동", "장안동", "평촌동", "오동", "우명동", "원정동", "용촌동", "봉곡동", "괴곡동", "만년동", "도마1동", "도마2동", "기성동"], feature:'', schools:'전남고, 상무고, 광주여고' },
+      '북구': { dongs:["창평동", "호계동", "매곡동", "가대동", "신천동", "중산동", "상안동", "천곡동", "달천동", "시례동", "무룡동", "구유동", "정자동", "신명동", "대안동", "당사동", "신현동", "산하동", "어물동", "명촌동", "진장동", "연암동", "효문동", "양정동", "화봉동", "송정동", "염포동"], feature:'', schools:'광덕고, 숭일고, 동신고' },
+      '광산구': { dongs:["송정동", "도산동", "도호동", "신촌동", "서봉동", "운수동", "선암동", "소촌동", "우산동", "황룡동", "박호동", "비아동", "도촌동(道村)", "수완동", "월계동", "쌍암동", "산월동", "신창동", "신가동", "운남동", "안청동", "진곡동", "오산동", "장덕동", "흑석동", "하남동", "장수동", "산정동", "월곡동", "등임동", "산막동", "고룡동", "신룡동", "두정동", "임곡동", "광산동", "사호동", "하산동", "유계동", "본덕동", "용봉동", "요기동", "복룡동", "송대동", "옥동", "월전동", "장록동", "송촌동", "지죽동", "용동", "용곡동", "지정동", "명화동", "동산동", "연산동", "도덕동", "송산동", "지평동", "오운동", "삼거동", "양동", "내산동", "대산동", "송학동", "신동", "삼도동", "남산동", "송치동", "산수동", "선동", "지산동", "왕동", "북산동", "명도동", "동호동", "덕림동", "양산동", "동림동", "구소동", "양촌동", "도촌동(陶村)", "승촌동", "지석동", "압촌동", "화장동", "칠석동", "석정동", "신장동", "양과동", "이장동", "대지동", "원산동", "월성동", "서창동", "세하동", "용두동", "풍암동", "벽진동", "금호동", "마륵동", "매월동", "도천동", "도금동", "오선동", "호남동", "중앙동", "원동", "신흥동", "용운동"], feature:'', schools:'수완고, 장덕고, 숭덕고' },
+      '남구': { dongs:["무거동", "옥동", "두왕동", "신정동", "달동", "삼산동", "여천동", "야음동", "선암동", "상개동", "부곡동", "고사동", "성암동", "황성동", "용연동", "남화동", "용잠동", "장생포동", "매암동"], feature:'', schools:'전남여고, 동아여고, 광주고' },
+      '동구': { dongs:["방어동", "화정동", "일산동", "전하동", "미포동", "주전동", "동부동", "서부동", "염포동"], feature:'', schools:'조선대부고, 금호중앙여고' },
     }
   },
   '대전': {
     label: '대전광역시', emoji: '🌾',
     areas: {
-      '유성구': { dongs:['노은동','지족동','반석동','관평동'], feature:'', schools:'대전과학고, 반석고, 지족고' },
-      '서구': { dongs:['둔산동','관저동','도안동','가수원동'], feature:'', schools:'유성고, 도안고, 서대전여고' },
-      '대덕구': { dongs:['송촌동','법동동','오정동','신탄진동'], feature:'', schools:'송촌고, 우송고' },
-      '중구': { dongs:['태평동','문화동','대흥동','중촌동'], feature:'', schools:'대신고, 보문고' },
-      '동구': { dongs:['판암동','성남동','용전동','대동'], feature:'', schools:'가오고, 동대전고' },
+      '유성구': { dongs:["원내동", "교촌동", "대정동", "용계동", "학하동", "계산동", "성북동", "세동", "송정동", "방동", "봉명동", "구암동", "덕명동", "원신흥동", "상대동", "복용동", "장대동", "갑동", "노은동", "지족동", "죽동", "궁동", "어은동", "구성동", "신성동", "가정동", "도룡동", "장동", "방현동", "화암동", "덕진동", "하기동", "추목동", "자운동", "신봉동", "수남동", "안산동", "외삼동", "반석동", "문지동", "전민동", "원촌동", "탑립동", "용산동", "봉산동", "관평동", "송강동", "금고동", "대동", "금탄동", "신동", "둔곡동", "구룡동", "진잠동", "온천1동", "온천2동", "탄동", "구즉동"], feature:'', schools:'대전과학고, 반석고, 지족고' },
+      '서구': { dongs:["복수동", "변동", "도마동", "정림동", "용문동", "탄방동", "삼천동", "괴정동", "가장동", "내동", "갈마동", "둔산동", "월평동", "가수원동", "도안동", "관저동", "흑석동", "매노동", "산직동", "장안동", "평촌동", "오동", "우명동", "원정동", "용촌동", "봉곡동", "괴곡동", "만년동", "도마1동", "도마2동", "기성동"], feature:'', schools:'유성고, 도안고, 서대전여고' },
+      '대덕구': { dongs:["오정동", "대화동", "읍내동", "연축동", "신대동", "와동", "송촌동", "법동", "중리동", "비래동", "석봉동", "목상동", "문평동", "신일동", "덕암동", "상서동", "평촌동", "장동", "용호동", "이현동", "갈전동", "부수동", "황호동", "삼정동", "미호동", "회덕1동", "회덕2동", "신탄진동"], feature:'', schools:'송촌고, 우송고' },
+      '중구': { dongs:["학성동", "학산동", "복산동", "북정동", "옥교동", "성남동", "교동", "우정동", "성안동", "유곡동", "태화동", "다운동", "동동", "서동", "남외동", "장현동", "약사동", "반구동"], feature:'', schools:'대신고, 보문고' },
+      '동구': { dongs:["방어동", "화정동", "일산동", "전하동", "미포동", "주전동", "동부동", "서부동", "염포동"], feature:'', schools:'가오고, 동대전고' },
     }
   },
   '울산': {
     label: '울산광역시', emoji: '⚙️',
     areas: {
-      '남구': { dongs:['삼산동','달동','무거동','신정동'], feature:'', schools:'현대고, 학성고, 울산여고' },
-      '북구': { dongs:['화봉동','송정동','창평동','연암동'], feature:'', schools:'화봉고, 매곡고' },
-      '동구': { dongs:['일산동','방어동','전하동','화정동'], feature:'', schools:'울산중앙고, 동구고' },
-      '중구': { dongs:['학성동','북정동','복산동','남외동'], feature:'', schools:'울산고, 학성고, 울산여고' },
-      '울주군': { dongs:['언양읍','온산읍','삼남읍','범서읍'], feature:'', schools:'언양고, 삼동고' },
+      '남구': { dongs:["무거동", "옥동", "두왕동", "신정동", "달동", "삼산동", "여천동", "야음동", "선암동", "상개동", "부곡동", "고사동", "성암동", "황성동", "용연동", "남화동", "용잠동", "장생포동", "매암동"], feature:'', schools:'현대고, 학성고, 울산여고' },
+      '북구': { dongs:["창평동", "호계동", "매곡동", "가대동", "신천동", "중산동", "상안동", "천곡동", "달천동", "시례동", "무룡동", "구유동", "정자동", "신명동", "대안동", "당사동", "신현동", "산하동", "어물동", "명촌동", "진장동", "연암동", "효문동", "양정동", "화봉동", "송정동", "염포동"], feature:'', schools:'화봉고, 매곡고' },
+      '동구': { dongs:["방어동", "화정동", "일산동", "전하동", "미포동", "주전동", "동부동", "서부동", "염포동"], feature:'', schools:'울산중앙고, 동구고' },
+      '중구': { dongs:["학성동", "학산동", "복산동", "북정동", "옥교동", "성남동", "교동", "우정동", "성안동", "유곡동", "태화동", "다운동", "동동", "서동", "남외동", "장현동", "약사동", "반구동"], feature:'', schools:'울산고, 학성고, 울산여고' },
+      '울주군': { dongs:["온산읍", "언양읍", "온양읍", "범서읍", "청량읍", "삼남읍", "서생면", "온양면", "청량면", "웅촌면", "범서면", "두동면", "두서면", "상북면", "삼남면", "삼동면"], feature:'', schools:'언양고, 삼동고' },
     }
   },
   '세종': {
     label: '세종특별자치시', emoji: '🏛',
     areas: {
-      '세종시': { dongs:['새롬동','도담동','아름동','종촌동','고운동','소담동','보람동','대평동'], feature:'', schools:'세종고, 양지고, 새롬고, 다정고' },
+      '세종시': { dongs:["반곡동", "소담동", "보람동", "대평동", "가람동", "한솔동", "나성동", "새롬동", "다정동", "어진동", "종촌동", "고운동", "아름동", "도담동", "산울동", "해밀동", "합강동", "집현동", "세종동", "누리동", "한별동", "다솜동", "용호동", "조치원읍", "연기면", "연동면", "부강면", "금남면", "장군면", "연서면", "전의면", "전동면", "소정면"], feature:'', schools:'세종고, 양지고, 새롬고, 다정고' },
     }
   },
   '강원': {
     label: '강원특별자치도', emoji: '🏔',
     areas: {
-      '춘천시': { dongs:['석사동','후평동','퇴계동','소양동'], feature:'', schools:'강원고, 춘천고, 춘천여고' },
-      '원주시': { dongs:['단구동','무실동','혁신도시','명륜동'], feature:'', schools:'원주고, 대성고, 북원여고' },
-      '강릉시': { dongs:['포남동','교동','홍제동','성덕동'], feature:'', schools:'강릉고, 강릉여고, 강릉제일고' },
-      '동해시': { dongs:['천곡동','송정동','북평동','묵호동'], feature:'', schools:'동해고, 북평고' },
-      '태백시': { dongs:['황지동','장성동','문곡동','철암동'], feature:'', schools:'태백고, 강원관광고' },
-      '속초시': { dongs:['조양동','영랑동','청호동','노학동'], feature:'', schools:'속초고, 속초여고' },
-      '삼척시': { dongs:['교동','성내동','남양동','근덕면'], feature:'', schools:'삼척고, 삼척여고' },
-      '홍천군': { dongs:['홍천읍','화촌면','북방면','남면'], feature:'', schools:'홍천고, 홍천여고' },
-      '횡성군': { dongs:['횡성읍','우천면','안흥면','공근면'], feature:'', schools:'횡성고' },
-      '영월군': { dongs:['영월읍','김삿갓면','상동읍','남면'], feature:'', schools:'영월고, 영월여고' },
-      '평창군': { dongs:['평창읍','대화면','진부면','봉평면'], feature:'', schools:'평창고, 대화고' },
-      '정선군': { dongs:['정선읍','고한읍','사북읍','신동읍'], feature:'', schools:'정선고, 정선여고' },
-      '철원군': { dongs:['철원읍','갈말읍','동송읍','근북면'], feature:'', schools:'철원고, 포병고' },
-      '화천군': { dongs:['화천읍','간동면','하남면','사내면'], feature:'', schools:'화천고' },
-      '양구군': { dongs:['양구읍','국토정중앙면','방산면','해안면'], feature:'', schools:'양구고' },
-      '인제군': { dongs:['인제읍','북면','기린면','남면'], feature:'', schools:'인제고' },
-      '고성군': { dongs:['간성읍','거진읍','토성면','죽왕면'], feature:'', schools:'간성고, 거진고' },
-      '양양군': { dongs:['양양읍','손양면','현북면','서면'], feature:'', schools:'양양고' },
+      '춘천시': { dongs:["봉의동", "요선동", "낙원동", "중앙로1가", "중앙로2가", "중앙로3가", "옥천동", "조양동", "죽림동", "운교동", "약사동", "효자동", "소양로1가", "소양로2가", "소양로3가", "소양로4가", "근화동", "우두동", "사농동", "후평동", "온의동", "교동", "퇴계동", "석사동", "삼천동", "칠전동", "송암동", "신동", "중도동", "신북읍", "동면", "동산면", "신동면", "남면", "서면", "사북면", "신북면", "북산면", "동내면", "남산면", "중앙동", "조운동", "소락동", "소양동", "호반동", "후평1동", "후평2동", "효자1동", "효자2동", "효자3동", "칠송동", "사우동"], feature:'', schools:'강원고, 춘천고, 춘천여고' },
+      '원주시': { dongs:["중앙동", "평원동", "원동", "인동", "개운동", "명륜동", "단구동", "일산동", "학성동", "단계동", "우산동", "태장동", "봉산동", "행구동", "무실동", "관설동", "반곡동", "가현동", "문막읍", "소초면", "호저면", "지정면", "문막면", "부론면", "귀래면", "흥업면", "판부면", "신림면", "중평동", "원인동", "학성1동", "학성2동", "태장1동", "태장2동", "봉산1동", "봉산2동"], feature:'', schools:'원주고, 대성고, 북원여고' },
+      '강릉시': { dongs:["홍제동", "남문동", "명주동", "성내동", "임당동", "금학동", "용강동", "성남동", "옥천동", "교동", "포남동", "초당동", "강문동", "송정동", "견소동", "내곡동", "회산동", "장현동", "박월동", "담산동", "노암동", "유산동", "월호평동", "신석동", "입암동", "청량동", "두산동", "학동", "병산동", "남항진동", "유천동", "지변동", "죽헌동", "대전동", "운정동", "난곡동", "저동", "안현동", "운산동", "주문진읍", "성산면", "왕산면", "구정면", "강동면", "옥계면", "사천면", "연곡면", "중앙동", "교1동", "교2동", "죽전동"], feature:'', schools:'강릉고, 강릉여고, 강릉제일고' },
+      '동해시': { dongs:["천곡동", "평릉동", "송정동", "용정동", "지흥동", "효가동", "동회동", "나안동", "쇄운동", "부곡동", "발한동", "북평동", "구미동", "추암동", "구호동", "단봉동", "지가동", "이도동", "귀운동", "대구동", "호현동", "내동", "묵호진동", "삼화동", "이기동", "이로동", "어달동", "대진동", "망상동", "심곡동", "초구동", "괴란동", "만우동", "신흥동", "비천동", "달방동", "북삼동", "동호동", "향로동", "사문동", "묵호동", "이원동", "삼흥동"], feature:'', schools:'동해고, 북평고' },
+      '태백시': { dongs:["황지동", "장성동", "금천동", "철암동", "문곡동", "동점동", "소도동", "혈동", "화전동", "적각동", "창죽동", "통동", "백산동", "원동", "상사미동", "하사미동", "조탄동", "황지1동", "황지2동", "황지3동", "상장동", "화광동", "계산동", "철암1동", "철암2동", "연화동", "화전1동", "화전2동"], feature:'', schools:'태백고, 강원관광고' },
+      '속초시': { dongs:["영랑동", "동명동", "중앙동", "금호동", "청학동", "교동", "노학동", "조양동", "청호동", "대포동", "도문동", "설악동", "장사동", "사진동"], feature:'', schools:'속초고, 속초여고' },
+      '삼척시': { dongs:["자지동", "성내동", "성북동", "읍상동", "읍중동", "당저동", "교동", "갈천동", "증산동", "우지동", "마달동", "자원동", "평전동", "등봉동", "도경동", "마평동", "오사동", "건지동", "원당동", "성남동", "남양동", "사직동", "오분동", "적노동", "조비동", "정상동", "정하동", "근산동", "도계읍", "원덕읍", "근덕면", "하장면", "노곡면", "미로면", "가곡면", "신기면", "월계동", "정라동", "도원동"], feature:'', schools:'삼척고, 삼척여고' },
+      '홍천군': { dongs:["홍천면", "홍천읍", "화촌면", "두촌면", "내촌면", "서석면", "동면", "영귀미면", "남면", "서면", "북방면", "내면"], feature:'', schools:'홍천고, 홍천여고' },
+      '횡성군': { dongs:["횡성면", "횡성읍", "우천면", "안흥면", "둔내면", "갑천면", "청일면", "공근면", "서원면", "강림면"], feature:'', schools:'횡성고' },
+      '영월군': { dongs:["영월면", "상동면", "영월읍", "상동읍", "중동면", "산솔면", "하동면", "김삿갓면", "북면", "남면", "서면", "한반도면", "주천면", "수주면", "무릉도원면"], feature:'', schools:'영월고, 영월여고' },
+      '평창군': { dongs:["평창면", "평창읍", "미탄면", "방림면", "대화면", "봉평면", "용평면", "진부면", "도암면", "대관령면"], feature:'', schools:'평창고, 대화고' },
+      '정선군': { dongs:["신동면", "정선면", "정선읍", "고한읍", "사북읍", "신동읍", "동면", "남면", "북면", "북평면", "임계면", "화암면", "여량면"], feature:'', schools:'정선고, 정선여고' },
+      '철원군': { dongs:["갈말면", "동송면", "철원읍", "김화읍", "갈말읍", "동송읍", "서면", "근남면", "근북면", "근동면", "원동면", "원남면", "임남면", "임문면"], feature:'', schools:'철원고, 포병고' },
+      '화천군': { dongs:["화천면", "화천읍", "간동면", "하남면", "상서면", "사내면"], feature:'', schools:'화천고' },
+      '양구군': { dongs:["양구면", "양구읍", "남면", "국토정중앙면", "동면", "방산면", "해안면"], feature:'', schools:'양구고' },
+      '인제군': { dongs:["인제면", "인제읍", "남면", "북면", "기린면", "서화면", "상남면"], feature:'', schools:'인제고' },
+      '고성군': { dongs:["고성읍", "삼산면", "하일면", "하이면", "상리면", "대가면", "영현면", "영오면", "개천면", "구만면", "회화면", "마암면", "동해면", "거류면"], feature:'', schools:'간성고, 거진고' },
+      '양양군': { dongs:["속초읍", "양양면", "양양읍", "서면", "손양면", "현북면", "현남면", "강현면"], feature:'', schools:'양양고' },
     }
   },
   '충북': {
     label: '충청북도', emoji: '🌻',
     areas: {
-      '청주시': { dongs:['개신동','복대동','산남동','가경동'], feature:'', schools:'청주고, 충북고, 청주여고' },
-      '충주시': { dongs:['칠금동','용산동','연수동','봉방동'], feature:'', schools:'충주고, 충주여고, 예성여고' },
-      '제천시': { dongs:['의림지동','모산동','청전동','신백동'], feature:'', schools:'제천고, 제천여고' },
-      '보은군': { dongs:['보은읍','회인면','속리산면','마로면'], feature:'', schools:'보은고, 보은여고' },
-      '옥천군': { dongs:['옥천읍','청성면','동이면','군서면'], feature:'', schools:'옥천고' },
-      '영동군': { dongs:['영동읍','용산면','양강면','추풍령면'], feature:'', schools:'영동고, 영동여고' },
-      '증평군': { dongs:['증평읍','도안면'], feature:'', schools:'증평고' },
-      '진천군': { dongs:['진천읍','덕산읍','이월면','백곡면'], feature:'', schools:'진천고, 세광고' },
-      '괴산군': { dongs:['괴산읍','칠성면','감물면','장연면'], feature:'', schools:'괴산고' },
-      '음성군': { dongs:['음성읍','금왕읍','삼성면','생극면'], feature:'', schools:'음성고, 음성여고' },
-      '단양군': { dongs:['단양읍','매포읍','적성면','대강면'], feature:'', schools:'단양고' },
+      '청주시': { dongs:["영동", "북문로2가", "북문로3가", "문화동", "북문로1가", "남문로2가", "서운동", "남문로1가", "서문동", "남주동", "석교동", "수동", "우암동", "내덕동", "율량동", "사천동", "탑동", "대성동", "사직동", "사창동", "모충동", "영운동", "금천동", "용담동", "명암동", "운천동", "신봉동", "용암동", "용정동", "산남동", "미평동", "분평동", "수곡동", "농촌동", "개신동", "가경동", "복대동", "봉명동", "송정동", "산성동", "방서동", "강서동", "석곡동", "휴암동", "신전동", "현암동", "동막동", "수의동", "지동동", "서촌동", "신성동", "평동", "신대동", "남촌동", "내곡동", "상신동", "원평동", "문암동", "송절동", "화계동", "외북동", "향정동", "비하동", "석소동", "죽림동", "정봉동", "신촌동", "성화동", "지북동", "평촌동", "월오동", "운동동", "외평동", "외남동", "오동동", "외하동", "정북동", "정상동", "정하동", "주중동", "주성동", "장암동", "장성동", "내덕1동", "내덕2동", "사직1동", "사직2동", "강서1동", "강서2동"], feature:'', schools:'청주고, 충북고, 청주여고' },
+      '충주시': { dongs:["성내동", "성남동", "성서동", "충인동", "교현동", "용산동", "호암동", "직동", "단월동", "풍동", "가주동", "용관동", "용두동", "달천동", "봉방동", "칠금동", "금능동", "연수동", "목행동", "용탄동", "종민동", "안림동", "목벌동", "충의동", "지현동", "역전동", "문화동", "금릉동", "주덕읍", "살미면", "상모면", "수안보면", "이류면", "대소원면", "주덕면", "신니면", "노은면", "앙성면", "가금면", "중앙탑면", "금가면", "동량면", "산척면", "엄정면", "소태면", "교현1동", "교현2동"], feature:'', schools:'충주고, 충주여고, 예성여고' },
+      '제천시': { dongs:["의림동", "서부동", "동현동", "남천동", "교동", "중앙로1가", "중앙로2가", "명동", "화산동", "영천동", "하소동", "신월동", "청전동", "모산동", "고암동", "장락동", "흑석동", "두학동", "고명동", "신백동", "강제동", "명지동", "산곡동", "왕암동", "천남동", "신동", "자작동", "대랑동", "봉양읍", "금성면", "청풍면", "수산면", "덕산면", "한수면", "백운면", "봉양면", "송학면", "중앙동", "명서동", "용두동", "화산1동", "화산2동", "영천1동", "영천2동"], feature:'', schools:'제천고, 제천여고' },
+      '보은군': { dongs:["보은면", "보은읍", "내속리면", "속리산면", "외속리면", "장안면", "마로면", "탄부면", "삼승면", "수한면", "회남면", "회북면", "회인면", "내북면", "산외면"], feature:'', schools:'보은고, 보은여고' },
+      '옥천군': { dongs:["옥천읍", "동이면", "안남면", "안내면", "청성면", "청산면", "이원면", "군서면", "군북면"], feature:'', schools:'옥천고' },
+      '영동군': { dongs:["영동읍", "용산면", "황간면", "황금면", "추풍령면", "매곡면", "상촌면", "양강면", "용화면", "학산면", "양산면", "심천면"], feature:'', schools:'영동고, 영동여고' },
+      '증평군': { dongs:["증평읍", "도안면"], feature:'', schools:'증평고' },
+      '진천군': { dongs:["진천면", "진천읍", "덕산읍", "덕산면", "초평면", "문백면", "백곡면", "이월면", "만승면", "광혜원면"], feature:'', schools:'진천고, 세광고' },
+      '괴산군': { dongs:["괴산면", "상모면", "증평읍", "괴산읍", "감물면", "장연면", "연풍면", "칠성면", "문광면", "청천면", "청안면", "도안면", "사리면", "소수면", "불정면"], feature:'', schools:'괴산고' },
+      '음성군': { dongs:["금왕면", "음성읍", "금왕읍", "소이면", "원남면", "맹동면", "대소면", "삼성면", "생극면", "감곡면"], feature:'', schools:'음성고, 음성여고' },
+      '단양군': { dongs:["단양면", "매포면", "단양읍", "매포읍", "대강면", "가곡면", "영춘면", "어상천면", "적성면", "단성면"], feature:'', schools:'단양고' },
     }
   },
   '충남': {
     label: '충청남도', emoji: '🌾',
     areas: {
-      '천안시': { dongs:['불당동','두정동','신방동','쌍용동'], feature:'', schools:'천안고, 천안여고, 오성고' },
-      '아산시': { dongs:['배방읍','탕정면','온양동','신창면'], feature:'', schools:'설화고, 신성고' },
-      '서산시': { dongs:['동문동','석남동','대산읍','해미면'], feature:'', schools:'서산고, 서령고' },
-      '당진시': { dongs:['당진읍','합덕읍','송악읍','순성면'], feature:'', schools:'호서고, 당진고' },
-      '공주시': { dongs:['공주읍','웅진동','신관동','반포면'], feature:'', schools:'공주고, 공주여고' },
-      '보령시': { dongs:['대천동','주교면','오천면','청라면'], feature:'', schools:'보령고, 대천고' },
-      '논산시': { dongs:['논산동','강경읍','연무읍','가야곡면'], feature:'', schools:'논산고, 강경고' },
-      '계룡시': { dongs:['금암동','두마면','신도안면','엄사면'], feature:'', schools:'계룡고, 계룡중앙고' },
-      '금산군': { dongs:['금산읍','추부면','남이면','진산면'], feature:'', schools:'금산고, 금산여고' },
-      '부여군': { dongs:['부여읍','규암면','은산면','외산면'], feature:'', schools:'부여고, 홍산고' },
-      '서천군': { dongs:['장항읍','서천읍','마서면','화양면'], feature:'', schools:'장항고, 서천고' },
-      '청양군': { dongs:['청양읍','대치면','화성면','청남면'], feature:'', schools:'청양고' },
-      '홍성군': { dongs:['홍성읍','광천읍','결성면','은하면'], feature:'', schools:'홍성고, 홍성여고' },
-      '예산군': { dongs:['예산읍','삽교읍','대술면','응봉면'], feature:'', schools:'예산고, 예산여고' },
-      '태안군': { dongs:['태안읍','안면읍','소원면','근흥면'], feature:'', schools:'태안고, 안면고' },
+      '천안시': { dongs:["대흥동", "와촌동", "성황동", "문화동", "사직동", "영성동", "오룡동", "원성동", "구성동", "청수동", "삼룡동", "청당동", "유량동", "성정동", "백석동", "두정동", "성성동", "차암동", "봉명동", "다가동", "용곡동", "신방동", "쌍용동", "불당동", "신부동", "업성동", "신당동", "부대동", "안서동", "구룡동", "성환읍", "성거읍", "직산읍", "목천읍", "풍세면", "광덕면", "목천면", "북면", "성남면", "수신면", "병천면", "동면", "직산면", "입장면", "대룡동", "문성동", "남산동", "원성1동", "원성2동", "성촌동", "쌍봉동", "신용동", "청용동", "신안동", "부성동"], feature:'', schools:'천안고, 천안여고, 오성고' },
+      '아산시': { dongs:["온천동", "실옥동", "방축동", "기산동", "초사동", "신인동", "법곡동", "장존동", "좌부동", "읍내동", "풍기동", "용화동", "모종동", "권곡동", "배미동", "득산동", "점양동", "신동", "남동", "염치읍", "배방읍", "송악면", "배방면", "탕정면", "음봉면", "둔포면", "영인면", "인주면", "선장면", "도고면", "신창면"], feature:'', schools:'설화고, 신성고' },
+      '서산시': { dongs:["읍내동", "동문동", "갈산동", "온석동", "잠홍동", "수석동", "석림동", "석남동", "예천동", "죽성동", "양대동", "오남동", "장동", "덕지천동", "대산읍", "인지면", "부석면", "팔봉면", "지곡면", "성연면", "음암면", "운산면", "해미면", "고북면", "부춘동", "활성동", "오산동"], feature:'', schools:'서산고, 서령고' },
+      '당진시': { dongs:["읍내동", "채운동", "우두동", "원당동", "시곡동", "수청동", "대덕동", "행정동", "용연동", "사기소동", "구룡동", "합덕읍", "송악읍", "고대면", "석문면", "대호지면", "정미면", "면천면", "순성면", "우강면", "신평면", "송산면"], feature:'', schools:'호서고, 당진고' },
+      '공주시': { dongs:["반죽동", "봉황동", "중학동", "중동", "산성동", "교동", "웅진동", "금성동", "옥룡동", "금학동", "봉정동", "주미동", "태봉동", "오곡동", "신기동", "소학동", "상왕동", "무릉동", "월송동", "신관동", "금흥동", "쌍신동", "월미동", "검상동", "석장리동", "송선동", "동현동", "유구읍", "이인면", "탄천면", "계룡면", "반포면", "장기면", "의당면", "정안면", "우성면", "사곡면", "신풍면", "유구면"], feature:'', schools:'공주고, 공주여고' },
+      '보령시': { dongs:["대천동", "죽정동", "화산동", "동대동", "명천동", "궁촌동", "내항동", "남곡동", "요암동", "신흑동", "웅천읍", "주포면", "오천면", "천북면", "청소면", "청라면", "남포면", "웅천면", "주산면", "미산면", "성주면", "주교면"], feature:'', schools:'보령고, 대천고' },
+      '논산시': { dongs:["화지동", "반월동", "대교동", "부창동", "취암동", "등화동", "지산동", "덕지동", "내동", "강산동", "관촉동", "강경읍", "연무읍", "성동면", "광석면", "노성면", "상월면", "부적면", "연산면", "두마면", "벌곡면", "양촌면", "가야곡면", "은진면", "채운면"], feature:'', schools:'논산고, 강경고' },
+      '계룡시': { dongs:["금암동", "두마면", "엄사면", "남선면", "신도안면"], feature:'', schools:'계룡고, 계룡중앙고' },
+      '금산군': { dongs:["금산읍", "금성면", "제원면", "부리면", "군북면", "남일면", "남이면", "진산면", "복수면", "추부면"], feature:'', schools:'금산고, 금산여고' },
+      '부여군': { dongs:["부여면", "부여읍", "규암면", "은산면", "외산면", "내산면", "구룡면", "홍산면", "옥산면", "남면", "충화면", "양화면", "임천면", "장암면", "세도면", "석성면", "초촌면"], feature:'', schools:'부여고, 홍산고' },
+      '서천군': { dongs:["서천면", "장항읍", "서천읍", "마서면", "화양면", "기산면", "한산면", "마산면", "시초면", "문산면", "판교면", "종천면", "비인면", "서면"], feature:'', schools:'장항고, 서천고' },
+      '청양군': { dongs:["적곡면", "사양면", "청양면", "청양읍", "운곡면", "대치면", "정산면", "목면", "청남면", "장평면", "남양면", "화성면", "비봉면"], feature:'', schools:'청양고' },
+      '홍성군': { dongs:["홍성면", "홍성읍", "광천읍", "홍북읍", "홍북면", "금마면", "홍동면", "장곡면", "은하면", "결성면", "서부면", "갈산면", "구항면"], feature:'', schools:'홍성고, 홍성여고' },
+      '예산군': { dongs:["삽교면", "예산읍", "삽교읍", "대술면", "신양면", "광시면", "대흥면", "응봉면", "덕산면", "봉산면", "고덕면", "신암면", "오가면"], feature:'', schools:'예산고, 예산여고' },
+      '태안군': { dongs:["태안읍", "안면읍", "고남면", "남면", "근흥면", "소원면", "원북면", "이원면"], feature:'', schools:'태안고, 안면고' },
     }
   },
   '전북': {
     label: '전북특별자치도', emoji: '🌾',
     areas: {
-      '전주시': { dongs:['서신동','효자동','송천동','평화동'], feature:'', schools:'전주고, 전북고, 전주여고' },
-      '익산시': { dongs:['영등동','신흥동','팔봉동','어양동'], feature:'', schools:'익산고, 원광고' },
-      '군산시': { dongs:['나운동','수송동','조촌동','미룡동'], feature:'', schools:'군산고, 군산제일고' },
-      '정읍시': { dongs:['정읍동','수성동','연지동','시기동'], feature:'', schools:'정읍고, 정읍여고' },
-      '남원시': { dongs:['남원동','도통동','향교동','광한루원'], feature:'', schools:'남원고, 남원여고' },
-      '김제시': { dongs:['김제동','요촌동','신풍동','검산동'], feature:'', schools:'김제고, 김제여고' },
-      '완주군': { dongs:['삼례읍','봉동읍','이서면','고산면'], feature:'', schools:'완주고, 삼례고' },
-      '진안군': { dongs:['진안읍','마령면','백운면','안천면'], feature:'', schools:'진안고' },
-      '무주군': { dongs:['무주읍','설천면','안성면','부남면'], feature:'', schools:'무주고' },
-      '장수군': { dongs:['장수읍','번암면','장계면','천천면'], feature:'', schools:'장수고' },
-      '임실군': { dongs:['임실읍','오수면','관촌면','신평면'], feature:'', schools:'임실고' },
-      '순창군': { dongs:['순창읍','팔덕면','복흥면','풍산면'], feature:'', schools:'순창고' },
-      '고창군': { dongs:['고창읍','흥덕면','성송면','아산면'], feature:'', schools:'고창고, 고창여고' },
-      '부안군': { dongs:['부안읍','줄포면','변산면','진서면'], feature:'', schools:'부안고, 부안여고' },
+      '전주시': { dongs:["중앙동1가", "중앙동2가", "중앙동3가", "중앙동4가", "경원동1가", "경원동2가", "경원동3가", "풍남동1가", "풍남동2가", "풍남동3가", "전동1가", "전동2가", "전동3가", "다가동1가", "다가동2가", "다가동3가", "다가동4가", "고사동1가", "고사동2가", "교동1가", "교동2가", "태평동", "중노송동", "동완산동1가", "동완산동2가", "서완산동1가", "서완산동2가", "중화산동1가", "중화산동2가", "진북동", "덕진동1가", "덕진동2가", "우아동1가", "우아동2가", "우아동3가", "호성동1가", "호성동2가", "호성동3가", "전미동1가", "전미동2가", "평화동1가", "평화동2가", "평화동3가", "삼천동1가", "삼천동2가", "삼천동3가", "효자동1가", "효자동2가", "효자동3가", "팔복동1가", "팔복동2가", "팔복동3가", "송천동1가", "송천동2가", "중앙동", "경원동", "풍남동", "전동", "다가동", "고사동", "교동", "태평동1가", "태평동2가", "중노송동1가", "중노송동2가", "남노송동", "서노송동", "진북1동", "진북2동", "동완산동", "서완산동", "동서학동", "서서학동", "중화산동", "인후동1가", "인후동2가", "덕진동", "금암동", "서신동", "팔복동", "우아동", "호성동", "전미동", "평화동", "삼천동", "효자동", "송천동", "대성동", "색장동", "화전동", "용정동", "성덕동", "반월동", "원동", "고랑동", "동산동", "여의동", "장동", "만성동", "금상동", "산정동", "석구동", "원당동", "중인동", "용복동", "금암1동", "금암2동", "남고동", "조촌동"], feature:'', schools:'전주고, 전북고, 전주여고' },
+      '익산시': { dongs:["창인동1가", "창인동2가", "중앙동1가", "중앙동2가", "중앙동3가", "평화동", "갈산동", "주현동", "인화동1가", "인화동2가", "동산동", "마동", "남중동", "모현동1가", "모현동2가", "송학동", "목천동", "만석동", "현영동", "신용동", "신동", "영등동", "어양동", "신흥동", "금강동", "석탄동", "팔봉동", "덕기동", "석왕동", "은기동", "정족동", "임상동", "월성동", "부송동", "용제동", "석암동", "함열읍", "오산면", "황등면", "함라면", "웅포면", "성당면", "용안면", "낭산면", "망성면", "여산면", "금마면", "왕궁면", "춘포면", "삼기면", "용동면"], feature:'', schools:'익산고, 원광고' },
+      '군산시': { dongs:["해망동", "신흥동", "금동", "월명동", "신창동", "오룡동", "금광동", "신풍동", "송풍동", "문화동", "삼학동", "선양동", "둔율동", "창성동", "명산동", "송창동", "개복동", "중앙로1가", "영화동", "장미동", "중앙로2가", "영동", "신영동", "죽성동", "평화동", "중앙로3가", "대명동", "장재동", "미원동", "중동", "금암동", "동흥남동", "서흥남동", "조촌동", "경장동", "경암동", "구암동", "내흥동", "개정동", "사정동", "수송동", "미장동", "지곡동", "나운동", "미룡동", "소룡동", "오식도동", "비응도동", "신관동", "개사동", "산북동", "내초동", "옥구읍", "옥산면", "회현면", "임피면", "서수면", "대야면", "개정면", "성산면", "나포면", "옥도면", "옥서면", "중앙로1가동", "중앙로2가동", "중앙로3가동", "흥남동", "미성동"], feature:'', schools:'군산고, 군산제일고' },
+      '정읍시': { dongs:["수성동", "장명동", "상동", "시기동", "연지동", "농소동", "하모동", "상평동", "과교동", "삼산동", "진산동", "금붕동", "송산동", "신월동", "용산동", "교암동", "부전동", "쌍암동", "내장동", "영파동", "하북동", "구룡동", "흑암동", "용계동", "공평동", "망제동", "신정동", "신태인읍", "북면", "입암면", "소성면", "고부면", "영원면", "덕천면", "이평면", "정우면", "태인면", "감곡면", "옹동면", "칠보면", "산내면", "산외면"], feature:'', schools:'정읍고, 정읍여고' },
+      '남원시': { dongs:["동충동", "하정동", "죽항동", "쌍교동", "천거동", "금동", "조산동", "왕정동", "신정동", "화정동", "향교동", "용정동", "광치동", "내척동", "산곡동", "도통동", "월락동", "고죽동", "식정동", "갈치동", "노암동", "어현동", "신촌동", "운봉읍", "주천면", "수지면", "송동면", "주생면", "금지면", "대강면", "대산면", "사매면", "덕과면", "보절면", "산동면", "이백면", "운봉면", "동면", "아영면", "산내면", "인월면"], feature:'', schools:'남원고, 남원여고' },
+      '김제시': { dongs:["요촌동", "신풍동", "용동", "검산동", "순동", "백학동", "서암동", "신곡동", "교동", "옥산동", "갈공동", "하동", "흥사동", "상동동", "월성동", "황산동", "난봉동", "오정동", "복죽동", "입석동", "장화동", "신덕동", "월봉동", "신월동", "연정동", "명덕동", "제월동", "도장동", "서정동", "양전동", "만경읍", "죽산면", "백산면", "용지면", "백구면", "부량면", "만경면", "공덕면", "청하면", "성덕면", "진봉면", "금구면", "봉남면", "황산면", "금산면", "광활면", "봉황동", "서흥동", "월촌동"], feature:'', schools:'김제고, 김제여고' },
+      '완주군': { dongs:["조촌읍", "봉동면", "조촌면", "삼례읍", "봉동읍", "용진읍", "용진면", "상관면", "이서면", "소양면", "구이면", "고산면", "비봉면", "운주면", "화산면", "동상면", "경천면"], feature:'', schools:'완주고, 삼례고' },
+      '진안군': { dongs:["진안면", "진안읍", "용담면", "안천면", "동향면", "상전면", "백운면", "성수면", "마령면", "부귀면", "정천면", "주천면"], feature:'', schools:'진안고' },
+      '무주군': { dongs:["무주면", "무주읍", "무풍면", "설천면", "적상면", "안성면", "부남면"], feature:'', schools:'무주고' },
+      '장수군': { dongs:["장수면", "장수읍", "산서면", "번암면", "계내면", "장계면", "천천면", "계남면", "계북면"], feature:'', schools:'장수고' },
+      '임실군': { dongs:["임실면", "임실읍", "청웅면", "운암면", "신평면", "성수면", "둔남면", "오수면", "신덕면", "삼계면", "관촌면", "강진면", "덕치면", "지사면"], feature:'', schools:'임실고' },
+      '순창군': { dongs:["순창면", "순창읍", "인계면", "동계면", "풍산면", "금과면", "팔덕면", "쌍치면", "복흥면", "적성면", "유등면", "구림면"], feature:'', schools:'순창고' },
+      '고창군': { dongs:["고창읍", "고수면", "아산면", "무장면", "공음면", "상하면", "해리면", "성송면", "대산면", "심원면", "흥덕면", "성내면", "신림면", "부안면"], feature:'', schools:'고창고, 고창여고' },
+      '부안군': { dongs:["산내면", "부안읍", "주산면", "동진면", "행안면", "계화면", "보안면", "변산면", "진서면", "백산면", "상서면", "하서면", "줄포면", "위도면"], feature:'', schools:'부안고, 부안여고' },
     }
   },
   '전남': {
     label: '전라남도', emoji: '🍵',
     areas: {
-      '순천시': { dongs:['조례동','연향동','풍덕동','왕지동'], feature:'', schools:'순천고, 순천여고, 매산고' },
-      '여수시': { dongs:['돌산읍','여서동','문수동','미평동'], feature:'', schools:'여수고, 여수여고' },
-      '목포시': { dongs:['하당동','남악동','옥암동','용해동'], feature:'', schools:'목포고, 목포여고' },
-      '나주시': { dongs:['나주동','금천면','빛가람동','봉황면'], feature:'', schools:'나주고, 나주여고' },
-      '광양시': { dongs:['광양읍','중동','금호동','태인동'], feature:'', schools:'광양고, 광양제철고' },
-      '담양군': { dongs:['담양읍','봉산면','창평면','대전면'], feature:'', schools:'담양고' },
-      '곡성군': { dongs:['곡성읍','오곡면','오산면','입면'], feature:'', schools:'곡성고' },
-      '구례군': { dongs:['구례읍','토지면','마산면','산동면'], feature:'', schools:'구례고' },
-      '고흥군': { dongs:['고흥읍','도양읍','포두면','두원면'], feature:'', schools:'고흥고, 고흥여고' },
-      '보성군': { dongs:['보성읍','벌교읍','조성면','득량면'], feature:'', schools:'보성고' },
-      '화순군': { dongs:['화순읍','능주면','동면','이양면'], feature:'', schools:'화순고, 화순여고' },
-      '장흥군': { dongs:['장흥읍','관산읍','대덕읍','안양면'], feature:'', schools:'장흥고' },
-      '강진군': { dongs:['강진읍','칠량면','대구면','마량면'], feature:'', schools:'강진고' },
-      '해남군': { dongs:['해남읍','화산면','북일면','산이면'], feature:'', schools:'해남고, 해남여고' },
-      '영암군': { dongs:['영암읍','삼호읍','학산면','신북면'], feature:'', schools:'영암고' },
-      '무안군': { dongs:['무안읍','일로읍','삼향읍','몽탄면'], feature:'', schools:'무안고' },
-      '함평군': { dongs:['함평읍','나비면','신광면','해보면'], feature:'', schools:'함평고' },
-      '영광군': { dongs:['영광읍','법성면','홍농읍','군서면'], feature:'', schools:'영광고, 영광여고' },
-      '장성군': { dongs:['장성읍','황룡면','북이면','삼서면'], feature:'', schools:'장성고' },
-      '완도군': { dongs:['완도읍','금일읍','노화읍','청산면'], feature:'', schools:'완도고, 완도수산고' },
-      '진도군': { dongs:['진도읍','의신면','군내면','임회면'], feature:'', schools:'진도고' },
-      '신안군': { dongs:['지도읍','압해읍','비금면','도초면'], feature:'', schools:'신안중앙고' },
+      '순천시': { dongs:["삼거동", "와룡동", "영동", "옥천동", "행동", "금곡동", "매곡동", "석현동", "가곡동", "용당동", "조곡동", "생목동", "덕암동", "연향동", "풍덕동", "남정동", "인제동", "저전동", "장천동", "남내동", "중앙동", "동외동", "교량동", "대룡동", "홍내동", "오천동", "덕월동", "야흥동", "인월동", "안풍동", "대대동", "왕지동", "조례동", "승주읍", "해룡면", "서면", "황전면", "월등면", "주암면", "송광면", "외서면", "낙안면", "별량면", "상사면", "용수동", "영옥동", "행금동", "삼산동", "덕연동", "남제동", "대평동", "덕흥동", "인안동", "왕조동"], feature:'', schools:'순천고, 순천여고, 매산고' },
+      '여수시': { dongs:["고하동", "종화동", "수정동", "공화동", "관문동", "고소동", "동산동", "중앙동", "교동", "군자동", "충무동", "연등동", "광무동", "서교동", "봉강동", "봉산동", "남산동", "국동", "신월동", "여서동", "문수동", "오림동", "미평동", "둔덕동", "오천동", "만흥동", "덕충동", "경호동", "학동", "학용동", "안산동", "소호동", "시전동", "신기동", "웅천동", "선원동", "여천동", "화장동", "주삼동", "봉계동", "해산동", "화치동", "월하동", "평여동", "중흥동", "적량동", "월내동", "묘도동", "낙포동", "신덕동", "상암동", "호명동", "돌산읍", "소라면", "율촌면", "화양면", "남면", "화정면", "삼산면"], feature:'', schools:'여수고, 여수여고' },
+      '목포시': { dongs:["상락동", "광동", "영해동", "행복동", "축복동", "보광동", "대의동", "중앙동", "수강동", "해안동", "중동", "금동", "경동", "고하동", "내삼학동", "용당동", "산정동", "연산동", "대성동", "양동", "북교동", "남교동", "호남동", "대안동", "창평동", "명륜동", "죽동", "무안동", "측후동", "상락동1가", "상락동2가", "복만동", "동명동", "광동1가", "광동2가", "광동3가", "영해동1가", "영해동2가", "행복동1가", "행복동2가", "축복동1가", "축복동2가", "축복동3가", "보광동1가", "보광동2가", "보광동3가", "유달동", "대의동1가", "대의동2가", "대의동3가", "중앙동1가", "중앙동2가", "중앙동3가", "만호동", "수강동1가", "수강동2가", "해안동1가", "해안동2가", "해안동3가", "해안동4가", "항동", "중동1가", "중동2가", "유동", "금동1가", "금동2가", "경동1가", "경동2가", "서산동", "금화동", "온금동", "죽교동", "상동", "용해동", "석현동", "달동", "율도동", "대양동", "옥암동", "용당1동", "용당2동", "산정1동", "산정2동", "산정3동", "대성1동", "대성2동", "죽교1동", "죽교2동", "죽교3동", "달성동", "대반동", "이로동", "충무동", "연동", "삼향동"], feature:'', schools:'목포고, 목포여고' },
+      '나주시': { dongs:["토계동", "송월동", "안창동", "삼영동", "교동", "서내동", "산정동", "경현동", "보산동", "금계동", "금성동", "남내동", "과원동", "성북동", "중앙동", "대호동", "송촌동", "석현동", "청동", "남외동", "죽림동", "삼도동", "영산동", "용산동", "관정동", "평산동", "부덕동", "이창동", "대기동", "운곡동", "동수동", "오량동", "진포동", "빛가람동", "남평읍", "세지면", "왕곡면", "반남면", "공산면", "동강면", "다시면", "문평면", "노안면", "금천면", "산포면", "남평면", "다도면", "봉황면", "영강동", "향교동", "금남동", "송현동", "남산동", "가야동"], feature:'', schools:'나주고, 나주여고' },
+      '광양시': { dongs:["황금동", "황길동", "도이동", "성황동", "중군동", "중동", "마동", "광영동", "태인동", "금호동", "광양읍", "봉강면", "옥룡면", "옥곡면", "진상면", "진월면", "다압면"], feature:'', schools:'광양고, 광양제철고' },
+      '담양군': { dongs:["담양읍", "봉산면", "고서면", "남면", "가사문학면", "창평면", "대덕면", "무정면", "금성면", "용면", "월산면", "수북면", "대전면"], feature:'', schools:'담양고' },
+      '곡성군': { dongs:["곡성면", "곡성읍", "오곡면", "삼기면", "석곡면", "목사동면", "죽곡면", "고달면", "옥과면", "입면", "겸면", "오산면"], feature:'', schools:'곡성고' },
+      '구례군': { dongs:["구례면", "구례읍", "문척면", "간전면", "토지면", "마산면", "광의면", "용방면", "산동면"], feature:'', schools:'구례고' },
+      '고흥군': { dongs:["고흥면", "도양면", "고흥읍", "도양읍", "풍양면", "도덕면", "금산면", "도화면", "포두면", "봉래면", "점암면", "과역면", "남양면", "동강면", "대서면", "두원면", "산내면", "영남면", "동일면"], feature:'', schools:'고흥고, 고흥여고' },
+      '보성군': { dongs:["보성읍", "벌교읍", "노동면", "미력면", "겸백면", "율어면", "복내면", "문덕면", "조성면", "득량면", "회천면", "웅치면"], feature:'', schools:'보성고' },
+      '화순군': { dongs:["화순면", "화순읍", "한천면", "춘양면", "청풍면", "이양면", "능주면", "도곡면", "도암면", "이서면", "북면", "백아면", "동복면", "남면", "사평면", "동면"], feature:'', schools:'화순고, 화순여고' },
+      '장흥군': { dongs:["관산면", "대덕면", "장흥읍", "관산읍", "대덕읍", "용산면", "안양면", "장동면", "장평면", "유치면", "부산면", "회진면"], feature:'', schools:'장흥고' },
+      '강진군': { dongs:["강진읍", "군동면", "칠량면", "대구면", "도암면", "신전면", "성전면", "작천면", "병영면", "옴천면", "마량면"], feature:'', schools:'강진고' },
+      '해남군': { dongs:["해남읍", "삼산면", "화산면", "현산면", "송지면", "북평면", "북일면", "옥천면", "계곡면", "마산면", "황산면", "산이면", "문내면", "화원면"], feature:'', schools:'해남고, 해남여고' },
+      '영암군': { dongs:["영암면", "영암읍", "삼호읍", "덕진면", "금정면", "신북면", "시종면", "도포면", "군서면", "서호면", "학산면", "미암면", "삼호면"], feature:'', schools:'영암고' },
+      '무안군': { dongs:["압해면", "일로면", "이로면", "지도면", "추자면", "자은면", "비금면", "도초면", "흑산면", "하의면", "장산면", "안좌면", "암태면", "무안면", "무안읍", "일로읍", "삼향읍", "삼향면", "몽탄면", "청계면", "현경면", "망운면", "해제면", "운남면"], feature:'', schools:'무안고' },
+      '함평군': { dongs:["함평면", "함평읍", "손불면", "신광면", "학교면", "엄다면", "대동면", "나산면", "해보면", "월야면"], feature:'', schools:'함평고' },
+      '영광군': { dongs:["홍농면", "백수면", "영광읍", "백수읍", "홍농읍", "대마면", "묘량면", "불갑면", "군서면", "군남면", "염산면", "법성면", "낙월면"], feature:'', schools:'영광고, 영광여고' },
+      '장성군': { dongs:["북상면", "장성읍", "진원면", "남면", "동화면", "삼서면", "삼계면", "황룡면", "서삼면", "북일면", "북이면", "북하면"], feature:'', schools:'장성고' },
+      '완도군': { dongs:["금일면", "노화면", "완도읍", "금일읍", "노화읍", "군외면", "신지면", "고금면", "약산면", "청산면", "소안면", "금당면", "보길면", "생일면"], feature:'', schools:'완도고, 완도수산고' },
+      '진도군': { dongs:["진도면", "진도읍", "군내면", "고군면", "의신면", "임회면", "지산면", "조도면"], feature:'', schools:'진도고' },
+      '신안군': { dongs:["지도면", "지도읍", "압해읍", "증도면", "임자면", "자은면", "비금면", "도초면", "흑산면", "하의면", "신의면", "장산면", "안좌면", "팔금면", "암태면", "압해면"], feature:'', schools:'신안중앙고' },
     }
   },
   '경북': {
     label: '경상북도', emoji: '🍎',
     areas: {
-      '포항시': { dongs:['양덕동','두호동','환호동','장성동'], feature:'', schools:'포항고, 포항여고, 장성고' },
-      '경주시': { dongs:['황성동','북군동','성건동','용강동'], feature:'', schools:'경주고, 경주여고' },
-      '구미시': { dongs:['원평동','형곡동','임은동','선주원남동'], feature:'', schools:'구미고, 구미여고, 오상고' },
-      '안동시': { dongs:['옥동','태화동','풍천면','용상동'], feature:'', schools:'안동고, 안동여고' },
-      '경산시': { dongs:['사동','중방동','옥산동','압량읍'], feature:'', schools:'경산고, 경산여고, 사동고' },
-      '김천시': { dongs:['김천동','평화동','율곡동','농소면'], feature:'', schools:'김천고, 김천여고' },
-      '영주시': { dongs:['영주동','풍기읍','가흥동','상망동'], feature:'', schools:'영주고, 영주여고' },
-      '영천시': { dongs:['영천동','완산동','금호읍','화산면'], feature:'', schools:'영천고, 영천여고' },
-      '상주시': { dongs:['상주동','낙동면','함창읍','공성면'], feature:'', schools:'상주고, 상주여고' },
-      '문경시': { dongs:['문경읍','점촌동','가은읍','산양면'], feature:'', schools:'문경고, 문경여고' },
-      '의성군': { dongs:['의성읍','단촌면','봉양면','금성면'], feature:'', schools:'의성고' },
-      '청송군': { dongs:['청송읍','진보면','현서면','파천면'], feature:'', schools:'청송고' },
-      '영양군': { dongs:['영양읍','일월면','입암면','수비면'], feature:'', schools:'영양고' },
-      '영덕군': { dongs:['영덕읍','강구면','병곡면','지품면'], feature:'', schools:'영덕고' },
-      '청도군': { dongs:['화양읍','청도읍','각남면','풍각면'], feature:'', schools:'청도고' },
-      '고령군': { dongs:['대가야읍','개진면','성산면','쌍림면'], feature:'', schools:'고령고' },
-      '성주군': { dongs:['성주읍','선남면','금수면','용암면'], feature:'', schools:'성주고' },
-      '칠곡군': { dongs:['왜관읍','가산면','동명면','지천면'], feature:'', schools:'왜관고, 칠곡고' },
-      '예천군': { dongs:['예천읍','호명면','지보면','풍양면'], feature:'', schools:'예천고' },
-      '봉화군': { dongs:['봉화읍','춘양면','재산면','명호면'], feature:'', schools:'봉화고' },
-      '울진군': { dongs:['울진읍','평해읍','죽변면','북면'], feature:'', schools:'울진고' },
-      '울릉군': { dongs:['울릉읍','서면','북면'], feature:'', schools:'울릉고' },
+      '포항시': { dongs:["대흥동", "신흥동", "상원동", "남빈동", "여천동", "중앙동", "덕산동", "덕수동", "대신동", "동빈1가", "동빈2가", "학산동", "항구동", "상도동", "대도동", "해도동", "송도동", "득량동", "학잠동", "죽도동", "용흥동", "우현동", "창포동", "두호동", "장성동", "양덕동", "환호동", "여남동", "청림동", "송정동", "송내동", "괴동", "동촌동", "장흥동", "인덕동", "지곡동", "효자동", "대잠동", "이동", "일월동", "호동", "동빈동", "상대1동", "상대2동", "해도1동", "해도2동", "양학동", "죽도1동", "죽도2동", "용흥1동", "용흥2동", "우창동", "장량동", "환여동", "제철동", "효곡동", "대이동"], feature:'', schools:'포항고, 포항여고, 장성고' },
+      '경주시': { dongs:["동부동", "서부동", "북부동", "성동동", "황오동", "노동동", "노서동", "성건동", "사정동", "황남동", "교동", "인왕동", "탑동", "충효동", "서악동", "효현동", "광명동", "동방동", "도지동", "남산동", "배반동", "구황동", "보문동", "황성동", "용강동", "동천동", "평동", "조양동", "시동", "시래동", "구정동", "마동", "하동", "진현동", "천군동", "신평동", "덕동", "암곡동", "황용동", "북군동", "손곡동", "율동", "배동", "석장동", "감포읍", "안강읍", "건천읍", "외동읍", "양북면", "문무대왕면", "양남면", "내남면", "산내면", "서면", "현곡면", "강동면", "천북면", "성내동", "중앙동", "탑정동", "인교동", "선도동", "도동동", "보황동", "용황동", "정래동", "불국동", "보덕동"], feature:'', schools:'경주고, 경주여고' },
+      '구미시': { dongs:["원평동", "지산동", "도량동", "봉곡동", "부곡동", "선기동", "수점동", "남통동", "형곡동", "송정동", "신평동", "비산동", "공단동", "광평동", "사곡동", "상모동", "임은동", "오태동", "신동", "구평동", "황상동", "인의동", "진평동", "시미동", "임수동", "양호동", "거의동", "옥계동", "구포동", "금전동", "선산읍", "고아읍", "산동읍", "무을면", "옥성면", "도개면", "해평면", "산동면", "장천면", "고아면", "원평1동", "원평2동", "원평3동", "도산동", "선주동", "원남동", "신시동", "신평1동", "신평2동", "임오동", "인동동", "진미동", "양포동"], feature:'', schools:'구미고, 구미여고, 오상고' },
+      '안동시': { dongs:["삼산동", "서부동", "북문동", "명륜동", "신안동", "율세동", "옥정동", "신세동", "법흥동", "용상동", "동문동", "동부동", "운흥동", "천리동", "남부동", "남문동", "안흥동", "대석동", "옥야동", "광석동", "당북동", "태화동", "화성동", "목성동", "법상동", "금곡동", "평화동", "안기동", "운안동", "성곡동", "상아동", "안막동", "옥동", "이천동", "노하동", "송현동", "송천동", "석동동", "정상동", "정하동", "수상동", "수하동", "풍산읍", "와룡면", "북후면", "서후면", "풍천면", "일직면", "남후면", "남선면", "임하면", "길안면", "임동면", "예안면", "도산면", "녹전면", "중구동", "옥율동", "신흥동", "용성동", "동남동", "대흥동", "대신동", "송하동", "강남동"], feature:'', schools:'안동고, 안동여고' },
+      '경산시': { dongs:["삼남동", "삼북동", "서상동", "신교동", "상방동", "백천동", "옥곡동", "사정동", "옥산동", "중산동", "정평동", "대평동", "대정동", "임당동", "대동", "계양동", "중방동", "조영동", "남방동", "내동", "여천동", "유곡동", "신천동", "점촌동", "평산동", "사동", "삼풍동", "갑제동", "하양읍", "진량읍", "압량읍", "와촌면", "진량면", "자인면", "용성면", "남산면", "압량면", "남천면", "중앙동", "남부동", "서부동", "북부동", "동부동"], feature:'', schools:'경산고, 경산여고, 사동고' },
+      '김천시': { dongs:["감호동", "용두동", "모암동", "성내동", "평화동", "남산동", "황금동", "신음동", "교동", "삼락동", "문당동", "다수동", "백옥동", "부곡동", "지좌동", "덕곡동", "대광동", "응명동", "양천동", "율곡동", "아포읍", "농소면", "남면", "아포면", "개령면", "감문면", "어모면", "봉산면", "대항면", "감천면", "조마면", "구성면", "지례면", "부항면", "대덕면", "증산면", "용호동", "금산동", "미곡동", "대응동"], feature:'', schools:'김천고, 김천여고' },
+      '영주시': { dongs:["영주동", "상망동", "하망동", "휴천동", "가흥동", "문정동", "고현동", "창진동", "상줄동", "조와동", "조암동", "적서동", "아지동", "풍기읍", "이산면", "평은면", "문수면", "장수면", "안정면", "봉현면", "순흥면", "단산면", "부석면", "하망1동", "하망2동", "하망3동", "영주1동", "영주2동", "영주3동", "영주4동", "휴천1동", "휴천2동", "휴천3동", "가흥1동", "가흥2동"], feature:'', schools:'영주고, 영주여고' },
+      '영천시': { dongs:["조교동", "망정동", "야사동", "문내동", "문외동", "창구동", "교촌동", "과전동", "성내동", "화룡동", "도동", "금노동", "완산동", "범어동", "작산동", "봉동", "본촌동", "채신동", "괴연동", "대전동", "녹전동", "도림동", "오미동", "오수동", "쌍계동", "도남동", "매산동", "언하동", "신기동", "서산동", "금호읍", "청통면", "신녕면", "화산면", "화북면", "화남면", "자양면", "임고면", "고경면", "북안면", "대창면", "동부동", "중앙동", "교동", "주남동", "봉작동", "영도동", "명산동"], feature:'', schools:'영천고, 영천여고' },
+      '상주시': { dongs:["성하동", "성동동", "인봉동", "복룡동", "냉림동", "서성동", "남성동", "서문동", "무양동", "낙양동", "개운동", "신봉동", "가장동", "양촌동", "지천동", "오대동", "흥각동", "거동동", "인평동", "서곡동", "화개동", "외답동", "헌신동", "병성동", "도남동", "낙상동", "중덕동", "초산동", "화산동", "계산동", "부원동", "죽전동", "만산동", "연원동", "남장동", "남적동", "함창읍", "중동면", "사벌면", "사벌국면", "낙동면", "청리면", "공성면", "외남면", "내서면", "모동면", "모서면", "화동면", "화서면", "화북면", "외서면", "은척면", "공검면", "이안면", "화남면", "중앙동", "남원동", "북문동", "계림동", "동문동", "동성동", "신흥동"], feature:'', schools:'상주고, 상주여고' },
+      '문경시': { dongs:["점촌동", "영신동", "흥덕동", "우지동", "창동", "신기동", "불정동", "유곡동", "공평동", "모전동", "윤직동", "문경읍", "가은읍", "영순면", "산양면", "호계면", "산북면", "동로면", "마성면", "농암면"], feature:'', schools:'문경고, 문경여고' },
+      '의성군': { dongs:["의성읍", "단촌면", "점곡면", "옥산면", "사곡면", "춘산면", "가음면", "금성면", "봉양면", "비안면", "구천면", "단밀면", "단북면", "안계면", "다인면", "신평면", "안평면", "안사면"], feature:'', schools:'의성고' },
+      '청송군': { dongs:["청송면", "청송읍", "부동면", "주왕산면", "부남면", "현동면", "현서면", "안덕면", "파천면", "진보면"], feature:'', schools:'청송고' },
+      '영양군': { dongs:["영양면", "영양읍", "입암면", "청기면", "일월면", "수비면", "석보면"], feature:'', schools:'영양고' },
+      '영덕군': { dongs:["영덕면", "영덕읍", "강구면", "남정면", "달산면", "지품면", "축산면", "영해면", "병곡면", "창수면"], feature:'', schools:'영덕고' },
+      '청도군': { dongs:["화양면", "화양읍", "청도읍", "각남면", "풍각면", "각북면", "이서면", "운문면", "금천면", "매전면"], feature:'', schools:'청도고' },
+      '고령군': { dongs:["고령면", "고령읍", "대가야읍", "덕곡면", "운수면", "성산면", "다산면", "개진면", "우곡면", "쌍림면"], feature:'', schools:'고령고' },
+      '성주군': { dongs:["성주면", "성주읍", "선남면", "용암면", "수륜면", "가천면", "금수면", "금수강산면", "대가면", "벽진면", "초전면", "월항면"], feature:'', schools:'성주고' },
+      '칠곡군': { dongs:["칠곡읍", "인동면", "칠곡면", "왜관읍", "북삼읍", "석적읍", "지천면", "동명면", "가산면", "석적면", "북삼면", "약목면", "기산면"], feature:'', schools:'왜관고, 칠곡고' },
+      '예천군': { dongs:["예천읍", "호명읍", "용문면", "상리면", "하리면", "감천면", "보문면", "호명면", "유천면", "용궁면", "개포면", "지보면", "풍양면", "효자면", "은풍면"], feature:'', schools:'예천고' },
+      '봉화군': { dongs:["봉화면", "봉화읍", "물야면", "봉성면", "법전면", "춘양면", "소천면", "재산면", "명호면", "상운면", "석포면"], feature:'', schools:'봉화고' },
+      '울진군': { dongs:["울진면", "평해면", "울진읍", "평해읍", "북면", "서면", "근남면", "원남면", "기성면", "온정면", "죽변면", "후포면", "금강송면", "매화면"], feature:'', schools:'울진고' },
+      '울릉군': { dongs:["남면", "울릉읍", "서면", "북면"], feature:'', schools:'울릉고' },
     }
   },
   '경남': {
     label: '경상남도', emoji: '🌊',
     areas: {
-      '창원시': { dongs:['상남동','봉곡동','중앙동','신월동'], feature:'', schools:'창원고, 창원여고, 경남고' },
-      '진주시': { dongs:['신안동','평거동','초전동','문산읍'], feature:'', schools:'진주고, 진주여고' },
-      '김해시': { dongs:['장유동','내외동','불암동','삼계동'], feature:'', schools:'김해고, 김해여고, 장유고' },
-      '양산시': { dongs:['물금읍','양산동','북정동','신기동'], feature:'', schools:'양산고, 양산여고' },
-      '거제시': { dongs:['고현동','장승포동','아주동','수월동'], feature:'', schools:'거제고, 거제여고' },
-      '통영시': { dongs:['통영동','무전동','도천동','미수동'], feature:'', schools:'통영고, 통영여고' },
-      '사천시': { dongs:['사천읍','용현면','정동면','향촌동'], feature:'', schools:'사천고, 사천여고' },
-      '밀양시': { dongs:['삼문동','내이동','가곡동','상남면'], feature:'', schools:'밀양고, 밀양여고' },
-      '의령군': { dongs:['의령읍','칠곡면','대의면','화정면'], feature:'', schools:'의령고' },
-      '함안군': { dongs:['가야읍','함안면','칠원면','군북면'], feature:'', schools:'함안고, 함안여고' },
-      '창녕군': { dongs:['창녕읍','남지읍','유어면','대지면'], feature:'', schools:'창녕고' },
-      '고성군': { dongs:['고성읍','삼산면','하이면','거류면'], feature:'', schools:'고성고' },
-      '남해군': { dongs:['남해읍','설천면','미조면','삼동면'], feature:'', schools:'남해고' },
-      '하동군': { dongs:['하동읍','금남면','화개면','악양면'], feature:'', schools:'하동고' },
-      '산청군': { dongs:['산청읍','단성면','신안면','금서면'], feature:'', schools:'산청고' },
-      '함양군': { dongs:['함양읍','안의면','수동면','마천면'], feature:'', schools:'함양고' },
-      '거창군': { dongs:['거창읍','웅양면','남상면','가조면'], feature:'', schools:'거창고, 거창여고' },
-      '합천군': { dongs:['합천읍','가야면','묘산면','봉산면'], feature:'', schools:'합천고' },
+      '창원시': { dongs:["북동", "중동", "서상동", "소답동", "도계동", "동정동", "소계동", "용동", "용지동", "토월동", "사파정동", "가음정동", "외동", "대방동", "남산동", "삼정자동", "천선동", "불모산동", "안민동", "연덕동", "내동", "삼동동", "두대동", "덕정동", "목동", "정동", "남지동", "상복동", "완암동", "창곡동", "월림동", "적현동", "양곡동", "지귀동", "서곡동", "반송동", "봉림동", "퇴촌동", "명곡동", "반계동", "사화동", "차용동", "내리동", "귀산동", "귀곡동", "귀현동", "신촌동", "대원동", "명서동", "반지동", "중앙동", "반림동", "상남동", "성주동", "웅남동", "사림동", "사파동", "신월동", "가음동", "봉곡동", "용호동", "팔용동", "성산동", "남양동", "동읍", "동면", "북면", "대산면", "의안동", "상북동", "삼귀동"], feature:'', schools:'창원고, 창원여고, 경남고' },
+      '진주시': { dongs:["망경남동", "망경북동", "상봉동동", "상봉서동", "수정남동", "수정북동", "상평동동", "옥봉남동", "옥봉북동", "상평서동", "초전남동", "초전북동", "이현남동", "이현북동", "판문남동", "판문북동", "망경동", "주약동", "강남동", "칠암동", "본성동", "동성동", "남성동", "인사동", "대안동", "평안동", "중안동", "계동", "봉곡동", "상봉동", "봉래동", "수정동", "장대동", "옥봉동", "상대동", "하대동", "상평동", "초전동", "장재동", "하촌동", "신안동", "평거동", "이현동", "유곡동", "판문동", "귀곡동", "가좌동", "호탄동", "충무공동", "문산읍", "내동면", "정촌면", "금곡면", "문산면", "진성면", "일반성면", "이반성면", "사봉면", "지수면", "대곡면", "금산면", "집현면", "미천면", "명석면", "대평면", "수곡면", "상대1동", "상대2동", "가호동"], feature:'', schools:'진주고, 진주여고' },
+      '김해시': { dongs:["동상동", "서상동", "부원동", "봉황동", "대성동", "구산동", "삼계동", "내동", "외동", "흥동", "풍유동", "명법동", "이동", "화목동", "전하동", "강동", "삼정동", "어방동", "삼방동", "안동", "지내동", "불암동", "유하동", "내덕동", "부곡동", "무계동", "신문동", "삼문동", "대청동", "관동동", "율하동", "장유동", "응달동", "수가동", "진영읍", "장유면", "주촌면", "진례면", "한림면", "생림면", "상동면", "대동면", "회현동", "내외동", "북부동", "칠산동", "서부동", "활천동", "삼안동"], feature:'', schools:'김해고, 김해여고, 장유고' },
+      '양산시': { dongs:["다방동", "남부동", "중부동", "북부동", "명곡동", "신기동", "북정동", "산막동", "호계동", "교동", "유산동", "어곡동", "용당동", "삼호동", "명동", "주남동", "소주동", "주진동", "평산동", "덕계동", "매곡동", "웅상읍", "물금읍", "동면", "원동면", "상북면", "하북면"], feature:'', schools:'양산고, 양산여고' },
+      '거제시': { dongs:["능포동", "장승포동", "두모동", "아양동", "아주동", "옥포동", "덕포동", "장평동", "고현동", "상동동", "문동동", "삼거동", "양정동", "수월동", "신현읍", "일운면", "동부면", "남부면", "거제면", "둔덕면", "사등면", "연초면", "하청면", "장목면"], feature:'', schools:'거제고, 거제여고' },
+      '통영시': { dongs:["도천동", "서호동", "명정동", "항남동", "중앙동", "문화동", "태평동", "동호동", "정량동", "북신동", "무전동", "평림동", "인평동", "당동", "미수동", "봉평동", "도남동", "산양읍", "용남면", "산양면", "도산면", "광도면", "욕지면", "한산면", "사량면"], feature:'', schools:'통영고, 통영여고' },
+      '사천시': { dongs:["동동", "서동", "선구동", "동금동", "서금동", "동림동", "좌룡동", "벌리동", "용강동", "와룡동", "봉남동", "이금동", "이홀동", "궁지동", "사등동", "향촌동", "대방동", "실안동", "마도동", "늑도동", "신수동", "백천동", "신벽동", "노룡동", "대포동", "송포동", "죽림동", "사천읍", "정동면", "사남면", "용현면", "축동면", "곤양면", "곤명면", "서포면"], feature:'', schools:'사천고, 사천여고' },
+      '밀양시': { dongs:["내일동", "내이동", "교동", "삼문동", "남포동", "용평동", "활성동", "가곡동", "삼랑진읍", "하남읍", "부북면", "상동면", "산외면", "산내면", "단장면", "상남면", "초동면", "무안면", "청도면", "용활동"], feature:'', schools:'밀양고, 밀양여고' },
+      '의령군': { dongs:["의령면", "의령읍", "가례면", "칠곡면", "대의면", "화정면", "용덕면", "정곡면", "지정면", "낙서면", "부림면", "봉수면", "궁유면", "궁류면", "유곡면"], feature:'', schools:'의령고' },
+      '함안군': { dongs:["가야면", "가야읍", "칠원읍", "함안면", "군북면", "법수면", "대산면", "칠서면", "칠북면", "칠원면", "산인면", "여항면"], feature:'', schools:'함안고, 함안여고' },
+      '창녕군': { dongs:["남지면", "창녕읍", "남지읍", "고암면", "성산면", "대합면", "이방면", "유어면", "대지면", "계성면", "영산면", "장마면", "도천면", "길곡면", "부곡면"], feature:'', schools:'창녕고' },
+      '고성군': { dongs:["고성읍", "삼산면", "하일면", "하이면", "상리면", "대가면", "영현면", "영오면", "개천면", "구만면", "회화면", "마암면", "동해면", "거류면"], feature:'', schools:'고성고' },
+      '남해군': { dongs:["남해면", "남해읍", "이동면", "상주면", "삼동면", "미조면", "남면", "서면", "고현면", "설천면", "창선면"], feature:'', schools:'남해고' },
+      '하동군': { dongs:["하동읍", "화개면", "악양면", "적량면", "횡천면", "고전면", "금남면", "진교면", "양보면", "북천면", "청암면", "옥종면", "금성면"], feature:'', schools:'하동고' },
+      '산청군': { dongs:["산청면", "산청읍", "차황면", "오부면", "생초면", "금서면", "삼장면", "시천면", "단성면", "신안면", "생비량면", "신등면"], feature:'', schools:'산청고' },
+      '함양군': { dongs:["함양읍", "마천면", "휴천면", "유림면", "수동면", "지곡면", "안의면", "서하면", "서상면", "백전면", "병곡면"], feature:'', schools:'함양고' },
+      '거창군': { dongs:["거창읍", "주상면", "웅양면", "고제면", "북상면", "위천면", "마리면", "남상면", "남하면", "신원면", "가조면", "가북면"], feature:'', schools:'거창고, 거창여고' },
+      '합천군': { dongs:["합천면", "합천읍", "봉산면", "묘산면", "가야면", "야로면", "율곡면", "초계면", "쌍책면", "덕곡면", "청덕면", "적중면", "대양면", "쌍백면", "삼가면", "가회면", "대병면", "용주면"], feature:'', schools:'합천고' },
     }
   },
   '제주': {
     label: '제주특별자치도', emoji: '🌺',
     areas: {
-      '제주시': { dongs:['노형동','이도동','연동','아라동'], feature:'', schools:'제주고, 제주여고, 남녕고' },
-      '서귀포시': { dongs:['서귀동','대정읍','성산읍','표선면'], feature:'', schools:'서귀포고, 서귀포여고' },
+      '제주시': { dongs:["일도일동", "일도이동", "이도일동", "이도이동", "삼도일동", "삼도이동", "건입동", "용담일동", "용담이동", "용담삼동", "화북일동", "화북이동", "삼양일동", "삼양이동", "삼양삼동", "봉개동", "아라일동", "아라이동", "오라일동", "오라이동", "오라삼동", "노형동", "외도일동", "외도이동", "이호일동", "이호이동", "도두일동", "도두이동", "도남동", "도련일동", "도련이동", "용강동", "회천동", "오등동", "월평동", "영평동", "연동", "도평동", "해안동", "내도동", "한림읍", "애월읍", "구좌읍", "조천읍", "한경면", "추자면", "우도면"], feature:'', schools:'제주고, 제주여고, 남녕고' },
+      '서귀포시': { dongs:["서귀동", "법환동", "서호동", "호근동", "동홍동", "서홍동", "상효동", "하효동", "신효동", "보목동", "토평동", "중문동", "회수동", "대포동", "월평동", "강정동", "도순동", "하원동", "색달동", "상예동", "하예동", "영남동", "대정읍", "남원읍", "성산읍", "안덕면", "표선면"], feature:'', schools:'서귀포고, 서귀포여고' },
     }
   },
 };
@@ -2749,10 +2299,207 @@ function getDongData(dongEn) {
 }
 
 // 해시 함수: 동+과목 조합으로 일관된 템플릿 선택
+
+// ── 한글 → 로마자 변환 (URL 슬러그용) ─────────────────────────────────────
+const HG_ONSET  = ['g','kk','n','d','tt','r','m','b','pp','s','ss','','j','jj','ch','k','t','p','h'];
+const HG_NUC    = ['a','ae','ya','yae','eo','e','yeo','ye','o','wa','wae','oe','yo','u','wo','we','wi','yu','eu','ui','i'];
+const HG_CODA   = ['','g','kk','gs','n','nj','nh','d','l','lg','lm','lb','ls','lt','lp','lh','m','b','bs','s','ss','ng','j','ch','k','t','p','h'];
+
+function toRoman(text) {
+  let r = '';
+  for (const ch of text) {
+    const code = ch.charCodeAt(0);
+    if (code >= 0xAC00 && code <= 0xD7A3) {
+      const c = code - 0xAC00;
+      r += HG_ONSET[Math.floor(c/588)] + HG_NUC[Math.floor((c%588)/28)] + HG_CODA[c%28];
+    } else if (ch === ' ') {
+      r += '-';
+    } else if (/[a-zA-Z0-9-]/.test(ch)) {
+      r += ch.toLowerCase();
+    }
+  }
+  return r || 'dong';
+}
+
+// 로마자 → 한글 동이름 (REGIONS dongs에서 역탐색)
+function fromRoman(sidoEn, guEn, roman) {
+  for (const [sido, reg] of Object.entries(REGIONS)) {
+    if ((SIDO_EN[sido]||sido) !== sidoEn) continue;
+    for (const [ak, area] of Object.entries(reg.areas)) {
+      if ((DISTRICT_EN[ak]||ak) !== guEn) continue;
+      for (const dong of (area.dongs||[])) {
+        if (toRoman(dong) === roman) return dong;
+      }
+    }
+  }
+  return null;
+}
+
 function hashSelect(str, arr) {
   let h = 0;
   for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
   return arr[h % arr.length];
+}
+
+
+// ── REGIONS 기반 동 페이지 생성 (DONG_DB 불필요) ──────────────────────────
+function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
+  // REGIONS에서 시도+구군 찾기
+  let sido = null, ak = null, region = null, area = null;
+  for (const [s, reg] of Object.entries(REGIONS)) {
+    if ((SIDO_EN[s]||s) === sidoEn) {
+      for (const [a, ar] of Object.entries(reg.areas)) {
+        if ((DISTRICT_EN[a]||a) === guEn) {
+          sido = s; ak = a; region = reg; area = ar;
+          break;
+        }
+      }
+    }
+    if (sido) break;
+  }
+  if (!sido || !area) return null;
+
+  // 동이름이 REGIONS dongs에 있는지 확인
+  const dongs = area.dongs || [];
+  if (!dongs.includes(dongName)) return null;
+
+  const subject = SUBJECT_MAP[subjectEn] || subjectEn;
+  const grade = GRADE_MAP[gradeEn] || gradeEn;
+  const subj = SUBJECTS[subject];
+  const gradeObj = GRADES[grade];
+  if (!subj || !gradeObj) return null;
+
+  const cat = area.cat || 'H';
+  const tmpl = CATEGORY_TEMPLATES[cat] || CATEGORY_TEMPLATES['H'];
+  const subjectKey = subject === '수학' ? 'math' : subject === '영어' ? 'english' : 'math';
+  const tmplTexts = tmpl[subjectKey] || tmpl.math;
+  const reviews = tmpl.reviews;
+
+  const dong = dongName;
+  const gu = ak;
+  const schools = area.schools || `${ak} 주요 학교`;
+  const sidoLabel = region.label || sido;
+  const canonical = `/${sidoEn}/${guEn}/${toRoman(dongName)}/${gradeEn}/${subjectEn}`;
+
+  // 이하 makeDongPage와 동일한 본문 생성 로직 재사용
+  const mainText = hashSelect(dong + subject, tmplTexts)
+    .replace(/{dong}/g, dong).replace(/{gu}/g, gu)
+    .replace(/{sido}/g, sido).replace(/{subject}/g, subject)
+    .replace(/{grade}/g, grade).replace(/{schools}/g, schools);
+
+  const gradeDesc = (() => {
+    const GRADE_DESC_MAP = {
+      '초1': `${dong} 초1 수학과외는 수 세기·덧셈·뺄셈 기초를 놀이처럼 익히며 수학에 대한 긍정적 경험을 만들어줍니다.`,
+      '초2': `${dong} 초2 과외는 두 자리 수 연산과 기초를 체계적으로 다집니다.`,
+      '초3': `${dong} 초3 과외는 곱셈·나눗셈·분수 개념이 처음 등장하는 중요한 시기입니다.`,
+      '초4': `${dong} 초4 과외는 소수·분수 연산 등 개념이 급격히 어려워지는 시기입니다.`,
+      '초5': `${dong} 초5 과외는 중학 수학의 기초가 되는 핵심 개념을 완성합니다.`,
+      '초6': `${dong} 초6 과외는 중학교 연결 개념을 완성하고 중학교를 미리 대비합니다.`,
+      '중1': `${dong} 중1 과외는 정수·유리수·방정식 등 중학 수학의 가장 중요한 기초를 완성합니다.`,
+      '중2': `${dong} 중2 과외는 연립방정식·일차함수 등 핵심 개념을 집중 학습합니다.`,
+      '중3': `${dong} 중3 과외는 이차방정식·이차함수로 고교 수학 준비를 완성합니다.`,
+      '고1': `${dong} 고1 과외는 수학Ⅰ·수학Ⅱ 기초를 다지고 내신과 수능을 동시에 준비합니다.`,
+      '고2': `${dong} 고2 과외는 내신 등급 관리와 수능 핵심 단원을 집중 공략합니다.`,
+      '고3': `${dong} 고3 과외는 수능 실전 대비와 마지막 내신 관리에 집중합니다.`,
+      '초등': `${dong} 초등 과외는 기초 개념부터 차근차근 쌓아 중학교를 준비합니다.`,
+      '중등': `${dong} 중등 과외는 중학 전 과정을 체계적으로 관리합니다.`,
+      '고등': `${dong} 고등 과외는 내신과 수능을 동시에 관리하는 맞춤 커리큘럼으로 운영합니다.`,
+    };
+    return GRADE_DESC_MAP[grade] || `${dong} ${grade} 과외는 학생 수준에 맞춘 1:1 맞춤 지도를 제공합니다.`;
+  })();
+
+  const review1 = hashSelect(dong+'r1', reviews).replace(/{dong}/g,dong).replace(/{schools}/g,schools).replace(/{gu}/g,gu);
+  const review2 = hashSelect(dong+'r2', reviews).replace(/{dong}/g,dong).replace(/{schools}/g,schools).replace(/{gu}/g,gu);
+
+  const CAT_DESC = {
+    A: `${dong}은 ${gu}에서도 교육열이 높은 학군으로, ${schools} 내신 경쟁이 치열합니다. 1:1 방문 과외 수요가 매우 높습니다.`,
+    B: `${dong}은 신도시 개발로 젊은 고학력 가정이 밀집한 지역입니다. 빠른 선생님 매칭이 가능합니다.`,
+    C: `${dong}은 산업단지 인근으로 맞벌이 가정이 많아 방문 과외 선호도가 높습니다.`,
+    D: `${dong}은 군인 가족이 많아 잦은 이사에도 빠른 매칭이 중요합니다.`,
+    E: `${dong}은 대학가 인근으로 우수한 과외 선생님 공급이 풍부합니다.`,
+    F: `${dong}은 학원 접근성이 낮은 지역 특성상 방문 과외 선호도가 높습니다. 합리적인 비용으로 1:1 지도가 가능합니다.`,
+    G: `${dong}은 도서 지역으로 온라인 과외와 방문 과외를 모두 지원합니다.`,
+    H: `${dong}은 ${gu} 주거지역으로 ${schools} 학군 내신 관리 과외 수요가 꾸준합니다.`,
+  };
+  const catDesc = CAT_DESC[cat] || CAT_DESC['H'];
+
+  const SUBJ_IMAGES = {
+    '수학': 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=900&q=80',
+    '영어': 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=900&q=80',
+    '국어': 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900&q=80',
+    '과학': 'https://images.unsplash.com/photo-1532094349884-543559244e6a?w=900&q=80',
+    '사회': 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=900&q=80',
+    '코딩': 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80',
+    '논술': 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80',
+  };
+  const thumbImg = SUBJ_IMAGES[subject] || SUBJ_IMAGES['수학'];
+
+  const otherSubjects = Object.entries(SUBJECTS).filter(([s])=>s!==subject).map(([s,v])=>
+    `<a class="subj-link" href="/${sidoEn}/${guEn}/${encodeURIComponent(dongName)}/${gradeEn}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${dong} ${grade} ${s}과외</span><span>→</span></a>`
+  ).join('');
+
+  const relDongs = dongs.filter(d=>d!==dongName).slice(0,6).map(d=>
+    `<a href="/${sidoEn}/${guEn}/${encodeURIComponent(d)}/${gradeEn}/${subjectEn}" class="rel-card"><div class="rc-tag">${gu} · ${d}</div><div class="rc-title">${d} ${subject}과외 | ${gu} ${d} ${subject} 맞춤 과외</div></a>`
+  ).join('');
+
+  const keywords = [`${dong} ${subject}과외`, `${gu} ${dong} 과외`, `${dong} ${grade} 과외`,
+    `${dong} 1:1과외`, `${gu} ${grade} ${subject}`, `${dong} 내신 ${subject}`];
+  const keywordTags = keywords.map(k=>`<span class="keyword-tag">${k}</span>`).join('');
+
+  const title = `${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${gradeObj.label} ${subject} 맞춤 1:1 과외 - 올케어스터디`;
+  const desc = `${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
+  const bc = [{name:'홈',url:'/'},{name:sidoLabel,url:`/${sidoEn}`},{name:gu,url:`/${sidoEn}/${guEn}`},{name:`${dong} ${subject}과외`,url:canonical}];
+
+  const body = `<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} ${grade} ${subject}과외</span></div>
+  <div class="art-tag">${subj.emoji} ${gu} · ${dong} · ${grade} · ${subject}</div>
+  <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${gradeObj.label} ${subject} 맞춤 1:1 과외</h1>
+  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 5분</span></div>
+  <div class="info-box">
+    <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
+    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
+    <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
+  </div>
+  <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
+    <img src="${thumbImg}" alt="${dong} ${grade} ${subject}과외" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.65),transparent);display:flex;align-items:center;padding:32px">
+      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">${gu} · ${dong}</div><div style="font-size:28px;font-weight:900">${dong} ${subject}과외</div></div>
+    </div>
+  </div>
+  <div class="art-body">
+    <h2>${dong} ${grade} ${subject}과외 안내</h2>
+    <p>${mainText}</p>
+    <p>${catDesc}</p>
+    <p>${gradeDesc}</p>
+    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 ${gradeObj.label} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
+    <h2>${dong} ${grade} ${subject}과외 선생님 특징</h2>
+    <p><strong>① 학교 기출 완벽 분석</strong> — ${schools} ${subject} 시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다.</p>
+    <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다.</p>
+    <p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도를 정리해 학부모님께 공유합니다.</p>
+    <p><strong>④ 취약점 집중 보완</strong> — ${subject} 취약 단원을 정확히 파악하고 집중 보완합니다.</p>
+    <h2>${dong} ${subject}과외 실제 후기</h2>
+    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic;color:var(--text-dark)">"${review1}"</blockquote>
+    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic;color:var(--text-dark)">"${review2}"</blockquote>
+    <h2>자주 묻는 질문</h2>
+    <p><strong>Q. ${dong}에서 ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${schools} 기출을 잘 아는 선생님 위주로 추천합니다.</p>
+    <p><strong>Q. ${grade} ${subject} 성적이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다.</p>
+    <h2>${dong} 다른 과목도 함께</h2>
+    <div class="subj-grid">${otherSubjects}</div>
+    <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags">${keywordTags}</div></div>
+  </div>
+  <div class="cta-box">
+    <h3>${dong} ${grade} ${subject}과외 무료 상담</h3>
+    <p>24시간 내 전문 코디네이터가 연락드립니다</p>
+    <div class="cta-btns">
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-o" href="/contact">✉️ 문의하기</a>
+    </div>
+  </div>
+  <div class="related-title">🔗 ${gu} 다른 동 ${subject}과외</div>
+  <div class="related-grid">${relDongs}</div>
+</div>`;
+
+  return wrap(title, desc, canonical, body, bc);
 }
 
 function makeDongPage(dongEn, subjectEn, gradeEn) {
@@ -3076,7 +2823,7 @@ function makeAreaPage(rk, ak) {
     }
     return area.dongs.map(d => {
       const dongEnKey = DONG_EN[d] || d;
-      return `<a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${dongEnKey}/high2/math" class="dong-card">
+      return `<a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${toRoman(d)}/elementary/math" class="dong-card">
   <div class="dong-card-body"><div class="dong-card-tag">${ak} · ${d}</div><div class="dong-card-title">${d} 과외</div><div class="dong-card-arrow">과외 보기 →</div></div>
 </a>`;
     }).join('');
@@ -5211,7 +4958,7 @@ function serveSitemap() {
   ];
 
   // 전국 DONG_DB 동별 × 12학년 × 과목 (동적 생성 페이지)
-  const DONG_GRADES = ['elem1','elem2','elem3','elem4','elem5','elem6','mid1','mid2','mid3','high1','high2','high3'];
+  const DONG_GRADES = ['elementary','middle','high'];
   for (const [dongEn, data] of Object.entries(DONG_DB)) {
     const [,, , , sidoEn, guEn] = data;
     for (const gk of DONG_GRADES) {
@@ -5276,13 +5023,19 @@ function serveSitemapChunk(chunkNum) {
   allUrls.push(url('/academy/all', 'weekly', '0.7'));
   allUrls.push(url('/contact', 'monthly', '0.6'));
 
-  // DONG_DB 전국 동별 × 12학년 × 과목
-  const DONG_GRADES = ['elem1','elem2','elem3','elem4','elem5','elem6','mid1','mid2','mid3','high1','high2','high3'];
-  for (const [dongEn, data] of Object.entries(DONG_DB)) {
-    const [,, , , sidoEn, guEn] = data;
-    for (const gk of DONG_GRADES) {
-      for (const sk of Object.keys(SUBJECTS)) {
-        allUrls.push(url(`/${sidoEn}/${guEn}/${dongEn}/${gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.7'));
+  // REGIONS 전국 동별 × 12학년 × 과목 (한글 URL)
+  const DONG_GRADES = ['elementary','middle','high'];
+  for (const [sido, reg] of Object.entries(REGIONS)) {
+    const sidoEn = SIDO_EN[sido]||sido;
+    for (const [ak, area] of Object.entries(reg.areas)) {
+      const guEn = DISTRICT_EN[ak]||ak;
+      for (const dong of (area.dongs||[])) {
+        const dongEnc = toRoman(dong);
+        for (const gk of DONG_GRADES) {
+          for (const sk of Object.keys(SUBJECTS)) {
+            allUrls.push(url(`/${sidoEn}/${guEn}/${dongEnc}/${gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.7'));
+          }
+        }
       }
     }
   }
@@ -5460,10 +5213,18 @@ export default {
       const dongEn = parts[2];
       const gradeEn = parts[3];
       const subjectEn = parts[4];
-      // DONG_DB에 있는 동이면 동적 생성
+      // DONG_DB 영문키로 먼저 시도
       if (DONG_DB[dongEn]) {
         const page = makeDongPage(dongEn, subjectEn, gradeEn);
         if (page) return new Response(page, { headers: h });
+      }
+      // 로마자 슬러그 → 한글 동이름 역변환 후 페이지 생성
+      {
+        const dongName = fromRoman(parts[0], parts[1], dongEn);
+        if (dongName) {
+          const page = makeDongPageByName(parts[0], parts[1], dongName, subjectEn, gradeEn);
+          if (page) return new Response(page, { headers: h });
+        }
       }
       // DONG_DB에 없는 동(읍/면 등) → 구/군 기반 fallback 페이지 생성
       const kr5 = toKr(parts[0], parts[1], null, parts[3], parts[4]);
