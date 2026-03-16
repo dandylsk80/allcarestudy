@@ -1729,7 +1729,7 @@ const GRADES = {
   '중등': { label: '중학교', years: ['1학년','2학년','3학년'] },
   '고등': { label: '고등학교', years: ['1학년','2학년','3학년'] },
   // 초등 세분화
-  '초1': { label: '초등학교 1학년', years: ['초1'], group: '초등' },
+  '초1': {math:``,english:``},
   '초2': { label: '초등학교 2학년', years: ['초2'], group: '초등' },
   '초3': { label: '초등학교 3학년', years: ['초3'], group: '초등' },
   '초4': { label: '초등학교 4학년', years: ['초4'], group: '초등' },
@@ -2154,12 +2154,12 @@ const CATEGORY_TEMPLATES = {
       '{gu} 최고 학군인 {dong}의 영어과외는 {schools} 내신 1등급을 목표로 합니다. 단어암기식 수업이 아닌 지문 분석 능력을 키우는 방식으로 어떤 지문에도 대응할 수 있는 실력을 만들어드립니다.',
     ],
     reviews: [
-      '{dong} 수학 과외 시작하고 {schools} 첫 중간고사에서 1등급 받았어요. 선생님이 기출 분석을 완벽하게 해주신 덕분입니다. — {dong} 고2 학부모',
-      '{dong} 학원만 다녔는데 수학이 제자리였어요. 1:1 과외 추가하고 딱 필요한 부분만 잡아주시니 효율이 완전히 달라졌습니다. — {dong} 중3 학부모',
-      '{dong} 영어 과외 받고 처음으로 내신 1등급 받았어요. {schools} 시험 스타일을 완벽히 파악하고 계신 선생님이었어요. — {dong} 고1 학부모',
-      '{dong} 수학 과외 2달 만에 등급이 두 단계 올랐어요. 선생님이 포기하지 않고 끝까지 챙겨주신 덕분입니다. — {dong} 고3 학부모',
-      '{dong}에서 영어 선생님 찾고 있었는데 하루 만에 완벽한 매칭이 됐어요. 내신 지문 분석 방식이 완전히 달라졌습니다. — {dong} 고2 학부모',
-      '{dong} 수학 선생님이 {schools} 출제 경향을 너무 잘 아세요. 시험 준비가 확실히 달라졌습니다. — {dong} 중2 학부모',
+      '{dong} 수학 과외 시작하고 {schools} 첫 중간고사에서 1등급 받았어요. 선생님이 기출 분석을 완벽하게 해주신 덕분입니다. — {dong} 학부모',
+      '{dong} 학원만 다녔는데 수학이 제자리였어요. 1:1 과외 추가하고 딱 필요한 부분만 잡아주시니 효율이 완전히 달라졌습니다. — {dong} 학부모',
+      '{dong} 영어 과외 받고 처음으로 내신 1등급 받았어요. {schools} 시험 스타일을 완벽히 파악하고 계신 선생님이었어요. — {dong} 학부모',
+      '{dong} 수학 과외 2달 만에 등급이 두 단계 올랐어요. 선생님이 포기하지 않고 끝까지 챙겨주신 덕분입니다. — {dong} 학부모',
+      '{dong}에서 영어 선생님 찾고 있었는데 하루 만에 완벽한 매칭이 됐어요. 내신 지문 분석 방식이 완전히 달라졌습니다. — {dong} 학부모',
+      '{dong} 수학 선생님이 {schools} 출제 경향을 너무 잘 아세요. 시험 준비가 확실히 달라졌습니다. — {dong} 학부모',
     ],
   },
   // B: 신도시
@@ -2175,12 +2175,12 @@ const CATEGORY_TEMPLATES = {
       '{dong}은 젊은 고학력 가정이 많아 영어 교육 수준이 높습니다. {schools} 내신 영어와 함께 영어 회화·독서 연계 교육도 병행하는 맞춤 커리큘럼으로 운영됩니다.',
     ],
     reviews: [
-      '{dong} 이사 오자마자 수학 선생님을 연결해주셨어요. 새 학교 {schools} 스타일을 빠르게 파악해주셔서 첫 시험에서 좋은 성적 나왔습니다. — {dong} 중1 학부모',
-      '{dong} 신도시라 좋은 선생님 찾기 어려울 것 같았는데 당일 매칭이 됐어요. 수학 성적이 꾸준히 오르고 있습니다. — {dong} 중2 학부모',
-      '{dong} 영어 과외 시작하고 {schools} 첫 내신에서 2등급 받았어요. 신도시인데 이렇게 좋은 선생님이 계실 줄 몰랐어요. — {dong} 고1 학부모',
-      '{dong} 초등 수학 과외 받고 있는데 아이가 수학을 좋아하게 됐어요. 선생님이 정말 잘 이끌어주십니다. — {dong} 초4 학부모',
-      '{dong}에서 영어 선생님 찾았는데 너무 빠르게 연결해주셔서 놀랐어요. 아이가 영어를 즐기게 됐습니다. — {dong} 초5 학부모',
-      '{dong} 수학 과외 시작하고 {schools} 중간고사에서 처음으로 1등급 받았어요. — {dong} 고2 학부모',
+      '{dong} 이사 오자마자 수학 선생님을 연결해주셨어요. 새 학교 {schools} 스타일을 빠르게 파악해주셔서 첫 시험에서 좋은 성적 나왔습니다. — {dong} 학부모',
+      '{dong} 신도시라 좋은 선생님 찾기 어려울 것 같았는데 당일 매칭이 됐어요. 수학 성적이 꾸준히 오르고 있습니다. — {dong} 학부모',
+      '{dong} 영어 과외 시작하고 {schools} 첫 내신에서 2등급 받았어요. 신도시인데 이렇게 좋은 선생님이 계실 줄 몰랐어요. — {dong} 학부모',
+      '{dong} 초등 수학 과외 받고 있는데 아이가 수학을 좋아하게 됐어요. 선생님이 정말 잘 이끌어주십니다. — {dong} 학부모',
+      '{dong}에서 영어 선생님 찾았는데 너무 빠르게 연결해주셔서 놀랐어요. 아이가 영어를 즐기게 됐습니다. — {dong} 학부모',
+      '{dong} 수학 과외 시작하고 {schools} 중간고사에서 처음으로 1등급 받았어요. — {dong} 학부모',
     ],
   },
   // C: 산업단지
@@ -2196,11 +2196,11 @@ const CATEGORY_TEMPLATES = {
       '{dong}은 IT·제조업 종사자 가정이 많아 영어 교육 수요가 높습니다. {schools} 내신 영어와 수능 영어를 체계적으로 준비해드립니다.',
     ],
     reviews: [
-      '{dong} IT 직장 다니다 보니 아이 수학을 못 봐줬는데 선생님이 꼼꼼하게 봐주셔서 정말 감사합니다. — {dong} 초6 학부모',
-      '{dong} 수학 과외 받고 있어요. 이공계 맞춤으로 심화 내용까지 다뤄주셔서 아이가 이공계 진학 목표가 뚜렷해졌어요. — {dong} 중3 학부모',
-      '{dong} 맞벌이라 시간이 없는데 선생님이 맞춰주시니 너무 편해요. {schools} 내신도 잘 챙겨주십니다. — {dong} 고1 학부모',
-      '{dong} 영어 과외 받고 처음으로 내신 2등급 받았어요. — {dong} 고2 학부모',
-      '{dong} 수학 선생님이 연구원 출신이시라 설명이 정말 논리적이에요. — {dong} 중2 학부모',
+      '{dong} IT 직장 다니다 보니 아이 수학을 못 봐줬는데 선생님이 꼼꼼하게 봐주셔서 정말 감사합니다. — {dong} 학부모',
+      '{dong} 수학 과외 받고 있어요. 이공계 맞춤으로 심화 내용까지 다뤄주셔서 아이가 이공계 진학 목표가 뚜렷해졌어요. — {dong} 학부모',
+      '{dong} 맞벌이라 시간이 없는데 선생님이 맞춰주시니 너무 편해요. {schools} 내신도 잘 챙겨주십니다. — {dong} 학부모',
+      '{dong} 영어 과외 받고 처음으로 내신 2등급 받았어요. — {dong} 학부모',
+      '{dong} 수학 선생님이 연구원 출신이시라 설명이 정말 논리적이에요. — {dong} 학부모',
     ],
   },
   // D: 군인가족
@@ -2214,9 +2214,9 @@ const CATEGORY_TEMPLATES = {
       '{dong}은 군인 자녀 비율이 높아 전학 후 빠른 적응이 중요합니다. {schools} 영어 내신 스타일을 빠르게 파악해 첫 시험부터 안정적인 성적을 유지할 수 있도록 지도합니다.',
     ],
     reviews: [
-      '{dong} 전임 후 바로 수학 선생님을 연결해주셨어요. {schools} 시험 스타일을 빠르게 파악해주셔서 첫 시험에서 좋은 성적 나왔습니다. — {dong} 고1 학부모',
-      '자주 이사 다니는 군인 가족인데 {dong}에서도 빠르게 영어 선생님을 찾을 수 있었어요. — {dong} 중2 학부모',
-      '{dong} 수학 과외 받고 이사 와서도 성적이 유지됐어요. 정말 감사합니다. — {dong} 중3 학부모',
+      '{dong} 전임 후 바로 수학 선생님을 연결해주셨어요. {schools} 시험 스타일을 빠르게 파악해주셔서 첫 시험에서 좋은 성적 나왔습니다. — {dong} 학부모',
+      '자주 이사 다니는 군인 가족인데 {dong}에서도 빠르게 영어 선생님을 찾을 수 있었어요. — {dong} 학부모',
+      '{dong} 수학 과외 받고 이사 와서도 성적이 유지됐어요. 정말 감사합니다. — {dong} 학부모',
     ],
   },
   // E: 대학가
@@ -2232,12 +2232,12 @@ const CATEGORY_TEMPLATES = {
       '{dong}은 어학·인문 계열 강세 지역으로 영어 교육 수준이 높습니다. {schools} 영어 내신을 완벽히 분석하고 수능 독해·어법 전 영역을 체계적으로 지도합니다.',
     ],
     reviews: [
-      '{dong}에서 수학 선생님 찾았는데 인근 대학 출신 선생님을 매칭해주셔서 설명이 정말 명쾌해요. — {dong} 고1 학부모',
-      '{dong} 수학 과외 받고 처음으로 수학 1등급 받았어요. 선생님 실력이 정말 좋으세요. — {dong} 고2 학부모',
-      '{dong} 영어 과외 받고 {schools} 내신 1등급 받았습니다. 지문 분석 방법이 완전히 달라졌어요. — {dong} 고1 학부모',
-      '{dong} 수학 선생님이 의대 출신이신데 정말 체계적으로 가르쳐주세요. — {dong} 고3 학부모',
-      '{dong} 영어 선생님이 영어영문학과 출신이시라 설명이 너무 좋아요. — {dong} 중3 학부모',
-      '{dong} 과외 받고 성적이 꾸준히 올라 SKY 목표가 현실이 됐어요. — {dong} 고2 학부모',
+      '{dong}에서 수학 선생님 찾았는데 인근 대학 출신 선생님을 매칭해주셔서 설명이 정말 명쾌해요. — {dong} 학부모',
+      '{dong} 수학 과외 받고 처음으로 수학 1등급 받았어요. 선생님 실력이 정말 좋으세요. — {dong} 학부모',
+      '{dong} 영어 과외 받고 {schools} 내신 1등급 받았습니다. 지문 분석 방법이 완전히 달라졌어요. — {dong} 학부모',
+      '{dong} 수학 선생님이 의대 출신이신데 정말 체계적으로 가르쳐주세요. — {dong} 학부모',
+      '{dong} 영어 선생님이 영어영문학과 출신이시라 설명이 너무 좋아요. — {dong} 학부모',
+      '{dong} 과외 받고 성적이 꾸준히 올라 SKY 목표가 현실이 됐어요. — {dong} 학부모',
     ],
   },
   // F: 농촌읍면
@@ -2251,9 +2251,9 @@ const CATEGORY_TEMPLATES = {
       '{dong}은 읍면 지역이지만 올케어스터디의 방문 과외로 도시와 같은 수준의 영어 교육을 받을 수 있습니다. {schools} 내신 영어를 합리적인 비용으로 체계적으로 준비합니다.',
     ],
     reviews: [
-      '{dong}은 학원이 없어 걱정이었는데 방문 수학 과외로 완벽히 해결됐어요. {schools} 성적이 확 올랐습니다. — {dong} 중2 학부모',
-      '{dong} 영어 과외 받고 처음으로 내신 2등급 받았어요. 집에서 배우니 아이도 편해하고 집중도 잘 해요. — {dong} 중3 학부모',
-      '{dong}에서 수학 선생님 찾기 어려울 것 같았는데 바로 연결해주셔서 감사해요. — {dong} 초6 학부모',
+      '{dong}은 학원이 없어 걱정이었는데 방문 수학 과외로 완벽히 해결됐어요. {schools} 성적이 확 올랐습니다. — {dong} 학부모',
+      '{dong} 영어 과외 받고 처음으로 내신 2등급 받았어요. 집에서 배우니 아이도 편해하고 집중도 잘 해요. — {dong} 학부모',
+      '{dong}에서 수학 선생님 찾기 어려울 것 같았는데 바로 연결해주셔서 감사해요. — {dong} 학부모',
     ],
   },
   // G: 도서
@@ -2266,8 +2266,8 @@ const CATEGORY_TEMPLATES = {
       '{dong} 영어과외는 온라인으로 {schools} 내신 영어를 집중 관리합니다. 도서 지역이지만 최고의 영어 선생님과 1:1 온라인 수업으로 학습 격차 없이 준비할 수 있습니다.',
     ],
     reviews: [
-      '{dong} 섬에서도 온라인 수학 과외로 성적을 올릴 수 있었어요. 선생님이 정말 꼼꼼하게 봐주십니다. — {dong} 중3 학부모',
-      '{dong} 온라인 영어 과외 받고 {schools} 내신 영어가 안정됐어요. — {dong} 고1 학부모',
+      '{dong} 섬에서도 온라인 수학 과외로 성적을 올릴 수 있었어요. 선생님이 정말 꼼꼼하게 봐주십니다. — {dong} 학부모',
+      '{dong} 온라인 영어 과외 받고 {schools} 내신 영어가 안정됐어요. — {dong} 학부모',
     ],
   },
   // H: 일반도심
@@ -2283,12 +2283,12 @@ const CATEGORY_TEMPLATES = {
       '{dong}에서 영어 과외를 시작하면 {schools} 내신 영어와 수능 영어를 동시에 준비할 수 있습니다. 학생의 현재 수준과 목표에 맞는 최적의 영어 선생님을 48시간 내 연결해드립니다.',
     ],
     reviews: [
-      '{dong} 수학 과외 시작하고 {schools} 중간고사에서 등급이 올랐어요. 선생님이 취약 단원을 정확히 짚어주셨습니다. — {dong} 중3 학부모',
-      '{dong} 영어 과외 받고 처음으로 내신 영어 2등급 받았어요. {schools} 시험 스타일을 너무 잘 아시더라고요. — {dong} 고1 학부모',
-      '{dong} 수학 선생님이 아이 수준에 맞게 가르쳐주시니 스트레스 없이 잘 따라가요. — {dong} 중2 학부모',
-      '{dong} 영어 과외 시작하고 수능 영어 독해 속도가 확실히 빨라졌어요. — {dong} 고2 학부모',
-      '{dong} 수학 과외 받고 있어요. 합리적인 비용에 정말 꼼꼼하게 가르쳐주셔서 만족합니다. — {dong} 중1 학부모',
-      '{dong} 영어 선생님이 학교 지문 분석을 정말 꼼꼼하게 해주세요. 변형 문제에도 강해졌습니다. — {dong} 고1 학부모',
+      '{dong} 수학 과외 시작하고 {schools} 중간고사에서 등급이 올랐어요. 선생님이 취약 단원을 정확히 짚어주셨습니다. — {dong} 학부모',
+      '{dong} 영어 과외 받고 처음으로 내신 영어 2등급 받았어요. {schools} 시험 스타일을 너무 잘 아시더라고요. — {dong} 학부모',
+      '{dong} 수학 선생님이 아이 수준에 맞게 가르쳐주시니 스트레스 없이 잘 따라가요. — {dong} 학부모',
+      '{dong} 영어 과외 시작하고 수능 영어 독해 속도가 확실히 빨라졌어요. — {dong} 학부모',
+      '{dong} 수학 과외 받고 있어요. 합리적인 비용에 정말 꼼꼼하게 가르쳐주셔서 만족합니다. — {dong} 학부모',
+      '{dong} 영어 선생님이 학교 지문 분석을 정말 꼼꼼하게 해주세요. 변형 문제에도 강해졌습니다. — {dong} 학부모',
     ],
   },
 };
@@ -2378,9 +2378,9 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   const intro = CAT_DESC[cat]||CAT_DESC['H'];
 
   const GRADES_3 = [
-    {en:'elementary',ko:'초등',label:'초등학교',desc:`초1~초6 전 학년 수학·영어·국어·과학 기초부터 탄탄하게 관리합니다.`},
-    {en:'middle',ko:'중등',label:'중학교',desc:`중1~중3 내신 관리와 고등학교 준비를 동시에 진행합니다.`},
-    {en:'high',ko:'고등',label:'고등학교',desc:`고1~고3 내신 등급 관리와 수능 대비를 체계적으로 진행합니다.`},
+    {en:'elementary',ko:'초등',label:'초등학교',desc:`초등 전 학년 수학·영어·국어·과학 기초부터 탄탄하게 관리합니다.`},
+    {en:'middle',ko:'중등',label:'중학교',desc:`중등 내신 관리와 고등학교 준비를 동시에 진행합니다.`},
+    {en:'high',ko:'고등',label:'고등학교',desc:`고등 내신 등급 관리와 수능 대비를 체계적으로 진행합니다.`},
   ];
 
   const subjList = Object.entries(SUBJECTS);
@@ -2415,6 +2415,12 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
     <div class="info-item"><div class="info-num">247명</div><div class="info-label">등록 선생님</div></div>
     <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
+  </div>
+  <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
+    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80" alt="${dong} 과외" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.65),transparent);display:flex;align-items:center;padding:32px">
+      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">${gu} · ${dong}</div><div style="font-size:28px;font-weight:900">${dong} 과외</div></div>
+    </div>
   </div>
   <div class="art-body">
     <h2>${dong} 과외 안내</h2>
@@ -2491,23 +2497,11 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
 
   const gradeDesc = (() => {
     const GRADE_DESC_MAP = {
-      '초1': `${dong} 초1 수학과외는 수 세기·덧셈·뺄셈 기초를 놀이처럼 익히며 수학에 대한 긍정적 경험을 만들어줍니다.`,
-      '초2': `${dong} 초2 과외는 두 자리 수 연산과 기초를 체계적으로 다집니다.`,
-      '초3': `${dong} 초3 과외는 곱셈·나눗셈·분수 개념이 처음 등장하는 중요한 시기입니다.`,
-      '초4': `${dong} 초4 과외는 소수·분수 연산 등 개념이 급격히 어려워지는 시기입니다.`,
-      '초5': `${dong} 초5 과외는 중학 수학의 기초가 되는 핵심 개념을 완성합니다.`,
-      '초6': `${dong} 초6 과외는 중학교 연결 개념을 완성하고 중학교를 미리 대비합니다.`,
-      '중1': `${dong} 중1 과외는 정수·유리수·방정식 등 중학 수학의 가장 중요한 기초를 완성합니다.`,
-      '중2': `${dong} 중2 과외는 연립방정식·일차함수 등 핵심 개념을 집중 학습합니다.`,
-      '중3': `${dong} 중3 과외는 이차방정식·이차함수로 고교 수학 준비를 완성합니다.`,
-      '고1': `${dong} 고1 과외는 수학Ⅰ·수학Ⅱ 기초를 다지고 내신과 수능을 동시에 준비합니다.`,
-      '고2': `${dong} 고2 과외는 내신 등급 관리와 수능 핵심 단원을 집중 공략합니다.`,
-      '고3': `${dong} 고3 과외는 수능 실전 대비와 마지막 내신 관리에 집중합니다.`,
-      '초등': `${dong} 초등 과외는 기초 개념부터 차근차근 쌓아 중학교를 준비합니다.`,
-      '중등': `${dong} 중등 과외는 중학 전 과정을 체계적으로 관리합니다.`,
-      '고등': `${dong} 고등 과외는 내신과 수능을 동시에 관리하는 맞춤 커리큘럼으로 운영합니다.`,
+      '초등': `${dong} 초등 과외는 기초 개념부터 차근차근 쌓아 중학교를 준비합니다. 수 개념·연산·도형·분수 등 전 과정을 1:1 맞춤 지도로 탄탄하게 완성합니다.`,
+      '중등': `${dong} 중등 과외는 중학 전 과정을 체계적으로 관리합니다. 핵심 단원을 집중 보완하고 고등학교를 미리 준비합니다.`,
+      '고등': `${dong} 고등 과외는 내신과 수능을 동시에 관리하는 맞춤 커리큘럼으로 운영합니다. 취약 단원을 집중 보완하고 수능 핵심 유형을 반복 훈련합니다.`,
     };
-    return GRADE_DESC_MAP[grade] || `${dong} ${grade} 과외는 학생 수준에 맞춘 1:1 맞춤 지도를 제공합니다.`;
+    return GRADE_DESC_MAP[grade] || GRADE_DESC_MAP['고등'];
   })();
 
   const review1 = hashSelect(dong+'r1', reviews).replace(/{dong}/g,dong).replace(/{schools}/g,schools).replace(/{gu}/g,gu);
@@ -2548,14 +2542,14 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     `${dong} 1:1과외`, `${gu} ${grade} ${subject}`, `${dong} 내신 ${subject}`];
   const keywordTags = keywords.map(k=>`<span class="keyword-tag">${k}</span>`).join('');
 
-  const title = `${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${gradeObj.label} ${subject} 맞춤 1:1 과외 - 올케어스터디`;
+  const title = `${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 맞춤 1:1 과외 - 올케어스터디`;
   const desc = `${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
   const bc = [{name:'홈',url:'/'},{name:sidoLabel,url:`/${sidoEn}`},{name:gu,url:`/${sidoEn}/${guEn}`},{name:`${dong} ${subject}과외`,url:canonical}];
 
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} ${grade} ${subject}과외</span></div>
   <div class="art-tag">${subj.emoji} ${gu} · ${dong} · ${grade} · ${subject}</div>
-  <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${gradeObj.label} ${subject} 맞춤 1:1 과외</h1>
+  <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 맞춤 1:1 과외</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 5분</span></div>
   <div class="info-box">
     <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
@@ -2573,7 +2567,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     <p>${mainText}</p>
     <p>${catDesc}</p>
     <p>${gradeDesc}</p>
-    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 ${gradeObj.label} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
+    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 ${grade} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
     <h2>${dong} ${grade} ${subject}과외 선생님 특징</h2>
     <p><strong>① 학교 기출 완벽 분석</strong> — ${schools} ${subject} 시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다.</p>
     <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다.</p>
@@ -2623,26 +2617,16 @@ function makeDongPage(dongEn, subjectEn, gradeEn) {
   // 학년별 특화 설명
   const gradeGroup = gradeObj.group || grade;
   const GRADE_DESC = {
-    '초1': { math: `${dong} 초1 수학과외는 수 세기·덧셈·뺄셈 기초 개념을 놀이처럼 익히는 방식으로 진행합니다. 처음 수학을 배우는 시기인 만큼 수학에 대한 긍정적 경험을 만들어주는 것이 핵심입니다.`, english: `${dong} 초1 영어과외는 파닉스·알파벳부터 시작해 영어를 자연스럽게 접할 수 있도록 도와줍니다. 영어 노래·게임을 활용한 흥미 유발 방식으로 진행합니다.` },
-    '초2': { math: `${dong} 초2 수학과외는 두 자리 수 연산과 도형 기초를 체계적으로 다집니다. 연산 실수를 줄이는 훈련과 함께 수학적 사고력 기초를 형성합니다.`, english: `${dong} 초2 영어과외는 파닉스 완성 후 기초 단어·문장 읽기로 이어지는 단계적 지도를 제공합니다.` },
-    '초3': { math: `${dong} 초3 수학과외는 곱셈·나눗셈·분수 개념이 처음 등장하는 중요한 시기입니다. 개념을 정확히 이해하고 응용력을 키우는 1:1 맞춤 지도를 제공합니다.`, english: `${dong} 초3 영어과외는 학교 영어 교과가 본격 시작되는 시기에 맞춰 교과서 기반 내신과 기초 회화를 병행합니다.` },
-    '초4': { math: `${dong} 초4 수학과외는 소수·분수 연산과 도형 넓이 등 개념이 급격히 어려워지는 시기입니다. 개념 완성 없이 넘어가면 이후 중학 수학에서 큰 어려움을 겪으므로 기초를 확실히 다집니다.`, english: `${dong} 초4 영어과외는 읽기·쓰기 실력을 본격적으로 키우는 시기입니다. 영어 문장 구조를 익히고 짧은 글쓰기까지 이어지는 체계적인 커리큘럼으로 운영합니다.` },
-    '초5': { math: `${dong} 초5 수학과외는 약수·배수·분수의 사칙연산 등 중학 수학의 기초가 되는 핵심 개념을 완성합니다. 이 시기 수학 기초가 탄탄해야 중학교 내신 관리가 수월합니다.`, english: `${dong} 초5 영어과외는 중학교 대비 문법 기초와 독해 능력을 키웁니다. 영어 일기 쓰기·독서록 작성 등 실용적인 영어 표현력 향상에 집중합니다.` },
-    '초6': { math: `${dong} 초6 수학과외는 비율·원의 넓이·비례식 등 중학 수학 연결 개념을 완성하고 중학교 수학을 미리 대비합니다. 중학교 내신 준비를 위한 선행 학습도 병행합니다.`, english: `${dong} 초6 영어과외는 중학교 영어 교과서를 미리 대비하는 예습 과외와 함께 현재 교과서 내신 완성을 병행합니다. 중학 문법 기초를 미리 다져두는 것이 핵심입니다.` },
-    '중1': { math: `${dong} 중1 수학과외는 정수·유리수·방정식 등 중학 수학의 가장 중요한 기초 개념을 완성합니다. 초등에서 중등으로 넘어오면서 수학이 갑자기 어려워지는 시기로, 1:1 맞춤 지도로 개념을 확실히 잡아드립니다.`, english: `${dong} 중1 영어과외는 중학교 첫 내신을 성공적으로 준비합니다. 문법 기초·어휘·읽기·쓰기를 체계적으로 다루며 첫 시험에서 좋은 성적을 받을 수 있도록 집중 지도합니다.` },
-    '중2': { math: `${dong} 중2 수학과외는 일차함수·연립방정식·부등식 등 중학 수학의 핵심 단원을 완성합니다. 내신 경쟁이 본격화되는 시기로 취약 단원을 정확히 파악해 집중 보완합니다.`, english: `${dong} 중2 영어과외는 문법 심화와 내신 지문 분석 능력을 키웁니다. 중2 영어 내신에서 변형 문제와 서술형이 본격 등장하므로 이에 특화된 맞춤 지도를 제공합니다.` },
-    '중3': { math: `${dong} 중3 수학과외는 이차방정식·함수·통계 등 고등 수학의 연결 개념을 완성하고 고등학교 진학을 철저히 대비합니다. 고등 내신과 수능을 위한 선행 학습도 병행합니다.`, english: `${dong} 중3 영어과외는 고등 영어 대비 독해력·어법 기초를 완성합니다. 중학 내신 1등급을 유지하면서 고등학교 영어를 미리 준비하는 전략적 커리큘럼으로 운영합니다.` },
-    '고1': { math: `${dong} 고1 수학과외는 고등 수학의 핵심인 수와 연산·방정식·부등식·함수 기초를 완성합니다. 고1 내신이 수능 수학의 기초가 되므로 개념을 확실히 잡는 것이 가장 중요합니다.`, english: `${dong} 고1 영어과외는 고등 영어의 첫 내신을 성공적으로 준비합니다. 수능 영어 유형에 맞춘 독해 전략과 내신 지문 분석을 병행해 내신과 수능을 동시에 대비합니다.` },
-    '고2': { math: `${dong} 고2 수학과외는 수학Ⅱ·확률과 통계·미적분 등 수능 핵심 단원을 집중 공략합니다. 내신 등급과 수능 성적을 동시에 관리하는 체계적인 커리큘럼으로 운영합니다.`, english: `${dong} 고2 영어과외는 수능 영어 1등급을 목표로 독해 속도와 정확도를 끌어올립니다. 내신 영어 지문 분석과 수능 기출 유형 훈련을 병행합니다.` },
-    '고3': { math: `${dong} 고3 수학과외는 수능 수학 최고점을 목표로 취약 단원 집중 보완과 실전 모의고사 분석을 병행합니다. D-100일 집중 과외부터 수능 전날까지 체계적인 수능 수학 완성 프로그램을 제공합니다.`, english: `${dong} 고3 영어과외는 수능 영어 1등급 확보를 위한 집중 과외입니다. 빠른 독해·어법·빈칸추론·순서배열 등 취약 유형을 집중 공략하고 실전 시간 관리 훈련을 병행합니다.` },
+    '초등': { math: `${dong} 초등 수학과외는 기초 개념부터 차근차근 쌓아 중학교를 준비합니다. 수 개념·연산·도형·분수 등 초등 수학 전 과정을 1:1 맞춤 지도로 탄탄하게 완성합니다.`, english: `${dong} 초등 영어과외는 파닉스부터 시작해 읽기·쓰기·회화까지 단계적으로 지도합니다.` },
+    '중등': { math: `${dong} 중등 수학과외는 중학 수학 전 과정을 체계적으로 관리합니다. 방정식·함수·확률 등 핵심 단원을 집중 보완하고 고등 수학을 미리 준비합니다.`, english: `${dong} 중등 영어과외는 내신 지문 분석과 문법 심화로 내신 성적을 관리합니다.` },
+    '고등': { math: `${dong} 고등 수학과외는 내신과 수능을 동시에 관리하는 맞춤 커리큘럼으로 운영합니다. 취약 단원을 집중 보완하고 수능 핵심 유형을 반복 훈련합니다.`, english: `${dong} 고등 영어과외는 수능 1등급을 목표로 독해 속도·정확도를 끌어올립니다.` },
   };
-  // 초등/중등/고등 통합 키도 처리
   const gradeDescFallback = {
-    '초등': GRADE_DESC['초5'],
-    '중등': GRADE_DESC['중2'],
-    '고등': GRADE_DESC['고2'],
+    '초등': GRADE_DESC['초등'],
+    '중등': GRADE_DESC['중등'],
+    '고등': GRADE_DESC['고등'],
   };
-  const gradeDesc = (GRADE_DESC[grade] || gradeDescFallback[grade] || GRADE_DESC['중2'])[subjectKey] || '';
+  const gradeDesc = (GRADE_DESC[grade] || GRADE_DESC['고등'])[subjectKey] || '';
 
   // 지역 내 학교명 (REGIONS에서 가져오거나 기본값)
   const regionArea = REGIONS[sido]?.areas[gu];
@@ -2666,7 +2650,7 @@ function makeDongPage(dongEn, subjectEn, gradeEn) {
     sido === '대전' ? '대대전광역시' : sido === '울산' ? '울산광역시' :
     sido === '세종' ? '세종특별자치시' : sido === '강원' ? '강원특별자치도' : sido;
 
-  const title = `${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${gradeObj.label} ${subject} 1:1 맞춤 과외 - 올케어스터디`;
+  const title = `${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 1:1 맞춤 과외 - 올케어스터디`;
   const desc = `${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
   const canonical = `/${sidoEn}/${guEn}/${dongEn}/${gradeEn}/${subjectEn}`;
 
@@ -2737,7 +2721,7 @@ function makeDongPage(dongEn, subjectEn, gradeEn) {
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} ${grade} ${subject}과외</span></div>
   <div class="art-tag">${subj.emoji} ${gu} · ${dong} · ${grade} · ${subject}</div>
-  <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${gradeObj.label} ${subject} 맞춤 1:1 과외</h1>
+  <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 맞춤 1:1 과외</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 5분</span></div>
   <div class="info-box">
     <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
@@ -2755,7 +2739,7 @@ function makeDongPage(dongEn, subjectEn, gradeEn) {
     <p>${mainText}</p>
     <p>${catDesc}</p>
     <p>${gradeDesc}</p>
-    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 ${gradeObj.label} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
+    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 ${grade} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
 
     <h2>${dong} ${grade} ${subject}과외 선생님 특징</h2>
     <p><strong>① 학교 기출 완벽 분석</strong> — ${schools} ${subject} 시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다. 단순 개념 설명이 아닌 실제 시험에서 나오는 유형 중심으로 집중 지도합니다.</p>
@@ -2798,52 +2782,10 @@ function makeDongPage(dongEn, subjectEn, gradeEn) {
 // ── 강남구 페이지 ──────────────────────────────────────────
 
 function makeGangnamPage() {
-  const dongCards = Object.entries(DONG_DB)
-    .filter(([k,v]) => v[1] === '강남구')
-    .map(([k,v]) => `<a href="/seoul/gangnam/${k}/high1/math" class="rel-card"><div class="rc-tag">강남구 · ${v[2]}</div><div class="rc-title">${v[2]} 과외 | 강남구 ${v[2]} 맞춤 1:1 과외</div></a>`)
-    .join('');
-
-  const gradeLinks = ['elem1','elem2','elem3','elem4','elem5','elem6','mid1','mid2','mid3','high1','high2','high3']
-    .map(g => `<a href="/seoul/gangnam/daichi/${g}/math" class="tag" style="font-size:14px;padding:10px 20px">${GRADE_MAP[g]}</a>`)
-    .join('');
-
-  const subjLinks = Object.entries(SUBJECTS)
-    .map(([s,v]) => `<a class="subj-link" href="/seoul/gangnam/daichi/high1/${SUBJECT_EN[s]||s}"><span>${v.emoji} 강남구 고1 ${s}과외</span><span>→</span></a>`)
-    .join('');
-
-  const title = '강남구 과외 | 서울 강남구 대치동·압구정·역삼 맞춤 1:1 과외 - 올케어스터디';
-  const desc = '강남구 과외 전문. 초1~고3 전 학년 수학·영어·국어·과학 1:1 방문 과외. 기출 분석 검증 선생님. 무료 상담 010-6834-8080';
-  const bc = [{name:'홈',url:'/'},{name:'서울특별시',url:'/seoul'},{name:'강남구',url:'/seoul/gangnam'}];
-
-  const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/seoul">서울특별시</a> › <span>강남구</span></div>
-  <div class="art-tag">🏙 서울 · 강남구</div>
-  <h1 class="art-title">강남구 과외 | 대치동·압구정·역삼 맞춤 1:1 과외</h1>
-  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
-  <div class="info-box">
-    <div class="info-item"><div class="info-num">247명</div><div class="info-label">등록 선생님</div></div>
-    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
-    <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담 신청</div></div>
-  </div>
-  <div class="art-body">
-    <h2>강남구 동별 과외 안내</h2>
-    <div class="related-grid">${dongCards}</div>
-    <h2>학년별 과외 선택</h2>
-    <div class="tag-wrap"><div class="tag-label">🎓 학년</div><div class="tags">${gradeLinks}</div></div>
-    <h2>과목별 과외</h2>
-    <div class="subj-grid">${subjLinks}</div>
-  </div>
-  <div class="cta-box">
-    <h3>강남구 맞춤 과외 선생님 찾기</h3>
-    <p>무료 상담 신청 시 전문 코디네이터가 연결해드립니다</p>
-    <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="/contact">✉️ 문의하기</a>
-    </div>
-  </div>
-</div>`;
-  return wrap(title, desc, '/seoul/gangnam', body, bc);
+  // 강남구는 makeAreaPage로 통일
+  return makeAreaPage('서울', '강남구');
 }
+
 
 // ── 시도 페이지 ──────────────────────────────────────────
 
@@ -2901,7 +2843,7 @@ function makeAreaPage(rk, ak) {
   if (!region || !area) return null;
 
   // 강남구는 전용 페이지
-  if (rk === '서울' && ak === '강남구') return makeGangnamPage();
+  // 강남구 포함 모든 구군 동일 처리
 
   const distDongData = null;
   const distDesc = generateAreaFeature(ak, area.schools || '');
@@ -2958,11 +2900,21 @@ function makeAreaPage(rk, ak) {
   <div class="art-body">
     <h2>${ak} 과외 안내</h2>
     ${distDesc.split('<br><br>').map(p => `<p>${p}</p>`).join('\n    ')}
+    <p>올케어스터디는 <strong>${ak}</strong> 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <h2>${ak} 과외 특징</h2>
+    <p><strong>① 학교 기출 완벽 분석</strong> — ${area.schools} 시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다.</p>
+    <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. 맞지 않으면 무료 교체 가능합니다.</p>
+    <p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도를 정리해 학부모님께 공유합니다.</p>
+    <p><strong>④ 취약점 집중 보완</strong> — 단원별 취약점을 정확히 파악하고 집중 보완합니다.</p>
     <h3>주요 학교: ${area.schools}</h3>
     <h2>동별 과외 정보</h2>
     <div class="dong-grid">${dongCards}</div>
     <h2>과목별 과외 바로가기</h2>
     <div class="subj-grid">${subjLinks}</div>
+    <h2>자주 묻는 질문</h2>
+    <p><strong>Q. ${ak}에서 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드리며, 빠르면 당일 매칭도 가능합니다. ${area.schools} 기출을 잘 아는 선생님 위주로 추천해드립니다.</p>
+    <p><strong>Q. 학원을 다니는데 과외도 함께 해도 되나요?</strong><br>학원과 병행하는 취약 단원 집중 보완 과외가 효과적입니다. 학원 일정을 고려해 유연하게 스케줄을 조정합니다.</p>
+    <p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력·수업 방식에 따라 다르며, 첫 상담은 완전 무료입니다. 학부모님 예산에 맞는 선생님을 투명하게 안내해드립니다.</p>
   </div>
   <div class="cta-box">
     <h3>${ak} 맞춤 과외 신청</h3>
@@ -5315,11 +5267,6 @@ export default {
       const dongEn = parts[2];
       const gradeEn = parts[3];
       const subjectEn = parts[4];
-      // DONG_DB 영문키로 먼저 시도
-      if (DONG_DB[dongEn]) {
-        const page = makeDongPage(dongEn, subjectEn, gradeEn);
-        if (page) return new Response(page, { headers: h });
-      }
       // 로마자 슬러그 → 한글 동이름 역변환 후 페이지 생성
       {
         const dongName = fromRoman(parts[0], parts[1], dongEn);
@@ -5342,7 +5289,7 @@ export default {
           const sidoEn = SIDO_EN[kr5.sido]||kr5.sido;
           const distEn = DISTRICT_EN[kr5.district]||kr5.district;
           const canonical = `/${sidoEn}/${distEn}/${dongEn}/${gradeEn}/${subjectEn}`;
-          const title = `${dongName} ${grade} ${subject}과외 | ${kr5.district} ${dongName} ${gradeObj.label} ${subject} 1:1 맞춤 과외 - 올케어스터디`;
+          const title = `${dongName} ${grade} ${subject}과외 | ${kr5.district} ${dongName} ${grade} ${subject} 1:1 맞춤 과외 - 올케어스터디`;
           const desc = `${dongName} ${grade} ${subject}과외 전문. ${area.schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
           const bc = [{name:'홈',url:'/'},{name:region.label,url:`/${sidoEn}`},{name:kr5.district,url:`/${sidoEn}/${distEn}`},{name:`${dongName} ${subject}과외`,url:canonical}];
           const schools = area.schools || `${kr5.district} 주요 학교`;
@@ -5356,7 +5303,7 @@ export default {
           const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${region.label}</a> › <a href="/${sidoEn}/${distEn}">${kr5.district}</a> › <span>${dongName} ${grade} ${subject}과외</span></div>
   <div class="art-tag">${subj.emoji} ${kr5.district} · ${dongName} · ${grade} · ${subject}</div>
-  <h1 class="art-title">${dongName} ${grade} ${subject}과외 | ${kr5.district} ${dongName} ${gradeObj.label} ${subject} 맞춤 1:1 과외</h1>
+  <h1 class="art-title">${dongName} ${grade} ${subject}과외 | ${kr5.district} ${dongName} ${grade} ${subject} 맞춤 1:1 과외</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 4분</span></div>
   <div class="info-box">
     <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
@@ -5366,7 +5313,7 @@ export default {
   <div class="art-body">
     <h2>${dongName} ${grade} ${subject}과외 안내</h2>
     <p>${mainText}</p>
-    <p>${kr5.district} ${dongName} 지역 ${gradeObj.label} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
+    <p>${kr5.district} ${dongName} 지역 ${grade} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
     <h2>${dongName} ${subject}과외 특징</h2>
     <p><strong>학교 기출 분석</strong>: ${schools} 시험 출제 경향 집중 분석</p>
     <p><strong>검증된 선생님</strong>: 학력·경력·수업 시연 3단계 검증 완료</p>
