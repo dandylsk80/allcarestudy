@@ -1386,7 +1386,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
   <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
-    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80" alt="${dong} 과외" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
+    <img src="${(['https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80','https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=900&q=80','https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80','https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=900&q=80','https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80'])[_dh%5]}" alt="${dong} 과외" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
     <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.65),transparent);display:flex;align-items:center;padding:32px">
       <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">${gu} · ${dong}</div><div style="font-size:28px;font-weight:900">${dong} 과외</div></div>
     </div>
@@ -1492,15 +1492,16 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   const catDesc = CAT_DESC[cat] || CAT_DESC['H'];
 
   const SUBJ_IMAGES = {
-    '수학': 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=900&q=80',
-    '영어': 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=900&q=80',
-    '국어': 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900&q=80',
-    '과학': 'https://images.unsplash.com/photo-1532094349884-543559244e6a?w=900&q=80',
-    '사회': 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=900&q=80',
-    '코딩': 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80',
-    '논술': 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80',
+    '수학': ['https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=900&q=80','https://images.unsplash.com/photo-1509228468518-180dd4864904?w=900&q=80','https://images.unsplash.com/photo-1596495577886-d920f1fb7238?w=900&q=80'],
+    '영어': ['https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=900&q=80','https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80','https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80'],
+    '국어': ['https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900&q=80','https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=900&q=80','https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80'],
+    '과학': ['https://images.unsplash.com/photo-1532094349884-543559244e6a?w=900&q=80','https://images.unsplash.com/photo-1576086213369-97a306d36557?w=900&q=80','https://images.unsplash.com/photo-1564325724739-bae0bd08762c?w=900&q=80'],
+    '사회': ['https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=900&q=80','https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=900&q=80','https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=900&q=80'],
+    '코딩': ['https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80','https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80','https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80'],
+    '논술': ['https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80','https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=900&q=80','https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80'],
   };
-  const thumbImg = SUBJ_IMAGES[subject] || SUBJ_IMAGES['수학'];
+  const _imgs = SUBJ_IMAGES[subject] || SUBJ_IMAGES['수학'];
+  const thumbImg = _imgs[_dh2 % _imgs.length];
 
   const otherSubjects = Object.entries(SUBJECTS).filter(([s])=>s!==subject).map(([s,v])=>
     `<a class="subj-link" href="/${sidoEn}/${guEn}/${toRoman(dongName)}/${gradeEn}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${dong} ${s}과외</span><span>→</span></a>`
@@ -4054,7 +4055,9 @@ export default {
     // /{sido}/{gu}/{dong}/{grade}/{subject} (5단계 - 전국 동별 페이지)
     if (parts.length === 5) {
       const dongEn = parts[2];
-      const gradeEn = parts[3];
+      // 구버전 학년키 정규화: elem1~elem6→elementary, mid1~mid3→middle, high1~high3→high
+      const rawGrade = parts[3];
+      const gradeEn = /^elem/.test(rawGrade) ? 'elementary' : /^mid/.test(rawGrade) ? 'middle' : /^high[123]$/.test(rawGrade) ? 'high' : rawGrade;
       const subjectEn = parts[4];
       // 로마자 슬러그 → 한글 동이름 역변환 후 페이지 생성
       {
@@ -4064,71 +4067,10 @@ export default {
           if (page) return new Response(page, { headers: h });
         }
       }
-      // DONG_DB에 없는 동(읍/면 등) → 구/군 기반 fallback 페이지 생성
-      const kr5 = toKr(parts[0], parts[1], null, parts[3], parts[4]);
-      if (kr5.sido && kr5.district) {
-        const dongName = DONG_MAP[dongEn] || dongEn;
-        const grade = GRADE_MAP[gradeEn] || gradeEn;
-        const subject = SUBJECT_MAP[subjectEn] || subjectEn;
-        const region = REGIONS[kr5.sido];
-        const area = region?.areas[kr5.district];
-        const gradeObj = GRADES[grade];
-        const subj = SUBJECTS[subject];
-        if (area && gradeObj && subj) {
-          const sidoEn = SIDO_EN[kr5.sido]||kr5.sido;
-          const distEn = DISTRICT_EN[kr5.district]||kr5.district;
-          const canonical = `/${sidoEn}/${distEn}/${dongEn}/${gradeEn}/${subjectEn}`;
-          const title = `${dongName} ${grade} ${subject}과외 | ${kr5.district} ${dongName} ${grade} ${subject} 1:1 맞춤 과외 - 올케어스터디`;
-          const desc = `${dongName} ${grade} ${subject}과외 전문. ${area.schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
-          const bc = [{name:'홈',url:'/'},{name:region.label,url:`/${sidoEn}`},{name:kr5.district,url:`/${sidoEn}/${distEn}`},{name:`${dongName} ${subject}과외`,url:canonical}];
-          const schools = area.schools || `${kr5.district} 주요 학교`;
-          const tmpl = CATEGORY_TEMPLATES['H'];
-          const subjectKey = subject === '수학' ? 'math' : subject === '영어' ? 'english' : 'math';
-          const mainText = (tmpl[subjectKey]||tmpl.math)[0]
-            .replace(/{dong}/g,dongName).replace(/{gu}/g,kr5.district)
-            .replace(/\{sido\}/g,kr5.sido).replace(/\{subject\}/g,subject)
-            .replace(/\{grade\}/g,grade).replace(/{schools}/g,schools);
-          const review = tmpl.reviews[0].replace(/{dong}/g,dongName).replace(/{schools}/g,schools).replace(/{gu}/g,kr5.district);
-          const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${region.label}</a> › <a href="/${sidoEn}/${distEn}">${kr5.district}</a> › <span>${dongName} ${grade} ${subject}과외</span></div>
-  <div class="art-tag">${subj.emoji} ${kr5.district} · ${dongName} · ${grade} · ${subject}</div>
-  <h1 class="art-title">${dongName} ${grade} ${subject}과외 | ${kr5.district} ${dongName} ${grade} ${subject} 맞춤 1:1 과외</h1>
-  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 4분</span></div>
-  <div class="info-box">
-    <div class="info-item"><div class="info-num">${dInfoNums[0]}명</div><div class="info-label">${subject} 선생님</div></div>
-    <div class="info-item"><div class="info-num">${dInfoNums[1]}%</div><div class="info-label">만족도</div></div>
-    <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
-  </div>
-  <div class="art-body">
-    <h2>${dongName} ${grade} ${subject}과외 안내</h2>
-    <p>${mainText}</p>
-    <p>${kr5.district} ${dongName} 지역 ${grade} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
-    <h2>${dongName} ${subject}과외 특징</h2>
-    <p><strong>학교 기출 분석</strong>: ${schools} 시험 출제 경향 집중 분석</p>
-    <p><strong>검증된 선생님</strong>: 학력·경력·수업 시연 3단계 검증 완료</p>
-    <p><strong>주간 학습 보고서</strong>: 매주 학습 현황 학부모 공유</p>
-    <p><strong>취약점 집중 보완</strong>: ${subject} 취약 단원 정확히 파악해 집중 보완</p>
-    <h2>${dongName} ${subject}과외 실제 후기</h2>
-    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic">"${review}"</blockquote>
-    <h2>자주 묻는 질문</h2>
-    <p><strong>Q. ${dongName}에서 ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${schools} 기출을 잘 아는 선생님 위주로 추천합니다.</p>
-    <p><strong>Q. ${grade} ${subject} 성적이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다.</p>
-  </div>
-  <div class="cta-box">
-    <h3>${dongName} ${grade} ${subject}과외 무료 상담</h3>
-    <p>24시간 내 전문 코디네이터가 연락드립니다</p>
-    <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="/contact">✉️ 문의하기</a>
-    </div>
-  </div>
-</div>`;
-          return new Response(wrap(title, desc, canonical, body, bc), { headers: h });
-        }
-      }
+
     }
 
-    // /seoul/gangnam/high/math (4단계)
+    // /seoul/gangnam/high/math (4단계)    // /seoul/gangnam/high/math (4단계)
     if (parts.length === 4) {
       const kr = toKr(parts[0], parts[1], null, parts[2], parts[3]);
       const page = makeArticlePage(kr.sido, kr.district, kr.grade, kr.subject);
