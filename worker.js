@@ -5034,52 +5034,52 @@ export default {
         if (area && gradeObj && subj) {
           const sidoEn = SIDO_EN[kr5.sido]||kr5.sido;
           const distEn = DISTRICT_EN[kr5.district]||kr5.district;
-          const canonical = \`/\${sidoEn}/\${distEn}/\${dongEn}/\${gradeEn}/\${subjectEn}\`;
-          const title = \`\${dongName} \${grade} \${subject}과외 | \${kr5.district} \${dongName} \${gradeObj.label} \${subject} 1:1 맞춤 과외 - 올케어스터디\`;
-          const desc = \`\${dongName} \${grade} \${subject}과외 전문. \${area.schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080\`;
-          const bc = [{name:'홈',url:'/'},{name:region.label,url:\`/\${sidoEn}\`},{name:kr5.district,url:\`/\${sidoEn}/\${distEn}\`},{name:\`\${dongName} \${subject}과외\`,url:canonical}];
-          const schools = area.schools || \`\${kr5.district} 주요 학교\`;
+          const canonical = `/${sidoEn}/${distEn}/${dongEn}/${gradeEn}/${subjectEn}`;
+          const title = `${dongName} ${grade} ${subject}과외 | ${kr5.district} ${dongName} ${gradeObj.label} ${subject} 1:1 맞춤 과외 - 올케어스터디`;
+          const desc = `${dongName} ${grade} ${subject}과외 전문. ${area.schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
+          const bc = [{name:'홈',url:'/'},{name:region.label,url:`/${sidoEn}`},{name:kr5.district,url:`/${sidoEn}/${distEn}`},{name:`${dongName} ${subject}과외`,url:canonical}];
+          const schools = area.schools || `${kr5.district} 주요 학교`;
           const tmpl = CATEGORY_TEMPLATES['H'];
           const subjectKey = subject === '수학' ? 'math' : subject === '영어' ? 'english' : 'math';
           const mainText = (tmpl[subjectKey]||tmpl.math)[0]
-            .replace(/\{dong\}/g,dongName).replace(/\{gu\}/g,kr5.district)
+            .replace(/{dong}/g,dongName).replace(/{gu}/g,kr5.district)
             .replace(/\{sido\}/g,kr5.sido).replace(/\{subject\}/g,subject)
-            .replace(/\{grade\}/g,grade).replace(/\{schools\}/g,schools);
-          const review = tmpl.reviews[0].replace(/\{dong\}/g,dongName).replace(/\{schools\}/g,schools).replace(/\{gu\}/g,kr5.district);
-          const body = \`<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/\${sidoEn}">\${region.label}</a> › <a href="/\${sidoEn}/\${distEn}">\${kr5.district}</a> › <span>\${dongName} \${grade} \${subject}과외</span></div>
-  <div class="art-tag">\${subj.emoji} \${kr5.district} · \${dongName} · \${grade} · \${subject}</div>
-  <h1 class="art-title">\${dongName} \${grade} \${subject}과외 | \${kr5.district} \${dongName} \${gradeObj.label} \${subject} 맞춤 1:1 과외</h1>
-  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 \${today()}</span><span>⏱ 4분</span></div>
+            .replace(/\{grade\}/g,grade).replace(/{schools}/g,schools);
+          const review = tmpl.reviews[0].replace(/{dong}/g,dongName).replace(/{schools}/g,schools).replace(/{gu}/g,kr5.district);
+          const body = `<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${region.label}</a> › <a href="/${sidoEn}/${distEn}">${kr5.district}</a> › <span>${dongName} ${grade} ${subject}과외</span></div>
+  <div class="art-tag">${subj.emoji} ${kr5.district} · ${dongName} · ${grade} · ${subject}</div>
+  <h1 class="art-title">${dongName} ${grade} ${subject}과외 | ${kr5.district} ${dongName} ${gradeObj.label} ${subject} 맞춤 1:1 과외</h1>
+  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 4분</span></div>
   <div class="info-box">
-    <div class="info-item"><div class="info-num">247명</div><div class="info-label">\${subject} 선생님</div></div>
+    <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
     <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
   <div class="art-body">
-    <h2>\${dongName} \${grade} \${subject}과외 안내</h2>
-    <p>\${mainText}</p>
-    <p>\${kr5.district} \${dongName} 지역 \${gradeObj.label} \${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>\${schools}</strong></p>
-    <h2>\${dongName} \${subject}과외 특징</h2>
-    <p><strong>학교 기출 분석</strong>: \${schools} 시험 출제 경향 집중 분석</p>
+    <h2>${dongName} ${grade} ${subject}과외 안내</h2>
+    <p>${mainText}</p>
+    <p>${kr5.district} ${dongName} 지역 ${gradeObj.label} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
+    <h2>${dongName} ${subject}과외 특징</h2>
+    <p><strong>학교 기출 분석</strong>: ${schools} 시험 출제 경향 집중 분석</p>
     <p><strong>검증된 선생님</strong>: 학력·경력·수업 시연 3단계 검증 완료</p>
     <p><strong>주간 학습 보고서</strong>: 매주 학습 현황 학부모 공유</p>
-    <p><strong>취약점 집중 보완</strong>: \${subject} 취약 단원 정확히 파악해 집중 보완</p>
-    <h2>\${dongName} \${subject}과외 실제 후기</h2>
-    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic">"\${review}"</blockquote>
+    <p><strong>취약점 집중 보완</strong>: ${subject} 취약 단원 정확히 파악해 집중 보완</p>
+    <h2>${dongName} ${subject}과외 실제 후기</h2>
+    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic">"${review}"</blockquote>
     <h2>자주 묻는 질문</h2>
-    <p><strong>Q. \${dongName}에서 \${subject} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. \${schools} 기출을 잘 아는 선생님 위주로 추천합니다.</p>
-    <p><strong>Q. \${grade} \${subject} 성적이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다.</p>
+    <p><strong>Q. ${dongName}에서 ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${schools} 기출을 잘 아는 선생님 위주로 추천합니다.</p>
+    <p><strong>Q. ${grade} ${subject} 성적이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다.</p>
   </div>
   <div class="cta-box">
-    <h3>\${dongName} \${grade} \${subject}과외 무료 상담</h3>
+    <h3>${dongName} ${grade} ${subject}과외 무료 상담</h3>
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
       <a class="btn-o" href="/contact">✉️ 문의하기</a>
     </div>
   </div>
-</div>\`;
+</div>`;
           return new Response(wrap(title, desc, canonical, body, bc), { headers: h });
         }
       }
