@@ -99,15 +99,1045 @@ const DISTRICT_MAP = {
 };
 const DISTRICT_EN = Object.fromEntries(Object.entries(DISTRICT_MAP).map(([k,v])=>[v,k]));
 
-const DONG_MAP = {
-  'gaepo':'개포동','nonhyeon':'논현동','daichi':'대치동','dogok':'도곡동',
-  'samsung':'삼성동','segok':'세곡동','suseo':'수서동','sinsa':'신사동',
-  'apgujeong':'압구정동','yeoksam':'역삼동','ilwon':'일원동','jagok':'자곡동',
-  'cheongdam':'청담동','yulhyeon':'율현동'
+// 전국 읍면동 DB
+// 형식: '영문키': ['시도한글', '시군구한글', '동한글', '카테고리', '시도En', '시군구En']
+// 카테고리: A=학원가특구, B=신도시, C=산업단지, D=군인가족, E=대학가, F=농촌읍면, G=도서, H=일반도심
+const DONG_DB = {
+  // ─── 서울 강남구 ───
+  'daichi':['서울','강남구','대치동','A','seoul','gangnam'],
+  'apgujeong':['서울','강남구','압구정동','A','seoul','gangnam'],
+  'yeoksam':['서울','강남구','역삼동','A','seoul','gangnam'],
+  'cheongdam':['서울','강남구','청담동','A','seoul','gangnam'],
+  'nonhyeon':['서울','강남구','논현동','A','seoul','gangnam'],
+  'dogok':['서울','강남구','도곡동','A','seoul','gangnam'],
+  'samsung':['서울','강남구','삼성동','A','seoul','gangnam'],
+  'gaepo':['서울','강남구','개포동','A','seoul','gangnam'],
+  'sinsa':['서울','강남구','신사동','A','seoul','gangnam'],
+  'suseo':['서울','강남구','수서동','A','seoul','gangnam'],
+  'ilwon':['서울','강남구','일원동','A','seoul','gangnam'],
+  'segok':['서울','강남구','세곡동','B','seoul','gangnam'],
+  'jagok':['서울','강남구','자곡동','H','seoul','gangnam'],
+  'yulhyeon':['서울','강남구','율현동','H','seoul','gangnam'],
+  // ─── 서울 서초구 ───
+  'banpo':['서울','서초구','반포동','A','seoul','seocho'],
+  'bangbae':['서울','서초구','방배동','A','seoul','seocho'],
+  'jamwon':['서울','서초구','잠원동','A','seoul','seocho'],
+  'seocho':['서울','서초구','서초동','A','seoul','seocho'],
+  'yangje':['서울','서초구','양재동','H','seoul','seocho'],
+  'umyeon':['서울','서초구','우면동','H','seoul','seocho'],
+  'naegok':['서울','서초구','내곡동','B','seoul','seocho'],
+  // ─── 서울 송파구 ───
+  'jamsil':['서울','송파구','잠실동','A','seoul','songpa'],
+  'munjeong':['서울','송파구','문정동','H','seoul','songpa'],
+  'garak':['서울','송파구','가락동','H','seoul','songpa'],
+  'bangi':['서울','송파구','방이동','H','seoul','songpa'],
+  'ogeum':['서울','송파구','오금동','H','seoul','songpa'],
+  'georye':['서울','송파구','거여동','H','seoul','songpa'],
+  'macheon':['서울','송파구','마천동','H','seoul','songpa'],
+  // ─── 서울 강동구 ───
+  'cheonho':['서울','강동구','천호동','H','seoul','gangdong'],
+  'amsa':['서울','강동구','암사동','H','seoul','gangdong'],
+  'myeongil':['서울','강동구','명일동','H','seoul','gangdong'],
+  'godeok':['서울','강동구','고덕동','B','seoul','gangdong'],
+  'gangil':['서울','강동구','강일동','B','seoul','gangdong'],
+  'dunchon':['서울','강동구','둔촌동','B','seoul','gangdong'],
+  // ─── 서울 마포구 ───
+  'hapjeong':['서울','마포구','합정동','E','seoul','mapo'],
+  'mangwon':['서울','마포구','망원동','H','seoul','mapo'],
+  'yeonnam':['서울','마포구','연남동','H','seoul','mapo'],
+  'sangsu':['서울','마포구','상수동','E','seoul','mapo'],
+  'sangam':['서울','마포구','상암동','C','seoul','mapo'],
+  'seongsan':['서울','마포구','성산동','H','seoul','mapo'],
+  // ─── 서울 양천구 ───
+  'mokdong':['서울','양천구','목동','A','seoul','yangcheon'],
+  'sinjeong':['서울','양천구','신정동','A','seoul','yangcheon'],
+  'sinwol':['서울','양천구','신월동','H','seoul','yangcheon'],
+  // ─── 서울 노원구 ───
+  'sanggye':['서울','노원구','상계동','A','seoul','nowon'],
+  'junggye':['서울','노원구','중계동','A','seoul','nowon'],
+  'hagye':['서울','노원구','하계동','H','seoul','nowon'],
+  'gongneung':['서울','노원구','공릉동','E','seoul','nowon'],
+  'wolgye':['서울','노원구','월계동','E','seoul','nowon'],
+  // ─── 서울 강서구 ───
+  'hwagok':['서울','강서구','화곡동','H','seoul','gangseo'],
+  'banghwa':['서울','강서구','방화동','H','seoul','gangseo'],
+  'magok':['서울','강서구','마곡동','C','seoul','gangseo'],
+  'balsan':['서울','강서구','발산동','B','seoul','gangseo'],
+  'deungchon':['서울','강서구','등촌동','H','seoul','gangseo'],
+  // ─── 서울 동작구 ───
+  'sadang':['서울','동작구','사당동','H','seoul','dongjak'],
+  'sangdo':['서울','동작구','상도동','E','seoul','dongjak'],
+  'noryangjin':['서울','동작구','노량진동','E','seoul','dongjak'],
+  'heukseok':['서울','동작구','흑석동','E','seoul','dongjak'],
+  'daebang':['서울','동작구','대방동','H','seoul','dongjak'],
+  // ─── 서울 관악구 ───
+  'sillim':['서울','관악구','신림동','E','seoul','gwanak'],
+  'bongcheon':['서울','관악구','봉천동','E','seoul','gwanak'],
+  'nakseongdae':['서울','관악구','낙성대동','E','seoul','gwanak'],
+  // ─── 서울 성북구 ───
+  'donam':['서울','성북구','돈암동','E','seoul','seongbuk'],
+  'gireum':['서울','성북구','길음동','B','seoul','seongbuk'],
+  'jeongneung':['서울','성북구','정릉동','E','seoul','seongbuk'],
+  'seokgwan':['서울','성북구','석관동','E','seoul','seongbuk'],
+  // ─── 서울 용산구 ───
+  'itaewon':['서울','용산구','이태원동','H','seoul','yongsan'],
+  'hannam':['서울','용산구','한남동','A','seoul','yongsan'],
+  'ichon':['서울','용산구','이촌동','A','seoul','yongsan'],
+  'seobinggo':['서울','용산구','서빙고동','H','seoul','yongsan'],
+  // ─── 서울 중구 ───
+  'sindang':['서울','중구','신당동','H','seoul','junggu'],
+  'hwangak':['서울','중구','황학동','H','seoul','junggu'],
+  'euljiro':['서울','중구','을지로동','H','seoul','junggu'],
+  'myeongdong':['서울','중구','명동','H','seoul','junggu'],
+  // ─── 서울 종로구 ───
+  'hyehwa':['서울','종로구','혜화동','E','seoul','jongno'],
+  'myeongyun':['서울','종로구','명륜동','E','seoul','jongno'],
+  'changsin':['서울','종로구','창신동','H','seoul','jongno'],
+  'buam':['서울','종로구','부암동','H','seoul','jongno'],
+  // ─── 서울 중랑구 ───
+  'myeonmok':['서울','중랑구','면목동','H','seoul','jungnang'],
+  'sinnae':['서울','중랑구','신내동','B','seoul','jungnang'],
+  'muk':['서울','중랑구','묵동','H','seoul','jungnang'],
+  'mangwoo':['서울','중랑구','망우동','H','seoul','jungnang'],
+  // ─── 서울 광진구 ───
+  'hwayang':['서울','광진구','화양동','E','seoul','gwangjin'],
+  'gunja':['서울','광진구','군자동','E','seoul','gwangjin'],
+  'guui':['서울','광진구','구의동','H','seoul','gwangjin'],
+  'jayang':['서울','광진구','자양동','H','seoul','gwangjin'],
+  // ─── 서울 동대문구 ───
+  'hoegi':['서울','동대문구','회기동','E','seoul','dongdaemun'],
+  'jeonong':['서울','동대문구','전농동','H','seoul','dongdaemun'],
+  'dapsimni':['서울','동대문구','답십리동','H','seoul','dongdaemun'],
+  'jangan':['서울','동대문구','장안동','H','seoul','dongdaemun'],
+  // ─── 서울 성동구 ───
+  'wangsimni':['서울','성동구','왕십리동','E','seoul','seongdong'],
+  'haengdang':['서울','성동구','행당동','E','seoul','seongdong'],
+  'geumho':['서울','성동구','금호동','H','seoul','seongdong'],
+  'oksu':['서울','성동구','옥수동','H','seoul','seongdong'],
+  // ─── 서울 은평구 ───
+  'eungam':['서울','은평구','응암동','H','seoul','eunpyeong'],
+  'nokbeon':['서울','은평구','녹번동','B','seoul','eunpyeong'],
+  'bulgwang':['서울','은평구','불광동','H','seoul','eunpyeong'],
+  'saekk':['서울','은평구','수색동','B','seoul','eunpyeong'],
+  // ─── 서울 서대문구 ───
+  'sinchon':['서울','서대문구','신촌동','E','seoul','seodaemun'],
+  'hongjae':['서울','서대문구','홍제동','H','seoul','seodaemun'],
+  'bukgajwa':['서울','서대문구','북가좌동','H','seoul','seodaemun'],
+  'namgajwa':['서울','서대문구','남가좌동','H','seoul','seodaemun'],
+  // ─── 서울 도봉구 ───
+  'ssangmun':['서울','도봉구','쌍문동','H','seoul','dobong'],
+  'banghak':['서울','도봉구','방학동','H','seoul','dobong'],
+  'changdong':['서울','도봉구','창동','B','seoul','dobong'],
+  'dobong':['서울','도봉구','도봉동','H','seoul','dobong'],
+  // ─── 서울 강북구 ───
+  'mia':['서울','강북구','미아동','H','seoul','gangbuk'],
+  'suyu':['서울','강북구','수유동','H','seoul','gangbuk'],
+  'beon':['서울','강북구','번동','H','seoul','gangbuk'],
+  'ui':['서울','강북구','우이동','H','seoul','gangbuk'],
+  // ─── 서울 금천구 ───
+  'gasan':['서울','금천구','가산동','C','seoul','geumcheon'],
+  'doksan':['서울','금천구','독산동','H','seoul','geumcheon'],
+  'siheung-gc':['서울','금천구','시흥동','H','seoul','geumcheon'],
+  // ─── 서울 구로구 ───
+  'guro':['서울','구로구','구로동','C','seoul','guro'],
+  'sindorim':['서울','구로구','신도림동','C','seoul','guro'],
+  'gaebong':['서울','구로구','개봉동','H','seoul','guro'],
+  'oryu':['서울','구로구','오류동','H','seoul','guro'],
+  // ─── 경기 수원시 ───
+  'paldal':['경기','수원시','팔달구','H','gyeonggi','suwon'],
+  'yeongtong':['경기','수원시','영통동','C','gyeonggi','suwon'],
+  'gwonseon':['경기','수원시','권선동','B','gyeonggi','suwon'],
+  'jangan-sw':['경기','수원시','장안동','H','gyeonggi','suwon'],
+  'maetan':['경기','수원시','매탄동','C','gyeonggi','suwon'],
+  'hwaseong-sw':['경기','수원시','화서동','H','gyeonggi','suwon'],
+  'uman':['경기','수원시','우만동','H','gyeonggi','suwon'],
+  'indeok':['경기','수원시','인계동','H','gyeonggi','suwon'],
+  // ─── 경기 성남시 ───
+  'bundang':['경기','성남시','분당구','A','gyeonggi','seongnam'],
+  'yatap':['경기','성남시','야탑동','A','gyeonggi','seongnam'],
+  'sujeong':['경기','성남시','수정구','B','gyeonggi','seongnam'],
+  'jungwon':['경기','성남시','중원구','H','gyeonggi','seongnam'],
+  'jeongja':['경기','성남시','정자동','C','gyeonggi','seongnam'],
+  'imae':['경기','성남시','이매동','A','gyeonggi','seongnam'],
+  'sunae':['경기','성남시','수내동','A','gyeonggi','seongnam'],
+  'seohyeon':['경기','성남시','서현동','A','gyeonggi','seongnam'],
+  // ─── 경기 용인시 ───
+  'suji':['경기','용인시','수지구','A','gyeonggi','yongin'],
+  'giheung':['경기','용인시','기흥구','C','gyeonggi','yongin'],
+  'dongbaek':['경기','용인시','동백동','B','gyeonggi','yongin'],
+  'sinbong':['경기','용인시','신봉동','A','gyeonggi','yongin'],
+  'heungdeok':['경기','용인시','흥덕동','B','gyeonggi','yongin'],
+  'sanghyeon':['경기','용인시','상현동','A','gyeonggi','yongin'],
+  'hyangmidong':['경기','용인시','향미동','B','gyeonggi','yongin'],
+  // ─── 경기 고양시 ───
+  'ilsandong':['경기','고양시','일산동구','B','gyeonggi','goyang'],
+  'ilsanseo':['경기','고양시','일산서구','B','gyeonggi','goyang'],
+  'deogyang':['경기','고양시','덕양구','B','gyeonggi','goyang'],
+  'madu':['경기','고양시','마두동','A','gyeonggi','goyang'],
+  'hwajung':['경기','고양시','화정동','H','gyeonggi','goyang'],
+  'baekseok':['경기','고양시','백석동','A','gyeonggi','goyang'],
+  'janghanpyeong':['경기','고양시','장항동','B','gyeonggi','goyang'],
+  // ─── 경기 부천시 ───
+  'jungdong':['경기','부천시','중동','A','gyeonggi','bucheon'],
+  'sangdong':['경기','부천시','상동','H','gyeonggi','bucheon'],
+  'sosa':['경기','부천시','소사동','H','gyeonggi','bucheon'],
+  'wonmi':['경기','부천시','원미동','H','gyeonggi','bucheon'],
+  'sinjungdong':['경기','부천시','신중동','H','gyeonggi','bucheon'],
+  // ─── 경기 안양시 ───
+  'pyeongchon':['경기','안양시','평촌동','A','gyeonggi','anyang'],
+  'bisan':['경기','안양시','비산동','H','gyeonggi','anyang'],
+  'manan':['경기','안양시','만안구','H','gyeonggi','anyang'],
+  'hogye':['경기','안양시','호계동','A','gyeonggi','anyang'],
+  'gwanyang':['경기','안양시','관양동','A','gyeonggi','anyang'],
+  // ─── 경기 화성시 ───
+  'dongtan':['경기','화성시','동탄동','B','gyeonggi','hwaseong'],
+  'bongdam':['경기','화성시','봉담읍','F','gyeonggi','hwaseong'],
+  'byeongjeom':['경기','화성시','병점동','H','gyeonggi','hwaseong'],
+  'hyangnam':['경기','화성시','향남읍','B','gyeonggi','hwaseong'],
+  'bansong':['경기','화성시','반송동','B','gyeonggi','hwaseong'],
+  // ─── 경기 남양주시 ───
+  'dasan':['경기','남양주시','다산동','B','gyeonggi','namyangju'],
+  'byeolnae':['경기','남양주시','별내동','B','gyeonggi','namyangju'],
+  'hopyeong':['경기','남양주시','호평동','H','gyeonggi','namyangju'],
+  'pyeongnae':['경기','남양주시','평내동','H','gyeonggi','namyangju'],
+  'jinjeop':['경기','남양주시','진접읍','F','gyeonggi','namyangju'],
+  // ─── 경기 안산시 ───
+  'danwon':['경기','안산시','단원구','C','gyeonggi','ansan'],
+  'sangnok':['경기','안산시','상록구','C','gyeonggi','ansan'],
+  'gojan':['경기','안산시','고잔동','C','gyeonggi','ansan'],
+  'seonbu':['경기','안산시','선부동','H','gyeonggi','ansan'],
+  'wongok':['경기','안산시','원곡동','C','gyeonggi','ansan'],
+  // ─── 경기 평택시 ───
+  'bijeon':['경기','평택시','비전동','B','gyeonggi','pyeongtaek'],
+  'sinjang':['경기','평택시','신장동','H','gyeonggi','pyeongtaek'],
+  'anjung':['경기','평택시','안중읍','F','gyeonggi','pyeongtaek'],
+  'jije':['경기','평택시','지제동','B','gyeonggi','pyeongtaek'],
+  'segyo':['경기','평택시','세교동','B','gyeonggi','pyeongtaek'],
+  // ─── 경기 시흥시 ───
+  'baegot':['경기','시흥시','배곧동','B','gyeonggi','siheung'],
+  'janghyeon':['경기','시흥시','장현동','B','gyeonggi','siheung'],
+  'mokgam':['경기','시흥시','목감동','H','gyeonggi','siheung'],
+  'eungye':['경기','시흥시','은계동','B','gyeonggi','siheung'],
+  'jeongwang':['경기','시흥시','정왕동','C','gyeonggi','siheung'],
+  // ─── 경기 파주시 ───
+  'unjeong':['경기','파주시','운정동','B','gyeonggi','paju'],
+  'gyoha':['경기','파주시','교하동','B','gyeonggi','paju'],
+  'geumchon':['경기','파주시','금촌동','H','gyeonggi','paju'],
+  'munsan':['경기','파주시','문산읍','H','gyeonggi','paju'],
+  'yadang':['경기','파주시','야당동','B','gyeonggi','paju'],
+  // ─── 경기 김포시 ───
+  'janggi':['경기','김포시','장기동','B','gyeonggi','gimpo'],
+  'unyang':['경기','김포시','운양동','B','gyeonggi','gimpo'],
+  'gurae':['경기','김포시','구래동','B','gyeonggi','gimpo'],
+  'sau':['경기','김포시','사우동','H','gyeonggi','gimpo'],
+  'geolpo':['경기','김포시','걸포동','H','gyeonggi','gimpo'],
+  // ─── 경기 의정부시 ───
+  'singok':['경기','의정부시','신곡동','H','gyeonggi','uijeongbu'],
+  'uijeongbu':['경기','의정부시','의정부동','H','gyeonggi','uijeongbu'],
+  'millak':['경기','의정부시','민락동','B','gyeonggi','uijeongbu'],
+  'ganeung':['경기','의정부시','가능동','H','gyeonggi','uijeongbu'],
+  'howon':['경기','의정부시','호원동','H','gyeonggi','uijeongbu'],
+  // ─── 경기 광주시 ───
+  'gyeongan':['경기','광주시','경안동','H','gyeonggi','gwangju-gg'],
+  'tanbul':['경기','광주시','탄벌동','H','gyeonggi','gwangju-gg'],
+  'opo':['경기','광주시','오포읍','F','gyeonggi','gwangju-gg'],
+  'chowol':['경기','광주시','초월읍','F','gyeonggi','gwangju-gg'],
+  // ─── 경기 하남시 ───
+  'misa':['경기','하남시','미사동','B','gyeonggi','hanam'],
+  'wirye':['경기','하남시','위례동','B','gyeonggi','hanam'],
+  'deokpung':['경기','하남시','덕풍동','H','gyeonggi','hanam'],
+  'gamil':['경기','하남시','감일동','B','gyeonggi','hanam'],
+  'mangweol':['경기','하남시','망월동','H','gyeonggi','hanam'],
+  // ─── 경기 광명시 ───
+  'cheolsan':['경기','광명시','철산동','H','gyeonggi','gwangmyeong'],
+  'haan':['경기','광명시','하안동','H','gyeonggi','gwangmyeong'],
+  'soha':['경기','광명시','소하동','H','gyeonggi','gwangmyeong'],
+  'gwangmyeong-gm':['경기','광명시','광명동','H','gyeonggi','gwangmyeong'],
+  // ─── 경기 군포시 ───
+  'sanbon':['경기','군포시','산본동','A','gyeonggi','gunpo'],
+  'dangjung':['경기','군포시','당정동','H','gyeonggi','gunpo'],
+  'bugok':['경기','군포시','부곡동','H','gyeonggi','gunpo'],
+  'daeyami':['경기','군포시','대야미동','H','gyeonggi','gunpo'],
+  // ─── 경기 이천시 ───
+  'changjeon':['경기','이천시','창전동','C','gyeonggi','icheon'],
+  'jungni':['경기','이천시','중리동','H','gyeonggi','icheon'],
+  'bubal':['경기','이천시','부발읍','F','gyeonggi','icheon'],
+  'sindun':['경기','이천시','신둔면','F','gyeonggi','icheon'],
+  // ─── 경기 오산시 ───
+  'osan-dong':['경기','오산시','오산동','H','gyeonggi','osan'],
+  'sema':['경기','오산시','세마동','C','gyeonggi','osan'],
+  'chopyeong':['경기','오산시','초평동','H','gyeonggi','osan'],
+  'galgot':['경기','오산시','갈곶동','H','gyeonggi','osan'],
+  // ─── 인천 ───
+  'songdo':['인천','연수구','송도동','B','incheon','yeonsu'],
+  'yeonsu':['인천','연수구','연수동','H','incheon','yeonsu'],
+  'cheonghal':['인천','연수구','청학동','H','incheon','yeonsu'],
+  'guwol':['인천','남동구','구월동','A','incheon','namdong'],
+  'mansu':['인천','남동구','만수동','H','incheon','namdong'],
+  'nonhyeon-ic':['인천','남동구','논현동','B','incheon','namdong'],
+  'bupyeong':['인천','부평구','부평동','H','incheon','bupyeong'],
+  'samsan':['인천','부평구','삼산동','H','incheon','bupyeong'],
+  'gyesan':['인천','계양구','계산동','H','incheon','gyeyang'],
+  'jakjeon':['인천','계양구','작전동','H','incheon','gyeyang'],
+  'cheongra':['인천','서구','청라동','B','incheon','seo-ic'],
+  'geomdan':['인천','서구','검단동','B','incheon','seo-ic'],
+  'juan':['인천','미추홀구','주안동','H','incheon','michuhol'],
+  'sunui':['인천','미추홀구','숭의동','E','incheon','michuhol'],
+  // ─── 부산 ───
+  'haeundae':['부산','해운대구','해운대동','A','busan','haeundae'],
+  'jwadong':['부산','해운대구','좌동','A','busan','haeundae'],
+  'jaesung':['부산','해운대구','재송동','B','busan','haeundae'],
+  'gwangan':['부산','수영구','광안동','H','busan','suyeong'],
+  'milak':['부산','수영구','민락동','H','busan','suyeong'],
+  'namcheon':['부산','수영구','남천동','H','busan','suyeong'],
+  'oncheon':['부산','동래구','온천동','A','busan','dongrae'],
+  'sajik':['부산','동래구','사직동','A','busan','dongrae'],
+  'jangjeon':['부산','금정구','장전동','E','busan','geumjeong'],
+  'guseo':['부산','금정구','구서동','E','busan','geumjeong'],
+  'bujeon':['부산','부산진구','부전동','H','busan','busanjin'],
+  'gaegeum':['부산','부산진구','개금동','H','busan','busanjin'],
+  'hwamdong':['부산','북구','화명동','B','busan','buk-bs'],
+  'deokcheon':['부산','북구','덕천동','H','busan','buk-bs'],
+  'yeonsan':['부산','연제구','연산동','H','busan','yeonje'],
+  'geoje':['부산','연제구','거제동','H','busan','yeonje'],
+  'jeongwan':['부산','기장군','정관읍','B','busan','gijang'],
+  // ─── 대구 ───
+  'beomeo':['대구','수성구','범어동','A','daegu','suseong'],
+  'manchon':['대구','수성구','만촌동','A','daegu','suseong'],
+  'hwanggeumhwi':['대구','수성구','황금동','A','daegu','suseong'],
+  'wolseong':['대구','달서구','월성동','H','daegu','dalseo'],
+  'yongsan':['대구','달서구','용산동','H','daegu','dalseo'],
+  'jingcheon':['대구','달서구','진천동','B','daegu','dalseo'],
+  'guam':['대구','북구','구암동','E','daegu','buk-dg'],
+  'bokhyeon':['대구','북구','복현동','E','daegu','buk-dg'],
+  'yulha':['대구','동구','율하동','B','daegu','dong-dg'],
+  'dongchon':['대구','동구','동촌동','B','daegu','dong-dg'],
+  'hyeonpung':['대구','달성군','현풍읍','C','daegu','dalseong'],
+  // ─── 광주 ───
+  'sangmu':['광주','서구','상무동','A','gwangju','seo-gj'],
+  'hwajung':['광주','서구','화정동','H','gwangju','seo-gj'],
+  'yongbong':['광주','북구','용봉동','E','gwangju','buk-gj'],
+  'ilgok':['광주','북구','일곡동','B','gwangju','buk-gj'],
+  'suwan':['광주','광산구','수완동','B','gwangju','gwangsan'],
+  'cheomdan':['광주','광산구','첨단동','B','gwangju','gwangsan'],
+  'bongseondong':['광주','남구','봉선동','A','gwangju','nam-gj'],
+  // ─── 대전 ───
+  'noeun':['대전','유성구','노은동','B','daejeon','yuseong'],
+  'jijok':['대전','유성구','지족동','B','daejeon','yuseong'],
+  'banseok':['대전','유성구','반석동','B','daejeon','yuseong'],
+  'dunsan':['대전','서구','둔산동','A','daejeon','seo-dj'],
+  'doan':['대전','서구','도안동','B','daejeon','seo-dj'],
+  'songchon':['대전','대덕구','송촌동','C','daejeon','daedeok'],
+  // ─── 울산 ───
+  'samsan':['울산','남구','삼산동','C','ulsan','nam-us'],
+  'daldong':['울산','남구','달동','H','ulsan','nam-us'],
+  'hwabong':['울산','북구','화봉동','C','ulsan','buk-us'],
+  'maegok':['울산','북구','매곡동','C','ulsan','buk-us'],
+  // ─── 세종 ───
+  'saeroeum':['세종','세종시','새롬동','B','sejong','sejong'],
+  'dodam':['세종','세종시','도담동','B','sejong','sejong'],
+  'areum':['세종','세종시','아름동','B','sejong','sejong'],
+  'jongchon':['세종','세종시','종촌동','B','sejong','sejong'],
+  'goun':['세종','세종시','고운동','B','sejong','sejong'],
+  // ─── 강원 ───
+  'seoksa':['강원','춘천시','석사동','E','gangwon','chuncheon'],
+  'hugpyeong':['강원','춘천시','후평동','H','gangwon','chuncheon'],
+  'danguk':['강원','원주시','단구동','H','gangwon','wonju'],
+  'musil':['강원','원주시','무실동','B','gangwon','wonju'],
+  'ponam':['강원','강릉시','포남동','H','gangwon','gangneung'],
+  'gyodong':['강원','강릉시','교동','H','gangwon','gangneung'],
+  // ─── 충북 ───
+  'gaeshin':['충북','청주시','개신동','E','chungbuk','cheongju'],
+  'bokdae':['충북','청주시','복대동','H','chungbuk','cheongju'],
+  'sannam':['충북','청주시','산남동','B','chungbuk','cheongju'],
+  'chilgeum':['충북','충주시','칠금동','H','chungbuk','chungju'],
+  'yongsan-cb':['충북','충주시','용산동','H','chungbuk','chungju'],
+  // ─── 충남 ───
+  'buldang':['충남','천안시','불당동','B','chungnam','cheonan'],
+  'dujeong':['충남','천안시','두정동','B','chungnam','cheonan'],
+  'sinbang':['충남','천안시','신방동','B','chungnam','cheonan'],
+  'baebang':['충남','아산시','배방읍','B','chungnam','asan'],
+  'tangjeong':['충남','아산시','탕정면','C','chungnam','asan'],
+  // ─── 전북 ───
+  'hyoja':['전북','전주시','효자동','A','jeonbuk','jeonju'],
+  'songcheon-jb':['전북','전주시','송천동','B','jeonbuk','jeonju'],
+  'pyeonghwa':['전북','전주시','평화동','H','jeonbuk','jeonju'],
+  'yeongdeung':['전북','익산시','영등동','H','jeonbuk','iksan'],
+  'sinheung':['전북','익산시','신흥동','H','jeonbuk','iksan'],
+  // ─── 전남 ───
+  'jorye':['전남','순천시','조례동','A','jeonnam','suncheon'],
+  'yeonhyang':['전남','순천시','연향동','B','jeonnam','suncheon'],
+  'yeoseo':['전남','여수시','여서동','H','jeonnam','yeosu'],
+  'hadang':['전남','목포시','하당동','B','jeonnam','mokpo'],
+  'namak':['전남','목포시','남악동','B','jeonnam','mokpo'],
+  // ─── 경북 ───
+  'yangdeok':['경북','포항시','양덕동','H','gyeongbuk','pohang'],
+  'duho':['경북','포항시','두호동','H','gyeongbuk','pohang'],
+  'hyeongok':['경북','구미시','형곡동','C','gyeongbuk','gumi'],
+  'wonpyeong':['경북','구미시','원평동','H','gyeongbuk','gumi'],
+  'okdong':['경북','안동시','옥동','H','gyeongbuk','andong'],
+  'taehwa':['경북','안동시','태화동','H','gyeongbuk','andong'],
+  'sadong':['경북','경산시','사동','E','gyeongbuk','gyeongsan'],
+  'jungbang':['경북','경산시','중방동','E','gyeongbuk','gyeongsan'],
+  // ─── 경남 ───
+  'sangnam':['경남','창원시','상남동','A','gyeongnam','changwon'],
+  'bonggok':['경남','창원시','봉곡동','H','gyeongnam','changwon'],
+  'sinan':['경남','진주시','신안동','E','gyeongnam','jinju'],
+  'pyeonggeo':['경남','진주시','평거동','B','gyeongnam','jinju'],
+  'jangyu':['경남','김해시','장유동','B','gyeongnam','gimhae'],
+  'naehoe':['경남','김해시','내외동','H','gyeongnam','gimhae'],
+  'mulgeum':['경남','양산시','물금읍','B','gyeongnam','yangsan'],
+  // ─── 제주 ───
+  'nohyeong':['제주','제주시','노형동','H','jeju','jeju-si'],
+  'ido':['제주','제주시','이도동','H','jeju','jeju-si'],
+  'yeondong':['제주','제주시','연동','H','jeju','jeju-si'],
+  'seogwipo':['제주','서귀포시','서귀동','H','jeju','seogwipo'],
+  'daejung':['제주','서귀포시','대정읍','F','jeju','seogwipo'],
 };
-const DONG_EN = Object.fromEntries(Object.entries(DONG_MAP).map(([k,v])=>[v,k]));
 
-const GRADE_MAP = {'elementary':'초등','middle':'중등','high':'고등'};
+// 전국 시군구 전체 DONG_DB 확장
+// 형식: '영문키': ['시도', '시군구', '동명', '카테고리', '시도En', '시군구En']
+
+const DONG_DB_EXTRA = {
+
+  // ═══════════════════════════════════════════
+  // 서울특별시 (기존 제외 추가분)
+  // ═══════════════════════════════════════════
+
+  // 서울 용산구 추가
+  'bogwang':['서울','용산구','보광동','H','seoul','yongsan'],
+  'huam':['서울','용산구','후암동','H','seoul','yongsan'],
+
+  // 서울 성동구 추가
+  'hapdong':['서울','성동구','합정동','H','seoul','seongdong'],
+  'sindang2':['서울','성동구','신당동','H','seoul','seongdong'],
+
+  // ═══════════════════════════════════════════
+  // 경기도 추가
+  // ═══════════════════════════════════════════
+
+  // 경기 과천시
+  'byeolyang':['경기','과천시','별양동','A','gyeonggi','gwacheon'],
+  'jungang-gc':['경기','과천시','중앙동','H','gyeonggi','gwacheon'],
+  'munwon':['경기','과천시','문원동','H','gyeonggi','gwacheon'],
+
+  // 경기 구리시
+  'toegyewon':['경기','구리시','토평동','H','gyeonggi','guri'],
+  'galmae':['경기','구리시','갈매동','B','gyeonggi','guri'],
+  'inchang':['경기','구리시','인창동','H','gyeonggi','guri'],
+
+  // 경기 양주시
+  'okjeong':['경기','양주시','옥정동','B','gyeonggi','yangju'],
+  'hoecheon':['경기','양주시','회천읍','H','gyeonggi','yangju'],
+
+  // 경기 여주시
+  'yeoju-eup':['경기','여주시','여주읍','H','gyeonggi','yeoju'],
+  'sejong-yj':['경기','여주시','세종로','H','gyeonggi','yeoju'],
+
+  // 경기 포천시
+  'pocheon-eup':['경기','포천시','포천읍','H','gyeonggi','pocheon'],
+  'sohul':['경기','포천시','소흘읍','H','gyeonggi','pocheon'],
+
+  // 경기 가평군
+  'gapyeong-eup':['경기','가평군','가평읍','F','gyeonggi','gapyeong'],
+  'cheongpyeong':['경기','가평군','청평면','F','gyeonggi','gapyeong'],
+
+  // 경기 양평군
+  'yangpyeong-eup':['경기','양평군','양평읍','F','gyeonggi','yangpyeong'],
+  'yongmun':['경기','양평군','용문면','F','gyeonggi','yangpyeong'],
+
+  // 경기 연천군
+  'yeoncheon-eup':['경기','연천군','연천읍','F','gyeonggi','yeoncheon'],
+  'jeongok':['경기','연천군','전곡읍','F','gyeonggi','yeoncheon'],
+
+  // ═══════════════════════════════════════════
+  // 인천광역시
+  // ═══════════════════════════════════════════
+
+  // 인천 강화군
+  'ganghwa-eup':['인천','강화군','강화읍','F','incheon','ganghwa'],
+  'gilsang':['인천','강화군','길상면','F','incheon','ganghwa'],
+
+  // 인천 옹진군
+  'yeongjong':['인천','옹진군','영종동','G','incheon','ongjin'],
+  'deokjeok':['인천','옹진군','덕적면','G','incheon','ongjin'],
+
+  // 인천 동구
+  'hwasu':['인천','동구','화수동','H','incheon','dong-ic'],
+  'songnyeo':['인천','동구','송현동','H','incheon','dong-ic'],
+
+  // ═══════════════════════════════════════════
+  // 부산광역시 추가
+  // ═══════════════════════════════════════════
+
+  // 부산 사하구
+  'dadae':['부산','사하구','다대동','H','busan','saha'],
+  'gwoejeong':['부산','사하구','괴정동','H','busan','saha'],
+  'hadan':['부산','사하구','하단동','H','busan','saha'],
+
+  // 부산 사상구
+  'morla':['부산','사상구','모라동','C','busan','sasang'],
+  'hakjang':['부산','사상구','학장동','C','busan','sasang'],
+
+  // 부산 영도구
+  'bongrae':['부산','영도구','봉래동','H','busan','yeongdo'],
+  'cheongak':['부산','영도구','청학동','H','busan','yeongdo'],
+
+  // 부산 동구
+  'choryang':['부산','동구','초량동','H','busan','dong-bs'],
+  'sujeong-bs':['부산','동구','수정동','H','busan','dong-bs'],
+
+  // 부산 중구
+  'nampodong':['부산','중구','남포동','H','busan','jung-bs'],
+  'gwangbok':['부산','중구','광복동','H','busan','jung-bs'],
+
+  // 부산 서구
+  'dongdaesin':['부산','서구','동대신동','H','busan','seo-bs'],
+  'bumin':['부산','서구','부민동','H','busan','seo-bs'],
+
+  // 부산 남구
+  'daeyeon':['부산','남구','대연동','E','busan','nam-bs'],
+  'yongho':['부산','남구','용호동','H','busan','nam-bs'],
+
+  // 부산 동래구 추가
+  'myeongnyun':['부산','동래구','명륜동','A','busan','dongrae'],
+  'nak':['부산','동래구','낙민동','H','busan','dongrae'],
+
+  // 부산 강서구
+  'myeongji':['부산','강서구','명지동','B','busan','gangseo-bs'],
+  'noksan':['부산','강서구','녹산동','C','busan','gangseo-bs'],
+
+  // ═══════════════════════════════════════════
+  // 대구광역시 추가
+  // ═══════════════════════════════════════════
+
+  // 대구 중구
+  'daebong':['대구','중구','대봉동','H','daegu','jung-dg'],
+  'namsan':['대구','중구','남산동','H','daegu','jung-dg'],
+
+  // 대구 서구
+  'naedang':['대구','서구','내당동','H','daegu','seo-dg'],
+  'bisan':['대구','서구','비산동','H','daegu','seo-dg'],
+
+  // 대구 남구
+  'daemyeong':['대구','남구','대명동','E','daegu','nam-dg'],
+  'bongdeok':['대구','남구','봉덕동','H','daegu','nam-dg'],
+
+  // 대구 달성군 추가
+  'hwawon':['대구','달성군','화원읍','B','daegu','dalseong'],
+  'okpo':['대구','달성군','옥포읍','B','daegu','dalseong'],
+
+  // ═══════════════════════════════════════════
+  // 광주광역시 추가
+  // ═══════════════════════════════════════════
+
+  // 광주 동구
+  'chungjang':['광주','동구','충장로','H','gwangju','dong-gj'],
+  'gyerim':['광주','동구','계림동','H','gwangju','dong-gj'],
+
+  // ═══════════════════════════════════════════
+  // 대전광역시 추가
+  // ═══════════════════════════════════════════
+
+  // 대전 동구
+  'gao':['대전','동구','가오동','H','daejeon','dong-dj'],
+  'daejeondong':['대전','동구','대동','H','daejeon','dong-dj'],
+
+  // 대전 중구
+  'taepyeong':['대전','중구','태평동','H','daejeon','jung-dj'],
+  'munhwa':['대전','중구','문화동','H','daejeon','jung-dj'],
+
+  // ═══════════════════════════════════════════
+  // 울산광역시 추가
+  // ═══════════════════════════════════════════
+
+  // 울산 중구
+  'hakseong':['울산','중구','학성동','H','ulsan','jung-us'],
+  'boksan':['울산','중구','복산동','H','ulsan','jung-us'],
+
+  // 울산 동구
+  'ilsan':['울산','동구','일산동','C','ulsan','dong-us'],
+  'bangeodong':['울산','동구','방어동','H','ulsan','dong-us'],
+
+  // 울산 울주군
+  'eonyang':['울산','울주군','언양읍','F','ulsan','ulju'],
+  'onsan':['울산','울주군','온산읍','C','ulsan','ulju'],
+
+  // ═══════════════════════════════════════════
+  // 세종특별자치시 추가
+  // ═══════════════════════════════════════════
+  'baram':['세종','세종시','바람개비마을','B','sejong','sejong'],
+  'haemil':['세종','세종시','해밀동','B','sejong','sejong'],
+  'sodam':['세종','세종시','소담동','B','sejong','sejong'],
+  'beopyong':['세종','세종시','보람동','B','sejong','sejong'],
+
+  // ═══════════════════════════════════════════
+  // 강원특별자치도
+  // ═══════════════════════════════════════════
+
+  // 강원 춘천시 추가
+  'toegyedong':['강원','춘천시','퇴계동','H','gangwon','chuncheon'],
+  'nakwon':['강원','춘천시','낙원동','H','gangwon','chuncheon'],
+
+  // 강원 원주시 추가
+  'hanil':['강원','원주시','단계동','H','gangwon','wonju'],
+  'myeongnyun-wj':['강원','원주시','명륜동','E','gangwon','wonju'],
+
+  // 강원 강릉시 추가
+  'hongje-gn':['강원','강릉시','홍제동','H','gangwon','gangneung'],
+  'seongdeok':['강원','강릉시','성덕동','H','gangwon','gangneung'],
+
+  // 강원 동해시
+  'cheonggok':['강원','동해시','천곡동','H','gangwon','donghae'],
+  'bukpyeong':['강원','동해시','북평동','H','gangwon','donghae'],
+
+  // 강원 속초시
+  'joyangdong':['강원','속초시','조양동','H','gangwon','sokcho'],
+  'yeongrang':['강원','속초시','영랑동','H','gangwon','sokcho'],
+
+  // 강원 삼척시
+  'gyodong-sc':['강원','삼척시','교동','H','gangwon','samcheok'],
+  'namsaem':['강원','삼척시','남양동','H','gangwon','samcheok'],
+
+  // 강원 태백시
+  'hwangji':['강원','태백시','황지동','H','gangwon','taebaek'],
+
+  // 강원 홍천군
+  'hongcheon-eup':['강원','홍천군','홍천읍','F','gangwon','hongcheon'],
+
+  // 강원 횡성군
+  'hoengseong-eup':['강원','횡성군','횡성읍','F','gangwon','hoengseong'],
+
+  // 강원 영월군
+  'yeongwol-eup':['강원','영월군','영월읍','F','gangwon','yeongwol'],
+
+  // 강원 평창군
+  'pyeongchang-eup':['강원','평창군','평창읍','F','gangwon','pyeongchang'],
+  'daehwa':['강원','평창군','대화면','F','gangwon','pyeongchang'],
+
+  // 강원 정선군
+  'jeongseon-eup':['강원','정선군','정선읍','F','gangwon','jeongseon'],
+  'gohan':['강원','정선군','고한읍','F','gangwon','jeongseon'],
+
+  // 강원 철원군
+  'cheorwon-eup':['강원','철원군','철원읍','D','gangwon','cheorwon'],
+  'dongsong':['강원','철원군','동송읍','D','gangwon','cheorwon'],
+
+  // 강원 화천군
+  'hwacheon-eup':['강원','화천군','화천읍','D','gangwon','hwacheon'],
+
+  // 강원 양구군
+  'yanggu-eup':['강원','양구군','양구읍','D','gangwon','yanggu'],
+
+  // 강원 인제군
+  'inje-eup':['강원','인제군','인제읍','D','gangwon','inje'],
+
+  // 강원 고성군
+  'ganseong-eup':['강원','고성군','간성읍','D','gangwon','goseong-gw'],
+  'geojin':['강원','고성군','거진읍','D','gangwon','goseong-gw'],
+
+  // 강원 양양군
+  'yangyang-eup':['강원','양양군','양양읍','H','gangwon','yangyang'],
+
+  // ═══════════════════════════════════════════
+  // 충청북도
+  // ═══════════════════════════════════════════
+
+  // 충북 청주시 추가
+  'gagyeong':['충북','청주시','가경동','B','chungbuk','cheongju'],
+  'jikji':['충북','청주시','직지대로','H','chungbuk','cheongju'],
+  'sugoknae':['충북','청주시','수곡동','H','chungbuk','cheongju'],
+
+  // 충북 충주시 추가
+  'anrim':['충북','충주시','안림동','H','chungbuk','chungju'],
+
+  // 충북 제천시
+  'uirimji':['충북','제천시','의림지동','H','chungbuk','jecheon'],
+  'mosan':['충북','제천시','모산동','H','chungbuk','jecheon'],
+
+  // 충북 보은군
+  'boeun-eup':['충북','보은군','보은읍','F','chungbuk','boeun'],
+
+  // 충북 옥천군
+  'okcheon-eup':['충북','옥천군','옥천읍','F','chungbuk','okcheon'],
+
+  // 충북 영동군
+  'yeongdong-eup':['충북','영동군','영동읍','F','chungbuk','yeongdong'],
+
+  // 충북 증평군
+  'jeungpyeong-eup':['충북','증평군','증평읍','F','chungbuk','jeungpyeong'],
+
+  // 충북 진천군
+  'jincheon-eup':['충북','진천군','진천읍','F','chungbuk','jincheon'],
+  'deoksan':['충북','진천군','덕산읍','C','chungbuk','jincheon'],
+
+  // 충북 괴산군
+  'goesan-eup':['충북','괴산군','괴산읍','F','chungbuk','goesan'],
+
+  // 충북 음성군
+  'eumseong-eup':['충북','음성군','음성읍','F','chungbuk','eumseong'],
+  'geumwang':['충북','음성군','금왕읍','C','chungbuk','eumseong'],
+
+  // 충북 단양군
+  'danyang-eup':['충북','단양군','단양읍','F','chungbuk','danyang'],
+
+  // ═══════════════════════════════════════════
+  // 충청남도
+  // ═══════════════════════════════════════════
+
+  // 충남 천안시 추가
+  'ssangnyong':['충남','천안시','쌍용동','B','chungnam','cheonan'],
+  'seonghwan':['충남','천안시','성환읍','F','chungnam','cheonan'],
+
+  // 충남 아산시 추가
+  'onyangdong':['충남','아산시','온양동','H','chungnam','asan'],
+
+  // 충남 서산시
+  'dongmun':['충남','서산시','동문동','H','chungnam','seosan'],
+  'seoknam':['충남','서산시','석남동','H','chungnam','seosan'],
+
+  // 충남 당진시
+  'dangjin-eup':['충남','당진시','당진동','H','chungnam','dangjin'],
+  'hapdeok':['충남','당진시','합덕읍','F','chungnam','dangjin'],
+
+  // 충남 공주시
+  'geumseong':['충남','공주시','금성동','H','chungnam','gongju'],
+  'sinwan':['충남','공주시','신관동','E','chungnam','gongju'],
+
+  // 충남 보령시
+  'daecheon':['충남','보령시','대천동','H','chungnam','boryeong'],
+  'jugyodong':['충남','보령시','주교면','F','chungnam','boryeong'],
+
+  // 충남 논산시
+  'nonsan-dong':['충남','논산시','논산동','D','chungnam','nonsan'],
+  'ganggyeong':['충남','논산시','강경읍','H','chungnam','nonsan'],
+
+  // 충남 계룡시
+  'geumam':['충남','계룡시','금암동','D','chungnam','gyeryong'],
+
+  // 충남 금산군
+  'geumsan-eup':['충남','금산군','금산읍','F','chungnam','geumsan'],
+
+  // 충남 부여군
+  'buyeo-eup':['충남','부여군','부여읍','F','chungnam','buyeo'],
+
+  // 충남 서천군
+  'janghang':['충남','서천군','장항읍','H','chungnam','seocheon'],
+  'seocheon-eup':['충남','서천군','서천읍','F','chungnam','seocheon'],
+
+  // 충남 청양군
+  'cheongyang-eup':['충남','청양군','청양읍','F','chungnam','cheongyang'],
+
+  // 충남 홍성군
+  'hongseong-eup':['충남','홍성군','홍성읍','F','chungnam','hongseong'],
+  'naepodong':['충남','홍성군','내포동','B','chungnam','hongseong'],
+
+  // 충남 예산군
+  'yesan-eup':['충남','예산군','예산읍','F','chungnam','yesan'],
+
+  // 충남 태안군
+  'taean-eup':['충남','태안군','태안읍','F','chungnam','taean'],
+  'anmyeon':['충남','태안군','안면읍','F','chungnam','taean'],
+
+  // ═══════════════════════════════════════════
+  // 전라북도
+  // ═══════════════════════════════════════════
+
+  // 전북 전주시 추가
+  'seosin':['전북','전주시','서신동','A','jeonbuk','jeonju'],
+  'deokjin':['전북','전주시','덕진동','E','jeonbuk','jeonju'],
+
+  // 전북 익산시 추가
+  'eoman':['전북','익산시','어양동','H','jeonbuk','iksan'],
+
+  // 전북 군산시
+  'naun':['전북','군산시','나운동','H','jeonbuk','gunsan'],
+  'susongi':['전북','군산시','수송동','H','jeonbuk','gunsan'],
+
+  // 전북 정읍시
+  'jeongeup-dong':['전북','정읍시','정읍동','H','jeonbuk','jeongeup'],
+
+  // 전북 남원시
+  'namwon-dong':['전북','남원시','남원동','H','jeonbuk','namwon'],
+
+  // 전북 김제시
+  'gimje-dong':['전북','김제시','김제동','H','jeonbuk','gimje'],
+
+  // 전북 완주군
+  'samrye':['전북','완주군','삼례읍','F','jeonbuk','wanju'],
+  'bongdong':['전북','완주군','봉동읍','F','jeonbuk','wanju'],
+
+  // 전북 진안군
+  'jinan-eup':['전북','진안군','진안읍','F','jeonbuk','jinan'],
+
+  // 전북 무주군
+  'muju-eup':['전북','무주군','무주읍','F','jeonbuk','muju'],
+
+  // 전북 장수군
+  'jangsu-eup':['전북','장수군','장수읍','F','jeonbuk','jangsu'],
+
+  // 전북 임실군
+  'imsil-eup':['전북','임실군','임실읍','F','jeonbuk','imsil'],
+
+  // 전북 순창군
+  'sunchang-eup':['전북','순창군','순창읍','F','jeonbuk','sunchang'],
+
+  // 전북 고창군
+  'gochang-eup':['전북','고창군','고창읍','F','jeonbuk','gochang'],
+
+  // 전북 부안군
+  'buan-eup':['전북','부안군','부안읍','F','jeonbuk','buan'],
+
+  // ═══════════════════════════════════════════
+  // 전라남도
+  // ═══════════════════════════════════════════
+
+  // 전남 순천시 추가
+  'yeonhyang2':['전남','순천시','연향동','B','jeonnam','suncheon'],
+  'pungdeok':['전남','순천시','풍덕동','H','jeonnam','suncheon'],
+
+  // 전남 여수시 추가
+  'dolsan':['전남','여수시','돌산읍','H','jeonnam','yeosu'],
+  'yosu-dong':['전남','여수시','여서동','H','jeonnam','yeosu'],
+
+  // 전남 목포시 추가
+  'okam':['전남','목포시','옥암동','B','jeonnam','mokpo'],
+
+  // 전남 나주시
+  'naju-dong':['전남','나주시','나주동','H','jeonnam','naju'],
+  'bitgaram':['전남','나주시','빛가람동','B','jeonnam','naju'],
+
+  // 전남 광양시 추가
+  'jungang-gy':['전남','광양시','중동','C','jeonnam','gwangyang'],
+
+  // 전남 담양군
+  'damyang-eup':['전남','담양군','담양읍','F','jeonnam','damyang'],
+
+  // 전남 곡성군
+  'gokseong-eup':['전남','곡성군','곡성읍','F','jeonnam','gokseong'],
+
+  // 전남 구례군
+  'gurye-eup':['전남','구례군','구례읍','F','jeonnam','gurye'],
+
+  // 전남 고흥군
+  'goheung-eup':['전남','고흥군','고흥읍','F','jeonnam','goheung'],
+
+  // 전남 보성군
+  'boseong-eup':['전남','보성군','보성읍','F','jeonnam','boseong'],
+
+  // 전남 화순군
+  'hwasun-eup':['전남','화순군','화순읍','F','jeonnam','hwasun'],
+
+  // 전남 장흥군
+  'jangheung-eup':['전남','장흥군','장흥읍','F','jeonnam','jangheung'],
+
+  // 전남 강진군
+  'gangjin-eup':['전남','강진군','강진읍','F','jeonnam','gangjin'],
+
+  // 전남 해남군
+  'haenam-eup':['전남','해남군','해남읍','F','jeonnam','haenam'],
+
+  // 전남 영암군
+  'yeongam-eup':['전남','영암군','영암읍','F','jeonnam','yeongam'],
+  'samho':['전남','영암군','삼호읍','C','jeonnam','yeongam'],
+
+  // 전남 무안군
+  'muan-eup':['전남','무안군','무안읍','F','jeonnam','muan'],
+  'ilro':['전남','무안군','일로읍','B','jeonnam','muan'],
+
+  // 전남 함평군
+  'hampyeong-eup':['전남','함평군','함평읍','F','jeonnam','hampyeong'],
+
+  // 전남 영광군
+  'yeonggwang-eup':['전남','영광군','영광읍','F','jeonnam','yeonggwang'],
+  'hongnong':['전남','영광군','홍농읍','C','jeonnam','yeonggwang'],
+
+  // 전남 장성군
+  'jangseong-eup':['전남','장성군','장성읍','F','jeonnam','jangseong'],
+
+  // 전남 완도군
+  'wando-eup':['전남','완도군','완도읍','G','jeonnam','wando'],
+
+  // 전남 진도군
+  'jindo-eup':['전남','진도군','진도읍','G','jeonnam','jindo'],
+
+  // 전남 신안군
+  '압해':['전남','신안군','압해읍','G','jeonnam','sinan'],
+
+  // ═══════════════════════════════════════════
+  // 경상북도
+  // ═══════════════════════════════════════════
+
+  // 경북 포항시 추가
+  'yonil':['경북','포항시','효자동','H','gyeongbuk','pohang'],
+  'jukdo':['경북','포항시','죽도동','H','gyeongbuk','pohang'],
+
+  // 경북 경주시 추가
+  'hwangseong':['경북','경주시','황성동','H','gyeongbuk','gyeongju'],
+  'bukgun':['경북','경주시','북군동','H','gyeongbuk','gyeongju'],
+
+  // 경북 구미시 추가
+  'imeu':['경북','구미시','임은동','H','gyeongbuk','gumi'],
+  'okgye':['경북','구미시','옥계동','C','gyeongbuk','gumi'],
+
+  // 경북 안동시 추가
+  'junggu-ad':['경북','안동시','중구동','H','gyeongbuk','andong'],
+
+  // 경북 경산시 추가
+  'oksan':['경북','경산시','옥산동','E','gyeongbuk','gyeongsan'],
+
+  // 경북 김천시
+  'gimcheon-dong':['경북','김천시','김천동','H','gyeongbuk','gimcheon'],
+  'pyeonghwa-gk':['경북','김천시','평화동','H','gyeongbuk','gimcheon'],
+
+  // 경북 영주시
+  'yeongju-dong':['경북','영주시','영주동','H','gyeongbuk','yeongju'],
+  'punggi':['경북','영주시','풍기읍','F','gyeongbuk','yeongju'],
+
+  // 경북 영천시
+  'yeongcheon-dong':['경북','영천시','영천동','H','gyeongbuk','yeongcheon'],
+
+  // 경북 상주시
+  'sangju-dong':['경북','상주시','상주동','H','gyeongbuk','sangju'],
+
+  // 경북 문경시
+  'jeomchon':['경북','문경시','점촌동','H','gyeongbuk','mungyeong'],
+
+  // 경북 의성군
+  'uiseong-eup':['경북','의성군','의성읍','F','gyeongbuk','uiseong'],
+
+  // 경북 청송군
+  'cheongsong-eup':['경북','청송군','청송읍','F','gyeongbuk','cheongsong'],
+
+  // 경북 영양군
+  'yeongyang-eup':['경북','영양군','영양읍','F','gyeongbuk','yeongyang'],
+
+  // 경북 영덕군
+  'yeongdeok-eup':['경북','영덕군','영덕읍','F','gyeongbuk','yeongdeok'],
+  'ganggu':['경북','영덕군','강구면','F','gyeongbuk','yeongdeok'],
+
+  // 경북 청도군
+  'hwayangup':['경북','청도군','화양읍','F','gyeongbuk','cheongdo'],
+
+  // 경북 고령군
+  'daegaya':['경북','고령군','대가야읍','F','gyeongbuk','goryeong'],
+
+  // 경북 성주군
+  'seongju-eup':['경북','성주군','성주읍','F','gyeongbuk','seongju'],
+
+  // 경북 칠곡군
+  'waegwan':['경북','칠곡군','왜관읍','C','gyeongbuk','chilgok'],
+  'buk-chilgok':['경북','칠곡군','북삼읍','H','gyeongbuk','chilgok'],
+
+  // 경북 예천군
+  'yecheon-eup':['경북','예천군','예천읍','F','gyeongbuk','yecheon'],
+
+  // 경북 봉화군
+  'bonghwa-eup':['경북','봉화군','봉화읍','F','gyeongbuk','bonghwa'],
+
+  // 경북 울진군
+  'uljin-eup':['경북','울진군','울진읍','F','gyeongbuk','uljin'],
+  'jukbyeon':['경북','울진군','죽변면','C','gyeongbuk','uljin'],
+
+  // 경북 울릉군
+  'ulleung-eup':['경북','울릉군','울릉읍','G','gyeongbuk','ulleung'],
+
+  // ═══════════════════════════════════════════
+  // 경상남도
+  // ═══════════════════════════════════════════
+
+  // 경남 창원시 추가
+  'jungang-cw':['경남','창원시','중앙동','H','gyeongnam','changwon'],
+  'sinwol-cw':['경남','창원시','신월동','B','gyeongnam','changwon'],
+
+  // 경남 진주시 추가
+  'chocheon':['경남','진주시','초전동','B','gyeongnam','jinju'],
+  'munsan-jj':['경남','진주시','문산읍','F','gyeongnam','jinju'],
+
+  // 경남 김해시 추가
+  'burhang':['경남','김해시','불암동','H','gyeongnam','gimhae'],
+
+  // 경남 양산시 추가
+  'yangsan-dong':['경남','양산시','양산동','H','gyeongnam','yangsan'],
+  'bugok-ys':['경남','양산시','북정동','H','gyeongnam','yangsan'],
+
+  // 경남 거제시
+  'gohyeon':['경남','거제시','고현동','C','gyeongnam','geoje'],
+  'jangseungpo':['경남','거제시','장승포동','C','gyeongnam','geoje'],
+
+  // 경남 통영시
+  'tongyeong-dong':['경남','통영시','통영동','H','gyeongnam','tongyeong'],
+  'mujeon':['경남','통영시','무전동','H','gyeongnam','tongyeong'],
+
+  // 경남 사천시
+  'sacheon-eup':['경남','사천시','사천읍','C','gyeongnam','sacheon'],
+  'seopoong':['경남','사천시','서포면','F','gyeongnam','sacheon'],
+
+  // 경남 밀양시
+  'milyang-dong':['경남','밀양시','밀양동','H','gyeongnam','miryang'],
+  'samnangjin':['경남','밀양시','삼랑진읍','F','gyeongnam','miryang'],
+
+  // 경남 의령군
+  'uiryeong-eup':['경남','의령군','의령읍','F','gyeongnam','uiryeong'],
+
+  // 경남 함안군
+  'gaya-eup':['경남','함안군','가야읍','H','gyeongnam','haman'],
+  'chilwon':['경남','함안군','칠원읍','F','gyeongnam','haman'],
+
+  // 경남 창녕군
+  'changnyeong-eup':['경남','창녕군','창녕읍','F','gyeongnam','changnyeong'],
+  'namji':['경남','창녕군','남지읍','F','gyeongnam','changnyeong'],
+
+  // 경남 고성군
+  'goseong-eup':['경남','고성군','고성읍','F','gyeongnam','goseong-gn'],
+
+  // 경남 남해군
+  'namhae-eup':['경남','남해군','남해읍','F','gyeongnam','namhae'],
+
+  // 경남 하동군
+  'hadong-eup':['경남','하동군','하동읍','F','gyeongnam','hadong'],
+
+  // 경남 산청군
+  'sancheong-eup':['경남','산청군','산청읍','F','gyeongnam','sancheong'],
+
+  // 경남 함양군
+  'hamyang-eup':['경남','함양군','함양읍','F','gyeongnam','hamyang'],
+
+  // 경남 거창군
+  'geochang-eup':['경남','거창군','거창읍','F','gyeongnam','geochang'],
+
+  // 경남 합천군
+  'hapcheon-eup':['경남','합천군','합천읍','F','gyeongnam','hapcheon'],
+
+  // ═══════════════════════════════════════════
+  // 제주특별자치도 추가
+  // ═══════════════════════════════════════════
+  'aewol':['제주','제주시','애월읍','F','jeju','jeju-si'],
+  'gujwa':['제주','제주시','구좌읍','F','jeju','jeju-si'],
+  'hallim':['제주','제주시','한림읍','F','jeju','jeju-si'],
+  'daejeong':['제주','서귀포시','대정읍','F','jeju','seogwipo'],
+  'namwon-jj':['제주','서귀포시','남원읍','F','jeju','seogwipo'],
+  'pyoseon':['제주','서귀포시','표선면','F','jeju','seogwipo'],
+};
+
+// DONG_MAP/DONG_EN은 DONG_DB에서 자동 생성
+// 추가 전국 데이터 병합
+Object.assign(DONG_DB, DONG_DB_EXTRA);
+
+const DONG_MAP = Object.fromEntries(Object.entries(DONG_DB).map(([k,v])=>[k,v[2]]));
+const DONG_EN = Object.fromEntries(Object.entries(DONG_DB).map(([k,v])=>[v[2],k]));
+
+
+const GRADE_MAP = {
+  // 통합 키 (기존 호환)
+  'elementary':'초등','middle':'중등','high':'고등',
+  // 초등 세분화
+  'elem1':'초1','elem2':'초2','elem3':'초3','elem4':'초4','elem5':'초5','elem6':'초6',
+  // 중등 세분화
+  'mid1':'중1','mid2':'중2','mid3':'중3',
+  // 고등 세분화
+  'high1':'고1','high2':'고2','high3':'고3',
+};
 const GRADE_EN = Object.fromEntries(Object.entries(GRADE_MAP).map(([k,v])=>[v,k]));
 
 const SUBJECT_MAP = {
@@ -145,347 +1175,17 @@ const GANGNAM_DONGS = [
 
 const CENTERS = [{"name":"하남풍산점","officialName":"하남풍산점와와학습코칭학원","regNo":"경기도광주하남교육지원청 제 하남314호","sido":"경기","sido_en":"gyeonggi","district":"하남시","address":"경기 하남시 덕풍동로 119  하남프라자 501호 와와학습코칭학원","directions":"경기도 하남시 덕풍동로119 하남프라자501호 \n 스타벅스 맞은편 건물입니다\n 주차 1시간 가능합니다","target_elem":"나룰초, 하남풍산초","target_mid":"덕풍중, 신평중, 동부중","target_high":"풍산고, 남한고, 신장고, 감일고, 미사고, 애니고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"사동점","officialName":"사동점와와학습코칭학원","regNo":"경상북도경산교육지원청 제1276호","sido":"경북","sido_en":"gyeongbuk","district":"경산시","address":"경북 경산시 백자로10길 1  402호 와와학습코칭학원","directions":"경산시 백자로 10길 1 402호(사동 공차건물)","target_elem":"사동초, 삼성현초, 평산초, 동부초","target_mid":"사동중, 문명중, 삼성현중, 경산중, 경산여중, 장산중","target_high":"사동고, 경산여고, 경산고, 문명고, 경북체고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"하계점","officialName":"하계점와와학습코칭학원","regNo":"서울북부교육청 등록 제 2016-12호","sido":"서울","sido_en":"seoul","district":"노원구","address":"서울 노원구 노원로 257  401호","directions":"혜성여고 건너편, 하계중 바로 옆, 1층에 메가커피가 있는 건물의 4층 맨 안쪽","target_elem":"","target_mid":"하계중, 녹천중, 상명중, 태릉중, 공릉중","target_high":"혜성여고, 대진고, 상명고, 월계고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"수지점","officialName":"수지점와와학습코칭학원","regNo":"용인교육지원청 등록 제4774호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기 용인시 수지구 문정로 13  중수프라자 503호","directions":"수지구청 맞으면 우리은행 건물 / 수지구청역 2번출구에서 2분거리","target_elem":"풍천초, 정평초, 이현초","target_mid":"이현중, 수지중, 정평중","target_high":"상현고, 신봉고, 홍천고, 성복고, 풍덕고, 수지고, 죽전고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"이곡점","officialName":"이곡점와와학습코칭학원","regNo":"대구남부교육지원청 등록 제2016-13호","sido":"대구","sido_en":"daegu","district":"달서구","address":"대구광역시 달서구 이곡동 달구벌대로259길 33  제일빌딩 5층","directions":"대구시 달서구 달구벌대로259길 33 제일빌딩 5층 (1층이 현풍닭칼국수 음식점이 있는 빌딩)","target_elem":"와룡초","target_mid":"성산중","target_high":"성서고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"탄현점","officialName":"탄현점와와학습코칭학원","regNo":"고양교육지원청 등록 제5930호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 일산서구 산현로17번길 23  은행프라자 4","directions":"✅주차장 주소: 경기도 고양시 일산서구 산현로17번길 35 탄현제2공영주차장\n(간판은 아파트쪽에서 보이기 때문에 혹시 간판이 보이지 않으면 농협 간판 보고 건물 확인 해주시면 됩니다) \n\n(차량 이용 시 주차는 탄현제2공영주차장 이용 부탁드립니다)\n(죄송하지만 주차비는 따로 지원하고 있지 않습니다)","target_elem":"상탄초","target_mid":"일산동중, 일산중, 호곡중","target_high":"일산동고, 덕이고, 중산고, 일산동고, 중산고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"철산점","officialName":"철산점와와학습코칭학원","regNo":"광명교육지원청 등록 제1781호","sido":"경기","sido_en":"gyeonggi","district":"광명시","address":"경기도 광명시 철산동 도덕공원로 27  삼우빌딩 2층","directions":"경기도 광명시 도덕공원로27 삼우빌딩 2층 (주차장이 없습니다 인근 철산성당이나 인근 아파트에 주차가능합니다)","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"치평점","officialName":"와와학습코칭학원","regNo":"광주서부교육지원청 등록 제6027호","sido":"광주","sido_en":"gwangju","district":"서구","address":"광주 서구 치평로 76  대한빌딩 403호","directions":"상무지구 이디야커피 건물4층이나 맥도널드 옆에 있다고 전달드립니다.","target_elem":"운천초, 계수초","target_mid":"전남중, 동명중","target_high":"전남고, 상무고, 광주여고, 상일여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"지족점","officialName":"와와학습코칭학원","regNo":"대전서부교육지원청 등록 제 서4241호","sido":"대전","sido_en":"daejeon","district":"유성구","address":"대전 유성구 지족동  910-7번지 401","directions":"노은역 동광장 다이소 맞은편 와플대학, BYC건물 4층","target_elem":"상지초, 지족초, 노은초, 수정초","target_mid":"지족중, 노은중","target_high":"반석고, 지족고, 노은고, 유성여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"수완점","officialName":"와와학습코칭수완학원","regNo":"광주서부교육지원청 등록 제6778호","sido":"광주","sido_en":"gwangju","district":"광산구","address":"광주 광산구 임방울대로 310  아이비타워 406","directions":"텃밭 건물로 들어와서 4층으로 올라오시면 바로 아발론 어학원이 있습니다.\n그대로 오른쪽을 바라보시면 복도 안쪽에 수완센터가 자리하고 있습니다.","target_elem":"","target_mid":"수완중, 장덕중","target_high":"수완고, 장덕고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"호매실점","officialName":"와와학습코칭센터호매실학원","regNo":"수원교육지원청 등록 제6830호","sido":"경기","sido_en":"gyeonggi","district":"수원시","address":"경기 수원시 권선구 금곡로 116  유동빌딩  602호","directions":"금곡동 유동타워 6층입니다.(채선당,아이온 소아과건물)","target_elem":"","target_mid":"","target_high":"호매실고, 영신여고, 동원고, 동우여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"신곡점","officialName":"와와학습코칭센터학원","regNo":"의정부교육지원청 등록 제2071호","sido":"경기","sido_en":"gyeonggi","district":"의정부시","address":"경기도 의정부시 신곡동 장곡로 626  금오종합상가 A동 302,303호","directions":"경기북부청사경전철역 건너편 금오종합상가 3층(1층 페리카나)","target_elem":"","target_mid":"천보중, 효자중","target_high":"효자고, 경민it고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"행신점","officialName":"행신점와와학습코칭센터학원","regNo":"경기도고양교육지원청 등록 제6408호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 덕양구 중앙로 442  아성프라자 305호 와와학습코칭학원","directions":"경기도 고양시 중앙로 442, 아성프라자 305호(홈플러스 건물 3층)","target_elem":"아람초, 행신초, 덕은초, 서정초","target_mid":"서정중, 행신중, 무원중, 가람중, 덕양중","target_high":"서정고, 행신고, 무원고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"서신점","officialName":"와와학습코칭학원","regNo":"전주교육지원청 등록 제6457호","sido":"전북","sido_en":"jeonbuk","district":"전주시","address":"전북특별자치도 전주시 완산구 서신로 5  4층 와와학습코칭학원","directions":"서신로5 4층(본병원 사거리에 있습니다)","target_elem":"중산초","target_mid":"","target_high":"한일고, 근영고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"센트럴점","officialName":"센트럴점와와학습코칭학원","regNo":"광주하남교육지원청 등록 제1894호","sido":"경기","sido_en":"gyeonggi","district":"하남시","address":"경기 하남시 미사강변대로 84  미사탑프라자 601호","directions":"미사탑프라자 6층( 빽다방 건물/ 자이아파트 정문)","target_elem":"한홀초, 청하초","target_mid":"윤슬중, 미사중","target_high":"미사강변고, 미사고, 신장고, 남한고, 풍산고, 강일고, 특성화고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"미금점","officialName":"금곡점와와학습코칭학원","regNo":"성남교육지원청 등록 제5313호","sido":"경기","sido_en":"gyeonggi","district":"성남시","address":"경기도 성남시 분당구 금곡동 돌마로 87  골드프라자 402호","directions":"미금역 2번출구 150m 앞 국민은행 건물4층","target_elem":"미금초, 청솔초, 늘푸른초","target_mid":"불곡중, 청솔중, 늘푸른중","target_high":"불곡고, 늘푸른고, 분당중앙고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"야탑점","officialName":"야탑와와학습코칭학원","regNo":"성남교육지원청 등록 제6056호","sido":"경기","sido_en":"gyeonggi","district":"성남시","address":"경기 성남시 중원구 양현로 461  4층","directions":"","target_elem":"여수초, 야탑초, 중탑초","target_mid":"야탑중","target_high":"아람고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"갈매점","officialName":"갈매점와와학습코칭학원","regNo":"구리남양주교육지원청 등록 제4331호","sido":"경기","sido_en":"gyeonggi","district":"구리시","address":"경기 구리시 갈매중앙로 79  에스엠타워 602호","directions":"안녕하세요, OO학생 학부모님~갈매점. 위치는 (구리시 갈매동79, 에스엠타워602호)입니다. 1층에 새마을금고, 베스킨라빈스 건물 6층입니다.","target_elem":"갈매초, 산마루초","target_mid":"갈매중","target_high":"갈매고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"마두점","officialName":"마두점와와학습코칭센터학원","regNo":"고양교육지원청 등록 제6135호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 일산동구 중앙로 1191  굿모닝법조타운 1 604호","directions":"스타벅스 마두역점 건물 6층","target_elem":"백신초, 호수초","target_mid":"백석중, 저동중","target_high":"백신고, 정발고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"첨단점","officialName":"첨단점와와학습코칭센터학원","regNo":"광주서부교육지원청 등록 제7200호","sido":"광주","sido_en":"gwangju","district":"광산구","address":"광주 광산구 월계로 191  404호","directions":"광주광역시 광산구 월계로191 첨단메디컬빌딩 4층 404호\n1층에 김가네와 쿼드커피 사이에 입구가 있습니다\n엘리베이터에서 내리셔서 바로 오른쪽에 센터가 위치합니다","target_elem":"월봉초","target_mid":"천곡중, 월봉중","target_high":"장덕고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"송정점","officialName":"송정점와와학습코칭학원","regNo":"울산강북교육지원청 등록 제5652호","sido":"울산","sido_en":"ulsan","district":"북구","address":"울산 북구 화산로 123  골드테라스 404호","directions":"울산 북구 화산로 123 골드테라스건물 4층 404호\n1층에 백소정건물있습니다.","target_elem":"고헌초, 송정초, 화봉초","target_mid":"고헌중, 화봉중, 연암중","target_high":"화봉고, 매곡고, 무룡고, 울산공고, 에너지고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"석동점","officialName":"석동점와와학습코칭학원","regNo":"창원교육지원청 등록 제1933호","sido":"경남","sido_en":"gyeongnam","district":"창원시","address":"경남 창원시 진해구 석동로 51  세븐코아 504호","directions":"진해구 석동로 51 세븐코아빌딩 5층 와와학습코칭센터","target_elem":"","target_mid":"석동중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"수진점","officialName":"수진점와와학습코칭학원","regNo":"성남교육지원청 등록 제6533호","sido":"경기","sido_en":"gyeonggi","district":"성남시","address":"경기 성남시 중원구 원터로 95  2층","directions":"성남중앙초 후문 앞 cu 옆 건물, 행복한성적표 위층","target_elem":"성남중앙초","target_mid":"성일중, 성남중, 동광중, 풍생중","target_high":"성남여고, 성남고, 성일고, 동광고, 효성고, 숭신여고, 복정고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"수성2가점","officialName":"수성2가점와와학습코칭학원","regNo":"대구광역시동부교육지원청 제6704호","sido":"대구","sido_en":"daegu","district":"수성구","address":"대구 수성구 명덕로 404  1동 404호 와와학습코칭학원","directions":"_x0008_대구 수성고 명덕로 404, 404호 3호선 수성시장역 2번출구에서 대봉교방향으로, 금손아귀 건물 4층","target_elem":"동일초, 동도초, 동성초","target_mid":"대구동중, 신명여중, 중앙중, 황금중","target_high":"남산고, 경북고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"기흥구청점","officialName":"기흥구청점와와학습코칭학원","regNo":"경기도용인교육지원청 등록 제 5253호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기 용인시 기흥구 구갈로60번길 15  경영빌딩 3층 와와학습코칭학원","directions":"기흥구청 앞 신협 건물 3층, 한양수자인 103동 건너편","target_elem":"구갈초, 산양초, 관곡초","target_mid":"구갈중, 신갈중, 신릉중","target_high":"기흥고, 신갈고, 성지고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"대구도남점","officialName":"대구도남점와와학습코칭학원","regNo":"대구광역시서부교육지원청 제2023-4500호","sido":"대구","sido_en":"daegu","district":"북구","address":"대구 북구 도남중앙로7길 20-3  위너프라자 402호 와와학습코칭학원","directions":"대구 북구 도남중앙로 7길, 20-3. 402호","target_elem":"국우초, 도남초","target_mid":"학남중","target_high":"학남고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"반석점","officialName":"반석점와와학습코칭학원","regNo":"대전서부교육지원청 등록 제 서4638호","sido":"대전","sido_en":"daejeon","district":"유성구","address":"대전 유성구 지족로 282  코오롱타워2 303,304","directions":"와이식자재마트 대각선, 브래드홀릭 건물 3층","target_elem":"새미래초, 반석초","target_mid":"새미래중, 외삼중, 하기중","target_high":"반석고, 노은고, 지족고, 유성고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"화성태안점","officialName":"화성태안점와와학습코칭학원","regNo":"경기도화성오산교육지원청 제4750호","sido":"경기","sido_en":"gyeonggi","district":"화성시","address":"경기 화성시 병점중앙로 87  408호 와와학습코칭학원","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"봉담점","officialName":"봉담점와와학습코칭학원","regNo":"경기도화성오산교육지원청 제 5025호","sido":"경기","sido_en":"gyeonggi","district":"화성시","address":"경기 화성시 봉담읍 상리중심상가길 28-8  713호 와와학습코칭학원","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"삼각산점","officialName":"삼각산점와와학습코칭학원","regNo":"성북강북교육지원청 등록 제2017-58호","sido":"서울","sido_en":"seoul","district":"강북구","address":"서울 강북구 미아동  811-9 두산위브테라스파크 상가 402/403호","directions":"","target_elem":"길음초, 송천초, 미양초","target_mid":"삼각산중, 길음중, 미양중","target_high":"삼각산고, 미양고, 영훈고, 혜화여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"당산점","officialName":"당산점와와학습코칭학원","regNo":"서울남부교육지원청 등록 제 5746호","sido":"서울","sido_en":"seoul","district":"영등포구","address":"서울 영등포구 당산로44길 3  삼성타운 504","directions":"당산역 10번 출구, 2호선 지나는 도로 따라 레미안4차 지나면 크로미빵집있는 건물 5층입니다.","target_elem":"당서초, 영동초, 당중초","target_mid":"당산중, 당산서중, 선유중","target_high":"선유고, 여의도고, 여의도여고, 영등포여고, 관악고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"은평점","officialName":"와와학습코칭학원","regNo":"서울서부교육지원청 등록 제02201700112호","sido":"서울","sido_en":"seoul","district":"은평구","address":"서울특별시 은평구 진관동 진관2로 29-21  드림스퀘어 제 8층 804호 805호","directions":"구파발역 2번출구,구파발성당 맞은편 1층 이디야,서브웨이 건물입니다.","target_elem":"은진초, 은빛초, 진관초, 신도초","target_mid":"진관중, 신도중, 연천중","target_high":"진관고, 신도고, 대성고, 선일여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"화정점","officialName":"화정점와와학습코칭학원","regNo":"고양교육지원청 등록 제5768호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 덕양구 화신로 263  브릿지타워 213호, 214호 와와학습코칭학원","directions":"경기도 고양시 덕양구 화신로 263 브릿지타워 2층 214호 (한방병원 건물)","target_elem":"","target_mid":"화정중, 지도중, 신능중","target_high":"화정고, 화수고, 백양고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"인창점","officialName":"와와학습코칭센터학원","regNo":"구리남양주교육지원청 등록 제3467호","sido":"경기","sido_en":"gyeonggi","district":"구리시","address":"경기 구리시 건원대로 36  제 407호 와와학습코칭학원","directions":"화성골드프라자( 1층에 베스킨라빈스)  4층","target_elem":"건원초, 동구초, 구지초","target_mid":"인창중, 동구중","target_high":"인창고, 수택고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"염창점","officialName":"와와코칭보습학원","regNo":"강서양천교육지원청 등록 제 5716호","sido":"서울","sido_en":"seoul","district":"강서구","address":"서울 강서구 양천로67길 15  한희빌딩 2층 202호  와와학습코칭학원","directions":"등촌역 2번출구 직진 500미터 염창중앙교회옆건물, 강서구 염창동 242-11 한히빌딩 5층","target_elem":"염경초, 염동초, 백석초","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"인천삼산점","officialName":"인천삼산점와와학습코칭학원","regNo":"인천북부교육지원청 등록 제4641호","sido":"인천","sido_en":"incheon","district":"부평구","address":"인천 부평구 체육관로 32  하이존빌딩 8층 802","directions":"인천 부평구 체육관로 32 하이존 8층 (삼산체육관에서 도보 5분)\nor 굴포천역 도보 5분 or 삼산타운 7단지 정문 맞은편","target_elem":"굴포초, 진산초, 영선초","target_mid":"진산중, 삼산중, 구산중","target_high":"영선고, 삼산고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"이매점","officialName":"이매점와와학습코칭학원","regNo":"성남교육지원청 등록 제5320호","sido":"경기","sido_en":"gyeonggi","district":"성남시","address":"경기도 성남시 분당구 이매동 이매로 49  4층 와와학습코칭센터","directions":"수인 분당선 이매역 6번 출구 바로 앞 1층 쿠쿠매장 주영빌딩 4층","target_elem":"이매초, 안말초","target_mid":"매송중, 이매중, 송림중","target_high":"이매고, 송림고, 태원고, 돌마고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"침산점","officialName":"침산점와와학습코칭학원","regNo":"대구서부교육지원청 등록 제2019-4229호","sido":"대구","sido_en":"daegu","district":"북구","address":"대구 북구 침산남로 140  엠비프라자 901","directions":"","target_elem":"침산초, 달산초","target_mid":"침산중, 대구일중, 경명여중, 산격중, 대구북중","target_high":"경명여고, 칠성고, 청구고, 사대부고, 경상고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"오산점","officialName":"와와학습코칭학원","regNo":"화성오산교육지원청 등록 제2840호","sido":"경기","sido_en":"gyeonggi","district":"오산시","address":"경기 오산시 성호대로 121  월드타워 505호","directions":"오산시청 우리은행 건물 5층","target_elem":"운천초, 성호초, 운산초","target_mid":"운암중, 운천중, 성호중","target_high":"운암고, 운천고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"별내점","officialName":"별내점와와학습코칭학원","regNo":"구리남양주교육지원청 등록 제4170호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 순화궁로 349  삼광프라자 501호","directions":"별내 카페거리 건너편 메가커피 건물5층","target_elem":"샛별초, 화접초, 별가람초, 한별초, 덕송초","target_mid":"별가람중, 한별중, 한삼중","target_high":"별가람고, 별내고, 한삼고, 퇴계원고, 청학고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"영통구청점","officialName":"영통구청점와와학습코칭학원","regNo":"수원교육지원청 등록 제6824-1호","sido":"경기","sido_en":"gyeonggi","district":"수원시","address":"경기 수원시 영통구 매탄로108번길 10  모닝프라자 602호","directions":"영통구청 옆 중심상가 내 맘스터치 건물 6층","target_elem":"매탄초,매현초","target_mid":"매탄중,매현중","target_high":"매탄고,효원고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"부평점","officialName":"와와학습코칭센터부평학원","regNo":"인천북부교육지원청 등록 제4371호","sido":"인천","sido_en":"incheon","district":"부평구","address":"인천광역시 부평구 부평동 부흥로 264  5층 와와학습코칭센터","directions":"부평시장역3번출구에서 도보5분거리/쿠우쿠우 있는 건물 5층","target_elem":"부평서초,부평동초","target_mid":"부원중,부원여중","target_high":"부평고,부평여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"풍동점","officialName":"풍동와와학습코칭학원","regNo":"고양교육지원청 등록 제5785호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 일산동구 숲속마을로 44  미래타워 6","directions":"풍동상가 미래타워6층(빽다방,이삭토스트건물)","target_elem":"풍산초, 다솜초, 은행초","target_mid":"풍동중, 풍산중, 양일중","target_high":"풍동고, 세원고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"송천점","officialName":"와와학습코칭송천점학원","regNo":"전주교육지원청 등록 제6679호","sido":"전북","sido_en":"jeonbuk","district":"전주시","address":"전북특별자치도 전주시 덕진구 솔내로 129  송천열방빌딩 501호 와와학습코칭학원","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"태평점","officialName":"태평와와학습코칭학원","regNo":"대전동부교육지원청등록 제 2동3247호","sido":"대전","sido_en":"daejeon","district":"중구","address":"대전 중구 태평로 15  버드내마을아파트 상가 308","directions":"","target_elem":"버드내초","target_mid":"버드내중, 태평중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"목감점(모두)","officialName":"목감점모두오름학습코칭학원","regNo":"시흥교육지원청 등록 제 시1311호","sido":"경기","sido_en":"gyeonggi","district":"시흥시","address":"경기 시흥시 수풀안길 14-23  4층 402호","directions":"시흥시 수풀안길 14-23 메트로타워2 4층(1층에 원할머니보쌈있습니다)","target_elem":"조남초, 목감초","target_mid":"조남중","target_high":"목감고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"송촌점","officialName":"송촌와와학습코칭학원","regNo":"대전동부교육지원청등록 제 2동3248호","sido":"대전","sido_en":"daejeon","district":"대덕구","address":"대전 대덕구 동춘당로94번길 11-7  4층 402","directions":"","target_elem":"송촌초","target_mid":"매봉중, 법동중, 송촌중","target_high":"송촌고, 명석고, 우송고, 대전여고, 동대전고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"중동점","officialName":"와와학습코칭보습학원","regNo":"부천교육지원청 등록 제5918호","sido":"경기","sido_en":"gyeonggi","district":"부천시","address":"경기 부천시 원미구 길주로 191  금영프라자 제 4층 401호","directions":"","target_elem":"부흥초, 중흥초","target_mid":"중흥중, 부명중","target_high":"증흥고, 중원고, 경기예고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"중동점(W+)","officialName":"중동점더블유플러스보습학원","regNo":"부천교육지원청 등록 제6516호","sido":"경기","sido_en":"gyeonggi","district":"부천시","address":"경기 부천시 원미구 길주로 219  드림빌딩 401호","directions":"","target_elem":"부흥초, 중흥초","target_mid":"중흥중, 부명중","target_high":"증흥고, 중원고, 경기예고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"신중동점","officialName":"와와학습코칭신중동보습학원","regNo":"부천교육지원청 등록 제6330호","sido":"경기","sido_en":"gyeonggi","district":"부천시","address":"경기 부천시 원미구 조마루로291번길 25  센터프라자 405호, 406호","directions":"","target_elem":"부곡초, 계남초, 심원초","target_mid":"심원중, 계남중, 부곡중","target_high":"계남고, 심원고, 원미고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"화정점(W+)","officialName":"화정점더블유플러스학원","regNo":"고양교육지원청 등록 제6077호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 덕양구 화중로 32-31  효원빌딩 401호 일부","directions":"","target_elem":"지도초","target_mid":"화정중, 신능중","target_high":"화정고, 서정고, 백양고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"양덕점","officialName":"양덕점와와학습코칭학원","regNo":"포항교육지원청 등록 제2584호","sido":"경북","sido_en":"gyeongbuk","district":"포항시","address":"경북 포항시 북구 천마로 66  환호빌딩 402호","directions":"양덕 하나로마트 근처, 양덕 농협사거리 롯데리아 사이 건물,  이디야 건물 4층,","target_elem":"양덕초 양서초 장흥초","target_mid":"양덕중 장흥중 대도중 환호여중","target_high":"장성고 포고 포여고 유성여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"옥정점","officialName":"옥정점와와학습코칭학원","regNo":"경기도동두천양주교육지원청 제1331호","sido":"경기","sido_en":"gyeonggi","district":"양주시","address":"경기 양주시 옥정로 218  신운정튼튼프라자 305호 와와학습코칭학원","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"은평점(글로리드)","officialName":"은평점글로리드학습코칭학원","regNo":"서울특별시 서부교육지원청 제 02202300049호","sido":"서울","sido_en":"seoul","district":"은평구","address":"서울 은평구 진관2로 29-21  드림스퀘어 609호","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"다산점(W+)","officialName":"다산점더블유플러스학원","regNo":"경기도구리남양주교육지원청 제4711호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 다산순환로 350  KB골든타워 310호 더블유플러스학원","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"옥길스타점","officialName":"옥길스타점와와학습코칭보습학원","regNo":"경기도부천교육지원청 등록 제6775호","sido":"경기","sido_en":"gyeonggi","district":"부천시","address":"경기 부천시 소사구 범안로 231-15  옥길중앙타워 제2층 201호 와와학습코칭학원","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"광장점","officialName":"와와학습코칭학원","regNo":"성동광진교육지원청 등록 제 2316호","sido":"서울","sido_en":"seoul","district":"광진구","address":"서울 광진구 광나루로 584  동서울빌딩 5","directions":"올림픽대교북단사거리 바로 앞, 광진구 광나루로 584 동서울빌딩5층","target_elem":"","target_mid":"양진중, 광장중","target_high":"광남고, 단대부고, 건대부고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"반월당점","officialName":"반월당점와와학습코칭학원","regNo":"대구광역시동부교육지원청 제6834호","sido":"대구","sido_en":"daegu","district":"중구","address":"대구 중구 대봉로 253  3층 와와학습코칭학원","directions":"대구 중구 대봉로 253 3층 와와학습코칭학원(센트로팰리스 대백마트 맞은편)","target_elem":"대구초, 사대부초","target_mid":"대구제일중, 사대부중","target_high":"사대부고, 경북여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"배곧점","officialName":"배곧점와와학습코칭학원","regNo":"경기도시흥교육지원청 제 시1653 호","sido":"경기","sido_en":"gyeonggi","district":"시흥시","address":"경기 시흥시 배곧4로 22  배곧타운2 217호 와와학습코칭학원","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"명지대역점","officialName":"명지대역점와와학습코칭학원","regNo":"경기도용인교육지원청 제 5578 호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기 용인시 처인구 명지로40번길 4  링크 153 502호 와와학습코칭학원","directions":"","target_elem":"함박초, 서룡초","target_mid":"용신중, 용인중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"칠금점","officialName":"칠금점와와학습코칭학원","regNo":"충주교육지원청 등록 제1469호","sido":"충북","sido_en":"chungbuk","district":"충주시","address":"충청북도 충주시 칠금동 계명대로 29  3층","directions":"","target_elem":"탄금초, 칠금초","target_mid":"탄금중, 칠금중, 중앙중, 미덕중, 여중, 북여중, 충주중","target_high":"국원고, 예성여고, 충주여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"세교점","officialName":"세교점와와학습코칭학원","regNo":"화성오산교육지원청 등록 제4098호","sido":"경기","sido_en":"gyeonggi","district":"오산시","address":"경기 오산시 수청로 193  P&P세교프라자 402호","directions":"오산세교종합사회복지관 앞 스타벅스 건물 4층","target_elem":"","target_mid":"문시중, 세마중","target_high":"세교고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"수지점(글로리드)","officialName":"수지점글로리드학습코칭학원","regNo":"경기도용인교육지원청 제5340호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기 용인시 수지구 풍덕천로 114  3층 글로리드학습코칭학원","directions":"수지구청역 2번출구 바로 앞에 미스터피자 건물 3층","target_elem":"풍천초, 정평초, 이현초","target_mid":"이현중, 수지중, 정평중","target_high":"상현고, 신봉고, 홍천고, 성복고, 풍덕고, 수지고, 죽전고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"마포2호점","officialName":"마포2호점와와학습코칭학원","regNo":"서울특별시 서부교육지원청 제02202300102호","sido":"서울","sido_en":"seoul","district":"마포구","address":"서울 마포구 토정로 252  승지빌딩 3층","directions":"서울특별시 마포구 토정로 252 승지빌딩 3층 와와학습코칭학원\n(대흥역 3번출구 5분거리이며 1층 기아자동차 AS센터 건물입니다.)","target_elem":"신석초, 염리초, 용강초, 서강초, 우이초","target_mid":"서울여중, 동도중, 신수중","target_high":"서울여고, 숭문고, 광성고, 한성고, 배문고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"다산도농점","officialName":"다산도농점와와학습코칭학원","regNo":"경기도구리남양주교육지원청 제4749호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 도농로 29  604호 와와학습코칭센터","directions":"다산도농 이마트앞 부영프라자 604호","target_elem":"도농초, 금교초, 미금초,","target_mid":"동화중, 도농중, 가운중","target_high":"도농고, 가운고, 다산고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"별가람점","officialName":"별가람점와와학습코칭학원","regNo":"경기도구리남양주교육지원청 제4785호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 덕송1로55번길 20  503호","directions":"경기도 남양주시 별내동 824-2 별내프라자-2 503호                                                                                   별내별가람역 3번출구에서 189m","target_elem":"덕송초, 샛별초","target_mid":"별가람중, 화접중, 한별중","target_high":"별내고, 별가람고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"동탄목동점","officialName":"동탄목동점와와학습코칭학원","regNo":"경기도화성오산교육지원청 제4752호","sido":"경기","sido_en":"gyeonggi","district":"화성시","address":"경기 화성시 동탄신리천로 408  M메디칼 212호","directions":"경기도 화성시 신리천로 408 M메디컬프라자 212호 와와학습코칭학원","target_elem":"동탄목동초, 한율초","target_mid":"동탄목동중, 세정중","target_high":"창의고, 정현고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"두호점","officialName":"와와학습코칭센터학원","regNo":"포항교육지원청 등록 제2124호","sido":"경북","sido_en":"gyeongbuk","district":"포항시","address":"경상북도 포항시 북구 용두산길 32  3층","directions":"파리 바게트 맞은편 건물 3층","target_elem":"","target_mid":"환호여중, 대도중","target_high":"두호고, 포여고, 장성고, 포고, 중앙고, 중앙여고, 대동고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"선운점","officialName":"선운점와와학습코칭학원","regNo":"광주광역시서부교육지원청 제7446호","sido":"광주","sido_en":"gwangju","district":"광산구","address":"광주 광산구 선운로20번길 55-1  402호 와와학습코칭학원","directions":"선운로 20번길 55-1 4층 (배가마트 옆 우산신협 건물)","target_elem":"선운초, 본량초","target_mid":"선운중","target_high":"정광고, 보문고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"교하점","officialName":"교하점와와학습코칭학원","regNo":"경기도파주교육지원청 제1975호","sido":"경기","sido_en":"gyeonggi","district":"파주시","address":"경기 파주시 청석로 272  센타프라자1 제8층 제803","directions":"와와학습코칭학원 파주 교하점\n경기도 파주시 청석로272 /센터프라자 803호(파리바게트 건물)","target_elem":"청석초, 석곶초, 두일초","target_mid":"교하중, 두일중, 심학중","target_high":"교하고, 심학고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"송파위례점","officialName":"송파위례점와와학습코칭학원","regNo":"서울특별시강동송파교육지원청 제8296호","sido":"서울","sido_en":"seoul","district":"송파구","address":"서울 송파구 위례광장로 188  아이온스퀘어 8층 816호 와와학습코칭학원","directions":"와와학습코칭센터 송파위례점 위례 아이온스퀘어 8층 816호","target_elem":"송례초, 위례별초","target_mid":"위례중, 송례중","target_high":"위례고, 문현고, 문정고, 덕수고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"산본점","officialName":"산본점와와학습코칭학원","regNo":"경기도군포의왕교육지원청 제2444호","sido":"경기","sido_en":"gyeonggi","district":"군포시","address":"경기 군포시 산본로 394  대림프라자 제 6층 제602호 와와학습코칭학원","directions":"경기 군포시 산본로394 602-2호( 대림프라자 6층)\n주차장입구가 노란색입니다.\n1층에 빽다방,이삭토스트, 본죽\n산본학원가 스타벅스 옆 건물\n하나로마트 옆","target_elem":"광정초","target_mid":"산본중, 궁내중, 수리중, 도장중, 금정중","target_high":"흥진고, 산본고, 군포고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"구월점","officialName":"구월점와와학습코칭학원","regNo":"인천광역시동부교육지원청 제4031호","sido":"인천","sido_en":"incheon","district":"남동구","address":"인천 남동구 선수촌공원로23번길 6-29  다복타워 401호 와와학습코칭학원","directions":"아시아드 로터리, 농협 건물 근처 세무소 방향 바로 옆 건물","target_elem":"성리초","target_mid":"성리중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"고잔점","officialName":"와와학습코칭센터안산학원","regNo":"안산교육지원청 등록 제4176호","sido":"경기","sido_en":"gyeonggi","district":"안산시","address":"경기 안산시 단원구 광덕대로 130  폴리타운 B동 513호","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"가좌점","officialName":"가좌점와와학습코칭학원","regNo":"서울서부교육지원청 등록 제02202000014호","sido":"서울","sido_en":"seoul","district":"서대문구","address":"서울 서대문구 가재울로 52  승우빌딩 301호","directions":"","target_elem":"가재울초, 연가초","target_mid":"","target_high":"가재울고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"호평점","officialName":"호평점와와학습코칭학원","regNo":"구리남양주교육지원청 등록 제4177호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 늘을3로 65-6  테마프라자 205호","directions":"경기 남양주시 늘을3로 65-6 (호평동 617-3) \n테마프라자2층 205호\n건물 지하 무료주차 가능합니다","target_elem":"구룡초, 호평초, 판곡초","target_mid":"판곡중, 호평중","target_high":"판곡고, 호평고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"평내점","officialName":"평내점와와학습코칭학원","regNo":"구리남양주교육지원청 등록 제3712호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 경춘로 1256번길 9  501호","directions":"평내상가지역 1층 메가커피건물 2층 아지트떡볶이","target_elem":"","target_mid":"장내초, 중","target_high":"고, 호평초, 중, 고, 금곡초, 중, 고, 판곡고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"부발점","officialName":"와와학습코칭부발학원","regNo":"이천교육지원청 등록 제1222호","sido":"경기","sido_en":"gyeonggi","district":"이천시","address":"경기 이천시 부발읍 경충대로2092번길 39-19  이천하이클래스 207,208","directions":"","target_elem":"아미초, 신하초","target_mid":"효양중, 사동중","target_high":"효양고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"율하점","officialName":"율하점와와학습코칭학원","regNo":"대구동부교육지원청 등록 제6183호","sido":"대구","sido_en":"daegu","district":"동구","address":"대구 동구 율하동로 32  4층 와와학습코칭센터","directions":"대구 동구 율하동로 32 대은빌딩 4층 (119센터 근처, 율원중 근처)","target_elem":"숙천초, 율원초, 율금초, 안일초","target_mid":"율원중, 강동중, 안심중, 새론중, 신기중, 동원중","target_high":"동부고, 강동고, 정동고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"비전점","officialName":"와와학습코칭센터학원","regNo":"평택교육지원청 등록 제 2126호","sido":"경기","sido_en":"gyeonggi","district":"평택시","address":"경기도 평택시 비전동 평남로 937  폴리프라자 602호, 603호","directions":"리더스하임 후문 맞은편또는 센텀정형외과 건물 6층","target_elem":"이화초 가내초 자란초","target_mid":"비전중 한광중 한광여중 평택여중 소사벌중","target_high":"비전고 한광고 한광여고 평택여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"옥길점","officialName":"옥길점와와학습코칭보습학원","regNo":"부천교육지원청 등록 제6454호","sido":"경기","sido_en":"gyeonggi","district":"부천시","address":"경기 부천시 소사구 옥길로 116  퀸즈파크 A동 7층 718호~719","directions":"","target_elem":"버들초","target_mid":"옥길중","target_high":"범박고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"후곡점","officialName":"후곡점와와학습코칭학원","regNo":"고양교육지원청 등록 제5985호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 일산서구 일산로 511  태성상가 2층 201,202","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"단구점","officialName":"와와학습코칭학원","regNo":"원주교육지원청 등록 제2412호","sido":"강원","sido_en":"gangwon","district":"원주시","address":"강원특별자치도 원주시 서원대로 406  리더스빌딩 402","directions":"단구동 롯데시네마 근처에 우리은행 건물 4층","target_elem":"구곡초등학교, 서원주초등학교","target_mid":"남원주중학교, 단구중학교","target_high":"치악고등학교, 원주고등학교","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"복대점","officialName":"복대점와와학습코칭학원","regNo":"청주교육지원청 등록 제5298호","sido":"충북","sido_en":"chungbuk","district":"청주시","address":"충북 청주시 흥덕구 진재로 37  3","directions":"증안초에서 하복대 방향 도보로 5분 / 아인동물병원 옆 건물 3층","target_elem":"증안초, 진흥초","target_mid":"복대중, 서원중, 솔밭중","target_high":"흥덕고, 세광고, 사대부고, 청주고, 중앙여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"단대점","officialName":"단대점와와학습코칭학원","regNo":"성남교육지원청 등록 제6183호","sido":"경기","sido_en":"gyeonggi","district":"성남시","address":"경기 성남시 수정구 산성대로 423  5층","directions":"","target_elem":"단대초","target_mid":"서중, 은행중","target_high":"성남고, 성일고, 숭신여고, 동광고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"은평점(W+)","officialName":"은평점더블유플러스수학보습학원","regNo":"서울서부교육지원청 등록 제02202100037호","sido":"서울","sido_en":"seoul","district":"은평구","address":"서울 은평구 진관2로 19  휴먼프라자 312호","directions":"","target_elem":"진관초, 신도초, 은진초","target_mid":"진관중, 신도중, 연천중","target_high":"진관고, 신도고, 대성고, 선일여고, 동명여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"산내점","officialName":"산내점와와학습코칭학원","regNo":"파주교육지원청 등록 제1713호","sido":"경기","sido_en":"gyeonggi","district":"파주시","address":"경기 파주시 청암로17번길 21  월드타워5차 405호","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"동춘점","officialName":"동춘점와와학습코칭학원","regNo":"인천동부교육지원청 등록 제3723호","sido":"인천","sido_en":"incheon","district":"연수구","address":"인천 연수구 앵고개로264번길 40  남지빌딩 4층 와와학습코칭센터","directions":"","target_elem":"","target_mid":"","target_high":"대건고, 연수여고, 연수고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"후곡점(W+)","officialName":"후곡점더블유플러스학원","regNo":"경기도고양교육지원청 등록 제6354호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 일산서구 일산로 524  202호 더블유플러스학원","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"알파시티점","officialName":"알파시티점와와학습코칭학원","regNo":"대구광역시동부교육지원청 제6562호","sido":"대구","sido_en":"daegu","district":"수성구","address":"대구 수성구 알파시티2로 19  알파N시티 2층 201호 와와학습코칭학원","directions":"대구 수성구 알파시티2로19 와와학습코칭학원 201호","target_elem":"노변초, 고산초","target_mid":"노변중, 고산중","target_high":"시지고, 덕원고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"신월성점","officialName":"신월성와와학습코칭학원","regNo":"대구남부교육지원청 등록 제2017-120호","sido":"대구","sido_en":"daegu","district":"달서구","address":"대구 달서구 월성동  1848번지 그루타워 702호","directions":"","target_elem":"조암초, 신월초, 월암초, 월성초","target_mid":"조암중, 월암중, 월서중, 효성중, 영남중, 대건중, 학산중","target_high":"영남고, 상원고, 효성여고, 송현여고, 상인고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"대구역점","officialName":"대구역점와와학습코칭학원","regNo":"대구광역시동부교육지원청 제6571호","sido":"대구","sido_en":"daegu","district":"중구","address":"대구 중구 서성로 99  대구역센트럴자이 상가 302호 와와학습코칭학원","directions":"수창공원 맞은편\n1층 몬스터커피에서 왼쪽 건물 3층","target_elem":"수창초, 달성초, 종로초","target_mid":"계성중, 성명여중, 사대부중","target_high":"사대부고, 경북여고, 신명고, 대구고, 경북예고, 칠성고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"신방화점","officialName":"신방화점와와학습코칭학원","regNo":"강서양천교육지원청 등록 제 5879호","sido":"서울","sido_en":"seoul","district":"강서구","address":"서울 강서구 방화대로 294  마곡더블유타워 505","directions":"신방화역 6번출구에서 나와서 바로 왼쪽 마곡 더블유타워","target_elem":"송화초, 공항초","target_mid":"공항중, 송정중","target_high":"한서고, 공항고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"청라점","officialName":"와와학습코칭청라학원","regNo":"인천서부교육지원청 등록 서부 제1903호","sido":"인천","sido_en":"incheon","district":"서구","address":"인천 서구 중봉대로 588  청라센트럴프라자 609","directions":"","target_elem":"","target_mid":"청라중, 해원중","target_high":"청라고, 해원고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"소하점","officialName":"소하점와와학습코칭학원","regNo":"광명교육지원청 등록 제1965호","sido":"경기","sido_en":"gyeonggi","district":"광명시","address":"경기 광명시 오리로 346  행운드림프라자 4층 405호","directions":"","target_elem":"충현초, 서면초","target_mid":"충현중, 빛가온중","target_high":"충현고, 광휘고, 소하고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"복산점","officialName":"복산점와와학습코칭학원","regNo":"울산강북교육지원청 등록 제5462호","sido":"울산","sido_en":"ulsan","district":"중구","address":"울산 중구 번영로 461  B2동 7","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"동탄호수점","officialName":"동탄호수와와학습코칭학원","regNo":"화성오산교육지원청 등록 제3775호","sido":"경기","sido_en":"gyeonggi","district":"화성시","address":"경기 화성시 동탄순환대로 127-19  에스비타운 907호","directions":"우성 상가촌 동탄성모병원 건물 9층","target_elem":"방교초, 서연초","target_mid":"청림중, 서연중, 방교중","target_high":"정현고, 서연고, 창의고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"동백점","officialName":"동백점와와학습코칭학원","regNo":"용인교육지원청 등록 제3918호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기도 용인시 기흥구 중동 동백3로11번길 3  2층 201호","directions":"경기도 용인시 기흥구 중동 851-4 동백역타워 2층 201호. 1층에 파찌내 만둣가게가 있는 건물 2층 입니다. 동백역2번 출구 50m 이내 입니다.","target_elem":"석성초, 초당초","target_mid":"초당중, 백현중, 동백중, 성지중, 어정중, 용인중","target_high":"초당고, 백현고, 동백고, 성지고, 용인고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"노형점","officialName":"와와학습코칭학원","regNo":"제주시교육지원청 등록 제2163호","sido":"제주","sido_en":"jeju","district":"제주시","address":"제주특별자치도 제주시 노형동 727-3 대안빌딩  3층","directions":"제주은행 연북로지점 주차장 뒷편 cu건물3층","target_elem":"노형초","target_mid":"서중, 중앙중","target_high":"지역내 모든 고등학교 가능","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"장기점","officialName":"와와학습코칭센터김포학원","regNo":"김포교육지원청 등록 제1237호","sido":"경기","sido_en":"gyeonggi","district":"김포시","address":"경기도 김포시 장기동 김포한강4로 162  한강메트로 503호, 504호","directions":"","target_elem":"푸른솔초, 운유초","target_mid":"장기중, 푸른솔중, 고창중","target_high":"솔터고, 제일고, 운양고, 통진고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"좌동점","officialName":"와와학습코칭센터학원","regNo":"해운대교육지원청 등록 제3142호","sido":"부산","sido_en":"busan","district":"해운대구","address":"부산광역시 해운대구 좌동 좌동로 88  울트라타워 5층 508호","directions":"부산 2호선 장산역 10번 출구 도보 10분 거리, 1층 장독대(반찬)/호두과자 가게 있습니다.","target_elem":"동백초, 부흥초, 신도초","target_mid":"신도중, 부흥중, 신곡중, 해운대중, 해강중","target_high":"신도고, 양운고, 부흥고, 해운대여고, 해강고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"신방점","officialName":"와와학습코칭학원","regNo":"천안교육지원청 등록 제3413호","sido":"충남","sido_en":"chungnam","district":"천안시","address":"충청남도 천안시 동남구 신방동 886 학산프라자  A동 3층 304호,305호","directions":"세종약국(이석훈내과와 늘푸른이비인후과가 있는 건물) 3층입니다. 신방점 리처드헤어본점 맞은편 학산프라자 5층건물 3층에 있습니다.","target_elem":"신용초","target_mid":"용곡중, 신방중","target_high":"청수고, 쌍용고, 천안여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"쌍용점","officialName":"와와학습코칭쌍용점학원","regNo":"천안교육지원청 등록 제3502호","sido":"충남","sido_en":"chungnam","district":"천안시","address":"충청남도 천안시 서북구 쌍용동 불당대로 260  319호 318호(1/2)","directions":"고3  영어 수업은 어렵습니다","target_elem":"쌍용초","target_mid":"쌍용중","target_high":"쌍용고, 월봉고, 중앙고, 천안여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"병점점","officialName":"병점점와와학습코칭학원","regNo":"화성오산교육지원청 등록 제4050호","sido":"경기","sido_en":"gyeonggi","district":"화성시","address":"경기 화성시 병점1로 221  화인메디컬프라자 2층 203호","directions":"병점 중심상가 사거리 롯데리아 건물 2층 (엘리베이터 내리면 바로 위치)  설빙과 같은 층입니다. \n와와 병점점 031) 297 - 7325","target_elem":"진안초, 안화초, 병점초, 송화초, 구봉초","target_mid":"진안중, 병점중, 안화중","target_high":"병점고, 안화고, 능동고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"불당점","officialName":"불당점와와학습코칭학원","regNo":"천안교육지원청 등록 제4191호","sido":"충남","sido_en":"chungnam","district":"천안시","address":"충남 천안시 서북구 불당33길 22  고은타워 805호","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"웰카운티점","officialName":"웰카운티점와와학습코칭학원","regNo":"인천광역시동부교육지원청 등록 제3877호","sido":"인천","sido_en":"incheon","district":"연수구","address":"인천 연수구 인천타워대로54번길 15-5  북일프라자 2층 와와학습코칭학원","directions":"북일프라자 1차가 아닌 MUZE건물 2층 북일프라자 2층입니다 \n북일프라자 2층, 뮤즈카페 건물위 2층입니다","target_elem":"해송초등학교","target_mid":"해송중학교, 능허대중학교, 박문중학교","target_high":"해송고등학교, 연송고등학교, 대건고등학교","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"중산점","officialName":"중산점와와학습코칭학원","regNo":"경기도고양교육지원청 제 6727호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 일산동구 중산로 103  거풍프라자 202호","directions":"일산동구 중산로 103 거풍프라자 202호","target_elem":"모당초, 안곡초, 중산초","target_mid":"안곡중, 중산중, 일산중","target_high":"안곡고, 중산고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"가경점","officialName":"가경점와와학습코칭학원","regNo":"충청북도청주교육지원청 제 5888호","sido":"충북","sido_en":"chungbuk","district":"청주시","address":"충북 청주시 흥덕구 서현북로 18  2층 와와학습코칭학원","directions":"서현북로 대원칸타빌과 가경 e편한세상 사이 편의점 CU맞은편","target_elem":"서현초, 서경초","target_mid":"서현중, 경덕중, 서현중","target_high":"사대부고, 서원고, 청주외고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"탕정점(모두)","officialName":"탕정점모두오름학습코칭학원","regNo":"충청남도아산교육지원청 제 1560호","sido":"충남","sido_en":"chungnam","district":"아산시","address":"충남 아산시 탕정면 한들물빛5로 5  605호 모두오름학습코칭학원","directions":"한들물빛도시 지웰시티 센트럴 프루지오 206동 맞은편 젤존 메디컬시티 605호","target_elem":"한들물빛초","target_mid":"한들물빛중","target_high":"설화고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"이시아폴리스점","officialName":"이시아폴리스점\n와와학습코칭학원","regNo":"대구동부교육지원청 제 6935호","sido":"대구","sido_en":"daegu","district":"동구","address":"대구 동구 팔공로51길 33  A-503호 와와학습코칭학원","directions":"이시아폴리스 더샵3차아파트 맞은편 이스트 애플빌딩 5층","target_elem":"봉무초, 영신초","target_mid":"영신중, 팔공중, 복현중, 성광중, 성화중, 동촌중","target_high":"영신고, 경상고, 영진고, 성광고, 성화여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"신봉점","officialName":"신봉점와와학습코칭학원","regNo":"경기도용인교육지원청 제 5625호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기 용인시 수지구 신봉2로 60  웰스톤시티엔웰스톤에비뉴 1동 103호 와와학습코칭학원","directions":"신봉 LG자이2차 옆 웰스톤시티상가 1층, 농협복도 끝에 위치","target_elem":"신봉초, 신일초, 홍천초, 신리초, 성복초","target_mid":"신봉중, 성복중, 홍천중","target_high":"신봉고, 용인홍천고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"퇴계원점","officialName":"퇴계원점와와학습코칭학원","regNo":"경기도구리남양주교육지원청 제4787호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 퇴계원읍 퇴계원로 29  202호","directions":"경기도 남양주시 퇴계원로 29 송백타운 202호 와와학습코칭학원 퇴계원점\n 판다팜건물 2층 \n 퇴계원역 4거리에서 2분거리","target_elem":"퇴계원초, 도제원초, 태강삼육초","target_mid":"퇴계원중, 진건중","target_high":"퇴계원고, 진건고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"마포점","officialName":"마포점와와학습코칭학원","regNo":"서울서부교육지원청 등록 제02201800007호","sido":"서울","sido_en":"seoul","district":"마포구","address":"서울특별시 마포구 염리동 독막로42길 7  173-3 2층","directions":"지하철5호선 마포역, 6호선 공덕역 하차후 염리초등학교 방향으로 10분도보","target_elem":"염리초","target_mid":"서울여중, 동도중, 신수중, 숭문중","target_high":"서울여고, 숭문고, 광성고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"용인백현점(모두)","officialName":"용인백현점\n모두오름학습코칭학원","regNo":"경기도용인교육지원청 제5632호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기 용인시 기흥구 동백7로 83  백현마을중앙프라자 제 2층 제 208호","directions":"동백고등학교 건너편 상가 중에 중앙프라자 2층에 위치한 모두오름 학습코칭학원","target_elem":"동막초, 동백초, 용인백현초","target_mid":"동백중, 용인백현중","target_high":"동백고, 용인백현고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"대구역점2호관","officialName":"대구역점2호관\n와와학습코칭학원","regNo":"대구동부교육지원청 제 6950 호","sido":"대구","sido_en":"daegu","district":"중구","address":"대구 중구 서성로 99  대구역센트럴자이 상가 203호 와와학습코칭학원","directions":"수창공원 맞은편 대구역센트릴자이아파트 상가 2층","target_elem":"수창초, 종로초","target_mid":"계성중, 성명여중, 대구제일중, 사대부중","target_high":"사대부고, 경북여고, 신명고, 칠성고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"운정중앙점","officialName":"운정중앙점\n와와학습코칭학원","regNo":"파주교육지원청 제2139호","sido":"경기","sido_en":"gyeonggi","district":"파주시","address":"경기도 파주시 양지로 131, 운정SB타워 509호,510호 (동패동)","directions":"초롱꽃마을 12단지(대림이편한세상아파트)와 13단지(디에트르아파트) 사이 상가건물들 중 버거킹건물 5층","target_elem":"초롱초","target_mid":"심학중","target_high":"심학고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"충주용산점","officialName":"충주용산점\n와와학습코칭학원","regNo":"충주교육지원청 제 1693호","sido":"충북","sido_en":"chungbuk","district":"충주시","address":"충북 충주시 형설로 54-10,2층 (용산동)","directions":"충주중학교 정문으로 오세요","target_elem":"남산초, 용산초","target_mid":"예성여중, 미덕중","target_high":"충주여고, 예성여고, 충주고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"진천점(모두)","officialName":"진천점 모두오름학습코칭학원","regNo":"대구남부교육지원청 제 2025-53호","sido":"대구","sido_en":"daegu","district":"달서구","address":"대구광역시 달서구 조암남로 158,301호(유천동)","directions":"AK그랑폴리스와 쌍용예가 사이에 있는 건물(그랑에비뉴) 3층 가장 왼쪽 학원","target_elem":"한솔초, 한샘초","target_mid":"월서중, 조암중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"별내중앙점(모두)","officialName":"별내중앙점 \n모두오름학습코칭학원","regNo":"경기도구리남양주교육지원청 제 5006 호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기도 남양주시 별내3로 66,401호","directions":"우체국과 홈플러스 사이건물 4층입니다!","target_elem":"한별초","target_mid":"화접중, 한별중","target_high":"별내고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"목동점","officialName":"와와학습코칭학원","regNo":"강서양천교육지원청 등록 제 5353호","sido":"서울","sido_en":"seoul","district":"양천구","address":"서울 양천구 목동동로8길 23  메리트윈 3층 305","directions":"","target_elem":"신목초, 서정초","target_mid":"목일중, 신목중, 양강중, 금옥중","target_high":"양천고, 신목고, 한광고, 서울영상고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"신도림점","officialName":"와와학습코칭신도림학원","regNo":"서울남부교육지원청 등록 제 5525호","sido":"서울","sido_en":"seoul","district":"구로구","address":"서울특별시 구로구 신도림동 신도림로 20  397-2 해동빌딩 402호","directions":"구로구 신도림로 20 해동빌딩4층(신미림초등학교옆)","target_elem":"신미림초","target_mid":"신도림중","target_high":"신도림고, 구현고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"제기점","officialName":"제기와와학습코칭학원","regNo":"서울동부교육지원청 등록 제 3066호","sido":"서울","sido_en":"seoul","district":"동대문구","address":"서울 동대문구 왕산로 61  302호 와와학습코칭학원","directions":"","target_elem":"용두초, 종암초, 기타사립초","target_mid":"대광중, 성일중","target_high":"대광고, 청량리고, 경희고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"종암점","officialName":"종암와와학습코칭학원","regNo":"성북강북교육지원청 등록 제2019-56호","sido":"서울","sido_en":"seoul","district":"성북구","address":"서울 성북구 종암로27길 13  도원프라자 501","directions":"종암로27길 13 도원프라자 5층 (메가커피 건물) 성북소방서와 GS 주유소 사이길로 들어오시면 소방서 바로 옆 건물입니다~","target_elem":"","target_mid":"종암중, 사대부중, 개운중","target_high":"사대부고, 용문고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"명일점","officialName":"명일점와와학습코칭학원","regNo":"서울강동교육지원청 등록 제 7641호","sido":"서울","sido_en":"seoul","district":"강동구","address":"서울 강동구 양재대로 1606  3층","directions":"","target_elem":"","target_mid":"천호중, 배재중, 명일중","target_high":"명일여고, 강동고, 광문고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"구산점","officialName":"구산점와와학습코칭학원","regNo":"서울서부교육지원청 등록 제02201700143호","sido":"서울","sido_en":"seoul","district":"은평구","address":"서울특별시 은평구 역촌동 연서로 130  4층","directions":"","target_elem":"","target_mid":"구산중, 은평중","target_high":"예일여중고, 선일여중고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"내발산점","officialName":"내발산점와와학습코칭학원","regNo":"강서양천교육지원청 등록 제 5444호","sido":"서울","sido_en":"seoul","district":"강서구","address":"서울 강서구 마곡중앙4로 74  이웰메디파크 제4층 401,402호","directions":"내발산역에서 우장산역 방향으로 걸어오시다보면 소방서 앞에 육교가 있는데 육교앞 건물입니다.\n1층에 커피숍과 딤채가 있습니다.","target_elem":"가곡초, 내발산초","target_mid":"등명중, 화곡중, 명덕중, 덕원중","target_high":"화곡고, 명덕고, 덕원여고, 마포고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"금천점","officialName":"금천점와와학습코칭학원","regNo":"서울남부교육지원청 등록 제 5726호","sido":"서울","sido_en":"seoul","district":"금천구","address":"서울 금천구 금하로 763  벽산아파트 제중심상가동 3층 306-2,307,308","directions":"금천구 시흥2동 주민센터 건너편 벽산중심상가 3층","target_elem":"탑동초","target_mid":"동일중, 세일중","target_high":"매그넷고, 동일여고, 금천고, 문일고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"위례점","officialName":"위례와와학습코칭학원","regNo":"성남교육지원청 등록 제6054호","sido":"경기","sido_en":"gyeonggi","district":"성남시","address":"경기 성남시 수정구 위례광장로 320  315호","directions":"","target_elem":"고운초, 위례중앙초, 송례초","target_mid":"위례한빛중, 위례중앙중, 송례중","target_high":"위례한빛고, 복정고, 문현고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"상현점","officialName":"상현점와와학습코칭학원","regNo":"용인교육지원청 등록 제4241-1호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기도 용인시 수지구 상현동 만현로 120  4층 410호 와와학습코칭학원","directions":"상현동 sr프라자 4층","target_elem":"솔개초, 상현초, 이현초","target_mid":"서원중, 소현중, 이현중, 성복중","target_high":"상현고, 서원고, 풍덕고, 이의고, 홍천고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"사우점","officialName":"사우점와와학습코칭학원","regNo":"김포교육지원청 등록 제1769호","sido":"경기","sido_en":"gyeonggi","district":"김포시","address":"경기 김포시 사우중로 77  삼정사이버프라자 304","directions":"","target_elem":"금파초, 향산초","target_mid":"금파중, 김포중","target_high":"사우고, 풍무고, 고촌고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"수지점(W+)","officialName":"수지점더블유플러스학원","regNo":"용인교육지원청 등록 제5126호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기 용인시 수지구 진산로 106  훼미리빌딩 512호,513호,514호","directions":"","target_elem":"","target_mid":"이현중, 수지중, 정평중","target_high":"성복고, 풍덕고, 수지고, 죽전고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"새롬점","officialName":"새롬와와학습코칭학원","regNo":"세종특별자치시교육청 등록 제1211호","sido":"세종","sido_en":"sejong","district":"","address":"세종특별자치시 새롬중앙로 62-15  해피라움W 305호","directions":"","target_elem":"새뜸초, 새롬초","target_mid":"새뜸중, 새롬중","target_high":"새롬고, 다정고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"삼산점","officialName":"삼산점와와학습코칭학원","regNo":"울산강남교육지원청 등록 제6001호","sido":"울산","sido_en":"ulsan","district":"남구","address":"울산광역시 남구 삼산동 돋질로 300  4층","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"상남점","officialName":"상남점와와학습코칭학원","regNo":"창원교육지원청 등록 제1020호","sido":"경남","sido_en":"gyeongnam","district":"창원시","address":"경남 창원시 성산구 마디미동로 25  비전빌딩 302호","directions":"상남동 한마음병원 횡단보도 맞은편 건물 3층에 위치","target_elem":"외동초","target_mid":"상남중, 토월중, 웅남중","target_high":"창원중앙여고, 남고, 신월고, 토월고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"향남점","officialName":"향남점와와학습코칭학원","regNo":"화성오산교육지원청 등록 제3567호","sido":"경기","sido_en":"gyeonggi","district":"화성시","address":"경기 화성시 향남읍 발안로 103-6  J&H빌딩 402호","directions":"","target_elem":"한울초, 도이초","target_mid":"발안중, 향남중, 하길중, 화성중","target_high":"향남고, 향일고, 하길고, 발안바이오고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"동래점","officialName":"동래점와와학습코칭학원","regNo":"동래교육지원청 등록 제4888호","sido":"부산","sido_en":"busan","district":"동래구","address":"부산광역시 동래구 온천동 충렬대로 129-1  한야빌딩 3","directions":"건강검진센터와 동래맥도널드 사이 / 횡단보도 근처 / 건겅검진센터에서 미남역으로 한 블럭","target_elem":"내산초","target_mid":"내성중,유락여중,동래중,동해중","target_high":"내성고,중앙여고,동래고,부산전자고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"장곡점","officialName":"와와학습코칭학원","regNo":"시흥교육지원청 등록 제 시871호","sido":"경기","sido_en":"gyeonggi","district":"시흥시","address":"경기 시흥시 진말로 7  중앙프라자 3층 305호, 306호","directions":"장곡동 에이스마트 맞은편 '미소신협'건물 3층 와와학습코칭학원","target_elem":"장곡초, 진말초","target_mid":"응곡중, 장곡중, 가온중","target_high":"장곡고, 능곡고, 시흥고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"갈산점","officialName":"와와학습코칭갈산학원","regNo":"이천교육지원청 등록 제1127호","sido":"경기","sido_en":"gyeonggi","district":"이천시","address":"경기도 이천시 갈산동 영창로 314  629-2외 2필지 주공프라자 504호","directions":"","target_elem":"안흥초, 설봉초","target_mid":"이천중, 설봉중, 증포중","target_high":"제일고, 이현고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"금릉점","officialName":"와와학습코칭학원(금릉점)","regNo":"파주교육지원청 등록 제1594호","sido":"경기","sido_en":"gyeonggi","district":"파주시","address":"경기 파주시 금빛로 24-27  제일메디컬 502","directions":"1층 용우동,복호두있는 건물 5층입니다. 눈높이 옆에있습니다.","target_elem":"금릉초, 금화초, 새금초, 금촌초","target_mid":"금릉중, 금촌중, 문산중","target_high":"금촌고, 문산제일고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"반달점","officialName":"반달점와와학습코칭보습학원","regNo":"부천교육지원청 등록 제6730호","sido":"경기","sido_en":"gyeonggi","district":"부천시","address":"경기 부천시 원미구 상일로 69  반달마을 제상가동 제 3층 제 304호 와와학습코칭학원","directions":"경기도 부천시 상일로 69 반달마을 상가동 304호\n (주차는 아파트 입구에서 상가 304호 방문이라고 하면 됩니다)","target_elem":"부인초, 상도초","target_mid":"부인중, 상동중","target_high":"상원고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"관평점","officialName":"관평점와와학습코칭학원","regNo":"대전서부교육지원청 등록 제 서4761호","sido":"대전","sido_en":"daejeon","district":"유성구","address":"대전 유성구 관평2로 46  밸리타운 501","directions":"지도 사진과 함께 동화중학교 맞은편/ 주민센터 뒷 건물 로 설명 드립니다.","target_elem":"동화초, 관평초","target_mid":"동화중, 관평중","target_high":"중일고, 용산고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"개신점","officialName":"와와학습코칭센터학원","regNo":"청주교육지원청 등록 제4620호","sido":"충북","sido_en":"chungbuk","district":"청주시","address":"충청북도 청주시 서원구 개신동 경신로 31-1  402호","directions":"청주시 서원구 경신로 31-1 스타타워빌딩 4층\n(개신동 농협사거리, 1층에 롯데리아 개신점이 있는 건물의 4층입니다.)","target_elem":"개신초, 서경초, 가경초, 죽림초, 서원초","target_mid":"가경중, 서경중, 경덕중, 사대부중, 성화중, 서원중","target_high":"서원고, 사대부고, 청주고, 중앙여고, 운호고, 봉명고, 흥덕고, 세광고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"상동점","officialName":"와와학습코칭상동보습학원","regNo":"부천교육지원청 등록 제5950호","sido":"경기","sido_en":"gyeonggi","district":"부천시","address":"경기 부천시 원미구 송내대로265번길 67  월드컵타운 305호 와와학습코칭센터","directions":"진달래마을 정문 앞  청담 어학원 옆건물","target_elem":"석천초  상인초","target_mid":"석천중 상동중 상일중 부인중","target_high":"상동고 상일고 상원고 중흥고 중원고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"논현점","officialName":"와와학습코칭인천논현학원","regNo":"인천동부교육지원청 등록 제3283호","sido":"인천","sido_en":"incheon","district":"남동구","address":"인천 남동구 청능대로 559  2","directions":"인천 논현역 3번 출구에서 직진 200M 논현 메디컬 센터 2층","target_elem":"동방초, 원동초","target_mid":"고잔중","target_high":"고잔고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"광명점","officialName":"광명점와와학습코칭학원","regNo":"광명교육지원청 등록 제1964호","sido":"경기","sido_en":"gyeonggi","district":"광명시","address":"경기 광명시 광명로 823  광명현대타운 7층 701호","directions":"","target_elem":"","target_mid":"광남중, 광문중","target_high":"광문고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"정평점","officialName":"와와학습코칭학원","regNo":"경산교육지원청 등록 제941호","sido":"경북","sido_en":"gyeongbuk","district":"경산시","address":"경북 경산시 대학로 23  월드스퀘어 302","directions":"","target_elem":"사월초","target_mid":"경산중, 사동중, 경산여중","target_high":"경산고, 사동고, 경산여고, 문경고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"영천점","officialName":"영천점와와학습코칭학원","regNo":"화성오산교육지원청 등록 제2851호","sido":"경기","sido_en":"gyeonggi","district":"화성시","address":"경기 화성시 동탄순환대로 704  성산에이타워 제4층 제 403호 와와학습코칭학원","directions":"","target_elem":"한백초, 다원초","target_mid":"한백중, 다원중","target_high":"한백고, 이산고, 창의고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"송도점","officialName":"WAWA와와학습코칭인천송도점학원","regNo":"인천동부교육지원청 등록 제3284호","sido":"인천","sido_en":"incheon","district":"연수구","address":"인천 연수구 해돋이로 165  차오름프라자 302","directions":"백제원 근처, 채드윅 근처, 1공구 학원가","target_elem":"신정초","target_mid":"신정중","target_high":"연송고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"둔산점","officialName":"와와학습코칭센터학원","regNo":"대전서부교육지원청 등록 제 서4002호","sido":"대전","sido_en":"daejeon","district":"서구","address":"대전광역시 서구 둔산동 둔산로 142  신화빌딩 401호","directions":"시청역 7번 출구쪽 스타벅스&올리브영 건물 4층.","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"관저점","officialName":"관저점와와학습코칭학원","regNo":"대전서부교육지원청 등록 제 서4277호","sido":"대전","sido_en":"daejeon","district":"서구","address":"대전 서구 구봉로 133  1542번지 205호","directions":"마치광장 신협건물 2층","target_elem":"","target_mid":"","target_high":"서일고, 서일여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"전주혁신점","officialName":"전주혁신점와와학습코칭학원","regNo":"완주교육지원청 제 454호","sido":"전북","sido_en":"jeonbuk","district":"완주군","address":"전북특별자치도 완주군 이서면 출판로 42  제 4층 제 402호 와와학습코칭학원","directions":"전주 혁신도시 호반 베르디움 1차 맞은편 상가 / 굽네치킨 건물 4층","target_elem":"","target_mid":"양현중, 삼우중, 만성중","target_high":"양현고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"주엽점","officialName":"주엽점와와학습코칭학원","regNo":"고양교육지원청 등록 제5403호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기도 고양시 일산서구 주엽동 주화로 88  502호","directions":"","target_elem":"강선초","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"주엽2호점","officialName":"주엽2호와와학습코칭학원","regNo":"고양교육지원청 등록 제5826호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 일산서구 중앙로 1413  동영빌딩 10층 1003","directions":"","target_elem":"강선초","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"다산점","officialName":"다산점와와학습코칭학원","regNo":"구리남양주교육지원청 등록 제4125호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 다산중앙로146번길 12-14  다산메트로타워 604호","directions":"","target_elem":"다산초","target_mid":"다산중","target_high":"다산고, 도농고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"비산점","officialName":"와와학습코칭비산센터학원","regNo":"안양과천교육지원청 등록 제 2017-063호","sido":"경기","sido_en":"gyeonggi","district":"안양시","address":"경기 안양시 동안구 관악대로 91  대림타워 1102호 와와학습코칭학원","directions":"경기 안양시 동안구 관악대로 91 대림타워 1102호 와와학습코칭학원","target_elem":"중앙초","target_mid":"비산중, 부흥중, 부림중, 신성중","target_high":"양명여고, 양명고, 관양고, 성문고, 동안고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"두정점","officialName":"와와학습코칭두정점학원","regNo":"천안교육지원청 등록 제3444호","sido":"충남","sido_en":"chungnam","district":"천안시","address":"충청남도 천안시 서북구 두정동 봉정로 382  성광빌딩 3층","directions":"두정초 정문 앞, 8단지 맞은편 피자마루 건물 3층,","target_elem":"두정초, 신대초","target_mid":"두정중, 성성중, 성정중,","target_high":"오성고, 두정고, 신당고, 업성고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"원주시청점","officialName":"와와학습코칭학원원주시청점","regNo":"원주교육지원청 등록 제2605호","sido":"강원","sido_en":"gangwon","district":"원주시","address":"강원특별자치도 원주시 시청로 22  2층 201","directions":"원주시청 등지고 오른쪽 첫번째 버스정류장 옆건물(1층에 피자알볼로)","target_elem":"만대초, 무실초","target_mid":"대성중, 평원중, 원주여중, 남원주중","target_high":"대성고, 육민관고, 북원여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"오산대역점","officialName":"오산대역점와와학습코칭학원","regNo":"화성오산교육지원청 등록 제3851호","sido":"경기","sido_en":"gyeonggi","district":"오산시","address":"경기 오산시 내삼미로 85  우정프라자 2","directions":"","target_elem":"세미초, 화성초, 수청초","target_mid":"매홀중, 세마중, 문시중, 대호중","target_high":"매홀고, 세교고, 오산고, 운천고, 운암고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"신창점","officialName":"와와학습코칭신창학원","regNo":"광주서부교육지원청 등록 제6884호","sido":"광주","sido_en":"gwangju","district":"광산구","address":"광주 광산구 신창로 129  상민빌딩 302","directions":"신창동 파리바게트 1호점 3층입니다.","target_elem":"신창초, 수문초","target_mid":"진흥중, 신창중, 진흥중","target_high":"숭덕고, 성덕고, 운남고, 장덕고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"칠곡점","officialName":"칠곡점와와학습코칭학원","regNo":"대구서부교육지원청 등록 제2020-4298호","sido":"대구","sido_en":"daegu","district":"북구","address":"대구 북구 구암로 149  6층","directions":"","target_elem":"관음초","target_mid":"구암중, 관천중, 운암중","target_high":"구암고, 함지고, 영송여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"운정점","officialName":"운정점와와학습코칭학원","regNo":"파주교육지원청 등록 제1424호","sido":"경기","sido_en":"gyeonggi","district":"파주시","address":"경기 파주시 동패동  1758-1 삼융프라자2 302호","directions":"","target_elem":"한가람초","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"다산지금점","officialName":"다산지금점와와학습코칭학원","regNo":"구리남양주교육지원청 등록 제4349-1호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 다산지금로 139  3층 308호, 309호","directions":"스타벅스 다산지금점 건물 3층(영신프라자)입니다.","target_elem":"다산한강초","target_mid":"다산한강중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"수성만촌점","officialName":"수성만촌점와와학습코칭학원","regNo":"대구동부교육지원청 등록 제6028호","sido":"대구","sido_en":"daegu","district":"수성구","address":"대구 수성구 화랑로8길 11-11  7층","directions":"","target_elem":"","target_mid":"동중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"천천점","officialName":"천천와와학습코칭학원","regNo":"수원교육지원청 등록 제6090-1호","sido":"경기","sido_en":"gyeonggi","district":"수원시","address":"경기 수원시 장안구 덕영대로535번길 34  천천그린프라자 제5층 제 502호 와와학습코칭학원","directions":"롯데마트 천천점 옆건물(건강과 행복 약국& 봉구스밥버거 1층)그린프라자 5층","target_elem":"천천초 정천초","target_mid":"천천중 대평중","target_high":"천천고 영생고 대평고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"산남점","officialName":"산남점와와학습코칭학원","regNo":"청주교육지원청 등록 제4696호","sido":"충북","sido_en":"chungbuk","district":"청주시","address":"충청북도 청주시 서원구 산남동 산남로 18  이화빌딩 5층","directions":"하나로 마트 건물 옆 1층 조은약국 건물","target_elem":"샛별초","target_mid":"수곡중 산남중","target_high":"충북고 운호고 충북여고 산남고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"석사점","officialName":"석사2호점와와학습코칭학원","regNo":"춘천교육지원청 등록 제1593호","sido":"강원","sido_en":"gangwon","district":"춘천시","address":"강원특별자치도 춘천시 지석로 85  703호","directions":"지석로 85 강남프라자 7층 ( 투탑시티 카펠라 휘트니스 건너편 건물)","target_elem":"성림초, 성원초, 봄내초","target_mid":"대룡중, 우석중, 남춘천중, 남춘천여중, 춘천중, 강원중","target_high":"강원고, 사대부고, 춘고, 춘여고, 봉의고, 성수여고, 유봉여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"후평점","officialName":"후평점와와학습코칭학원","regNo":"춘천교육지원청 등록 제1741호","sido":"강원","sido_en":"gangwon","district":"춘천시","address":"강원특별자치도 춘천시 춘천로 316  춘천더샵아파트상가2동 304.305","directions":"후평사거리 포스코상가 3층 (정육점 건물 3층으로 말하시면 많이들 아십니다)","target_elem":"","target_mid":"후평중, 봉의중, 강원중","target_high":"강원고, 춘천여고, 봉의고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"옥계점","officialName":"옥계점와와학습코칭학원","regNo":"구미교육지원청 등록 제2536호","sido":"경북","sido_en":"gyeongbuk","district":"구미시","address":"경북 구미시 산호대로31길 16  2","directions":"구미시 산호대로 31길 16 2층","target_elem":"원당초, 옥계동부초, 해마루초","target_mid":"옥계동부중, 해마루중, 옥계중","target_high":"산동고, 오상고, 금오여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"당진중앙점","officialName":"당진중앙와와학습코칭학원","regNo":"당진교육지원청 등록 제617호","sido":"충남","sido_en":"chungnam","district":"당진시","address":"충남 당진시 당진중앙2로 211-5  효명프라자 404호","directions":"","target_elem":"탑동초","target_mid":"호서중, 당진중","target_high":"호서고, 당진고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"미사점","officialName":"미사점와와학습코칭학원","regNo":"광주하남교육지원청 등록 제1913호","sido":"경기","sido_en":"gyeonggi","district":"하남시","address":"경기 하남시 미사강변대로 212  미사센트럴프라자 309","directions":"https://naver.me/xhHGgP9o  학원 위치 안내드립니다^^~미사도서관이나 보건센터에서 도보로 2분 거리입니다.","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"영통점","officialName":"와와학습코칭학원","regNo":"수원교육지원청 등록 제6117호","sido":"경기","sido_en":"gyeonggi","district":"수원시","address":"경기도 수원시 영통구 영통동 봉영로 1623  드림피아빌딩 301호, 302호 1/2","directions":"영통역과 청명역 중간에 버거킹 건물 3층입니다.","target_elem":"영덕초","target_mid":"흥덕중, 서천중","target_high":"영덕고, 청명고, 태장고, 흥덕고, 서천고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"망포점","officialName":"망포와와학습코칭학원","regNo":"수원교육지원청 등록 제6338호","sido":"경기","sido_en":"gyeonggi","district":"수원시","address":"경기도 수원시 영통구 망포동 영통로 127  센터프라자 401호","directions":"","target_elem":"잠원초, 망포초, 대선초","target_mid":"영동중, 잠원중, 망포중, 동학중","target_high":"태장고, 망포고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"강릉교동점","officialName":"와와학습코칭학원","regNo":"강릉교육지원청 등록 제1386호","sido":"강원","sido_en":"gangwon","district":"강릉시","address":"강원특별자치도 강릉시 정원로 44  202호 와와학습코칭학원","directions":"","target_elem":"율곡초, 경포초","target_mid":"관동중, 율곡중, 해람중, 솔올중, 경포중","target_high":"강여고, 강일여고, 명륜고, 제일고, 강릉고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"서수원점","officialName":"서수원와와학습코칭학원","regNo":"수원교육지원청 등록 제6949호","sido":"경기","sido_en":"gyeonggi","district":"수원시","address":"경기 수원시 권선구 호매실로104번길 90  JD타워 205호","directions":"","target_elem":"능실초, 금호초","target_mid":"오현초호매실중, 능실중, 영신중, 고색중","target_high":"호매실고, 영신여고, 고색고, 율천고, 동우여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"원당점","officialName":"원당점와와학습코칭학원","regNo":"고양교육지원청 등록 제5951호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 덕양구 고양대로1384번길 7-5  서강프라자 502호","directions":"","target_elem":"","target_mid":"성사중, 화수중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"송도점(W+)","officialName":"송도점더블유플러스학원","regNo":"인천동부교육지원청 등록 제3518호","sido":"인천","sido_en":"incheon","district":"연수구","address":"인천 연수구 해돋이로 160-6  꿈에계단 702호 일부(송도동)","directions":"백제원 근처, 백제원 앞 랜드로버 방향 옆건물, 1층에 명월카츠","target_elem":"신정초","target_mid":"신정중","target_high":"연송고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"운양점","officialName":"운양점와와학습코칭학원","regNo":"김포교육지원청 등록 제1913호","sido":"경기","sido_en":"gyeonggi","district":"김포시","address":"경기 김포시 김포한강11로 288-37  헤리움리버테라스 205호","directions":"경기 김포시 운양동 1296-7 헤리움'리버테라스' 205호입니다 엘레베이터 열리고 바로 왼쪽으로 오시면 됩니다~","target_elem":"하늘빛초, 청수초","target_mid":"하늘빛중, 운양중, 푸른솔중","target_high":"제일고, 운양고, 운유고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"도안점","officialName":"도안점와와학습코칭학원","regNo":"대전서부교육지원청 등록 제 서4790호","sido":"대전","sido_en":"daejeon","district":"서구","address":"대전 서구 동서대로 692  에프엠프라임 1차 501","directions":"","target_elem":"흥도초","target_mid":"유성중, 봉명중, 도안중","target_high":"유성고, 도안고, 서대전여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"시흥대야점","officialName":"시흥대야점와와학습코칭학원","regNo":"시흥교육지원청 등록 제 시1277호","sido":"경기","sido_en":"gyeonggi","district":"시흥시","address":"경기 시흥시 은행로167번길 7  크리스탈 빌딩 503호,504호","directions":"","target_elem":"은계초, 은행초","target_mid":"은행중, 은계중","target_high":"은행고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"둔산점(W+)","officialName":"둔산점더블유플러스학원","regNo":"대전서부교육지원청 등록 제 서4833호","sido":"대전","sido_en":"daejeon","district":"서구","address":"대전 서구 둔산로 130  803호","directions":"시청역 7번 출구쪽 30m","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"반여점","officialName":"반여점와와학습코칭학원","regNo":"해운대교육지원청 등록 제3955호","sido":"부산","sido_en":"busan","district":"해운대구","address":"부산 해운대구 반여로 102  경성빌딩 501호","directions":"아시아선수촌 정문 건너편 깨비블럭있는 건물 5층","target_elem":"인지초, 장산초, 무정초","target_mid":"장산중, 인지중","target_high":"반여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"화명점","officialName":"화명점와와학습코칭학원","regNo":"부산북부교육지원청 등록 제2830호","sido":"부산","sido_en":"busan","district":"북구","address":"부산 북구 금곡대로285번길 19  리버사이드빌딩 504","directions":"일방통행길 빽다방 건물 5층, 또는 코오롱하늘채 2차 정문 앞 상가","target_elem":"와석초","target_mid":"명진중, 화명중","target_high":"화명고,  성도고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"보라점","officialName":"보라점와와학습코칭학원","regNo":"용인교육지원청 등록 제4991호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기 용인시 기흥구 사은로126번길 6  신원프라자 303호","directions":"쌍용아파트 입구 줄넘기 학원 건물 3층","target_elem":"나곡초","target_mid":"나곡중/보라중/상갈중","target_high":"보라고/신갈고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"대구장기점","officialName":"대구장기점와와학습코칭학원","regNo":"대구남부교육지원청 등록 제2020-80호","sido":"대구","sido_en":"daegu","district":"달서구","address":"대구 달서구 장기로 252  장기협성휴포레 2층 209,210","directions":"버스정류장(장동초등학교앞) 바로 앞 대로변에 있습니다.\n 장기협성휴포레 상가 2층 (1층에 한솥 도시락이 있습니다)","target_elem":"장동초, 장기초, 성당초","target_mid":"원화중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"범박점","officialName":"범박점와와학습코칭보습학원","regNo":"부천교육지원청 등록 제6495호","sido":"경기","sido_en":"gyeonggi","district":"부천시","address":"경기 부천시 소사구 은성로 132  5층","directions":"부천 은성로132 제일프라자 501호 (세븐일레븐건물 5층)","target_elem":"창영초, 소안초, 소사초, 복사초","target_mid":"일신중, 소사중, 부일중","target_high":"시온고, 소사고, 범박고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"위례창곡점","officialName":"위례창곡점와와학습코칭학원","regNo":"성남교육지원청 등록 제6458호","sido":"경기","sido_en":"gyeonggi","district":"성남시","address":"경기 성남시 수정구 위례동로 141  우성메디피아 401호","directions":"경기도 성남시 수정구 위례동로 141 우성메디피아 401호  1층컴포즈커피","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"혁신점","officialName":"혁신점와와학습코칭학원","regNo":"원주교육지원청 등록 제2762호","sido":"강원","sido_en":"gangwon","district":"원주시","address":"강원특별자치도 원주시 입춘로 110  파라다이스프라자 305호","directions":"","target_elem":"버들초, 반고초","target_mid":"버들중, 반곡중","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"원흥점","officialName":"원흥점와와학습코칭학원","regNo":"고양교육지원청 등록 제6096호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 덕양구 권율대로 672  원흥역봄오피스텔 217호","directions":"원흥역 1번 출구 앞 1층 베스킨 라빈스 있는 건물 2층 217호","target_elem":"원흥초, 삼송초","target_mid":"원흥중, 고양중","target_high":"신원고, 서정고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"거제수월점","officialName":"거제수월점와와학습코칭학원","regNo":"거제교육지원청 등록 제1558호","sido":"경남","sido_en":"gyeongnam","district":"거제시","address":"경남 거제시 수양로 462  3층","directions":"수월사거리 파리바게트 맞은편 skT월드 건물 3층","target_elem":"수월초, 제산초","target_mid":"수월중, 거제중앙중","target_high":"거제중앙고, 연초고, 상문고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"덕이점","officialName":"덕이점와와학습코칭학원","regNo":"고양교육지원청 등록 제6169호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 일산서구 하이파크2로 40  금문프라자 804호","directions":"금문프라자(농협 옆건물, 1층에 컴포즈 카페있는 건물, 7층 헬스장 바로 위 8층입니다)","target_elem":"한산초, 덕이초, 백송초","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"삼송점","officialName":"삼송점와와학습코칭학원","regNo":"고양교육지원청 등록 제6173호","sido":"경기","sido_en":"gyeonggi","district":"고양시","address":"경기 고양시 덕양구 신원로 36  명승세도나3 701호","directions":"신원마을6단지 맞은편 상가-명승세도나3차 맘스터치있는 건물 7층","target_elem":"신원초","target_mid":"신원중","target_high":"신원고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"진월점","officialName":"진월점와와학습코칭센터학원","regNo":"광주서부교육지원청 등록 제7193호","sido":"광주","sido_en":"gwangju","district":"남구","address":"광주 남구 광복마을길 47  4층","directions":"광주광역시 남구 광복마을길 47 4층","target_elem":"진월초, 주월초","target_mid":"동성여중, 주월중","target_high":"대광여고, 동성고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"이충점","officialName":"이충점와와학습코칭학원","regNo":"평택교육지원청 등록 제 2599호","sido":"경기","sido_en":"gyeonggi","district":"평택시","address":"경기 평택시 이충로 49-31  삼원프라자 201호","directions":"이충상가 농협 옆건물 삼원프라자 2층, 1층 정관장 건물","target_elem":"","target_mid":"효명중, 이충중, 은혜중","target_high":"이충고, 은혜고, 효명고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"루원시티점","officialName":"루원시티점와와학습코칭학원","regNo":"인천서부교육지원청 등록 서부 제2212호","sido":"인천","sido_en":"incheon","district":"서구","address":"인천 서구 새오개로111번안길 23  대릉빌딩 302호","directions":"","target_elem":"가현초","target_mid":"신형중, 신현여중, 가현중","target_high":"신현고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"복현점","officialName":"복현점와와학습코칭학원","regNo":"대구광역시서부교육지원청 제2024-4559호","sido":"대구","sido_en":"daegu","district":"북구","address":"대구 북구 동북로 247  이편한세상복현 상가동 305호 와와학습코칭학원","directions":"대구 북구 복현동 713 e편한세상복현 상가동 305호","target_elem":"복현초","target_mid":"북중, 성광중, 산격중","target_high":"경상고, 성광고, 영진고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"진접점","officialName":"진접점와와학습코칭학원","regNo":"경기도구리남양주교육지원청등록 제4552호","sido":"경기","sido_en":"gyeonggi","district":"남양주시","address":"경기 남양주시 진접읍 해밀예당1로 171  제일프라자 203호","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"사직점","officialName":"사직점와와학습코칭학원","regNo":"동래교육지원청 등록 제5468호","sido":"부산","sido_en":"busan","district":"동래구","address":"부산 동래구 사직로 80  222동 311호 (사직쌍용예가아파트 상가)","directions":"부산시 동래구 사직로 80 쌍용예가상가 222동 311호 (상가 두개 중 맑은샘사우나가 있는 상가 3에 위치)","target_elem":"예원초, 사직초","target_mid":"사직중, 사직여중","target_high":"사직고, 사직여고, 동인고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"운정호수점","officialName":"운정호수점와와학습코칭센터학원","regNo":"경기도파주교육지원청 등록 제1878호","sido":"경기","sido_en":"gyeonggi","district":"파주시","address":"경기 파주시 경의로1240번길 37-1  명품프라자3차 605호","directions":"운정역1번출구에서 걸어서 7분, 가람도서관 건너편, 할리스건물","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"탄벌점","officialName":"탄벌점와와학습코칭학원","regNo":"광주하남교육지원청 등록 제2007호","sido":"경기","sido_en":"gyeonggi","district":"광주시","address":"경기 광주시 벌원길 61  2층","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"남외점","officialName":"남외점와와학습코칭학원","regNo":"울산강북교육지원청 등록 제5626호","sido":"울산","sido_en":"ulsan","district":"중구","address":"울산 중구 남외3길 15  남외프라자 401호","directions":"남외초앞 파리바게트 사거리 마트위 4층","target_elem":"남외초","target_mid":"남외중,울산중","target_high":"울산고,가온고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"흥덕점","officialName":"흥덕점와와학습코칭학원","regNo":"용인교육지원청 등록 제4989호","sido":"경기","sido_en":"gyeonggi","district":"용인시","address":"경기 용인시 기흥구 흥덕2로 85  우연프라자 201호","directions":"용인 흥덕 이마트 뒷편 세차장 옆건물 2층입니다.(경기도 용인시 흥덕2로 85 우연프라자 201호)","target_elem":"샘말초, 석현초, 흥덕초, 매원초","target_mid":"흥덕중, 다산중, 광교호수중, 상현중","target_high":"흥덕고, 기흥고, 신갈고, 상현고, 매원고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"반송점","officialName":"반송점와와학습코칭학원","regNo":"화성오산교육지원청 등록 제3130호","sido":"경기","sido_en":"gyeonggi","district":"화성시","address":"경기도 화성시 반송동 동탄원천로 163  503호","directions":"","target_elem":"","target_mid":"","target_high":"","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"돈암점","officialName":"돈암점와와학습코칭학원","regNo":"성북강북교육지원청 등록 제2017-43호","sido":"서울","sido_en":"seoul","district":"성북구","address":"서울특별시 성북구 돈암동 동소문로 190  중앙빌딩 201호","directions":"성신여대역 1번출구, 직진 버스 1정거장  기아자동차 건물 2층","target_elem":"개운초","target_mid":"개운중, 성신여중, 고명중","target_high":"용문고, 사대부고, 성신여고, 고대부고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"동소문점","officialName":"동소문점와와학습코칭학원","regNo":"성북강북교육지원청 등록 제2017-39호","sido":"서울","sido_en":"seoul","district":"성북구","address":"서울 성북구 아리랑로7길 5  4층 와와학습코칭학원","directions":"할머니문방구 사거리 건물 4층","target_elem":"정덕초, 우촌초, 정수초","target_mid":"성신여중, 동구여중, 삼선중, 고명중","target_high":"성신여고, 홍대부고, 고대부고, 한성여고","strength":"","price_elem":0,"price_mid":0,"price_high":0},{"name":"상암점","officialName":"와와학습코칭센터학원","regNo":"서울서부교육지원청 등록 제022015001127호","sido":"서울","sido_en":"seoul","district":"마포구","address":"서울특별시 마포구 상암동 상암산로1길 73  202호","directions":"","target_elem":"중동초, 상지초, 상암초","target_mid":"상암중, 중암중, 성산중, 성사중, 덕은한강중","target_high":"상암고, 예일여고, 대성고, 숭실고, 가재울고","strength":"","price_elem":0,"price_mid":0,"price_high":0}];
 
-const DONG_IMAGES = {
-  '개포동': 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=900&q=80',
-  '논현동': 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80',
-  '대치동': 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80',
-  '도곡동': 'https://images.unsplash.com/photo-1532153955177-f59af40d6472?w=900&q=80',
-  '삼성동': 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=900&q=80',
-  '세곡동': 'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=900&q=80',
-  '수서동': 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=900&q=80',
-  '신사동': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80',
-  '압구정동': 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=900&q=80',
-  '역삼동': 'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=900&q=80',
-  '일원동': 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=900&q=80',
-  '자곡동': 'https://images.unsplash.com/photo-1598620617148-c9e8ddee4b27?w=900&q=80',
-  '청담동': 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80',
-  '율현동': 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=900&q=80',
-};
-
-const GANGNAM_DONG_INFO = {
-  '대치동': '대치동은 전국 최고의 교육특구로, 수백 개의 학원이 밀집한 대치동 학원가를 중심으로 치열한 학업 경쟁이 펼쳐집니다. 대명중, 은광중, 휘문고, 단대부고 등 명문 학교들이 포진해 있으며, 내신 시험 난이도가 전국 최상위권입니다.',
-  '압구정동': '압구정동은 현대아파트와 갤러리아 백화점 인근의 고급 주거지역으로, 압구정중, 신사중 학군이 형성되어 있습니다. 학부모들의 교육열이 매우 높으며 외국어·예술 계열 과외 수요도 풍부합니다.',
-  '청담동': '청담동은 청담중 학군을 중심으로 고급 주거지와 교육이 공존하는 지역입니다. 외국계 기업 임원 가정이 많아 영어 원어민 수업 수요가 높고, 예술·문화 계열 과외도 활발합니다.',
-  '역삼동': '역삼동은 강남 IT 업무지구와 주거지역이 공존하는 곳입니다. 언주중, 역삼중 학군이 있으며 테헤란로 인근 직장인 자녀들의 교육 수요가 꾸준합니다.',
-  '개포동': '개포동은 재건축 이후 신축 아파트 단지가 들어서며 젊은 학부모층이 대거 유입된 지역입니다. 개포중, 개포고 학군을 중심으로 내신 관리 수요가 빠르게 증가하고 있습니다.',
-  '도곡동': '도곡동은 타워팰리스를 비롯한 고급 아파트 밀집 지역으로, 도곡중, 숙명여고 학군이 형성되어 있습니다. 학업 수준이 높고 1:1 심화 과외 수요가 많습니다.',
-  '삼성동': '삼성동은 코엑스 인근 업무·주거 복합지역으로, 영동중, 삼성고 학군이 있습니다. 외국계 기업 밀집으로 영어 조기교육 수요가 높습니다.',
-  '논현동': '논현동은 강남 중심부의 주거·상업 복합지역으로 논현중 학군이 형성되어 있습니다. 다양한 계층이 거주하며 실속형 내신 관리 과외 수요가 꾸준합니다.',
-  '신사동': '신사동은 가로수길 인근의 감각적인 주거지역으로, 신사중 학군이 있습니다. 패션·디자인 업계 종사자 가정이 많아 예체능·어학 과외 수요가 높습니다.',
-  '일원동': '일원동은 삼성서울병원 인근 의료·주거 복합지역으로, 일원중, 중동고 학군이 형성되어 있습니다. 의대 준비 학생들의 과학·수학 심화 과외 수요가 높습니다.',
-  '수서동': '수서동은 강남 동부의 주거지역으로 수서중 학군이 있습니다. 재건축·재개발로 교육 환경이 개선되고 있으며 초등 조기교육 수요가 증가하고 있습니다.',
-  '세곡동': '세곡동은 강남구 남단의 신흥 주거지역으로, 신규 아파트 단지 입주로 젊은 가족층이 늘고 있습니다. 초등학생 대상 수학·영어 기초 과외 수요가 빠르게 성장 중입니다.',
-  '자곡동': '자곡동은 강남구 남부의 주택가로 조용한 교육 환경을 갖추고 있습니다. 경쟁이 치열한 도심과 달리 여유 있는 분위기에서 집중적인 1:1 과외가 이루어집니다.',
-  '율현동': '율현동은 강남구의 주거 지역으로 초등·중등 학생들의 기초 학력 강화 수요가 높습니다. 소규모 주거 환경 덕분에 선생님과 학생 간 밀착 관리가 잘 이루어집니다.',
-};
-
-const SUBJECT_INFO = {
-  '수학': {
-    emoji: '📐',
-    intro: '수학은 모든 이공계 진학의 핵심 과목으로, 강남구 학교들의 수학 내신 시험은 경시대회 수준의 문제가 출제됩니다.',
-    고등: '고등학교 수학은 수학Ⅰ, 수학Ⅱ, 확률과 통계, 미적분, 기하 등 다양한 과목으로 나뉩니다. 내신과 수능을 동시에 대비해야 하므로 체계적인 학습 전략이 필수입니다.',
-    중등: '중학교 수학은 고등학교 수학의 기초를 다지는 시기입니다. 개념을 확실히 이해하고 응용력을 키우는 것이 중요합니다.',
-    초등: '초등학교 수학은 수의 개념, 연산, 도형, 측정 등 기초 수학 능력을 형성하는 시기입니다. 올바른 수학적 사고 습관을 만드는 것이 핵심입니다.',
-  },
-  '영어': {
-    emoji: '📖',
-    intro: '영어는 대입과 취업 모두에서 필수 역량입니다. 강남구 영어 과외는 내신·수능·회화를 체계적으로 다루며 실질적인 영어 실력을 높여드립니다.',
-    고등: '고등학교 영어 내신은 지문 분석과 변형 문제 대비가 핵심입니다. 수능 영어 1등급을 목표로 독해력과 듣기 능력을 집중 훈련합니다.',
-    중등: '중학교 영어는 문법 기초와 독해력을 동시에 키우는 시기입니다. 내신 시험 대비와 함께 영어에 대한 흥미를 유지하는 것이 중요합니다.',
-    초등: '초등학교 영어는 알파벳부터 기초 회화까지 영어에 대한 흥미를 높이는 것이 목표입니다. 자연스러운 영어 환경 속에서 실력을 키워드립니다.',
-  },
-  '국어': {
-    emoji: '✍️',
-    intro: '국어는 수능에서 변별력이 가장 높은 과목 중 하나입니다. 문학, 비문학 독해력과 화법·작문 능력을 종합적으로 키워드립니다.',
-    고등: '고등 국어는 문학 작품 분석, 비문학 독해, 화법·작문·언어 영역을 모두 다룹니다. 수능 국어 1등급을 위한 독해 속도와 정확성을 집중 훈련합니다.',
-    중등: '중학교 국어는 독서 습관 형성과 글쓰기 능력 개발이 핵심입니다. 교과서 문학 작품 분석과 서술형·논술형 대비를 병행합니다.',
-    초등: '초등학교 국어는 올바른 읽기·쓰기 습관을 형성하는 시기입니다. 독서 능력과 어휘력을 키우고 창의적 글쓰기 능력을 개발합니다.',
-  },
-  '과학': {
-    emoji: '🔬',
-    intro: '과학은 이공계 진학의 필수 과목입니다. 물리, 화학, 생명과학, 지구과학을 과목별로 전문적으로 지도하여 개념 이해와 문제 풀이 능력을 키워드립니다.',
-    고등: '고등 과학은 물리학Ⅰ·Ⅱ, 화학Ⅰ·Ⅱ, 생명과학Ⅰ·Ⅱ, 지구과학Ⅰ·Ⅱ 등 선택과목이 다양합니다. 개념 이해와 수능 문제 풀이 전략을 동시에 훈련합니다.',
-    중등: '중학교 과학은 물질, 에너지, 생명, 지구 4개 영역을 통합적으로 배웁니다. 암기보다 원리 이해 중심으로 학습하면 고등 과학의 기초가 탄탄해집니다.',
-    초등: '초등학교 과학은 자연 현상에 대한 관찰과 탐구 능력을 키우는 시기입니다. 실험과 관찰 활동을 통해 과학적 사고 능력을 자연스럽게 개발합니다.',
-  },
-  '사회': {
-    emoji: '🌏',
-    intro: '사회 과목은 한국사부터 지리, 경제, 정치까지 폭넓은 내용을 다룹니다. 체계적인 개념 정리와 암기 전략으로 내신과 수능을 동시에 준비합니다.',
-    고등: '고등 사회 계열은 한국사, 통합사회, 한국지리, 세계지리, 경제, 정치와법 등 다양합니다. 수능 선택과목에 따라 맞춤 전략을 수립합니다.',
-    중등: '중학교 사회는 역사, 지리, 일반사회를 통합적으로 학습합니다. 개념 정리와 함께 시사 연계 학습으로 흥미를 높입니다.',
-    초등: '초등학교 사회는 우리 지역, 우리나라, 세계 이해를 단계적으로 배웁니다. 지도 읽기, 역사 이야기 등 다양한 방법으로 쉽고 재미있게 지도합니다.',
-  },
-  '코딩': {
-    emoji: '💻',
-    intro: '코딩 교육은 미래 사회의 핵심 역량입니다. 스크래치 기초부터 파이썬 심화, 알고리즘 대회 준비까지 수준별 맞춤 지도를 제공합니다.',
-    고등: '고등학교 코딩은 정보 교과 내신과 대입 소프트웨어 특기자 전형을 동시에 준비합니다. 파이썬, 알고리즘, 자료구조 등을 체계적으로 지도합니다.',
-    중등: '중학교 코딩은 스크래치와 파이썬 기초를 익히며 논리적 사고력을 키우는 시기입니다. 정보 교과 내신 대비와 코딩 대회 준비를 병행합니다.',
-    초등: '초등학교 코딩은 스크래치, 엔트리 등 블록 코딩으로 컴퓨팅 사고력을 키웁니다. 게임처럼 재미있는 프로젝트를 통해 코딩의 기초를 닦습니다.',
-  },
-  '논술': {
-    emoji: '📝',
-    intro: '논술은 주요 대학 수시 전형의 핵심 평가 요소입니다. 논리적 사고와 글쓰기 능력을 종합적으로 키워 대입 논술 전형 합격을 도와드립니다.',
-    고등: '고등 논술은 인문 논술, 자연 논술로 나뉩니다. 지원 대학의 기출 문제 분석과 함께 논리적 글쓰기 능력을 집중 훈련합니다.',
-    중등: '중학교 논술은 대입 준비의 기초를 다지는 시기입니다. 독서와 글쓰기를 연계하여 논리적 사고와 표현력을 키웁니다.',
-    초등: '초등 논술은 창의적 글쓰기와 독서 능력을 기르는 시기입니다. 다양한 주제로 생각을 정리하고 표현하는 능력을 자연스럽게 개발합니다.',
-  },
-};
 
 
-// ── 동별 이미지·설명 데이터 ──────────────────────────────────
-const DONG_DATA = {
-  '서울': {
-    '강남구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'강남구는 대한민국 교육의 중심지로, 전국에서 가장 높은 교육열과 촘촘한 학습 인프라를 자랑합니다. 대치동 학원가를 필두로 압구정·역삼·청담 등 각 동마다 특색 있는 교육 환경이 형성되어 있으며, 초등학교부터 고등학교까지 모든 단계에서 최상위 수준의 커리큘럼이 운영됩니다.<br><br>강남구 학교들의 내신 시험은 경시대회 수준의 문제가 출제됩니다. 단순 학원 수강만으로는 1등급 유지가 어렵기 때문에 1:1 과외를 통한 개별 취약점 보완이 특히 중요합니다.<br><br>올케어스터디는 강남구 각 학교의 기출 문제와 출제 경향을 꿰뚫고 있는 검증된 선생님을 연결해드립니다. 첫 상담과 체험 수업은 완전히 무료입니다.',
-    dongs: {
-      '개포동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'개포주공 재건축 완료 후 신축 아파트 단지 입주로 젊은 학부모층 대거 유입. 개포중·개포고 학군 중심으로 내신 관리 수요 급증.'},
-      '논현동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'강남 중심부 주거·상업 복합지역. 논현중 학군 형성. 다양한 계층 거주로 실속형 내신 관리 과외 수요 꾸준.'},
-      '대치동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'전국 최고 교육 특구. 수백 개 학원 밀집. 은마·대치·선경아파트 학부모 교육열 전국 최상위.'},
-      '도곡동':{'img':'https://images.unsplash.com/photo-1532153955177-f59af40d6472?w=600&q=80','desc':'타워팰리스 등 고급 아파트 밀집. 도곡중·숙명여고 학군. 학업 수준 높고 1:1 심화 과외 수요 풍부.'},
-      '삼성동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'코엑스 인근 업무·주거 복합지역. 영동중·삼성고 학군. 외국계 기업 밀집으로 영어 조기교육 수요 높음.'},
-      '세곡동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'강남구 남단 신흥 주거지. 신규 아파트 입주로 젊은 가족층 증가. 초등 수학·영어 기초 과외 수요 빠르게 성장.'},
-      '수서동':{'img':'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=600&q=80','desc':'강남 동부 주거지역. 수서중 학군. 재건축·재개발로 교육 환경 개선 중. 초등 조기교육 수요 증가.'},
-      '신사동':{'img':'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=600&q=80','desc':'가로수길 인근 감각적 주거지. 신사중 학군. 패션·디자인 업계 가정 많아 예체능·어학 과외 수요 높음.'},
-      '압구정동':{'img':'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80','desc':'현대아파트·갤러리아 인근 고급 주거지. 압구정중·신사중 학군. 학부모 교육열 매우 높으며 외국어·예술 과외 수요 풍부.'},
-      '역삼동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'강남 IT 업무지구와 주거 공존. 언주중·역삼중 학군. 테헤란로 인근 직장인 자녀 교육 수요 꾸준.'},
-      '일원동':{'img':'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&q=80','desc':'삼성서울병원 인근 의료·주거 복합지역. 일원중·중동고 학군. 의대 준비 학생들의 과학·수학 심화 과외 수요 높음.'},
-      '자곡동':{'img':'https://images.unsplash.com/photo-1598620617148-c9e8ddee4b27?w=600&q=80','desc':'강남구 남부 주택가. 집중적인 1:1 과외 선호. 초등·중등 기초 학력 강화 수요 높음.'},
-      '청담동':{'img':'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80','desc':'청담중 학군 중심 고급 주거지. 외국계 기업 임원 가정 많아 영어 원어민 수업 수요 높고 예술·문화 과외 활발.'},
-      '율현동':{'img':'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=80','desc':'강남구 조용한 주거 지역. 초등·중등 기초 학력 강화 수요 높음. 소규모 환경으로 선생님과 밀착 관리 가능.'},
-    }},
-    '서초구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'서초구는 강남구와 함께 서울 최고의 교육 명문 지역입니다. 반포·방배·잠원 일대에 우수한 학교들이 밀집해 있으며, 법조타운과 고급 주거단지를 중심으로 고학력 학부모 비율이 서울 내에서도 최상위권입니다.<br><br>서초구는 문·이과 모두 강세를 보이는 지역입니다. 논술·면접 등 수시 전형 대비에도 열성적이며, 법조계·의료계 진학을 목표로 한 학생들의 심화 학습 수요가 높아 국어·사회·과학 과외 시장이 발달해 있습니다.<br><br>올케어스터디는 서초구 주요 학교들의 내신 출제 패턴과 수능 연계를 동시에 분석해온 전문 선생님들을 보유하고 있습니다.',
-    dongs: {
-      '방배동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'방배중·방배고 학군 중심. 조용한 주거지로 1:1 개인 지도 선호. 예술·음악 계열 특기 교육 수요도 상당.'},
-      '반포동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'반포자이·래미안퍼스티지 등 최고급 아파트 밀집. 잠원중·반포고 학군. 수능·내신 동시 대비 심화 과외 수요 매우 높음.'},
-      '잠원동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'한강변 고급 주거지. 신반포중·잠원고 학군. 학부모 교육열 높고 방문 과외 선호도 강한 지역.'},
-      '서초동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'서초중·서초고 학군. 법원·검찰청 인근으로 법조계 종사자 가정 비율 높음. 논술·국어 과외 수요 특히 높음.'},
-      '양재동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'양재역 인근 산업·주거 복합지역. 양재중·언남고 학군. IT 기업 종사자 자녀 코딩·수학 과외 수요 꾸준히 증가.'},
-      '우면동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'서울 외곽 조용한 주거지. 신계중 학군. 아파트 단지 내 학부모 커뮤니티 중심으로 과외 선생님 소개 활발.'},
-      '내곡동':{'img':'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80','desc':'헌인마을 등 신규 아파트 단지 조성으로 젊은 가족 유입. 초등 저학년 기초 수학·영어 과외 수요 성장 중.'},
-    }},
-    '송파구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'송파구는 잠실을 중심으로 서울 동남권 최대의 교육 수요를 형성하고 있습니다. 문정·가락·위례 신도시가 급성장하며 젊은 학부모층이 대거 유입되었고, 초등 조기교육부터 수능 대비까지 전 단계에 걸친 과외 수요가 빠르게 증가하고 있습니다.<br><br>잠실 학군은 내신 경쟁이 치열하기로 유명합니다. 잠실고·방산고·송파고 등 명문 고등학교가 밀집해 있어 중학교 때부터 체계적인 내신 관리가 필수입니다.<br><br>올케어스터디는 송파구 학교들의 시험 경향을 파악하고 있는 지역 전문 선생님들을 연결해드립니다.',
-    dongs: {
-      '잠실동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'롯데타워·롯데월드 인근 대규모 주거지. 잠실중·잠실고 학군. 교육열 높은 학부모층 밀집으로 수학·영어 심화 과외 수요 최상위.'},
-      '문정동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'가락시장·문정법조타운 인근. 문정중·문정고 학군. 법조계·의료계 종사자 가정 비율 높고 논술·국어 과외 수요 높음.'},
-      '가락동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'가락시장 인근 대규모 주거지. 가락중 학군. 중등 수학·영어 기초부터 심화까지 고루 수요 있음.'},
-      '방이동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'올림픽공원 인근 조용한 주거지. 방이중·방산고 학군. 운동·예체능 특기 교육 수요와 함께 내신 관리 과외 병행 수요 높음.'},
-      '오금동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'오금중·오금고 학군. 중산층 가정 밀집 지역으로 합리적인 비용의 내신 대비 과외 수요 꾸준.'},
-      '거여동':{'img':'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=80','desc':'거여중·거여고 학군. 재건축 예정 단지 다수. 현재는 1:1 방문 과외 선호 경향.'},
-      '마천동':{'img':'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80','desc':'마천중 학군. 아파트 재건축 진행 중으로 젊은 가족층 유입 증가. 초등~중학생 기초 학력 강화 과외 수요 성장.'},
-    }},
-    '강동구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'강동구는 강남권과 인접한 서울 동부의 신흥 교육 명문 지역입니다. 고덕 신도시와 강일지구 개발 완성으로 젊은 학부모층이 대규모로 유입되었고, 올림픽파크포레온 입주로 수만 명의 신규 교육 수요가 형성되었습니다.<br><br>강동구는 중학교 내신 경쟁이 특히 치열합니다. 고덕·강일 신도시 학부모들의 교육열이 강남구에 뒤지지 않을 만큼 높으며, 초등학교 고학년부터 체계적으로 선행을 준비하는 가정이 많습니다.<br><br>올케어스터디는 강동구 주요 학교 기출 분석에 강한 선생님을 다수 보유하고 있습니다.',
-    dongs: {
-      '천호동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'강동구 대표 상권·주거 복합지역. 천호중·강동고 학군. 다양한 교육 수요 공존. 수학·영어 과외 수요 꾸준.'},
-      '암사동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'한강변 조용한 주거지역. 암사중 학군. 초등 고학년~중학생 내신 대비 과외 수요 높음. 방문 과외 선호도 강함.'},
-      '명일동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'명일중·명일여고 학군 중심. 조용한 주거환경 속 집중 1:1 과외 선호. 수능 영어·수학 심화 수요 높음.'},
-      '고덕동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'고덕신도시 대규모 개발로 신축 아파트 밀집. 고덕중·고덕고 학군. 젊은 부모 교육열 높고 초등 영재·수학 과외 수요 증가.'},
-      '강일동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'강일지구 신도시 입주 완료. 강일중 학군 신설. 초등학생 대상 수학·영어·코딩 조기교육 수요 빠르게 성장.'},
-      '둔촌동':{'img':'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80','desc':'올림픽파크포레온 입주로 대규모 주거지 형성. 둔촌중·둔촌고 학군. 신규 입주민 대상 과외 선생님 매칭 수요 폭증.'},
-    }},
-    '마포구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'마포구는 홍대·합정·연남·상암을 아우르는 문화·미디어 중심지로, 방송국·IT 기업·출판사 종사자 비율이 높고 외국어와 미디어·예술 계열 교육에 대한 관심이 서울에서도 특히 높은 편입니다.<br><br>마포구 학생들은 수능 중심의 일반 학습부터 예술고·특목고 진학, 방송·미디어 계열 준비까지 스펙트럼이 넓습니다. 수학·영어 내신 과외와 함께 논술·글쓰기·미디어 제작 관련 특기 과외 수요가 공존하는 특색 있는 교육 시장입니다.<br><br>올케어스터디는 마포구 각 학교의 내신 특성과 학생의 진로 방향에 맞는 선생님을 정밀 매칭해드립니다.',
-    dongs: {
-      '합정동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'홍대 인근 젊은 문화 중심지. 합정중 학군. 예술·음악·미디어 계열 특기 교육과 수능 기초 병행 수요 높음.'},
-      '망원동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'마포 최대 주거 밀집 지역. 망원중 학군. 중산층 가정 다수로 내신 관리·수능 대비 과외 수요 꾸준.'},
-      '연남동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'경의선 숲길 인근 트렌디한 주거지. 연남중 학군. 영어·중국어 회화 과외 수요 높음.'},
-      '상수동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'홍대 인접 주거지. 예술 특기자 비율 높고 음악·미술·체육 과외 수요 독특하게 형성. 내신도 병행 관리.'},
-      '상암동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'디지털미디어시티 인근. 방송·IT 업계 종사자 가정 많아 코딩·영어 과외 수요 높음. 상암중 학군 중심.'},
-    }},
-    '양천구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'양천구 목동은 강남 대치동과 함께 서울 양대 교육 특구로 꼽힙니다. 목동신시가지 14개 단지를 중심으로 수십 년간 축적된 교육 인프라와 학부모 커뮤니티가 형성되어 있습니다.<br><br>목동 학군의 내신 경쟁은 전국 최상위권입니다. 양천고·목동고·신목고 등 우수 고등학교가 밀집해 있어 중학교 때부터의 철저한 내신 대비가 필수이며, 1:1 과외를 병행하는 비율이 매우 높습니다.<br><br>올케어스터디는 목동 학군의 시험 경향을 잘 아는 선생님들을 다수 보유하고 있습니다. 수학·영어 심화부터 국어·과학 내신 대비까지 폭넓게 매칭 가능합니다.',
-    dongs: {
-      '목동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'서울 서부 최대 교육 특구. 목동중·목동고 학군. 목동학원가를 중심으로 수학·영어 심화 과외 수요 전국 최상위 수준.'},
-      '신정동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'목동 인접 대규모 주거지. 신정중 학군. 목동 학원가 이용과 함께 1:1 개인 과외 병행 수요 높음.'},
-      '신월동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'양천구 서부 주거지역. 신월중 학군. 합리적인 비용의 내신 관리 과외 수요 꾸준.'},
-    }},
-    '노원구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'노원구 중계동은 강북 최대의 학원가로, 서울 북부 교육의 중심지 역할을 합니다. 상계·중계·하계를 아우르는 대규모 아파트 단지에 수만 가구가 거주하며, 교육에 대한 투자 의지가 강한 중산층 가정이 밀집해 있습니다.<br><br>노원구 학생들은 학원 수업과 개인 과외를 병행하는 비율이 매우 높습니다. 1:1 과외로 취약 단원을 집중 보완하는 방식이 일반화되어 있으며, 불암고·노원고·을지고 등 명문 고등학교 진학을 위한 중학교 내신 관리 수요도 높습니다.<br><br>올케어스터디는 노원구 학교들의 기출 문제와 출제 경향을 분석한 선생님들을 연결해드립니다.',
-    dongs: {
-      '상계동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'노원구 최대 주거 단지. 상계중·상계고 학군. 중계학원가 인접으로 교육 인프라 우수. 수학·영어 심화 과외 수요 높음.'},
-      '중계동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'강북 최대 학원가 밀집 지역. 중계중·불암고 학군. 학원 수업과 병행한 1:1 취약점 보완 과외 수요 매우 높음.'},
-      '하계동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'하계중·을지고 학군. 재건축 아파트 입주로 젊은 가족층 유입. 초등 영재교육·수학올림피아드 준비 과외 수요 증가.'},
-      '공릉동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'서울과학기술대 인근. 이공계 진학 희망자 비율 높아 수학·과학 심화 과외 수요 특화. 공릉중 학군 중심.'},
-      '월계동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'인덕대·광운대 인근 교육 지역. 월계중 학군. 공학계열 진학 목표 학생들의 수학·물리 집중 과외 수요 높음.'},
-    }},
-    '강서구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'강서구는 마곡 산업단지 성장과 함께 교육 수요가 빠르게 증가하고 있는 지역입니다. LG사이언스파크 등 대기업 R&D센터와 IT 기업들이 집적되면서 고학력 맞벌이 가정이 대거 유입되었습니다.<br><br>강서구는 IT·공학 계열 종사자 자녀들의 코딩·수학 과외 수요와 함께 공항 인근 항공·외국어 계열 교육 수요도 특화되어 있습니다. 화곡·등촌 일대에서는 전통적인 내신 관리 과외 수요가 꾸준히 이어지고 있습니다.<br><br>올케어스터디는 강서구 각 지역의 특성에 맞는 다양한 전문 선생님들을 보유하고 있습니다.',
-    dongs: {
-      '화곡동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'강서구 최대 주거지역. 화곡중·화곡고 학군. 대단지 아파트 밀집으로 초등~고등 전 학년 과외 수요 골고루 높음.'},
-      '방화동':{'img':'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80','desc':'김포공항 인근 주거지역. 방화중 학군. 공항 관련 종사자 자녀 영어·외국어 과외 수요 특화.'},
-      '마곡동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'LG사이언스파크·마곡산업단지 성장으로 IT·공학 인재 가족 대거 유입. 코딩·수학 과외 수요 급증.'},
-      '발산동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'마곡과 인접한 신흥 주거지. 발산중 학군. 젊은 부모들의 초등 영어·수학 조기교육 과외 수요 빠르게 증가.'},
-      '등촌동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'9호선 등촌역 인근 주거지역. 등촌중·강서고 학군. 강남 접근성 향상으로 수능 대비 심화 과외 수요 증가 추세.'},
-    }},
-    '동작구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'동작구는 서울 중남부의 교육 요충지입니다. 숭실대·중앙대 등 주요 대학이 인접해 있어 대학생·대학원생 과외 선생님의 공급이 풍부하고, 노량진 고시촌을 중심으로 수험 교육 인프라가 전국 최대 규모로 형성되어 있습니다.<br><br>동작구 학생들은 진학 목표 의식이 뚜렷한 편입니다. 의대·법대·SKY 목표 학생 비율이 서울 평균보다 높으며, 수학·과학 심화 과외와 논술·국어 과외 수요가 두드러집니다.<br><br>올케어스터디는 동작구 학교 내신부터 수능·논술 대비까지 전 과정을 커버하는 선생님을 연결해드립니다.',
-    dongs: {
-      '사당동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'사당중·서울고 학군. 지하철 환승 요충지로 학원 접근성 우수. 내신·수능 동시 대비 과외 수요 높음.'},
-      '상도동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'숭실대 인근 교육 지역. 상도중 학군. 대학가 분위기로 대입 준비 과외 수요 높음.'},
-      '노량진동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'전국 최대 공무원·고시 학원가. 중등·고등 수험 교육 수요 특화. 검정고시·편입 대비 등 다양한 수험 과외 수요 집중.'},
-      '대방동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'여의도 인접 주거지역. 대방중 학군. 금융·공공기관 종사자 가정 비율 높아 영어·논술 과외 수요 꾸준.'},
-      '흑석동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'중앙대 바로 옆 캠퍼스타운. 흑석중·동작고 학군. 대학생 과외 선생님 풍부. 의대·이공계 준비 과외 수요 높음.'},
-    }},
-    '관악구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'관악구는 서울대학교를 중심으로 전국 최고의 이공계 교육 인프라를 자랑합니다. 낙성대·신림·봉천 일대에 서울대 재학생과 대학원생이 대거 거주하며, 이들이 과외 선생님으로 활동하는 비율이 전국에서 가장 높습니다.<br><br>관악구 학생들은 이공계 진학에 대한 열망이 높습니다. 수학·과학 심화 과외 수요가 특히 강하며, 의대·공대 진학을 위한 집중 학습이 중학교 때부터 시작되는 경우가 많습니다.<br><br>올케어스터디는 관악구에서 서울대 출신 및 재학생 과외 선생님을 가장 빠르게 연결해드릴 수 있습니다.',
-    dongs: {
-      '신림동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'서울대 인근 최대 주거지역. 신림중 학군. 이공계 진학 희망자 수학·과학 심화 과외 수요 전국 최상위.'},
-      '봉천동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'관악산 인근 대규모 주거지. 봉현중·관악고 학군. 다양한 소득계층 거주로 맞춤형 가격대 과외 수요 폭넓게 분포.'},
-      '낙성대동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'서울대 정문 인근. 낙성대중 학군. 서울대 재학생·졸업생 과외 선생님 가장 밀집된 지역. 의대·SKY 목표 심화 과외 수요 높음.'},
-    }},
-    '성북구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'성북구는 고려대학교를 중심으로 인문·사회 계열 교육이 발달한 지역입니다. 돈암·길음 학원가가 강북권 교육 허브 역할을 하며, 성신여대·한성대 등 여러 대학이 인접해 있습니다.<br><br>성북구는 문과 계열 교육 수요가 특히 높습니다. 고려대 인접 영향으로 국어·사회·논술 과외 수요가 강하며, 길음뉴타운 재개발 완료 후 젊은 가족층 유입으로 초등 조기교육 과외 시장도 빠르게 성장하고 있습니다.<br><br>올케어스터디는 성북구 학교들의 내신 출제 특성을 분석한 선생님들을 보유하고 있습니다.',
-    dongs: {
-      '돈암동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'성신여대역 인근. 개운중·성신여중 학군. 고려대 인접으로 문과 계열 논술·국어 과외 수요 높음.'},
-      '길음동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'길음뉴타운 재개발 완료. 길음중·삼각산고 학군. 신규 입주 가정 증가로 초등~중학생 과외 수요 빠르게 성장.'},
-      '정릉동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'국민대 인근 주거지역. 정릉중 학군. 조용한 주거 환경 속 집중 1:1 과외 선호.'},
-      '석관동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'서울시립대 인근. 석관중 학군. 이공계 진학 목표 수학·과학 과외 수요 특화.'},
-    }},
-    '용산구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'용산구는 서울의 중심부에 위치한 고급 주거지역으로, 한남·이촌·서빙고 일대에 외국계 기업 임원, 외교관, 주재원 가족들이 다수 거주합니다. 영어·이중언어 교육 수요가 서울에서 가장 높은 지역 중 하나입니다.<br><br>용산구 학생들의 특성은 다양합니다. 국내 일반 내신 준비 학생부터 국제학교 재학생, 해외 유학 준비생까지 스펙트럼이 넓습니다. SAT·TOEFL·IB 과외 수요도 높습니다.<br><br>올케어스터디는 용산구의 글로벌 교육 수요를 충족하는 다양한 선생님을 연결해드립니다.',
-    dongs: {
-      '이태원동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'외국인 밀집 지역. 국제학교·외국어 교육 수요 전국 최상위. 원어민 영어·다국어 회화 과외 수요 매우 높음.'},
-      '한남동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'한남더힐 등 최고급 주거지. 한강중 학군. 외국 거주 경험 가정 비율 높아 영어·수학 원어민 수업 수요 높음.'},
-      '서빙고동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'한강변 고급 주거지. 이촌중 학군. 조용한 환경에서 집중 1:1 과외 선호. 내신·수능 동시 대비 수요 높음.'},
-      '이촌동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'한강 인접 고급 주거지. 이촌중·용산고 학군. 외교관·주재원 가족 비율 높아 영어·수학 영재교육 수요 풍부.'},
-    }},
-    '중구':    { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'서울 중구는 도심 한복판에 위치한 역사와 현대가 공존하는 지역입니다. 명동·을지로·충무로 등 서울 최대 업무지구가 자리하고 있어 맞벌이 가정 비율이 높으며, 방문 과외에 대한 선호도가 다른 지역보다 높은 편입니다.<br><br>중구는 이화여고·덕수고 등 전통 명문 학교가 포진해 있으며, 역사·문화에 대한 관심이 높아 사회·역사 계열 과외 수요가 특색 있게 형성되어 있습니다.<br><br>올케어스터디는 중구 학교들의 내신 특성에 맞는 선생님을 연결해드립니다.',
-    dongs: {
-      '명동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'서울 최대 상권 인근. 외국어·관광계열 특기 교육 수요 특화.'},
-      '신당동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'신당중 학군. 도심 주거지역으로 내신 관리 중심 과외 수요 꾸준. 이화여고 학군 인접으로 여학생 교육 수요 높음.'},
-      '황학동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'도심 재개발 진행 지역. 중구고 학군. 합리적 비용의 내신 관리 과외 수요 꾸준.'},
-      '을지로':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'도심 최대 업무지구. 맞벌이 부모 비율 높아 방문 과외 선호도 강함. 초등~중학생 영어·수학 집중 과외 수요 높음.'},
-    }},
-    '종로구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'종로구는 서울의 심장부로, 경복고·종로고 등 전통 명문 학교들이 밀집해 있습니다. 대학로·인사동·북촌 등 문화 예술의 중심지이기도 하여, 인문학적 소양과 예술 감수성을 중시하는 교육 문화가 형성되어 있습니다.<br><br>종로구는 문과 계열과 예술 계열 교육 수요가 특히 높습니다. 대학로 인근에서는 연극·음악·미술 특기 교육 수요가 활발하고, 고시·입시 학원이 많아 수험 교육 환경도 잘 갖춰져 있습니다.<br><br>올케어스터디는 종로구의 다양한 교육 수요를 만족시키는 선생님들을 보유하고 있습니다.',
-    dongs: {
-      '혜화동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'서울 대학로 인접. 연극·예술 특기 교육 수요 특화. 혜화중·경복고 학군. 문과 계열 논술·국어 과외 수요 높음.'},
-      '명륜동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'성균관대·이화여대 인근. 명륜중 학군. 전통 있는 교육 지역으로 내신·수능 대비 과외 수요 꾸준.'},
-      '창신동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'종로구 주거 밀집 지역. 창신중 학군. 다양한 소득계층 거주로 맞춤형 가격대 과외 수요 폭넓게 형성.'},
-      '부암동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'인왕산 인근 고급 주거지. 부암중 학군. 예술·인문계 관심 높은 가정 비율 높아 논술·예술 특기 과외 수요 높음.'},
-    }},
-    '중랑구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'중랑구는 서울 동북부 최대 주거 지역으로, 면목·신내·묵동 등 대규모 아파트 단지에 수십만 명이 거주합니다. 신내 택지지구 개발과 재개발 완료로 젊은 가족층 유입이 지속되고 있습니다.<br><br>중랑구 학부모들은 실용적이고 비용 효율적인 교육을 선호합니다. 학원보다 저렴하면서도 개인 맞춤형으로 진행되는 1:1 방문 과외의 선호도가 높으며, 중학생 취약 단원 집중 보완 과외 수요가 꾸준합니다.<br><br>올케어스터디는 중랑구 학생들의 예산과 수준에 맞는 선생님을 빠르게 연결해드립니다.',
-    dongs: {
-      '면목동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'중랑구 최대 주거지역. 면목중·면목고 학군. 실용적 내신 관리 과외 수요 높음.'},
-      '신내동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'신내 택지지구 개발 완료. 신내중 학군. 신규 입주 젊은 가정 증가로 초등 조기교육 과외 수요 빠르게 성장.'},
-      '묵동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'묵동중 학군. 중산층 주거 밀집 지역. 내신 관리 중심 과외 수요 꾸준.'},
-      '망우동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'망우중 학군. 재건축·재개발 진행으로 교육 환경 개선 기대. 방문 과외 선호도 높음.'},
-    }},
-    '광진구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'광진구는 건국대학교·세종대학교와 인접한 교육 활성화 지역으로, 화양·군자·자양 일대 학원가가 성장하면서 강남에 버금가는 교육 인프라가 형성되고 있습니다.<br><br>광진구는 강남과의 접근성이 좋아 교육 수준과 기대치가 빠르게 높아지고 있습니다. 광남고·건대부고 진학을 위한 중학교 내신 관리와 수능 대비 심화 과외 수요가 급증하고 있습니다.<br><br>올케어스터디는 광진구 학교들의 내신 특성을 파악한 건국대·세종대 출신 선생님들을 우선 연결해드립니다.',
-    dongs: {
-      '화양동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'건국대 바로 앞. 화양중 학군. 대학생 과외 선생님 공급 풍부. 이공계 진학 목표 수학·과학 심화 과외 수요 높음.'},
-      '군자동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'군자중 학군. 세종대 인근으로 예·체능 계열 과외 수요 특화. 실용 영어·코딩 과외도 꾸준한 수요.'},
-      '구의동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'강남과 인접한 광진구 핵심 주거지. 구의중·광남고 학군. 강남 수준의 교육열 형성. 수능 수학·영어 심화 과외 수요 높음.'},
-      '자양동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'자양중 학군. 건대입구역 상권 인근. 학원가 집중 지역으로 1:1 과외 보완 수요 높음.'},
-    }},
-    '동대문구':{ hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'동대문구는 경희대학교·한국외국어대학교가 인접한 교육 특화 지역입니다. 외대 인근의 영향으로 외국어 교육에 대한 관심이 높으며, 영어는 물론 중국어·일본어·스페인어 등 제2외국어 과외 수요가 서울에서도 손꼽히는 수준입니다.<br><br>동대문구 학생들은 어학과 일반 학습을 균형 있게 준비하는 경우가 많습니다. 내신 관리 과외와 외국어 회화 과외를 병행하는 비율이 높으며, 경희대 진학을 목표로 한 의치한·이공계 입시 준비 과외도 활발합니다.<br><br>올케어스터디는 동대문구에서 외국어 특화 선생님과 일반 내신 선생님 모두를 빠르게 연결해드립니다.',
-    dongs: {
-      '회기동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'경희대 인접. 회기중 학군. 외국어대 인근으로 영어·중국어·일본어 회화 과외 수요 전국 상위.'},
-      '전농동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'전농중·동대문고 학군. 대규모 주거지로 내신 관리 중심 과외 수요 꾸준.'},
-      '답십리동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'답십리중 학군. 재개발 진행으로 신규 아파트 입주 증가. 젊은 가족층 유입으로 초등 조기교육 과외 수요 성장.'},
-      '장안동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'장안중·장안고 학군. 동대문구 최대 주거지역. 내신·수능 병행 과외 수요 높고 수학·국어 취약점 보완 과외 인기.'},
-    }},
-    '성동구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'성동구는 한양대학교를 중심으로 이공계 교육이 특화된 지역이며, 최근 성수동이 서울 최대의 젊은 직장인 밀집 지역으로 떠오르면서 교육 수요가 빠르게 변화하고 있습니다.<br><br>성동구 학생들은 이공계 진학 비율이 높습니다. 수학·과학 심화 과외 수요가 강하며, 성수동 IT 기업 종사자 자녀들을 중심으로 코딩 과외 수요도 빠르게 증가하고 있습니다.<br><br>올케어스터디는 성동구 학교들의 내신 특성을 파악한 한양대 출신 및 재학생 선생님을 우선 연결해드립니다.',
-    dongs: {
-      '왕십리동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'한양대 인근 교육 중심지. 무학중·성동고 학군. 이공계 진학 목표 수학·과학 심화 과외 수요 높음.'},
-      '행당동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'행당중 학군. 한양대 캠퍼스타운 형성으로 교육 환경 개선. 내신·수능 동시 대비 과외 수요 높음.'},
-      '금호동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'금호중 학군. 도심 인접 주거지역. 맞벌이 가정 비율 높아 방문 과외 선호. 영어·수학 집중 과외 수요 꾸준.'},
-      '옥수동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'한강변 고급 주거지. 옥수중 학군. 강남 접근성 우수로 강남 수준 교육열 형성. 수능 수학·영어 심화 과외 수요 높음.'},
-    }},
-    '은평구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'은평구는 서울 서북부 최대 주거 지역으로, 뉴타운 개발이 순차적으로 완료되면서 젊은 가족층이 빠르게 유입되고 있습니다. 학원가 접근성이 강남·목동 대비 다소 낮아 1:1 방문 과외 선호도가 특히 높습니다.<br><br>진관고·신도고 등 은평구 고등학교 내신 대비와 함께, 특목고·자사고 진학을 목표로 한 중학생 심화 학습 수요도 꾸준히 증가하고 있습니다.<br><br>올케어스터디는 은평구 학교들의 내신 특성을 분석한 선생님들을 보유하고 있습니다.',
-    dongs: {
-      '응암동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'응암중 학군. 은평구 최대 주거지역. 방문 과외 선호도 높고 수학·영어 내신 관리 수요 꾸준.'},
-      '녹번동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'은평뉴타운 개발로 신규 아파트 대거 입주. 녹번중 학군. 젊은 부모들의 초등 조기교육 과외 수요 빠르게 성장.'},
-      '불광동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'불광중·은평고 학군. 지하철 접근성 좋아 학원 이용 편리. 1:1 과외와 병행 학습 수요 높음.'},
-      '수색동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'수색중 학군. 재개발 완료 후 신규 입주 증가. 초등~중학생 기초 수학·영어 강화 과외 수요 성장 중.'},
-    }},
-    '서대문구':{ hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'서대문구는 연세대학교·이화여자대학교·서강대학교 등 국내 최고의 대학들이 밀집한 교육 명문 지역입니다. 신촌을 중심으로 세 대학의 재학생·대학원생이 풍부하게 거주하며, 이들이 과외 선생님으로 활동하는 비율이 전국에서 가장 높습니다.<br><br>서대문구 학생들은 SKY 진학에 대한 목표 의식이 강합니다. 영어·수학·논술 과외를 조기에 시작하는 경향이 강하며, 이화여대 부속 학교들 주변에서는 여학생 교육 수요가 특화되어 있습니다.<br><br>올케어스터디는 서대문구에서 연세대·이화여대·서강대 출신 및 재학생 선생님을 가장 빠르게 연결해드립니다.',
-    dongs: {
-      '신촌동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'연세대·이화여대 캠퍼스타운. 신촌중 학군. SKY 목표 수험생 과외 수요 전국 상위. 대학원생 과외 선생님 최대 밀집 지역.'},
-      '홍제동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'홍제중 학군. 서대문구 최대 주거지역. 내신 관리 중심 과외 수요 꾸준.'},
-      '북가좌동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'가좌중 학군. 재개발 완료 신규 아파트 밀집. 젊은 가족층 증가로 초등 조기교육 과외 수요 성장.'},
-      '남가좌동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'남가좌중 학군. 이화·서강 인접 영향으로 영어·논술 과외 수요 높음.'},
-    }},
-    '도봉구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'도봉구는 서울 북부의 대표적인 주거 지역으로, 최근 창동 역세권 개발이 진행되면서 교육 환경이 점차 개선되고 있습니다. 젊은 가족층 유입으로 초등 조기교육 수요가 꾸준히 증가하고 있습니다.<br><br>도봉구 학부모들은 합리적인 교육 투자를 선호합니다. 1:1 방문 과외를 통한 개인 맞춤형 학습 효과를 기대하는 경향이 강하며, 도봉고·창동고 등 지역 고등학교의 내신 대비와 함께 수능 기초 다지기 과외 수요도 높습니다.<br><br>올케어스터디는 도봉구 학교들의 내신 특성에 맞는 선생님을 빠르게 연결해드립니다.',
-    dongs: {
-      '쌍문동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'쌍문중·창동고 학군. 도봉구 최대 주거지역. 내신 관리 과외 수요 꾸준. 수학·영어 취약점 보완 수업 선호.'},
-      '방학동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'방학중 학군. 도봉산 인근 조용한 주거지. 집중력 높은 환경으로 1:1 방문 과외 선호도 높음.'},
-      '창동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'창동역세권 개발로 교육 환경 개선 중. 창동중·도봉고 학군. 미래 성장 지역으로 교육 수요 증가 추세.'},
-      '도봉동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'도봉중 학군. 아파트 재건축 진행 중. 방문 과외 선호도 높고 중학생 내신 관리 수요 꾸준.'},
-    }},
-    '강북구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'강북구는 서울 최북단에 위치한 주거 지역으로, 학원가 접근성이 상대적으로 낮아 1:1 방문 과외에 대한 선호도가 서울에서 가장 높은 지역 중 하나입니다.<br><br>강북구 학부모들은 가성비 높은 교육을 추구합니다. 대형 학원보다 저렴하면서도 개인 맞춤형으로 진행되는 방문 과외를 선호하며, 수학·영어 내신 관리부터 수능 기초 다지기까지 폭넓은 수요가 있습니다.<br><br>올케어스터디는 강북구 전 지역에 방문 과외 서비스를 제공합니다. 합리적인 비용으로 최고의 교육 효과를 경험하세요.',
-    dongs: {
-      '미아동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'미아중·강북고 학군. 강북구 최대 주거지역. 방문 과외 선호도 매우 높음. 수학·영어 내신 관리 과외 수요 꾸준.'},
-      '수유동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'수유중 학군. 재건축 완료 신규 입주 증가로 젊은 가족층 유입. 초등 기초 과외 수요 성장.'},
-      '번동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'번동중 학군. 조용한 주거 환경. 1:1 방문 과외 수요 높고 합리적 비용 과외 선호.'},
-      '우이동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'북한산 인근 전원형 주거지. 우이중 학군. 교육 환경은 조용하나 집중력 높은 1:1 과외 환경 우수.'},
-    }},
-    '금천구':  { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'금천구는 서울 G밸리(가산·독산·시흥 디지털산업단지)를 품고 있는 IT·제조업 밀집 지역입니다. 수천 개의 IT 기업과 스타트업이 입주해 있어, IT 종사자 자녀들의 코딩·수학 과외 수요가 전국 최상위 수준을 형성하고 있습니다.<br><br>금천구 학생들은 이공계·IT 계열 진학에 대한 관심이 높습니다. 코딩·알고리즘 과외 수요가 특화되어 있으며, AI·빅데이터 계열 대학 진학을 목표로 한 심화 수학 과외 수요도 빠르게 증가하고 있습니다.<br><br>올케어스터디는 금천구에서 IT·코딩 특화 선생님과 내신 관리 전문 선생님 모두를 빠르게 연결해드립니다.',
-    dongs: {
-      '가산동':{'img':'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&q=80','desc':'G밸리 IT단지 중심. IT 종사자 자녀 코딩·수학 과외 수요 전국 상위. 가산중 학군.'},
-      '독산동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'독산중·금천고 학군. 금천구 최대 주거지역. 내신 관리 중심 과외 수요 꾸준.'},
-      '시흥동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'시흥중·시흥고 학군. 재개발 완료 신규 아파트 입주. 젊은 가족층 증가로 초등 조기교육 과외 수요 성장 중.'},
-    }},
-    '구로구':  { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'구로구는 서울 디지털산업단지와 신도림 복합쇼핑타운을 품고 있는 역동적인 지역입니다. 2호선·1호선 환승역인 신도림역을 중심으로 교통 접근성이 우수하며, 다양한 배경의 가정들이 거주하고 있습니다.<br><br>구로구는 디지털단지 IT 종사자 자녀들의 코딩·수학 과외 수요와 함께, 다문화 가정의 한국어·영어 교육 수요도 특화되어 있습니다. 구로고·개봉고·신도림고 학군에서는 내신 관리 중심의 수학·영어 과외 수요가 꾸준합니다.<br><br>올케어스터디는 구로구의 다양한 교육 수요에 대응하는 폭넓은 선생님 풀을 보유하고 있습니다.',
-    dongs: {
-      '구로동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'구로디지털단지 인접. 구로중·구로고 학군. IT 종사자 자녀 코딩·수학 과외 수요 높음.'},
-      '신도림동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'신도림중 학군. 2호선·1호선 환승역 인근 교통 요충지. 학원 접근성 우수하고 1:1 과외 병행 수요 높음.'},
-      '개봉동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'개봉중·개봉고 학군. 구로구 서부 주거지역. 내신 관리 중심 과외 수요 꾸준.'},
-      '오류동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'오류중 학군. 조용한 주거 환경. 방문 과외 선호도 높고 합리적 비용 과외 수요 꾸준.'},
-    }},
-  },
-  '경기': {
-    '수원시': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'수원시는 경기도청 소재지이자 경기 남부 최대 교육 도시입니다. 삼성전자 본사가 위치해 있어 고학력 IT 종사자 가정이 밀집해 있으며, 이공계 교육 수요가 전국에서 가장 높은 도시 중 하나입니다.<br><br>영통·매탄·망포 등 신도시 지역을 중심으로 수능 상위권 학생 비율이 높고, 수원외고·수원고 등 명문 학교 진학을 위한 내신 관리 수요가 강합니다. 1:1 과외와 학원 병행 비율이 매우 높습니다.<br><br>올케어스터디는 수원시 주요 학교 기출 분석에 강한 선생님들을 연결해드립니다.',
-    dongs: {'팔달구':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'수원 원도심. 팔달중·수원고 학군. 역사 깊은 교육 지역으로 내신 관리 과외 수요 꾸준.'},'영통구':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'삼성전자 인근 IT 주거지역. 영통중·청명고 학군. IT 종사자 자녀 코딩·수학 심화 과외 수요 높음.'},'권선구':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'호매실·고색 신도시. 권선중 학군. 신규 입주 젊은 가정 증가로 초등 조기교육 과외 수요 성장.'},'장안구':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'수원 북부 주거지역. 천천중 학군. 합리적 비용 내신 관리 과외 수요 꾸준.'},}},
-    '성남시': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'성남시 분당구는 대치동·목동과 함께 대한민국 3대 교육 특구로 꼽힙니다. 판교테크노밸리에 카카오·네이버 등 IT 대기업이 집중되어 있어 고학력 부모 비율이 전국 최상위입니다.<br><br>분당 신도시의 내신 경쟁은 치열하기로 유명합니다. 낙생고·분당고·서현고 등 명문 고등학교가 밀집해 있어 중학교 때부터 체계적인 내신 관리가 필수입니다.<br><br>올케어스터디는 분당 학군의 시험 경향을 잘 파악하고 있는 선생님들을 연결해드립니다.',
-    dongs: {'분당구':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'판교·정자·서현 등 최고급 주거지. 내신 경쟁 전국 최상위. 수능·내신 심화 과외 수요 가장 높음.'},'수정구':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'성남 원도심. 위례신도시 개발로 젊은 학부모층 유입. 초등~중학생 내신 관리 과외 수요 성장.'},'중원구':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'야탑·이매동 학군. 아람고·야탑고 중심 내신 관리 과외 수요 꾸준.'},}},
-    '용인시': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'용인시 수지·기흥구는 경기 남부 최대의 신흥 교육 특구입니다. 분당과 인접해 있어 교육 수준과 기대치가 높으며, 흥덕·동백·상현 신도시를 중심으로 젊은 고학력 부모들이 대거 정착했습니다.<br><br>수지구는 내신 경쟁이 치열하기로 유명합니다. 상현고·신봉고·풍덕고 등 우수 고등학교가 밀집해 있으며, 학원과 1:1 과외를 병행하는 비율이 매우 높습니다.<br><br>올케어스터디는 용인시 학교들의 내신 출제 경향에 특화된 선생님들을 연결해드립니다.',
-    dongs: {'수지구':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'분당 인접 신흥 교육 특구. 이현중·수지중 학군. 내신 경쟁 치열. 수학·영어 심화 과외 수요 전국 상위.'},'기흥구':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'동백·흥덕·구갈 신도시. 흥덕중·기흥고 학군. 삼성전자 기흥캠퍼스 인근 IT 종사자 가정 밀집.'},'처인구':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'용인 동부 주거·산업 지역. 합리적 비용 내신 관리 과외 수요 꾸준.'},}},
-    '고양시': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'고양시는 일산 신도시를 중심으로 경기 서북부 최대 교육 도시입니다. 서울과의 접근성이 뛰어나고, 문화·교육 인프라가 우수해 수도권 이주 가정들이 선호하는 교육 환경을 갖추고 있습니다.<br><br>일산동구·일산서구·덕양구를 아우르는 넓은 주거지에 학원가가 발달해 있으며, 내신 관리와 수능 대비를 병행하는 과외 수요가 꾸준합니다.<br><br>올케어스터디는 고양시 학교들의 특성에 맞는 선생님들을 연결해드립니다.',
-    dongs: {'일산동구':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'마두·백석·장항 신도시. 백석중·정발고 학군. 학원가 밀집으로 교육 인프라 우수.'},'일산서구':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'주엽·탄현·대화 지역. 대규모 아파트 단지 밀집. 내신 관리 중심 1:1 과외 수요 꾸준.'},'덕양구':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'원흥·삼송·화정 신도시. 젊은 가족층 대거 유입. 초등 조기교육 과외 수요 빠르게 성장.'},}},
-    '부천시': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'부천시는 서울과 인접한 경기 서부 핵심 교육 도시입니다. 중동·상동·부천역 일대에 학원가가 밀집해 있으며, 서울 접근성이 뛰어나 교육 수요가 높습니다.<br><br>부천 학생들은 실용적인 내신 관리 중심 과외를 선호합니다. 부천고·중원고·상동고 등 지역 고등학교 내신 대비와 함께 수능 기초 다지기 과외 수요가 꾸준합니다.<br><br>올케어스터디는 부천시 학교들의 내신 특성에 맞는 선생님을 연결해드립니다.',
-    dongs: {'소사구':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'소사본동·역곡동·옥길동 학군. 합리적 비용 내신 관리 과외 수요 꾸준.'},'오정구':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'오정동·신흥동 학군. 부천 서부 주거지역. 방문 과외 선호도 높음.'},'원미구':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'중동·상동·심곡 학원가 밀집. 부천고·중원고 학군. 학원 병행 1:1 취약점 보완 과외 수요 높음.'},}},
-    '안양시': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'안양시 평촌 신도시는 경기 남서부 최대 교육 특구입니다. 평촌학원가를 중심으로 안양·과천·군포 학생들이 몰리며, 내신 경쟁이 치열하기로 유명합니다.<br><br>평촌고·귀인고 등 우수 고등학교가 밀집해 있으며, 중학교 때부터 체계적인 선행 학습과 내신 관리를 병행하는 가정이 많습니다.<br><br>올케어스터디는 안양시 학군의 시험 경향을 파악한 선생님들을 연결해드립니다.',
-    dongs: {'만안구':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'안양1번가 인근 원도심. 안양중 학군. 합리적 비용 내신 관리 과외 수요 꾸준.'},'동안구':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'평촌 신도시. 관양중·귀인고 학군. 학원가 밀집 교육 특구. 수학·영어 심화 과외 수요 매우 높음.'},}},
-    '화성시': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'화성시는 동탄 신도시를 중심으로 경기 남부에서 가장 빠르게 성장하는 교육 도시입니다. 인구 유입 속도가 전국 최상위이며, 삼성전자·현대기아차 종사자 가정이 대거 정착했습니다.<br><br>동탄1·2 신도시에 학원가가 빠르게 형성되고 있으며, 창의고·정현고·동탄고 등 신설 학교들 중심으로 내신 관리 수요가 폭증하고 있습니다.<br><br>올케어스터디는 화성시 신도시 학교들의 출제 경향에 특화된 선생님들을 연결해드립니다.',
-    dongs: {'동탄1신도시':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'화성 최초 신도시. 동탄중·청계고 학군. 입주 완료로 교육 인프라 안정화. 내신 관리 과외 수요 꾸준.'},'동탄2신도시':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'국내 최대 규모 신도시. 젊은 고학력 가정 대거 입주. 내신 관리·수능 대비 과외 수요 폭증.'},'봉담읍':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'수원 인접 주거지역. 합리적 비용 방문 과외 수요 높음.'},}},
-    '남양주시': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'남양주시는 다산·별내·평내 등 대규모 신도시 개발로 경기 동북부 최대 교육 도시로 성장했습니다. 서울 강동·노원과 인접해 있어 수도권 수준의 교육열이 빠르게 형성되고 있습니다.<br><br>다산 신도시에 젊은 고학력 가정이 대거 유입되면서 초등 조기교육부터 수능 대비까지 전 단계에 걸친 과외 수요가 급증하고 있습니다.<br><br>올케어스터디는 남양주시 전 지역에서 빠른 과외 선생님 매칭 서비스를 제공합니다.',
-    dongs: {'화도읍':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'남양주 동부 주거지역. 마석·화도중 학군. 방문 과외 선호 높음.'},'다산동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'다산 신도시 중심지. 젊은 고학력 가정 밀집. 초등 조기교육·중등 내신 과외 수요 폭발적 증가.'},'별내동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'별내 신도시. 별가람중·별내고 학군. 서울 노원 인접 영향으로 교육열 높음.'},'오남읍':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'남양주 북부 주거지역. 합리적 비용 내신 관리 과외 수요 꾸준.'},}},
-  },
-  '인천': {
-    '연수구': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'인천 연수구 송도는 글로벌 교육 환경이 조성된 인천 최고의 교육 특구입니다. 인천외고, CITI(채드윅 국제학교) 등이 위치해 있으며, 외국계 기업·국제기구 종사자 가정의 영어 교육 수요가 매우 높습니다.<br><br>연수구는 일반 내신 관리 수요와 글로벌 교육 수요가 공존합니다. 수능 대비와 함께 SAT·토플·IB 과외 수요도 있어 다양한 유형의 과외가 활발합니다.<br><br>올케어스터디는 연수구의 다양한 교육 수요에 맞는 선생님들을 연결해드립니다.',
-    dongs: {'송도동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'인천 경제자유구역. 국제학교 밀집. 영어 원어민 수업·SAT·IB 과외 수요 전국 상위.'},'연수동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'인천 구도심 학군. 연수중·연수고 중심. 내신 관리 과외 수요 꾸준.'},'청학동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'청학중 학군. 인천 남부 주거지역. 합리적 비용 과외 수요 꾸준.'},'옥련동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'옥련중 학군. 송도 인접 주거지. 글로벌 교육 환경 영향으로 영어 과외 수요 높음.'},}},
-    '남동구': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'인천 남동구는 인천 최대의 주거 밀집 지역입니다. 구월·만수·논현 일대에 대규모 아파트 단지가 형성되어 있으며, 인천 내에서 교육 수요가 가장 높은 지역 중 하나입니다.<br><br>인천 최대 학원가가 구월동 일대에 형성되어 있으며, 남동고·논현고 등 지역 고등학교 내신 대비 수요와 함께 수능 대비 과외 수요가 꾸준합니다.<br><br>올케어스터디는 남동구 학교들의 내신 특성에 맞는 선생님들을 연결해드립니다.',
-    dongs: {'구월동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'인천 최대 학원가. 구월중 학군. 수학·영어 심화 과외 수요 인천 내 최상위.'},'만수동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'만수중 학군. 대규모 아파트 단지 밀집. 내신 관리 중심 과외 수요 꾸준.'},'논현동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'논현 신도시. 고잔중 학군. 젊은 가족층 증가로 초등 조기교육 과외 수요 성장.'},'간석동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'간석중 학군. 인천 중심부 주거지역. 합리적 비용 내신 관리 과외 수요 꾸준.'},}},
-    '부평구': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'인천 부평구는 인천 최대의 상업·주거 복합지역입니다. 부평역 중심 상권이 형성되어 있으며, 학원가가 잘 발달해 있습니다. 서울·경기 접근성이 좋아 교육 수요가 꾸준합니다.<br><br>부평고·부평여고 등 지역 명문 학교를 중심으로 내신 관리 수요가 높으며, 삼산 신도시 개발로 젊은 가족층 유입이 계속되고 있습니다.<br><br>올케어스터디는 부평구 전 지역에서 검증된 선생님을 신속하게 연결해드립니다.',
-    dongs: {'부평동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'부평역 상권 인근. 부평중 학군. 학원 접근성 우수. 1:1 과외 병행 수요 높음.'},'삼산동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'삼산 신도시. 진산중·삼산고 학군. 젊은 가족층 밀집. 초등~중등 과외 수요 높음.'},'갈산동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'갈산중 학군. 합리적 비용 내신 관리 과외 수요 꾸준.'},'산곡동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'산곡중 학군. 부평구 서부 주거지역. 방문 과외 선호도 높음.'},}},
-  },
-  '부산': {
-    '해운대구': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'부산 해운대구는 부산 최고의 교육 특구입니다. 해운대·좌동·재송 학원가를 중심으로 부산 전역에서 학생들이 몰리며, 내신 경쟁이 부산에서 가장 치열한 지역입니다.<br><br>해운대고·신도고·양운고 등 명문 고등학교가 밀집해 있으며, 중학교 때부터 체계적인 내신 관리와 수능 대비를 병행하는 가정이 많습니다.<br><br>올케어스터디는 해운대구 학교들의 내신 출제 경향에 특화된 선생님들을 연결해드립니다.',
-    dongs: {'해운대동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'마린시티·엘시티 등 고급 주거지. 해운대중 학군. 외국어 교육 수요 높음.'},'우동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'센텀시티 인근 주거지. 센텀중·해운대고 학군. 부산 최고 교육 수요 집중 지역.'},'좌동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'부산 최대 학원가 밀집. 좌중·신도고 학군. 수학·영어 심화 과외 수요 부산 최상위.'},'재송동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'재송중 학군. 해운대구 서부 주거지역. 합리적 비용 내신 관리 과외 수요 꾸준.'},}},
-    '수영구': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'부산 수영구는 광안리·민락 해변 인근 주거지역으로, 부산에서 젊은 층 선호도가 높은 교육 지역입니다. 수영중·광안중 학군을 중심으로 내신 관리 수요가 꾸준합니다.<br><br>해운대구와 인접해 있어 교육 수준과 기대치가 높으며, 수영고·남천고 등 지역 고등학교 내신 대비와 함께 수능 대비 과외 수요가 활발합니다.<br><br>올케어스터디는 수영구 학교 특성에 맞는 선생님들을 연결해드립니다.',
-    dongs: {'광안동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'광안리 인근 주거지. 광안중 학군. 젊은 층 선호 지역으로 교육 수요 꾸준.'},'민락동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'민락중 학군. 수영구 동부 주거지. 내신 관리 중심 과외 수요 꾸준.'},'수영동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'수영고 학군. 부산 지하철 2호선 인근 교통 요충지. 학원 접근성 우수.'},'남천동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'남천초·남천중 학군. 한강변 고급 주거지와 유사한 주거 환경. 교육열 높음.'},}},
-    '동래구': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'부산 동래구는 전통적인 교육 명문 지역입니다. 동래고·동래여고 등 오랜 역사의 명문 학교들이 위치해 있으며, 부산 내에서 교육열이 가장 높은 구 중 하나입니다.<br><br>온천·사직 일대를 중심으로 학원가가 형성되어 있으며, 중학교 때부터 내신 관리와 수능 대비를 체계적으로 준비하는 가정이 많습니다.<br><br>올케어스터디는 동래구 학교들의 전통적인 출제 경향을 파악한 선생님들을 연결해드립니다.',
-    dongs: {'동래동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'동래역 인근. 동래중·동래고 학군. 전통 명문 학군으로 내신 관리 수요 매우 높음.'},'온천동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'온천중 학군. 동래구 최대 주거지역. 학원가 밀집으로 1:1 과외 병행 수요 높음.'},'사직동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'사직중·사직고 학군. 야구장 인근 주거지. 내신 관리 중심 과외 수요 꾸준.'},'명장동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'명장중 학군. 동래구 동부 주거지역. 합리적 비용 방문 과외 수요 높음.'},}},
-  },
-  '대구': {
-    '수성구': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'대구 수성구는 대구 최고의 교육 특구입니다. 범어·만촌·수성 학원가를 중심으로 대구 전역은 물론 경북 지역에서도 학생들이 몰리는 명실상부한 대구 교육의 중심지입니다.<br><br>경신고·영남고·대건고 등 대구 최고 명문 고등학교들이 집중되어 있으며, 중학교 때부터 치열한 내신 경쟁이 펼쳐집니다. 학원과 1:1 과외를 병행하는 비율이 매우 높습니다.<br><br>올케어스터디는 수성구 학교들의 내신 출제 경향에 특화된 선생님들을 연결해드립니다.',
-    dongs: {'범어동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'수성구 학원가 핵심 지역. 범어중·경신고 학군. 대구 교육 수요 1번지.'},'만촌동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'만촌중·영남고 학군. 고급 주거지와 학원가 공존. 수학·영어 심화 과외 수요 최상위.'},'황금동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'황금중 학군. 수성구 중심부 주거지. 내신 관리 중심 과외 수요 꾸준.'},'수성동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'수성중·대건고 학군. 수성못 인근 고급 주거지. 교육열 매우 높음.'},}},
-    '달서구': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'대구 달서구는 대구 서부 최대 주거 지역으로, 월성·용산·감삼동 일대에 대규모 아파트 단지가 형성되어 있습니다. 수성구에 버금가는 교육 수요를 형성하고 있으며, 학원가가 빠르게 성장하고 있습니다.<br><br>달서고·계성고·상원고 등 지역 고등학교 내신 대비 수요가 높으며, 중학교 내신 관리와 함께 수능 대비 과외 수요도 꾸준합니다.<br><br>올케어스터디는 달서구 학교들의 내신 특성에 맞는 선생님들을 연결해드립니다.',
-    dongs: {'월성동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'월서중·상원고 학군. 달서구 핵심 주거지. 내신 관리 중심 과외 수요 높음.'},'용산동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'용산중 학군. 달서구 서부 주거지역. 합리적 비용 내신 관리 과외 수요 꾸준.'},'감삼동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'감삼중·계성고 학군. 달서구 중심부. 학원가 인접으로 1:1 과외 병행 수요 높음.'},'죽전동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'죽전중 학군. 달서구 동부 주거지역. 내신 관리 중심 과외 수요 꾸준.'},}},
-  },
-  '광주': {
-    '서구': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'광주 서구 상무지구는 광주 최고의 교육 특구입니다. 상무지구 학원가를 중심으로 광주 전역에서 학생들이 몰리며, 내신 경쟁이 광주에서 가장 치열한 지역입니다.<br><br>전남고·상무고·광주여고 등 명문 학교들이 밀집해 있으며, 중학교 때부터 체계적인 내신 관리와 수능 대비를 병행하는 가정이 많습니다.<br><br>올케어스터디는 서구 학교들의 내신 출제 경향에 특화된 선생님들을 연결해드립니다.',
-    dongs: {'상무지구':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'광주 최대 학원가 밀집. 상무중·전남고 학군. 광주 교육 수요 1번지.'},'치평동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'치평중·상무고 학군. 상무지구 인접. 내신 관리 중심 과외 수요 높음.'},'화정동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'화정중 학군. 광주 서구 핵심 주거지. 학원 병행 1:1 과외 수요 꾸준.'},'금호동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'금호중 학군. 서구 남부 주거지역. 합리적 비용 내신 관리 과외 수요 꾸준.'},}},
-    '북구': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'광주 북구는 전남대학교·조선대학교와 인접한 교육 특화 지역입니다. 두 대학의 재학생·졸업생 과외 선생님 공급이 풍부하며, 이공계·의치대 진학 수요가 높습니다.<br><br>일곡·신용동 신도시를 중심으로 젊은 가족층이 유입되면서 초등 조기교육부터 수능 대비까지 전 단계에 걸친 과외 수요가 증가하고 있습니다.<br><br>올케어스터디는 북구 학교들의 내신 특성에 맞는 선생님들을 연결해드립니다.',
-    dongs: {'용봉동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'전남대 인근. 용봉중 학군. 이공계·의대 준비 과외 수요 높음.'},'일곡동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'일곡 신도시. 일곡중 학군. 젊은 가족층 밀집으로 초등 조기교육 과외 수요 성장.'},'신용동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'신용동 택지지구. 신용중 학군. 합리적 비용 내신 관리 과외 수요 꾸준.'},'운암동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'운암중 학군. 광주 북구 핵심 주거지. 내신 관리 중심 과외 수요 꾸준.'},}},
-    '광산구': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'광주 광산구 수완·첨단지구는 광주 신흥 교육 특구입니다. 빠른 인구 증가로 학원가가 급성장하고 있으며, 젊은 학부모들의 교육열이 매우 높습니다.<br><br>수완고·장덕고 등 신설 학교들을 중심으로 내신 경쟁이 점차 치열해지고 있으며, 초등 조기교육부터 수능 대비까지 전 단계 과외 수요가 급증하고 있습니다.<br><br>올케어스터디는 광산구 신도시 학교들의 출제 경향에 맞는 선생님들을 연결해드립니다.',
-    dongs: {'수완지구':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'광주 최대 신도시. 수완중·수완고 학군. 젊은 고학력 가정 밀집. 내신 관리 과외 수요 급증.'},'첨단지구':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'광주 AI 혁신지구 인근. 첨단중 학군. IT 종사자 자녀 코딩·수학 과외 수요 높음.'},'선운지구':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'선운중 학군. 신개발지역으로 젊은 가족층 증가. 초등 조기교육 과외 수요 성장.'},'신창동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'신창중 학군. 광산구 서부 주거지역. 합리적 비용 내신 관리 과외 수요 꾸준.'},}},
-  },
-  '대전': {
-    '유성구': { hero:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80', desc:'대전 유성구는 카이스트·충남대·한밭대 등 이공계 명문 대학이 밀집한 전국 최고 수준의 이공계 교육 특구입니다. 대덕연구단지·대전 테크노밸리 인근으로 연구원·박사급 부모 비율이 전국 최상위입니다.<br><br>대전과학고·한빛고·반석고 등 우수 학교들이 위치해 있으며, 과학고·영재학교 진학을 목표로 한 수학·과학 심화 과외 수요가 전국에서 가장 높은 지역 중 하나입니다.<br><br>올케어스터디는 유성구에서 카이스트 출신 및 연구원 선생님들을 가장 빠르게 연결해드립니다.',
-    dongs: {'노은동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'노은 신도시. 노은중 학군. 연구원·공학자 가정 밀집. 수학·과학 심화 과외 수요 최상위.'},'지족동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'지족중·지족고 학군. 카이스트 인근. 이공계 특화 과외 수요 전국 상위.'},'반석동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'반석 신도시. 반석중·반석고 학군. 젊은 연구원 가정 밀집으로 교육 수요 높음.'},'관평동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'테크노밸리 인근. 관평중 학군. IT 기업 종사자 가정 증가로 코딩·수학 과외 수요 성장.'},}},
-    '서구': { hero:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80', desc:'대전 서구 둔산 신도시는 대전 최대의 교육 중심지입니다. 둔산 학원가를 중심으로 충남·세종 학생들까지 유학 올 정도로 교육 인프라가 잘 발달해 있습니다.<br><br>유성고·도안고·서대전여고 등 명문 학교들이 밀집해 있으며, 내신 관리와 수능 대비를 병행하는 과외 수요가 매우 높습니다.<br><br>올케어스터디는 서구 학교들의 내신 출제 경향에 특화된 선생님들을 연결해드립니다.',
-    dongs: {'둔산동':{'img':'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80','desc':'대전 최대 학원가 밀집. 둔산중 학군. 대전 교육 수요 1번지. 수학·영어 심화 과외 수요 최상위.'},'관저동':{'img':'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80','desc':'관저 신도시. 관저중 학군. 젊은 가족층 밀집. 초등 조기교육·중등 내신 과외 수요 높음.'},'도안동':{'img':'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80','desc':'도안 신도시. 도안중 학군. 최신 교육 인프라 구축. 내신 관리 과외 수요 급증.'},'가수원동':{'img':'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=600&q=80','desc':'가수원중 학군. 서구 남부 주거지역. 합리적 비용 내신 관리 과외 수요 꾸준.'},}},
-  },
 
-};
+
 
 const REGIONS = {
   '서울': {
     label: '서울특별시', emoji: '🏙',
     areas: {
       '강남구': {
-        dongs: GANGNAM_DONGS,
+        dongs: Object.entries(DONG_DB).filter(([k,v])=>v[1]==='강남구').map(([k,v])=>v[2]),
         feature: '강남구 과외는 대치동·압구정·역삼·청담 전 지역에서 수학 과외, 영어 과외, 국어 과외, 과학 과외를 1:1 방문 과외로 연결해드립니다. 강남구 초등 과외·중등 과외·고등 과외 전 학년 내신 대비와 수능 대비를 전담하며, 강남 학원가 기출 문제 분석에 특화된 검증 선생님을 매칭합니다. 강남구 수학 과외·영어 과외 선생님은 학력·경력·수업 시연 검증을 완료한 분들로만 구성되어 있습니다. 무료 상담 후 48시간 내 강남구 맞춤 과외 선생님을 연결해드립니다.',
         schools: '휘문고, 단대부고, 중동고, 숙명여고, 경기고, 개포고'
       },
@@ -801,9 +1501,25 @@ const REGIONS = {
 };
 
 const GRADES = {
+  // 통합 (기존 호환)
   '초등': { label: '초등학교', years: ['1학년','2학년','3학년','4학년','5학년','6학년'] },
   '중등': { label: '중학교', years: ['1학년','2학년','3학년'] },
-  '고등': { label: '고등학교', years: ['1학년','2학년','3학년','수능준비'] },
+  '고등': { label: '고등학교', years: ['1학년','2학년','3학년'] },
+  // 초등 세분화
+  '초1': { label: '초등학교 1학년', years: ['초1'], group: '초등' },
+  '초2': { label: '초등학교 2학년', years: ['초2'], group: '초등' },
+  '초3': { label: '초등학교 3학년', years: ['초3'], group: '초등' },
+  '초4': { label: '초등학교 4학년', years: ['초4'], group: '초등' },
+  '초5': { label: '초등학교 5학년', years: ['초5'], group: '초등' },
+  '초6': { label: '초등학교 6학년', years: ['초6'], group: '초등' },
+  // 중등 세분화
+  '중1': { label: '중학교 1학년', years: ['중1'], group: '중등' },
+  '중2': { label: '중학교 2학년', years: ['중2'], group: '중등' },
+  '중3': { label: '중학교 3학년', years: ['중3'], group: '중등' },
+  // 고등 세분화
+  '고1': { label: '고등학교 1학년', years: ['고1'], group: '고등' },
+  '고2': { label: '고등학교 2학년', years: ['고2'], group: '고등' },
+  '고3': { label: '고등학교 3학년', years: ['고3'], group: '고등' },
 };
 
 const SUBJECTS = {
@@ -1197,205 +1913,359 @@ function wrapDark(title,desc,canonical,body){
   return page.replace(HEADER, HEADER_DARK);
 }
 
-// ── 강남구 동별 × 학년 × 과목 SEO 아티클 (2000자) ──────────────
 
-function makeDongArticle(dong, grade, subject) {
-  const sInfo = SUBJECT_INFO[subject];
-  const gInfo = GRADES[grade];
-  if (!sInfo || !gInfo) return null;
 
-  const dongDesc = GANGNAM_DONG_INFO[dong] || `${dong}은 서울 강남구에 위치한 지역으로, 우수한 교육 환경을 갖추고 있습니다.`;
-  const gradeDesc = sInfo[grade] || sInfo['고등'];
+// ── 카테고리별 동적 텍스트 템플릿 ────────────────────────────
+// {dong}=동이름, {gu}=구이름, {sido}=시도, {subject}=과목, {grade}=학년, {schools}=학교명
+const CATEGORY_TEMPLATES = {
+  // A: 학원가 특구
+  A: {
+    math: [
+      '{dong} 수학과외는 {gu} 최고 학군에서 내신 1등급을 목표로 학교별 기출 패턴을 완벽 분석해 1:1 맞춤 지도를 제공합니다. {schools} 등 명문 학교가 밀집해 내신 경쟁이 치열하며, 학원 수업만으로는 개별 취약점 보완이 어렵습니다. 올케어스터디는 {dong} 지역 학교 시험 출제 경향을 꿰뚫고 있는 검증된 수학 선생님을 연결해드립니다.',
+      '{dong} 수학과외는 학원가 밀집 지역 특성에 맞춰 학원 수업과 병행한 취약 단원 집중 보완 방식으로 운영합니다. {schools} 내신 기출을 철저히 분석해 시험에 최적화된 커리큘럼을 제공하며, 수능 수학까지 체계적으로 대비합니다.',
+      '{dong}은 {gu}에서도 교육열이 가장 높은 지역입니다. {schools} 수학 내신 난이도가 전국 상위권이라 1:1 과외를 통한 개별 맞춤 지도가 필수적입니다. 올케어스터디 {dong} 수학과외는 내신 1등급부터 수능 최상위권까지 목표에 맞는 선생님을 연결합니다.',
+    ],
+    english: [
+      '{dong} 영어과외는 {schools} 내신 영어 기출을 완벽 분석해 변형 문제와 서술형까지 완벽 대비합니다. {gu} 학원가 수준의 체계적인 영어 커리큘럼을 1:1 방문 과외로 제공합니다.',
+      '{dong} 영어과외는 내신 영어와 수능 영어를 동시에 잡는 통합 커리큘럼으로 운영합니다. {schools} 영어 시험 출제 패턴을 철저히 분석하고 독해·어법·서술형 전 영역을 체계적으로 다룹니다.',
+      '{gu} 최고 학군인 {dong}의 영어과외는 {schools} 내신 1등급을 목표로 합니다. 단어암기식 수업이 아닌 지문 분석 능력을 키우는 방식으로 어떤 지문에도 대응할 수 있는 실력을 만들어드립니다.',
+    ],
+    reviews: [
+      '{dong} 수학 과외 시작하고 {schools} 첫 중간고사에서 1등급 받았어요. 선생님이 기출 분석을 완벽하게 해주신 덕분입니다. — {dong} 고2 학부모',
+      '{dong} 학원만 다녔는데 수학이 제자리였어요. 1:1 과외 추가하고 딱 필요한 부분만 잡아주시니 효율이 완전히 달라졌습니다. — {dong} 중3 학부모',
+      '{dong} 영어 과외 받고 처음으로 내신 1등급 받았어요. {schools} 시험 스타일을 완벽히 파악하고 계신 선생님이었어요. — {dong} 고1 학부모',
+      '{dong} 수학 과외 2달 만에 등급이 두 단계 올랐어요. 선생님이 포기하지 않고 끝까지 챙겨주신 덕분입니다. — {dong} 고3 학부모',
+      '{dong}에서 영어 선생님 찾고 있었는데 하루 만에 완벽한 매칭이 됐어요. 내신 지문 분석 방식이 완전히 달라졌습니다. — {dong} 고2 학부모',
+      '{dong} 수학 선생님이 {schools} 출제 경향을 너무 잘 아세요. 시험 준비가 확실히 달라졌습니다. — {dong} 중2 학부모',
+    ],
+  },
+  // B: 신도시
+  B: {
+    math: [
+      '{dong} 수학과외는 신도시 특성에 맞춰 신설 학교 기출 분석에 특화된 선생님을 빠르게 매칭해드립니다. {schools} 학군의 젊은 학부모들의 높은 교육 기대에 맞춘 체계적인 수학 커리큘럼을 제공합니다.',
+      '{dong}은 신도시 개발로 젊은 고학력 가정이 밀집한 지역입니다. {schools} 수학 내신 관리와 함께 초등 영재교육·수학올림피아드 준비 과외 수요가 높으며, 이공계 진학을 위한 심화 수학 과외도 활발합니다.',
+      '{dong} 수학과외는 신규 입주 학생들의 빠른 적응을 지원합니다. {schools} 학교 스타일을 빠르게 파악해 첫 시험부터 좋은 성적을 낼 수 있도록 맞춤 지도합니다.',
+    ],
+    english: [
+      '{dong} 영어과외는 신도시 {gu}의 {schools} 내신 영어를 집중 관리합니다. 이사 후 빠른 선생님 매칭으로 학습 공백 없이 바로 시작할 수 있습니다.',
+      '{dong} 영어과외는 초등 영어 기초부터 {schools} 중학·고등 내신까지 단계별 체계적 지도를 제공합니다. 신도시 학부모들의 높은 영어 교육 기대에 맞춘 검증된 선생님을 연결합니다.',
+      '{dong}은 젊은 고학력 가정이 많아 영어 교육 수준이 높습니다. {schools} 내신 영어와 함께 영어 회화·독서 연계 교육도 병행하는 맞춤 커리큘럼으로 운영됩니다.',
+    ],
+    reviews: [
+      '{dong} 이사 오자마자 수학 선생님을 연결해주셨어요. 새 학교 {schools} 스타일을 빠르게 파악해주셔서 첫 시험에서 좋은 성적 나왔습니다. — {dong} 중1 학부모',
+      '{dong} 신도시라 좋은 선생님 찾기 어려울 것 같았는데 당일 매칭이 됐어요. 수학 성적이 꾸준히 오르고 있습니다. — {dong} 중2 학부모',
+      '{dong} 영어 과외 시작하고 {schools} 첫 내신에서 2등급 받았어요. 신도시인데 이렇게 좋은 선생님이 계실 줄 몰랐어요. — {dong} 고1 학부모',
+      '{dong} 초등 수학 과외 받고 있는데 아이가 수학을 좋아하게 됐어요. 선생님이 정말 잘 이끌어주십니다. — {dong} 초4 학부모',
+      '{dong}에서 영어 선생님 찾았는데 너무 빠르게 연결해주셔서 놀랐어요. 아이가 영어를 즐기게 됐습니다. — {dong} 초5 학부모',
+      '{dong} 수학 과외 시작하고 {schools} 중간고사에서 처음으로 1등급 받았어요. — {dong} 고2 학부모',
+    ],
+  },
+  // C: 산업단지
+  C: {
+    math: [
+      '{dong} 수학과외는 산업단지 인근 이공계·IT 종사자 가정을 위한 맞춤 수학 심화 과외를 제공합니다. {schools} 내신 수학과 함께 이공계 대학 진학을 위한 수능 수학 심화 과외 수요가 높습니다.',
+      '{dong}은 {gu} 산업단지 인근으로 연구원·공학자 가정 비율이 높습니다. {schools} 수학 내신 관리와 함께 코딩·수학 통합 커리큘럼으로 이공계 진학 준비를 체계적으로 지원합니다.',
+      '{dong} 수학과외는 산업단지 맞벌이 가정의 방문 과외 수요에 맞춰 유연한 수업 일정으로 운영합니다. {schools} 내신 관리부터 수능 수학까지 검증된 선생님이 1:1로 책임 지도합니다.',
+    ],
+    english: [
+      '{dong} 영어과외는 산업단지 인근 글로벌 기업 종사자 가정을 위한 영어 과외를 제공합니다. {schools} 내신 영어와 함께 실용 영어 회화·비즈니스 영어 수요도 있어 다양한 커리큘럼을 운영합니다.',
+      '{dong} 영어과외는 맞벌이 가정 비율이 높은 지역 특성에 맞춰 방문 과외로 {schools} 내신 영어를 집중 관리합니다.',
+      '{dong}은 IT·제조업 종사자 가정이 많아 영어 교육 수요가 높습니다. {schools} 내신 영어와 수능 영어를 체계적으로 준비해드립니다.',
+    ],
+    reviews: [
+      '{dong} IT 직장 다니다 보니 아이 수학을 못 봐줬는데 선생님이 꼼꼼하게 봐주셔서 정말 감사합니다. — {dong} 초6 학부모',
+      '{dong} 수학 과외 받고 있어요. 이공계 맞춤으로 심화 내용까지 다뤄주셔서 아이가 이공계 진학 목표가 뚜렷해졌어요. — {dong} 중3 학부모',
+      '{dong} 맞벌이라 시간이 없는데 선생님이 맞춰주시니 너무 편해요. {schools} 내신도 잘 챙겨주십니다. — {dong} 고1 학부모',
+      '{dong} 영어 과외 받고 처음으로 내신 2등급 받았어요. — {dong} 고2 학부모',
+      '{dong} 수학 선생님이 연구원 출신이시라 설명이 정말 논리적이에요. — {dong} 중2 학부모',
+    ],
+  },
+  // D: 군인가족
+  D: {
+    math: [
+      '{dong} 수학과외는 군인 가족 이동에 맞춰 빠른 선생님 매칭과 유연한 수업 일정을 지원합니다. {schools} 내신 수학을 단기간에 집중적으로 관리해 전학 후에도 성적 유지가 가능합니다.',
+      '{dong}은 군부대 인근으로 전국에서 모인 군인 자녀들의 교육 수요가 특화된 지역입니다. 잦은 이사에도 빠르게 새 학교 {schools} 수학 내신 스타일에 적응할 수 있도록 집중 지도합니다.',
+    ],
+    english: [
+      '{dong} 영어과외는 군인 가족 특성에 맞춰 이사 직후 빠른 선생님 매칭으로 {schools} 내신 영어를 즉시 시작할 수 있습니다.',
+      '{dong}은 군인 자녀 비율이 높아 전학 후 빠른 적응이 중요합니다. {schools} 영어 내신 스타일을 빠르게 파악해 첫 시험부터 안정적인 성적을 유지할 수 있도록 지도합니다.',
+    ],
+    reviews: [
+      '{dong} 전임 후 바로 수학 선생님을 연결해주셨어요. {schools} 시험 스타일을 빠르게 파악해주셔서 첫 시험에서 좋은 성적 나왔습니다. — {dong} 고1 학부모',
+      '자주 이사 다니는 군인 가족인데 {dong}에서도 빠르게 영어 선생님을 찾을 수 있었어요. — {dong} 중2 학부모',
+      '{dong} 수학 과외 받고 이사 와서도 성적이 유지됐어요. 정말 감사합니다. — {dong} 중3 학부모',
+    ],
+  },
+  // E: 대학가
+  E: {
+    math: [
+      '{dong} 수학과외는 인근 대학 재학생·졸업생 선생님 매칭이 가능한 지역입니다. {schools} 내신 수학과 함께 이공계·의대 진학을 위한 수학 심화 과외 수요가 높으며, 우수한 선생님을 합리적인 비용으로 연결해드립니다.',
+      '{dong}은 대학가 인근으로 우수한 과외 선생님 공급이 풍부합니다. {schools} 수학 내신 관리부터 수능 수학 최상위권까지 학생의 목표에 맞는 최적의 선생님을 매칭합니다.',
+      '{dong} 수학과외는 대학가 특성상 SKY·의대 진학 목표 학생들의 집중 심화 수업 수요가 높습니다. {schools} 내신 관리와 수능 수학 1등급을 동시에 목표로 체계적인 커리큘럼을 운영합니다.',
+    ],
+    english: [
+      '{dong} 영어과외는 인근 대학 출신 선생님 매칭이 가능합니다. {schools} 내신 영어와 수능 영어를 체계적으로 준비하며, 영어 회화·논술 연계 교육도 병행합니다.',
+      '{dong} 영어과외는 대학가 특성상 어학 특화 선생님 매칭이 수월합니다. {schools} 내신 영어 기출 분석부터 수능 영어 1등급까지 목표에 맞는 맞춤 지도를 제공합니다.',
+      '{dong}은 어학·인문 계열 강세 지역으로 영어 교육 수준이 높습니다. {schools} 영어 내신을 완벽히 분석하고 수능 독해·어법 전 영역을 체계적으로 지도합니다.',
+    ],
+    reviews: [
+      '{dong}에서 수학 선생님 찾았는데 인근 대학 출신 선생님을 매칭해주셔서 설명이 정말 명쾌해요. — {dong} 고1 학부모',
+      '{dong} 수학 과외 받고 처음으로 수학 1등급 받았어요. 선생님 실력이 정말 좋으세요. — {dong} 고2 학부모',
+      '{dong} 영어 과외 받고 {schools} 내신 1등급 받았습니다. 지문 분석 방법이 완전히 달라졌어요. — {dong} 고1 학부모',
+      '{dong} 수학 선생님이 의대 출신이신데 정말 체계적으로 가르쳐주세요. — {dong} 고3 학부모',
+      '{dong} 영어 선생님이 영어영문학과 출신이시라 설명이 너무 좋아요. — {dong} 중3 학부모',
+      '{dong} 과외 받고 성적이 꾸준히 올라 SKY 목표가 현실이 됐어요. — {dong} 고2 학부모',
+    ],
+  },
+  // F: 농촌읍면
+  F: {
+    math: [
+      '{dong} 수학과외는 학원이 부족한 지역 특성에 맞춰 방문 과외 위주로 운영합니다. {schools} 내신 수학을 합리적인 비용으로 꼼꼼하게 1:1 지도해 학원 없이도 성적 관리가 가능합니다.',
+      '{dong}은 읍면 지역으로 학원 접근성이 낮아 방문 과외 선호도가 높습니다. {schools} 수학 내신을 집에서 편하게 1:1로 배울 수 있으며, 합리적인 과외비로 체계적인 수학 지도를 받을 수 있습니다.',
+    ],
+    english: [
+      '{dong} 영어과외는 방문 과외로 {schools} 내신 영어를 집에서 편하게 준비합니다. 학원이 멀어도 검증된 선생님이 직접 방문해 1:1 맞춤 지도를 제공합니다.',
+      '{dong}은 읍면 지역이지만 올케어스터디의 방문 과외로 도시와 같은 수준의 영어 교육을 받을 수 있습니다. {schools} 내신 영어를 합리적인 비용으로 체계적으로 준비합니다.',
+    ],
+    reviews: [
+      '{dong}은 학원이 없어 걱정이었는데 방문 수학 과외로 완벽히 해결됐어요. {schools} 성적이 확 올랐습니다. — {dong} 중2 학부모',
+      '{dong} 영어 과외 받고 처음으로 내신 2등급 받았어요. 집에서 배우니 아이도 편해하고 집중도 잘 해요. — {dong} 중3 학부모',
+      '{dong}에서 수학 선생님 찾기 어려울 것 같았는데 바로 연결해주셔서 감사해요. — {dong} 초6 학부모',
+    ],
+  },
+  // G: 도서
+  G: {
+    math: [
+      '{dong} 수학과외는 도서 지역 학생을 위한 온라인 과외와 방문 과외를 모두 지원합니다. {schools} 내신 수학을 섬에 있어도 검증된 선생님과 1:1로 체계적으로 준비할 수 있습니다.',
+      '{dong}은 도서 지역 특성상 온라인 수학과외로 {schools} 내신을 효율적으로 관리합니다. 화상 수업으로도 충분히 1:1 맞춤 지도가 가능합니다.',
+    ],
+    english: [
+      '{dong} 영어과외는 온라인으로 {schools} 내신 영어를 집중 관리합니다. 도서 지역이지만 최고의 영어 선생님과 1:1 온라인 수업으로 학습 격차 없이 준비할 수 있습니다.',
+    ],
+    reviews: [
+      '{dong} 섬에서도 온라인 수학 과외로 성적을 올릴 수 있었어요. 선생님이 정말 꼼꼼하게 봐주십니다. — {dong} 중3 학부모',
+      '{dong} 온라인 영어 과외 받고 {schools} 내신 영어가 안정됐어요. — {dong} 고1 학부모',
+    ],
+  },
+  // H: 일반도심
+  H: {
+    math: [
+      '{dong} 수학과외는 {gu} {schools} 내신 수학을 1:1 방문 과외로 집중 관리합니다. 학생의 수준과 학교 시험 출제 경향에 맞춘 맞춤 커리큘럼으로 내신 등급 향상을 목표로 합니다.',
+      '{dong} 수학과외는 {schools} 기출 분석에 특화된 검증 선생님이 취약 단원을 집중 보완합니다. 학원 수업 후 부족한 부분을 1:1로 완전히 채우는 효율적인 수업 방식으로 운영합니다.',
+      '{dong}에서 수학 과외를 시작하면 {schools} 내신 수학 관리와 수능 수학 대비를 동시에 진행합니다. 올케어스터디의 검증 선생님이 학생 개개인의 학습 목표에 맞춘 최적의 커리큘럼을 설계합니다.',
+    ],
+    english: [
+      '{dong} 영어과외는 {schools} 내신 영어 기출을 완벽 분석해 시험에 최적화된 1:1 맞춤 수업을 제공합니다. 독해·어법·서술형 전 영역을 체계적으로 다루며 내신 1등급을 목표로 합니다.',
+      '{dong} 영어과외는 {schools} 학교 스타일에 맞는 내신 영어 지도와 함께 수능 영어 독해 훈련을 병행합니다. 합리적인 비용으로 검증된 선생님의 1:1 방문 과외를 받을 수 있습니다.',
+      '{dong}에서 영어 과외를 시작하면 {schools} 내신 영어와 수능 영어를 동시에 준비할 수 있습니다. 학생의 현재 수준과 목표에 맞는 최적의 영어 선생님을 48시간 내 연결해드립니다.',
+    ],
+    reviews: [
+      '{dong} 수학 과외 시작하고 {schools} 중간고사에서 등급이 올랐어요. 선생님이 취약 단원을 정확히 짚어주셨습니다. — {dong} 중3 학부모',
+      '{dong} 영어 과외 받고 처음으로 내신 영어 2등급 받았어요. {schools} 시험 스타일을 너무 잘 아시더라고요. — {dong} 고1 학부모',
+      '{dong} 수학 선생님이 아이 수준에 맞게 가르쳐주시니 스트레스 없이 잘 따라가요. — {dong} 중2 학부모',
+      '{dong} 영어 과외 시작하고 수능 영어 독해 속도가 확실히 빨라졌어요. — {dong} 고2 학부모',
+      '{dong} 수학 과외 받고 있어요. 합리적인 비용에 정말 꼼꼼하게 가르쳐주셔서 만족합니다. — {dong} 중1 학부모',
+      '{dong} 영어 선생님이 학교 지문 분석을 정말 꼼꼼하게 해주세요. 변형 문제에도 강해졌습니다. — {dong} 고1 학부모',
+    ],
+  },
+};
 
-  const title = `${dong} ${grade} ${subject}과외 | 강남구 ${dong} ${gInfo.label} ${subject} 맞춤 1:1 과외 - 올케어스터디`;
-  const desc = `${dong} ${grade} ${subject}과외 전문. 강남구 ${dong} ${gInfo.label} 1:1 방문 과외. 내신·수능 기출 분석 검증 선생님. 무료 상담 010-6834-8080`;
-  const canonical = `/seoul/gangnam/${DONG_EN[dong]||dong}/${GRADE_EN[grade]||grade}/${SUBJECT_EN[subject]||subject}`;
-  const bcDong = [
-    {name:'홈',url:'/'},
-    {name:'서울특별시',url:'/seoul'},
-    {name:'강남구',url:'/seoul/gangnam'},
-    {name:`${dong} ${grade} ${subject}과외`,url:canonical}
+// ── 동적 페이지 생성 함수 ────────────────────────────────────
+function getDongData(dongEn) {
+  return DONG_DB[dongEn] || null;
+}
+
+// 해시 함수: 동+과목 조합으로 일관된 템플릿 선택
+function hashSelect(str, arr) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  return arr[h % arr.length];
+}
+
+function makeDongPage(dongEn, subjectEn, gradeEn) {
+  const data = DONG_DB[dongEn];
+  if (!data) return null;
+  const subject = SUBJECT_MAP[subjectEn] || subjectEn;
+  const grade = GRADE_MAP[gradeEn] || gradeEn;
+  const subj = SUBJECTS[subject];
+  const gradeObj = GRADES[grade];
+  if (!subj || !gradeObj) return null;
+
+  const [sido, gu, dong, cat, sidoEn, guEn] = data;
+  const tmpl = CATEGORY_TEMPLATES[cat] || CATEGORY_TEMPLATES['H'];
+
+  const subjectKey = subject === '수학' ? 'math' : subject === '영어' ? 'english' : 'math';
+  const tmplTexts = tmpl[subjectKey] || tmpl.math;
+  const reviews = tmpl.reviews;
+
+  // 학년별 특화 설명
+  const gradeGroup = gradeObj.group || grade;
+  const GRADE_DESC = {
+    '초1': { math: `${dong} 초1 수학과외는 수 세기·덧셈·뺄셈 기초 개념을 놀이처럼 익히는 방식으로 진행합니다. 처음 수학을 배우는 시기인 만큼 수학에 대한 긍정적 경험을 만들어주는 것이 핵심입니다.`, english: `${dong} 초1 영어과외는 파닉스·알파벳부터 시작해 영어를 자연스럽게 접할 수 있도록 도와줍니다. 영어 노래·게임을 활용한 흥미 유발 방식으로 진행합니다.` },
+    '초2': { math: `${dong} 초2 수학과외는 두 자리 수 연산과 도형 기초를 체계적으로 다집니다. 연산 실수를 줄이는 훈련과 함께 수학적 사고력 기초를 형성합니다.`, english: `${dong} 초2 영어과외는 파닉스 완성 후 기초 단어·문장 읽기로 이어지는 단계적 지도를 제공합니다.` },
+    '초3': { math: `${dong} 초3 수학과외는 곱셈·나눗셈·분수 개념이 처음 등장하는 중요한 시기입니다. 개념을 정확히 이해하고 응용력을 키우는 1:1 맞춤 지도를 제공합니다.`, english: `${dong} 초3 영어과외는 학교 영어 교과가 본격 시작되는 시기에 맞춰 교과서 기반 내신과 기초 회화를 병행합니다.` },
+    '초4': { math: `${dong} 초4 수학과외는 소수·분수 연산과 도형 넓이 등 개념이 급격히 어려워지는 시기입니다. 개념 완성 없이 넘어가면 이후 중학 수학에서 큰 어려움을 겪으므로 기초를 확실히 다집니다.`, english: `${dong} 초4 영어과외는 읽기·쓰기 실력을 본격적으로 키우는 시기입니다. 영어 문장 구조를 익히고 짧은 글쓰기까지 이어지는 체계적인 커리큘럼으로 운영합니다.` },
+    '초5': { math: `${dong} 초5 수학과외는 약수·배수·분수의 사칙연산 등 중학 수학의 기초가 되는 핵심 개념을 완성합니다. 이 시기 수학 기초가 탄탄해야 중학교 내신 관리가 수월합니다.`, english: `${dong} 초5 영어과외는 중학교 대비 문법 기초와 독해 능력을 키웁니다. 영어 일기 쓰기·독서록 작성 등 실용적인 영어 표현력 향상에 집중합니다.` },
+    '초6': { math: `${dong} 초6 수학과외는 비율·원의 넓이·비례식 등 중학 수학 연결 개념을 완성하고 중학교 수학을 미리 대비합니다. 중학교 내신 준비를 위한 선행 학습도 병행합니다.`, english: `${dong} 초6 영어과외는 중학교 영어 교과서를 미리 대비하는 예습 과외와 함께 현재 교과서 내신 완성을 병행합니다. 중학 문법 기초를 미리 다져두는 것이 핵심입니다.` },
+    '중1': { math: `${dong} 중1 수학과외는 정수·유리수·방정식 등 중학 수학의 가장 중요한 기초 개념을 완성합니다. 초등에서 중등으로 넘어오면서 수학이 갑자기 어려워지는 시기로, 1:1 맞춤 지도로 개념을 확실히 잡아드립니다.`, english: `${dong} 중1 영어과외는 중학교 첫 내신을 성공적으로 준비합니다. 문법 기초·어휘·읽기·쓰기를 체계적으로 다루며 첫 시험에서 좋은 성적을 받을 수 있도록 집중 지도합니다.` },
+    '중2': { math: `${dong} 중2 수학과외는 일차함수·연립방정식·부등식 등 중학 수학의 핵심 단원을 완성합니다. 내신 경쟁이 본격화되는 시기로 취약 단원을 정확히 파악해 집중 보완합니다.`, english: `${dong} 중2 영어과외는 문법 심화와 내신 지문 분석 능력을 키웁니다. 중2 영어 내신에서 변형 문제와 서술형이 본격 등장하므로 이에 특화된 맞춤 지도를 제공합니다.` },
+    '중3': { math: `${dong} 중3 수학과외는 이차방정식·함수·통계 등 고등 수학의 연결 개념을 완성하고 고등학교 진학을 철저히 대비합니다. 고등 내신과 수능을 위한 선행 학습도 병행합니다.`, english: `${dong} 중3 영어과외는 고등 영어 대비 독해력·어법 기초를 완성합니다. 중학 내신 1등급을 유지하면서 고등학교 영어를 미리 준비하는 전략적 커리큘럼으로 운영합니다.` },
+    '고1': { math: `${dong} 고1 수학과외는 고등 수학의 핵심인 수와 연산·방정식·부등식·함수 기초를 완성합니다. 고1 내신이 수능 수학의 기초가 되므로 개념을 확실히 잡는 것이 가장 중요합니다.`, english: `${dong} 고1 영어과외는 고등 영어의 첫 내신을 성공적으로 준비합니다. 수능 영어 유형에 맞춘 독해 전략과 내신 지문 분석을 병행해 내신과 수능을 동시에 대비합니다.` },
+    '고2': { math: `${dong} 고2 수학과외는 수학Ⅱ·확률과 통계·미적분 등 수능 핵심 단원을 집중 공략합니다. 내신 등급과 수능 성적을 동시에 관리하는 체계적인 커리큘럼으로 운영합니다.`, english: `${dong} 고2 영어과외는 수능 영어 1등급을 목표로 독해 속도와 정확도를 끌어올립니다. 내신 영어 지문 분석과 수능 기출 유형 훈련을 병행합니다.` },
+    '고3': { math: `${dong} 고3 수학과외는 수능 수학 최고점을 목표로 취약 단원 집중 보완과 실전 모의고사 분석을 병행합니다. D-100일 집중 과외부터 수능 전날까지 체계적인 수능 수학 완성 프로그램을 제공합니다.`, english: `${dong} 고3 영어과외는 수능 영어 1등급 확보를 위한 집중 과외입니다. 빠른 독해·어법·빈칸추론·순서배열 등 취약 유형을 집중 공략하고 실전 시간 관리 훈련을 병행합니다.` },
+  };
+  // 초등/중등/고등 통합 키도 처리
+  const gradeDescFallback = {
+    '초등': GRADE_DESC['초5'],
+    '중등': GRADE_DESC['중2'],
+    '고등': GRADE_DESC['고2'],
+  };
+  const gradeDesc = (GRADE_DESC[grade] || gradeDescFallback[grade] || GRADE_DESC['중2'])[subjectKey] || '';
+
+  // 지역 내 학교명 (REGIONS에서 가져오거나 기본값)
+  const regionArea = REGIONS[sido]?.areas[gu];
+  const schools = regionArea?.schools || `${gu} 주요 학교`;
+
+  const fill = (t) => t
+    .replace(/\{dong\}/g, dong)
+    .replace(/\{gu\}/g, gu)
+    .replace(/\{sido\}/g, sido)
+    .replace(/\{subject\}/g, subject)
+    .replace(/\{grade\}/g, grade)
+    .replace(/\{schools\}/g, schools);
+
+  const mainText = fill(hashSelect(dongEn + subjectEn, tmplTexts));
+  const review1 = fill(hashSelect(dongEn + subjectEn + '1', reviews));
+  const review2 = fill(hashSelect(dongEn + subjectEn + '2', reviews));
+
+  const sidoLabel = sido === '서울' ? '서울특별시' : sido === '경기' ? '경기도' :
+    sido === '인천' ? '인천광역시' : sido === '부산' ? '부산광역시' :
+    sido === '대구' ? '대구광역시' : sido === '광주' ? '광주광역시' :
+    sido === '대전' ? '대대전광역시' : sido === '울산' ? '울산광역시' :
+    sido === '세종' ? '세종특별자치시' : sido === '강원' ? '강원특별자치도' : sido;
+
+  const title = `${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${gradeObj.label} ${subject} 1:1 맞춤 과외 - 올케어스터디`;
+  const desc = `${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
+  const canonical = `/${sidoEn}/${guEn}/${dongEn}/${gradeEn}/${subjectEn}`;
+
+  const bc = [
+    {name:'홈', url:'/'},
+    {name:sidoLabel, url:`/${sidoEn}`},
+    {name:gu, url:`/${sidoEn}/${guEn}`},
+    {name:`${dong} ${grade} ${subject}과외`, url:canonical}
   ];
 
-  // 관련 과목 링크
-  const otherSubjects = Object.keys(SUBJECTS).filter(s => s !== subject).slice(0, 6)
-    .map(s => `<a class="subj-link" href="/seoul/gangnam/${DONG_EN[dong]||dong}/${GRADE_EN[grade]||grade}/${SUBJECT_EN[s]||s}"><span>${SUBJECTS[s].emoji} ${dong} ${grade} ${s}과외</span><span>→</span></a>`)
+  const otherSubjects = Object.entries(SUBJECTS)
+    .filter(([s]) => s !== subject)
+    .slice(0, 6)
+    .map(([s, v]) => `<a class="subj-link" href="/${sidoEn}/${guEn}/${dongEn}/${gradeEn}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${dong} ${grade} ${s}과외</span><span>→</span></a>`)
     .join('');
 
-  // 관련 동 링크
-  const otherDongs = GANGNAM_DONGS.filter(d => d !== dong).slice(0, 3)
-    .map(d => `<a class="rel-card" href="/seoul/gangnam/${DONG_EN[d]||d}/${GRADE_EN[grade]||grade}/${SUBJECT_EN[subject]||subject}"><div class="rc-tag">강남구 · ${d}</div><div class="rc-title">${d} ${grade} ${subject}과외 | 강남구 맞춤 1:1 과외</div></a>`)
+  const relDongs = Object.entries(DONG_DB)
+    .filter(([k, v]) => v[1] === gu && k !== dongEn)
+    .slice(0, 3)
+    .map(([k, v]) => `<a class="rel-card" href="/${sidoEn}/${guEn}/${k}/${gradeEn}/${subjectEn}"><div class="rc-tag">${gu} · ${v[2]}</div><div class="rc-title">${v[2]} ${grade} ${subject}과외</div></a>`)
     .join('');
 
-  // 학년 태그
-  const yearTags = gInfo.years.map(y => `<span class="tag">${y}</span>`).join('');
+  const yearTags = gradeObj.years.map(y => `<span class="tag">${y}</span>`).join('');
 
-  // SEO 키워드 태그 10개
   const keywords = [
-    `${dong} ${subject}과외`,
-    `강남구 ${subject}과외`,
-    `${dong} ${grade} ${subject}`,
-    `강남 ${grade} ${subject}과외`,
-    `${dong} 1:1과외`,
-    `강남구 ${gInfo.label} ${subject}`,
-    `${dong} 과외 추천`,
-    `강남구 내신 ${subject}`,
-    `${dong} ${subject} 선생님`,
-    `강남 ${subject} 과외비`
+    `${dong} ${subject}과외`, `${dong} ${grade} ${subject}`,
+    `${gu} ${subject}과외`, `${dong} 과외`,
+    `${dong} 1:1과외`, `${gu} ${grade} ${subject}`,
+    `${dong} 내신 ${subject}`, `${dong} ${subject} 선생님`
   ];
   const keywordTags = keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('');
 
   const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/seoul">서울특별시</a> › <a href="/seoul/gangnam">강남구</a> › <a href="/seoul/gangnam/${DONG_EN[dong]||dong}/${GRADE_EN[grade]||grade}">${dong} ${grade}</a> › <span>${subject}과외</span></div>
-
-  <div class="art-tag">${SUBJECTS[subject].emoji} 강남구 · ${dong} · ${grade} · ${subject}</div>
-  <h1 class="art-title">${dong} ${grade} ${subject}과외 | 강남구 ${dong} ${gInfo.label} ${subject} 맞춤 1:1 과외</h1>
-  <div class="art-meta">
-    <span>✏️ 올케어스터디 편집팀</span>
-    <span>📅 ${today()}</span>
-    <span>⏱ 4분 읽기</span>
-  </div>
-
+  <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} ${grade} ${subject}과외</span></div>
+  <div class="art-tag">${subj.emoji} ${gu} · ${dong} · ${grade} · ${subject}</div>
+  <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${gradeObj.label} ${subject} 맞춤 1:1 과외</h1>
+  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 4분</span></div>
   <div class="info-box">
-    <div class="info-item"><div class="info-num">247명</div><div class="info-label">강남구 ${subject} 선생님</div></div>
-    <div class="info-item"><div class="info-num">98%</div><div class="info-label">수업 만족도</div></div>
-    <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담 신청</div></div>
+    <div class="info-item"><div class="info-num">247명</div><div class="info-label">${subject} 선생님</div></div>
+    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
+    <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
   </div>
-
-  <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
-    <img src="${DONG_IMAGES[dong] || 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80'}" alt="${dong} ${grade} ${subject}과외" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
-    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.6),transparent);display:flex;align-items:center;padding:32px">
-      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">강남구 · ${dong} · ${grade}</div><div style="font-size:26px;font-weight:900">${dong} ${subject}과외</div></div>
-    </div>
-  </div>
-
   <div class="art-body">
     <h2>${dong} ${grade} ${subject}과외 안내</h2>
-    <p>${dongDesc}</p>
-    <p>${sInfo.intro}</p>
-    <p>올케어스터디는 <strong>강남구 ${dong}</strong> 지역에서 검증된 ${subject} 과외 선생님을 연결해드립니다. ${gInfo.label} ${subject} 내신부터 수능까지 학생의 수준과 목표에 맞는 최적의 1:1 맞춤 수업을 제공합니다.</p>
-
-    <h2>${grade} ${subject}과외 커리큘럼</h2>
+    <p>${mainText}</p>
     <p>${gradeDesc}</p>
-    <p>강남구 ${dong} 지역 학교들의 출제 경향을 철저히 분석하여 <strong>내신 1등급</strong>을 목표로 맞춤 전략을 수립합니다. 단순 암기식 학습이 아닌 개념 이해를 바탕으로 한 응용력 훈련으로 어떤 문제 유형에도 대응할 수 있는 실력을 키워드립니다.</p>
-
-    <h3>학년별 수업 안내</h3>
-    <div class="tag-wrap"><div class="tag-label">🎓 학년 선택</div><div class="tags">${yearTags}</div></div>
-
-    <h2>올케어스터디 ${subject}과외 5가지 특징</h2>
-    <p><strong>① 검증된 선생님 매칭</strong> — 모든 선생님은 학력·경력·수업 시연을 거쳐 엄선됩니다. 강남구 학교 내신 출제 경향을 잘 아는 선생님을 배정합니다.</p>
-    <p><strong>② 학교 맞춤 내신 대비</strong> — ${dong} 인근 학교의 기출 문제와 출제 경향을 분석해 시험에 최적화된 수업을 진행합니다.</p>
-    <p><strong>③ 매주 학습 보고서 제공</strong> — 수업 내용, 성취도, 보완 사항을 주간 보고서로 학부모님께 공유합니다.</p>
-    <p><strong>④ 취약점 집중 보완</strong> — AI 학습 분석을 통해 학생의 약점을 파악하고 집중 보완합니다.</p>
-    <p><strong>⑤ 언제든 선생님 교체 가능</strong> — 수업이 맞지 않으면 부담 없이 선생님을 바꿀 수 있습니다.</p>
-
-    <h2>강남구 ${dong} 학습 환경</h2>
-    <p>강남구는 전국에서 가장 높은 교육열을 자랑하는 지역으로, ${dong}도 예외가 아닙니다. 우수한 학생들이 밀집해 있어 내신 등급 경쟁이 매우 치열하며, 학원 수업만으로는 개별적인 약점 보완이 어렵습니다.</p>
-    <p>1:1 과외는 이러한 환경에서 <strong>가장 효과적인 학습 방법</strong>입니다. 선생님이 학생 한 명에게만 집중하여 이해도를 즉각 확인하고, 모르는 부분을 바로 짚어줄 수 있기 때문입니다. 올케어스터디의 ${subject} 선생님들은 강남구 학교들의 시험 경향을 누구보다 잘 알고 있습니다.</p>
-
-    <h2>${dong} ${subject}과외 수업 방식</h2>
-    <p>올케어스터디는 단순히 선생님을 연결하는 것을 넘어, <strong>학생의 성적 향상</strong>을 목표로 수업 전 과정을 체계적으로 관리합니다. 첫 상담에서 학생의 현재 학력 수준과 목표를 정확히 파악한 뒤, 최적의 선생님을 매칭합니다.</p>
-    <p>수업은 주 2~3회 진행되며, 학생의 학교 일정과 학원 스케줄을 고려하여 유연하게 조정합니다. 매 수업 후 선생님이 수업 내용과 학생의 이해도를 기록하여 학부모님께 공유드립니다. 시험 전에는 집중 특강 형태로 내신 대비를 강화합니다.</p>
-
-    <h2>${grade} ${subject} 과외 비용 안내</h2>
-    <p>강남구 ${dong} 지역 ${grade} ${subject} 과외 비용은 선생님의 경력, 학력, 수업 방식에 따라 다릅니다. 올케어스터디는 학부모님의 예산과 학생의 필요에 맞는 선생님을 합리적인 비용으로 연결해드립니다.</p>
-    <p>수업 시작 전 선생님과 충분히 상담하여 수업료를 협의하며, 숨겨진 추가 비용 없이 투명하게 운영됩니다. 첫 상담은 완전히 무료이며, 매칭 후에도 수업이 맞지 않으면 부담 없이 선생님을 교체할 수 있습니다.</p>
-
-    <h2>자주 묻는 질문 (FAQ)</h2>
-    <p><strong>Q. 첫 수업 전에 선생님을 미리 만나볼 수 있나요?</strong><br>네, 가능합니다. 정식 수업 전 무료 체험 수업을 통해 선생님의 수업 방식과 학생과의 케미를 확인하실 수 있습니다.</p>
-    <p><strong>Q. ${dong}에서 ${subject} 선생님을 찾는 데 얼마나 걸리나요?</strong><br>보통 상담 신청 후 24시간 이내에 코디네이터가 연락드리며, 빠르면 당일에도 매칭이 가능합니다.</p>
-    <p><strong>Q. 학교 교과서 외에 추가 교재가 필요한가요?</strong><br>기본적으로 학교 교과서와 기출문제를 활용합니다. 필요에 따라 선생님이 추가 교재를 추천해드리지만 강요하지 않습니다.</p>
-    <p><strong>Q. ${grade} ${subject} 성적이 많이 낮아도 괜찮나요?</strong><br>물론입니다. 오히려 기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 매칭해드립니다.</p>
-
-    <h2>다른 과목도 함께 준비하세요</h2>
+    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 ${gradeObj.label} ${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>${schools}</strong></p>
+    <h2>${dong} ${grade} ${subject}과외 특징</h2>
+    <p><strong>학교 기출 분석</strong>: ${schools} 시험 출제 경향 집중 분석</p>
+    <p><strong>검증된 선생님</strong>: 학력·경력·수업 시연 3단계 검증 완료</p>
+    <p><strong>주간 학습 보고서</strong>: 매주 학습 현황 학부모 공유</p>
+    <h2>${dong} ${subject}과외 실제 후기</h2>
+    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic">"${review1}"</blockquote>
+    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic">"${review2}"</blockquote>
+    <h2>${dong} 다른 과목도 함께</h2>
     <div class="subj-grid">${otherSubjects}</div>
-
-    <div class="keyword-box">
-      <div class="keyword-title">🔍 관련 검색 키워드</div>
-      <div class="keyword-tags">${keywordTags}</div>
-    </div>
+    <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags">${keywordTags}</div></div>
   </div>
-
   <div class="cta-box">
     <h3>${dong} ${grade} ${subject}과외 무료 상담</h3>
-    <p>지금 상담 신청 시 전문 코디네이터가 24시간 내 최적의 선생님을 연결해드립니다</p>
+    <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
       <a class="btn-o" href="/contact">✉️ 문의하기</a>
     </div>
   </div>
-
-  <div class="related-title">🔗 강남구 인근 동 ${subject}과외</div>
-  <div class="related-grid">${otherDongs}</div>
+  <div class="related-title">🔗 ${gu} 다른 동 ${subject}과외</div>
+  <div class="related-grid">${relDongs}</div>
 </div>`;
 
-  return wrap(title, desc, canonical, body, bcDong);
+  return wrap(title, desc, canonical, body, bc);
 }
 
 // ── 강남구 페이지 ──────────────────────────────────────────
 
 function makeGangnamPage() {
-  const gradeLinks = Object.keys(GRADES).map(g =>
-    `<a href="/seoul/gangnam/${GRADE_EN[g]||g}" class="tag" style="font-size:14px;padding:10px 20px">${g}</a>`
-  ).join('');
+  const dongCards = Object.entries(DONG_DB)
+    .filter(([k,v]) => v[1] === '강남구')
+    .map(([k,v]) => `<a href="/seoul/gangnam/${k}/high1/math" class="rel-card"><div class="rc-tag">강남구 · ${v[2]}</div><div class="rc-title">${v[2]} 과외 | 강남구 ${v[2]} 맞춤 1:1 과외</div></a>`)
+    .join('');
 
-  const dongCards = GANGNAM_DONGS.map(dong =>
-    `<a href="/seoul/gangnam/${DONG_EN[dong]||dong}/high/math" class="rel-card"><div class="rc-tag">강남구 · ${dong}</div><div class="rc-title">${dong} 과외 | 강남구 ${dong} 맞춤 1:1 과외</div></a>`
-  ).join('');
+  const gradeLinks = ['elem1','elem2','elem3','elem4','elem5','elem6','mid1','mid2','mid3','high1','high2','high3']
+    .map(g => `<a href="/seoul/gangnam/daichi/${g}/math" class="tag" style="font-size:14px;padding:10px 20px">${GRADE_MAP[g]}</a>`)
+    .join('');
 
-  const subjLinks = Object.entries(SUBJECTS).map(([s, v]) =>
-    `<a class="subj-link" href="/seoul/gangnam/daichi/high/${SUBJECT_EN[s]||s}"><span>${v.emoji} 강남구 고등 ${s}과외</span><span>→</span></a>`
-  ).join('');
+  const subjLinks = Object.entries(SUBJECTS)
+    .map(([s,v]) => `<a class="subj-link" href="/seoul/gangnam/daichi/high1/${SUBJECT_EN[s]||s}"><span>${v.emoji} 강남구 고1 ${s}과외</span><span>→</span></a>`)
+    .join('');
 
   const title = '강남구 과외 | 서울 강남구 대치동·압구정·역삼 맞춤 1:1 과외 - 올케어스터디';
-  const desc = '강남구 과외 전문. 대치동, 압구정동, 역삼동, 청담동 등 강남구 전 지역 검증된 선생님. 수학, 영어, 국어, 과학 내신·수능 완벽 대비. 무료 상담 010-6834-8080';
+  const desc = '강남구 과외 전문. 초1~고3 전 학년 수학·영어·국어·과학 1:1 방문 과외. 기출 분석 검증 선생님. 무료 상담 010-6834-8080';
+  const bc = [{name:'홈',url:'/'},{name:'서울특별시',url:'/seoul'},{name:'강남구',url:'/seoul/gangnam'}];
 
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <a href="/seoul">서울특별시</a> › <span>강남구</span></div>
-
   <div class="art-tag">🏙 서울 · 강남구</div>
   <h1 class="art-title">강남구 과외 | 대치동·압구정·역삼 맞춤 1:1 과외</h1>
-  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 3분</span></div>
-
+  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
   <div class="info-box">
     <div class="info-item"><div class="info-num">247명</div><div class="info-label">등록 선생님</div></div>
     <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
     <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담 신청</div></div>
   </div>
-
-  <div style="width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative">
-    <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=900&q=80" alt="강남구 과외" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
-    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.65),transparent);display:flex;align-items:center;padding:32px">
-      <div style="color:white"><div style="font-size:13px;opacity:.7;margin-bottom:6px">서울특별시 · 강남구</div><div style="font-size:28px;font-weight:900">강남구 과외</div></div>
-    </div>
-  </div>
-
   <div class="art-body">
-    <h2>강남구 과외 안내</h2>
-    <p>강남구는 대한민국 최고의 교육 특구입니다. 대치동 학원가를 중심으로 전국 최고 수준의 교육 인프라가 갖춰져 있으며, 내신 시험 난이도도 전국 최상위권입니다. 올케어스터디는 강남구 전 지역에서 검증된 과외 선생님을 연결해드립니다.</p>
-
-    <h2>동별 과외 정보</h2>
+    <h2>강남구 동별 과외 안내</h2>
     <div class="related-grid">${dongCards}</div>
-
     <h2>학년별 과외 선택</h2>
-    <div class="tag-wrap"><div class="tag-label">🎓 학년 선택</div><div class="tags">${gradeLinks}</div></div>
-
-    <h2>과목별 과외 바로가기</h2>
+    <div class="tag-wrap"><div class="tag-label">🎓 학년</div><div class="tags">${gradeLinks}</div></div>
+    <h2>과목별 과외</h2>
     <div class="subj-grid">${subjLinks}</div>
   </div>
-
   <div class="cta-box">
     <h3>강남구 맞춤 과외 선생님 찾기</h3>
-    <p>지금 바로 무료 상담을 신청하시면 전문 코디네이터가 연결해드립니다</p>
+    <p>무료 상담 신청 시 전문 코디네이터가 연결해드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
       <a class="btn-o" href="/contact">✉️ 문의하기</a>
     </div>
   </div>
 </div>`;
-
-  const bcGangnam = [{name:'홈',url:'/'},{name:'서울특별시',url:'/seoul'},{name:'강남구',url:'/seoul/gangnam'}];
-  return wrap(title, desc, '/seoul/gangnam', body, bcGangnam);
+  return wrap(title, desc, '/seoul/gangnam', body, bc);
 }
 
 // ── 시도 페이지 ──────────────────────────────────────────
@@ -1456,9 +2326,9 @@ function makeAreaPage(rk, ak) {
   // 강남구는 전용 페이지
   if (rk === '서울' && ak === '강남구') return makeGangnamPage();
 
-  const distDongData = (DONG_DATA[rk] && DONG_DATA[rk][ak]) ? DONG_DATA[rk][ak] : null;
-  const distDesc = distDongData ? distDongData.desc : area.feature;
-  const heroImg = distDongData ? distDongData.hero : 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80';
+  const distDongData = null;
+  const distDesc = area.feature;
+  const heroImg = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80';
 
   const dongCards = (() => {
     if (distDongData && distDongData.dongs) {
@@ -3609,23 +4479,24 @@ function serveSitemap() {
     url('/contact', 'monthly', '0.6'),
   ];
 
-  // 강남구 동별 × 학년 × 과목
-  for (const dong of GANGNAM_DONGS) {
-    for (const grade of Object.keys(GRADES)) {
-      for (const subj of Object.keys(SUBJECTS)) {
-        urls.push(url(`/seoul/gangnam/${DONG_EN[dong]||dong}/${GRADE_EN[grade]||grade}/${SUBJECT_EN[subj]||subj}`, 'monthly', '0.8'));
+  // 전국 DONG_DB 동별 × 12학년 × 과목 (동적 생성 페이지)
+  const DONG_GRADES = ['elem1','elem2','elem3','elem4','elem5','elem6','mid1','mid2','mid3','high1','high2','high3'];
+  for (const [dongEn, data] of Object.entries(DONG_DB)) {
+    const [,, , , sidoEn, guEn] = data;
+    for (const gk of DONG_GRADES) {
+      for (const sk of Object.keys(SUBJECTS)) {
+        urls.push(url(`/${sidoEn}/${guEn}/${dongEn}/${gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.7'));
       }
     }
   }
 
-  // 전국 지역별
+  // 전국 시도·구군 페이지
   for (const [sido, r] of Object.entries(REGIONS)) {
     const sidoEn = SIDO_EN[sido]||sido;
     urls.push(url(`/${sidoEn}`, 'weekly', '0.7'));
     for (const ak of Object.keys(r.areas)) {
       const distEn = DISTRICT_EN[ak]||ak;
       urls.push(url(`/${sidoEn}/${distEn}`, 'weekly', '0.7'));
-      // 학년 × 과목 세부 URL
       for (const gk of Object.keys(GRADES)) {
         for (const sk of Object.keys(SUBJECTS)) {
           urls.push(url(`/${sidoEn}/${distEn}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.6'));
@@ -3634,7 +4505,77 @@ function serveSitemap() {
     }
   }
 
+  // sitemap 50,000개 제한 → 분할 반환
+  const CHUNK = 49000;
+  const idx = Math.floor((urls.length / CHUNK));
   return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join('')}</urlset>`,
+    { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
+}
+
+function serveSitemapIndex() {
+  const today = new Date().toISOString().slice(0,10);
+  // 동적으로 sitemap 분할
+  const CHUNK = 49000;
+  // 전체 URL 수 계산
+  const dongCount = Object.keys(DONG_DB).length;
+  const grades12 = ['elem1','elem2','elem3','elem4','elem5','elem6','mid1','mid2','mid3','high1','high2','high3'];
+  const dongUrls = dongCount * grades12.length * Object.keys(SUBJECTS).length;
+  const regionUrls = Object.values(REGIONS).reduce((a,r)=>a+Object.keys(r.areas).length,0) * Object.keys(GRADES).length * Object.keys(SUBJECTS).length;
+  const total = dongUrls + regionUrls + 100;
+  const chunks = Math.ceil(total / CHUNK);
+  
+  const sitemaps = Array.from({length: chunks}, (_,i) =>
+    `<sitemap><loc>https://allcarestudy.com/sitemap${i+1}.xml</loc><lastmod>${today}</lastmod></sitemap>`
+  ).join('');
+  
+  return new Response(`<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemaps}</sitemapindex>`,
+    { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
+}
+
+function serveSitemapChunk(chunkNum) {
+  const today = new Date().toISOString().slice(0,10);
+  const url = (loc, freq, pri) =>
+    `<url><loc>https://allcarestudy.com${loc}</loc><lastmod>${today}</lastmod><changefreq>${freq}</changefreq><priority>${pri}</priority></url>`;
+
+  const allUrls = [];
+  
+  // 정적 페이지
+  allUrls.push(url('/', 'daily', '1.0'));
+  allUrls.push(url('/academy/intro', 'monthly', '0.8'));
+  allUrls.push(url('/academy/all', 'weekly', '0.7'));
+  allUrls.push(url('/contact', 'monthly', '0.6'));
+
+  // DONG_DB 전국 동별 × 12학년 × 과목
+  const DONG_GRADES = ['elem1','elem2','elem3','elem4','elem5','elem6','mid1','mid2','mid3','high1','high2','high3'];
+  for (const [dongEn, data] of Object.entries(DONG_DB)) {
+    const [,, , , sidoEn, guEn] = data;
+    for (const gk of DONG_GRADES) {
+      for (const sk of Object.keys(SUBJECTS)) {
+        allUrls.push(url(`/${sidoEn}/${guEn}/${dongEn}/${gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.7'));
+      }
+    }
+  }
+
+  // 전국 시도·구군 페이지
+  for (const [sido, r] of Object.entries(REGIONS)) {
+    const sidoEn = SIDO_EN[sido]||sido;
+    allUrls.push(url(`/${sidoEn}`, 'weekly', '0.7'));
+    for (const ak of Object.keys(r.areas)) {
+      const distEn = DISTRICT_EN[ak]||ak;
+      allUrls.push(url(`/${sidoEn}/${distEn}`, 'weekly', '0.7'));
+      for (const gk of Object.keys(GRADES)) {
+        for (const sk of Object.keys(SUBJECTS)) {
+          allUrls.push(url(`/${sidoEn}/${distEn}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.6'));
+        }
+      }
+    }
+  }
+
+  const CHUNK = 49000;
+  const start = (chunkNum - 1) * CHUNK;
+  const chunk = allUrls.slice(start, start + CHUNK);
+  
+  return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${chunk.join('')}</urlset>`,
     { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 }
 
@@ -3747,7 +4688,11 @@ export default {
       }
     }
 
-    if (path === '/sitemap.xml') return serveSitemap();
+    if (path === '/sitemap.xml') return serveSitemapIndex();
+    if (path.match(/^\/sitemap\d+\.xml$/)) {
+      const n = parseInt(path.match(/\d+/)[0]);
+      return serveSitemapChunk(n);
+    }
     if (path === '/rss.xml' || path === '/feed' || path === '/feed.xml') return serveRSS();
 
     // 문의하기
@@ -3767,10 +4712,23 @@ export default {
 
     // 영문 URL 파싱
     // /seoul/gangnam/daichi/high/math (5단계 - 동 포함)
+    // /{sido}/{gu}/{dong}/{grade}/{subject} (5단계 - 전국 동별 페이지)
     if (parts.length === 5) {
+      const dongEn = parts[2];
+      const gradeEn = parts[3];
+      const subjectEn = parts[4];
+      // DONG_DB에 있는 동이면 동적 생성
+      if (DONG_DB[dongEn]) {
+        const page = makeDongPage(dongEn, subjectEn, gradeEn);
+        if (page) return new Response(page, { headers: h });
+      }
+      // 기존 강남구 동별 (학년×과목 5단계)
       const kr = toKr(parts[0], parts[1], parts[2], parts[3], parts[4]);
-      if (kr.sido === '서울' && kr.district === '강남구') {
-        const page = makeDongArticle(kr.dong, kr.grade, kr.subject);
+      if (kr.sido === '서울' && kr.district === '강남구' && kr.dong) {
+        const dongEn = DONG_EN[kr.dong] || kr.dong;
+        const gradeEn = GRADE_EN[kr.grade] || kr.grade;
+        const subjEn = SUBJECT_EN[kr.subject] || kr.subject;
+        const page = makeDongPage(dongEn, subjEn, gradeEn);
         if (page) return new Response(page, { headers: h });
       }
     }
