@@ -1122,6 +1122,16 @@ const DONG_DB_EXTRA = {
 
 // DONG_MAP/DONG_EN은 DONG_DB에서 자동 생성
 // 추가 전국 데이터 병합
+// 누락 시군구 추가
+Object.assign(DONG_DB, {
+  'ansong-dong':['경기','안성시','안성동','H','gyeonggi','anseong'],
+  'gongdo':['경기','안성시','공도읍','B','gyeonggi','anseong'],
+  'naeui':['경기','의왕시','내손동','B','gyeonggi','uiwang'],
+  'bugok-uw':['경기','의왕시','부곡동','H','gyeonggi','uiwang'],
+  'dongducheon-dong':['경기','동두천시','지행동','H','gyeonggi','dongducheon'],
+  'sengol':['경기','동두천시','생연동','D','gyeonggi','dongducheon'],
+  'gunwi-eup':['대구','군위군','군위읍','F','daegu','gunwi'],
+});
 Object.assign(DONG_DB, DONG_DB_EXTRA);
 
 const DONG_MAP = Object.fromEntries(Object.entries(DONG_DB).map(([k,v])=>[k,v[2]]));
@@ -1887,15 +1897,15 @@ const HEADER = `<header>
           <div class="mega-panel" id="region-grade">
             <div class="mega-rt">초등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="#">초등 1학년</a><a class="mega-btn" href="#">초등 2학년</a><a class="mega-btn" href="#">초등 3학년</a><a class="mega-btn" href="#">초등 4학년</a><a class="mega-btn" href="#">초등 5학년</a><a class="mega-btn" href="#">초등 6학년</a>
+              <a class="mega-btn" href="/seoul/gangnam/daichi/elem1/math">초등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem2/math">초등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem3/math">초등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem4/math">초등 4학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem5/math">초등 5학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem6/math">초등 6학년</a>
             </div>
             <div class="mega-rt">중학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="#">중학교 1학년</a><a class="mega-btn" href="#">중학교 2학년</a><a class="mega-btn" href="#">중학교 3학년</a>
+              <a class="mega-btn" href="/seoul/gangnam/daichi/mid1/math">중학교 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid2/math">중학교 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid3/math">중학교 3학년</a>
             </div>
             <div class="mega-rt">고등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="#">고등 1학년</a><a class="mega-btn" href="#">고등 2학년</a><a class="mega-btn" href="#">고등 3학년</a><a class="mega-btn" href="#">수능 준비</a>
+              <a class="mega-btn" href="/seoul/gangnam/daichi/high1/math">고등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high2/math">고등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">고등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">수능 준비</a>
             </div>
           </div>
           <div class="mega-panel" id="region-school">
@@ -1907,7 +1917,7 @@ const HEADER = `<header>
       </div>
       <div class="gi">
         <button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a><a href="#">코딩</a><a href="#">검정고시</a><a href="#">코칭 수업</a></div>
+        <div class="drop"><a href="/seoul/gangnam/daichi/high2/math">수학</a><a href="/seoul/gangnam/daichi/high2/english">영어</a><a href="/seoul/gangnam/daichi/high2/science">과학</a><a href="/seoul/gangnam/daichi/high2/korean">국어</a><a href="/seoul/gangnam/daichi/high2/social">사회</a><a href="/seoul/gangnam/daichi/high2/coding">코딩</a><a href="/seoul/gangnam/daichi/high2/math">검정고시</a><a href="/academy/all">코칭 수업</a></div>
       </div>
       <div class="gi">
         <button class="gb" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
@@ -1915,7 +1925,7 @@ const HEADER = `<header>
       </div>
       <div class="gi">
         <button class="gb">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a></div>
+        <div class="drop"><a href="/seoul/gangnam/daichi/high2/english">영어회화</a><a href="/seoul/gangnam/daichi/high2/english">중국어회화</a><a href="/seoul/gangnam/daichi/high2/english">일본어회화</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
@@ -1974,15 +1984,15 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
           <div class="mega-panel" id="region-grade">
             <div class="mega-rt">초등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="#">초등 1학년</a><a class="mega-btn" href="#">초등 2학년</a><a class="mega-btn" href="#">초등 3학년</a><a class="mega-btn" href="#">초등 4학년</a><a class="mega-btn" href="#">초등 5학년</a><a class="mega-btn" href="#">초등 6학년</a>
+              <a class="mega-btn" href="/seoul/gangnam/daichi/elem1/math">초등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem2/math">초등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem3/math">초등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem4/math">초등 4학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem5/math">초등 5학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem6/math">초등 6학년</a>
             </div>
             <div class="mega-rt">중학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="#">중학교 1학년</a><a class="mega-btn" href="#">중학교 2학년</a><a class="mega-btn" href="#">중학교 3학년</a>
+              <a class="mega-btn" href="/seoul/gangnam/daichi/mid1/math">중학교 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid2/math">중학교 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid3/math">중학교 3학년</a>
             </div>
             <div class="mega-rt">고등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="#">고등 1학년</a><a class="mega-btn" href="#">고등 2학년</a><a class="mega-btn" href="#">고등 3학년</a><a class="mega-btn" href="#">수능 준비</a>
+              <a class="mega-btn" href="/seoul/gangnam/daichi/high1/math">고등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high2/math">고등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">고등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">수능 준비</a>
             </div>
           </div>
           <div class="mega-panel" id="region-school">
@@ -1994,7 +2004,7 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
       </div>
       <div class="gi">
         <button class="gb" style="color:rgba(255,255,255,0.85)">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a><a href="#">코딩</a><a href="#">검정고시</a><a href="#">코칭 수업</a></div>
+        <div class="drop"><a href="/seoul/gangnam/daichi/high2/math">수학</a><a href="/seoul/gangnam/daichi/high2/english">영어</a><a href="/seoul/gangnam/daichi/high2/science">과학</a><a href="/seoul/gangnam/daichi/high2/korean">국어</a><a href="/seoul/gangnam/daichi/high2/social">사회</a><a href="/seoul/gangnam/daichi/high2/coding">코딩</a><a href="/seoul/gangnam/daichi/high2/math">검정고시</a><a href="/academy/all">코칭 수업</a></div>
       </div>
       <div class="gi">
         <button class="gb" style="color:rgba(255,255,255,0.85)" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
@@ -2002,7 +2012,7 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
       </div>
       <div class="gi">
         <button class="gb" style="color:rgba(255,255,255,0.85)">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a></div>
+        <div class="drop"><a href="/seoul/gangnam/daichi/high2/english">영어회화</a><a href="/seoul/gangnam/daichi/high2/english">중국어회화</a><a href="/seoul/gangnam/daichi/high2/english">일본어회화</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a>
@@ -2620,13 +2630,16 @@ function makeAreaPage(rk, ak) {
 </a>`;
       }).join('');
     }
-    return area.dongs.map(d => `<a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${d}/high/math" class="dong-card">
+    return area.dongs.map(d => {
+      const dongEnKey = DONG_EN[d] || d;
+      return `<a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${dongEnKey}/high2/math" class="dong-card">
   <div class="dong-card-body"><div class="dong-card-tag">${ak} · ${d}</div><div class="dong-card-title">${d} 과외</div><div class="dong-card-arrow">과외 보기 →</div></div>
-</a>`).join('');
+</a>`;
+    }).join('');
   })();
 
   const subjLinks = Object.entries(SUBJECTS).slice(0, 6).map(([s, v]) =>
-    `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/high/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} 고등 ${s}과외</span><span>→</span></a>`
+    `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/high2/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} ${s}과외</span><span>→</span></a>`
   ).join('');
   const relAreas = Object.keys(region.areas).filter(a => a !== ak).slice(0, 3)
     .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[a]||a}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} 과외 | ${a} 맞춤 과외</div></a>`).join('');
@@ -4251,15 +4264,15 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
           <div class="mega-panel" id="region-grade">
             <div class="mega-rt">초등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="#">초등 1학년</a><a class="mega-btn" href="#">초등 2학년</a><a class="mega-btn" href="#">초등 3학년</a><a class="mega-btn" href="#">초등 4학년</a><a class="mega-btn" href="#">초등 5학년</a><a class="mega-btn" href="#">초등 6학년</a>
+              <a class="mega-btn" href="/seoul/gangnam/daichi/elem1/math">초등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem2/math">초등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem3/math">초등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem4/math">초등 4학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem5/math">초등 5학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/elem6/math">초등 6학년</a>
             </div>
             <div class="mega-rt">중학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="#">중학교 1학년</a><a class="mega-btn" href="#">중학교 2학년</a><a class="mega-btn" href="#">중학교 3학년</a>
+              <a class="mega-btn" href="/seoul/gangnam/daichi/mid1/math">중학교 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid2/math">중학교 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/mid3/math">중학교 3학년</a>
             </div>
             <div class="mega-rt">고등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="#">고등 1학년</a><a class="mega-btn" href="#">고등 2학년</a><a class="mega-btn" href="#">고등 3학년</a><a class="mega-btn" href="#">수능 준비</a>
+              <a class="mega-btn" href="/seoul/gangnam/daichi/high1/math">고등 1학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high2/math">고등 2학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">고등 3학년</a><a class="mega-btn" href="/seoul/gangnam/daichi/high3/math">수능 준비</a>
             </div>
           </div>
           <!-- 학교별 -->
@@ -4273,7 +4286,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
       <!-- 과목수업 -->
       <div class="gi">
         <button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a><a href="#">코딩</a><a href="#">검정고시</a><a href="#">코칭 수업</a></div>
+        <div class="drop"><a href="/seoul/gangnam/daichi/high2/math">수학</a><a href="/seoul/gangnam/daichi/high2/english">영어</a><a href="/seoul/gangnam/daichi/high2/science">과학</a><a href="/seoul/gangnam/daichi/high2/korean">국어</a><a href="/seoul/gangnam/daichi/high2/social">사회</a><a href="/seoul/gangnam/daichi/high2/coding">코딩</a><a href="/seoul/gangnam/daichi/high2/math">검정고시</a><a href="/academy/all">코칭 수업</a></div>
       </div>
       <!-- 학원수업 - 바로 이동 -->
       <div class="gi">
@@ -4282,7 +4295,7 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
       <!-- 회화수업 -->
       <div class="gi">
         <button class="gb">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a></div>
+        <div class="drop"><a href="/seoul/gangnam/daichi/high2/english">영어회화</a><a href="/seoul/gangnam/daichi/high2/english">중국어회화</a><a href="/seoul/gangnam/daichi/high2/english">일본어회화</a></div>
       </div>
       <!-- 문의하기 -->
       <div class="gi">
@@ -5008,14 +5021,67 @@ export default {
         const page = makeDongPage(dongEn, subjectEn, gradeEn);
         if (page) return new Response(page, { headers: h });
       }
-      // 기존 강남구 동별 (학년×과목 5단계)
-      const kr = toKr(parts[0], parts[1], parts[2], parts[3], parts[4]);
-      if (kr.sido === '서울' && kr.district === '강남구' && kr.dong) {
-        const dongEn = DONG_EN[kr.dong] || kr.dong;
-        const gradeEn = GRADE_EN[kr.grade] || kr.grade;
-        const subjEn = SUBJECT_EN[kr.subject] || kr.subject;
-        const page = makeDongPage(dongEn, subjEn, gradeEn);
-        if (page) return new Response(page, { headers: h });
+      // DONG_DB에 없는 동(읍/면 등) → 구/군 기반 fallback 페이지 생성
+      const kr5 = toKr(parts[0], parts[1], null, parts[3], parts[4]);
+      if (kr5.sido && kr5.district) {
+        const dongName = DONG_MAP[dongEn] || dongEn;
+        const grade = GRADE_MAP[gradeEn] || gradeEn;
+        const subject = SUBJECT_MAP[subjectEn] || subjectEn;
+        const region = REGIONS[kr5.sido];
+        const area = region?.areas[kr5.district];
+        const gradeObj = GRADES[grade];
+        const subj = SUBJECTS[subject];
+        if (area && gradeObj && subj) {
+          const sidoEn = SIDO_EN[kr5.sido]||kr5.sido;
+          const distEn = DISTRICT_EN[kr5.district]||kr5.district;
+          const canonical = \`/\${sidoEn}/\${distEn}/\${dongEn}/\${gradeEn}/\${subjectEn}\`;
+          const title = \`\${dongName} \${grade} \${subject}과외 | \${kr5.district} \${dongName} \${gradeObj.label} \${subject} 1:1 맞춤 과외 - 올케어스터디\`;
+          const desc = \`\${dongName} \${grade} \${subject}과외 전문. \${area.schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080\`;
+          const bc = [{name:'홈',url:'/'},{name:region.label,url:\`/\${sidoEn}\`},{name:kr5.district,url:\`/\${sidoEn}/\${distEn}\`},{name:\`\${dongName} \${subject}과외\`,url:canonical}];
+          const schools = area.schools || \`\${kr5.district} 주요 학교\`;
+          const tmpl = CATEGORY_TEMPLATES['H'];
+          const subjectKey = subject === '수학' ? 'math' : subject === '영어' ? 'english' : 'math';
+          const mainText = (tmpl[subjectKey]||tmpl.math)[0]
+            .replace(/\{dong\}/g,dongName).replace(/\{gu\}/g,kr5.district)
+            .replace(/\{sido\}/g,kr5.sido).replace(/\{subject\}/g,subject)
+            .replace(/\{grade\}/g,grade).replace(/\{schools\}/g,schools);
+          const review = tmpl.reviews[0].replace(/\{dong\}/g,dongName).replace(/\{schools\}/g,schools).replace(/\{gu\}/g,kr5.district);
+          const body = \`<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/\${sidoEn}">\${region.label}</a> › <a href="/\${sidoEn}/\${distEn}">\${kr5.district}</a> › <span>\${dongName} \${grade} \${subject}과외</span></div>
+  <div class="art-tag">\${subj.emoji} \${kr5.district} · \${dongName} · \${grade} · \${subject}</div>
+  <h1 class="art-title">\${dongName} \${grade} \${subject}과외 | \${kr5.district} \${dongName} \${gradeObj.label} \${subject} 맞춤 1:1 과외</h1>
+  <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 \${today()}</span><span>⏱ 4분</span></div>
+  <div class="info-box">
+    <div class="info-item"><div class="info-num">247명</div><div class="info-label">\${subject} 선생님</div></div>
+    <div class="info-item"><div class="info-num">98%</div><div class="info-label">만족도</div></div>
+    <div class="info-item"><div class="info-num">무료</div><div class="info-label">상담</div></div>
+  </div>
+  <div class="art-body">
+    <h2>\${dongName} \${grade} \${subject}과외 안내</h2>
+    <p>\${mainText}</p>
+    <p>\${kr5.district} \${dongName} 지역 \${gradeObj.label} \${subject} 검증된 선생님을 연결해드립니다. 주요 학교: <strong>\${schools}</strong></p>
+    <h2>\${dongName} \${subject}과외 특징</h2>
+    <p><strong>학교 기출 분석</strong>: \${schools} 시험 출제 경향 집중 분석</p>
+    <p><strong>검증된 선생님</strong>: 학력·경력·수업 시연 3단계 검증 완료</p>
+    <p><strong>주간 학습 보고서</strong>: 매주 학습 현황 학부모 공유</p>
+    <p><strong>취약점 집중 보완</strong>: \${subject} 취약 단원 정확히 파악해 집중 보완</p>
+    <h2>\${dongName} \${subject}과외 실제 후기</h2>
+    <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic">"\${review}"</blockquote>
+    <h2>자주 묻는 질문</h2>
+    <p><strong>Q. \${dongName}에서 \${subject} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. \${schools} 기출을 잘 아는 선생님 위주로 추천합니다.</p>
+    <p><strong>Q. \${grade} \${subject} 성적이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다.</p>
+  </div>
+  <div class="cta-box">
+    <h3>\${dongName} \${grade} \${subject}과외 무료 상담</h3>
+    <p>24시간 내 전문 코디네이터가 연락드립니다</p>
+    <div class="cta-btns">
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-o" href="/contact">✉️ 문의하기</a>
+    </div>
+  </div>
+</div>\`;
+          return new Response(wrap(title, desc, canonical, body, bc), { headers: h });
+        }
       }
     }
 
