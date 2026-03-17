@@ -3902,75 +3902,75 @@ function serveSitemap() {
 
 function serveSitemapIndex() {
   const today = new Date().toISOString().slice(0,10);
-  const CHUNK = 49000;
-  // REGIONS 기반 정확한 URL 수 계산
-  let total = 4; // 정적 페이지
+  const CHUNK = 5000;
+  let total = 4;
   for (const [sido, reg] of Object.entries(REGIONS)) {
-    total++; // 시도 페이지
+    total++;
     for (const [ak, area] of Object.entries(reg.areas)) {
-      total++; // 구군 페이지
+      total++;
       const dongs = area.dongs || [];
       for (const dong of dongs) {
-        total++; // 동 메인 페이지
-        total += 3 * Object.keys(SUBJECTS).length; // 동 상세: 3학년 × 7과목
+        total++;
+        total += 3 * Object.keys(SUBJECTS).length;
       }
     }
   }
   const chunks = Math.ceil(total / CHUNK);
-  
   const sitemaps = Array.from({length: chunks}, (_,i) =>
     `<sitemap><loc>https://allcarestudy.com/sitemap${i+1}.xml</loc><lastmod>${today}</lastmod></sitemap>`
   ).join('');
-  
   return new Response(`<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemaps}</sitemapindex>`,
-    { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
+    { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=86400' } });
 }
 
 function serveSitemapChunk(chunkNum) {
+  // 구군 목록 (시도별로 처리)
   const today = new Date().toISOString().slice(0,10);
-  const url = (loc, freq, pri) =>
-    `<url><loc>https://allcarestudy.com${loc}</loc><lastmod>${today}</lastmod><changefreq>${freq}</changefreq><priority>${pri}</priority></url>`;
-
-  const allUrls = [];
-  
-  // 정적 페이지
-  allUrls.push(url('/', 'daily', '1.0'));
-  allUrls.push(url('/academy/intro', 'monthly', '0.8'));
-  allUrls.push(url('/academy/all', 'weekly', '0.7'));
-  allUrls.push(url('/contact', 'monthly', '0.6'));
-
+  const CHUNK = 5000;
   const DONG_GRADES = ['elementary','middle','high'];
-
+  const subjKeys = Object.keys(SUBJECTS);
+  
+  // URL을 인덱스 기반으로 직접 계산 (배열 없이)
+  const parts = [];
+  let idx = 0;
+  
+  // 정적 4개
+  const statics = ['/', '/academy/intro', '/academy/all', '/contact'];
+  const freqs = ['daily','monthly','weekly','monthly'];
+  const pris = ['1.0','0.8','0.7','0.6'];
+  for(let i=0;i<statics.length;i++){
+    parts.push(`<url><loc>https://allcarestudy.com${statics[i]}</loc><lastmod>${today}</lastmod><changefreq>${freqs[i]}</changefreq><priority>${pris[i]}</priority></url>`);
+    idx++;
+  }
+  
   for (const [sido, reg] of Object.entries(REGIONS)) {
-    const sidoEn = SIDO_EN[sido]||sido;
-    // 시도 페이지
-    allUrls.push(url(`/${sidoEn}`, 'weekly', '0.8'));
-
+    const se = SIDO_EN[sido]||sido;
+    parts.push(`<url><loc>https://allcarestudy.com/${se}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
+    idx++;
     for (const [ak, area] of Object.entries(reg.areas)) {
-      const guEn = DISTRICT_EN[ak]||ak;
-      // 구군 페이지
-      allUrls.push(url(`/${sidoEn}/${guEn}`, 'weekly', '0.7'));
-
+      const ge = DISTRICT_EN[ak]||ak;
+      parts.push(`<url><loc>https://allcarestudy.com/${se}/${ge}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>`);
+      idx++;
       for (const dong of (area.dongs||[])) {
-        const dongRoman = toRoman(dong);
-        // 동 메인 페이지
-        allUrls.push(url(`/${sidoEn}/${guEn}/${dongRoman}`, 'weekly', '0.8'));
-        // 동 상세: 3학년 × 7과목
+        const dr = toRoman(dong);
+        parts.push(`<url><loc>https://allcarestudy.com/${se}/${ge}/${dr}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
+        idx++;
         for (const gk of DONG_GRADES) {
-          for (const sk of Object.keys(SUBJECTS)) {
-            allUrls.push(url(`/${sidoEn}/${guEn}/${dongRoman}/${gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.7'));
+          for (const sk of subjKeys) {
+            parts.push(`<url><loc>https://allcarestudy.com/${se}/${ge}/${dr}/${gk}/${SUBJECT_EN[sk]||sk}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`);
+            idx++;
           }
         }
       }
     }
   }
-
-  const CHUNK = 49000;
+  
   const start = (chunkNum - 1) * CHUNK;
-  const chunk = allUrls.slice(start, start + CHUNK);
+  const chunk = parts.slice(start, start + CHUNK);
+  if(chunk.length === 0) return null;
   
   return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${chunk.join('')}</urlset>`,
-    { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
+    { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=86400' } });
 }
 
 // ── RSS 피드 ──────────────────────────────────────────────
