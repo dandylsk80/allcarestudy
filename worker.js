@@ -3902,76 +3902,87 @@ function serveSitemap() {
 
 function serveSitemapIndex() {
   const today = new Date().toISOString().slice(0,10);
-  const CHUNK = 5000;
-  let total = 4;
-  for (const [sido, reg] of Object.entries(REGIONS)) {
-    total++;
-    for (const [ak, area] of Object.entries(reg.areas)) {
-      total++;
-      const dongs = area.dongs || [];
-      for (const dong of dongs) {
-        total++;
-        total += 3 * Object.keys(SUBJECTS).length;
-      }
-    }
-  }
-  const chunks = Math.ceil(total / CHUNK);
-  const sitemaps = Array.from({length: chunks}, (_,i) =>
-    `<sitemap><loc>https://allcarestudy.com/sitemap${i+1}.xml</loc><lastmod>${today}</lastmod></sitemap>`
-  ).join('');
-  return new Response(`<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemaps}</sitemapindex>`,
-    { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=86400' } });
+  // 시도별 sitemap + 정적 sitemap
+  const LARGE_SIDO = ['seoul','gyeonggi','gyeongbuk','jeonnam','jeonbuk','gyeongnam','gyeonggi']; // 8,000개 이상 → 2분할
+  const sidoList = Object.keys(REGIONS).map(s => SIDO_EN[s]||s);
+  const sitemapEntries = [
+    `<sitemap><loc>https://allcarestudy.com/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>`,
+    ...sidoList.flatMap(se =>
+      LARGE_SIDO.includes(se)
+        ? [`<sitemap><loc>https://allcarestudy.com/sitemap-${se}-1.xml</loc><lastmod>${today}</lastmod></sitemap>`,
+           `<sitemap><loc>https://allcarestudy.com/sitemap-${se}-2.xml</loc><lastmod>${today}</lastmod></sitemap>`]
+        : [`<sitemap><loc>https://allcarestudy.com/sitemap-${se}.xml</loc><lastmod>${today}</lastmod></sitemap>`]
+    )
+  ];
+  const sitemaps = sitemapEntries.join('');
+  return new Response(
+    `<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemaps}</sitemapindex>`,
+    { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' } }
+  );
 }
 
-function serveSitemapChunk(chunkNum) {
-  // 구군 목록 (시도별로 처리)
+function serveSitemapByKey(key) {
+  // key: sido 영문키 or 'static'
   const today = new Date().toISOString().slice(0,10);
-  const CHUNK = 5000;
-  const DONG_GRADES = ['elementary','middle','high'];
-  const subjKeys = Object.keys(SUBJECTS);
+  const u = (loc) => `<url><loc>https://allcarestudy.com${loc}</loc><lastmod>${today}</lastmod><changefreq>${loc.split('/').filter(Boolean).length<=2?'weekly':'monthly'}</changefreq><priority>${loc.split('/').filter(Boolean).length<=2?'0.8':loc.split('/').filter(Boolean).length===3?'0.8':'0.7'}</priority></url>`;
   
-  // URL을 인덱스 기반으로 직접 계산 (배열 없이)
   const parts = [];
-  let idx = 0;
   
-  // 정적 4개
-  const statics = ['/', '/academy/intro', '/academy/all', '/contact'];
-  const freqs = ['daily','monthly','weekly','monthly'];
-  const pris = ['1.0','0.8','0.7','0.6'];
-  for(let i=0;i<statics.length;i++){
-    parts.push(`<url><loc>https://allcarestudy.com${statics[i]}</loc><lastmod>${today}</lastmod><changefreq>${freqs[i]}</changefreq><priority>${pris[i]}</priority></url>`);
-    idx++;
-  }
-  
-  for (const [sido, reg] of Object.entries(REGIONS)) {
-    const se = SIDO_EN[sido]||sido;
-    parts.push(`<url><loc>https://allcarestudy.com/${se}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
-    idx++;
-    for (const [ak, area] of Object.entries(reg.areas)) {
+  if(key === 'static'){
+    parts.push(u('/'));
+    parts.push(u('/academy/intro'));
+    parts.push(u('/academy/all'));
+    parts.push(u('/contact'));
+  } else {
+    // key 파싱: sido 영문키 (예: seoul, gyeonggi-1, gyeonggi-2)
+    const baseKey = key.replace(/-[12]$/, '');
+    const part = key.endsWith('-1') ? 1 : key.endsWith('-2') ? 2 : 0; // 0=전체
+    
+    let targetSido = null;
+    for(const [sido] of Object.entries(REGIONS)){
+      if((SIDO_EN[sido]||sido) === baseKey){ targetSido = sido; break; }
+    }
+    if(!targetSido) return null;
+    
+    const reg = REGIONS[targetSido];
+    const se = baseKey;
+    const GRADES3 = ['elementary','middle','high'];
+    const subjKeys = Object.keys(SUBJECTS);
+    const areaEntries = Object.entries(reg.areas);
+    
+    // 분할 필요한 시도(서울/경기): part=1→전반, part=2→후반
+    const half = Math.ceil(areaEntries.length / 2);
+    const targetEntries = part === 1 ? areaEntries.slice(0, half)
+                        : part === 2 ? areaEntries.slice(half)
+                        : areaEntries;
+    
+    if(part === 0 || part === 1) parts.push(u(`/${se}`));
+    for(const [ak,area] of targetEntries){
       const ge = DISTRICT_EN[ak]||ak;
-      parts.push(`<url><loc>https://allcarestudy.com/${se}/${ge}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>`);
-      idx++;
-      for (const dong of (area.dongs||[])) {
+      parts.push(u(`/${se}/${ge}`));
+      for(const dong of (area.dongs||[])){
         const dr = toRoman(dong);
-        parts.push(`<url><loc>https://allcarestudy.com/${se}/${ge}/${dr}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
-        idx++;
-        for (const gk of DONG_GRADES) {
-          for (const sk of subjKeys) {
-            parts.push(`<url><loc>https://allcarestudy.com/${se}/${ge}/${dr}/${gk}/${SUBJECT_EN[sk]||sk}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`);
-            idx++;
+        parts.push(u(`/${se}/${ge}/${dr}`));
+        for(const g of GRADES3){
+          for(const sk of subjKeys){
+            parts.push(u(`/${se}/${ge}/${dr}/${g}/${SUBJECT_EN[sk]||sk}`));
           }
         }
       }
     }
   }
   
-  const start = (chunkNum - 1) * CHUNK;
-  const chunk = parts.slice(start, start + CHUNK);
-  if(chunk.length === 0) return null;
-  
-  return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${chunk.join('')}</urlset>`,
-    { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=86400' } });
+  return new Response(
+    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${parts.join('')}</urlset>`,
+    { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=86400' } }
+  );
 }
+
+function serveSitemapChunk(chunkNum) {
+  // 하위 호환성 유지
+  return serveSitemapByKey('static');
+}
+
 
 // ── RSS 피드 ──────────────────────────────────────────────
 
@@ -4094,6 +4105,13 @@ export default {
     }
 
     if (path === '/sitemap.xml') return serveSitemapIndex();
+    // 시도별 sitemap: /sitemap-seoul.xml, /sitemap-static.xml 등
+    const sitemapMatch = path.match(/^\/sitemap-([a-z0-9_-]+)\.xml$/);
+    if (sitemapMatch) {
+      const result = serveSitemapByKey(sitemapMatch[1]);
+      if (result) return result;
+    }
+    // 하위 호환: /sitemap1.xml ~ /sitemap27.xml
     if (path.match(/^\/sitemap\d+\.xml$/)) {
       const n = parseInt(path.match(/\d+/)[0]);
       return serveSitemapChunk(n);
