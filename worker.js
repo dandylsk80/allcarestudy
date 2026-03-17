@@ -1008,10 +1008,23 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
 </footer>
 <div class="floats" id="float-btns">
   <a class="fbtn fb1" href="tel:01068348080">📞 전화상담</a>
-  <a class="fbtn fb2" href="/contact">✉️ 문의하기</a>
+  <a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring">✉️ 상담하기</a>
 </div>
 <script>
 (function(){
+  // 현재 URL 기준으로 상담 타입 자동 결정
+  var path = window.location.pathname;
+  var isAcademy = path.indexOf('/academy') === 0;
+  var btn = document.getElementById('float-contact-btn');
+  if(btn){
+    if(isAcademy){
+      btn.href = '/contact?type=academy';
+      btn.textContent = '🏫 학원 상담하기';
+    } else {
+      btn.href = '/contact?type=tutoring';
+      btn.textContent = '👨‍🏫 과외 상담하기';
+    }
+  }
   var el = document.getElementById('float-btns');
   var footer = document.querySelector('footer');
   if(!el || !footer) return;
@@ -1403,7 +1416,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="/contact">✉️ 문의하기</a>
+      <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
 </div>`;
@@ -1629,7 +1642,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="/contact">✉️ 문의하기</a>
+      <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
   <div class="related-title">🔗 ${gu} 다른 동 ${subject}과외</div>
@@ -1707,7 +1720,7 @@ function makeSidoPage(rk) {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px">
         <a href="tel:01068348080" style="background:#3B82F6;color:white;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap">📞 전화 상담</a>
-        <a href="/contact" style="background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;text-align:center">✉️ 문의하기</a>
+        <a href="/contact?type=tutoring" style="background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;text-align:center">✉️ 과외 상담하기</a>
       </div>
     </div>
   </div>
@@ -1816,7 +1829,7 @@ function makeAreaPage(rk, ak) {
     <p>무료 상담을 신청하시면 전문 코디네이터가 연결해드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="/contact">✉️ 문의하기</a>
+      <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
   <div class="related-title">🔗 주변 지역 과외</div>
@@ -1892,7 +1905,7 @@ function makeArticlePage(rk, ak, gk, sk) {
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
-      <a class="btn-o" href="/contact">✉️ 문의하기</a>
+      <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
   <div class="related-title">🔗 ${region.label} 다른 지역 ${sk}과외</div>
@@ -2240,7 +2253,7 @@ function mslideMove(sid, dir) {
     <p class="hero-desc">전국 200여 개 직영센터, 15년의 노하우. 올케어스터디가 검증한 학습코칭 시스템을 소개합니다.</p>
     <div class="hero-btns">
       <a href="/academy/all" class="btn-white">📍 센터 찾기</a>
-      <a href="/contact" class="btn-outline">✉️ 무료 상담</a>
+      <a href="/contact?type=academy" class="btn-outline">✉️ 학원 상담 신청</a>
     </div>
   </div>
 </section>
@@ -2553,7 +2566,7 @@ function mslideMove(sid, dir) {
   <p class="cta-sub">전국 200여 개 직영센터에서 전문 코치와 1:1 학습 상담을 진행합니다.</p>
   <div class="cta-btns">
     <a href="/academy/all" class="btn-white">📍 센터 찾기</a>
-    <a href="/contact" class="btn-outline">✉️ 온라인 문의</a>
+    <a href="/contact?type=academy" class="btn-outline">✉️ 학원 문의하기</a>
   </div>
 </section>`;
 
@@ -2723,7 +2736,7 @@ function makeAcademyPage() {
           \${c.target_high?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#EFF6FF;color:#2563EB;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.target_high+'</span></div>':''}
           \${!c.target_elem&&!c.target_mid&&!c.target_high?'<div style="font-size:11px;color:#D1D5DB">대상학교 정보 없음</div>':''}
         </div>
-        <button onclick="location.href='/contact?center='+encodeURIComponent('\${cname}')" style="display:block;width:100%;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;margin-top:14px;border:none;cursor:pointer;font-family:inherit">✉️ 문의하기</button>
+        <button onclick="location.href='/contact?type=academy&center='+encodeURIComponent('\${cname}')" style="display:block;width:100%;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;margin-top:14px;border:none;cursor:pointer;font-family:inherit">✉️ 문의하기</button>
       </div>\`;
     }).join('') : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#9CA3AF">해당 지역 센터가 없습니다</div>';
   }
@@ -2995,6 +3008,17 @@ function makeContactPage() {
     }).catch(()=>{btn.disabled=false;btn.textContent='✉️ 문의 제출하기';btn.style.opacity='1';showErr('네트워크 오류가 발생했습니다.');});
   }
   function showErr(msg){var el=document.getElementById('cf-error');el.textContent='⚠️ '+msg;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('cf-submit').disabled=false;document.getElementById('cf-submit').textContent='✉️ 문의 제출하기';document.getElementById('cf-submit').style.opacity='1';}
+  // URL 파라미터로 자동 탭 전환: ?type=tutoring → 과외 상담, ?type=academy → 학원 상담
+  (function(){
+    var params = new URLSearchParams(window.location.search);
+    var type = params.get('type');
+    var center = params.get('center');
+    if(type === 'tutoring') cfSwitchType('tutoring');
+    else if(type === 'academy') { cfSwitchType('academy'); }
+    else cfSwitchType('tutoring'); // 기본값: 과외 상담 (과외 페이지에서 대부분 유입)
+    // center 파라미터 자동 입력
+    if(center){ var ci=document.getElementById('cf-center'); if(ci) ci.value=decodeURIComponent(center); }
+  })();
   </script>`;
   const bcContact = [{name:'홈',url:'/'},{name:'문의하기',url:'/contact'}];
   return wrap('문의하기 | 올케어스터디 과외 상담', '올케어스터디 과외 무료 상담 신청. 수학·영어·국어·과학 초등·중등·고등 1:1 방문 과외. 010-6834-8080', '/contact', body, bcContact);
@@ -3836,10 +3860,23 @@ function switchFind(tab){
 
 <div class="floats" id="floats">
   <a class="fbtn fb1" href="tel:01068348080">📞 전화상담</a>
-  <a class="fbtn fb2" href="/contact">✉️ 문의하기</a>
+  <a class="fbtn fb2" id="floats-contact-btn" href="/contact?type=tutoring">👨‍🏫 과외 상담하기</a>
 </div>
 <script>
 (function(){
+  // 현재 URL 기준으로 상담 타입 자동 결정
+  var path = window.location.pathname;
+  var isAcademy = path.indexOf('/academy') === 0;
+  var btn = document.getElementById('floats-contact-btn');
+  if(btn){
+    if(isAcademy){
+      btn.href = '/contact?type=academy';
+      btn.textContent = '🏫 학원 상담하기';
+    } else {
+      btn.href = '/contact?type=tutoring';
+      btn.textContent = '👨‍🏫 과외 상담하기';
+    }
+  }
   var floats = document.getElementById('floats');
   var footer = document.querySelector('footer');
   function adjustFloats(){
@@ -4214,7 +4251,7 @@ export default {
 <h1 class="art-title">${ak} ${gk} 과외 | 과목 선택</h1>
 <div class="art-body"><h2>과목을 선택하세요</h2><div class="subj-grid">${subjLinks}</div></div>
 <div class="cta-box"><h3>${ak} ${gk} 맞춤 과외</h3><p>무료 상담 신청</p>
-<div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact">✉️ 문의하기</a></div></div>
+<div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
 </div>`;
         const canon = `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${GRADE_EN[gk]||gk}`;
         const bc3 = [{name:'홈',url:'/'},{name:region.label,url:`/${SIDO_EN[rk]||rk}`},{name:ak,url:`/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`},{name:`${gk} 과외`,url:canon}];
