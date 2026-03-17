@@ -3902,14 +3902,20 @@ function serveSitemap() {
 
 function serveSitemapIndex() {
   const today = new Date().toISOString().slice(0,10);
-  // 동적으로 sitemap 분할
   const CHUNK = 49000;
-  // 전체 URL 수 계산
-  const dongCount = Object.keys(DONG_DB).length;
-  const grades12 = ['elem1','elem2','elem3','elem4','elem5','elem6','mid1','mid2','mid3','high1','high2','high3'];
-  const dongUrls = dongCount * grades12.length * Object.keys(SUBJECTS).length;
-  const regionUrls = Object.values(REGIONS).reduce((a,r)=>a+Object.keys(r.areas).length,0) * Object.keys(GRADES).length * Object.keys(SUBJECTS).length;
-  const total = dongUrls + regionUrls + 100;
+  // REGIONS 기반 정확한 URL 수 계산
+  let total = 4; // 정적 페이지
+  for (const [sido, reg] of Object.entries(REGIONS)) {
+    total++; // 시도 페이지
+    for (const [ak, area] of Object.entries(reg.areas)) {
+      total++; // 구군 페이지
+      const dongs = area.dongs || [];
+      for (const dong of dongs) {
+        total++; // 동 메인 페이지
+        total += 3 * Object.keys(SUBJECTS).length; // 동 상세: 3학년 × 7과목
+      }
+    }
+  }
   const chunks = Math.ceil(total / CHUNK);
   
   const sitemaps = Array.from({length: chunks}, (_,i) =>
@@ -3933,33 +3939,27 @@ function serveSitemapChunk(chunkNum) {
   allUrls.push(url('/academy/all', 'weekly', '0.7'));
   allUrls.push(url('/contact', 'monthly', '0.6'));
 
-  // REGIONS 전국 동별 × 12학년 × 과목 (한글 URL)
   const DONG_GRADES = ['elementary','middle','high'];
+
   for (const [sido, reg] of Object.entries(REGIONS)) {
     const sidoEn = SIDO_EN[sido]||sido;
+    // 시도 페이지
+    allUrls.push(url(`/${sidoEn}`, 'weekly', '0.8'));
+
     for (const [ak, area] of Object.entries(reg.areas)) {
       const guEn = DISTRICT_EN[ak]||ak;
+      // 구군 페이지
+      allUrls.push(url(`/${sidoEn}/${guEn}`, 'weekly', '0.7'));
+
       for (const dong of (area.dongs||[])) {
-        const dongEnc = toRoman(dong);
+        const dongRoman = toRoman(dong);
+        // 동 메인 페이지
+        allUrls.push(url(`/${sidoEn}/${guEn}/${dongRoman}`, 'weekly', '0.8'));
+        // 동 상세: 3학년 × 7과목
         for (const gk of DONG_GRADES) {
           for (const sk of Object.keys(SUBJECTS)) {
-            allUrls.push(url(`/${sidoEn}/${guEn}/${dongEnc}/${gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.7'));
+            allUrls.push(url(`/${sidoEn}/${guEn}/${dongRoman}/${gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.7'));
           }
-        }
-      }
-    }
-  }
-
-  // 전국 시도·구군 페이지
-  for (const [sido, r] of Object.entries(REGIONS)) {
-    const sidoEn = SIDO_EN[sido]||sido;
-    allUrls.push(url(`/${sidoEn}`, 'weekly', '0.7'));
-    for (const ak of Object.keys(r.areas)) {
-      const distEn = DISTRICT_EN[ak]||ak;
-      allUrls.push(url(`/${sidoEn}/${distEn}`, 'weekly', '0.7'));
-      for (const gk of Object.keys(GRADES)) {
-        for (const sk of Object.keys(SUBJECTS)) {
-          allUrls.push(url(`/${sidoEn}/${distEn}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[sk]||sk}`, 'monthly', '0.6'));
         }
       }
     }
