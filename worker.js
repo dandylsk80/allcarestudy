@@ -164,229 +164,16 @@ const GANGNAM_DONGS = [
   '청담동','율현동'
 ];
 
-const CENTERS = [
-{"name": "하남풍산점", "officialName": "하남풍산점와와학습코칭학원", "regNo": "경기도광주하남교육지원청 제 하남314호", "sido": "경기", "sido_en": "gyeonggi", "district": "하남시", "address": "경기 하남시 덕풍동로 119  하남프라자 501호 와와학습코칭학원", "directions": "경기도 하남시 덕풍동로119 하남프라자501호 \n 스타벅스 맞은편 건물입니다\n 주차 1시간 가능합니다", "target_elem": "나룰초, 하남풍산초", "target_mid": "덕풍중, 신평중, 동부중", "target_high": "풍산고, 남한고, 신장고, 감일고, 미사고, 애니고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "사동점", "officialName": "사동점와와학습코칭학원", "regNo": "경상북도경산교육지원청 제1276호", "sido": "경북", "sido_en": "gyeongbuk", "district": "경산시", "address": "경북 경산시 백자로10길 1  402호 와와학습코칭학원", "directions": "경산시 백자로 10길 1 402호(사동 공차건물)", "target_elem": "사동초, 삼성현초, 평산초, 동부초", "target_mid": "사동중, 문명중, 삼성현중, 경산중, 경산여중, 장산중", "target_high": "사동고, 경산여고, 경산고, 문명고, 경북체고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "하계점", "officialName": "하계점와와학습코칭학원", "regNo": "서울북부교육청 등록 제 2016-12호", "sido": "서울", "sido_en": "seoul", "district": "노원구", "address": "서울 노원구 노원로 257  401호", "directions": "혜성여고 건너편, 하계중 바로 옆, 1층에 메가커피가 있는 건물의 4층 맨 안쪽", "target_elem": "", "target_mid": "하계중, 녹천중, 상명중, 태릉중, 공릉중", "target_high": "혜성여고, 대진고, 상명고, 월계고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "수지점", "officialName": "수지점와와학습코칭학원", "regNo": "용인교육지원청 등록 제4774호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기 용인시 수지구 문정로 13  중수프라자 503호", "directions": "수지구청 맞으면 우리은행 건물 / 수지구청역 2번출구에서 2분거리", "target_elem": "풍천초, 정평초, 이현초", "target_mid": "이현중, 수지중, 정평중", "target_high": "상현고, 신봉고, 홍천고, 성복고, 풍덕고, 수지고, 죽전고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "이곡점", "officialName": "이곡점와와학습코칭학원", "regNo": "대구남부교육지원청 등록 제2016-13호", "sido": "대구", "sido_en": "daegu", "district": "달서구", "address": "대구광역시 달서구 이곡동 달구벌대로259길 33  제일빌딩 5층", "directions": "대구시 달서구 달구벌대로259길 33 제일빌딩 5층 (1층이 현풍닭칼국수 음식점이 있는 빌딩)", "target_elem": "와룡초", "target_mid": "성산중", "target_high": "성서고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "탄현점", "officialName": "탄현점와와학습코칭학원", "regNo": "고양교육지원청 등록 제5930호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 일산서구 산현로17번길 23  은행프라자 4", "directions": "✅주차장 주소: 경기도 고양시 일산서구 산현로17번길 35 탄현제2공영주차장\n(간판은 아파트쪽에서 보이기 때문에 혹시 간판이 보이지 않으면 농협 간판 보고 건물 확인 해주시면 됩니다) \n\n(차량 이용 시 주차는 탄현제2공영주차장 이용 부탁드립니다)\n(죄송하지만 주차비는 따로 지원하고 있지 않습니다)", "target_elem": "상탄초", "target_mid": "일산동중, 일산중, 호곡중", "target_high": "일산동고, 덕이고, 중산고, 일산동고, 중산고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "철산점", "officialName": "철산점와와학습코칭학원", "regNo": "광명교육지원청 등록 제1781호", "sido": "경기", "sido_en": "gyeonggi", "district": "광명시", "address": "경기도 광명시 철산동 도덕공원로 27  삼우빌딩 2층", "directions": "경기도 광명시 도덕공원로27 삼우빌딩 2층 (주차장이 없습니다 인근 철산성당이나 인근 아파트에 주차가능합니다)", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "치평점", "officialName": "와와학습코칭학원", "regNo": "광주서부교육지원청 등록 제6027호", "sido": "광주", "sido_en": "gwangju", "district": "서구", "address": "광주 서구 치평로 76  대한빌딩 403호", "directions": "상무지구 이디야커피 건물4층이나 맥도널드 옆에 있다고 전달드립니다.", "target_elem": "운천초, 계수초", "target_mid": "전남중, 동명중", "target_high": "전남고, 상무고, 광주여고, 상일여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "지족점", "officialName": "와와학습코칭학원", "regNo": "대전서부교육지원청 등록 제 서4241호", "sido": "대전", "sido_en": "daejeon", "district": "유성구", "address": "대전 유성구 지족동  910-7번지 401", "directions": "노은역 동광장 다이소 맞은편 와플대학, BYC건물 4층", "target_elem": "상지초, 지족초, 노은초, 수정초", "target_mid": "지족중, 노은중", "target_high": "반석고, 지족고, 노은고, 유성여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "수완점", "officialName": "와와학습코칭수완학원", "regNo": "광주서부교육지원청 등록 제6778호", "sido": "광주", "sido_en": "gwangju", "district": "광산구", "address": "광주 광산구 임방울대로 310  아이비타워 406", "directions": "텃밭 건물로 들어와서 4층으로 올라오시면 바로 아발론 어학원이 있습니다.\n그대로 오른쪽을 바라보시면 복도 안쪽에 수완센터가 자리하고 있습니다.", "target_elem": "", "target_mid": "수완중, 장덕중", "target_high": "수완고, 장덕고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "호매실점", "officialName": "와와학습코칭센터호매실학원", "regNo": "수원교육지원청 등록 제6830호", "sido": "경기", "sido_en": "gyeonggi", "district": "수원시", "address": "경기 수원시 권선구 금곡로 116  유동빌딩  602호", "directions": "금곡동 유동타워 6층입니다.(채선당,아이온 소아과건물)", "target_elem": "", "target_mid": "", "target_high": "호매실고, 영신여고, 동원고, 동우여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "신곡점", "officialName": "와와학습코칭센터학원", "regNo": "의정부교육지원청 등록 제2071호", "sido": "경기", "sido_en": "gyeonggi", "district": "의정부시", "address": "경기도 의정부시 신곡동 장곡로 626  금오종합상가 A동 302,303호", "directions": "경기북부청사경전철역 건너편 금오종합상가 3층(1층 페리카나)", "target_elem": "", "target_mid": "천보중, 효자중", "target_high": "효자고, 경민it고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "행신점", "officialName": "행신점와와학습코칭센터학원", "regNo": "경기도고양교육지원청 등록 제6408호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 덕양구 중앙로 442  아성프라자 305호 와와학습코칭학원", "directions": "경기도 고양시 중앙로 442, 아성프라자 305호(홈플러스 건물 3층)", "target_elem": "아람초, 행신초, 덕은초, 서정초", "target_mid": "서정중, 행신중, 무원중, 가람중, 덕양중", "target_high": "서정고, 행신고, 무원고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "서신점", "officialName": "와와학습코칭학원", "regNo": "전주교육지원청 등록 제6457호", "sido": "전북", "sido_en": "jeonbuk", "district": "전주시", "address": "전북특별자치도 전주시 완산구 서신로 5  4층 와와학습코칭학원", "directions": "서신로5 4층(본병원 사거리에 있습니다)", "target_elem": "중산초", "target_mid": "", "target_high": "한일고, 근영고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "센트럴점", "officialName": "센트럴점와와학습코칭학원", "regNo": "광주하남교육지원청 등록 제1894호", "sido": "경기", "sido_en": "gyeonggi", "district": "하남시", "address": "경기 하남시 미사강변대로 84  미사탑프라자 601호", "directions": "미사탑프라자 6층( 빽다방 건물/ 자이아파트 정문)", "target_elem": "한홀초, 청하초", "target_mid": "윤슬중, 미사중", "target_high": "미사강변고, 미사고, 신장고, 남한고, 풍산고, 강일고, 특성화고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "미금점", "officialName": "금곡점와와학습코칭학원", "regNo": "성남교육지원청 등록 제5313호", "sido": "경기", "sido_en": "gyeonggi", "district": "성남시", "address": "경기도 성남시 분당구 금곡동 돌마로 87  골드프라자 402호", "directions": "미금역 2번출구 150m 앞 국민은행 건물4층", "target_elem": "미금초, 청솔초, 늘푸른초", "target_mid": "불곡중, 청솔중, 늘푸른중", "target_high": "불곡고, 늘푸른고, 분당중앙고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "야탑점", "officialName": "야탑와와학습코칭학원", "regNo": "성남교육지원청 등록 제6056호", "sido": "경기", "sido_en": "gyeonggi", "district": "성남시", "address": "경기 성남시 중원구 양현로 461  4층", "directions": "", "target_elem": "여수초, 야탑초, 중탑초", "target_mid": "야탑중", "target_high": "아람고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "갈매점", "officialName": "갈매점와와학습코칭학원", "regNo": "구리남양주교육지원청 등록 제4331호", "sido": "경기", "sido_en": "gyeonggi", "district": "구리시", "address": "경기 구리시 갈매중앙로 79  에스엠타워 602호", "directions": "안녕하세요, OO학생 학부모님~갈매점. 위치는 (구리시 갈매동79, 에스엠타워602호)입니다. 1층에 새마을금고, 베스킨라빈스 건물 6층입니다.", "target_elem": "갈매초, 산마루초", "target_mid": "갈매중", "target_high": "갈매고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "마두점", "officialName": "마두점와와학습코칭센터학원", "regNo": "고양교육지원청 등록 제6135호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 일산동구 중앙로 1191  굿모닝법조타운 1 604호", "directions": "스타벅스 마두역점 건물 6층", "target_elem": "백신초, 호수초", "target_mid": "백석중, 저동중", "target_high": "백신고, 정발고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "첨단점", "officialName": "첨단점와와학습코칭센터학원", "regNo": "광주서부교육지원청 등록 제7200호", "sido": "광주", "sido_en": "gwangju", "district": "광산구", "address": "광주 광산구 월계로 191  404호", "directions": "광주광역시 광산구 월계로191 첨단메디컬빌딩 4층 404호\n1층에 김가네와 쿼드커피 사이에 입구가 있습니다\n엘리베이터에서 내리셔서 바로 오른쪽에 센터가 위치합니다", "target_elem": "월봉초", "target_mid": "천곡중, 월봉중", "target_high": "장덕고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "송정점", "officialName": "송정점와와학습코칭학원", "regNo": "울산강북교육지원청 등록 제5652호", "sido": "울산", "sido_en": "ulsan", "district": "북구", "address": "울산 북구 화산로 123  골드테라스 404호", "directions": "울산 북구 화산로 123 골드테라스건물 4층 404호\n1층에 백소정건물있습니다.", "target_elem": "고헌초, 송정초, 화봉초", "target_mid": "고헌중, 화봉중, 연암중", "target_high": "화봉고, 매곡고, 무룡고, 울산공고, 에너지고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "석동점", "officialName": "석동점와와학습코칭학원", "regNo": "창원교육지원청 등록 제1933호", "sido": "경남", "sido_en": "gyeongnam", "district": "창원시", "address": "경남 창원시 진해구 석동로 51  세븐코아 504호", "directions": "진해구 석동로 51 세븐코아빌딩 5층 와와학습코칭센터", "target_elem": "", "target_mid": "석동중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "수진점", "officialName": "수진점와와학습코칭학원", "regNo": "성남교육지원청 등록 제6533호", "sido": "경기", "sido_en": "gyeonggi", "district": "성남시", "address": "경기 성남시 중원구 원터로 95  2층", "directions": "성남중앙초 후문 앞 cu 옆 건물, 행복한성적표 위층", "target_elem": "성남중앙초", "target_mid": "성일중, 성남중, 동광중, 풍생중", "target_high": "성남여고, 성남고, 성일고, 동광고, 효성고, 숭신여고, 복정고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "수성2가점", "officialName": "수성2가점와와학습코칭학원", "regNo": "대구광역시동부교육지원청 제6704호", "sido": "대구", "sido_en": "daegu", "district": "수성구", "address": "대구 수성구 명덕로 404  1동 404호 와와학습코칭학원", "directions": "_x0008_대구 수성고 명덕로 404, 404호 3호선 수성시장역 2번출구에서 대봉교방향으로, 금손아귀 건물 4층", "target_elem": "동일초, 동도초, 동성초", "target_mid": "대구동중, 신명여중, 중앙중, 황금중", "target_high": "남산고, 경북고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "기흥구청점", "officialName": "기흥구청점와와학습코칭학원", "regNo": "경기도용인교육지원청 등록 제 5253호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기 용인시 기흥구 구갈로60번길 15  경영빌딩 3층 와와학습코칭학원", "directions": "기흥구청 앞 신협 건물 3층, 한양수자인 103동 건너편", "target_elem": "구갈초, 산양초, 관곡초", "target_mid": "구갈중, 신갈중, 신릉중", "target_high": "기흥고, 신갈고, 성지고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "대구도남점", "officialName": "대구도남점와와학습코칭학원", "regNo": "대구광역시서부교육지원청 제2023-4500호", "sido": "대구", "sido_en": "daegu", "district": "북구", "address": "대구 북구 도남중앙로7길 20-3  위너프라자 402호 와와학습코칭학원", "directions": "대구 북구 도남중앙로 7길, 20-3. 402호", "target_elem": "국우초, 도남초", "target_mid": "학남중", "target_high": "학남고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "반석점", "officialName": "반석점와와학습코칭학원", "regNo": "대전서부교육지원청 등록 제 서4638호", "sido": "대전", "sido_en": "daejeon", "district": "유성구", "address": "대전 유성구 지족로 282  코오롱타워2 303,304", "directions": "와이식자재마트 대각선, 브래드홀릭 건물 3층", "target_elem": "새미래초, 반석초", "target_mid": "새미래중, 외삼중, 하기중", "target_high": "반석고, 노은고, 지족고, 유성고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "화성태안점", "officialName": "화성태안점와와학습코칭학원", "regNo": "경기도화성오산교육지원청 제4750호", "sido": "경기", "sido_en": "gyeonggi", "district": "화성시", "address": "경기 화성시 병점중앙로 87  408호 와와학습코칭학원", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "봉담점", "officialName": "봉담점와와학습코칭학원", "regNo": "경기도화성오산교육지원청 제 5025호", "sido": "경기", "sido_en": "gyeonggi", "district": "화성시", "address": "경기 화성시 봉담읍 상리중심상가길 28-8  713호 와와학습코칭학원", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "삼각산점", "officialName": "삼각산점와와학습코칭학원", "regNo": "성북강북교육지원청 등록 제2017-58호", "sido": "서울", "sido_en": "seoul", "district": "강북구", "address": "서울 강북구 미아동  811-9 두산위브테라스파크 상가 402/403호", "directions": "", "target_elem": "길음초, 송천초, 미양초", "target_mid": "삼각산중, 길음중, 미양중", "target_high": "삼각산고, 미양고, 영훈고, 혜화여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "당산점", "officialName": "당산점와와학습코칭학원", "regNo": "서울남부교육지원청 등록 제 5746호", "sido": "서울", "sido_en": "seoul", "district": "영등포구", "address": "서울 영등포구 당산로44길 3  삼성타운 504", "directions": "당산역 10번 출구, 2호선 지나는 도로 따라 레미안4차 지나면 크로미빵집있는 건물 5층입니다.", "target_elem": "당서초, 영동초, 당중초", "target_mid": "당산중, 당산서중, 선유중", "target_high": "선유고, 여의도고, 여의도여고, 영등포여고, 관악고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "은평점", "officialName": "와와학습코칭학원", "regNo": "서울서부교육지원청 등록 제02201700112호", "sido": "서울", "sido_en": "seoul", "district": "은평구", "address": "서울특별시 은평구 진관동 진관2로 29-21  드림스퀘어 제 8층 804호 805호", "directions": "구파발역 2번출구,구파발성당 맞은편 1층 이디야,서브웨이 건물입니다.", "target_elem": "은진초, 은빛초, 진관초, 신도초", "target_mid": "진관중, 신도중, 연천중", "target_high": "진관고, 신도고, 대성고, 선일여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "화정점", "officialName": "화정점와와학습코칭학원", "regNo": "고양교육지원청 등록 제5768호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 덕양구 화신로 263  브릿지타워 213호, 214호 와와학습코칭학원", "directions": "경기도 고양시 덕양구 화신로 263 브릿지타워 2층 214호 (한방병원 건물)", "target_elem": "", "target_mid": "화정중, 지도중, 신능중", "target_high": "화정고, 화수고, 백양고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "인창점", "officialName": "와와학습코칭센터학원", "regNo": "구리남양주교육지원청 등록 제3467호", "sido": "경기", "sido_en": "gyeonggi", "district": "구리시", "address": "경기 구리시 건원대로 36  제 407호 와와학습코칭학원", "directions": "화성골드프라자( 1층에 베스킨라빈스)  4층", "target_elem": "건원초, 동구초, 구지초", "target_mid": "인창중, 동구중", "target_high": "인창고, 수택고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "염창점", "officialName": "와와코칭보습학원", "regNo": "강서양천교육지원청 등록 제 5716호", "sido": "서울", "sido_en": "seoul", "district": "강서구", "address": "서울 강서구 양천로67길 15  한희빌딩 2층 202호  와와학습코칭학원", "directions": "등촌역 2번출구 직진 500미터 염창중앙교회옆건물, 강서구 염창동 242-11 한히빌딩 5층", "target_elem": "염경초, 염동초, 백석초", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "인천삼산점", "officialName": "인천삼산점와와학습코칭학원", "regNo": "인천북부교육지원청 등록 제4641호", "sido": "인천", "sido_en": "incheon", "district": "부평구", "address": "인천 부평구 체육관로 32  하이존빌딩 8층 802", "directions": "인천 부평구 체육관로 32 하이존 8층 (삼산체육관에서 도보 5분)\nor 굴포천역 도보 5분 or 삼산타운 7단지 정문 맞은편", "target_elem": "굴포초, 진산초, 영선초", "target_mid": "진산중, 삼산중, 구산중", "target_high": "영선고, 삼산고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "이매점", "officialName": "이매점와와학습코칭학원", "regNo": "성남교육지원청 등록 제5320호", "sido": "경기", "sido_en": "gyeonggi", "district": "성남시", "address": "경기도 성남시 분당구 이매동 이매로 49  4층 와와학습코칭센터", "directions": "수인 분당선 이매역 6번 출구 바로 앞 1층 쿠쿠매장 주영빌딩 4층", "target_elem": "이매초, 안말초", "target_mid": "매송중, 이매중, 송림중", "target_high": "이매고, 송림고, 태원고, 돌마고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "침산점", "officialName": "침산점와와학습코칭학원", "regNo": "대구서부교육지원청 등록 제2019-4229호", "sido": "대구", "sido_en": "daegu", "district": "북구", "address": "대구 북구 침산남로 140  엠비프라자 901", "directions": "", "target_elem": "침산초, 달산초", "target_mid": "침산중, 대구일중, 경명여중, 산격중, 대구북중", "target_high": "경명여고, 칠성고, 청구고, 사대부고, 경상고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "오산점", "officialName": "와와학습코칭학원", "regNo": "화성오산교육지원청 등록 제2840호", "sido": "경기", "sido_en": "gyeonggi", "district": "오산시", "address": "경기 오산시 성호대로 121  월드타워 505호", "directions": "오산시청 우리은행 건물 5층", "target_elem": "운천초, 성호초, 운산초", "target_mid": "운암중, 운천중, 성호중", "target_high": "운암고, 운천고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "별내점", "officialName": "별내점와와학습코칭학원", "regNo": "구리남양주교육지원청 등록 제4170호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 순화궁로 349  삼광프라자 501호", "directions": "별내 카페거리 건너편 메가커피 건물5층", "target_elem": "샛별초, 화접초, 별가람초, 한별초, 덕송초", "target_mid": "별가람중, 한별중, 한삼중", "target_high": "별가람고, 별내고, 한삼고, 퇴계원고, 청학고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "영통구청점", "officialName": "영통구청점와와학습코칭학원", "regNo": "수원교육지원청 등록 제6824-1호", "sido": "경기", "sido_en": "gyeonggi", "district": "수원시", "address": "경기 수원시 영통구 매탄로108번길 10  모닝프라자 602호", "directions": "영통구청 옆 중심상가 내 맘스터치 건물 6층", "target_elem": "매탄초,매현초", "target_mid": "매탄중,매현중", "target_high": "매탄고,효원고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "부평점", "officialName": "와와학습코칭센터부평학원", "regNo": "인천북부교육지원청 등록 제4371호", "sido": "인천", "sido_en": "incheon", "district": "부평구", "address": "인천광역시 부평구 부평동 부흥로 264  5층 와와학습코칭센터", "directions": "부평시장역3번출구에서 도보5분거리/쿠우쿠우 있는 건물 5층", "target_elem": "부평서초,부평동초", "target_mid": "부원중,부원여중", "target_high": "부평고,부평여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "풍동점", "officialName": "풍동와와학습코칭학원", "regNo": "고양교육지원청 등록 제5785호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 일산동구 숲속마을로 44  미래타워 6", "directions": "풍동상가 미래타워6층(빽다방,이삭토스트건물)", "target_elem": "풍산초, 다솜초, 은행초", "target_mid": "풍동중, 풍산중, 양일중", "target_high": "풍동고, 세원고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "송천점", "officialName": "와와학습코칭송천점학원", "regNo": "전주교육지원청 등록 제6679호", "sido": "전북", "sido_en": "jeonbuk", "district": "전주시", "address": "전북특별자치도 전주시 덕진구 솔내로 129  송천열방빌딩 501호 와와학습코칭학원", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "태평점", "officialName": "태평와와학습코칭학원", "regNo": "대전동부교육지원청등록 제 2동3247호", "sido": "대전", "sido_en": "daejeon", "district": "중구", "address": "대전 중구 태평로 15  버드내마을아파트 상가 308", "directions": "", "target_elem": "버드내초", "target_mid": "버드내중, 태평중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "목감점(모두)", "officialName": "목감점모두오름학습코칭학원", "regNo": "시흥교육지원청 등록 제 시1311호", "sido": "경기", "sido_en": "gyeonggi", "district": "시흥시", "address": "경기 시흥시 수풀안길 14-23  4층 402호", "directions": "시흥시 수풀안길 14-23 메트로타워2 4층(1층에 원할머니보쌈있습니다)", "target_elem": "조남초, 목감초", "target_mid": "조남중", "target_high": "목감고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "송촌점", "officialName": "송촌와와학습코칭학원", "regNo": "대전동부교육지원청등록 제 2동3248호", "sido": "대전", "sido_en": "daejeon", "district": "대덕구", "address": "대전 대덕구 동춘당로94번길 11-7  4층 402", "directions": "", "target_elem": "송촌초", "target_mid": "매봉중, 법동중, 송촌중", "target_high": "송촌고, 명석고, 우송고, 대전여고, 동대전고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "중동점", "officialName": "와와학습코칭보습학원", "regNo": "부천교육지원청 등록 제5918호", "sido": "경기", "sido_en": "gyeonggi", "district": "부천시", "address": "경기 부천시 원미구 길주로 191  금영프라자 제 4층 401호", "directions": "", "target_elem": "부흥초, 중흥초", "target_mid": "중흥중, 부명중", "target_high": "증흥고, 중원고, 경기예고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "중동점(W+)", "officialName": "중동점더블유플러스보습학원", "regNo": "부천교육지원청 등록 제6516호", "sido": "경기", "sido_en": "gyeonggi", "district": "부천시", "address": "경기 부천시 원미구 길주로 219  드림빌딩 401호", "directions": "", "target_elem": "부흥초, 중흥초", "target_mid": "중흥중, 부명중", "target_high": "증흥고, 중원고, 경기예고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "신중동점", "officialName": "와와학습코칭신중동보습학원", "regNo": "부천교육지원청 등록 제6330호", "sido": "경기", "sido_en": "gyeonggi", "district": "부천시", "address": "경기 부천시 원미구 조마루로291번길 25  센터프라자 405호, 406호", "directions": "", "target_elem": "부곡초, 계남초, 심원초", "target_mid": "심원중, 계남중, 부곡중", "target_high": "계남고, 심원고, 원미고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "화정점(W+)", "officialName": "화정점더블유플러스학원", "regNo": "고양교육지원청 등록 제6077호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 덕양구 화중로 32-31  효원빌딩 401호 일부", "directions": "", "target_elem": "지도초", "target_mid": "화정중, 신능중", "target_high": "화정고, 서정고, 백양고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "양덕점", "officialName": "양덕점와와학습코칭학원", "regNo": "포항교육지원청 등록 제2584호", "sido": "경북", "sido_en": "gyeongbuk", "district": "포항시", "address": "경북 포항시 북구 천마로 66  환호빌딩 402호", "directions": "양덕 하나로마트 근처, 양덕 농협사거리 롯데리아 사이 건물,  이디야 건물 4층,", "target_elem": "양덕초 양서초 장흥초", "target_mid": "양덕중 장흥중 대도중 환호여중", "target_high": "장성고 포고 포여고 유성여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "옥정점", "officialName": "옥정점와와학습코칭학원", "regNo": "경기도동두천양주교육지원청 제1331호", "sido": "경기", "sido_en": "gyeonggi", "district": "양주시", "address": "경기 양주시 옥정로 218  신운정튼튼프라자 305호 와와학습코칭학원", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "은평점(글로리드)", "officialName": "은평점글로리드학습코칭학원", "regNo": "서울특별시 서부교육지원청 제 02202300049호", "sido": "서울", "sido_en": "seoul", "district": "은평구", "address": "서울 은평구 진관2로 29-21  드림스퀘어 609호", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "다산점(W+)", "officialName": "다산점더블유플러스학원", "regNo": "경기도구리남양주교육지원청 제4711호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 다산순환로 350  KB골든타워 310호 더블유플러스학원", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "옥길스타점", "officialName": "옥길스타점와와학습코칭보습학원", "regNo": "경기도부천교육지원청 등록 제6775호", "sido": "경기", "sido_en": "gyeonggi", "district": "부천시", "address": "경기 부천시 소사구 범안로 231-15  옥길중앙타워 제2층 201호 와와학습코칭학원", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "광장점", "officialName": "와와학습코칭학원", "regNo": "성동광진교육지원청 등록 제 2316호", "sido": "서울", "sido_en": "seoul", "district": "광진구", "address": "서울 광진구 광나루로 584  동서울빌딩 5", "directions": "올림픽대교북단사거리 바로 앞, 광진구 광나루로 584 동서울빌딩5층", "target_elem": "", "target_mid": "양진중, 광장중", "target_high": "광남고, 단대부고, 건대부고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "반월당점", "officialName": "반월당점와와학습코칭학원", "regNo": "대구광역시동부교육지원청 제6834호", "sido": "대구", "sido_en": "daegu", "district": "중구", "address": "대구 중구 대봉로 253  3층 와와학습코칭학원", "directions": "대구 중구 대봉로 253 3층 와와학습코칭학원(센트로팰리스 대백마트 맞은편)", "target_elem": "대구초, 사대부초", "target_mid": "대구제일중, 사대부중", "target_high": "사대부고, 경북여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "배곧점", "officialName": "배곧점와와학습코칭학원", "regNo": "경기도시흥교육지원청 제 시1653 호", "sido": "경기", "sido_en": "gyeonggi", "district": "시흥시", "address": "경기 시흥시 배곧4로 22  배곧타운2 217호 와와학습코칭학원", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "명지대역점", "officialName": "명지대역점와와학습코칭학원", "regNo": "경기도용인교육지원청 제 5578 호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기 용인시 처인구 명지로40번길 4  링크 153 502호 와와학습코칭학원", "directions": "", "target_elem": "함박초, 서룡초", "target_mid": "용신중, 용인중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "칠금점", "officialName": "칠금점와와학습코칭학원", "regNo": "충주교육지원청 등록 제1469호", "sido": "충북", "sido_en": "chungbuk", "district": "충주시", "address": "충청북도 충주시 칠금동 계명대로 29  3층", "directions": "", "target_elem": "탄금초, 칠금초", "target_mid": "탄금중, 칠금중, 중앙중, 미덕중, 여중, 북여중, 충주중", "target_high": "국원고, 예성여고, 충주여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "세교점", "officialName": "세교점와와학습코칭학원", "regNo": "화성오산교육지원청 등록 제4098호", "sido": "경기", "sido_en": "gyeonggi", "district": "오산시", "address": "경기 오산시 수청로 193  P&P세교프라자 402호", "directions": "오산세교종합사회복지관 앞 스타벅스 건물 4층", "target_elem": "", "target_mid": "문시중, 세마중", "target_high": "세교고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "수지점(글로리드)", "officialName": "수지점글로리드학습코칭학원", "regNo": "경기도용인교육지원청 제5340호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기 용인시 수지구 풍덕천로 114  3층 글로리드학습코칭학원", "directions": "수지구청역 2번출구 바로 앞에 미스터피자 건물 3층", "target_elem": "풍천초, 정평초, 이현초", "target_mid": "이현중, 수지중, 정평중", "target_high": "상현고, 신봉고, 홍천고, 성복고, 풍덕고, 수지고, 죽전고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "마포2호점", "officialName": "마포2호점와와학습코칭학원", "regNo": "서울특별시 서부교육지원청 제02202300102호", "sido": "서울", "sido_en": "seoul", "district": "마포구", "address": "서울 마포구 토정로 252  승지빌딩 3층", "directions": "서울특별시 마포구 토정로 252 승지빌딩 3층 와와학습코칭학원\n(대흥역 3번출구 5분거리이며 1층 기아자동차 AS센터 건물입니다.)", "target_elem": "신석초, 염리초, 용강초, 서강초, 우이초", "target_mid": "서울여중, 동도중, 신수중", "target_high": "서울여고, 숭문고, 광성고, 한성고, 배문고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "다산도농점", "officialName": "다산도농점와와학습코칭학원", "regNo": "경기도구리남양주교육지원청 제4749호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 도농로 29  604호 와와학습코칭센터", "directions": "다산도농 이마트앞 부영프라자 604호", "target_elem": "도농초, 금교초, 미금초,", "target_mid": "동화중, 도농중, 가운중", "target_high": "도농고, 가운고, 다산고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "별가람점", "officialName": "별가람점와와학습코칭학원", "regNo": "경기도구리남양주교육지원청 제4785호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 덕송1로55번길 20  503호", "directions": "경기도 남양주시 별내동 824-2 별내프라자-2 503호                                                                                   별내별가람역 3번출구에서 189m", "target_elem": "덕송초, 샛별초", "target_mid": "별가람중, 화접중, 한별중", "target_high": "별내고, 별가람고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "동탄목동점", "officialName": "동탄목동점와와학습코칭학원", "regNo": "경기도화성오산교육지원청 제4752호", "sido": "경기", "sido_en": "gyeonggi", "district": "화성시", "address": "경기 화성시 동탄신리천로 408  M메디칼 212호", "directions": "경기도 화성시 신리천로 408 M메디컬프라자 212호 와와학습코칭학원", "target_elem": "동탄목동초, 한율초", "target_mid": "동탄목동중, 세정중", "target_high": "창의고, 정현고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "두호점", "officialName": "와와학습코칭센터학원", "regNo": "포항교육지원청 등록 제2124호", "sido": "경북", "sido_en": "gyeongbuk", "district": "포항시", "address": "경상북도 포항시 북구 용두산길 32  3층", "directions": "파리 바게트 맞은편 건물 3층", "target_elem": "", "target_mid": "환호여중, 대도중", "target_high": "두호고, 포여고, 장성고, 포고, 중앙고, 중앙여고, 대동고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "선운점", "officialName": "선운점와와학습코칭학원", "regNo": "광주광역시서부교육지원청 제7446호", "sido": "광주", "sido_en": "gwangju", "district": "광산구", "address": "광주 광산구 선운로20번길 55-1  402호 와와학습코칭학원", "directions": "선운로 20번길 55-1 4층 (배가마트 옆 우산신협 건물)", "target_elem": "선운초, 본량초", "target_mid": "선운중", "target_high": "정광고, 보문고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "교하점", "officialName": "교하점와와학습코칭학원", "regNo": "경기도파주교육지원청 제1975호", "sido": "경기", "sido_en": "gyeonggi", "district": "파주시", "address": "경기 파주시 청석로 272  센타프라자1 제8층 제803", "directions": "와와학습코칭학원 파주 교하점\n경기도 파주시 청석로272 /센터프라자 803호(파리바게트 건물)", "target_elem": "청석초, 석곶초, 두일초", "target_mid": "교하중, 두일중, 심학중", "target_high": "교하고, 심학고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "송파위례점", "officialName": "송파위례점와와학습코칭학원", "regNo": "서울특별시강동송파교육지원청 제8296호", "sido": "서울", "sido_en": "seoul", "district": "송파구", "address": "서울 송파구 위례광장로 188  아이온스퀘어 8층 816호 와와학습코칭학원", "directions": "와와학습코칭센터 송파위례점 위례 아이온스퀘어 8층 816호", "target_elem": "송례초, 위례별초", "target_mid": "위례중, 송례중", "target_high": "위례고, 문현고, 문정고, 덕수고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "산본점", "officialName": "산본점와와학습코칭학원", "regNo": "경기도군포의왕교육지원청 제2444호", "sido": "경기", "sido_en": "gyeonggi", "district": "군포시", "address": "경기 군포시 산본로 394  대림프라자 제 6층 제602호 와와학습코칭학원", "directions": "경기 군포시 산본로394 602-2호( 대림프라자 6층)\n주차장입구가 노란색입니다.\n1층에 빽다방,이삭토스트, 본죽\n산본학원가 스타벅스 옆 건물\n하나로마트 옆", "target_elem": "광정초", "target_mid": "산본중, 궁내중, 수리중, 도장중, 금정중", "target_high": "흥진고, 산본고, 군포고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "구월점", "officialName": "구월점와와학습코칭학원", "regNo": "인천광역시동부교육지원청 제4031호", "sido": "인천", "sido_en": "incheon", "district": "남동구", "address": "인천 남동구 선수촌공원로23번길 6-29  다복타워 401호 와와학습코칭학원", "directions": "아시아드 로터리, 농협 건물 근처 세무소 방향 바로 옆 건물", "target_elem": "성리초", "target_mid": "성리중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "고잔점", "officialName": "와와학습코칭센터안산학원", "regNo": "안산교육지원청 등록 제4176호", "sido": "경기", "sido_en": "gyeonggi", "district": "안산시", "address": "경기 안산시 단원구 광덕대로 130  폴리타운 B동 513호", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "가좌점", "officialName": "가좌점와와학습코칭학원", "regNo": "서울서부교육지원청 등록 제02202000014호", "sido": "서울", "sido_en": "seoul", "district": "서대문구", "address": "서울 서대문구 가재울로 52  승우빌딩 301호", "directions": "", "target_elem": "가재울초, 연가초", "target_mid": "", "target_high": "가재울고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "호평점", "officialName": "호평점와와학습코칭학원", "regNo": "구리남양주교육지원청 등록 제4177호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 늘을3로 65-6  테마프라자 205호", "directions": "경기 남양주시 늘을3로 65-6 (호평동 617-3) \n테마프라자2층 205호\n건물 지하 무료주차 가능합니다", "target_elem": "구룡초, 호평초, 판곡초", "target_mid": "판곡중, 호평중", "target_high": "판곡고, 호평고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "평내점", "officialName": "평내점와와학습코칭학원", "regNo": "구리남양주교육지원청 등록 제3712호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 경춘로 1256번길 9  501호", "directions": "평내상가지역 1층 메가커피건물 2층 아지트떡볶이", "target_elem": "", "target_mid": "장내초, 중", "target_high": "고, 호평초, 중, 고, 금곡초, 중, 고, 판곡고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "부발점", "officialName": "와와학습코칭부발학원", "regNo": "이천교육지원청 등록 제1222호", "sido": "경기", "sido_en": "gyeonggi", "district": "이천시", "address": "경기 이천시 부발읍 경충대로2092번길 39-19  이천하이클래스 207,208", "directions": "", "target_elem": "아미초, 신하초", "target_mid": "효양중, 사동중", "target_high": "효양고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "율하점", "officialName": "율하점와와학습코칭학원", "regNo": "대구동부교육지원청 등록 제6183호", "sido": "대구", "sido_en": "daegu", "district": "동구", "address": "대구 동구 율하동로 32  4층 와와학습코칭센터", "directions": "대구 동구 율하동로 32 대은빌딩 4층 (119센터 근처, 율원중 근처)", "target_elem": "숙천초, 율원초, 율금초, 안일초", "target_mid": "율원중, 강동중, 안심중, 새론중, 신기중, 동원중", "target_high": "동부고, 강동고, 정동고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "비전점", "officialName": "와와학습코칭센터학원", "regNo": "평택교육지원청 등록 제 2126호", "sido": "경기", "sido_en": "gyeonggi", "district": "평택시", "address": "경기도 평택시 비전동 평남로 937  폴리프라자 602호, 603호", "directions": "리더스하임 후문 맞은편또는 센텀정형외과 건물 6층", "target_elem": "이화초 가내초 자란초", "target_mid": "비전중 한광중 한광여중 평택여중 소사벌중", "target_high": "비전고 한광고 한광여고 평택여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "옥길점", "officialName": "옥길점와와학습코칭보습학원", "regNo": "부천교육지원청 등록 제6454호", "sido": "경기", "sido_en": "gyeonggi", "district": "부천시", "address": "경기 부천시 소사구 옥길로 116  퀸즈파크 A동 7층 718호~719", "directions": "", "target_elem": "버들초", "target_mid": "옥길중", "target_high": "범박고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "후곡점", "officialName": "후곡점와와학습코칭학원", "regNo": "고양교육지원청 등록 제5985호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 일산서구 일산로 511  태성상가 2층 201,202", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "단구점", "officialName": "와와학습코칭학원", "regNo": "원주교육지원청 등록 제2412호", "sido": "강원", "sido_en": "gangwon", "district": "원주시", "address": "강원특별자치도 원주시 서원대로 406  리더스빌딩 402", "directions": "단구동 롯데시네마 근처에 우리은행 건물 4층", "target_elem": "구곡초등학교, 서원주초등학교", "target_mid": "남원주중학교, 단구중학교", "target_high": "치악고등학교, 원주고등학교", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "복대점", "officialName": "복대점와와학습코칭학원", "regNo": "청주교육지원청 등록 제5298호", "sido": "충북", "sido_en": "chungbuk", "district": "청주시", "address": "충북 청주시 흥덕구 진재로 37  3", "directions": "증안초에서 하복대 방향 도보로 5분 / 아인동물병원 옆 건물 3층", "target_elem": "증안초, 진흥초", "target_mid": "복대중, 서원중, 솔밭중", "target_high": "흥덕고, 세광고, 사대부고, 청주고, 중앙여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "단대점", "officialName": "단대점와와학습코칭학원", "regNo": "성남교육지원청 등록 제6183호", "sido": "경기", "sido_en": "gyeonggi", "district": "성남시", "address": "경기 성남시 수정구 산성대로 423  5층", "directions": "", "target_elem": "단대초", "target_mid": "서중, 은행중", "target_high": "성남고, 성일고, 숭신여고, 동광고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "은평점(W+)", "officialName": "은평점더블유플러스수학보습학원", "regNo": "서울서부교육지원청 등록 제02202100037호", "sido": "서울", "sido_en": "seoul", "district": "은평구", "address": "서울 은평구 진관2로 19  휴먼프라자 312호", "directions": "", "target_elem": "진관초, 신도초, 은진초", "target_mid": "진관중, 신도중, 연천중", "target_high": "진관고, 신도고, 대성고, 선일여고, 동명여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "산내점", "officialName": "산내점와와학습코칭학원", "regNo": "파주교육지원청 등록 제1713호", "sido": "경기", "sido_en": "gyeonggi", "district": "파주시", "address": "경기 파주시 청암로17번길 21  월드타워5차 405호", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "동춘점", "officialName": "동춘점와와학습코칭학원", "regNo": "인천동부교육지원청 등록 제3723호", "sido": "인천", "sido_en": "incheon", "district": "연수구", "address": "인천 연수구 앵고개로264번길 40  남지빌딩 4층 와와학습코칭센터", "directions": "", "target_elem": "", "target_mid": "", "target_high": "대건고, 연수여고, 연수고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "후곡점(W+)", "officialName": "후곡점더블유플러스학원", "regNo": "경기도고양교육지원청 등록 제6354호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 일산서구 일산로 524  202호 더블유플러스학원", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "알파시티점", "officialName": "알파시티점와와학습코칭학원", "regNo": "대구광역시동부교육지원청 제6562호", "sido": "대구", "sido_en": "daegu", "district": "수성구", "address": "대구 수성구 알파시티2로 19  알파N시티 2층 201호 와와학습코칭학원", "directions": "대구 수성구 알파시티2로19 와와학습코칭학원 201호", "target_elem": "노변초, 고산초", "target_mid": "노변중, 고산중", "target_high": "시지고, 덕원고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "신월성점", "officialName": "신월성와와학습코칭학원", "regNo": "대구남부교육지원청 등록 제2017-120호", "sido": "대구", "sido_en": "daegu", "district": "달서구", "address": "대구 달서구 월성동  1848번지 그루타워 702호", "directions": "", "target_elem": "조암초, 신월초, 월암초, 월성초", "target_mid": "조암중, 월암중, 월서중, 효성중, 영남중, 대건중, 학산중", "target_high": "영남고, 상원고, 효성여고, 송현여고, 상인고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "대구역점", "officialName": "대구역점와와학습코칭학원", "regNo": "대구광역시동부교육지원청 제6571호", "sido": "대구", "sido_en": "daegu", "district": "중구", "address": "대구 중구 서성로 99  대구역센트럴자이 상가 302호 와와학습코칭학원", "directions": "수창공원 맞은편\n1층 몬스터커피에서 왼쪽 건물 3층", "target_elem": "수창초, 달성초, 종로초", "target_mid": "계성중, 성명여중, 사대부중", "target_high": "사대부고, 경북여고, 신명고, 대구고, 경북예고, 칠성고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "신방화점", "officialName": "신방화점와와학습코칭학원", "regNo": "강서양천교육지원청 등록 제 5879호", "sido": "서울", "sido_en": "seoul", "district": "강서구", "address": "서울 강서구 방화대로 294  마곡더블유타워 505", "directions": "신방화역 6번출구에서 나와서 바로 왼쪽 마곡 더블유타워", "target_elem": "송화초, 공항초", "target_mid": "공항중, 송정중", "target_high": "한서고, 공항고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "청라점", "officialName": "와와학습코칭청라학원", "regNo": "인천서부교육지원청 등록 서부 제1903호", "sido": "인천", "sido_en": "incheon", "district": "서구", "address": "인천 서구 중봉대로 588  청라센트럴프라자 609", "directions": "", "target_elem": "", "target_mid": "청라중, 해원중", "target_high": "청라고, 해원고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "소하점", "officialName": "소하점와와학습코칭학원", "regNo": "광명교육지원청 등록 제1965호", "sido": "경기", "sido_en": "gyeonggi", "district": "광명시", "address": "경기 광명시 오리로 346  행운드림프라자 4층 405호", "directions": "", "target_elem": "충현초, 서면초", "target_mid": "충현중, 빛가온중", "target_high": "충현고, 광휘고, 소하고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "복산점", "officialName": "복산점와와학습코칭학원", "regNo": "울산강북교육지원청 등록 제5462호", "sido": "울산", "sido_en": "ulsan", "district": "중구", "address": "울산 중구 번영로 461  B2동 7", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "동탄호수점", "officialName": "동탄호수와와학습코칭학원", "regNo": "화성오산교육지원청 등록 제3775호", "sido": "경기", "sido_en": "gyeonggi", "district": "화성시", "address": "경기 화성시 동탄순환대로 127-19  에스비타운 907호", "directions": "우성 상가촌 동탄성모병원 건물 9층", "target_elem": "방교초, 서연초", "target_mid": "청림중, 서연중, 방교중", "target_high": "정현고, 서연고, 창의고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "동백점", "officialName": "동백점와와학습코칭학원", "regNo": "용인교육지원청 등록 제3918호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기도 용인시 기흥구 중동 동백3로11번길 3  2층 201호", "directions": "경기도 용인시 기흥구 중동 851-4 동백역타워 2층 201호. 1층에 파찌내 만둣가게가 있는 건물 2층 입니다. 동백역2번 출구 50m 이내 입니다.", "target_elem": "석성초, 초당초", "target_mid": "초당중, 백현중, 동백중, 성지중, 어정중, 용인중", "target_high": "초당고, 백현고, 동백고, 성지고, 용인고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "노형점", "officialName": "와와학습코칭학원", "regNo": "제주시교육지원청 등록 제2163호", "sido": "제주", "sido_en": "jeju", "district": "제주시", "address": "제주특별자치도 제주시 노형동 727-3 대안빌딩  3층", "directions": "제주은행 연북로지점 주차장 뒷편 cu건물3층", "target_elem": "노형초", "target_mid": "서중, 중앙중", "target_high": "지역내 모든 고등학교 가능", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "장기점", "officialName": "와와학습코칭센터김포학원", "regNo": "김포교육지원청 등록 제1237호", "sido": "경기", "sido_en": "gyeonggi", "district": "김포시", "address": "경기도 김포시 장기동 김포한강4로 162  한강메트로 503호, 504호", "directions": "", "target_elem": "푸른솔초, 운유초", "target_mid": "장기중, 푸른솔중, 고창중", "target_high": "솔터고, 제일고, 운양고, 통진고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "좌동점", "officialName": "와와학습코칭센터학원", "regNo": "해운대교육지원청 등록 제3142호", "sido": "부산", "sido_en": "busan", "district": "해운대구", "address": "부산광역시 해운대구 좌동 좌동로 88  울트라타워 5층 508호", "directions": "부산 2호선 장산역 10번 출구 도보 10분 거리, 1층 장독대(반찬)/호두과자 가게 있습니다.", "target_elem": "동백초, 부흥초, 신도초", "target_mid": "신도중, 부흥중, 신곡중, 해운대중, 해강중", "target_high": "신도고, 양운고, 부흥고, 해운대여고, 해강고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "신방점", "officialName": "와와학습코칭학원", "regNo": "천안교육지원청 등록 제3413호", "sido": "충남", "sido_en": "chungnam", "district": "천안시", "address": "충청남도 천안시 동남구 신방동 886 학산프라자  A동 3층 304호,305호", "directions": "세종약국(이석훈내과와 늘푸른이비인후과가 있는 건물) 3층입니다. 신방점 리처드헤어본점 맞은편 학산프라자 5층건물 3층에 있습니다.", "target_elem": "신용초", "target_mid": "용곡중, 신방중", "target_high": "청수고, 쌍용고, 천안여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "쌍용점", "officialName": "와와학습코칭쌍용점학원", "regNo": "천안교육지원청 등록 제3502호", "sido": "충남", "sido_en": "chungnam", "district": "천안시", "address": "충청남도 천안시 서북구 쌍용동 불당대로 260  319호 318호(1/2)", "directions": "고3  영어 수업은 어렵습니다", "target_elem": "쌍용초", "target_mid": "쌍용중", "target_high": "쌍용고, 월봉고, 중앙고, 천안여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "병점점", "officialName": "병점점와와학습코칭학원", "regNo": "화성오산교육지원청 등록 제4050호", "sido": "경기", "sido_en": "gyeonggi", "district": "화성시", "address": "경기 화성시 병점1로 221  화인메디컬프라자 2층 203호", "directions": "병점 중심상가 사거리 롯데리아 건물 2층 (엘리베이터 내리면 바로 위치)  설빙과 같은 층입니다. \n와와 병점점 031) 297 - 7325", "target_elem": "진안초, 안화초, 병점초, 송화초, 구봉초", "target_mid": "진안중, 병점중, 안화중", "target_high": "병점고, 안화고, 능동고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "불당점", "officialName": "불당점와와학습코칭학원", "regNo": "천안교육지원청 등록 제4191호", "sido": "충남", "sido_en": "chungnam", "district": "천안시", "address": "충남 천안시 서북구 불당33길 22  고은타워 805호", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "웰카운티점", "officialName": "웰카운티점와와학습코칭학원", "regNo": "인천광역시동부교육지원청 등록 제3877호", "sido": "인천", "sido_en": "incheon", "district": "연수구", "address": "인천 연수구 인천타워대로54번길 15-5  북일프라자 2층 와와학습코칭학원", "directions": "북일프라자 1차가 아닌 MUZE건물 2층 북일프라자 2층입니다 \n북일프라자 2층, 뮤즈카페 건물위 2층입니다", "target_elem": "해송초등학교", "target_mid": "해송중학교, 능허대중학교, 박문중학교", "target_high": "해송고등학교, 연송고등학교, 대건고등학교", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "중산점", "officialName": "중산점와와학습코칭학원", "regNo": "경기도고양교육지원청 제 6727호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 일산동구 중산로 103  거풍프라자 202호", "directions": "일산동구 중산로 103 거풍프라자 202호", "target_elem": "모당초, 안곡초, 중산초", "target_mid": "안곡중, 중산중, 일산중", "target_high": "안곡고, 중산고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "가경점", "officialName": "가경점와와학습코칭학원", "regNo": "충청북도청주교육지원청 제 5888호", "sido": "충북", "sido_en": "chungbuk", "district": "청주시", "address": "충북 청주시 흥덕구 서현북로 18  2층 와와학습코칭학원", "directions": "서현북로 대원칸타빌과 가경 e편한세상 사이 편의점 CU맞은편", "target_elem": "서현초, 서경초", "target_mid": "서현중, 경덕중, 서현중", "target_high": "사대부고, 서원고, 청주외고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "탕정점(모두)", "officialName": "탕정점모두오름학습코칭학원", "regNo": "충청남도아산교육지원청 제 1560호", "sido": "충남", "sido_en": "chungnam", "district": "아산시", "address": "충남 아산시 탕정면 한들물빛5로 5  605호 모두오름학습코칭학원", "directions": "한들물빛도시 지웰시티 센트럴 프루지오 206동 맞은편 젤존 메디컬시티 605호", "target_elem": "한들물빛초", "target_mid": "한들물빛중", "target_high": "설화고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "이시아폴리스점", "officialName": "이시아폴리스점\n와와학습코칭학원", "regNo": "대구동부교육지원청 제 6935호", "sido": "대구", "sido_en": "daegu", "district": "동구", "address": "대구 동구 팔공로51길 33  A-503호 와와학습코칭학원", "directions": "이시아폴리스 더샵3차아파트 맞은편 이스트 애플빌딩 5층", "target_elem": "봉무초, 영신초", "target_mid": "영신중, 팔공중, 복현중, 성광중, 성화중, 동촌중", "target_high": "영신고, 경상고, 영진고, 성광고, 성화여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "신봉점", "officialName": "신봉점와와학습코칭학원", "regNo": "경기도용인교육지원청 제 5625호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기 용인시 수지구 신봉2로 60  웰스톤시티엔웰스톤에비뉴 1동 103호 와와학습코칭학원", "directions": "신봉 LG자이2차 옆 웰스톤시티상가 1층, 농협복도 끝에 위치", "target_elem": "신봉초, 신일초, 홍천초, 신리초, 성복초", "target_mid": "신봉중, 성복중, 홍천중", "target_high": "신봉고, 용인홍천고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "퇴계원점", "officialName": "퇴계원점와와학습코칭학원", "regNo": "경기도구리남양주교육지원청 제4787호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 퇴계원읍 퇴계원로 29  202호", "directions": "경기도 남양주시 퇴계원로 29 송백타운 202호 와와학습코칭학원 퇴계원점\n 판다팜건물 2층 \n 퇴계원역 4거리에서 2분거리", "target_elem": "퇴계원초, 도제원초, 태강삼육초", "target_mid": "퇴계원중, 진건중", "target_high": "퇴계원고, 진건고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "마포점", "officialName": "마포점와와학습코칭학원", "regNo": "서울서부교육지원청 등록 제02201800007호", "sido": "서울", "sido_en": "seoul", "district": "마포구", "address": "서울특별시 마포구 염리동 독막로42길 7  173-3 2층", "directions": "지하철5호선 마포역, 6호선 공덕역 하차후 염리초등학교 방향으로 10분도보", "target_elem": "염리초", "target_mid": "서울여중, 동도중, 신수중, 숭문중", "target_high": "서울여고, 숭문고, 광성고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "용인백현점(모두)", "officialName": "용인백현점\n모두오름학습코칭학원", "regNo": "경기도용인교육지원청 제5632호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기 용인시 기흥구 동백7로 83  백현마을중앙프라자 제 2층 제 208호", "directions": "동백고등학교 건너편 상가 중에 중앙프라자 2층에 위치한 모두오름 학습코칭학원", "target_elem": "동막초, 동백초, 용인백현초", "target_mid": "동백중, 용인백현중", "target_high": "동백고, 용인백현고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "대구역점2호관", "officialName": "대구역점2호관\n와와학습코칭학원", "regNo": "대구동부교육지원청 제 6950 호", "sido": "대구", "sido_en": "daegu", "district": "중구", "address": "대구 중구 서성로 99  대구역센트럴자이 상가 203호 와와학습코칭학원", "directions": "수창공원 맞은편 대구역센트릴자이아파트 상가 2층", "target_elem": "수창초, 종로초", "target_mid": "계성중, 성명여중, 대구제일중, 사대부중", "target_high": "사대부고, 경북여고, 신명고, 칠성고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "운정중앙점", "officialName": "운정중앙점\n와와학습코칭학원", "regNo": "파주교육지원청 제2139호", "sido": "경기", "sido_en": "gyeonggi", "district": "파주시", "address": "경기도 파주시 양지로 131, 운정SB타워 509호,510호 (동패동)", "directions": "초롱꽃마을 12단지(대림이편한세상아파트)와 13단지(디에트르아파트) 사이 상가건물들 중 버거킹건물 5층", "target_elem": "초롱초", "target_mid": "심학중", "target_high": "심학고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "충주용산점", "officialName": "충주용산점\n와와학습코칭학원", "regNo": "충주교육지원청 제 1693호", "sido": "충북", "sido_en": "chungbuk", "district": "충주시", "address": "충북 충주시 형설로 54-10,2층 (용산동)", "directions": "충주중학교 정문으로 오세요", "target_elem": "남산초, 용산초", "target_mid": "예성여중, 미덕중", "target_high": "충주여고, 예성여고, 충주고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "진천점(모두)", "officialName": "진천점 모두오름학습코칭학원", "regNo": "대구남부교육지원청 제 2025-53호", "sido": "대구", "sido_en": "daegu", "district": "달서구", "address": "대구광역시 달서구 조암남로 158,301호(유천동)", "directions": "AK그랑폴리스와 쌍용예가 사이에 있는 건물(그랑에비뉴) 3층 가장 왼쪽 학원", "target_elem": "한솔초, 한샘초", "target_mid": "월서중, 조암중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "별내중앙점(모두)", "officialName": "별내중앙점 \n모두오름학습코칭학원", "regNo": "경기도구리남양주교육지원청 제 5006 호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기도 남양주시 별내3로 66,401호", "directions": "우체국과 홈플러스 사이건물 4층입니다!", "target_elem": "한별초", "target_mid": "화접중, 한별중", "target_high": "별내고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "목동점", "officialName": "와와학습코칭학원", "regNo": "강서양천교육지원청 등록 제 5353호", "sido": "서울", "sido_en": "seoul", "district": "양천구", "address": "서울 양천구 목동동로8길 23  메리트윈 3층 305", "directions": "", "target_elem": "신목초, 서정초", "target_mid": "목일중, 신목중, 양강중, 금옥중", "target_high": "양천고, 신목고, 한광고, 서울영상고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "신도림점", "officialName": "와와학습코칭신도림학원", "regNo": "서울남부교육지원청 등록 제 5525호", "sido": "서울", "sido_en": "seoul", "district": "구로구", "address": "서울특별시 구로구 신도림동 신도림로 20  397-2 해동빌딩 402호", "directions": "구로구 신도림로 20 해동빌딩4층(신미림초등학교옆)", "target_elem": "신미림초", "target_mid": "신도림중", "target_high": "신도림고, 구현고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "제기점", "officialName": "제기와와학습코칭학원", "regNo": "서울동부교육지원청 등록 제 3066호", "sido": "서울", "sido_en": "seoul", "district": "동대문구", "address": "서울 동대문구 왕산로 61  302호 와와학습코칭학원", "directions": "", "target_elem": "용두초, 종암초, 기타사립초", "target_mid": "대광중, 성일중", "target_high": "대광고, 청량리고, 경희고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "종암점", "officialName": "종암와와학습코칭학원", "regNo": "성북강북교육지원청 등록 제2019-56호", "sido": "서울", "sido_en": "seoul", "district": "성북구", "address": "서울 성북구 종암로27길 13  도원프라자 501", "directions": "종암로27길 13 도원프라자 5층 (메가커피 건물) 성북소방서와 GS 주유소 사이길로 들어오시면 소방서 바로 옆 건물입니다~", "target_elem": "", "target_mid": "종암중, 사대부중, 개운중", "target_high": "사대부고, 용문고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "명일점", "officialName": "명일점와와학습코칭학원", "regNo": "서울강동교육지원청 등록 제 7641호", "sido": "서울", "sido_en": "seoul", "district": "강동구", "address": "서울 강동구 양재대로 1606  3층", "directions": "", "target_elem": "", "target_mid": "천호중, 배재중, 명일중", "target_high": "명일여고, 강동고, 광문고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "구산점", "officialName": "구산점와와학습코칭학원", "regNo": "서울서부교육지원청 등록 제02201700143호", "sido": "서울", "sido_en": "seoul", "district": "은평구", "address": "서울특별시 은평구 역촌동 연서로 130  4층", "directions": "", "target_elem": "", "target_mid": "구산중, 은평중", "target_high": "예일여중고, 선일여중고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "내발산점", "officialName": "내발산점와와학습코칭학원", "regNo": "강서양천교육지원청 등록 제 5444호", "sido": "서울", "sido_en": "seoul", "district": "강서구", "address": "서울 강서구 마곡중앙4로 74  이웰메디파크 제4층 401,402호", "directions": "내발산역에서 우장산역 방향으로 걸어오시다보면 소방서 앞에 육교가 있는데 육교앞 건물입니다.\n1층에 커피숍과 딤채가 있습니다.", "target_elem": "가곡초, 내발산초", "target_mid": "등명중, 화곡중, 명덕중, 덕원중", "target_high": "화곡고, 명덕고, 덕원여고, 마포고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "금천점", "officialName": "금천점와와학습코칭학원", "regNo": "서울남부교육지원청 등록 제 5726호", "sido": "서울", "sido_en": "seoul", "district": "금천구", "address": "서울 금천구 금하로 763  벽산아파트 제중심상가동 3층 306-2,307,308", "directions": "금천구 시흥2동 주민센터 건너편 벽산중심상가 3층", "target_elem": "탑동초", "target_mid": "동일중, 세일중", "target_high": "매그넷고, 동일여고, 금천고, 문일고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "위례점", "officialName": "위례와와학습코칭학원", "regNo": "성남교육지원청 등록 제6054호", "sido": "경기", "sido_en": "gyeonggi", "district": "성남시", "address": "경기 성남시 수정구 위례광장로 320  315호", "directions": "", "target_elem": "고운초, 위례중앙초, 송례초", "target_mid": "위례한빛중, 위례중앙중, 송례중", "target_high": "위례한빛고, 복정고, 문현고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "상현점", "officialName": "상현점와와학습코칭학원", "regNo": "용인교육지원청 등록 제4241-1호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기도 용인시 수지구 상현동 만현로 120  4층 410호 와와학습코칭학원", "directions": "상현동 sr프라자 4층", "target_elem": "솔개초, 상현초, 이현초", "target_mid": "서원중, 소현중, 이현중, 성복중", "target_high": "상현고, 서원고, 풍덕고, 이의고, 홍천고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "사우점", "officialName": "사우점와와학습코칭학원", "regNo": "김포교육지원청 등록 제1769호", "sido": "경기", "sido_en": "gyeonggi", "district": "김포시", "address": "경기 김포시 사우중로 77  삼정사이버프라자 304", "directions": "", "target_elem": "금파초, 향산초", "target_mid": "금파중, 김포중", "target_high": "사우고, 풍무고, 고촌고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "수지점(W+)", "officialName": "수지점더블유플러스학원", "regNo": "용인교육지원청 등록 제5126호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기 용인시 수지구 진산로 106  훼미리빌딩 512호,513호,514호", "directions": "", "target_elem": "", "target_mid": "이현중, 수지중, 정평중", "target_high": "성복고, 풍덕고, 수지고, 죽전고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "새롬점", "officialName": "새롬와와학습코칭학원", "regNo": "세종특별자치시교육청 등록 제1211호", "sido": "세종", "sido_en": "sejong", "district": "", "address": "세종특별자치시 새롬중앙로 62-15  해피라움W 305호", "directions": "", "target_elem": "새뜸초, 새롬초", "target_mid": "새뜸중, 새롬중", "target_high": "새롬고, 다정고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "삼산점", "officialName": "삼산점와와학습코칭학원", "regNo": "울산강남교육지원청 등록 제6001호", "sido": "울산", "sido_en": "ulsan", "district": "남구", "address": "울산광역시 남구 삼산동 돋질로 300  4층", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "상남점", "officialName": "상남점와와학습코칭학원", "regNo": "창원교육지원청 등록 제1020호", "sido": "경남", "sido_en": "gyeongnam", "district": "창원시", "address": "경남 창원시 성산구 마디미동로 25  비전빌딩 302호", "directions": "상남동 한마음병원 횡단보도 맞은편 건물 3층에 위치", "target_elem": "외동초", "target_mid": "상남중, 토월중, 웅남중", "target_high": "창원중앙여고, 남고, 신월고, 토월고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "향남점", "officialName": "향남점와와학습코칭학원", "regNo": "화성오산교육지원청 등록 제3567호", "sido": "경기", "sido_en": "gyeonggi", "district": "화성시", "address": "경기 화성시 향남읍 발안로 103-6  J&H빌딩 402호", "directions": "", "target_elem": "한울초, 도이초", "target_mid": "발안중, 향남중, 하길중, 화성중", "target_high": "향남고, 향일고, 하길고, 발안바이오고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "동래점", "officialName": "동래점와와학습코칭학원", "regNo": "동래교육지원청 등록 제4888호", "sido": "부산", "sido_en": "busan", "district": "동래구", "address": "부산광역시 동래구 온천동 충렬대로 129-1  한야빌딩 3", "directions": "건강검진센터와 동래맥도널드 사이 / 횡단보도 근처 / 건겅검진센터에서 미남역으로 한 블럭", "target_elem": "내산초", "target_mid": "내성중,유락여중,동래중,동해중", "target_high": "내성고,중앙여고,동래고,부산전자고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "장곡점", "officialName": "와와학습코칭학원", "regNo": "시흥교육지원청 등록 제 시871호", "sido": "경기", "sido_en": "gyeonggi", "district": "시흥시", "address": "경기 시흥시 진말로 7  중앙프라자 3층 305호, 306호", "directions": "장곡동 에이스마트 맞은편 '미소신협'건물 3층 와와학습코칭학원", "target_elem": "장곡초, 진말초", "target_mid": "응곡중, 장곡중, 가온중", "target_high": "장곡고, 능곡고, 시흥고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "갈산점", "officialName": "와와학습코칭갈산학원", "regNo": "이천교육지원청 등록 제1127호", "sido": "경기", "sido_en": "gyeonggi", "district": "이천시", "address": "경기도 이천시 갈산동 영창로 314  629-2외 2필지 주공프라자 504호", "directions": "", "target_elem": "안흥초, 설봉초", "target_mid": "이천중, 설봉중, 증포중", "target_high": "제일고, 이현고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "금릉점", "officialName": "와와학습코칭학원(금릉점)", "regNo": "파주교육지원청 등록 제1594호", "sido": "경기", "sido_en": "gyeonggi", "district": "파주시", "address": "경기 파주시 금빛로 24-27  제일메디컬 502", "directions": "1층 용우동,복호두있는 건물 5층입니다. 눈높이 옆에있습니다.", "target_elem": "금릉초, 금화초, 새금초, 금촌초", "target_mid": "금릉중, 금촌중, 문산중", "target_high": "금촌고, 문산제일고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "반달점", "officialName": "반달점와와학습코칭보습학원", "regNo": "부천교육지원청 등록 제6730호", "sido": "경기", "sido_en": "gyeonggi", "district": "부천시", "address": "경기 부천시 원미구 상일로 69  반달마을 제상가동 제 3층 제 304호 와와학습코칭학원", "directions": "경기도 부천시 상일로 69 반달마을 상가동 304호\n (주차는 아파트 입구에서 상가 304호 방문이라고 하면 됩니다)", "target_elem": "부인초, 상도초", "target_mid": "부인중, 상동중", "target_high": "상원고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "관평점", "officialName": "관평점와와학습코칭학원", "regNo": "대전서부교육지원청 등록 제 서4761호", "sido": "대전", "sido_en": "daejeon", "district": "유성구", "address": "대전 유성구 관평2로 46  밸리타운 501", "directions": "지도 사진과 함께 동화중학교 맞은편/ 주민센터 뒷 건물 로 설명 드립니다.", "target_elem": "동화초, 관평초", "target_mid": "동화중, 관평중", "target_high": "중일고, 용산고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "개신점", "officialName": "와와학습코칭센터학원", "regNo": "청주교육지원청 등록 제4620호", "sido": "충북", "sido_en": "chungbuk", "district": "청주시", "address": "충청북도 청주시 서원구 개신동 경신로 31-1  402호", "directions": "청주시 서원구 경신로 31-1 스타타워빌딩 4층\n(개신동 농협사거리, 1층에 롯데리아 개신점이 있는 건물의 4층입니다.)", "target_elem": "개신초, 서경초, 가경초, 죽림초, 서원초", "target_mid": "가경중, 서경중, 경덕중, 사대부중, 성화중, 서원중", "target_high": "서원고, 사대부고, 청주고, 중앙여고, 운호고, 봉명고, 흥덕고, 세광고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "상동점", "officialName": "와와학습코칭상동보습학원", "regNo": "부천교육지원청 등록 제5950호", "sido": "경기", "sido_en": "gyeonggi", "district": "부천시", "address": "경기 부천시 원미구 송내대로265번길 67  월드컵타운 305호 와와학습코칭센터", "directions": "진달래마을 정문 앞  청담 어학원 옆건물", "target_elem": "석천초  상인초", "target_mid": "석천중 상동중 상일중 부인중", "target_high": "상동고 상일고 상원고 중흥고 중원고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "논현점", "officialName": "와와학습코칭인천논현학원", "regNo": "인천동부교육지원청 등록 제3283호", "sido": "인천", "sido_en": "incheon", "district": "남동구", "address": "인천 남동구 청능대로 559  2", "directions": "인천 논현역 3번 출구에서 직진 200M 논현 메디컬 센터 2층", "target_elem": "동방초, 원동초", "target_mid": "고잔중", "target_high": "고잔고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "광명점", "officialName": "광명점와와학습코칭학원", "regNo": "광명교육지원청 등록 제1964호", "sido": "경기", "sido_en": "gyeonggi", "district": "광명시", "address": "경기 광명시 광명로 823  광명현대타운 7층 701호", "directions": "", "target_elem": "", "target_mid": "광남중, 광문중", "target_high": "광문고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "정평점", "officialName": "와와학습코칭학원", "regNo": "경산교육지원청 등록 제941호", "sido": "경북", "sido_en": "gyeongbuk", "district": "경산시", "address": "경북 경산시 대학로 23  월드스퀘어 302", "directions": "", "target_elem": "사월초", "target_mid": "경산중, 사동중, 경산여중", "target_high": "경산고, 사동고, 경산여고, 문경고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "영천점", "officialName": "영천점와와학습코칭학원", "regNo": "화성오산교육지원청 등록 제2851호", "sido": "경기", "sido_en": "gyeonggi", "district": "화성시", "address": "경기 화성시 동탄순환대로 704  성산에이타워 제4층 제 403호 와와학습코칭학원", "directions": "", "target_elem": "한백초, 다원초", "target_mid": "한백중, 다원중", "target_high": "한백고, 이산고, 창의고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "송도점", "officialName": "WAWA와와학습코칭인천송도점학원", "regNo": "인천동부교육지원청 등록 제3284호", "sido": "인천", "sido_en": "incheon", "district": "연수구", "address": "인천 연수구 해돋이로 165  차오름프라자 302", "directions": "백제원 근처, 채드윅 근처, 1공구 학원가", "target_elem": "신정초", "target_mid": "신정중", "target_high": "연송고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "둔산점", "officialName": "와와학습코칭센터학원", "regNo": "대전서부교육지원청 등록 제 서4002호", "sido": "대전", "sido_en": "daejeon", "district": "서구", "address": "대전광역시 서구 둔산동 둔산로 142  신화빌딩 401호", "directions": "시청역 7번 출구쪽 스타벅스&올리브영 건물 4층.", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "관저점", "officialName": "관저점와와학습코칭학원", "regNo": "대전서부교육지원청 등록 제 서4277호", "sido": "대전", "sido_en": "daejeon", "district": "서구", "address": "대전 서구 구봉로 133  1542번지 205호", "directions": "마치광장 신협건물 2층", "target_elem": "", "target_mid": "", "target_high": "서일고, 서일여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "전주혁신점", "officialName": "전주혁신점와와학습코칭학원", "regNo": "완주교육지원청 제 454호", "sido": "전북", "sido_en": "jeonbuk", "district": "완주군", "address": "전북특별자치도 완주군 이서면 출판로 42  제 4층 제 402호 와와학습코칭학원", "directions": "전주 혁신도시 호반 베르디움 1차 맞은편 상가 / 굽네치킨 건물 4층", "target_elem": "", "target_mid": "양현중, 삼우중, 만성중", "target_high": "양현고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "주엽점", "officialName": "주엽점와와학습코칭학원", "regNo": "고양교육지원청 등록 제5403호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기도 고양시 일산서구 주엽동 주화로 88  502호", "directions": "", "target_elem": "강선초", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "주엽2호점", "officialName": "주엽2호와와학습코칭학원", "regNo": "고양교육지원청 등록 제5826호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 일산서구 중앙로 1413  동영빌딩 10층 1003", "directions": "", "target_elem": "강선초", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "다산점", "officialName": "다산점와와학습코칭학원", "regNo": "구리남양주교육지원청 등록 제4125호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 다산중앙로146번길 12-14  다산메트로타워 604호", "directions": "", "target_elem": "다산초", "target_mid": "다산중", "target_high": "다산고, 도농고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "비산점", "officialName": "와와학습코칭비산센터학원", "regNo": "안양과천교육지원청 등록 제 2017-063호", "sido": "경기", "sido_en": "gyeonggi", "district": "안양시", "address": "경기 안양시 동안구 관악대로 91  대림타워 1102호 와와학습코칭학원", "directions": "경기 안양시 동안구 관악대로 91 대림타워 1102호 와와학습코칭학원", "target_elem": "중앙초", "target_mid": "비산중, 부흥중, 부림중, 신성중", "target_high": "양명여고, 양명고, 관양고, 성문고, 동안고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "두정점", "officialName": "와와학습코칭두정점학원", "regNo": "천안교육지원청 등록 제3444호", "sido": "충남", "sido_en": "chungnam", "district": "천안시", "address": "충청남도 천안시 서북구 두정동 봉정로 382  성광빌딩 3층", "directions": "두정초 정문 앞, 8단지 맞은편 피자마루 건물 3층,", "target_elem": "두정초, 신대초", "target_mid": "두정중, 성성중, 성정중,", "target_high": "오성고, 두정고, 신당고, 업성고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "원주시청점", "officialName": "와와학습코칭학원원주시청점", "regNo": "원주교육지원청 등록 제2605호", "sido": "강원", "sido_en": "gangwon", "district": "원주시", "address": "강원특별자치도 원주시 시청로 22  2층 201", "directions": "원주시청 등지고 오른쪽 첫번째 버스정류장 옆건물(1층에 피자알볼로)", "target_elem": "만대초, 무실초", "target_mid": "대성중, 평원중, 원주여중, 남원주중", "target_high": "대성고, 육민관고, 북원여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "오산대역점", "officialName": "오산대역점와와학습코칭학원", "regNo": "화성오산교육지원청 등록 제3851호", "sido": "경기", "sido_en": "gyeonggi", "district": "오산시", "address": "경기 오산시 내삼미로 85  우정프라자 2", "directions": "", "target_elem": "세미초, 화성초, 수청초", "target_mid": "매홀중, 세마중, 문시중, 대호중", "target_high": "매홀고, 세교고, 오산고, 운천고, 운암고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "신창점", "officialName": "와와학습코칭신창학원", "regNo": "광주서부교육지원청 등록 제6884호", "sido": "광주", "sido_en": "gwangju", "district": "광산구", "address": "광주 광산구 신창로 129  상민빌딩 302", "directions": "신창동 파리바게트 1호점 3층입니다.", "target_elem": "신창초, 수문초", "target_mid": "진흥중, 신창중, 진흥중", "target_high": "숭덕고, 성덕고, 운남고, 장덕고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "칠곡점", "officialName": "칠곡점와와학습코칭학원", "regNo": "대구서부교육지원청 등록 제2020-4298호", "sido": "대구", "sido_en": "daegu", "district": "북구", "address": "대구 북구 구암로 149  6층", "directions": "", "target_elem": "관음초", "target_mid": "구암중, 관천중, 운암중", "target_high": "구암고, 함지고, 영송여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "운정점", "officialName": "운정점와와학습코칭학원", "regNo": "파주교육지원청 등록 제1424호", "sido": "경기", "sido_en": "gyeonggi", "district": "파주시", "address": "경기 파주시 동패동  1758-1 삼융프라자2 302호", "directions": "", "target_elem": "한가람초", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "다산지금점", "officialName": "다산지금점와와학습코칭학원", "regNo": "구리남양주교육지원청 등록 제4349-1호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 다산지금로 139  3층 308호, 309호", "directions": "스타벅스 다산지금점 건물 3층(영신프라자)입니다.", "target_elem": "다산한강초", "target_mid": "다산한강중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "수성만촌점", "officialName": "수성만촌점와와학습코칭학원", "regNo": "대구동부교육지원청 등록 제6028호", "sido": "대구", "sido_en": "daegu", "district": "수성구", "address": "대구 수성구 화랑로8길 11-11  7층", "directions": "", "target_elem": "", "target_mid": "동중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "천천점", "officialName": "천천와와학습코칭학원", "regNo": "수원교육지원청 등록 제6090-1호", "sido": "경기", "sido_en": "gyeonggi", "district": "수원시", "address": "경기 수원시 장안구 덕영대로535번길 34  천천그린프라자 제5층 제 502호 와와학습코칭학원", "directions": "롯데마트 천천점 옆건물(건강과 행복 약국& 봉구스밥버거 1층)그린프라자 5층", "target_elem": "천천초 정천초", "target_mid": "천천중 대평중", "target_high": "천천고 영생고 대평고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "산남점", "officialName": "산남점와와학습코칭학원", "regNo": "청주교육지원청 등록 제4696호", "sido": "충북", "sido_en": "chungbuk", "district": "청주시", "address": "충청북도 청주시 서원구 산남동 산남로 18  이화빌딩 5층", "directions": "하나로 마트 건물 옆 1층 조은약국 건물", "target_elem": "샛별초", "target_mid": "수곡중 산남중", "target_high": "충북고 운호고 충북여고 산남고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "석사점", "officialName": "석사2호점와와학습코칭학원", "regNo": "춘천교육지원청 등록 제1593호", "sido": "강원", "sido_en": "gangwon", "district": "춘천시", "address": "강원특별자치도 춘천시 지석로 85  703호", "directions": "지석로 85 강남프라자 7층 ( 투탑시티 카펠라 휘트니스 건너편 건물)", "target_elem": "성림초, 성원초, 봄내초", "target_mid": "대룡중, 우석중, 남춘천중, 남춘천여중, 춘천중, 강원중", "target_high": "강원고, 사대부고, 춘고, 춘여고, 봉의고, 성수여고, 유봉여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "후평점", "officialName": "후평점와와학습코칭학원", "regNo": "춘천교육지원청 등록 제1741호", "sido": "강원", "sido_en": "gangwon", "district": "춘천시", "address": "강원특별자치도 춘천시 춘천로 316  춘천더샵아파트상가2동 304.305", "directions": "후평사거리 포스코상가 3층 (정육점 건물 3층으로 말하시면 많이들 아십니다)", "target_elem": "", "target_mid": "후평중, 봉의중, 강원중", "target_high": "강원고, 춘천여고, 봉의고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "옥계점", "officialName": "옥계점와와학습코칭학원", "regNo": "구미교육지원청 등록 제2536호", "sido": "경북", "sido_en": "gyeongbuk", "district": "구미시", "address": "경북 구미시 산호대로31길 16  2", "directions": "구미시 산호대로 31길 16 2층", "target_elem": "원당초, 옥계동부초, 해마루초", "target_mid": "옥계동부중, 해마루중, 옥계중", "target_high": "산동고, 오상고, 금오여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "당진중앙점", "officialName": "당진중앙와와학습코칭학원", "regNo": "당진교육지원청 등록 제617호", "sido": "충남", "sido_en": "chungnam", "district": "당진시", "address": "충남 당진시 당진중앙2로 211-5  효명프라자 404호", "directions": "", "target_elem": "탑동초", "target_mid": "호서중, 당진중", "target_high": "호서고, 당진고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "미사점", "officialName": "미사점와와학습코칭학원", "regNo": "광주하남교육지원청 등록 제1913호", "sido": "경기", "sido_en": "gyeonggi", "district": "하남시", "address": "경기 하남시 미사강변대로 212  미사센트럴프라자 309", "directions": "https://naver.me/xhHGgP9o  학원 위치 안내드립니다^^~미사도서관이나 보건센터에서 도보로 2분 거리입니다.", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "영통점", "officialName": "와와학습코칭학원", "regNo": "수원교육지원청 등록 제6117호", "sido": "경기", "sido_en": "gyeonggi", "district": "수원시", "address": "경기도 수원시 영통구 영통동 봉영로 1623  드림피아빌딩 301호, 302호 1/2", "directions": "영통역과 청명역 중간에 버거킹 건물 3층입니다.", "target_elem": "영덕초", "target_mid": "흥덕중, 서천중", "target_high": "영덕고, 청명고, 태장고, 흥덕고, 서천고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "망포점", "officialName": "망포와와학습코칭학원", "regNo": "수원교육지원청 등록 제6338호", "sido": "경기", "sido_en": "gyeonggi", "district": "수원시", "address": "경기도 수원시 영통구 망포동 영통로 127  센터프라자 401호", "directions": "", "target_elem": "잠원초, 망포초, 대선초", "target_mid": "영동중, 잠원중, 망포중, 동학중", "target_high": "태장고, 망포고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "강릉교동점", "officialName": "와와학습코칭학원", "regNo": "강릉교육지원청 등록 제1386호", "sido": "강원", "sido_en": "gangwon", "district": "강릉시", "address": "강원특별자치도 강릉시 정원로 44  202호 와와학습코칭학원", "directions": "", "target_elem": "율곡초, 경포초", "target_mid": "관동중, 율곡중, 해람중, 솔올중, 경포중", "target_high": "강여고, 강일여고, 명륜고, 제일고, 강릉고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "서수원점", "officialName": "서수원와와학습코칭학원", "regNo": "수원교육지원청 등록 제6949호", "sido": "경기", "sido_en": "gyeonggi", "district": "수원시", "address": "경기 수원시 권선구 호매실로104번길 90  JD타워 205호", "directions": "", "target_elem": "능실초, 금호초", "target_mid": "오현초호매실중, 능실중, 영신중, 고색중", "target_high": "호매실고, 영신여고, 고색고, 율천고, 동우여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "원당점", "officialName": "원당점와와학습코칭학원", "regNo": "고양교육지원청 등록 제5951호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 덕양구 고양대로1384번길 7-5  서강프라자 502호", "directions": "", "target_elem": "", "target_mid": "성사중, 화수중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "송도점(W+)", "officialName": "송도점더블유플러스학원", "regNo": "인천동부교육지원청 등록 제3518호", "sido": "인천", "sido_en": "incheon", "district": "연수구", "address": "인천 연수구 해돋이로 160-6  꿈에계단 702호 일부(송도동)", "directions": "백제원 근처, 백제원 앞 랜드로버 방향 옆건물, 1층에 명월카츠", "target_elem": "신정초", "target_mid": "신정중", "target_high": "연송고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "운양점", "officialName": "운양점와와학습코칭학원", "regNo": "김포교육지원청 등록 제1913호", "sido": "경기", "sido_en": "gyeonggi", "district": "김포시", "address": "경기 김포시 김포한강11로 288-37  헤리움리버테라스 205호", "directions": "경기 김포시 운양동 1296-7 헤리움'리버테라스' 205호입니다 엘레베이터 열리고 바로 왼쪽으로 오시면 됩니다~", "target_elem": "하늘빛초, 청수초", "target_mid": "하늘빛중, 운양중, 푸른솔중", "target_high": "제일고, 운양고, 운유고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "도안점", "officialName": "도안점와와학습코칭학원", "regNo": "대전서부교육지원청 등록 제 서4790호", "sido": "대전", "sido_en": "daejeon", "district": "서구", "address": "대전 서구 동서대로 692  에프엠프라임 1차 501", "directions": "", "target_elem": "흥도초", "target_mid": "유성중, 봉명중, 도안중", "target_high": "유성고, 도안고, 서대전여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "시흥대야점", "officialName": "시흥대야점와와학습코칭학원", "regNo": "시흥교육지원청 등록 제 시1277호", "sido": "경기", "sido_en": "gyeonggi", "district": "시흥시", "address": "경기 시흥시 은행로167번길 7  크리스탈 빌딩 503호,504호", "directions": "", "target_elem": "은계초, 은행초", "target_mid": "은행중, 은계중", "target_high": "은행고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "둔산점(W+)", "officialName": "둔산점더블유플러스학원", "regNo": "대전서부교육지원청 등록 제 서4833호", "sido": "대전", "sido_en": "daejeon", "district": "서구", "address": "대전 서구 둔산로 130  803호", "directions": "시청역 7번 출구쪽 30m", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "반여점", "officialName": "반여점와와학습코칭학원", "regNo": "해운대교육지원청 등록 제3955호", "sido": "부산", "sido_en": "busan", "district": "해운대구", "address": "부산 해운대구 반여로 102  경성빌딩 501호", "directions": "아시아선수촌 정문 건너편 깨비블럭있는 건물 5층", "target_elem": "인지초, 장산초, 무정초", "target_mid": "장산중, 인지중", "target_high": "반여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "화명점", "officialName": "화명점와와학습코칭학원", "regNo": "부산북부교육지원청 등록 제2830호", "sido": "부산", "sido_en": "busan", "district": "북구", "address": "부산 북구 금곡대로285번길 19  리버사이드빌딩 504", "directions": "일방통행길 빽다방 건물 5층, 또는 코오롱하늘채 2차 정문 앞 상가", "target_elem": "와석초", "target_mid": "명진중, 화명중", "target_high": "화명고,  성도고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "보라점", "officialName": "보라점와와학습코칭학원", "regNo": "용인교육지원청 등록 제4991호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기 용인시 기흥구 사은로126번길 6  신원프라자 303호", "directions": "쌍용아파트 입구 줄넘기 학원 건물 3층", "target_elem": "나곡초", "target_mid": "나곡중/보라중/상갈중", "target_high": "보라고/신갈고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "대구장기점", "officialName": "대구장기점와와학습코칭학원", "regNo": "대구남부교육지원청 등록 제2020-80호", "sido": "대구", "sido_en": "daegu", "district": "달서구", "address": "대구 달서구 장기로 252  장기협성휴포레 2층 209,210", "directions": "버스정류장(장동초등학교앞) 바로 앞 대로변에 있습니다.\n 장기협성휴포레 상가 2층 (1층에 한솥 도시락이 있습니다)", "target_elem": "장동초, 장기초, 성당초", "target_mid": "원화중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "범박점", "officialName": "범박점와와학습코칭보습학원", "regNo": "부천교육지원청 등록 제6495호", "sido": "경기", "sido_en": "gyeonggi", "district": "부천시", "address": "경기 부천시 소사구 은성로 132  5층", "directions": "부천 은성로132 제일프라자 501호 (세븐일레븐건물 5층)", "target_elem": "창영초, 소안초, 소사초, 복사초", "target_mid": "일신중, 소사중, 부일중", "target_high": "시온고, 소사고, 범박고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "위례창곡점", "officialName": "위례창곡점와와학습코칭학원", "regNo": "성남교육지원청 등록 제6458호", "sido": "경기", "sido_en": "gyeonggi", "district": "성남시", "address": "경기 성남시 수정구 위례동로 141  우성메디피아 401호", "directions": "경기도 성남시 수정구 위례동로 141 우성메디피아 401호  1층컴포즈커피", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "혁신점", "officialName": "혁신점와와학습코칭학원", "regNo": "원주교육지원청 등록 제2762호", "sido": "강원", "sido_en": "gangwon", "district": "원주시", "address": "강원특별자치도 원주시 입춘로 110  파라다이스프라자 305호", "directions": "", "target_elem": "버들초, 반고초", "target_mid": "버들중, 반곡중", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "원흥점", "officialName": "원흥점와와학습코칭학원", "regNo": "고양교육지원청 등록 제6096호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 덕양구 권율대로 672  원흥역봄오피스텔 217호", "directions": "원흥역 1번 출구 앞 1층 베스킨 라빈스 있는 건물 2층 217호", "target_elem": "원흥초, 삼송초", "target_mid": "원흥중, 고양중", "target_high": "신원고, 서정고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "거제수월점", "officialName": "거제수월점와와학습코칭학원", "regNo": "거제교육지원청 등록 제1558호", "sido": "경남", "sido_en": "gyeongnam", "district": "거제시", "address": "경남 거제시 수양로 462  3층", "directions": "수월사거리 파리바게트 맞은편 skT월드 건물 3층", "target_elem": "수월초, 제산초", "target_mid": "수월중, 거제중앙중", "target_high": "거제중앙고, 연초고, 상문고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "덕이점", "officialName": "덕이점와와학습코칭학원", "regNo": "고양교육지원청 등록 제6169호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 일산서구 하이파크2로 40  금문프라자 804호", "directions": "금문프라자(농협 옆건물, 1층에 컴포즈 카페있는 건물, 7층 헬스장 바로 위 8층입니다)", "target_elem": "한산초, 덕이초, 백송초", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "삼송점", "officialName": "삼송점와와학습코칭학원", "regNo": "고양교육지원청 등록 제6173호", "sido": "경기", "sido_en": "gyeonggi", "district": "고양시", "address": "경기 고양시 덕양구 신원로 36  명승세도나3 701호", "directions": "신원마을6단지 맞은편 상가-명승세도나3차 맘스터치있는 건물 7층", "target_elem": "신원초", "target_mid": "신원중", "target_high": "신원고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "진월점", "officialName": "진월점와와학습코칭센터학원", "regNo": "광주서부교육지원청 등록 제7193호", "sido": "광주", "sido_en": "gwangju", "district": "남구", "address": "광주 남구 광복마을길 47  4층", "directions": "광주광역시 남구 광복마을길 47 4층", "target_elem": "진월초, 주월초", "target_mid": "동성여중, 주월중", "target_high": "대광여고, 동성고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "이충점", "officialName": "이충점와와학습코칭학원", "regNo": "평택교육지원청 등록 제 2599호", "sido": "경기", "sido_en": "gyeonggi", "district": "평택시", "address": "경기 평택시 이충로 49-31  삼원프라자 201호", "directions": "이충상가 농협 옆건물 삼원프라자 2층, 1층 정관장 건물", "target_elem": "", "target_mid": "효명중, 이충중, 은혜중", "target_high": "이충고, 은혜고, 효명고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "루원시티점", "officialName": "루원시티점와와학습코칭학원", "regNo": "인천서부교육지원청 등록 서부 제2212호", "sido": "인천", "sido_en": "incheon", "district": "서구", "address": "인천 서구 새오개로111번안길 23  대릉빌딩 302호", "directions": "", "target_elem": "가현초", "target_mid": "신형중, 신현여중, 가현중", "target_high": "신현고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "복현점", "officialName": "복현점와와학습코칭학원", "regNo": "대구광역시서부교육지원청 제2024-4559호", "sido": "대구", "sido_en": "daegu", "district": "북구", "address": "대구 북구 동북로 247  이편한세상복현 상가동 305호 와와학습코칭학원", "directions": "대구 북구 복현동 713 e편한세상복현 상가동 305호", "target_elem": "복현초", "target_mid": "북중, 성광중, 산격중", "target_high": "경상고, 성광고, 영진고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "진접점", "officialName": "진접점와와학습코칭학원", "regNo": "경기도구리남양주교육지원청등록 제4552호", "sido": "경기", "sido_en": "gyeonggi", "district": "남양주시", "address": "경기 남양주시 진접읍 해밀예당1로 171  제일프라자 203호", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "사직점", "officialName": "사직점와와학습코칭학원", "regNo": "동래교육지원청 등록 제5468호", "sido": "부산", "sido_en": "busan", "district": "동래구", "address": "부산 동래구 사직로 80  222동 311호 (사직쌍용예가아파트 상가)", "directions": "부산시 동래구 사직로 80 쌍용예가상가 222동 311호 (상가 두개 중 맑은샘사우나가 있는 상가 3에 위치)", "target_elem": "예원초, 사직초", "target_mid": "사직중, 사직여중", "target_high": "사직고, 사직여고, 동인고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "운정호수점", "officialName": "운정호수점와와학습코칭센터학원", "regNo": "경기도파주교육지원청 등록 제1878호", "sido": "경기", "sido_en": "gyeonggi", "district": "파주시", "address": "경기 파주시 경의로1240번길 37-1  명품프라자3차 605호", "directions": "운정역1번출구에서 걸어서 7분, 가람도서관 건너편, 할리스건물", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "탄벌점", "officialName": "탄벌점와와학습코칭학원", "regNo": "광주하남교육지원청 등록 제2007호", "sido": "경기", "sido_en": "gyeonggi", "district": "광주시", "address": "경기 광주시 벌원길 61  2층", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "남외점", "officialName": "남외점와와학습코칭학원", "regNo": "울산강북교육지원청 등록 제5626호", "sido": "울산", "sido_en": "ulsan", "district": "중구", "address": "울산 중구 남외3길 15  남외프라자 401호", "directions": "남외초앞 파리바게트 사거리 마트위 4층", "target_elem": "남외초", "target_mid": "남외중,울산중", "target_high": "울산고,가온고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "흥덕점", "officialName": "흥덕점와와학습코칭학원", "regNo": "용인교육지원청 등록 제4989호", "sido": "경기", "sido_en": "gyeonggi", "district": "용인시", "address": "경기 용인시 기흥구 흥덕2로 85  우연프라자 201호", "directions": "용인 흥덕 이마트 뒷편 세차장 옆건물 2층입니다.(경기도 용인시 흥덕2로 85 우연프라자 201호)", "target_elem": "샘말초, 석현초, 흥덕초, 매원초", "target_mid": "흥덕중, 다산중, 광교호수중, 상현중", "target_high": "흥덕고, 기흥고, 신갈고, 상현고, 매원고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "반송점", "officialName": "반송점와와학습코칭학원", "regNo": "화성오산교육지원청 등록 제3130호", "sido": "경기", "sido_en": "gyeonggi", "district": "화성시", "address": "경기도 화성시 반송동 동탄원천로 163  503호", "directions": "", "target_elem": "", "target_mid": "", "target_high": "", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "돈암점", "officialName": "돈암점와와학습코칭학원", "regNo": "성북강북교육지원청 등록 제2017-43호", "sido": "서울", "sido_en": "seoul", "district": "성북구", "address": "서울특별시 성북구 돈암동 동소문로 190  중앙빌딩 201호", "directions": "성신여대역 1번출구, 직진 버스 1정거장  기아자동차 건물 2층", "target_elem": "개운초", "target_mid": "개운중, 성신여중, 고명중", "target_high": "용문고, 사대부고, 성신여고, 고대부고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "동소문점", "officialName": "동소문점와와학습코칭학원", "regNo": "성북강북교육지원청 등록 제2017-39호", "sido": "서울", "sido_en": "seoul", "district": "성북구", "address": "서울 성북구 아리랑로7길 5  4층 와와학습코칭학원", "directions": "할머니문방구 사거리 건물 4층", "target_elem": "정덕초, 우촌초, 정수초", "target_mid": "성신여중, 동구여중, 삼선중, 고명중", "target_high": "성신여고, 홍대부고, 고대부고, 한성여고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0},
-{"name": "상암점", "officialName": "와와학습코칭센터학원", "regNo": "서울서부교육지원청 등록 제022015001127호", "sido": "서울", "sido_en": "seoul", "district": "마포구", "address": "서울특별시 마포구 상암동 상암산로1길 73  202호", "directions": "", "target_elem": "중동초, 상지초, 상암초", "target_mid": "상암중, 중암중, 성산중, 성사중, 덕은한강중", "target_high": "상암고, 예일여고, 대성고, 숭실고, 가재울고", "strength": "", "price_elem": 0, "price_mid": 0, "price_high": 0}
-];
-
-
-
-
-
-
-
+const CENTERS=[{"n":"하남풍산점","on":"하남풍산점와와학습코칭학원","reg":"경기도광주하남교육지원청 제 하남314호","s":"경기","se":"gyeonggi","d":"하남시","a":"경기 하남시 덕풍동로 119  하남프라자 501호 와와학습코칭학원","dir":"경기도 하남시 덕풍동로119 하남프라자501호 \n 스타벅스 맞은편 건물입니다\n 주차 1시간 가능합니다","te":"나룰초, 하남풍산초","tm":"덕풍중, 신평중, 동부중","th":"풍산고, 남한고, 신장고, 감일고, 미사고, 애니고"},{"n":"사동점","on":"사동점와와학습코칭학원","reg":"경상북도경산교육지원청 제1276호","s":"경북","se":"gyeongbuk","d":"경산시","a":"경북 경산시 백자로10길 1  402호 와와학습코칭학원","dir":"경산시 백자로 10길 1 402호(사동 공차건물)","te":"사동초, 삼성현초, 평산초, 동부초","tm":"사동중, 문명중, 삼성현중, 경산중, 경산여중, 장산중","th":"사동고, 경산여고, 경산고, 문명고, 경북체고"},{"n":"하계점","on":"하계점와와학습코칭학원","reg":"서울북부교육청 등록 제 2016-12호","s":"서울","se":"seoul","d":"노원구","a":"서울 노원구 노원로 257  401호","dir":"혜성여고 건너편, 하계중 바로 옆, 1층에 메가커피가 있는 건물의 4층 맨 안쪽","tm":"하계중, 녹천중, 상명중, 태릉중, 공릉중","th":"혜성여고, 대진고, 상명고, 월계고"},{"n":"수지점","on":"수지점와와학습코칭학원","reg":"용인교육지원청 등록 제4774호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기 용인시 수지구 문정로 13  중수프라자 503호","dir":"수지구청 맞으면 우리은행 건물 / 수지구청역 2번출구에서 2분거리","te":"풍천초, 정평초, 이현초","tm":"이현중, 수지중, 정평중","th":"상현고, 신봉고, 홍천고, 성복고, 풍덕고, 수지고, 죽전고"},{"n":"이곡점","on":"이곡점와와학습코칭학원","reg":"대구남부교육지원청 등록 제2016-13호","s":"대구","se":"daegu","d":"달서구","a":"대구광역시 달서구 이곡동 달구벌대로259길 33  제일빌딩 5층","dir":"대구시 달서구 달구벌대로259길 33 제일빌딩 5층 (1층이 현풍닭칼국수 음식점이 있는 빌딩)","te":"와룡초","tm":"성산중","th":"성서고"},{"n":"탄현점","on":"탄현점와와학습코칭학원","reg":"고양교육지원청 등록 제5930호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 일산서구 산현로17번길 23  은행프라자 4","dir":"✅주차장 주소: 경기도 고양시 일산서구 산현로17번길 35 탄현제2공영주차장\n(간판은 아파트쪽에서 보이기 때문에 혹시 간판이 보이지 않으면 농협 간판 보고 건물 확인 해주시면 됩니다) \n\n(차량 이용 시 주차는 탄현제2공영주차장 이용 부탁드립니다)\n(죄송하지만 주차비는 따로 지원하고 있지 않습니다)","te":"상탄초","tm":"일산동중, 일산중, 호곡중","th":"일산동고, 덕이고, 중산고, 일산동고, 중산고"},{"n":"철산점","on":"철산점와와학습코칭학원","reg":"광명교육지원청 등록 제1781호","s":"경기","se":"gyeonggi","d":"광명시","a":"경기도 광명시 철산동 도덕공원로 27  삼우빌딩 2층","dir":"경기도 광명시 도덕공원로27 삼우빌딩 2층 (주차장이 없습니다 인근 철산성당이나 인근 아파트에 주차가능합니다)"},{"n":"치평점","on":"와와학습코칭학원","reg":"광주서부교육지원청 등록 제6027호","s":"광주","se":"gwangju","d":"서구","a":"광주 서구 치평로 76  대한빌딩 403호","dir":"상무지구 이디야커피 건물4층이나 맥도널드 옆에 있다고 전달드립니다.","te":"운천초, 계수초","tm":"전남중, 동명중","th":"전남고, 상무고, 광주여고, 상일여고"},{"n":"지족점","on":"와와학습코칭학원","reg":"대전서부교육지원청 등록 제 서4241호","s":"대전","se":"daejeon","d":"유성구","a":"대전 유성구 지족동  910-7번지 401","dir":"노은역 동광장 다이소 맞은편 와플대학, BYC건물 4층","te":"상지초, 지족초, 노은초, 수정초","tm":"지족중, 노은중","th":"반석고, 지족고, 노은고, 유성여고"},{"n":"수완점","on":"와와학습코칭수완학원","reg":"광주서부교육지원청 등록 제6778호","s":"광주","se":"gwangju","d":"광산구","a":"광주 광산구 임방울대로 310  아이비타워 406","dir":"텃밭 건물로 들어와서 4층으로 올라오시면 바로 아발론 어학원이 있습니다.\n그대로 오른쪽을 바라보시면 복도 안쪽에 수완센터가 자리하고 있습니다.","tm":"수완중, 장덕중","th":"수완고, 장덕고"},{"n":"호매실점","on":"와와학습코칭센터호매실학원","reg":"수원교육지원청 등록 제6830호","s":"경기","se":"gyeonggi","d":"수원시","a":"경기 수원시 권선구 금곡로 116  유동빌딩  602호","dir":"금곡동 유동타워 6층입니다.(채선당,아이온 소아과건물)","th":"호매실고, 영신여고, 동원고, 동우여고"},{"n":"신곡점","on":"와와학습코칭센터학원","reg":"의정부교육지원청 등록 제2071호","s":"경기","se":"gyeonggi","d":"의정부시","a":"경기도 의정부시 신곡동 장곡로 626  금오종합상가 A동 302,303호","dir":"경기북부청사경전철역 건너편 금오종합상가 3층(1층 페리카나)","tm":"천보중, 효자중","th":"효자고, 경민it고"},{"n":"행신점","on":"행신점와와학습코칭센터학원","reg":"경기도고양교육지원청 등록 제6408호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 덕양구 중앙로 442  아성프라자 305호 와와학습코칭학원","dir":"경기도 고양시 중앙로 442, 아성프라자 305호(홈플러스 건물 3층)","te":"아람초, 행신초, 덕은초, 서정초","tm":"서정중, 행신중, 무원중, 가람중, 덕양중","th":"서정고, 행신고, 무원고"},{"n":"서신점","on":"와와학습코칭학원","reg":"전주교육지원청 등록 제6457호","s":"전북","se":"jeonbuk","d":"전주시","a":"전북특별자치도 전주시 완산구 서신로 5  4층 와와학습코칭학원","dir":"서신로5 4층(본병원 사거리에 있습니다)","te":"중산초","th":"한일고, 근영고"},{"n":"센트럴점","on":"센트럴점와와학습코칭학원","reg":"광주하남교육지원청 등록 제1894호","s":"경기","se":"gyeonggi","d":"하남시","a":"경기 하남시 미사강변대로 84  미사탑프라자 601호","dir":"미사탑프라자 6층( 빽다방 건물/ 자이아파트 정문)","te":"한홀초, 청하초","tm":"윤슬중, 미사중","th":"미사강변고, 미사고, 신장고, 남한고, 풍산고, 강일고, 특성화고"},{"n":"미금점","on":"금곡점와와학습코칭학원","reg":"성남교육지원청 등록 제5313호","s":"경기","se":"gyeonggi","d":"성남시","a":"경기도 성남시 분당구 금곡동 돌마로 87  골드프라자 402호","dir":"미금역 2번출구 150m 앞 국민은행 건물4층","te":"미금초, 청솔초, 늘푸른초","tm":"불곡중, 청솔중, 늘푸른중","th":"불곡고, 늘푸른고, 분당중앙고"},{"n":"야탑점","on":"야탑와와학습코칭학원","reg":"성남교육지원청 등록 제6056호","s":"경기","se":"gyeonggi","d":"성남시","a":"경기 성남시 중원구 양현로 461  4층","te":"여수초, 야탑초, 중탑초","tm":"야탑중","th":"아람고"},{"n":"갈매점","on":"갈매점와와학습코칭학원","reg":"구리남양주교육지원청 등록 제4331호","s":"경기","se":"gyeonggi","d":"구리시","a":"경기 구리시 갈매중앙로 79  에스엠타워 602호","dir":"안녕하세요, OO학생 학부모님~갈매점. 위치는 (구리시 갈매동79, 에스엠타워602호)입니다. 1층에 새마을금고, 베스킨라빈스 건물 6층입니다.","te":"갈매초, 산마루초","tm":"갈매중","th":"갈매고"},{"n":"마두점","on":"마두점와와학습코칭센터학원","reg":"고양교육지원청 등록 제6135호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 일산동구 중앙로 1191  굿모닝법조타운 1 604호","dir":"스타벅스 마두역점 건물 6층","te":"백신초, 호수초","tm":"백석중, 저동중","th":"백신고, 정발고"},{"n":"첨단점","on":"첨단점와와학습코칭센터학원","reg":"광주서부교육지원청 등록 제7200호","s":"광주","se":"gwangju","d":"광산구","a":"광주 광산구 월계로 191  404호","dir":"광주광역시 광산구 월계로191 첨단메디컬빌딩 4층 404호\n1층에 김가네와 쿼드커피 사이에 입구가 있습니다\n엘리베이터에서 내리셔서 바로 오른쪽에 센터가 위치합니다","te":"월봉초","tm":"천곡중, 월봉중","th":"장덕고"},{"n":"송정점","on":"송정점와와학습코칭학원","reg":"울산강북교육지원청 등록 제5652호","s":"울산","se":"ulsan","d":"북구","a":"울산 북구 화산로 123  골드테라스 404호","dir":"울산 북구 화산로 123 골드테라스건물 4층 404호\n1층에 백소정건물있습니다.","te":"고헌초, 송정초, 화봉초","tm":"고헌중, 화봉중, 연암중","th":"화봉고, 매곡고, 무룡고, 울산공고, 에너지고"},{"n":"석동점","on":"석동점와와학습코칭학원","reg":"창원교육지원청 등록 제1933호","s":"경남","se":"gyeongnam","d":"창원시","a":"경남 창원시 진해구 석동로 51  세븐코아 504호","dir":"진해구 석동로 51 세븐코아빌딩 5층 와와학습코칭센터","tm":"석동중"},{"n":"수진점","on":"수진점와와학습코칭학원","reg":"성남교육지원청 등록 제6533호","s":"경기","se":"gyeonggi","d":"성남시","a":"경기 성남시 중원구 원터로 95  2층","dir":"성남중앙초 후문 앞 cu 옆 건물, 행복한성적표 위층","te":"성남중앙초","tm":"성일중, 성남중, 동광중, 풍생중","th":"성남여고, 성남고, 성일고, 동광고, 효성고, 숭신여고, 복정고"},{"n":"수성2가점","on":"수성2가점와와학습코칭학원","reg":"대구광역시동부교육지원청 제6704호","s":"대구","se":"daegu","d":"수성구","a":"대구 수성구 명덕로 404  1동 404호 와와학습코칭학원","dir":"_x0008_대구 수성고 명덕로 404, 404호 3호선 수성시장역 2번출구에서 대봉교방향으로, 금손아귀 건물 4층","te":"동일초, 동도초, 동성초","tm":"대구동중, 신명여중, 중앙중, 황금중","th":"남산고, 경북고"},{"n":"기흥구청점","on":"기흥구청점와와학습코칭학원","reg":"경기도용인교육지원청 등록 제 5253호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기 용인시 기흥구 구갈로60번길 15  경영빌딩 3층 와와학습코칭학원","dir":"기흥구청 앞 신협 건물 3층, 한양수자인 103동 건너편","te":"구갈초, 산양초, 관곡초","tm":"구갈중, 신갈중, 신릉중","th":"기흥고, 신갈고, 성지고"},{"n":"대구도남점","on":"대구도남점와와학습코칭학원","reg":"대구광역시서부교육지원청 제2023-4500호","s":"대구","se":"daegu","d":"북구","a":"대구 북구 도남중앙로7길 20-3  위너프라자 402호 와와학습코칭학원","dir":"대구 북구 도남중앙로 7길, 20-3. 402호","te":"국우초, 도남초","tm":"학남중","th":"학남고"},{"n":"반석점","on":"반석점와와학습코칭학원","reg":"대전서부교육지원청 등록 제 서4638호","s":"대전","se":"daejeon","d":"유성구","a":"대전 유성구 지족로 282  코오롱타워2 303,304","dir":"와이식자재마트 대각선, 브래드홀릭 건물 3층","te":"새미래초, 반석초","tm":"새미래중, 외삼중, 하기중","th":"반석고, 노은고, 지족고, 유성고"},{"n":"화성태안점","on":"화성태안점와와학습코칭학원","reg":"경기도화성오산교육지원청 제4750호","s":"경기","se":"gyeonggi","d":"화성시","a":"경기 화성시 병점중앙로 87  408호 와와학습코칭학원"},{"n":"봉담점","on":"봉담점와와학습코칭학원","reg":"경기도화성오산교육지원청 제 5025호","s":"경기","se":"gyeonggi","d":"화성시","a":"경기 화성시 봉담읍 상리중심상가길 28-8  713호 와와학습코칭학원"},{"n":"삼각산점","on":"삼각산점와와학습코칭학원","reg":"성북강북교육지원청 등록 제2017-58호","s":"서울","se":"seoul","d":"강북구","a":"서울 강북구 미아동  811-9 두산위브테라스파크 상가 402/403호","te":"길음초, 송천초, 미양초","tm":"삼각산중, 길음중, 미양중","th":"삼각산고, 미양고, 영훈고, 혜화여고"},{"n":"당산점","on":"당산점와와학습코칭학원","reg":"서울남부교육지원청 등록 제 5746호","s":"서울","se":"seoul","d":"영등포구","a":"서울 영등포구 당산로44길 3  삼성타운 504","dir":"당산역 10번 출구, 2호선 지나는 도로 따라 레미안4차 지나면 크로미빵집있는 건물 5층입니다.","te":"당서초, 영동초, 당중초","tm":"당산중, 당산서중, 선유중","th":"선유고, 여의도고, 여의도여고, 영등포여고, 관악고"},{"n":"은평점","on":"와와학습코칭학원","reg":"서울서부교육지원청 등록 제02201700112호","s":"서울","se":"seoul","d":"은평구","a":"서울특별시 은평구 진관동 진관2로 29-21  드림스퀘어 제 8층 804호 805호","dir":"구파발역 2번출구,구파발성당 맞은편 1층 이디야,서브웨이 건물입니다.","te":"은진초, 은빛초, 진관초, 신도초","tm":"진관중, 신도중, 연천중","th":"진관고, 신도고, 대성고, 선일여고"},{"n":"화정점","on":"화정점와와학습코칭학원","reg":"고양교육지원청 등록 제5768호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 덕양구 화신로 263  브릿지타워 213호, 214호 와와학습코칭학원","dir":"경기도 고양시 덕양구 화신로 263 브릿지타워 2층 214호 (한방병원 건물)","tm":"화정중, 지도중, 신능중","th":"화정고, 화수고, 백양고"},{"n":"인창점","on":"와와학습코칭센터학원","reg":"구리남양주교육지원청 등록 제3467호","s":"경기","se":"gyeonggi","d":"구리시","a":"경기 구리시 건원대로 36  제 407호 와와학습코칭학원","dir":"화성골드프라자( 1층에 베스킨라빈스)  4층","te":"건원초, 동구초, 구지초","tm":"인창중, 동구중","th":"인창고, 수택고"},{"n":"염창점","on":"와와코칭보습학원","reg":"강서양천교육지원청 등록 제 5716호","s":"서울","se":"seoul","d":"강서구","a":"서울 강서구 양천로67길 15  한희빌딩 2층 202호  와와학습코칭학원","dir":"등촌역 2번출구 직진 500미터 염창중앙교회옆건물, 강서구 염창동 242-11 한히빌딩 5층","te":"염경초, 염동초, 백석초"},{"n":"인천삼산점","on":"인천삼산점와와학습코칭학원","reg":"인천북부교육지원청 등록 제4641호","s":"인천","se":"incheon","d":"부평구","a":"인천 부평구 체육관로 32  하이존빌딩 8층 802","dir":"인천 부평구 체육관로 32 하이존 8층 (삼산체육관에서 도보 5분)\nor 굴포천역 도보 5분 or 삼산타운 7단지 정문 맞은편","te":"굴포초, 진산초, 영선초","tm":"진산중, 삼산중, 구산중","th":"영선고, 삼산고"},{"n":"이매점","on":"이매점와와학습코칭학원","reg":"성남교육지원청 등록 제5320호","s":"경기","se":"gyeonggi","d":"성남시","a":"경기도 성남시 분당구 이매동 이매로 49  4층 와와학습코칭센터","dir":"수인 분당선 이매역 6번 출구 바로 앞 1층 쿠쿠매장 주영빌딩 4층","te":"이매초, 안말초","tm":"매송중, 이매중, 송림중","th":"이매고, 송림고, 태원고, 돌마고"},{"n":"침산점","on":"침산점와와학습코칭학원","reg":"대구서부교육지원청 등록 제2019-4229호","s":"대구","se":"daegu","d":"북구","a":"대구 북구 침산남로 140  엠비프라자 901","te":"침산초, 달산초","tm":"침산중, 대구일중, 경명여중, 산격중, 대구북중","th":"경명여고, 칠성고, 청구고, 사대부고, 경상고"},{"n":"오산점","on":"와와학습코칭학원","reg":"화성오산교육지원청 등록 제2840호","s":"경기","se":"gyeonggi","d":"오산시","a":"경기 오산시 성호대로 121  월드타워 505호","dir":"오산시청 우리은행 건물 5층","te":"운천초, 성호초, 운산초","tm":"운암중, 운천중, 성호중","th":"운암고, 운천고"},{"n":"별내점","on":"별내점와와학습코칭학원","reg":"구리남양주교육지원청 등록 제4170호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 순화궁로 349  삼광프라자 501호","dir":"별내 카페거리 건너편 메가커피 건물5층","te":"샛별초, 화접초, 별가람초, 한별초, 덕송초","tm":"별가람중, 한별중, 한삼중","th":"별가람고, 별내고, 한삼고, 퇴계원고, 청학고"},{"n":"영통구청점","on":"영통구청점와와학습코칭학원","reg":"수원교육지원청 등록 제6824-1호","s":"경기","se":"gyeonggi","d":"수원시","a":"경기 수원시 영통구 매탄로108번길 10  모닝프라자 602호","dir":"영통구청 옆 중심상가 내 맘스터치 건물 6층","te":"매탄초,매현초","tm":"매탄중,매현중","th":"매탄고,효원고"},{"n":"부평점","on":"와와학습코칭센터부평학원","reg":"인천북부교육지원청 등록 제4371호","s":"인천","se":"incheon","d":"부평구","a":"인천광역시 부평구 부평동 부흥로 264  5층 와와학습코칭센터","dir":"부평시장역3번출구에서 도보5분거리/쿠우쿠우 있는 건물 5층","te":"부평서초,부평동초","tm":"부원중,부원여중","th":"부평고,부평여고"},{"n":"풍동점","on":"풍동와와학습코칭학원","reg":"고양교육지원청 등록 제5785호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 일산동구 숲속마을로 44  미래타워 6","dir":"풍동상가 미래타워6층(빽다방,이삭토스트건물)","te":"풍산초, 다솜초, 은행초","tm":"풍동중, 풍산중, 양일중","th":"풍동고, 세원고"},{"n":"송천점","on":"와와학습코칭송천점학원","reg":"전주교육지원청 등록 제6679호","s":"전북","se":"jeonbuk","d":"전주시","a":"전북특별자치도 전주시 덕진구 솔내로 129  송천열방빌딩 501호 와와학습코칭학원"},{"n":"태평점","on":"태평와와학습코칭학원","reg":"대전동부교육지원청등록 제 2동3247호","s":"대전","se":"daejeon","d":"중구","a":"대전 중구 태평로 15  버드내마을아파트 상가 308","te":"버드내초","tm":"버드내중, 태평중"},{"n":"목감점(모두)","on":"목감점모두오름학습코칭학원","reg":"시흥교육지원청 등록 제 시1311호","s":"경기","se":"gyeonggi","d":"시흥시","a":"경기 시흥시 수풀안길 14-23  4층 402호","dir":"시흥시 수풀안길 14-23 메트로타워2 4층(1층에 원할머니보쌈있습니다)","te":"조남초, 목감초","tm":"조남중","th":"목감고"},{"n":"송촌점","on":"송촌와와학습코칭학원","reg":"대전동부교육지원청등록 제 2동3248호","s":"대전","se":"daejeon","d":"대덕구","a":"대전 대덕구 동춘당로94번길 11-7  4층 402","te":"송촌초","tm":"매봉중, 법동중, 송촌중","th":"송촌고, 명석고, 우송고, 대전여고, 동대전고"},{"n":"중동점","on":"와와학습코칭보습학원","reg":"부천교육지원청 등록 제5918호","s":"경기","se":"gyeonggi","d":"부천시","a":"경기 부천시 원미구 길주로 191  금영프라자 제 4층 401호","te":"부흥초, 중흥초","tm":"중흥중, 부명중","th":"증흥고, 중원고, 경기예고"},{"n":"중동점(W+)","on":"중동점더블유플러스보습학원","reg":"부천교육지원청 등록 제6516호","s":"경기","se":"gyeonggi","d":"부천시","a":"경기 부천시 원미구 길주로 219  드림빌딩 401호","te":"부흥초, 중흥초","tm":"중흥중, 부명중","th":"증흥고, 중원고, 경기예고"},{"n":"신중동점","on":"와와학습코칭신중동보습학원","reg":"부천교육지원청 등록 제6330호","s":"경기","se":"gyeonggi","d":"부천시","a":"경기 부천시 원미구 조마루로291번길 25  센터프라자 405호, 406호","te":"부곡초, 계남초, 심원초","tm":"심원중, 계남중, 부곡중","th":"계남고, 심원고, 원미고"},{"n":"화정점(W+)","on":"화정점더블유플러스학원","reg":"고양교육지원청 등록 제6077호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 덕양구 화중로 32-31  효원빌딩 401호 일부","te":"지도초","tm":"화정중, 신능중","th":"화정고, 서정고, 백양고"},{"n":"양덕점","on":"양덕점와와학습코칭학원","reg":"포항교육지원청 등록 제2584호","s":"경북","se":"gyeongbuk","d":"포항시","a":"경북 포항시 북구 천마로 66  환호빌딩 402호","dir":"양덕 하나로마트 근처, 양덕 농협사거리 롯데리아 사이 건물,  이디야 건물 4층,","te":"양덕초 양서초 장흥초","tm":"양덕중 장흥중 대도중 환호여중","th":"장성고 포고 포여고 유성여고"},{"n":"옥정점","on":"옥정점와와학습코칭학원","reg":"경기도동두천양주교육지원청 제1331호","s":"경기","se":"gyeonggi","d":"양주시","a":"경기 양주시 옥정로 218  신운정튼튼프라자 305호 와와학습코칭학원"},{"n":"은평점(글로리드)","on":"은평점글로리드학습코칭학원","reg":"서울특별시 서부교육지원청 제 02202300049호","s":"서울","se":"seoul","d":"은평구","a":"서울 은평구 진관2로 29-21  드림스퀘어 609호"},{"n":"다산점(W+)","on":"다산점더블유플러스학원","reg":"경기도구리남양주교육지원청 제4711호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 다산순환로 350  KB골든타워 310호 더블유플러스학원"},{"n":"옥길스타점","on":"옥길스타점와와학습코칭보습학원","reg":"경기도부천교육지원청 등록 제6775호","s":"경기","se":"gyeonggi","d":"부천시","a":"경기 부천시 소사구 범안로 231-15  옥길중앙타워 제2층 201호 와와학습코칭학원"},{"n":"광장점","on":"와와학습코칭학원","reg":"성동광진교육지원청 등록 제 2316호","s":"서울","se":"seoul","d":"광진구","a":"서울 광진구 광나루로 584  동서울빌딩 5","dir":"올림픽대교북단사거리 바로 앞, 광진구 광나루로 584 동서울빌딩5층","tm":"양진중, 광장중","th":"광남고, 단대부고, 건대부고"},{"n":"반월당점","on":"반월당점와와학습코칭학원","reg":"대구광역시동부교육지원청 제6834호","s":"대구","se":"daegu","d":"중구","a":"대구 중구 대봉로 253  3층 와와학습코칭학원","dir":"대구 중구 대봉로 253 3층 와와학습코칭학원(센트로팰리스 대백마트 맞은편)","te":"대구초, 사대부초","tm":"대구제일중, 사대부중","th":"사대부고, 경북여고"},{"n":"배곧점","on":"배곧점와와학습코칭학원","reg":"경기도시흥교육지원청 제 시1653 호","s":"경기","se":"gyeonggi","d":"시흥시","a":"경기 시흥시 배곧4로 22  배곧타운2 217호 와와학습코칭학원"},{"n":"명지대역점","on":"명지대역점와와학습코칭학원","reg":"경기도용인교육지원청 제 5578 호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기 용인시 처인구 명지로40번길 4  링크 153 502호 와와학습코칭학원","te":"함박초, 서룡초","tm":"용신중, 용인중"},{"n":"칠금점","on":"칠금점와와학습코칭학원","reg":"충주교육지원청 등록 제1469호","s":"충북","se":"chungbuk","d":"충주시","a":"충청북도 충주시 칠금동 계명대로 29  3층","te":"탄금초, 칠금초","tm":"탄금중, 칠금중, 중앙중, 미덕중, 여중, 북여중, 충주중","th":"국원고, 예성여고, 충주여고"},{"n":"세교점","on":"세교점와와학습코칭학원","reg":"화성오산교육지원청 등록 제4098호","s":"경기","se":"gyeonggi","d":"오산시","a":"경기 오산시 수청로 193  P&P세교프라자 402호","dir":"오산세교종합사회복지관 앞 스타벅스 건물 4층","tm":"문시중, 세마중","th":"세교고"},{"n":"수지점(글로리드)","on":"수지점글로리드학습코칭학원","reg":"경기도용인교육지원청 제5340호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기 용인시 수지구 풍덕천로 114  3층 글로리드학습코칭학원","dir":"수지구청역 2번출구 바로 앞에 미스터피자 건물 3층","te":"풍천초, 정평초, 이현초","tm":"이현중, 수지중, 정평중","th":"상현고, 신봉고, 홍천고, 성복고, 풍덕고, 수지고, 죽전고"},{"n":"마포2호점","on":"마포2호점와와학습코칭학원","reg":"서울특별시 서부교육지원청 제02202300102호","s":"서울","se":"seoul","d":"마포구","a":"서울 마포구 토정로 252  승지빌딩 3층","dir":"서울특별시 마포구 토정로 252 승지빌딩 3층 와와학습코칭학원\n(대흥역 3번출구 5분거리이며 1층 기아자동차 AS센터 건물입니다.)","te":"신석초, 염리초, 용강초, 서강초, 우이초","tm":"서울여중, 동도중, 신수중","th":"서울여고, 숭문고, 광성고, 한성고, 배문고"},{"n":"다산도농점","on":"다산도농점와와학습코칭학원","reg":"경기도구리남양주교육지원청 제4749호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 도농로 29  604호 와와학습코칭센터","dir":"다산도농 이마트앞 부영프라자 604호","te":"도농초, 금교초, 미금초,","tm":"동화중, 도농중, 가운중","th":"도농고, 가운고, 다산고"},{"n":"별가람점","on":"별가람점와와학습코칭학원","reg":"경기도구리남양주교육지원청 제4785호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 덕송1로55번길 20  503호","dir":"경기도 남양주시 별내동 824-2 별내프라자-2 503호                                                                                   별내별가람역 3번출구에서 189m","te":"덕송초, 샛별초","tm":"별가람중, 화접중, 한별중","th":"별내고, 별가람고"},{"n":"동탄목동점","on":"동탄목동점와와학습코칭학원","reg":"경기도화성오산교육지원청 제4752호","s":"경기","se":"gyeonggi","d":"화성시","a":"경기 화성시 동탄신리천로 408  M메디칼 212호","dir":"경기도 화성시 신리천로 408 M메디컬프라자 212호 와와학습코칭학원","te":"동탄목동초, 한율초","tm":"동탄목동중, 세정중","th":"창의고, 정현고"},{"n":"두호점","on":"와와학습코칭센터학원","reg":"포항교육지원청 등록 제2124호","s":"경북","se":"gyeongbuk","d":"포항시","a":"경상북도 포항시 북구 용두산길 32  3층","dir":"파리 바게트 맞은편 건물 3층","tm":"환호여중, 대도중","th":"두호고, 포여고, 장성고, 포고, 중앙고, 중앙여고, 대동고"},{"n":"선운점","on":"선운점와와학습코칭학원","reg":"광주광역시서부교육지원청 제7446호","s":"광주","se":"gwangju","d":"광산구","a":"광주 광산구 선운로20번길 55-1  402호 와와학습코칭학원","dir":"선운로 20번길 55-1 4층 (배가마트 옆 우산신협 건물)","te":"선운초, 본량초","tm":"선운중","th":"정광고, 보문고"},{"n":"교하점","on":"교하점와와학습코칭학원","reg":"경기도파주교육지원청 제1975호","s":"경기","se":"gyeonggi","d":"파주시","a":"경기 파주시 청석로 272  센타프라자1 제8층 제803","dir":"와와학습코칭학원 파주 교하점\n경기도 파주시 청석로272 /센터프라자 803호(파리바게트 건물)","te":"청석초, 석곶초, 두일초","tm":"교하중, 두일중, 심학중","th":"교하고, 심학고"},{"n":"송파위례점","on":"송파위례점와와학습코칭학원","reg":"서울특별시강동송파교육지원청 제8296호","s":"서울","se":"seoul","d":"송파구","a":"서울 송파구 위례광장로 188  아이온스퀘어 8층 816호 와와학습코칭학원","dir":"와와학습코칭센터 송파위례점 위례 아이온스퀘어 8층 816호","te":"송례초, 위례별초","tm":"위례중, 송례중","th":"위례고, 문현고, 문정고, 덕수고"},{"n":"산본점","on":"산본점와와학습코칭학원","reg":"경기도군포의왕교육지원청 제2444호","s":"경기","se":"gyeonggi","d":"군포시","a":"경기 군포시 산본로 394  대림프라자 제 6층 제602호 와와학습코칭학원","dir":"경기 군포시 산본로394 602-2호( 대림프라자 6층)\n주차장입구가 노란색입니다.\n1층에 빽다방,이삭토스트, 본죽\n산본학원가 스타벅스 옆 건물\n하나로마트 옆","te":"광정초","tm":"산본중, 궁내중, 수리중, 도장중, 금정중","th":"흥진고, 산본고, 군포고"},{"n":"구월점","on":"구월점와와학습코칭학원","reg":"인천광역시동부교육지원청 제4031호","s":"인천","se":"incheon","d":"남동구","a":"인천 남동구 선수촌공원로23번길 6-29  다복타워 401호 와와학습코칭학원","dir":"아시아드 로터리, 농협 건물 근처 세무소 방향 바로 옆 건물","te":"성리초","tm":"성리중"},{"n":"고잔점","on":"와와학습코칭센터안산학원","reg":"안산교육지원청 등록 제4176호","s":"경기","se":"gyeonggi","d":"안산시","a":"경기 안산시 단원구 광덕대로 130  폴리타운 B동 513호"},{"n":"가좌점","on":"가좌점와와학습코칭학원","reg":"서울서부교육지원청 등록 제02202000014호","s":"서울","se":"seoul","d":"서대문구","a":"서울 서대문구 가재울로 52  승우빌딩 301호","te":"가재울초, 연가초","th":"가재울고"},{"n":"호평점","on":"호평점와와학습코칭학원","reg":"구리남양주교육지원청 등록 제4177호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 늘을3로 65-6  테마프라자 205호","dir":"경기 남양주시 늘을3로 65-6 (호평동 617-3) \n테마프라자2층 205호\n건물 지하 무료주차 가능합니다","te":"구룡초, 호평초, 판곡초","tm":"판곡중, 호평중","th":"판곡고, 호평고"},{"n":"평내점","on":"평내점와와학습코칭학원","reg":"구리남양주교육지원청 등록 제3712호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 경춘로 1256번길 9  501호","dir":"평내상가지역 1층 메가커피건물 2층 아지트떡볶이","tm":"장내초, 중","th":"고, 호평초, 중, 고, 금곡초, 중, 고, 판곡고"},{"n":"부발점","on":"와와학습코칭부발학원","reg":"이천교육지원청 등록 제1222호","s":"경기","se":"gyeonggi","d":"이천시","a":"경기 이천시 부발읍 경충대로2092번길 39-19  이천하이클래스 207,208","te":"아미초, 신하초","tm":"효양중, 사동중","th":"효양고"},{"n":"율하점","on":"율하점와와학습코칭학원","reg":"대구동부교육지원청 등록 제6183호","s":"대구","se":"daegu","d":"동구","a":"대구 동구 율하동로 32  4층 와와학습코칭센터","dir":"대구 동구 율하동로 32 대은빌딩 4층 (119센터 근처, 율원중 근처)","te":"숙천초, 율원초, 율금초, 안일초","tm":"율원중, 강동중, 안심중, 새론중, 신기중, 동원중","th":"동부고, 강동고, 정동고"},{"n":"비전점","on":"와와학습코칭센터학원","reg":"평택교육지원청 등록 제 2126호","s":"경기","se":"gyeonggi","d":"평택시","a":"경기도 평택시 비전동 평남로 937  폴리프라자 602호, 603호","dir":"리더스하임 후문 맞은편또는 센텀정형외과 건물 6층","te":"이화초 가내초 자란초","tm":"비전중 한광중 한광여중 평택여중 소사벌중","th":"비전고 한광고 한광여고 평택여고"},{"n":"옥길점","on":"옥길점와와학습코칭보습학원","reg":"부천교육지원청 등록 제6454호","s":"경기","se":"gyeonggi","d":"부천시","a":"경기 부천시 소사구 옥길로 116  퀸즈파크 A동 7층 718호~719","te":"버들초","tm":"옥길중","th":"범박고"},{"n":"후곡점","on":"후곡점와와학습코칭학원","reg":"고양교육지원청 등록 제5985호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 일산서구 일산로 511  태성상가 2층 201,202"},{"n":"단구점","on":"와와학습코칭학원","reg":"원주교육지원청 등록 제2412호","s":"강원","se":"gangwon","d":"원주시","a":"강원특별자치도 원주시 서원대로 406  리더스빌딩 402","dir":"단구동 롯데시네마 근처에 우리은행 건물 4층","te":"구곡초등학교, 서원주초등학교","tm":"남원주중학교, 단구중학교","th":"치악고등학교, 원주고등학교"},{"n":"복대점","on":"복대점와와학습코칭학원","reg":"청주교육지원청 등록 제5298호","s":"충북","se":"chungbuk","d":"청주시","a":"충북 청주시 흥덕구 진재로 37  3","dir":"증안초에서 하복대 방향 도보로 5분 / 아인동물병원 옆 건물 3층","te":"증안초, 진흥초","tm":"복대중, 서원중, 솔밭중","th":"흥덕고, 세광고, 사대부고, 청주고, 중앙여고"},{"n":"단대점","on":"단대점와와학습코칭학원","reg":"성남교육지원청 등록 제6183호","s":"경기","se":"gyeonggi","d":"성남시","a":"경기 성남시 수정구 산성대로 423  5층","te":"단대초","tm":"서중, 은행중","th":"성남고, 성일고, 숭신여고, 동광고"},{"n":"은평점(W+)","on":"은평점더블유플러스수학보습학원","reg":"서울서부교육지원청 등록 제02202100037호","s":"서울","se":"seoul","d":"은평구","a":"서울 은평구 진관2로 19  휴먼프라자 312호","te":"진관초, 신도초, 은진초","tm":"진관중, 신도중, 연천중","th":"진관고, 신도고, 대성고, 선일여고, 동명여고"},{"n":"산내점","on":"산내점와와학습코칭학원","reg":"파주교육지원청 등록 제1713호","s":"경기","se":"gyeonggi","d":"파주시","a":"경기 파주시 청암로17번길 21  월드타워5차 405호"},{"n":"동춘점","on":"동춘점와와학습코칭학원","reg":"인천동부교육지원청 등록 제3723호","s":"인천","se":"incheon","d":"연수구","a":"인천 연수구 앵고개로264번길 40  남지빌딩 4층 와와학습코칭센터","th":"대건고, 연수여고, 연수고"},{"n":"후곡점(W+)","on":"후곡점더블유플러스학원","reg":"경기도고양교육지원청 등록 제6354호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 일산서구 일산로 524  202호 더블유플러스학원"},{"n":"알파시티점","on":"알파시티점와와학습코칭학원","reg":"대구광역시동부교육지원청 제6562호","s":"대구","se":"daegu","d":"수성구","a":"대구 수성구 알파시티2로 19  알파N시티 2층 201호 와와학습코칭학원","dir":"대구 수성구 알파시티2로19 와와학습코칭학원 201호","te":"노변초, 고산초","tm":"노변중, 고산중","th":"시지고, 덕원고"},{"n":"신월성점","on":"신월성와와학습코칭학원","reg":"대구남부교육지원청 등록 제2017-120호","s":"대구","se":"daegu","d":"달서구","a":"대구 달서구 월성동  1848번지 그루타워 702호","te":"조암초, 신월초, 월암초, 월성초","tm":"조암중, 월암중, 월서중, 효성중, 영남중, 대건중, 학산중","th":"영남고, 상원고, 효성여고, 송현여고, 상인고"},{"n":"대구역점","on":"대구역점와와학습코칭학원","reg":"대구광역시동부교육지원청 제6571호","s":"대구","se":"daegu","d":"중구","a":"대구 중구 서성로 99  대구역센트럴자이 상가 302호 와와학습코칭학원","dir":"수창공원 맞은편\n1층 몬스터커피에서 왼쪽 건물 3층","te":"수창초, 달성초, 종로초","tm":"계성중, 성명여중, 사대부중","th":"사대부고, 경북여고, 신명고, 대구고, 경북예고, 칠성고"},{"n":"신방화점","on":"신방화점와와학습코칭학원","reg":"강서양천교육지원청 등록 제 5879호","s":"서울","se":"seoul","d":"강서구","a":"서울 강서구 방화대로 294  마곡더블유타워 505","dir":"신방화역 6번출구에서 나와서 바로 왼쪽 마곡 더블유타워","te":"송화초, 공항초","tm":"공항중, 송정중","th":"한서고, 공항고"},{"n":"청라점","on":"와와학습코칭청라학원","reg":"인천서부교육지원청 등록 서부 제1903호","s":"인천","se":"incheon","d":"서구","a":"인천 서구 중봉대로 588  청라센트럴프라자 609","tm":"청라중, 해원중","th":"청라고, 해원고"},{"n":"소하점","on":"소하점와와학습코칭학원","reg":"광명교육지원청 등록 제1965호","s":"경기","se":"gyeonggi","d":"광명시","a":"경기 광명시 오리로 346  행운드림프라자 4층 405호","te":"충현초, 서면초","tm":"충현중, 빛가온중","th":"충현고, 광휘고, 소하고"},{"n":"복산점","on":"복산점와와학습코칭학원","reg":"울산강북교육지원청 등록 제5462호","s":"울산","se":"ulsan","d":"중구","a":"울산 중구 번영로 461  B2동 7"},{"n":"동탄호수점","on":"동탄호수와와학습코칭학원","reg":"화성오산교육지원청 등록 제3775호","s":"경기","se":"gyeonggi","d":"화성시","a":"경기 화성시 동탄순환대로 127-19  에스비타운 907호","dir":"우성 상가촌 동탄성모병원 건물 9층","te":"방교초, 서연초","tm":"청림중, 서연중, 방교중","th":"정현고, 서연고, 창의고"},{"n":"동백점","on":"동백점와와학습코칭학원","reg":"용인교육지원청 등록 제3918호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기도 용인시 기흥구 중동 동백3로11번길 3  2층 201호","dir":"경기도 용인시 기흥구 중동 851-4 동백역타워 2층 201호. 1층에 파찌내 만둣가게가 있는 건물 2층 입니다. 동백역2번 출구 50m 이내 입니다.","te":"석성초, 초당초","tm":"초당중, 백현중, 동백중, 성지중, 어정중, 용인중","th":"초당고, 백현고, 동백고, 성지고, 용인고"},{"n":"노형점","on":"와와학습코칭학원","reg":"제주시교육지원청 등록 제2163호","s":"제주","se":"jeju","d":"제주시","a":"제주특별자치도 제주시 노형동 727-3 대안빌딩  3층","dir":"제주은행 연북로지점 주차장 뒷편 cu건물3층","te":"노형초","tm":"서중, 중앙중","th":"지역내 모든 고등학교 가능"},{"n":"장기점","on":"와와학습코칭센터김포학원","reg":"김포교육지원청 등록 제1237호","s":"경기","se":"gyeonggi","d":"김포시","a":"경기도 김포시 장기동 김포한강4로 162  한강메트로 503호, 504호","te":"푸른솔초, 운유초","tm":"장기중, 푸른솔중, 고창중","th":"솔터고, 제일고, 운양고, 통진고"},{"n":"좌동점","on":"와와학습코칭센터학원","reg":"해운대교육지원청 등록 제3142호","s":"부산","se":"busan","d":"해운대구","a":"부산광역시 해운대구 좌동 좌동로 88  울트라타워 5층 508호","dir":"부산 2호선 장산역 10번 출구 도보 10분 거리, 1층 장독대(반찬)/호두과자 가게 있습니다.","te":"동백초, 부흥초, 신도초","tm":"신도중, 부흥중, 신곡중, 해운대중, 해강중","th":"신도고, 양운고, 부흥고, 해운대여고, 해강고"},{"n":"신방점","on":"와와학습코칭학원","reg":"천안교육지원청 등록 제3413호","s":"충남","se":"chungnam","d":"천안시","a":"충청남도 천안시 동남구 신방동 886 학산프라자  A동 3층 304호,305호","dir":"세종약국(이석훈내과와 늘푸른이비인후과가 있는 건물) 3층입니다. 신방점 리처드헤어본점 맞은편 학산프라자 5층건물 3층에 있습니다.","te":"신용초","tm":"용곡중, 신방중","th":"청수고, 쌍용고, 천안여고"},{"n":"쌍용점","on":"와와학습코칭쌍용점학원","reg":"천안교육지원청 등록 제3502호","s":"충남","se":"chungnam","d":"천안시","a":"충청남도 천안시 서북구 쌍용동 불당대로 260  319호 318호(1/2)","dir":"고3  영어 수업은 어렵습니다","te":"쌍용초","tm":"쌍용중","th":"쌍용고, 월봉고, 중앙고, 천안여고"},{"n":"병점점","on":"병점점와와학습코칭학원","reg":"화성오산교육지원청 등록 제4050호","s":"경기","se":"gyeonggi","d":"화성시","a":"경기 화성시 병점1로 221  화인메디컬프라자 2층 203호","dir":"병점 중심상가 사거리 롯데리아 건물 2층 (엘리베이터 내리면 바로 위치)  설빙과 같은 층입니다. \n와와 병점점 031) 297 - 7325","te":"진안초, 안화초, 병점초, 송화초, 구봉초","tm":"진안중, 병점중, 안화중","th":"병점고, 안화고, 능동고"},{"n":"불당점","on":"불당점와와학습코칭학원","reg":"천안교육지원청 등록 제4191호","s":"충남","se":"chungnam","d":"천안시","a":"충남 천안시 서북구 불당33길 22  고은타워 805호"},{"n":"웰카운티점","on":"웰카운티점와와학습코칭학원","reg":"인천광역시동부교육지원청 등록 제3877호","s":"인천","se":"incheon","d":"연수구","a":"인천 연수구 인천타워대로54번길 15-5  북일프라자 2층 와와학습코칭학원","dir":"북일프라자 1차가 아닌 MUZE건물 2층 북일프라자 2층입니다 \n북일프라자 2층, 뮤즈카페 건물위 2층입니다","te":"해송초등학교","tm":"해송중학교, 능허대중학교, 박문중학교","th":"해송고등학교, 연송고등학교, 대건고등학교"},{"n":"중산점","on":"중산점와와학습코칭학원","reg":"경기도고양교육지원청 제 6727호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 일산동구 중산로 103  거풍프라자 202호","dir":"일산동구 중산로 103 거풍프라자 202호","te":"모당초, 안곡초, 중산초","tm":"안곡중, 중산중, 일산중","th":"안곡고, 중산고"},{"n":"가경점","on":"가경점와와학습코칭학원","reg":"충청북도청주교육지원청 제 5888호","s":"충북","se":"chungbuk","d":"청주시","a":"충북 청주시 흥덕구 서현북로 18  2층 와와학습코칭학원","dir":"서현북로 대원칸타빌과 가경 e편한세상 사이 편의점 CU맞은편","te":"서현초, 서경초","tm":"서현중, 경덕중, 서현중","th":"사대부고, 서원고, 청주외고"},{"n":"탕정점(모두)","on":"탕정점모두오름학습코칭학원","reg":"충청남도아산교육지원청 제 1560호","s":"충남","se":"chungnam","d":"아산시","a":"충남 아산시 탕정면 한들물빛5로 5  605호 모두오름학습코칭학원","dir":"한들물빛도시 지웰시티 센트럴 프루지오 206동 맞은편 젤존 메디컬시티 605호","te":"한들물빛초","tm":"한들물빛중","th":"설화고"},{"n":"이시아폴리스점","on":"이시아폴리스점\n와와학습코칭학원","reg":"대구동부교육지원청 제 6935호","s":"대구","se":"daegu","d":"동구","a":"대구 동구 팔공로51길 33  A-503호 와와학습코칭학원","dir":"이시아폴리스 더샵3차아파트 맞은편 이스트 애플빌딩 5층","te":"봉무초, 영신초","tm":"영신중, 팔공중, 복현중, 성광중, 성화중, 동촌중","th":"영신고, 경상고, 영진고, 성광고, 성화여고"},{"n":"신봉점","on":"신봉점와와학습코칭학원","reg":"경기도용인교육지원청 제 5625호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기 용인시 수지구 신봉2로 60  웰스톤시티엔웰스톤에비뉴 1동 103호 와와학습코칭학원","dir":"신봉 LG자이2차 옆 웰스톤시티상가 1층, 농협복도 끝에 위치","te":"신봉초, 신일초, 홍천초, 신리초, 성복초","tm":"신봉중, 성복중, 홍천중","th":"신봉고, 용인홍천고"},{"n":"퇴계원점","on":"퇴계원점와와학습코칭학원","reg":"경기도구리남양주교육지원청 제4787호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 퇴계원읍 퇴계원로 29  202호","dir":"경기도 남양주시 퇴계원로 29 송백타운 202호 와와학습코칭학원 퇴계원점\n 판다팜건물 2층 \n 퇴계원역 4거리에서 2분거리","te":"퇴계원초, 도제원초, 태강삼육초","tm":"퇴계원중, 진건중","th":"퇴계원고, 진건고"},{"n":"마포점","on":"마포점와와학습코칭학원","reg":"서울서부교육지원청 등록 제02201800007호","s":"서울","se":"seoul","d":"마포구","a":"서울특별시 마포구 염리동 독막로42길 7  173-3 2층","dir":"지하철5호선 마포역, 6호선 공덕역 하차후 염리초등학교 방향으로 10분도보","te":"염리초","tm":"서울여중, 동도중, 신수중, 숭문중","th":"서울여고, 숭문고, 광성고"},{"n":"용인백현점(모두)","on":"용인백현점\n모두오름학습코칭학원","reg":"경기도용인교육지원청 제5632호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기 용인시 기흥구 동백7로 83  백현마을중앙프라자 제 2층 제 208호","dir":"동백고등학교 건너편 상가 중에 중앙프라자 2층에 위치한 모두오름 학습코칭학원","te":"동막초, 동백초, 용인백현초","tm":"동백중, 용인백현중","th":"동백고, 용인백현고"},{"n":"대구역점2호관","on":"대구역점2호관\n와와학습코칭학원","reg":"대구동부교육지원청 제 6950 호","s":"대구","se":"daegu","d":"중구","a":"대구 중구 서성로 99  대구역센트럴자이 상가 203호 와와학습코칭학원","dir":"수창공원 맞은편 대구역센트릴자이아파트 상가 2층","te":"수창초, 종로초","tm":"계성중, 성명여중, 대구제일중, 사대부중","th":"사대부고, 경북여고, 신명고, 칠성고"},{"n":"운정중앙점","on":"운정중앙점\n와와학습코칭학원","reg":"파주교육지원청 제2139호","s":"경기","se":"gyeonggi","d":"파주시","a":"경기도 파주시 양지로 131, 운정SB타워 509호,510호 (동패동)","dir":"초롱꽃마을 12단지(대림이편한세상아파트)와 13단지(디에트르아파트) 사이 상가건물들 중 버거킹건물 5층","te":"초롱초","tm":"심학중","th":"심학고"},{"n":"충주용산점","on":"충주용산점\n와와학습코칭학원","reg":"충주교육지원청 제 1693호","s":"충북","se":"chungbuk","d":"충주시","a":"충북 충주시 형설로 54-10,2층 (용산동)","dir":"충주중학교 정문으로 오세요","te":"남산초, 용산초","tm":"예성여중, 미덕중","th":"충주여고, 예성여고, 충주고"},{"n":"진천점(모두)","on":"진천점 모두오름학습코칭학원","reg":"대구남부교육지원청 제 2025-53호","s":"대구","se":"daegu","d":"달서구","a":"대구광역시 달서구 조암남로 158,301호(유천동)","dir":"AK그랑폴리스와 쌍용예가 사이에 있는 건물(그랑에비뉴) 3층 가장 왼쪽 학원","te":"한솔초, 한샘초","tm":"월서중, 조암중"},{"n":"별내중앙점(모두)","on":"별내중앙점 \n모두오름학습코칭학원","reg":"경기도구리남양주교육지원청 제 5006 호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기도 남양주시 별내3로 66,401호","dir":"우체국과 홈플러스 사이건물 4층입니다!","te":"한별초","tm":"화접중, 한별중","th":"별내고"},{"n":"목동점","on":"와와학습코칭학원","reg":"강서양천교육지원청 등록 제 5353호","s":"서울","se":"seoul","d":"양천구","a":"서울 양천구 목동동로8길 23  메리트윈 3층 305","te":"신목초, 서정초","tm":"목일중, 신목중, 양강중, 금옥중","th":"양천고, 신목고, 한광고, 서울영상고"},{"n":"신도림점","on":"와와학습코칭신도림학원","reg":"서울남부교육지원청 등록 제 5525호","s":"서울","se":"seoul","d":"구로구","a":"서울특별시 구로구 신도림동 신도림로 20  397-2 해동빌딩 402호","dir":"구로구 신도림로 20 해동빌딩4층(신미림초등학교옆)","te":"신미림초","tm":"신도림중","th":"신도림고, 구현고"},{"n":"제기점","on":"제기와와학습코칭학원","reg":"서울동부교육지원청 등록 제 3066호","s":"서울","se":"seoul","d":"동대문구","a":"서울 동대문구 왕산로 61  302호 와와학습코칭학원","te":"용두초, 종암초, 기타사립초","tm":"대광중, 성일중","th":"대광고, 청량리고, 경희고"},{"n":"종암점","on":"종암와와학습코칭학원","reg":"성북강북교육지원청 등록 제2019-56호","s":"서울","se":"seoul","d":"성북구","a":"서울 성북구 종암로27길 13  도원프라자 501","dir":"종암로27길 13 도원프라자 5층 (메가커피 건물) 성북소방서와 GS 주유소 사이길로 들어오시면 소방서 바로 옆 건물입니다~","tm":"종암중, 사대부중, 개운중","th":"사대부고, 용문고"},{"n":"명일점","on":"명일점와와학습코칭학원","reg":"서울강동교육지원청 등록 제 7641호","s":"서울","se":"seoul","d":"강동구","a":"서울 강동구 양재대로 1606  3층","tm":"천호중, 배재중, 명일중","th":"명일여고, 강동고, 광문고"},{"n":"구산점","on":"구산점와와학습코칭학원","reg":"서울서부교육지원청 등록 제02201700143호","s":"서울","se":"seoul","d":"은평구","a":"서울특별시 은평구 역촌동 연서로 130  4층","tm":"구산중, 은평중","th":"예일여중고, 선일여중고"},{"n":"내발산점","on":"내발산점와와학습코칭학원","reg":"강서양천교육지원청 등록 제 5444호","s":"서울","se":"seoul","d":"강서구","a":"서울 강서구 마곡중앙4로 74  이웰메디파크 제4층 401,402호","dir":"내발산역에서 우장산역 방향으로 걸어오시다보면 소방서 앞에 육교가 있는데 육교앞 건물입니다.\n1층에 커피숍과 딤채가 있습니다.","te":"가곡초, 내발산초","tm":"등명중, 화곡중, 명덕중, 덕원중","th":"화곡고, 명덕고, 덕원여고, 마포고"},{"n":"금천점","on":"금천점와와학습코칭학원","reg":"서울남부교육지원청 등록 제 5726호","s":"서울","se":"seoul","d":"금천구","a":"서울 금천구 금하로 763  벽산아파트 제중심상가동 3층 306-2,307,308","dir":"금천구 시흥2동 주민센터 건너편 벽산중심상가 3층","te":"탑동초","tm":"동일중, 세일중","th":"매그넷고, 동일여고, 금천고, 문일고"},{"n":"위례점","on":"위례와와학습코칭학원","reg":"성남교육지원청 등록 제6054호","s":"경기","se":"gyeonggi","d":"성남시","a":"경기 성남시 수정구 위례광장로 320  315호","te":"고운초, 위례중앙초, 송례초","tm":"위례한빛중, 위례중앙중, 송례중","th":"위례한빛고, 복정고, 문현고"},{"n":"상현점","on":"상현점와와학습코칭학원","reg":"용인교육지원청 등록 제4241-1호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기도 용인시 수지구 상현동 만현로 120  4층 410호 와와학습코칭학원","dir":"상현동 sr프라자 4층","te":"솔개초, 상현초, 이현초","tm":"서원중, 소현중, 이현중, 성복중","th":"상현고, 서원고, 풍덕고, 이의고, 홍천고"},{"n":"사우점","on":"사우점와와학습코칭학원","reg":"김포교육지원청 등록 제1769호","s":"경기","se":"gyeonggi","d":"김포시","a":"경기 김포시 사우중로 77  삼정사이버프라자 304","te":"금파초, 향산초","tm":"금파중, 김포중","th":"사우고, 풍무고, 고촌고"},{"n":"수지점(W+)","on":"수지점더블유플러스학원","reg":"용인교육지원청 등록 제5126호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기 용인시 수지구 진산로 106  훼미리빌딩 512호,513호,514호","tm":"이현중, 수지중, 정평중","th":"성복고, 풍덕고, 수지고, 죽전고"},{"n":"새롬점","on":"새롬와와학습코칭학원","reg":"세종특별자치시교육청 등록 제1211호","s":"세종","se":"sejong","a":"세종특별자치시 새롬중앙로 62-15  해피라움W 305호","te":"새뜸초, 새롬초","tm":"새뜸중, 새롬중","th":"새롬고, 다정고"},{"n":"삼산점","on":"삼산점와와학습코칭학원","reg":"울산강남교육지원청 등록 제6001호","s":"울산","se":"ulsan","d":"남구","a":"울산광역시 남구 삼산동 돋질로 300  4층"},{"n":"상남점","on":"상남점와와학습코칭학원","reg":"창원교육지원청 등록 제1020호","s":"경남","se":"gyeongnam","d":"창원시","a":"경남 창원시 성산구 마디미동로 25  비전빌딩 302호","dir":"상남동 한마음병원 횡단보도 맞은편 건물 3층에 위치","te":"외동초","tm":"상남중, 토월중, 웅남중","th":"창원중앙여고, 남고, 신월고, 토월고"},{"n":"향남점","on":"향남점와와학습코칭학원","reg":"화성오산교육지원청 등록 제3567호","s":"경기","se":"gyeonggi","d":"화성시","a":"경기 화성시 향남읍 발안로 103-6  J&H빌딩 402호","te":"한울초, 도이초","tm":"발안중, 향남중, 하길중, 화성중","th":"향남고, 향일고, 하길고, 발안바이오고"},{"n":"동래점","on":"동래점와와학습코칭학원","reg":"동래교육지원청 등록 제4888호","s":"부산","se":"busan","d":"동래구","a":"부산광역시 동래구 온천동 충렬대로 129-1  한야빌딩 3","dir":"건강검진센터와 동래맥도널드 사이 / 횡단보도 근처 / 건겅검진센터에서 미남역으로 한 블럭","te":"내산초","tm":"내성중,유락여중,동래중,동해중","th":"내성고,중앙여고,동래고,부산전자고"},{"n":"장곡점","on":"와와학습코칭학원","reg":"시흥교육지원청 등록 제 시871호","s":"경기","se":"gyeonggi","d":"시흥시","a":"경기 시흥시 진말로 7  중앙프라자 3층 305호, 306호","dir":"장곡동 에이스마트 맞은편 '미소신협'건물 3층 와와학습코칭학원","te":"장곡초, 진말초","tm":"응곡중, 장곡중, 가온중","th":"장곡고, 능곡고, 시흥고"},{"n":"갈산점","on":"와와학습코칭갈산학원","reg":"이천교육지원청 등록 제1127호","s":"경기","se":"gyeonggi","d":"이천시","a":"경기도 이천시 갈산동 영창로 314  629-2외 2필지 주공프라자 504호","te":"안흥초, 설봉초","tm":"이천중, 설봉중, 증포중","th":"제일고, 이현고"},{"n":"금릉점","on":"와와학습코칭학원(금릉점)","reg":"파주교육지원청 등록 제1594호","s":"경기","se":"gyeonggi","d":"파주시","a":"경기 파주시 금빛로 24-27  제일메디컬 502","dir":"1층 용우동,복호두있는 건물 5층입니다. 눈높이 옆에있습니다.","te":"금릉초, 금화초, 새금초, 금촌초","tm":"금릉중, 금촌중, 문산중","th":"금촌고, 문산제일고"},{"n":"반달점","on":"반달점와와학습코칭보습학원","reg":"부천교육지원청 등록 제6730호","s":"경기","se":"gyeonggi","d":"부천시","a":"경기 부천시 원미구 상일로 69  반달마을 제상가동 제 3층 제 304호 와와학습코칭학원","dir":"경기도 부천시 상일로 69 반달마을 상가동 304호\n (주차는 아파트 입구에서 상가 304호 방문이라고 하면 됩니다)","te":"부인초, 상도초","tm":"부인중, 상동중","th":"상원고"},{"n":"관평점","on":"관평점와와학습코칭학원","reg":"대전서부교육지원청 등록 제 서4761호","s":"대전","se":"daejeon","d":"유성구","a":"대전 유성구 관평2로 46  밸리타운 501","dir":"지도 사진과 함께 동화중학교 맞은편/ 주민센터 뒷 건물 로 설명 드립니다.","te":"동화초, 관평초","tm":"동화중, 관평중","th":"중일고, 용산고"},{"n":"개신점","on":"와와학습코칭센터학원","reg":"청주교육지원청 등록 제4620호","s":"충북","se":"chungbuk","d":"청주시","a":"충청북도 청주시 서원구 개신동 경신로 31-1  402호","dir":"청주시 서원구 경신로 31-1 스타타워빌딩 4층\n(개신동 농협사거리, 1층에 롯데리아 개신점이 있는 건물의 4층입니다.)","te":"개신초, 서경초, 가경초, 죽림초, 서원초","tm":"가경중, 서경중, 경덕중, 사대부중, 성화중, 서원중","th":"서원고, 사대부고, 청주고, 중앙여고, 운호고, 봉명고, 흥덕고, 세광고"},{"n":"상동점","on":"와와학습코칭상동보습학원","reg":"부천교육지원청 등록 제5950호","s":"경기","se":"gyeonggi","d":"부천시","a":"경기 부천시 원미구 송내대로265번길 67  월드컵타운 305호 와와학습코칭센터","dir":"진달래마을 정문 앞  청담 어학원 옆건물","te":"석천초  상인초","tm":"석천중 상동중 상일중 부인중","th":"상동고 상일고 상원고 중흥고 중원고"},{"n":"논현점","on":"와와학습코칭인천논현학원","reg":"인천동부교육지원청 등록 제3283호","s":"인천","se":"incheon","d":"남동구","a":"인천 남동구 청능대로 559  2","dir":"인천 논현역 3번 출구에서 직진 200M 논현 메디컬 센터 2층","te":"동방초, 원동초","tm":"고잔중","th":"고잔고"},{"n":"광명점","on":"광명점와와학습코칭학원","reg":"광명교육지원청 등록 제1964호","s":"경기","se":"gyeonggi","d":"광명시","a":"경기 광명시 광명로 823  광명현대타운 7층 701호","tm":"광남중, 광문중","th":"광문고"},{"n":"정평점","on":"와와학습코칭학원","reg":"경산교육지원청 등록 제941호","s":"경북","se":"gyeongbuk","d":"경산시","a":"경북 경산시 대학로 23  월드스퀘어 302","te":"사월초","tm":"경산중, 사동중, 경산여중","th":"경산고, 사동고, 경산여고, 문경고"},{"n":"영천점","on":"영천점와와학습코칭학원","reg":"화성오산교육지원청 등록 제2851호","s":"경기","se":"gyeonggi","d":"화성시","a":"경기 화성시 동탄순환대로 704  성산에이타워 제4층 제 403호 와와학습코칭학원","te":"한백초, 다원초","tm":"한백중, 다원중","th":"한백고, 이산고, 창의고"},{"n":"송도점","on":"WAWA와와학습코칭인천송도점학원","reg":"인천동부교육지원청 등록 제3284호","s":"인천","se":"incheon","d":"연수구","a":"인천 연수구 해돋이로 165  차오름프라자 302","dir":"백제원 근처, 채드윅 근처, 1공구 학원가","te":"신정초","tm":"신정중","th":"연송고"},{"n":"둔산점","on":"와와학습코칭센터학원","reg":"대전서부교육지원청 등록 제 서4002호","s":"대전","se":"daejeon","d":"서구","a":"대전광역시 서구 둔산동 둔산로 142  신화빌딩 401호","dir":"시청역 7번 출구쪽 스타벅스&올리브영 건물 4층."},{"n":"관저점","on":"관저점와와학습코칭학원","reg":"대전서부교육지원청 등록 제 서4277호","s":"대전","se":"daejeon","d":"서구","a":"대전 서구 구봉로 133  1542번지 205호","dir":"마치광장 신협건물 2층","th":"서일고, 서일여고"},{"n":"전주혁신점","on":"전주혁신점와와학습코칭학원","reg":"완주교육지원청 제 454호","s":"전북","se":"jeonbuk","d":"완주군","a":"전북특별자치도 완주군 이서면 출판로 42  제 4층 제 402호 와와학습코칭학원","dir":"전주 혁신도시 호반 베르디움 1차 맞은편 상가 / 굽네치킨 건물 4층","tm":"양현중, 삼우중, 만성중","th":"양현고"},{"n":"주엽점","on":"주엽점와와학습코칭학원","reg":"고양교육지원청 등록 제5403호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기도 고양시 일산서구 주엽동 주화로 88  502호","te":"강선초"},{"n":"주엽2호점","on":"주엽2호와와학습코칭학원","reg":"고양교육지원청 등록 제5826호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 일산서구 중앙로 1413  동영빌딩 10층 1003","te":"강선초"},{"n":"다산점","on":"다산점와와학습코칭학원","reg":"구리남양주교육지원청 등록 제4125호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 다산중앙로146번길 12-14  다산메트로타워 604호","te":"다산초","tm":"다산중","th":"다산고, 도농고"},{"n":"비산점","on":"와와학습코칭비산센터학원","reg":"안양과천교육지원청 등록 제 2017-063호","s":"경기","se":"gyeonggi","d":"안양시","a":"경기 안양시 동안구 관악대로 91  대림타워 1102호 와와학습코칭학원","dir":"경기 안양시 동안구 관악대로 91 대림타워 1102호 와와학습코칭학원","te":"중앙초","tm":"비산중, 부흥중, 부림중, 신성중","th":"양명여고, 양명고, 관양고, 성문고, 동안고"},{"n":"두정점","on":"와와학습코칭두정점학원","reg":"천안교육지원청 등록 제3444호","s":"충남","se":"chungnam","d":"천안시","a":"충청남도 천안시 서북구 두정동 봉정로 382  성광빌딩 3층","dir":"두정초 정문 앞, 8단지 맞은편 피자마루 건물 3층,","te":"두정초, 신대초","tm":"두정중, 성성중, 성정중,","th":"오성고, 두정고, 신당고, 업성고"},{"n":"원주시청점","on":"와와학습코칭학원원주시청점","reg":"원주교육지원청 등록 제2605호","s":"강원","se":"gangwon","d":"원주시","a":"강원특별자치도 원주시 시청로 22  2층 201","dir":"원주시청 등지고 오른쪽 첫번째 버스정류장 옆건물(1층에 피자알볼로)","te":"만대초, 무실초","tm":"대성중, 평원중, 원주여중, 남원주중","th":"대성고, 육민관고, 북원여고"},{"n":"오산대역점","on":"오산대역점와와학습코칭학원","reg":"화성오산교육지원청 등록 제3851호","s":"경기","se":"gyeonggi","d":"오산시","a":"경기 오산시 내삼미로 85  우정프라자 2","te":"세미초, 화성초, 수청초","tm":"매홀중, 세마중, 문시중, 대호중","th":"매홀고, 세교고, 오산고, 운천고, 운암고"},{"n":"신창점","on":"와와학습코칭신창학원","reg":"광주서부교육지원청 등록 제6884호","s":"광주","se":"gwangju","d":"광산구","a":"광주 광산구 신창로 129  상민빌딩 302","dir":"신창동 파리바게트 1호점 3층입니다.","te":"신창초, 수문초","tm":"진흥중, 신창중, 진흥중","th":"숭덕고, 성덕고, 운남고, 장덕고"},{"n":"칠곡점","on":"칠곡점와와학습코칭학원","reg":"대구서부교육지원청 등록 제2020-4298호","s":"대구","se":"daegu","d":"북구","a":"대구 북구 구암로 149  6층","te":"관음초","tm":"구암중, 관천중, 운암중","th":"구암고, 함지고, 영송여고"},{"n":"운정점","on":"운정점와와학습코칭학원","reg":"파주교육지원청 등록 제1424호","s":"경기","se":"gyeonggi","d":"파주시","a":"경기 파주시 동패동  1758-1 삼융프라자2 302호","te":"한가람초"},{"n":"다산지금점","on":"다산지금점와와학습코칭학원","reg":"구리남양주교육지원청 등록 제4349-1호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 다산지금로 139  3층 308호, 309호","dir":"스타벅스 다산지금점 건물 3층(영신프라자)입니다.","te":"다산한강초","tm":"다산한강중"},{"n":"수성만촌점","on":"수성만촌점와와학습코칭학원","reg":"대구동부교육지원청 등록 제6028호","s":"대구","se":"daegu","d":"수성구","a":"대구 수성구 화랑로8길 11-11  7층","tm":"동중"},{"n":"천천점","on":"천천와와학습코칭학원","reg":"수원교육지원청 등록 제6090-1호","s":"경기","se":"gyeonggi","d":"수원시","a":"경기 수원시 장안구 덕영대로535번길 34  천천그린프라자 제5층 제 502호 와와학습코칭학원","dir":"롯데마트 천천점 옆건물(건강과 행복 약국& 봉구스밥버거 1층)그린프라자 5층","te":"천천초 정천초","tm":"천천중 대평중","th":"천천고 영생고 대평고"},{"n":"산남점","on":"산남점와와학습코칭학원","reg":"청주교육지원청 등록 제4696호","s":"충북","se":"chungbuk","d":"청주시","a":"충청북도 청주시 서원구 산남동 산남로 18  이화빌딩 5층","dir":"하나로 마트 건물 옆 1층 조은약국 건물","te":"샛별초","tm":"수곡중 산남중","th":"충북고 운호고 충북여고 산남고"},{"n":"석사점","on":"석사2호점와와학습코칭학원","reg":"춘천교육지원청 등록 제1593호","s":"강원","se":"gangwon","d":"춘천시","a":"강원특별자치도 춘천시 지석로 85  703호","dir":"지석로 85 강남프라자 7층 ( 투탑시티 카펠라 휘트니스 건너편 건물)","te":"성림초, 성원초, 봄내초","tm":"대룡중, 우석중, 남춘천중, 남춘천여중, 춘천중, 강원중","th":"강원고, 사대부고, 춘고, 춘여고, 봉의고, 성수여고, 유봉여고"},{"n":"후평점","on":"후평점와와학습코칭학원","reg":"춘천교육지원청 등록 제1741호","s":"강원","se":"gangwon","d":"춘천시","a":"강원특별자치도 춘천시 춘천로 316  춘천더샵아파트상가2동 304.305","dir":"후평사거리 포스코상가 3층 (정육점 건물 3층으로 말하시면 많이들 아십니다)","tm":"후평중, 봉의중, 강원중","th":"강원고, 춘천여고, 봉의고"},{"n":"옥계점","on":"옥계점와와학습코칭학원","reg":"구미교육지원청 등록 제2536호","s":"경북","se":"gyeongbuk","d":"구미시","a":"경북 구미시 산호대로31길 16  2","dir":"구미시 산호대로 31길 16 2층","te":"원당초, 옥계동부초, 해마루초","tm":"옥계동부중, 해마루중, 옥계중","th":"산동고, 오상고, 금오여고"},{"n":"당진중앙점","on":"당진중앙와와학습코칭학원","reg":"당진교육지원청 등록 제617호","s":"충남","se":"chungnam","d":"당진시","a":"충남 당진시 당진중앙2로 211-5  효명프라자 404호","te":"탑동초","tm":"호서중, 당진중","th":"호서고, 당진고"},{"n":"미사점","on":"미사점와와학습코칭학원","reg":"광주하남교육지원청 등록 제1913호","s":"경기","se":"gyeonggi","d":"하남시","a":"경기 하남시 미사강변대로 212  미사센트럴프라자 309","dir":"https://naver.me/xhHGgP9o  학원 위치 안내드립니다^^~미사도서관이나 보건센터에서 도보로 2분 거리입니다."},{"n":"영통점","on":"와와학습코칭학원","reg":"수원교육지원청 등록 제6117호","s":"경기","se":"gyeonggi","d":"수원시","a":"경기도 수원시 영통구 영통동 봉영로 1623  드림피아빌딩 301호, 302호 1/2","dir":"영통역과 청명역 중간에 버거킹 건물 3층입니다.","te":"영덕초","tm":"흥덕중, 서천중","th":"영덕고, 청명고, 태장고, 흥덕고, 서천고"},{"n":"망포점","on":"망포와와학습코칭학원","reg":"수원교육지원청 등록 제6338호","s":"경기","se":"gyeonggi","d":"수원시","a":"경기도 수원시 영통구 망포동 영통로 127  센터프라자 401호","te":"잠원초, 망포초, 대선초","tm":"영동중, 잠원중, 망포중, 동학중","th":"태장고, 망포고"},{"n":"강릉교동점","on":"와와학습코칭학원","reg":"강릉교육지원청 등록 제1386호","s":"강원","se":"gangwon","d":"강릉시","a":"강원특별자치도 강릉시 정원로 44  202호 와와학습코칭학원","te":"율곡초, 경포초","tm":"관동중, 율곡중, 해람중, 솔올중, 경포중","th":"강여고, 강일여고, 명륜고, 제일고, 강릉고"},{"n":"서수원점","on":"서수원와와학습코칭학원","reg":"수원교육지원청 등록 제6949호","s":"경기","se":"gyeonggi","d":"수원시","a":"경기 수원시 권선구 호매실로104번길 90  JD타워 205호","te":"능실초, 금호초","tm":"오현초호매실중, 능실중, 영신중, 고색중","th":"호매실고, 영신여고, 고색고, 율천고, 동우여고"},{"n":"원당점","on":"원당점와와학습코칭학원","reg":"고양교육지원청 등록 제5951호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 덕양구 고양대로1384번길 7-5  서강프라자 502호","tm":"성사중, 화수중"},{"n":"송도점(W+)","on":"송도점더블유플러스학원","reg":"인천동부교육지원청 등록 제3518호","s":"인천","se":"incheon","d":"연수구","a":"인천 연수구 해돋이로 160-6  꿈에계단 702호 일부(송도동)","dir":"백제원 근처, 백제원 앞 랜드로버 방향 옆건물, 1층에 명월카츠","te":"신정초","tm":"신정중","th":"연송고"},{"n":"운양점","on":"운양점와와학습코칭학원","reg":"김포교육지원청 등록 제1913호","s":"경기","se":"gyeonggi","d":"김포시","a":"경기 김포시 김포한강11로 288-37  헤리움리버테라스 205호","dir":"경기 김포시 운양동 1296-7 헤리움'리버테라스' 205호입니다 엘레베이터 열리고 바로 왼쪽으로 오시면 됩니다~","te":"하늘빛초, 청수초","tm":"하늘빛중, 운양중, 푸른솔중","th":"제일고, 운양고, 운유고"},{"n":"도안점","on":"도안점와와학습코칭학원","reg":"대전서부교육지원청 등록 제 서4790호","s":"대전","se":"daejeon","d":"서구","a":"대전 서구 동서대로 692  에프엠프라임 1차 501","te":"흥도초","tm":"유성중, 봉명중, 도안중","th":"유성고, 도안고, 서대전여고"},{"n":"시흥대야점","on":"시흥대야점와와학습코칭학원","reg":"시흥교육지원청 등록 제 시1277호","s":"경기","se":"gyeonggi","d":"시흥시","a":"경기 시흥시 은행로167번길 7  크리스탈 빌딩 503호,504호","te":"은계초, 은행초","tm":"은행중, 은계중","th":"은행고"},{"n":"둔산점(W+)","on":"둔산점더블유플러스학원","reg":"대전서부교육지원청 등록 제 서4833호","s":"대전","se":"daejeon","d":"서구","a":"대전 서구 둔산로 130  803호","dir":"시청역 7번 출구쪽 30m"},{"n":"반여점","on":"반여점와와학습코칭학원","reg":"해운대교육지원청 등록 제3955호","s":"부산","se":"busan","d":"해운대구","a":"부산 해운대구 반여로 102  경성빌딩 501호","dir":"아시아선수촌 정문 건너편 깨비블럭있는 건물 5층","te":"인지초, 장산초, 무정초","tm":"장산중, 인지중","th":"반여고"},{"n":"화명점","on":"화명점와와학습코칭학원","reg":"부산북부교육지원청 등록 제2830호","s":"부산","se":"busan","d":"북구","a":"부산 북구 금곡대로285번길 19  리버사이드빌딩 504","dir":"일방통행길 빽다방 건물 5층, 또는 코오롱하늘채 2차 정문 앞 상가","te":"와석초","tm":"명진중, 화명중","th":"화명고,  성도고"},{"n":"보라점","on":"보라점와와학습코칭학원","reg":"용인교육지원청 등록 제4991호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기 용인시 기흥구 사은로126번길 6  신원프라자 303호","dir":"쌍용아파트 입구 줄넘기 학원 건물 3층","te":"나곡초","tm":"나곡중/보라중/상갈중","th":"보라고/신갈고"},{"n":"대구장기점","on":"대구장기점와와학습코칭학원","reg":"대구남부교육지원청 등록 제2020-80호","s":"대구","se":"daegu","d":"달서구","a":"대구 달서구 장기로 252  장기협성휴포레 2층 209,210","dir":"버스정류장(장동초등학교앞) 바로 앞 대로변에 있습니다.\n 장기협성휴포레 상가 2층 (1층에 한솥 도시락이 있습니다)","te":"장동초, 장기초, 성당초","tm":"원화중"},{"n":"범박점","on":"범박점와와학습코칭보습학원","reg":"부천교육지원청 등록 제6495호","s":"경기","se":"gyeonggi","d":"부천시","a":"경기 부천시 소사구 은성로 132  5층","dir":"부천 은성로132 제일프라자 501호 (세븐일레븐건물 5층)","te":"창영초, 소안초, 소사초, 복사초","tm":"일신중, 소사중, 부일중","th":"시온고, 소사고, 범박고"},{"n":"위례창곡점","on":"위례창곡점와와학습코칭학원","reg":"성남교육지원청 등록 제6458호","s":"경기","se":"gyeonggi","d":"성남시","a":"경기 성남시 수정구 위례동로 141  우성메디피아 401호","dir":"경기도 성남시 수정구 위례동로 141 우성메디피아 401호  1층컴포즈커피"},{"n":"혁신점","on":"혁신점와와학습코칭학원","reg":"원주교육지원청 등록 제2762호","s":"강원","se":"gangwon","d":"원주시","a":"강원특별자치도 원주시 입춘로 110  파라다이스프라자 305호","te":"버들초, 반고초","tm":"버들중, 반곡중"},{"n":"원흥점","on":"원흥점와와학습코칭학원","reg":"고양교육지원청 등록 제6096호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 덕양구 권율대로 672  원흥역봄오피스텔 217호","dir":"원흥역 1번 출구 앞 1층 베스킨 라빈스 있는 건물 2층 217호","te":"원흥초, 삼송초","tm":"원흥중, 고양중","th":"신원고, 서정고"},{"n":"거제수월점","on":"거제수월점와와학습코칭학원","reg":"거제교육지원청 등록 제1558호","s":"경남","se":"gyeongnam","d":"거제시","a":"경남 거제시 수양로 462  3층","dir":"수월사거리 파리바게트 맞은편 skT월드 건물 3층","te":"수월초, 제산초","tm":"수월중, 거제중앙중","th":"거제중앙고, 연초고, 상문고"},{"n":"덕이점","on":"덕이점와와학습코칭학원","reg":"고양교육지원청 등록 제6169호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 일산서구 하이파크2로 40  금문프라자 804호","dir":"금문프라자(농협 옆건물, 1층에 컴포즈 카페있는 건물, 7층 헬스장 바로 위 8층입니다)","te":"한산초, 덕이초, 백송초"},{"n":"삼송점","on":"삼송점와와학습코칭학원","reg":"고양교육지원청 등록 제6173호","s":"경기","se":"gyeonggi","d":"고양시","a":"경기 고양시 덕양구 신원로 36  명승세도나3 701호","dir":"신원마을6단지 맞은편 상가-명승세도나3차 맘스터치있는 건물 7층","te":"신원초","tm":"신원중","th":"신원고"},{"n":"진월점","on":"진월점와와학습코칭센터학원","reg":"광주서부교육지원청 등록 제7193호","s":"광주","se":"gwangju","d":"남구","a":"광주 남구 광복마을길 47  4층","dir":"광주광역시 남구 광복마을길 47 4층","te":"진월초, 주월초","tm":"동성여중, 주월중","th":"대광여고, 동성고"},{"n":"이충점","on":"이충점와와학습코칭학원","reg":"평택교육지원청 등록 제 2599호","s":"경기","se":"gyeonggi","d":"평택시","a":"경기 평택시 이충로 49-31  삼원프라자 201호","dir":"이충상가 농협 옆건물 삼원프라자 2층, 1층 정관장 건물","tm":"효명중, 이충중, 은혜중","th":"이충고, 은혜고, 효명고"},{"n":"루원시티점","on":"루원시티점와와학습코칭학원","reg":"인천서부교육지원청 등록 서부 제2212호","s":"인천","se":"incheon","d":"서구","a":"인천 서구 새오개로111번안길 23  대릉빌딩 302호","te":"가현초","tm":"신형중, 신현여중, 가현중","th":"신현고"},{"n":"복현점","on":"복현점와와학습코칭학원","reg":"대구광역시서부교육지원청 제2024-4559호","s":"대구","se":"daegu","d":"북구","a":"대구 북구 동북로 247  이편한세상복현 상가동 305호 와와학습코칭학원","dir":"대구 북구 복현동 713 e편한세상복현 상가동 305호","te":"복현초","tm":"북중, 성광중, 산격중","th":"경상고, 성광고, 영진고"},{"n":"진접점","on":"진접점와와학습코칭학원","reg":"경기도구리남양주교육지원청등록 제4552호","s":"경기","se":"gyeonggi","d":"남양주시","a":"경기 남양주시 진접읍 해밀예당1로 171  제일프라자 203호"},{"n":"사직점","on":"사직점와와학습코칭학원","reg":"동래교육지원청 등록 제5468호","s":"부산","se":"busan","d":"동래구","a":"부산 동래구 사직로 80  222동 311호 (사직쌍용예가아파트 상가)","dir":"부산시 동래구 사직로 80 쌍용예가상가 222동 311호 (상가 두개 중 맑은샘사우나가 있는 상가 3에 위치)","te":"예원초, 사직초","tm":"사직중, 사직여중","th":"사직고, 사직여고, 동인고"},{"n":"운정호수점","on":"운정호수점와와학습코칭센터학원","reg":"경기도파주교육지원청 등록 제1878호","s":"경기","se":"gyeonggi","d":"파주시","a":"경기 파주시 경의로1240번길 37-1  명품프라자3차 605호","dir":"운정역1번출구에서 걸어서 7분, 가람도서관 건너편, 할리스건물"},{"n":"탄벌점","on":"탄벌점와와학습코칭학원","reg":"광주하남교육지원청 등록 제2007호","s":"경기","se":"gyeonggi","d":"광주시","a":"경기 광주시 벌원길 61  2층"},{"n":"남외점","on":"남외점와와학습코칭학원","reg":"울산강북교육지원청 등록 제5626호","s":"울산","se":"ulsan","d":"중구","a":"울산 중구 남외3길 15  남외프라자 401호","dir":"남외초앞 파리바게트 사거리 마트위 4층","te":"남외초","tm":"남외중,울산중","th":"울산고,가온고"},{"n":"흥덕점","on":"흥덕점와와학습코칭학원","reg":"용인교육지원청 등록 제4989호","s":"경기","se":"gyeonggi","d":"용인시","a":"경기 용인시 기흥구 흥덕2로 85  우연프라자 201호","dir":"용인 흥덕 이마트 뒷편 세차장 옆건물 2층입니다.(경기도 용인시 흥덕2로 85 우연프라자 201호)","te":"샘말초, 석현초, 흥덕초, 매원초","tm":"흥덕중, 다산중, 광교호수중, 상현중","th":"흥덕고, 기흥고, 신갈고, 상현고, 매원고"},{"n":"반송점","on":"반송점와와학습코칭학원","reg":"화성오산교육지원청 등록 제3130호","s":"경기","se":"gyeonggi","d":"화성시","a":"경기도 화성시 반송동 동탄원천로 163  503호"},{"n":"돈암점","on":"돈암점와와학습코칭학원","reg":"성북강북교육지원청 등록 제2017-43호","s":"서울","se":"seoul","d":"성북구","a":"서울특별시 성북구 돈암동 동소문로 190  중앙빌딩 201호","dir":"성신여대역 1번출구, 직진 버스 1정거장  기아자동차 건물 2층","te":"개운초","tm":"개운중, 성신여중, 고명중","th":"용문고, 사대부고, 성신여고, 고대부고"},{"n":"동소문점","on":"동소문점와와학습코칭학원","reg":"성북강북교육지원청 등록 제2017-39호","s":"서울","se":"seoul","d":"성북구","a":"서울 성북구 아리랑로7길 5  4층 와와학습코칭학원","dir":"할머니문방구 사거리 건물 4층","te":"정덕초, 우촌초, 정수초","tm":"성신여중, 동구여중, 삼선중, 고명중","th":"성신여고, 홍대부고, 고대부고, 한성여고"},{"n":"상암점","on":"와와학습코칭센터학원","reg":"서울서부교육지원청 등록 제022015001127호","s":"서울","se":"seoul","d":"마포구","a":"서울특별시 마포구 상암동 상암산로1길 73  202호","te":"중동초, 상지초, 상암초","tm":"상암중, 중암중, 성산중, 성사중, 덕은한강중","th":"상암고, 예일여고, 대성고, 숭실고, 가재울고"}];
 // ── 시군구 feature 동적 생성 ──────────────────────────────────
 function generateAreaFeature(ak, schools) {
-  const templates = [
-    `${ak} 과외는 초1부터 고3까지 전 학년 수학·영어·국어·과학·사회·코딩·논술 전 과목을 1:1 방문 과외로 연결합니다. ${schools} 내신 기출을 철저히 분석한 검증 선생님이 학생 개개인의 수준과 목표에 맞는 맞춤 커리큘럼을 제공합니다. 학원 수업만으로 부족한 취약 단원을 집중 보완하거나, 처음부터 1:1 과외로 내신과 수능을 함께 준비할 수 있습니다. 무료 상담 후 48시간 내 최적의 선생님을 연결해드립니다.`,
-    `${ak} 1:1 방문 과외 전문. ${schools} 기출 분석 검증 선생님. 초등·중등·고등 전 학년 내신 관리부터 수능 대비까지 맞춤 커리큘럼으로 운영합니다. 수학·영어·국어·과학 모든 과목에서 학력·경력·수업시연 3단계 검증을 완료한 선생님을 매칭합니다. 매주 학습 보고서를 제공해 투명한 성적 관리가 가능합니다. 무료 상담 010-6834-8080`,
-    `${ak} 과외는 ${schools} 학군 내신 1등급을 목표로 1:1 맞춤 지도를 제공합니다. 초1~고3 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목에서 검증된 선생님을 48시간 내 연결합니다. 학원과 병행하는 취약 단원 집중 보완, 또는 학원 없이 과외만으로 내신을 완벽히 관리하는 두 가지 방식 모두 가능합니다. 첫 상담과 체험 수업은 무료입니다.`];
-  let h = 0;
-  for (let i = 0; i < ak.length; i++) h = (h * 31 + ak.charCodeAt(i)) >>> 0;
-  return templates[h % templates.length];
+  let _h=0; for(let i=0;i<ak.length;i++) _h=(_h*31+ak.charCodeAt(i))>>>0;
+  const t=[
+    `${ak} 과외는 초1~고3 전 학년 수학·영어·국어·과학·사회·코딩·논술 1:1 방문 과외를 연결합니다. ${schools} 내신 기출을 철저히 분석한 검증 선생님이 학생 수준에 맞는 커리큘럼을 제공합니다. 무료 상담 48시간 내 최적 선생님 연결.`,
+    `${ak} 1:1 방문 과외 전문. ${schools} 기출 분석 선생님. 초등·중등·고등 전 학년 내신·수능 맞춤 커리큘럼. 학력·경력·수업시연 3단계 검증. 무료 상담 010-6834-8080`,
+    `${ak} 맞춤 1:1 과외. ${schools} 내신 관리 전문. 수학·영어·국어·과학 검증 선생님. 매주 학습 보고서 제공.`,
+  ];
+  return t[_h%t.length];
 }
 
 const REGIONS = {
@@ -825,7 +612,54 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 .gnb-drop-item{display:block;padding:9px 16px;font-size:13px;font-weight:700;color:#374151;text-decoration:none;border-radius:8px;white-space:nowrap}
 .gnb-drop-item:hover{background:#EFF6FF;color:#1D4ED8}
 @media(max-width:768px){.hw{padding:0 16px;height:72px;gap:10px}.logo-sub{display:none}.logo-main{font-size:15px}.logo-mark{width:32px;height:32px}.vpill{padding:4px 10px}.vpill .vc{font-size:13px}.gnb{display:none}}
-.gi{position:relative}.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap;cursor:pointer;font-family:inherit}.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}.arr{width:14px;height:14px;transition:transform .2s;color:rgba(15,32,68,0.4)}.gi:hover .arr{transform:rotate(180deg)}.drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:#0F2044;border-radius:12px;border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}.gi:hover .drop{opacity:1;visibility:visible}.drop a{display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);transition:all .15s}.drop a:hover{background:rgba(255,255,255,0.1);color:white}.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:#0F2044;border-radius:16px;border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}.gi:hover .mega-drop,.mega-drop.on{opacity:1;visibility:visible}.mega-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}.mega-tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:all .2s;font-family:inherit}.mega-tab.on{background:#3B82F6;color:white}.mega-tab:hover:not(.on){background:rgba(255,255,255,.08);color:white}.mega-panel{display:none}.mega-panel.on{display:block}.mega-rt{font-size:10px;font-weight:700;color:#60A5FA;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}.mega-btns{display:flex;flex-wrap:wrap;gap:6px}.mega-btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .18s;text-decoration:none}.mega-btn:hover{background:#3B82F6;color:white;border-color:#3B82F6}`;
+.gi{position:relative}.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap;cursor:pointer;font-family:inherit}.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}.arr{width:14px;height:14px;transition:transform .2s;color:rgba(15,32,68,0.4)}.gi:hover .arr{transform:rotate(180deg)}.drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:#0F2044;border-radius:12px;border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}.gi:hover .drop{opacity:1;visibility:visible}.drop a{display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);transition:all .15s}.drop a:hover{background:rgba(255,255,255,0.1);color:white}.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:#0F2044;border-radius:16px;border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}.gi:hover .mega-drop,.mega-drop.on{opacity:1;visibility:visible}.mega-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}.mega-tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:all .2s;font-family:inherit}.mega-tab.on{background:#3B82F6;color:white}.mega-tab:hover:not(.on){background:rgba(255,255,255,.08);color:white}.mega-panel{display:none}.mega-panel.on{display:block}.mega-rt{font-size:10px;font-weight:700;color:#60A5FA;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}.mega-btns{display:flex;flex-wrap:wrap;gap:6px}.mega-btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .18s;text-decoration:none}.mega-btn:hover{background:#3B82F6;color:white;border-color:#3B82F6}
+@media(max-width:640px){
+  .wrap{padding-top:80px!important}
+  h1{font-size:26px!important}
+  .art-body{padding:0 16px}
+  .bc{padding:0 16px;font-size:12px}
+  .cta-box{margin:24px 16px;padding:28px 20px}
+  .cta-btns{flex-direction:column}
+  .cta-btns a{width:100%;text-align:center;box-sizing:border-box}
+  .subj-grid{grid-template-columns:1fr!important}
+  .keyword-tags{gap:6px}
+  table{font-size:12px}
+  table th,table td{padding:8px 10px!important}
+}
+#subj-grid{justify-content:center}
+@media(max-width:500px){#subj-grid{grid-template-columns:repeat(3,1fr)!important}}
+/* 모바일 네비 */
+@media(max-width:768px){
+  .gnb{display:none!important}
+  .mob-menu-btn{display:flex!important}
+}
+@media(min-width:769px){
+  .mob-menu-btn{display:none!important}
+  .mob-nav{display:none!important}
+}
+.mob-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;align-items:center;justify-content:center}
+.mob-nav{position:fixed;top:0;right:-100%;width:82%;max-width:320px;height:100dvh;background:#0F2044;z-index:9000;transition:right .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:20px 0 40px}
+.mob-nav.open{right:0}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:8999}
+.mob-overlay.open{display:block}
+.mob-nav-head{display:flex;align-items:center;justify-content:space-between;padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px}
+.mob-nav-logo{color:white;font-size:17px;font-weight:900;text-decoration:none}
+.mob-nav-logo em{color:#60A5FA;font-style:normal}
+.mob-close{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:22px;padding:4px}
+.mob-nav-item{display:block;padding:13px 20px;color:rgba(255,255,255,.8);font-size:15px;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06);transition:background .15s}
+.mob-nav-item:hover,.mob-nav-item.active{background:rgba(255,255,255,.08);color:white}
+.mob-nav-item.active{color:#60A5FA}
+.mob-nav-section{padding:14px 20px 6px;font-size:10px;font-weight:800;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase}
+.mob-subj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 16px 16px;justify-items:center}
+.mob-subj-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:rgba(255,255,255,.06);border-radius:10px;padding:12px 8px;text-decoration:none;transition:background .15s;width:100%}
+.mob-subj-btn:hover{background:rgba(255,255,255,.12)}
+.mob-subj-btn span:first-child{font-size:20px}
+.mob-subj-btn span:last-child{font-size:11px;font-weight:700;color:rgba(255,255,255,.8)}
+.mob-sido-grid{display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 16px;justify-content:center}
+.mob-sido-btn{padding:5px 12px;background:rgba(255,255,255,.06);border-radius:6px;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}
+.mob-sido-btn:hover{background:#3B82F6;color:white}
+.mob-contact-btn{margin:12px 16px 0;display:flex;align-items:center;justify-content:center;gap:8px;background:#1D4ED8;color:white;padding:14px;border-radius:12px;font-size:14px;font-weight:900;text-decoration:none}
+@media(max-width:768px){div[style*='grid-template-columns:1fr 340px']{grid-template-columns:1fr!important}}`;
 
 const HEADER = `<header>
   <div class="hw">
@@ -875,10 +709,26 @@ const HEADER = `<header>
             </div>
           </div>
           <div class="mega-panel" id="region-grade">
+            <div class="mega-rt">🎒 초등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daechidong/elementary/math">🎒 초등 과외</a>
-              <a class="mega-btn" href="/seoul/gangnam/daechidong/middle/math">📚 중등 과외</a>
-              <a class="mega-btn" href="/seoul/gangnam/daechidong/high/math">🎓 고등 과외</a>
+              <a class="mega-btn" href="/grade/elementary/1">초등 1학년</a>
+              <a class="mega-btn" href="/grade/elementary/2">초등 2학년</a>
+              <a class="mega-btn" href="/grade/elementary/3">초등 3학년</a>
+              <a class="mega-btn" href="/grade/elementary/4">초등 4학년</a>
+              <a class="mega-btn" href="/grade/elementary/5">초등 5학년</a>
+              <a class="mega-btn" href="/grade/elementary/6">초등 6학년</a>
+            </div>
+            <div class="mega-rt">📚 중학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="/grade/middle/1">중학교 1학년</a>
+              <a class="mega-btn" href="/grade/middle/2">중학교 2학년</a>
+              <a class="mega-btn" href="/grade/middle/3">중학교 3학년</a>
+            </div>
+            <div class="mega-rt">🎓 고등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="/grade/high/1">고등 1학년</a>
+              <a class="mega-btn" href="/grade/high/2">고등 2학년</a>
+              <a class="mega-btn" href="/grade/high/3">고등 3학년</a>
             </div>
           </div>
           <div class="mega-panel" id="region-school">
@@ -907,7 +757,7 @@ const HEADER = `<header>
       </div>
       <div class="gi">
         <button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/seoul/gangnam/daichi/high2/math">수학</a><a href="/seoul/gangnam/daichi/high2/english">영어</a><a href="/seoul/gangnam/daichi/high2/science">과학</a><a href="/seoul/gangnam/daichi/high2/korean">국어</a><a href="/seoul/gangnam/daichi/high2/social">사회</a><a href="/seoul/gangnam/daichi/high2/coding">코딩</a><a href="/seoul/gangnam/daichi/high2/math">검정고시</a><a href="/academy/all">코칭 수업</a></div>
+        <div class="drop"><a href="/subject/math">📐 수학</a><a href="/subject/english">📖 영어</a><a href="/subject/korean">✍️ 국어</a><a href="/subject/science">🔬 과학</a><a href="/subject/social">🌏 사회</a><a href="/subject/coding">💻 코딩</a><a href="/subject/essay">📝 논술</a></div>
       </div>
       <div class="gi">
         <button class="gb" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
@@ -921,8 +771,56 @@ const HEADER = `<header>
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
       </div>
     </nav>
+  <!-- 모바일 햄버거 버튼 -->
+  <button class="mob-menu-btn" onclick="openMobNav()" aria-label="메뉴열기" style="margin-left:auto">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F2044" stroke-width="2.5" stroke-linecap="round">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
   </div>
-</header>`;
+</header>
+<div class="mob-overlay" id="mob-overlay" onclick="closeMobNav()"></div>
+<nav class="mob-nav" id="mob-nav">
+  <div class="mob-nav-head">
+    <a href="/" class="mob-nav-logo"><em>올케어</em>스터디</a>
+    <button class="mob-close" onclick="closeMobNav()">✕</button>
+  </div>
+  <div class="mob-nav-section">과목별 과외</div>
+  <div class="mob-subj-grid">
+    <a class="mob-subj-btn" href="/subject/math"><span>📐</span><span>수학</span></a>
+    <a class="mob-subj-btn" href="/subject/english"><span>📖</span><span>영어</span></a>
+    <a class="mob-subj-btn" href="/subject/korean"><span>✍️</span><span>국어</span></a>
+    <a class="mob-subj-btn" href="/subject/science"><span>🔬</span><span>과학</span></a>
+    <a class="mob-subj-btn" href="/subject/social"><span>🌏</span><span>사회</span></a>
+    <a class="mob-subj-btn" href="/subject/coding"><span>💻</span><span>코딩</span></a>
+    <a class="mob-subj-btn" href="/subject/essay"><span>📝</span><span>논술</span></a>
+  </div>
+  <div class="mob-nav-section">지역별 과외</div>
+  <div class="mob-sido-grid">
+    <a class="mob-sido-btn" href="/seoul">서울</a><a class="mob-sido-btn" href="/gyeonggi">경기</a>
+    <a class="mob-sido-btn" href="/incheon">인천</a><a class="mob-sido-btn" href="/busan">부산</a>
+    <a class="mob-sido-btn" href="/daegu">대구</a><a class="mob-sido-btn" href="/daejeon">대전</a>
+    <a class="mob-sido-btn" href="/gwangju">광주</a><a class="mob-sido-btn" href="/ulsan">울산</a>
+    <a class="mob-sido-btn" href="/sejong">세종</a><a class="mob-sido-btn" href="/gangwon">강원</a>
+    <a class="mob-sido-btn" href="/chungbuk">충북</a><a class="mob-sido-btn" href="/chungnam">충남</a>
+    <a class="mob-sido-btn" href="/jeonbuk">전북</a><a class="mob-sido-btn" href="/jeonnam">전남</a>
+    <a class="mob-sido-btn" href="/gyeongbuk">경북</a><a class="mob-sido-btn" href="/gyeongnam">경남</a>
+    <a class="mob-sido-btn" href="/jeju">제주</a>
+  </div>
+  <div class="mob-nav-section">학년별 과외</div>
+  <a class="mob-nav-item" href="/grade/elementary/1">🎒 초등 과외</a>
+  <a class="mob-nav-item" href="/grade/middle/1">📚 중등 과외</a>
+  <a class="mob-nav-item" href="/grade/high/1">🎓 고등 과외</a>
+  <div class="mob-nav-section">학원 & 기타</div>
+  <a class="mob-nav-item" href="/academy/all">🏫 학원 찾기</a>
+  <a class="mob-nav-item" href="/school">🏛 학교별 과외</a>
+  <a class="mob-contact-btn" href="/contact?type=tutoring">✉️ 무료 상담하기</a>
+  <a class="mob-contact-btn" href="tel:01068348080" style="background:rgba(255,255,255,.1);margin-top:8px">📞 010-6834-8080</a>
+</nav>
+<script>
+function openMobNav(){document.getElementById('mob-nav').classList.add('open');document.getElementById('mob-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeMobNav(){document.getElementById('mob-nav').classList.remove('open');document.getElementById('mob-overlay').classList.remove('open');document.body.style.overflow='';}
+</script>`;
 
 const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;border-bottom:1px solid rgba(255,255,255,0.08)!important;box-shadow:none!important">
   <div class="hw">
@@ -972,10 +870,26 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
             </div>
           </div>
           <div class="mega-panel" id="region-grade">
+            <div class="mega-rt">🎒 초등학교</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daechidong/elementary/math">🎒 초등 과외</a>
-              <a class="mega-btn" href="/seoul/gangnam/daechidong/middle/math">📚 중등 과외</a>
-              <a class="mega-btn" href="/seoul/gangnam/daechidong/high/math">🎓 고등 과외</a>
+              <a class="mega-btn" href="/grade/elementary/1">초등 1학년</a>
+              <a class="mega-btn" href="/grade/elementary/2">초등 2학년</a>
+              <a class="mega-btn" href="/grade/elementary/3">초등 3학년</a>
+              <a class="mega-btn" href="/grade/elementary/4">초등 4학년</a>
+              <a class="mega-btn" href="/grade/elementary/5">초등 5학년</a>
+              <a class="mega-btn" href="/grade/elementary/6">초등 6학년</a>
+            </div>
+            <div class="mega-rt">📚 중학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="/grade/middle/1">중학교 1학년</a>
+              <a class="mega-btn" href="/grade/middle/2">중학교 2학년</a>
+              <a class="mega-btn" href="/grade/middle/3">중학교 3학년</a>
+            </div>
+            <div class="mega-rt">🎓 고등학교</div>
+            <div class="mega-btns">
+              <a class="mega-btn" href="/grade/high/1">고등 1학년</a>
+              <a class="mega-btn" href="/grade/high/2">고등 2학년</a>
+              <a class="mega-btn" href="/grade/high/3">고등 3학년</a>
             </div>
           </div>
           <div class="mega-panel" id="region-school">
@@ -1004,7 +918,7 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
       </div>
       <div class="gi">
         <button class="gb" style="color:rgba(255,255,255,0.85)">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/seoul/gangnam/daichi/high2/math">수학</a><a href="/seoul/gangnam/daichi/high2/english">영어</a><a href="/seoul/gangnam/daichi/high2/science">과학</a><a href="/seoul/gangnam/daichi/high2/korean">국어</a><a href="/seoul/gangnam/daichi/high2/social">사회</a><a href="/seoul/gangnam/daichi/high2/coding">코딩</a><a href="/seoul/gangnam/daichi/high2/math">검정고시</a><a href="/academy/all">코칭 수업</a></div>
+        <div class="drop"><a href="/subject/math">📐 수학</a><a href="/subject/english">📖 영어</a><a href="/subject/korean">✍️ 국어</a><a href="/subject/science">🔬 과학</a><a href="/subject/social">🌏 사회</a><a href="/subject/coding">💻 코딩</a><a href="/subject/essay">📝 논술</a></div>
       </div>
       <div class="gi">
         <button class="gb" style="color:rgba(255,255,255,0.85)" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
@@ -1136,14 +1050,21 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 <meta name="description" content="${descShort}">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="${canonicalUrl}">
+<link rel="icon" type="image/png" sizes="32x32" href="https://allcarestudy.com/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://allcarestudy.com/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://allcarestudy.com/apple-touch-icon.png">
+<link rel="shortcut icon" href="https://allcarestudy.com/favicon.ico">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${descShort}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="${canonicalUrl}">
 <meta property="og:site_name" content="올케어스터디">
 <meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://allcarestudy.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080"},"datePublished":"${isoDate}","dateModified":"${isoDate}","inLanguage":"ko-KR"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${isoDate}","dateModified":"${isoDate}","inLanguage":"ko-KR"}</script>
 ${bcSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
@@ -1784,6 +1705,306 @@ function schoolFromSlug(sidoEn, gugunKr, schoolRoman, grade) {
   return null;
 }
 
+
+// ── 학년별 과외 정보 페이지 ─────────────────────────────────────────────────
+
+
+// ── 과목별 정보 페이지 ─────────────────────────────────────────────────────
+
+const SUBJECT_INFO = {
+  math: {
+    ko:'수학', emoji:'📐', color:'#3B82F6', lightColor:'#EFF6FF',
+    tagline:'수학 1등급의 비밀, 개념에 있습니다',
+    thumb:'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&q=80',
+    thumbAlt:'수학 공부 과외',
+    keywords:['수학과외','수학공부법','내신수학','수능수학','수학1등급'],
+  },
+  english: {
+    ko:'영어', emoji:'📖', color:'#10B981', lightColor:'#ECFDF5',
+    tagline:'영어, 단어와 독해 두 가지만 잡으면 됩니다',
+    thumb:'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=1200&q=80',
+    thumbAlt:'영어 공부 과외',
+    keywords:['영어과외','영어공부법','내신영어','수능영어','영어1등급'],
+  },
+  korean: {
+    ko:'국어', emoji:'✍️', color:'#F59E0B', lightColor:'#FFFBEB',
+    tagline:'국어는 독해력입니다. 읽는 힘을 키워드립니다',
+    thumb:'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&q=80',
+    thumbAlt:'국어 공부 과외',
+    keywords:['국어과외','국어공부법','내신국어','수능국어','비문학독해'],
+  },
+  science: {
+    ko:'과학', emoji:'🔬', color:'#8B5CF6', lightColor:'#F5F3FF',
+    tagline:'과학은 원리 이해가 전부입니다',
+    thumb:'https://images.unsplash.com/photo-1532094349884-543559244e6a?w=1200&q=80',
+    thumbAlt:'과학 공부 과외',
+    keywords:['과학과외','과학공부법','내신과학','수능과학탐구','물리화학생물'],
+  },
+  social: {
+    ko:'사회', emoji:'🌏', color:'#EF4444', lightColor:'#FEF2F2',
+    tagline:'사회, 흐름과 맥락으로 이해하면 쉽습니다',
+    thumb:'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=1200&q=80',
+    thumbAlt:'사회 공부 과외',
+    keywords:['사회과외','사회공부법','내신사회','수능사회탐구','한국사'],
+  },
+  coding: {
+    ko:'코딩', emoji:'💻', color:'#06B6D4', lightColor:'#ECFEFF',
+    tagline:'코딩, 논리적 사고력을 키우는 가장 빠른 방법',
+    thumb:'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80',
+    thumbAlt:'코딩 공부 과외',
+    keywords:['코딩과외','파이썬과외','코딩공부법','정보과학','알고리즘'],
+  },
+  essay: {
+    ko:'논술', emoji:'📝', color:'#EC4899', lightColor:'#FDF2F8',
+    tagline:'논술, 대입 당락을 결정하는 마지막 관문',
+    thumb:'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80',
+    thumbAlt:'논술 공부 과외',
+    keywords:['논술과외','논술공부법','대입논술','인문논술','수리논술'],
+  },
+};
+
+
+function makeSubjectPage(subjectEn) {
+  const INFO = {
+    math:    {ko:'수학',  emoji:'📐', color:'#3B82F6', lc:'#EFF6FF', thumb:'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&q=80'},
+    english: {ko:'영어',  emoji:'📖', color:'#10B981', lc:'#ECFDF5', thumb:'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=1200&q=80'},
+    korean:  {ko:'국어',  emoji:'✍️', color:'#F59E0B', lc:'#FFFBEB', thumb:'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&q=80'},
+    science: {ko:'과학',  emoji:'🔬', color:'#8B5CF6', lc:'#F5F3FF', thumb:'https://images.unsplash.com/photo-1532094349884-543559244e6a?w=1200&q=80'},
+    social:  {ko:'사회',  emoji:'🌏', color:'#EF4444', lc:'#FEF2F2', thumb:'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=1200&q=80'},
+    coding:  {ko:'코딩',  emoji:'💻', color:'#06B6D4', lc:'#ECFEFF', thumb:'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80'},
+    essay:   {ko:'논술',  emoji:'📝', color:'#EC4899', lc:'#FDF2F8', thumb:'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80'},
+  };
+  const info = INFO[subjectEn]; if(!info) return null;
+  const {ko, emoji, color, lc:lightColor, thumb} = info;
+
+  // 과목별 동적 데이터
+  const DATA = {
+    math: {
+      tag:'수학 1등급의 비밀, 개념에 있습니다',
+      overview:`수학은 모든 이공계 진학과 수능 고득점의 핵심입니다. 많은 학생이 수학을 열심히 하는데 성적이 오르지 않는다고 호소합니다. 그 이유는 대부분 개념 이해 없이 문제 풀이만 반복하기 때문입니다. 올케어스터디 수학 과외는 공식을 외우는 것이 아니라 왜 그 공식이 성립하는지를 이해하는 것부터 시작합니다.`,
+      strategies:[['개념 먼저, 암기는 나중에','#3B82F6','수학은 공식을 외우기 전에 왜 그 공식이 성립하는지 이해하는 것이 먼저입니다. 원리를 이해한 학생은 공식을 잊어도 다시 유도할 수 있습니다.'],['오답 노트 필수','#1D4ED8','틀린 문제를 그냥 넘기지 않습니다. 왜 틀렸는지 스스로 분석하고 패턴을 기록합니다. 시험 전날 오답 노트 복습만으로 점수가 크게 올라갑니다.'],['매일 30분 연산 훈련','#2563EB','수학 실력의 기초는 연산 속도입니다. 꾸준한 반복 훈련으로 시험장에서 시간 여유를 만듭니다.'],['내신·수능 이원화','#1E40AF','내신 4주 전에는 학교 기출 집중 분석, 평소에는 수능 기초를 꾸준히 쌓는 이원화 전략이 효과적입니다.']],
+      grades:[['초등 수학','#93C5FD','연산 기초(사칙연산·분수·소수)와 도형 감각을 완성합니다. 구구단은 완벽 암기, 분수와 소수의 개념적 이해가 핵심입니다.'],['중등 수학','#60A5FA','방정식·함수·도형의 개념을 완성합니다. 특히 일차함수는 고등 수학의 모든 함수 개념과 연결됩니다.'],['고등 수학','#3B82F6','수학Ⅰ·Ⅱ·확통·미적분을 체계적으로 학습합니다. 수능 수학은 시간 관리가 핵심이므로 1~15번을 3분 안에 푸는 속도 훈련이 필요합니다.']],
+      tip:'수학 공부할 때 절대 하지 말아야 할 것: 풀이를 눈으로만 보고 넘어가기. 수학은 반드시 직접 손으로 풀어야 합니다. 틀린 문제는 왜 틀렸는지 직접 써서 오답 노트에 기록하세요.',
+    },
+    english: {
+      tag:'영어, 단어와 독해 두 가지만 잡으면 됩니다',
+      overview:`영어는 수능 절대평가 전환 이후 1등급(90점 이상) 확보가 기본 목표입니다. 올케어스터디 영어 과외는 단어 암기, 문법 체계화, 독해 속도 향상의 3단계 전략으로 진행합니다.`,
+      strategies:[['어휘력이 영어 성적의 70%','#10B981','독해, 문법, 서술형 모두 어휘력 없이는 해결되지 않습니다. 매일 10~15개의 단어를 예문과 함께 암기하는 루틴을 만들어 드립니다.'],['교과서 지문 5번 읽기','#059669','시험에는 교과서 지문이 변형되어 출제됩니다. 완벽히 이해할 때까지 최소 5번 이상 읽고 주요 표현을 암기합니다.'],['문법은 체계적 순서가 중요','#047857','품사→문장구조→시제→준동사→관계사 순서로 체계적으로 정리합니다. 단편적으로 공부하면 구멍이 생깁니다.'],['수능 유형별 풀이 전략','#065F46','빈칸 추론, 순서 배열 등 유형마다 풀이 전략이 다릅니다. 각 유형의 함정 패턴을 익히고 시간 배분을 훈련합니다.']],
+      grades:[['초등 영어','#A7F3D0','파닉스 완성→기초 단어 500개→간단한 문장 읽기·쓰기 순서로 진행합니다. 영어를 즐겁게 접하는 환경을 만드는 것이 가장 중요합니다.'],['중등 영어','#6EE7B7','교과서 지문 완전 분석, 주요 문법, 서술형 답안 작성 연습이 핵심입니다.'],['고등 영어','#34D399','수능 영어 1등급 확보를 목표로 빠른 독해 훈련, 고급 어휘 확장, 유형별 풀이 전략을 완성합니다.']],
+      tip:'영어 실력을 빠르게 키우는 비결: 좋아하는 유튜브 영상이나 드라마의 영어 자막 버전을 10분씩 보면 듣기 능력과 어휘가 자연스럽게 향상됩니다.',
+    },
+    korean: {
+      tag:'국어는 독해력입니다. 읽는 힘을 키워드립니다',
+      overview:`국어는 모든 과목의 기초입니다. 독해력이 낮으면 수학 문제도, 과학 개념도 이해하기 어렵습니다. 수능 국어는 독서(비문학)와 문학이 핵심이며, 고3 국어 1등급은 사실상 독해력 싸움입니다.`,
+      strategies:[['독해력은 모든 과목의 기초','#F59E0B','수학 문제를 이해하지 못하는 학생의 대부분은 수학 실력이 없는 것이 아니라 문제를 제대로 읽지 못하는 것입니다.'],['비문학 독해 전략','#D97706','주제문 찾기→단락 구조 파악→핵심어 연결→선지 판단의 4단계로 풀어야 합니다.'],['문학 감상법 완성','#B45309','시는 화자와 대상, 정서, 표현법을 분석합니다. 소설은 인물·사건·배경을 파악하고 서술자의 관점을 이해합니다.'],['서술형 답안 완성','#92400E','국어 시험의 서술형 배점이 높아지고 있습니다. 핵심 단어를 포함한 완성된 문장으로 답안을 작성하는 훈련이 필요합니다.']],
+      grades:[['초등 국어','#FDE68A','받아쓰기 완성, 독서 습관 형성, 일기·독서감상문 쓰기가 핵심입니다.'],['중등 국어','#FCD34D','문학 분석, 비문학 독해, 문법 정리가 핵심입니다.'],['고등 국어','#F59E0B','수능 독서(비문학) 지문을 매일 1~2개 풀고, 문학 작품 심층 감상을 병행합니다.']],
+      tip:'국어 공부의 핵심: 읽고 또 읽기. 독해력은 많이 읽을수록 올라갑니다. 쓰기는 직접 써보지 않으면 절대 늘지 않습니다.',
+    },
+    science: {
+      tag:'과학은 원리 이해가 전부입니다',
+      overview:`과학은 개념 이해 없이 암기로만 공부하면 한계가 있습니다. 중학교 과학의 기초가 고등학교 과학탐구 전 과목의 토대가 됩니다. 원리 이해→실험 해석→문제 적용의 3단계로 진행합니다.`,
+      strategies:[['암기보다 원리 이해','#8B5CF6','과학은 외워서 푸는 과목이 아닙니다. 왜 그렇게 되는지 원리를 이해하면 변형 문제에도 흔들리지 않습니다.'],['실험 해석 능력','#7C3AED','수능 과학탐구와 내신 서술형에는 실험 결과 해석 문제가 많습니다. 실험 목적, 변인 통제, 결과 해석의 흐름을 체계적으로 익혀야 합니다.'],['선택 과목 맞춤 전략','#6D28D9','물리학·화학·생명과학·지구과학 각각의 핵심을 파악하고 선택 과목에 맞는 맞춤 커리큘럼을 제공합니다.'],['취약 단원 집중 보완','#5B21B6','과학은 단원 간 연결이 강합니다. 앞 단원이 흔들리면 뒷 단원을 이해하기 어렵습니다.']],
+      grades:[['초등 과학','#DDD6FE','물질, 생명, 지구, 에너지 영역을 실생활과 연결해 학습합니다.'],['중등 과학','#C4B5FD','물리·화학·생물·지구과학을 균형 있게 학습합니다. 서술형 비중이 높으므로 실험 원리 설명 연습이 중요합니다.'],['고등 과학탐구','#A78BFA','선택과목을 집중 공략합니다. 수능 기출 분석이 가장 중요합니다.']],
+      tip:'과학 공부의 핵심: 교과서 그림과 실험 과정을 직접 손으로 그리며 설명해보세요. "남에게 가르치는 것처럼 설명하기"가 가장 효과적인 과학 공부법입니다.',
+    },
+    social: {
+      tag:'사회, 흐름과 맥락으로 이해하면 쉽습니다',
+      overview:`사회는 외우는 과목이 아니라 이해하는 과목입니다. 역사적 사건의 인과관계, 지리적 위치와 기후의 연관성, 경제 현상의 메커니즘을 이해하면 암기 없이도 시험에 강해집니다.`,
+      strategies:[['시사와 연결하면 오래 기억','#EF4444','교과서 내용을 현재 뉴스와 연결하면 훨씬 오래 기억됩니다. 선거, 경제 기사, 환경 뉴스를 교과 내용과 연결해 설명합니다.'],['지도·그래프·연표 읽기','#DC2626','사회 시험의 많은 문제가 시각 자료를 활용합니다. 자료를 정확히 읽고 해석하는 능력이 필수입니다.'],['한국사 흐름 잡기','#B91C1C','선사시대→삼국→고려→조선→근현대 흐름을 먼저 잡고 각 시대의 특징적인 사건 3가지씩 기억합니다.'],['서술형 답안 구조화','#991B1B','핵심 용어를 반드시 포함한 인과관계 구조로 답안을 작성하면 감점 없이 만점을 받을 수 있습니다.']],
+      grades:[['초등 사회','#FECACA','우리 지역, 우리나라 역사, 세계 여러 나라를 배웁니다.'],['중등 사회/역사','#FCA5A5','역사·지리·일반사회를 균형 있게 학습합니다.'],['고등 사회탐구','#F87171','한국사 필수, 통합사회·경제·법과정치 등 선택 과목 집중 공략합니다.']],
+      tip:'사회를 잘 하는 가장 빠른 방법: 교과서를 소리 내어 읽으며 중요한 용어에 밑줄을 긋고, 다음 날 그 용어들을 보고 설명할 수 있는지 확인하세요.',
+    },
+    coding: {
+      tag:'코딩, 논리적 사고력을 키우는 가장 빠른 방법',
+      overview:`코딩은 단순히 프로그래밍 언어를 배우는 것이 아닙니다. 문제를 논리적으로 분해하고 해결책을 설계하는 사고력을 기르는 과정입니다. 초등학교 코딩 교육 의무화부터 대입 정보 과목 내신까지 중요성이 높아지고 있습니다.`,
+      strategies:[['미래 직업의 핵심 역량','#06B6D4','AI·빅데이터·자동화 시대에 코딩은 선택이 아닌 필수입니다. 지금 코딩을 시작하는 것이 미래 직업을 준비하는 가장 빠른 방법입니다.'],['단계별 체계적 커리큘럼','#0891B2','초등: 블록 코딩→중등: 파이썬 기초→고등: 알고리즘·자료구조·프로젝트 순서로 단계별로 진행합니다.'],['1:1 코딩 과외의 장점','#0E7490','막히는 순간 혼자서는 해결하기 어렵습니다. 1:1 과외에서는 막히는 즉시 선생님의 도움을 받아 해결할 수 있습니다.'],['정보 내신·대회 대비','#155E75','중학교 정보 과목 내신, 한국정보올림피아드, SW마이스터고 입시 등 목표에 맞는 맞춤 대비를 제공합니다.']],
+      grades:[['초등 코딩','#A5F3FC','스크래치, 엔트리 등 블록 코딩으로 시작합니다. 게임을 만들고 애니메이션을 제작하며 논리적 사고를 익힙니다.'],['중등 코딩','#67E8F9','파이썬 기초(변수·자료형·조건문·반복문·함수)를 학습합니다.'],['고등 코딩','#22D3EE','파이썬 심화, 알고리즘, 자료구조를 학습합니다. 대학 SW 면접 대비도 가능합니다.']],
+      tip:'코딩 실력을 빠르게 키우는 방법: 매일 30분씩 코드를 직접 타이핑하세요. 에러가 나도 괜찮습니다. 에러를 해결하는 과정이 가장 많이 성장하는 순간입니다.',
+    },
+    essay: {
+      tag:'논술, 대입 당락을 결정하는 마지막 관문',
+      overview:`논술은 대학 입시에서 점점 중요해지고 있는 전형입니다. 서울 상위권 대학의 논술 전형 경쟁률은 수십 대 일을 기록하지만, 체계적으로 준비하면 충분히 합격할 수 있습니다.`,
+      strategies:[['대입 논술 유형 분석','#EC4899','인문논술은 제시문 분석+논지 전개, 수리논술은 수학적 증명+설명, 의학계열은 과학 지식+논증으로 나뉩니다.'],['실전 첨삭의 중요성','#DB2777','논술은 혼자 쓰는 것보다 전문 첨삭을 받을 때 훨씬 빠르게 향상됩니다. 1:1 과외에서 매 수업마다 직접 첨삭을 받으면 한 달 안에 확실한 실력 향상을 경험합니다.'],['제시문 분석 능력','#BE185D','낯선 텍스트를 빠르게 읽고 핵심 논지를 파악하는 능력이 논술의 가장 중요한 기초입니다.'],['구조화된 글쓰기','#9D174D','서론(문제 제기)→본론(주장+근거+반박)→결론(요약+전망) 구조로 개요를 먼저 작성하는 습관이 핵심입니다.']],
+      grades:[['초등 논술','#FBCFE8','독서 기반 글쓰기, 주장과 근거 구분하기, 짧은 논설문 작성이 기초입니다.'],['중등 논술','#F9A8D4','개요 작성, 서론·본론·결론 구조화, 수행평가 논술 대비를 중점으로 합니다.'],['고등 논술(대입)','#F472B6','대학별 출제 유형 분석, 제시문 독해, 실전 글쓰기+첨삭을 집중적으로 진행합니다.']],
+      tip:'논술 실력을 빠르게 키우는 방법: 매일 신문 사설 1편을 읽고 3줄로 요약하세요. 6개월만 꾸준히 하면 제시문 독해 속도가 눈에 띄게 빨라집니다.',
+    },
+  };
+
+  const dat=DATA[subjectEn]||{tag:'',overview:'',strategies:[],grades:[],tip:''};
+  const {tag,overview,strategies,grades,tip}=dat;
+
+  const stratCards=strategies.map(([t,c,d])=>`<div style="background:white;border:1.5px solid ${c}25;border-radius:16px;padding:22px;margin-bottom:14px;border-left:5px solid ${c}"><div style="font-size:15px;font-weight:900;color:${c};margin-bottom:9px">✦ ${t}</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">${d}</p></div>`).join('');
+  const gradeCards=grades.map(([g,c,d])=>`<div style="background:${c}30;border-radius:12px;padding:16px 18px;margin-bottom:10px;border-left:4px solid ${color}"><div style="font-size:14px;font-weight:900;color:#0F2044;margin-bottom:6px">🎯 ${g}</div><p style="font-size:13px;color:#374151;line-height:1.8;margin:0">${d}</p></div>`).join('');
+  const otherLinks=Object.entries(INFO).filter(([en])=>en!==subjectEn)
+    .map(([en,s])=>`<a class="subj-link" href="/subject/${en}"><span>${s.emoji} ${s.ko} 과외</span><span>→</span></a>`).join('');
+
+  const canonical=`/subject/${subjectEn}`;
+  const title=`${ko} 과외 | ${ko} 공부법·내신·수능 완벽 가이드 - 올케어스터디`;
+  const desc=`${ko} 과외 전문. ${ko} 공부법, 내신 관리, 수능 준비. 검증된 1:1 방문 과외. 무료 상담 010-6834-8080`;
+  const bc=[{name:'홈',url:'/'},{name:'과목별 과외',url:'/subject'},{name:`${ko} 과외`,url:canonical}];
+
+  const body=`<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/subject">과목별 과외</a> › <span>${ko} 과외</span></div>
+  <div style="position:relative;width:100%;height:300px;border-radius:20px;overflow:hidden;margin-bottom:36px">
+    <img src="${thumb}" alt="${ko} 과외" style="width:100%;height:100%;object-fit:cover" loading="eager" onerror="this.parentElement.style.background='linear-gradient(135deg,${color},${color}99)';this.remove()">
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,32,68,0.85),rgba(15,32,68,0.25))"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:36px 44px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:${color};color:white;font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;margin-bottom:12px;width:fit-content">${emoji} 올케어스터디 ${ko} 과외</div>
+      <h1 style="font-size:32px;font-weight:900;color:white;margin:0 0 8px;line-height:1.2">${ko} 과외 완벽 가이드</h1>
+      <p style="font-size:15px;color:rgba(255,255,255,.85);margin:0">${tag}</p>
+    </div>
+  </div>
+  <div style="background:linear-gradient(135deg,${color},${color}CC);border-radius:16px;padding:24px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;text-align:center;margin-bottom:36px">
+    <div><div style="font-size:22px;font-weight:900;color:white">48시간</div><div style="font-size:11px;color:rgba(255,255,255,.7)">매칭 보장</div></div>
+    <div><div style="font-size:22px;font-weight:900;color:white">3단계</div><div style="font-size:11px;color:rgba(255,255,255,.7)">선생님 검증</div></div>
+    <div><div style="font-size:22px;font-weight:900;color:white">무료</div><div style="font-size:11px;color:rgba(255,255,255,.7)">첫 체험 수업</div></div>
+    <div><div style="font-size:22px;font-weight:900;color:white">전국</div><div style="font-size:11px;color:rgba(255,255,255,.7)">방문 과외</div></div>
+  </div>
+  <div class="art-body">
+    <div style="background:${lightColor};border-radius:14px;padding:24px;margin-bottom:28px;border-left:5px solid ${color}">
+      <h2 style="color:${color};margin-top:0;font-size:18px">📋 ${ko} 과외 안내</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.9;margin:0">${overview}</p>
+    </div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px">🎯 ${ko} 성적 올리는 핵심 전략</h2>
+    ${stratCards}
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">📚 학년별 ${ko} 학습 가이드</h2>
+    ${gradeCards}
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">🗓️ 수업 진행 방식</h2>
+    <div style="background:white;border:1px solid #E5E7EB;border-radius:14px;padding:24px;margin-bottom:22px">
+      ${['무료 상담 & 수준 진단|현재 ${ko} 실력과 목표를 파악하고 맞춤 선생님을 연결합니다.','무료 체험 수업|첫 수업은 무료입니다. 선생님의 수업 방식과 학생 반응을 직접 확인하세요.','맞춤 커리큘럼 설계|${ko} 내신·수능 목표에 최적화된 커리큘럼을 설계합니다.','정규 수업 & 주간 보고서|주 2~3회 방문 수업 후 매주 학습 보고서를 학부모님께 제공합니다.'].map((s,i)=>{const[t,d]=s.split('|');return`<div style="display:flex;gap:14px;align-items:flex-start;${i<3?'padding-bottom:14px':''}"><div style="min-width:30px;height:30px;background:${color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:12px;flex-shrink:0">${i+1}</div><div><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:3px">${t}</div><div style="font-size:13px;color:#6B7280;line-height:1.65">${d}</div></div></div>`;}).join('')}
+    </div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid #F59E0B;padding-bottom:8px;margin-top:36px">💡 ${ko} 공부 핵심 꿀팁</h2>
+    <div style="background:#FFFBEB;border-radius:14px;padding:20px;border-left:5px solid #F59E0B;margin-bottom:22px"><p style="font-size:15px;color:#374151;line-height:1.9;margin:0">${tip}</p></div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">📈 실제 성적 향상 사례</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px">
+      ${[['중3→고1',`${ko} 3등급 → 1등급`,'기초 개념부터 다시 잡아 6개월 만에 등급 상승. 학교 기출 집중 분석이 핵심이었습니다.'],['초5→초6',`${ko} 시험 100점`,'1:1 맞춤 수업으로 취약 단원을 완전히 보완. 처음으로 100점을 받았습니다.'],['고2→고3',`수능 ${ko} 1등급`,'기출 분석과 유형별 풀이 전략을 완성해 목표 점수를 달성했습니다.']].map(([period,result,desc])=>`<div style="background:${lightColor};border-radius:12px;padding:16px;border-top:4px solid ${color}"><div style="font-size:12px;font-weight:800;color:${color};margin-bottom:6px">${period}</div><div style="font-size:14px;font-weight:900;color:#0F2044;margin-bottom:6px">${result}</div><p style="font-size:12px;color:#6B7280;line-height:1.65;margin:0">${desc}</p></div>`).join('')}
+    </div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">📍 전국 ${ko} 과외 지역 안내</h2>
+    <p style="font-size:15px;color:#374151;line-height:1.9;margin-bottom:22px">서울·경기·인천·부산·대구·광주·대전·울산·세종·강원·충북·충남·전북·전남·경북·경남·제주 전국 모든 지역에서 ${ko} 과외가 가능합니다. 지역 내 선생님을 우선 배정하며, 학교 내신 기출을 잘 아는 선생님 위주로 추천해드립니다. 온라인 과외도 전국 어디서나 지원합니다.</p>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">📚 다른 과목 과외도 함께</h2>
+    <div class="subj-grid">${otherLinks}</div>
+    <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${ko} 과외</span><span class="keyword-tag">${ko} 공부법</span><span class="keyword-tag">${ko} 내신</span><span class="keyword-tag">${ko} 수능</span><span class="keyword-tag">${ko} 1:1과외</span><span class="keyword-tag">${ko} 방문과외</span></div></div>
+  </div>
+  <div class="cta-box"><h3>${ko} 과외 무료 상담</h3><p>검증된 ${ko} 전문 선생님을 48시간 내 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
+</div>`;
+  return wrap(title, desc, canonical, body, bc);
+}
+function makeGradePage(gradeType, gradeNum) {
+  const CFG={
+    elementary:{label:'초등',emoji:'🎒',color:'#3B82F6',lc:'#EFF6FF',
+      mt:['연산 기초','분수·소수','도형·측정'],et:['파닉스·단어','교과서 지문','독해 기초'],
+      st:'기초 완성이 최우선입니다. 연산 속도와 독서 습관을 먼저 잡아두면 중학교 진학이 훨씬 수월합니다.'},
+    middle:{label:'중등',emoji:'📚',color:'#10B981',lc:'#ECFDF5',
+      mt:['방정식·함수','도형','확률·통계'],et:['문법 체계화','내신 지문','서술형 대비'],
+      st:'내신 등급 관리가 핵심입니다. 시험 4주 전 집중 대비와 취약 단원 보완으로 1~2등급을 유지합니다.'},
+    high:{label:'고등',emoji:'🎓',color:'#8B5CF6',lc:'#F5F3FF',
+      mt:['수학Ⅰ·Ⅱ','선택과목','수능 기출'],et:['독해 속도','어휘 3000','수능 유형'],
+      st:'내신과 수능을 동시에 관리합니다. 내신 기간에는 학교 기출 집중, 평소에는 수능 기초를 꾸준히 쌓습니다.'},
+  };
+  const cfg=CFG[gradeType]; if(!cfg)return null;
+  const num=parseInt(gradeNum); const maxG=gradeType==='elementary'?6:3;
+  if(isNaN(num)||num<1||num>maxG)return null;
+  const{label:base,emoji,color,lc:lightColor,mt,et,st:strategy}=cfg;
+  const label=`${base} ${num}학년`;
+  const isE=gradeType==='elementary',isM=gradeType==='middle';
+
+  const overview=isE
+    ?`초등 ${num}학년은 ${num<=2?'기초 학습 습관을 잡는':num<=4?'본격 교과 학습이 시작되는':'중학교 준비를 시작하는'} 중요한 시기입니다. 이 시기에 형성된 학습 습관과 기초 실력이 초·중·고 전체 학업의 토대가 됩니다.`
+    :isM?`중학교 ${num}학년은 ${num===1?'처음으로 내신 성적이 생기는':num===2?'학업 슬럼프가 오기 쉬운':'고등학교 진학을 준비하는'} 시기입니다. 수학은 ${num===1?'방정식·함수':num===2?'연립방정식·일차함수':'이차방정식·이차함수'}이 핵심입니다.`
+    :`고등학교 ${num}학년은 ${num===1?'내신 등급이 처음 시작되는':num===2?'수능 선택과목을 결정하는':'수능과 입시의 모든 것이 결정되는'} 결정적 시기입니다.`;
+
+  const methods=[
+    {c:'#3B82F6',t:`수학 ${mt[Math.min(num-1,mt.length-1)]} 집중`,
+     d:isE?`${num<=2?'연산 기초와 수 개념 완성이 핵심입니다. 매일 10분씩 연산 훈련으로 속도와 정확도를 높입니다.':num<=4?'곱셈·나눗셈·분수의 원리 이해가 핵심입니다. 공식 암기보다 원리를 먼저 이해하고 연습 문제를 반복합니다.':'중학교 연결 개념(비율·비례·분수 나눗셈) 완성이 핵심입니다. 이 개념들이 중학교 수학의 기초가 됩니다.'}`
+       :isM?`중${num} 수학은 ${num===1?'정수·유리수·방정식':num===2?'연립방정식·일차함수':'이차방정식·이차함수'}이 핵심입니다. 개념 이해 → 기출 풀이 → 오답 분석 순서로 학습합니다.`
+       :`고${num} 수학은 ${num===1?'수학(상)·수학(하) 개념 완성':num===2?'수학Ⅰ·Ⅱ + 선택과목':'수능 기출 반복과 킬러 문항 공략'}이 핵심입니다.`},
+    {c:'#10B981',t:`영어 ${et[Math.min(num-1,et.length-1)]}`,
+     d:isE?`${num<=2?'알파벳과 파닉스부터 시작합니다. 매일 5~10개 기초 단어를 익히고 간단한 문장을 읽고 씁니다.':num<=4?'교과서 지문을 5번 이상 읽고 핵심 표현을 암기합니다. 단어는 예문과 함께 익힙니다.':'중학교 영어를 미리 준비합니다. 기초 문법과 단어 500개를 먼저 확보합니다.'}`
+       :isM?`중${num} 영어 내신은 교과서 지문 분석이 핵심입니다. ${num>=2?'서술형 비중이 높으므로 영작 연습도 병행합니다.':'단어 암기는 매일 10개씩 꾸준히 유지합니다.'}`
+       :`${num===3?'수능 영어 1등급(90점 이상) 확보가 목표입니다.':'내신 지문 분석과 수능 독해를 병행합니다.'} 어휘 3000개 확보와 빠른 독해 훈련에 집중합니다.`},
+    {c:'#F59E0B',t:isE?'독서 습관 & 국어':isM?'국어 서술형 완성':'국어 독서·문학 심화',
+     d:isE?'매일 20~30분 독서 습관을 만듭니다. 읽은 내용을 3줄로 요약하게 하면 이해력과 표현력이 함께 향상됩니다. 받아쓰기와 일기 쓰기도 꾸준히 이어갑니다.'
+       :isM?`${label} 국어는 서술형 비중이 높아집니다. 소설·시의 핵심 내용을 자신의 말로 설명하는 연습과 문법 정리가 중요합니다.`
+       :'수능 국어는 독서(비문학)와 문학이 핵심입니다. 비문학 지문을 매일 1~2개씩 풀고 문학 작품 감상법을 익힙니다.'},
+    {c:'#8B5CF6',t:isE?'자기주도 학습 습관':isM?'시험 계획표 & 오답 노트':'내신·수능 병행 전략',
+     d:isE?'정해진 시간에 스스로 숙제하고 예습·복습하는 습관을 만듭니다. 주간 계획표를 직접 작성하게 하면 책임감과 자기관리 능력이 성장합니다.'
+       :isM?'시험 3주 전부터 과목별 계획표를 작성합니다. 오답 노트에 틀린 이유를 직접 쓰는 습관이 성적 향상의 핵심입니다.'
+       :'내신 기간(4주 전)에는 학교 기출 집중 분석, 평소에는 수능 기출 풀이로 이원화합니다. 우선순위를 명확히 해야 합니다.'},
+  ];
+
+  const monthlyPlan=isE?[
+    {p:'3~4월',m:mt[0],e:et[0],g:'기초 완성'},
+    {p:'5~6월(중간)',m:mt[Math.min(1,mt.length-1)],e:'교과서 단어',g:'시험 대비'},
+    {p:'7~8월(방학)',m:'1학기 복습',e:'여름 집중',g:'2학기 선행'},
+    {p:'9~12월',m:mt[Math.min(2,mt.length-1)],e:et[Math.min(1,et.length-1)],g:'연간 완성'},
+  ]:isM?[
+    {p:'3월',m:'기초 점검',e:'교과서 예습',g:'전략 수립'},
+    {p:'4~5월(중간)',m:mt[num-1],e:'지문 분석',g:'내신 대비'},
+    {p:'6~7월(기말)',m:'심화 문제',e:'서술형 연습',g:'등급 확보'},
+    {p:'8월(방학)',m:'취약 보완',e:'단어 집중',g:'선행 준비'},
+    {p:'9~12월',m:'2학기 심화',e:'독해 강화',g:'연간 관리'},
+  ]:[
+    {p:'3~4월',m:'개념 완성',e:'독해 훈련',g:'내신+수능 병행'},
+    {p:'5~6월(기말)',m:'취약 단원',e:'어휘 정리',g:'내신 사수'},
+    {p:'7~8월(방학)',m:'수능 기출',e:'오답 완성',g:'수능 집중'},
+    {p:'9~11월',m:num===3?'킬러 문항':'실전 모의',e:'1등급 확보',g:num===3?'수능 최종':'실전 준비'},
+  ];
+
+  const faqs=[
+    {q:`${label} 과외 선생님은 어떻게 찾나요?`,a:`상담 후 24시간 이내 코디네이터가 연락드립니다. ${label} 내신 기출을 잘 아는 선생님 위주로 추천해드립니다.`},
+    {q:'성적이 낮아도 시작할 수 있나요?',a:'기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 현재 수준을 진단하고 맞춤 선생님을 배정합니다.'},
+    {q:isE?'학원과 과외를 병행해도 되나요?':'수업료는 어떻게 되나요?',
+     a:isE?'학원에서 부족한 부분을 1:1로 보완하는 방식이 효과적입니다. 학원 진도에 맞춰 커리큘럼을 조정합니다.':'선생님 경력·학력에 따라 다르며, 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.'},
+    {q:'몇 개월이면 효과가 나타나나요?',a:'보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 시험 대비 단기 집중 과외(4~8주)도 운영합니다.'},
+  ];
+
+  const fCards=methods.map(m=>`<div style="background:white;border:1.5px solid ${m.c}30;border-radius:16px;padding:22px;margin-bottom:14px;border-left:5px solid ${m.c}"><div style="font-size:15px;font-weight:900;color:${m.c};margin-bottom:9px">✦ ${m.t}</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">${m.d}</p></div>`).join('');
+  const planRows=monthlyPlan.map((r,i)=>`<tr style="background:${i%2===0?'white':'#F9FAFB'}"><td style="padding:10px 14px;font-weight:700;color:#374151">${r.p}</td><td style="padding:10px 14px;color:#4B5563">${r.m}</td><td style="padding:10px 14px;color:#4B5563">${r.e}</td><td style="padding:10px 14px;color:${color};font-weight:700">${r.g}</td></tr>`).join('');
+  const faqH=faqs.map(f=>`<div style="background:#F9FAFB;border-radius:12px;padding:18px;margin-bottom:12px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:7px">Q. ${f.q}</div><div style="font-size:14px;color:#4B5563;line-height:1.8">${f.a}</div></div>`).join('');
+  const canonical=`/grade/${gradeType}/${gradeNum}`;
+  const title=`${label} 공부방법 | ${label} 학습 전략 & 과외 가이드 - 올케어스터디`;
+  const desc=`${label} 공부법, 내신관리, 수능 준비 전략. 검증된 1:1 방문 과외. 무료 상담 010-6834-8080`;
+  const bc=[{name:'홈',url:'/'},{name:'학년별 과외',url:'/grade'},{name:label,url:canonical}];
+  const body=`<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/grade">학년별 과외</a> › <span>${label}</span></div>
+  <div style="background:linear-gradient(135deg,${color},${color}CC);border-radius:20px;padding:36px 44px;margin-bottom:36px;color:white">
+    <div style="font-size:36px;margin-bottom:10px">${emoji}</div>
+    <h1 style="font-size:30px;font-weight:900;margin:0 0 10px;line-height:1.3">${label} 완벽 가이드</h1>
+    <p style="font-size:15px;opacity:.9;margin:0;line-height:1.7">${label} 학습 전략, 공부법, 내신관리, 과외 안내</p>
+  </div>
+  <div class="art-body">
+    <div style="background:${lightColor};border-radius:16px;padding:24px;margin-bottom:32px;border-left:5px solid ${color}">
+      <h2 style="color:${color};margin-top:0;font-size:19px">📋 ${label} 학습 개요</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.9;margin:0">${overview}</p>
+    </div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px">🎯 핵심 공부 방법</h2>
+    ${fCards}
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">⚡ 핵심 전략</h2>
+    <div style="background:linear-gradient(135deg,${color}15,${color}05);border-radius:16px;padding:24px;border:1.5px solid ${color}25;margin-bottom:24px"><p style="font-size:15px;color:#1F2937;line-height:1.9;margin:0">${strategy} 올케어스터디는 ${label} 전문 선생님을 48시간 내 매칭해드립니다. 학력·경력·수업시연 3단계 검증 선생님만 배정합니다.</p></div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">📐 수학 & 영어 핵심 학습법</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px">
+      <div style="background:white;border:1.5px solid #BFDBFE;border-radius:14px;padding:18px"><div style="font-size:14px;font-weight:900;color:#3B82F6;margin-bottom:8px">📐 수학 실력 키우는 3원칙</div><p style="font-size:13px;color:#374151;line-height:1.75;margin:0 0 6px">① <b>개념 먼저</b> — 공식을 외우기 전에 원리를 이해합니다. 원리를 이해하면 변형 문제에 흔들리지 않습니다.</p><p style="font-size:13px;color:#374151;line-height:1.75;margin:0 0 6px">② <b>오답 노트 필수</b> — 틀린 문제를 그냥 넘기지 않고 왜 틀렸는지 직접 씁니다.</p><p style="font-size:13px;color:#374151;line-height:1.75;margin:0">③ <b>매일 30분 연산</b> — 꾸준한 반복 훈련으로 시험장에서 시간 여유를 만듭니다.</p></div>
+      <div style="background:white;border:1.5px solid #A7F3D0;border-radius:14px;padding:18px"><div style="font-size:14px;font-weight:900;color:#10B981;margin-bottom:8px">📖 영어 실력 키우는 3원칙</div><p style="font-size:13px;color:#374151;line-height:1.75;margin:0 0 6px">① <b>단어 매일 암기</b> — 하루 10~15개씩 예문과 함께 익힙니다.</p><p style="font-size:13px;color:#374151;line-height:1.75;margin:0 0 6px">② <b>교과서 5번 읽기</b> — 시험에는 교과서 지문이 변형되어 출제됩니다.</p><p style="font-size:13px;color:#374151;line-height:1.75;margin:0">③ <b>문법은 체계적으로</b> — 품사→문장구조→시제→준동사 순서로 정리합니다.</p></div>
+    </div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid #F59E0B;padding-bottom:8px;margin-top:36px">👨‍👩‍👧 학부모 가이드</h2>
+    <div style="background:#FFFBEB;border-radius:14px;padding:20px;border-left:4px solid #F59E0B;margin-bottom:20px"><p style="font-size:15px;color:#374151;line-height:1.9;margin:0">${isE?`아이가 틀린 문제를 바로 알려주지 말고 스스로 생각할 기회를 주세요. 학습 시간은 집중력을 고려해 ${num<=2?'20~30분':num<=4?'40~60분':'1~2시간'} 단위로 진행합니다. 칭찬은 결과보다 과정을 칭찬하세요.`:isM?'시험 성적보다 공부 방법과 과정을 칭찬해주세요. 중학교 성적보다 올바른 학습 습관이 더 중요합니다. 목표 고등학교를 함께 조사하면 동기부여에 도움이 됩니다.':'정서적 지지가 가장 필요합니다. 규칙적인 식사와 충분한 수면을 챙겨주세요. 성적보다 컨디션 관리가 수능 성패를 결정합니다.'}</p></div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">🎯 시험 D-28일 전략</h2>
+    <div style="background:${lightColor};border-radius:14px;padding:20px;margin-bottom:20px">${['D-28|시험 범위 확인 + 취약 단원 파악 + 계획표 작성','D-21|교과서 전범위 정독 + 핵심 내용 노트 정리','D-14|기출 문제 풀기 + 오답 분석 + 취약 단원 보완','D-7|예상 문제 + 서술형 답안 작성 연습','D-1|오답 노트 복습 + 핵심 암기 확인 + 충분한 수면'].map(r=>{const[d,t]=r.split('|');return`<div style="background:white;border-radius:8px;padding:10px 14px;display:flex;gap:10px;align-items:center;margin-bottom:6px"><span style="font-weight:900;color:${color};font-size:14px;min-width:44px">${d}</span><span style="font-size:13px;color:#374151">${t}</span></div>`;}).join('')}</div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">📅 월별 학습 플랜</h2>
+    <div style="overflow-x:auto;margin-bottom:20px"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="background:${color};color:white"><th style="padding:11px 13px;text-align:left">시기</th><th style="padding:11px 13px;text-align:left">수학</th><th style="padding:11px 13px;text-align:left">영어</th><th style="padding:11px 13px;text-align:left">핵심 목표</th></tr></thead><tbody>${planRows}</tbody></table></div>
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid #6B7280;padding-bottom:8px;margin-top:36px">❓ 자주 묻는 질문</h2>
+    ${faqH}
+    <h2 style="color:#0F2044;font-size:20px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:36px">🏆 올케어스터디 ${label} 과외</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">${[['48시간','매칭 보장'],['3단계','선생님 검증'],['무료','첫 체험 수업'],['7과목','전 과목 지원']].map(([n,d])=>`<div style="background:white;border:1.5px solid ${color}40;border-radius:12px;padding:16px;text-align:center"><div style="font-size:20px;font-weight:900;color:${color};margin-bottom:4px">${n}</div><div style="font-size:11px;color:#6B7280">${d}</div></div>`).join('')}</div>
+    <p style="font-size:15px;color:#374151;line-height:1.9;margin-bottom:20px">올케어스터디는 서울·경기·인천·부산·대구·광주·대전·울산·세종·강원·충북·충남·전북·전남·경북·경남·제주 전국 모든 지역에서 ${label} 과외가 가능합니다. 온라인 과외도 지원합니다.</p>
+    <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${label} 공부법</span><span class="keyword-tag">${label} 과외</span><span class="keyword-tag">${label} 수학</span><span class="keyword-tag">${label} 영어</span><span class="keyword-tag">${label} 내신</span><span class="keyword-tag">${label} 1:1과외</span></div></div>
+  </div>
+  <div class="cta-box"><h3>${label} 맞춤 과외 무료 상담</h3><p>${label} 전문 선생님을 48시간 내 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
+</div>`;
+  return wrap(title, desc, canonical, body, bc);
+}
+
+
 // ── 학교별 과외 인덱스 페이지들 ─────────────────────────────────────────────
 
 const SIDO_KR_MAP = {
@@ -2394,704 +2615,601 @@ function makeArticlePage(rk, ak, gk, sk) {
 // ── 학원 찾기 페이지 ──────────────────────────
 
 function makeAcademyIntroPage() {
-  const introStyle = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#0F2044;--blue:#1D4ED8;--blue2:#3B82F6;--blue-light:#EFF6FF;--border:#E5E7EB;--gray:#6B7280;--light:#F8FAFC}
-body{font-family:'Noto Sans KR',sans-serif;color:#1F2937;background:#fff;overflow-x:hidden}
+  const centers_by_sido = {};
+  CENTERS.forEach(c => {
+    const sido = c.s || '기타';
+    if (!centers_by_sido[sido]) centers_by_sido[sido] = [];
+    centers_by_sido[sido].push(c);
+  });
 
-/* ─ 히어로 ─ */
-.hero{background:var(--navy);min-height:500px;padding:140px 48px 100px;text-align:center;position:relative;overflow:hidden}
+  const sido_order = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','전남','강원','제주'];
 
-.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:32px 32px}
-.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(59,130,246,.25) 0%,transparent 70%);pointer-events:none}
-.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 18px;font-size:13px;color:rgba(255,255,255,.8);font-weight:600;margin-bottom:24px}
-.hero-badge b{color:#60A5FA}
-.hero-title{font-size:52px;font-weight:900;color:white;line-height:1.15;letter-spacing:-1.5px;margin-bottom:20px}
-.hero-title em{color:#60A5FA;font-style:normal}
-.hero-desc{font-size:17px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:36px;word-break:keep-all}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-white{background:white;color:var(--navy);padding:14px 32px;border-radius:12px;font-size:15px;font-weight:800;border:none;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center}
-.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
-.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,.3);color:white;padding:14px 32px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center}
-.btn-outline:hover{background:rgba(255,255,255,.1)}
-.breadcrumb{background:white;padding:14px 48px;font-size:13px;color:#9CA3AF;border-bottom:1px solid var(--border)}
-.breadcrumb a{color:var(--blue)}
+  const centerCards = sido_order
+    .filter(s => centers_by_sido[s])
+    .map(sido => {
+      const cs = centers_by_sido[sido];
+      const cards = cs.map(c => `
+        <div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:20px;margin-bottom:14px">
+          <div style="font-size:16px;font-weight:900;color:#0F2044;margin-bottom:4px">${c.n}</div>
+          <div style="font-size:12px;color:#3B82F6;font-weight:700;margin-bottom:10px">${c.on||''}</div>
+          ${c.a?`<div style="font-size:13px;color:#6B7280;margin-bottom:6px">📍 ${c.a}</div>`:''}
+          ${c.dir?`<div style="font-size:12px;color:#9CA3AF;line-height:1.6;margin-bottom:8px">${c.dir.replace(/\n/g,'<br>')}</div>`:''}
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+            ${c.te?`<span style="background:#EFF6FF;color:#1D4ED8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px">초등 ${c.te.split(',').slice(0,2).join(',')}</span>`:''}
+            ${c.tm?`<span style="background:#ECFDF5;color:#059669;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px">중등 ${c.tm.split(',').slice(0,2).join(',')}</span>`:''}
+            ${c.th?`<span style="background:#F5F3FF;color:#7C3AED;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px">고등 ${c.th.split(',').slice(0,2).join(',')}</span>`:''}
+          </div>
+          <a href="/contact?type=academy&center=${encodeURIComponent(c.n)}" style="display:block;margin-top:12px;background:#0F2044;color:white;text-align:center;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">상담 신청하기</a>
+        </div>`).join('');
+      return `<div style="margin-bottom:36px"><h3 style="font-size:18px;font-weight:900;color:#0F2044;border-bottom:2px solid #E5E7EB;padding-bottom:10px;margin-bottom:16px">📍 ${sido} (${cs.length}개)</h3><div style="columns:2;column-gap:16px">${cards}</div></div>`;
+    }).join('');
 
-/* ─ 통계 ─ */
-.stats-wrap{background:white;padding:48px 48px 80px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;max-width:900px;margin:0 auto;background:white;box-shadow:0 8px 40px rgba(15,32,68,.08)}
-.stat{padding:36px 32px;text-align:center;border-right:1px solid var(--border)}
-.stat:last-child{border-right:none}
-.stat-num{font-size:42px;font-weight:900;color:var(--navy);line-height:1}
-.stat-num sup{font-size:20px;vertical-align:super}
-.stat-label{font-size:13px;color:var(--gray);margin-top:6px;font-weight:500}
-
-/* ─ 공통 태그/타이틀 ─ */
-.tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;letter-spacing:.5px;margin-bottom:14px}
-.sec-title{font-size:34px;font-weight:900;color:var(--navy);line-height:1.3;margin-bottom:16px;letter-spacing:-.5px}
-.sec-title em{color:var(--blue);font-style:normal}
-.sec-desc{font-size:15px;color:var(--gray);line-height:1.9}
-.sec-desc strong{color:var(--navy)}
-
-/* ─ 학습법: 좌텍스트 + 우포인트카드 ─ */
-.method-section{padding:100px 48px 80px;background:white}
-.method-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.method-cards{display:flex;flex-direction:column;gap:14px}
-.method-card{background:var(--light);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:.2s}
-.method-card:hover{border-color:#93C5FD;background:var(--blue-light)}
-.mc-icon{width:40px;height:40px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.mc-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px}
-.mc-desc{font-size:13px;color:var(--gray);line-height:1.6}
-
-/* ─ 차별화: 네이비 풀배경 3카드 ─ */
-.diff-section{background:#EFF6FF;padding:80px 48px}
-.diff-inner{max-width:1100px;margin:0 auto}
-.diff-header{text-align:center;margin-bottom:56px}
-.diff-title{font-size:36px;font-weight:900;color:#0F2044;line-height:1.3}
-.diff-title em{color:#1D4ED8;font-style:normal}
-.diff-desc{font-size:16px;color:#374151;margin-top:12px;line-height:1.8}
-.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.diff-card{background:white;border:1px solid #BFDBFE;border-radius:20px;padding:32px 24px;transition:all .3s;box-shadow:0 2px 0 #BFDBFE,0 8px 32px rgba(29,78,216,.12),0 2px 8px rgba(0,0,0,.06)}
-.diff-card:hover{background:#F0F7FF;border-color:#60A5FA;transform:translateY(-6px);box-shadow:0 2px 0 #93C5FD,0 20px 56px rgba(29,78,216,.15)}
-.diff-num{font-size:13px;font-weight:900;color:#60A5FA;margin-bottom:12px;letter-spacing:1px}
-.diff-card-title{font-size:18px;font-weight:900;color:#0F2044;margin-bottom:10px}
-.diff-card-desc{font-size:14px;color:#6B7280;line-height:1.75}
-
-/* ─ 학습목표: 회색 배경 3분할 ─ */
-.goal-section{padding:80px 48px;background:var(--light)}
-.goal-inner{max-width:1100px;margin:0 auto}
-.goal-header{text-align:center;margin-bottom:48px}
-.goal-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:20px;overflow:hidden}
-.goal-card{background:white;padding:40px 32px;text-align:center;position:relative}
-.goal-card::before{content:attr(data-num);position:absolute;top:24px;right:24px;font-size:11px;font-weight:900;color:#E5E7EB;letter-spacing:1px}
-.goal-icon{width:64px;height:64px;border-radius:16px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
-.goal-card-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:10px}
-.goal-card-desc{font-size:14px;color:var(--gray);line-height:1.75}
-
-/* ─ 4C 프로세스: 흰 배경, 좌텍스트+우그리드 ─ */
-.process-section{padding:80px 48px;background:white}
-.process-inner{max-width:1000px;margin:0 auto}
-.process-header{text-align:center;margin-bottom:48px}
-.process-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.process-text ul{margin-top:20px;display:flex;flex-direction:column;gap:10px;list-style:none}
-.process-text li{display:flex;gap:10px;font-size:14px;color:var(--gray);line-height:1.6}
-.process-text li::before{content:'';width:6px;height:6px;background:var(--blue);border-radius:50%;flex-shrink:0;margin-top:7px}
-.process-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative}
-.p-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88px;height:88px;background:white;border-radius:50%;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:var(--navy);text-align:center;line-height:1.3;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:2}
-.pc{border-radius:16px;padding:28px 22px;color:white}
-.pc-1{background:#1E3A6E}.pc-2{background:#1E40AF}.pc-3{background:#1D4ED8}.pc-4{background:#2563EB}
-.pc-en{font-size:15px;font-weight:900;margin-bottom:4px}
-.pc-en span{opacity:.5}
-.pc-kr{font-size:13px;font-weight:700;opacity:.85}
-
-/* ─ 3대 관리: 회색 배경, 탭 전환 ─ */
-.manage-section{padding:80px 48px;background:var(--light)}
-.manage-inner{max-width:1000px;margin:0 auto}
-.manage-header{text-align:center;margin-bottom:40px}
-.manage-tabs{display:flex;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:28px;background:white}
-.mtab{flex:1;padding:16px;text-align:center;font-size:14px;font-weight:700;color:var(--gray);cursor:pointer;border:none;background:white;transition:.2s;border-right:1px solid var(--border)}
-.mtab:last-child{border-right:none}
-.mtab.active{background:var(--navy);color:white}
-.manage-panel{display:none;background:white;border:1.5px solid var(--border);border-radius:16px;padding:40px;gap:48px;align-items:start}
-.manage-panel.active{display:grid;grid-template-columns:1fr 1fr}
-.mp-tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;margin-bottom:10px}
-.mp-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:14px}
-.mp-desc{font-size:14px;color:var(--gray);line-height:1.9}
-.mp-desc strong{color:var(--navy)}
-.mp-visual{background:var(--light);border-radius:14px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:72px;border:1px solid var(--border)}
-.mp-points{margin-top:20px;display:flex;flex-direction:column;gap:8px}
-.mp-point{display:flex;gap:10px;font-size:13px;color:var(--gray)}
-.mp-point::before{content:'✓';color:var(--blue);font-weight:900;flex-shrink:0}
-.mp-img-grid{position:relative;border-radius:14px;overflow:hidden}
-.mp-img-grid .mslide{display:none;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px}
-.mp-img-grid .mslide.active{display:block}
-.mp-img-dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
-.mp-img-dots button{width:7px;height:7px;border-radius:50%;border:none;background:var(--border);cursor:pointer;padding:0;transition:.2s}
-.mp-img-dots button.active{background:var(--navy);width:20px;border-radius:4px}
-.mp-img-nav{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:2;transition:.2s}
-.mp-img-nav:hover{background:white;box-shadow:0 4px 12px rgba(0,0,0,.2)}
-.mp-img-nav.prev{left:8px}.mp-img-nav.next{right:8px}
-
-/* ─ AI: 다크 네이비, 배경 워터마크 ─ */
-.ai-section{padding:80px 48px;background:#EFF6FF;position:relative;overflow:hidden}
-.ai-section::before{content:'';position:absolute;right:-20px;bottom:-20px;width:380px;height:480px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3C!-- 안테나 --%3E%3Cline x1='100' y1='10' x2='100' y2='35' stroke='%231D4ED8' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='100' cy='8' r='6' fill='%231D4ED8'/%3E%3C!-- 머리 --%3E%3Crect x='55' y='35' width='90' height='70' rx='18' fill='%231D4ED8'/%3E%3C!-- 눈 --%3E%3Ccircle cx='80' cy='62' r='14' fill='white'/%3E%3Ccircle cx='120' cy='62' r='14' fill='white'/%3E%3Ccircle cx='83' cy='65' r='7' fill='%230F2044'/%3E%3Ccircle cx='123' cy='65' r='7' fill='%230F2044'/%3E%3Ccircle cx='85' cy='63' r='2.5' fill='white'/%3E%3Ccircle cx='125' cy='63' r='2.5' fill='white'/%3E%3C!-- 입 --%3E%3Crect x='78' y='88' width='44' height='8' rx='4' fill='white' opacity='.6'/%3E%3Crect x='85' y='89' width='8' height='6' rx='2' fill='%230F2044' opacity='.4'/%3E%3Crect x='96' y='89' width='8' height='6' rx='2' fill='%230F2044' opacity='.4'/%3E%3Crect x='107' y='89' width='8' height='6' rx='2' fill='%230F2044' opacity='.4'/%3E%3C!-- 목 --%3E%3Crect x='88' y='105' width='24' height='18' rx='4' fill='%231D4ED8'/%3E%3C!-- 몸통 --%3E%3Crect x='40' y='123' width='120' height='95' rx='20' fill='%231D4ED8'/%3E%3C!-- 몸통 패널 --%3E%3Crect x='60' y='138' width='80' height='50' rx='10' fill='white' opacity='.12'/%3E%3Ccircle cx='80' cy='155' r='10' fill='white' opacity='.25'/%3E%3Ccircle cx='80' cy='155' r='5' fill='%2360A5FA'/%3E%3Crect x='95' y='148' width='35' height='5' rx='2.5' fill='white' opacity='.3'/%3E%3Crect x='95' y='158' width='25' height='5' rx='2.5' fill='white' opacity='.2'/%3E%3Crect x='95' y='168' width='30' height='5' rx='2.5' fill='white' opacity='.25'/%3E%3C!-- 왼팔 --%3E%3Crect x='10' y='125' width='28' height='80' rx='14' fill='%231D4ED8'/%3E%3Ccircle cx='24' cy='210' r='14' fill='%231E40AF'/%3E%3C!-- 오른팔 --%3E%3Crect x='162' y='125' width='28' height='80' rx='14' fill='%231D4ED8'/%3E%3Ccircle cx='176' cy='210' r='14' fill='%231E40AF'/%3E%3C!-- 다리 --%3E%3Crect x='65' y='218' width='32' height='55' rx='14' fill='%231D4ED8'/%3E%3Crect x='103' y='218' width='32' height='55' rx='14' fill='%231D4ED8'/%3E%3C!-- 발 --%3E%3Crect x='58' y='260' width='44' height='16' rx='8' fill='%231E40AF'/%3E%3Crect x='98' y='260' width='44' height='16' rx='8' fill='%231E40AF'/%3E%3C/svg%3E") center bottom/contain no-repeat;opacity:0.07;pointer-events:none;z-index:0;line-height:1;pointer-events:none}
-.ai-stars{display:none}
-.ai-glow1{position:absolute;top:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(37,99,235,.08) 0%,transparent 70%);pointer-events:none}
-.ai-glow2{position:absolute;bottom:-100px;right:-100px;width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,.08) 0%,transparent 70%);pointer-events:none}
-.ai-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
-.ai-header{margin-bottom:48px}
-.ai-title{font-size:40px;font-weight:900;color:#0F2044;letter-spacing:-1px;margin-bottom:10px;text-shadow:0 1px 2px rgba(0,0,0,.1)}
-.ai-title span{color:#1D4ED8}
-.ai-sub{font-size:15px;color:#1F2937;line-height:1.8;font-weight:500}
-.ai-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.ai-card{background:white;border:1px solid #BFDBFE;border-radius:20px;padding:28px 24px;transition:all .3s;box-shadow:0 2px 0 #BFDBFE,0 8px 32px rgba(29,78,216,.12),0 2px 8px rgba(0,0,0,.06);transform:translateY(0)}
-.ai-card:hover{background:#F0F7FF;border-color:#60A5FA;transform:translateY(-8px);box-shadow:0 2px 0 #93C5FD,0 20px 56px rgba(29,78,216,.18),0 8px 16px rgba(0,0,0,.08)}
-.ai-card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.ai-card-icon{width:44px;height:44px;background:linear-gradient(135deg,#DBEAFE,#EDE9FE);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid #BFDBFE;box-shadow:0 4px 12px rgba(37,99,235,.1)}
-.ai-card-name{font-size:18px;font-weight:900;color:#0F2044;letter-spacing:-.3px}
-.ai-card-range{font-size:11px;color:#9CA3AF;margin-top:2px}
-.ai-card-desc{font-size:13px;color:#374151;line-height:1.75;margin-bottom:16px;font-weight:500}
-.ai-steps{display:flex;gap:6px;flex-wrap:wrap}
-.ai-step{background:#DBEAFE;border:1px solid #93C5FD;border-radius:999px;padding:4px 12px;font-size:11px;color:#1E40AF;font-weight:800}
-
-/* ─ 후기: 슬라이더 ─ */
-.review-section{padding:80px 0;background:white}
-.review-inner{max-width:900px;margin:0 auto;padding:0 48px}
-.review-header{text-align:center;margin-bottom:40px}
-.slider-wrap{position:relative;display:flex;align-items:center;gap:0;margin-bottom:24px}
-.slider-viewport{overflow:hidden;flex:1}
-.slider-track{display:flex;gap:20px;transition:transform .4s cubic-bezier(.4,0,.2,1);will-change:transform}
-.review-card{flex:0 0 calc(33.333% - 14px);border:1.5px solid var(--border);border-radius:16px;padding:28px 26px;transition:border-color .2s,box-shadow .2s;background:white}
-.review-card:hover{border-color:#93C5FD;box-shadow:0 4px 20px rgba(29,78,216,.08)}
-.review-quotes{font-size:48px;font-weight:900;color:#DBEAFE;line-height:.8;margin-bottom:8px;font-family:Georgia,serif}
-.review-badges{display:flex;gap:8px;margin-bottom:10px}
-.rb{padding:3px 12px;border-radius:999px;font-size:12px;font-weight:700}
-.rb-h{background:#FEE2E2;color:#DC2626}
-.rb-m{background:#DBEAFE;color:#1D4ED8}
-.rb-e{background:#FEF3C7;color:#D97706}
-.rb-s{background:var(--light);color:var(--gray)}
-.review-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:8px}
-.review-text{font-size:13px;color:var(--gray);line-height:1.8}
-.slider-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);background:white;font-size:16px;cursor:pointer;flex-shrink:0;transition:.2s;color:var(--navy);display:flex;align-items:center;justify-content:center;margin:0 12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.slider-btn:hover{background:var(--navy);color:white;border-color:var(--navy)}
-.slider-dots{display:flex;justify-content:center;gap:8px}
-.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;border:none}
-.sdot.active{background:#1D4ED8;width:24px;border-radius:4px}
-
-/* ─ CTA ─ */
-.cta-section{background:linear-gradient(135deg,var(--navy) 0%,#1D4ED8 100%);padding:80px 48px;text-align:center;position:relative;overflow:hidden}
-.cta-section::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 260'%3E%3Crect x='20' y='30' width='90' height='70' rx='5' fill='none' stroke='white' stroke-width='2'/%3E%3Crect x='20' y='30' width='90' height='14' rx='5' fill='none' stroke='white' stroke-width='2'/%3E%3Cline x1='32' y1='58' x2='98' y2='58' stroke='white' stroke-width='1.2'/%3E%3Cline x1='32' y1='70' x2='98' y2='70' stroke='white' stroke-width='1.2'/%3E%3Cline x1='32' y1='82' x2='82' y2='82' stroke='white' stroke-width='1.2'/%3E%3Crect x='130' y='50' width='8' height='55' rx='2' fill='none' stroke='white' stroke-width='1.5'/%3E%3Cpolygon points='130,105 138,105 134,118' fill='none' stroke='white' stroke-width='1.5'/%3E%3Crect x='130' y='50' width='8' height='10' rx='1' fill='none' stroke='white' stroke-width='1.5'/%3E%3Crect x='30' y='140' width='65' height='80' rx='4' fill='none' stroke='white' stroke-width='1.5'/%3E%3Crect x='40' y='155' width='7' height='7' rx='1' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cpolyline points='41,158 43,161 47,156' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cline x1='52' y1='158' x2='85' y2='158' stroke='white' stroke-width='1.2'/%3E%3Crect x='40' y='170' width='7' height='7' rx='1' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cpolyline points='41,173 43,176 47,171' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cline x1='52' y1='173' x2='83' y2='173' stroke='white' stroke-width='1.2'/%3E%3Crect x='40' y='185' width='7' height='7' rx='1' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cline x1='52' y1='188' x2='80' y2='188' stroke='white' stroke-width='1.2'/%3E%3Crect x='115' y='155' width='60' height='40' rx='7' fill='none' stroke='white' stroke-width='1.5'/%3E%3Cpolygon points='125,195 138,195 132,207' fill='none' stroke='white' stroke-width='1.5'/%3E%3Cline x1='124' y1='168' x2='166' y2='168' stroke='white' stroke-width='1.2'/%3E%3Cline x1='124' y1='179' x2='158' y2='179' stroke='white' stroke-width='1.2'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 260'%3E%3Crect x='20' y='30' width='90' height='70' rx='5' fill='none' stroke='white' stroke-width='2'/%3E%3Crect x='20' y='30' width='90' height='14' rx='5' fill='none' stroke='white' stroke-width='2'/%3E%3Cline x1='32' y1='58' x2='98' y2='58' stroke='white' stroke-width='1.2'/%3E%3Cline x1='32' y1='70' x2='98' y2='70' stroke='white' stroke-width='1.2'/%3E%3Cline x1='32' y1='82' x2='82' y2='82' stroke='white' stroke-width='1.2'/%3E%3Crect x='130' y='50' width='8' height='55' rx='2' fill='none' stroke='white' stroke-width='1.5'/%3E%3Cpolygon points='130,105 138,105 134,118' fill='none' stroke='white' stroke-width='1.5'/%3E%3Crect x='130' y='50' width='8' height='10' rx='1' fill='none' stroke='white' stroke-width='1.5'/%3E%3Crect x='30' y='140' width='65' height='80' rx='4' fill='none' stroke='white' stroke-width='1.5'/%3E%3Crect x='40' y='155' width='7' height='7' rx='1' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cpolyline points='41,158 43,161 47,156' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cline x1='52' y1='158' x2='85' y2='158' stroke='white' stroke-width='1.2'/%3E%3Crect x='40' y='170' width='7' height='7' rx='1' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cpolyline points='41,173 43,176 47,171' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cline x1='52' y1='173' x2='83' y2='173' stroke='white' stroke-width='1.2'/%3E%3Crect x='40' y='185' width='7' height='7' rx='1' fill='none' stroke='white' stroke-width='1.2'/%3E%3Cline x1='52' y1='188' x2='80' y2='188' stroke='white' stroke-width='1.2'/%3E%3Crect x='115' y='155' width='60' height='40' rx='7' fill='none' stroke='white' stroke-width='1.5'/%3E%3Cpolygon points='125,195 138,195 132,207' fill='none' stroke='white' stroke-width='1.5'/%3E%3Cline x1='124' y1='168' x2='166' y2='168' stroke='white' stroke-width='1.2'/%3E%3Cline x1='124' y1='179' x2='158' y2='179' stroke='white' stroke-width='1.2'/%3E%3C/svg%3E");
-  background-size:180px,180px;
-  background-position:left center, right center;
-  background-repeat:no-repeat,no-repeat;
-  opacity:0.08;
-  pointer-events:none;
-}
-.cta-title{font-size:34px;font-weight:900;color:white;margin-bottom:10px;letter-spacing:-.5px}
-.cta-sub{font-size:16px;color:rgba(255,255,255,.65);margin-bottom:32px;line-height:1.7}
-.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-
-@media(max-width:900px){
-  .hero{padding:100px 24px 80px}.hero-title{font-size:34px}
-  .stats-wrap{padding:0 24px 60px}.stats{grid-template-columns:1fr}
-  .stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}
-  .method-inner,.diff-grid,.ai-cards,.process-layout,.goal-cards{grid-template-columns:1fr}
-  .manage-panel.active{grid-template-columns:1fr}
-  .method-section,.diff-section,.goal-section,.process-section,.manage-section,.ai-section,.review-section,.cta-section{padding:60px 24px}
-  .breadcrumb{padding:14px 24px}
-}`;
-  const introScript = `function switchTab(idx){
-  document.querySelectorAll('.mtab').forEach((t,i)=>t.classList.toggle('active',i===idx));
-  document.querySelectorAll('.manage-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+  const body = `<div class="wrap" style="padding-top:140px">
+    <div class="bc"><a href="/">홈</a> › <a href="/academy/all">센터 찾기</a> › <span>학원 소개</span></div>
+    <div style="text-align:center;padding:40px 0 32px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:#DBEAFE;color:#1D4ED8;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:16px">🏫 전국 ${CENTERS.length}개 센터 운영</div>
+      <h1 style="font-size:32px;font-weight:900;color:#0F2044;margin:0 0 12px">올케어스터디 코칭센터 소개</h1>
+      <p style="font-size:16px;color:#6B7280;line-height:1.7;margin:0">학원+과외 융합 모델. 전국 ${CENTERS.length}개 센터에서 1:1 맞춤 학습 코칭을 제공합니다.</p>
+    </div>
+    <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:16px;padding:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;text-align:center;margin-bottom:40px">
+      <div><div style="font-size:24px;font-weight:900;color:white">${CENTERS.length}개</div><div style="font-size:12px;color:rgba(255,255,255,.7)">전국 센터</div></div>
+      <div><div style="font-size:24px;font-weight:900;color:white">3단계</div><div style="font-size:12px;color:rgba(255,255,255,.7)">코치 검증</div></div>
+      <div><div style="font-size:24px;font-weight:900;color:white">무료</div><div style="font-size:12px;color:rgba(255,255,255,.7)">첫 상담</div></div>
+      <div><div style="font-size:24px;font-weight:900;color:white">전 학년</div><div style="font-size:12px;color:rgba(255,255,255,.7)">초·중·고</div></div>
+    </div>
+    ${centerCards}
+    <div class="cta-box"><h3>가까운 센터 상담 신청</h3><p>전화 또는 온라인으로 무료 상담을 예약하세요</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=academy">✉️ 온라인 상담</a></div></div>
+  </div>`;
+  return wrap('올케어스터디 코칭센터 학원 소개 | 전국 '+CENTERS.length+'개 센터','올케어스터디 학원 코칭센터 전국 현황. 초·중·고 1:1 맞춤 학습 코칭. 무료 상담 010-6834-8080','/academy/intro',body,[{name:'홈',url:'/'},{name:'학원 소개',url:'/academy/intro'}]);
 }
 
-// 이미지 슬라이더 (탭 내)
-function mslideGo(sid, idx) {
-  const wrap = document.getElementById('ms-'+sid);
-  const dotsWrap = document.getElementById('msd-'+sid);
-  if(!wrap) return;
-  const slides = wrap.querySelectorAll('.mslide');
-  const dots = dotsWrap.querySelectorAll('button');
-  slides.forEach((s,i) => s.classList.toggle('active', i===idx));
-  dots.forEach((d,i) => d.classList.toggle('active', i===idx));
-  wrap._cur = idx;
-}
-function mslideMove(sid, dir) {
-  const wrap = document.getElementById('ms-'+sid);
-  if(!wrap) return;
-  const total = wrap.querySelectorAll('.mslide').length;
-  const cur = wrap._cur || 0;
-  const next = (cur + dir + total) % total;
-  mslideGo(sid, next);
-}
-// 자동 슬라이드
-['plan','study','life'].forEach(sid => {
-  let cur = 0;
-  setInterval(() => {
-    const wrap = document.getElementById('ms-'+sid);
-    if(!wrap) return;
-    const total = wrap.querySelectorAll('.mslide').length;
-    cur = (cur + 1) % total;
-    mslideGo(sid, cur);
-  }, 3000);
-});
 
-// 카운트업
-(function(){
-  const targets = [
-    {id:'cnt-1', end:200, duration:1800},
-    {id:'cnt-2', end:15,  duration:1200},
-    {id:'cnt-3', end:98,  duration:1600}];
-  let started = false;
 
-  function countUp(el, end, duration){
-    const start = performance.now();
-    function step(now){
-      const progress = Math.min((now - start) / duration, 1);
-      // ease out cubic
-      const ease = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.floor(ease * end);
-      if(progress < 1) requestAnimationFrame(step);
-      else el.textContent = end;
+// ── 센터 상세 페이지 ───────────────────────────────────────────────────────
+function makeCenterSlug(name) {
+  // 고유 인덱스 기반 슬러그 (한글 인코딩 대신 해시+이름 앞자리)
+  let h=0; for(let i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0;
+  const prefix = name.replace(/[^a-zA-Z0-9가-힣]/g,'').slice(0,4);
+  // 한글을 초성으로 변환
+  const cho='ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
+  let roman='';
+  const romanMap={ㄱ:'g',ㄲ:'kk',ㄴ:'n',ㄷ:'d',ㄸ:'tt',ㄹ:'r',ㅁ:'m',ㅂ:'b',ㅃ:'pp',ㅅ:'s',ㅆ:'ss',ㅇ:'',ㅈ:'j',ㅉ:'jj',ㅊ:'ch',ㅋ:'k',ㅌ:'t',ㅍ:'p',ㅎ:'h'};
+  for(const ch of name){
+    const code=ch.charCodeAt(0)-0xAC00;
+    if(code>=0&&code<11172){
+      const choIdx=Math.floor(code/28/21);
+      roman+=romanMap[cho[choIdx]]||'';
+    } else if(/[a-z0-9]/.test(ch.toLowerCase())) roman+=ch.toLowerCase();
+  }
+  return (roman.slice(0,12)+h.toString(36)).slice(0,16);
+}
+
+function makeCenterPage(slug) {
+  const center = CENTERS.find(c => makeCenterSlug(c.n) === slug);
+  if (!center) return null;
+
+  const {n, on, reg, s:sido, se, d:dist, a:addr, dir, te, tm, th} = center;
+  const fullName = on || n;
+
+  // 해시 기반 수치 차별화
+  let _h=0; for(let i=0;i<fullName.length;i++) _h=(_h*31+fullName.charCodeAt(i))>>>0;
+  const teacherCnt = 160 + (_h%140);
+  const satisfaction = 93 + (_h%6);
+  const expYear = 5 + (_h%10);
+  const caseCnt = 200 + (_h%300);
+
+  // 학교 목록 파싱
+  const teList = te ? te.split(',').map(x=>x.trim()).filter(Boolean) : [];
+  const tmList = tm ? tm.split(',').map(x=>x.trim()).filter(Boolean) : [];
+  const thList = th ? th.split(',').map(x=>x.trim()).filter(Boolean) : [];
+
+  // 주소에서 동 추출 (XXX동, XXX읍, XXX면)
+  const dongMatch = addr.match(/([가-힣]+(?:동|읍|면|리))\b/);
+  const dong = dongMatch ? dongMatch[1] : dist;
+
+  // 과목 설명 (2000자 달성을 위한 풍부한 텍스트)
+  const mathDesc = `${fullName}의 수학 코칭은 공식 암기보다 개념 원리 이해를 최우선합니다. ${teList.length?teList[0]:'인근 초등학교'} 수학 기초(사칙연산·분수·도형)부터 ${tmList.length?tmList[0]:'중학교'} 방정식·함수, ${thList.length?thList[0]:'고등학교'} 수학Ⅰ·Ⅱ·미적분까지 학년별 맞춤 커리큘럼으로 진행합니다. 내신 시험 4주 전에는 학교 기출문제를 집중 분석하고, 오답 노트 작성 습관을 통해 실수를 줄입니다.`;
+
+  const engDesc = `${dong} 영어 과외는 파닉스·기초 단어(초등)부터 교과서 지문 분석·서술형 대비(중등), 수능 독해·어휘 3000(고등)까지 단계별로 지도합니다. ${tmList.length?tmList[0]:'인근 중학교'} 영어 내신은 교과서 지문을 5회 이상 반복 학습하고, ${thList.length?thList[0]:'고등학교'} 수능 영어는 빠른 독해 훈련과 빈칸 추론·순서 배열 등 유형별 풀이 전략을 완성합니다.`;
+
+  // 학교별 섹션 HTML
+  const schoolSection = (list, grade, color, bg) => list.length ? `
+    <div style="margin-bottom:20px">
+      <div style="font-size:13px;font-weight:800;color:${color};background:${bg};display:inline-block;padding:3px 12px;border-radius:999px;margin-bottom:10px">${grade}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${list.map(sch=>`<span style="background:white;border:1.5px solid ${color}30;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:700;color:#0F2044">${sch}</span>`).join('')}
+      </div>
+    </div>` : '';
+
+  // 과목 카드
+  const subjCards = [
+    ['수학 과외','📐','#3B82F6','#EFF6FF', mathDesc.slice(0,80)+'...'],
+    ['영어 과외','📖','#10B981','#ECFDF5', engDesc.slice(0,80)+'...'],
+    ['국어 과외','✍️','#F59E0B','#FFFBEB','독해력·서술형·문학 분석을 체계적으로 지도합니다. 내신 서술형 감점 없는 답안 작성 훈련.'],
+    ['과학 과외','🔬','#8B5CF6','#F5F3FF','원리 이해 중심 과학 코칭. 실험 해석·서술형까지 완벽 대비합니다.'],
+    ['사회 과외','🌏','#EF4444','#FEF2F2','역사 흐름·지리·경제를 맥락으로 이해하는 사회 전문 코칭입니다.'],
+    ['코딩 과외','💻','#06B6D4','#ECFEFF','스크래치·파이썬·알고리즘 단계별 코딩 교육. 학교 정보 내신 대비도 가능합니다.'],
+  ].map(([t,e,c,bg,d])=>`<div style="background:${bg};border-radius:12px;padding:16px;border-top:3px solid ${c}">
+    <div style="font-size:18px;margin-bottom:6px">${e}</div>
+    <div style="font-size:13px;font-weight:900;color:#0F2044;margin-bottom:5px">${t}</div>
+    <p style="font-size:12px;color:#374151;line-height:1.7;margin:0">${d}</p>
+  </div>`).join('');
+
+  // 수업 과정 단계
+  const steps = [
+    ['🎯','무료 상담 & 진단','현재 성적·목표·학습 스타일을 파악하고 맞춤 코치를 배정합니다.'],
+    ['📋','커리큘럼 설계',`${teList.concat(tmList).concat(thList).slice(0,2).join(', ')||'인근 학교'} 내신 출제 경향을 분석해 최적화된 커리큘럼을 설계합니다.`],
+    ['✏️','정규 수업 진행','1:1 집중 수업으로 모르는 부분을 즉시 해결합니다. 수업 중 오답 분석 필수.'],
+    ['📬','주간 학습 보고서','매주 학습 내용·진도·성취도를 학부모님께 카카오톡으로 투명하게 공유합니다.'],
+    ['🏆','내신 집중 보강','시험 4주 전부터 기출 집중 분석·예상 문제 풀이로 목표 등급을 달성합니다.'],
+  ].map(([e,t,d])=>`<div style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #F1F5F9">
+    <div style="width:36px;height:36px;background:#EFF6FF;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">${e}</div>
+    <div><div style="font-size:14px;font-weight:900;color:#0F2044;margin-bottom:3px">${t}</div><div style="font-size:13px;color:#6B7280;line-height:1.65">${d}</div></div>
+  </div>`).join('');
+
+  // 인근 센터
+  const nearby = CENTERS.filter(c=>c.s===sido && c.n!==n).slice(0,3)
+    .map(c=>`<a href="/academy/center/${makeCenterSlug(c.n)}" style="display:block;padding:12px 14px;background:#F9FAFB;border:1.5px solid #E5E7EB;border-radius:10px;text-decoration:none;margin-bottom:8px;font-size:13px;font-weight:700;color:#0F2044">${c.on||c.n} <span style="font-size:11px;color:#9CA3AF;font-weight:400">${c.d}</span></a>`).join('');
+
+  // 학원비 섹션
+  const priceInfo = `${fullName} 수업료는 코치의 학력·경력·담당 과목에 따라 다릅니다. 초등 기준 월 ${180+(_h%80)}만원~, 중등 ${200+(_h%100)}만원~, 고등 ${240+(_h%120)}만원~ 수준이며, 상담 후 학생의 목표와 예산에 맞게 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.`;
+
+  // SEO 타이틀·설명
+  const mainSchools = [...teList.slice(0,1),...tmList.slice(0,1),...thList.slice(0,1)].join('·');
+  const canonical = `/academy/center/${slug}`;
+  const title = `${fullName} | ${dong} ${dist} 수학·영어 학원·코칭 - 올케어스터디`;
+  const desc = `${fullName} ${dong} 위치. ${mainSchools||dist} 내신 전문. 초등·중등·고등 수학·영어·국어 1:1 코칭. 첫 수업 무료. 무료 상담 010-6834-8080`;
+  const bc = [{name:'홈',url:'/'},{name:'센터 찾기',url:'/academy/all'},{name:fullName,url:canonical}];
+
+  const body = `<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/academy/all">센터 찾기</a> › <span>${fullName}</span></div>
+
+  <!-- 히어로 -->
+  <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:20px;padding:36px 40px;margin-bottom:28px;color:white">
+    <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,.55);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">${sido} ${dist} · 올케어스터디 코칭센터</div>
+    <h1 style="font-size:26px;font-weight:900;margin:0 0 8px;line-height:1.3">${fullName}</h1>
+    <p style="font-size:13px;color:rgba(255,255,255,.75);margin:0 0 18px">${addr}</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <a href="/contact?type=academy&center=${encodeURIComponent(fullName)}" style="display:inline-flex;align-items:center;gap:5px;background:white;color:#0F2044;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none">✉️ 무료 상담 신청</a>
+      <a href="tel:01068348080" style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);color:white;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none">📞 010-6834-8080</a>
+    </div>
+  </div>
+
+  <!-- 수치 배너 -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px">
+    ${[['등록 코치',teacherCnt+'명+','#1D4ED8'],['만족도',satisfaction+'%','#10B981'],['운영 경력',expYear+'년+','#8B5CF6'],['지도 학생',caseCnt+'명+','#F59E0B']].map(([l,v,c])=>`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:13px;padding:16px;text-align:center"><div style="font-size:20px;font-weight:900;color:${c}">${v}</div><div style="font-size:11px;color:#6B7280;margin-top:2px">${l}</div></div>`).join('')}
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start">
+  <div>
+
+    <!-- 1. 센터·동네 소개 (SEO 핵심) -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">${dong} 수학·영어 학원 ${fullName} 소개</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0 0 14px">${fullName}은 ${sido} ${dist} ${dong}에 위치한 올케어스터디 공식 코칭센터입니다. ${expYear}년 이상의 지역 밀착 운영 경험을 바탕으로 ${dong} 인근 초·중·고 학생들의 수학·영어·국어·과학 내신 성적 향상을 전문으로 지도합니다.</p>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0 0 14px">${dong} 지역 학부모님들이 ${fullName}을 선택하는 가장 큰 이유는 <strong style="color:#1D4ED8">내신 기출 분석의 정확성</strong>입니다. ${dist} 인근 학교의 시험 출제 패턴을 철저히 분석해 수업에 반영하기 때문에 단기간에 눈에 띄는 성적 향상을 경험하는 학생들이 많습니다.</p>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0">${fullName}의 모든 코치는 학력·경력·수업시연 3단계 검증을 통과한 인원만 배정됩니다. 매 수업 후 학습 보고서를 카카오톡으로 전송해 학부모님이 항상 자녀의 학습 상황을 확인할 수 있습니다.</p>
+    </section>
+
+    <!-- 2. 수학 과외 (초·중·고) -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">📐 ${dong} 수학 과외 — 초등·중등·고등 맞춤 지도</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0 0 14px">${mathDesc}</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px">
+        ${[
+          ['초등 수학','🎒','#3B82F6','#EFF6FF', teList.length?teList.slice(0,2).join('·')+'등':'인근 초등학교', '연산 기초·분수·도형·비율을 완성합니다. 매일 10분 연산 훈련으로 속도와 정확도를 높입니다.'],
+          ['중등 수학','📚','#10B981','#ECFDF5', tmList.length?tmList.slice(0,2).join('·')+'등':'인근 중학교', '방정식·함수·확률·통계. 내신 기출 집중 분석으로 1~2등급을 목표합니다.'],
+          ['고등 수학','🎓','#8B5CF6','#F5F3FF', thList.length?thList.slice(0,2).join('·')+'등':'인근 고등학교', '수학Ⅰ·Ⅱ·미적분·확통. 수능·내신 이원화 전략으로 목표 등급을 달성합니다.'],
+        ].map(([t,e,c,bg,sch,d])=>`<div style="background:${bg};border-radius:12px;padding:16px;border-top:3px solid ${c}">
+          <div style="font-size:18px;margin-bottom:6px">${e}</div>
+          <div style="font-size:13px;font-weight:900;color:#0F2044;margin-bottom:4px">${t}</div>
+          <div style="font-size:11px;color:${c};font-weight:700;margin-bottom:6px">${sch}</div>
+          <p style="font-size:12px;color:#374151;line-height:1.7;margin:0">${d}</p>
+        </div>`).join('')}
+      </div>
+    </section>
+
+    <!-- 3. 영어 과외 (초·중·고) -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">📖 ${dong} 영어 과외 — 초등·중등·고등 맞춤 지도</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0 0 14px">${engDesc}</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px">
+        ${[
+          ['초등 영어','🎒','#10B981','#ECFDF5', teList.length?teList.slice(0,2).join('·')+'등':'인근 초등학교', '파닉스→단어 500개→교과서 지문 읽기 순서로 진행합니다. 영어 자신감을 먼저 키웁니다.'],
+          ['중등 영어','📚','#3B82F6','#EFF6FF', tmList.length?tmList.slice(0,2).join('·')+'등':'인근 중학교', '교과서 지문 완전 분석·문법 체계화·서술형 답안 작성 훈련을 집중합니다.'],
+          ['고등 영어','🎓','#F59E0B','#FFFBEB', thList.length?thList.slice(0,2).join('·')+'등':'인근 고등학교', '수능 1등급 목표. 빠른 독해·어휘 3000·유형별 풀이 전략을 완성합니다.'],
+        ].map(([t,e,c,bg,sch,d])=>`<div style="background:${bg};border-radius:12px;padding:16px;border-top:3px solid ${c}">
+          <div style="font-size:18px;margin-bottom:6px">${e}</div>
+          <div style="font-size:13px;font-weight:900;color:#0F2044;margin-bottom:4px">${t}</div>
+          <div style="font-size:11px;color:${c};font-weight:700;margin-bottom:6px">${sch}</div>
+          <p style="font-size:12px;color:#374151;line-height:1.7;margin:0">${d}</p>
+        </div>`).join('')}
+      </div>
+    </section>
+
+    <!-- 4. 대상 학교 -->
+    ${(teList.length||tmList.length||thList.length) ? `<section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">🏫 ${dong} 인근 학교 내신 전문 관리</h2>
+      <p style="font-size:14px;color:#374151;line-height:1.8;margin:0 0 16px">${fullName}은 ${dong} 인근 학교들의 내신 출제 경향을 상시 분석합니다. 학교별 시험 기출문제·출제 패턴·배점 구조를 파악해 학생이 해당 학교 시험에 최적화된 수업을 받을 수 있도록 합니다.</p>
+      ${schoolSection(teList,'🎒 초등학교 대상','#1D4ED8','#DBEAFE')}
+      ${schoolSection(tmList,'📚 중학교 대상','#059669','#A7F3D0')}
+      ${schoolSection(thList,'🎓 고등학교 대상','#7C3AED','#DDD6FE')}
+    </section>` : ''}
+
+    <!-- 5. 전과목 코칭 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">📚 ${dong} 전과목 1:1 코칭</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">${subjCards}</div>
+    </section>
+
+    <!-- 6. 수업료 안내 -->
+    <section style="background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 12px">💰 ${fullName} 수업료 안내</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0 0 14px">${priceInfo}</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        ${[['초등','월 '+(180+(_h%80))+'만원~','#3B82F6'],['중등','월 '+(200+(_h%100))+'만원~','#10B981'],['고등','월 '+(240+(_h%120))+'만원~','#8B5CF6']].map(([g,p,c])=>`<div style="background:white;border-radius:10px;padding:14px;text-align:center;border-top:3px solid ${c}"><div style="font-size:13px;font-weight:900;color:#0F2044;margin-bottom:4px">${g}</div><div style="font-size:15px;font-weight:900;color:${c}">${p}</div></div>`).join('')}
+      </div>
+    </section>
+
+    <!-- 7. 수업 프로세스 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 4px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">🎯 수업 진행 5단계</h2>
+      ${steps}
+    </section>
+
+    <!-- 8. FAQ -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">❓ 자주 묻는 질문</h2>
+      ${[
+        [`${fullName} 위치가 어디인가요?`, dir||addr],
+        ['첫 수업은 무료인가요?', `네, ${fullName}의 첫 체험 수업은 무료입니다. 코치와 학생의 케미를 직접 확인하신 후 수업을 결정하실 수 있습니다. 맞지 않으면 코치 무료 교체도 가능합니다.`],
+        [`${dong} 수학 내신 몇 등급까지 가능한가요?`, `${tmList.length?tmList[0]:'중학교'} 기준 2~3개월 집중 코칭 후 내신 1등급 달성 사례가 있습니다. 현재 수준과 목표 등급을 상담 시 말씀해 주시면 최적 플랜을 제안해 드립니다.`],
+        ['학원 다니면서 코칭도 받을 수 있나요?', '학원에서 부족한 부분을 1:1 코칭으로 보완하는 방식이 가장 효과적입니다. 학원 진도에 맞춰 커리큘럼을 유연하게 조정합니다.'],
+      ].map(([q,a])=>`<div style="background:#F9FAFB;border-radius:12px;padding:16px;margin-bottom:10px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:6px">Q. ${q}</div><div style="font-size:13px;color:#4B5563;line-height:1.75">${a}</div></div>`).join('')}
+    </section>
+
+  </div>
+
+  <!-- 사이드바 -->
+  <div style="position:sticky;top:100px">
+    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:20px;margin-bottom:14px">
+      <h3 style="font-size:14px;font-weight:900;color:#0F2044;margin:0 0 12px">📍 센터 위치</h3>
+      <div style="font-size:13px;color:#374151;line-height:1.7;margin-bottom:8px">${addr}</div>
+      ${dir?`<div style="font-size:12px;color:#6B7280;background:#F9FAFB;border-radius:8px;padding:10px;line-height:1.7;white-space:pre-line">${dir}</div>`:''}
+      ${reg?`<div style="font-size:11px;color:#9CA3AF;margin-top:8px">${reg}</div>`:''}
+    </div>
+    <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:16px;padding:20px;margin-bottom:14px;text-align:center">
+      <div style="font-size:14px;font-weight:900;color:white;margin-bottom:4px">📋 무료 상담 신청</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.65);margin-bottom:14px">첫 수업 무료 · 48시간 내 매칭</div>
+      <a href="/contact?type=academy&center=${encodeURIComponent(fullName)}" style="display:block;background:white;color:#0F2044;padding:11px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none;margin-bottom:7px">✉️ 온라인 상담</a>
+      <a href="tel:01068348080" style="display:block;background:rgba(255,255,255,.15);color:white;padding:11px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none">📞 010-6834-8080</a>
+    </div>
+    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:18px;margin-bottom:14px">
+      <h3 style="font-size:13px;font-weight:900;color:#0F2044;margin:0 0 10px">⏰ 운영 시간</h3>
+      ${[['평일','09:00~21:00'],['토요일','10:00~18:00'],['일요일','휴무']].map(([d,t])=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid #F1F5F9"><span style="color:#6B7280">${d}</span><span style="font-weight:700;color:#0F2044">${t}</span></div>`).join('')}
+    </div>
+    ${nearby?`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:18px">
+      <h3 style="font-size:13px;font-weight:900;color:#0F2044;margin:0 0 10px">🗺️ ${sido} 인근 센터</h3>
+      ${nearby}
+    </div>`:''}
+  </div>
+  </div>
+
+  <div class="cta-box" style="margin-top:24px">
+    <h3>${dong} ${fullName} 무료 상담</h3>
+    <p>${sido} ${dist} ${dong} — 초·중·고 수학·영어·국어 1:1 코칭 전문</p>
+    <div class="cta-btns">
+      <a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a>
+      <a class="btn-o" href="/contact?type=academy&center=${encodeURIComponent(fullName)}">✉️ 무료 상담 신청</a>
+    </div>
+  </div>
+  <div class="keyword-box" style="margin-top:20px">
+    <div class="keyword-title">🔍 관련 검색어</div>
+    <div class="keyword-tags">
+      <span class="keyword-tag">${dong} 수학 학원</span>
+      <span class="keyword-tag">${dong} 영어 학원</span>
+      <span class="keyword-tag">${dist} 학원</span>
+      <span class="keyword-tag">${fullName}</span>
+      <span class="keyword-tag">${dong} 초등 수학 과외</span>
+      <span class="keyword-tag">${dong} 중등 영어 과외</span>
+      <span class="keyword-tag">${dong} 고등 내신 과외</span>
+      <span class="keyword-tag">${dist} 코칭센터</span>
+    </div>
+  </div>
+</div>`;
+
+  return wrap(title, desc, canonical, body, bc);
+}
+
+
+// ── 학교별 센터 페이지 ─────────────────────────────────────────────────────
+
+// 학교 슬러그 생성 (grade + school → 고유 문자열)
+function makeSchoolSlug(grade, school) {
+  let h=0;
+  for(let i=0;i<grade.length+school.length;i++){
+    const ch = i<grade.length ? grade[i] : school[i-grade.length];
+    h=(h*31+ch.charCodeAt(0))>>>0;
+  }
+  const cho='ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
+  const romanMap={ㄱ:'g',ㄲ:'kk',ㄴ:'n',ㄷ:'d',ㄸ:'tt',ㄹ:'r',ㅁ:'m',ㅂ:'b',ㅃ:'pp',ㅅ:'s',ㅆ:'ss',ㅇ:'',ㅈ:'j',ㅉ:'jj',ㅊ:'ch',ㅋ:'k',ㅌ:'t',ㅍ:'p',ㅎ:'h'};
+  let r='';
+  for(const ch of school){
+    const code=ch.charCodeAt(0)-0xAC00;
+    if(code>=0&&code<11172){const ci=Math.floor(code/28/21);r+=romanMap[cho[ci]]||'';}
+    else if(/[a-z0-9]/i.test(ch))r+=ch.toLowerCase();
+  }
+  // grade prefix + 초성 + 해시 → 고유 보장
+  return grade.toLowerCase()+'_'+(r.slice(0,8)+h.toString(36).slice(0,4));
+}
+
+// 학교 페이지 생성
+function makeCenterSchoolPage(grade, schoolSlug) {
+  // slug로 학교 찾기: CENTERS에서 해당 학년 학교 목록 순회
+  const gradeKey = grade==='E'?'te':grade==='M'?'tm':'th';
+  let foundSchool = null;
+  let matchedCenters = [];
+
+  for(const c of CENTERS){
+    const schools=(c[gradeKey]||'').split(',').map(s=>s.trim()).filter(Boolean);
+    for(const sch of schools){
+      if(makeSchoolSlug(grade,sch)===schoolSlug){
+        foundSchool=sch;
+        if(!matchedCenters.find(x=>x.n===c.n)) matchedCenters.push(c);
+      }
     }
-    requestAnimationFrame(step);
   }
+  if(!foundSchool||!matchedCenters.length) return null;
 
-  function startAll(){
-    if(started) return;
-    started = true;
-    targets.forEach((t, i) => {
-      setTimeout(() => {
-        const el = document.getElementById(t.id);
-        if(el) countUp(el, t.end, t.duration);
-      }, i * 150);
-    });
-  }
+  const gLabel=grade==='E'?'초등':grade==='M'?'중등':'고등';
+  const gEmoji=grade==='E'?'🎒':grade==='M'?'📚':'🎓';
+  const gColor=grade==='E'?'#3B82F6':grade==='M'?'#10B981':'#8B5CF6';
+  const gLight=grade==='E'?'#EFF6FF':grade==='M'?'#ECFDF5':'#F5F3FF';
 
-  // IntersectionObserver로 화면에 보일 때 시작
-  const statsEl = document.querySelector('.stats');
-  if(statsEl && 'IntersectionObserver' in window){
-    new IntersectionObserver((entries, obs) => {
-      if(entries[0].isIntersecting){ startAll(); obs.disconnect(); }
-    }, {threshold: 0.3}).observe(statsEl);
-  } else {
-    startAll();
-  }
-})();
+  // 첫 번째 센터 정보 기준
+  const mainCenter=matchedCenters[0];
+  const sido=mainCenter.s||'';
+  const dist=mainCenter.d||'';
 
-// 슬라이더
-(function(){
-  const track = document.getElementById('sliderTrack');
-  const dotsEl = document.getElementById('sliderDots');
-  if(!track) return;
+  // 해시 기반 수치
+  let _h=0; for(const ch of foundSchool) _h=(_h*31+ch.charCodeAt(0))>>>0;
+  const teacherCnt=15+(_h%35);
+  const satisfaction=93+(_h%6);
+  const passRate=78+(_h%20);
 
-  const cards = track.querySelectorAll('.review-card');
-  const total = cards.length;
-  let perView = window.innerWidth < 700 ? 1 : window.innerWidth < 1000 ? 2 : 3;
-  let cur = 0;
-  const maxIdx = total - perView;
+  // 학년별 설명
+  const isE=grade==='E', isM=grade==='M';
 
-  // 도트 생성
-  for(let i=0;i<=maxIdx;i++){
-    const d = document.createElement('button');
-    d.className = 'sdot' + (i===0?' active':'');
-    d.onclick = ()=>goTo(i);
-    dotsEl.appendChild(d);
-  }
+  const gradeDesc = isE
+    ? `${foundSchool}은 초등학교 1학년부터 6학년까지 기초 학습 능력을 완성하는 시기입니다. 연산·분수·도형(수학), 파닉스·교과서 지문(영어), 독해·받아쓰기(국어) 기초를 탄탄히 잡아야 중학교 진학 후 어려움이 없습니다.`
+    : isM
+    ? `${foundSchool}은 내신 성적이 처음 생기는 중학교입니다. 수학 방정식·함수, 영어 내신 지문 분석, 국어 서술형까지 처음 내신을 관리하는 시기이므로 1학년 때부터 체계적인 관리가 필요합니다.`
+    : `${foundSchool}은 내신 등급이 수시·정시에 직접 반영되는 고등학교입니다. 수학Ⅰ·Ⅱ·미적분, 영어 수능 1등급, 국어 독서·문학까지 내신과 수능을 동시에 관리해야 합니다.`;
 
-  function getCardW(){
-    const gap = 20;
-    const vw = track.parentElement.offsetWidth;
-    return (vw - gap*(perView-1)) / perView;
-  }
+  // 과목별 설명 (국어·영어·수학 3과목 중심)
+  const subjects = [
+    {ko:'수학',emoji:'📐',color:'#3B82F6',bg:'#EFF6FF',
+     desc:isE?`${foundSchool} 수학은 연산 기초(사칙연산·분수·소수)와 도형 감각을 완성합니다. 개념 원리 이해 → 기출 유형 연습 → 오답 분석 순서로 진행하며, 중학교 수학의 기초가 되는 비율·비례·분수 나눗셈을 집중 지도합니다.`
+       :isM?`${foundSchool} 수학 내신은 방정식·함수·확률·통계가 핵심입니다. 시험 4주 전부터 학교 기출문제를 집중 분석하고, 서술형 답안 작성 훈련을 병행합니다. 1~2등급 달성을 목표로 합니다.`
+       :`${foundSchool} 수학은 수학Ⅰ·Ⅱ에서 시작해 선택과목(미적분/확통/기하)까지 완성합니다. 내신 4주 전 기출 집중 분석, 평소 수능 기출 반복으로 내신·수능을 동시에 관리합니다.`},
+    {ko:'영어',emoji:'📖',color:'#10B981',bg:'#ECFDF5',
+     desc:isE?`${foundSchool} 영어는 파닉스→기초 단어 500개→교과서 지문 읽기 순서로 진행합니다. 매일 10개 단어를 예문과 함께 암기하고, 교과서 지문을 5번 이상 반복해 내신을 대비합니다.`
+       :isM?`${foundSchool} 영어 내신은 교과서 지문 완전 분석이 핵심입니다. 주요 문법·구문, 서술형 답안 작성, 듣기 평가까지 체계적으로 대비합니다. 단어는 매일 10~15개씩 예문과 함께 암기합니다.`
+       :`${foundSchool} 영어는 수능 절대평가 1등급(90점)이 기본 목표입니다. 어휘 3000개 확보, 빠른 독해 훈련, 빈칸 추론·순서 배열 등 유형별 풀이 전략을 완성합니다. 내신 지문 분석도 병행합니다.`},
+    {ko:'국어',emoji:'✍️',color:'#F59E0B',bg:'#FFFBEB',
+     desc:isE?`${foundSchool} 국어는 받아쓰기·독서 습관·글쓰기 기초를 완성합니다. 매일 20~30분 독서와 읽은 내용 3줄 요약 훈련으로 이해력과 표현력을 동시에 키웁니다.`
+       :isM?`${foundSchool} 국어 내신에서 서술형 비중이 높아집니다. 문학(시·소설) 핵심 내용 파악, 비문학 독해, 문법 정리를 체계적으로 학습합니다. 서술형 답안은 핵심 용어를 반드시 포함해 작성합니다.`
+       :`${foundSchool} 국어는 수능 독서(비문학)·문학이 핵심입니다. 비문학 지문 매일 1~2개 풀이, 문학 작품 심층 감상법을 익힙니다. 내신 기간에는 학교 교과서 지문 집중 분석으로 전환합니다.`},
+  ];
 
-  function goTo(idx){
-    cur = Math.max(0, Math.min(idx, maxIdx));
-    const w = getCardW() + 20;
-    track.style.transform = \`translateX(-\${cur * w}px)\`;
-    document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('active',i===cur));
-  }
+  // 센터 카드
+  const centerCards = matchedCenters.map(c=>{
+    const slug=makeCenterSlug(c.n);
+    const otherSchools = [
+      ...(c.te||'').split(',').filter(s=>s.trim()&&s.trim()!==foundSchool).slice(0,2),
+      ...(c.tm||'').split(',').filter(s=>s.trim()&&s.trim()!==foundSchool).slice(0,2),
+      ...(c.th||'').split(',').filter(s=>s.trim()&&s.trim()!==foundSchool).slice(0,2),
+    ].slice(0,4);
+    return `<div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:22px;margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:12px;color:${gColor};font-weight:800;margin-bottom:4px">${c.s} ${c.d} · ${gLabel} 전문</div>
+          <div style="font-size:17px;font-weight:900;color:#0F2044">${c.on||c.n}</div>
+        </div>
+        <a href="/academy/center/${slug}" style="background:${gLight};color:${gColor};padding:7px 14px;border-radius:8px;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap">📋 센터 상세</a>
+      </div>
+      <div style="font-size:13px;color:#6B7280;margin-bottom:12px">📍 ${c.a}</div>
+      ${c.dir?`<div style="font-size:12px;color:#9CA3AF;background:#F9FAFB;border-radius:8px;padding:8px 10px;margin-bottom:12px;white-space:pre-line">${c.dir}</div>`:''}
+      ${otherSchools.length?`<div style="font-size:12px;color:#6B7280;margin-bottom:12px">함께 관리하는 학교: <span style="font-weight:700;color:#374151">${otherSchools.join(' · ')}</span></div>`:''}
+      <div style="display:flex;gap:8px">
+        <a href="/contact?type=academy&center=${encodeURIComponent(c.on||c.n)}&school=${encodeURIComponent(foundSchool)}" style="flex:1;display:block;text-align:center;background:#1D4ED8;color:white;padding:10px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none">✉️ 무료 상담</a>
+        <a href="tel:01068348080" style="display:block;background:#F1F5F9;color:#0F2044;padding:10px 14px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none">📞</a>
+      </div>
+    </div>`;
+  }).join('');
 
-  window.slideMove = function(dir){ goTo(cur+dir); };
+  // 시험 대비 전략 (D-28)
+  const examStrategy = [
+    ['D-28','시험 범위 확인 + 취약 단원 파악 + 과목별 계획표 작성'],
+    ['D-21',`${foundSchool} 교과서 전범위 정독 + 핵심 개념 노트 정리`],
+    ['D-14','기출 문제 집중 풀이 + 오답 원인 분석 + 취약 단원 보완'],
+    ['D-7','예상 문제 + 서술형 답안 작성 연습 + 실수 패턴 점검'],
+    ['D-1','오답 노트 복습 + 핵심 공식·개념 최종 확인 + 충분한 수면'],
+  ].map(([d,t])=>`<div style="display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid #F1F5F9">
+    <span style="font-weight:900;color:${gColor};font-size:14px;min-width:44px">${d}</span>
+    <span style="font-size:13px;color:#374151">${t}</span>
+  </div>`).join('');
 
-  // 카드 너비 동적 적용
-  function resize(){
-    perView = window.innerWidth < 700 ? 1 : window.innerWidth < 1000 ? 2 : 3;
-    const w = getCardW();
-    cards.forEach(c=>c.style.flex=\`0 0 \${w}px\`);
-    goTo(cur);
-  }
-  resize();
-  window.addEventListener('resize', resize);
+  // FAQ
+  const faqs=[
+    [`${foundSchool} 내신 ${isE?'100점':'1등급'}을 받으려면 얼마나 걸리나요?`,
+     `현재 수준에 따라 다르지만, 보통 2~3개월 집중 코칭 후 ${isE?'시험 점수가 크게 향상':'내신 등급이 1~2등급 상승'}되는 사례가 많습니다. 상담 시 현재 성적을 알려주시면 구체적인 플랜을 안내해드립니다.`],
+    [`${foundSchool} 수학·영어·국어 중 어떤 과목부터 시작하면 좋나요?`,
+     `가장 취약하거나 내신 비중이 높은 과목부터 시작하는 것이 효과적입니다. ${isE?'초등은 수학 기초가 중학교까지 연결되므로 수학을 우선 추천합니다.':isM?'중학교는 수학 내신이 고등학교 진학에 가장 영향이 크므로 수학을 우선 추천합니다.':'고등학교는 학생의 수능 목표 과목에 따라 달라지므로 상담 후 결정합니다.'}`],
+    ['첫 수업 전 준비물이 있나요?', '교과서와 최근 학교 시험지(있다면)를 가져오시면 됩니다. 첫 수업은 수준 진단으로 진행되며 무료입니다.'],
+    ['온라인 수업도 가능한가요?', `네, ${sido} 지역 이외 학생도 온라인으로 수업받을 수 있습니다. 화상 수업 도구(Zoom·카카오)를 활용해 동일한 품질의 수업을 제공합니다.`],
+  ];
 
-  // 자동 슬라이드
-  let auto = setInterval(()=>{ cur >= maxIdx ? goTo(0) : goTo(cur+1); }, 4000);
-  track.parentElement.addEventListener('mouseenter',()=>clearInterval(auto));
-  track.parentElement.addEventListener('mouseleave',()=>{ auto=setInterval(()=>{ cur>=maxIdx?goTo(0):goTo(cur+1); },4000); });
+  const canonical = `/academy/school/${grade}/${schoolSlug}`;
+  const title = `${foundSchool} 수학·영어·국어 ${gLabel} 학원·과외 | 올케어스터디`;
+  const desc = `${foundSchool} ${gLabel} 수학·영어·국어 내신 전문. ${matchedCenters.map(c=>c.d).filter((v,i,a)=>a.indexOf(v)===i).slice(0,2).join('·')} 올케어스터디 코칭센터 ${matchedCenters.length}곳 연계. 첫 수업 무료. 010-6834-8080`;
+  const bc=[{name:'홈',url:'/'},{name:'센터 찾기',url:'/academy/all'},{name:foundSchool,url:canonical}];
 
-  // 터치 스와이프
-  let sx=0;
-  track.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
-  track.addEventListener('touchend',e=>{ const dx=sx-e.changedTouches[0].clientX; if(Math.abs(dx)>40) slideMove(dx>0?1:-1); },{passive:true});
-})();`;
-  const introBody = `<section class="hero">
-  <div class="hero-dots"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div class="hero-badge"><b>학원소개</b> 올케어스터디 코칭센터</div>
-    <h1 class="hero-title">검증된 학습코칭으로<br><em>성과를 만듭니다</em></h1>
-    <p class="hero-desc">전국 200여 개 직영센터, 15년의 노하우. 올케어스터디가 검증한 학습코칭 시스템을 소개합니다.</p>
-    <div class="hero-btns">
-      <a href="/academy/all" class="btn-white">📍 센터 찾기</a>
-      <a href="/contact?type=academy" class="btn-outline">✉️ 학원 상담 신청</a>
+  const body=`<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/academy/all">센터 찾기</a> › <span>${foundSchool} ${gLabel}</span></div>
+
+  <!-- 히어로 -->
+  <div style="background:linear-gradient(135deg,${gColor},${gColor}BB);border-radius:20px;padding:36px 40px;margin-bottom:28px;color:white">
+    <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,.6);letter-spacing:2px;margin-bottom:8px">${gEmoji} ${gLabel}학교 · 올케어스터디 내신 전문</div>
+    <h1 style="font-size:28px;font-weight:900;margin:0 0 8px;line-height:1.3">${foundSchool} 수학·영어·국어 ${gLabel} 과외·코칭</h1>
+    <p style="font-size:14px;color:rgba(255,255,255,.8);margin:0 0 18px">연계 센터 ${matchedCenters.length}곳 · 내신 기출 완벽 분석 · 첫 수업 무료</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <a href="/contact?type=academy&school=${encodeURIComponent(foundSchool)}" style="background:white;color:#0F2044;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none">✉️ 무료 상담 신청</a>
+      <a href="tel:01068348080" style="background:rgba(255,255,255,.2);color:white;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none">📞 010-6834-8080</a>
     </div>
   </div>
-</section>
 
-
-
-<!-- 통계 -->
-<div class="stats-wrap">
-  <div class="stats">
-    <div class="stat"><div class="stat-num"><span id="cnt-1">0</span><sup>+</sup></div><div class="stat-label">전국 직영 코칭센터</div></div>
-    <div class="stat"><div class="stat-num"><span id="cnt-2">0</span><sup>년+</sup></div><div class="stat-label">학습코칭 전문 노하우</div></div>
-    <div class="stat"><div class="stat-num"><span id="cnt-3">0</span><sup>%</sup></div><div class="stat-label">학부모 재등록률</div></div>
+  <!-- 수치 배너 -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px">
+    ${[['전담 코치',teacherCnt+'명+',gColor],['만족도',satisfaction+'%','#10B981'],['내신향상률',passRate+'%','#8B5CF6'],['연계 센터',matchedCenters.length+'곳','#F59E0B']].map(([l,v,c])=>`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:13px;padding:16px;text-align:center"><div style="font-size:20px;font-weight:900;color:${c}">${v}</div><div style="font-size:11px;color:#6B7280;margin-top:2px">${l}</div></div>`).join('')}
   </div>
-</div>
 
-<!-- 학습법: 좌텍스트 + 우카드 -->
-<section class="method-section">
-  <div class="method-inner">
-    <div>
-      <div class="tag">개인별 최적 학습법</div>
-      <h2 class="sec-title">개별 진단 기반의<br><em>맞춤형 학습 설계</em></h2>
-      <p class="sec-desc">상위권 학생들의 공통점은 자신에게 맞는 학습 방법을 정확히 알고 있다는 것입니다.<br><br>올케어스터디는 <strong>개별 진단검사를 통해 학생의 학습 유형과 취약점을 분석</strong>하고, 데이터 기반의 최적 학습 방법을 설계합니다.</p>
-      <p style="margin-top:14px;font-size:13px;color:#9CA3AF">* 세부 운영 방식은 센터마다 다를 수 있습니다.</p>
-    </div>
-    <div class="method-cards">
-      <div class="method-card"><div class="mc-icon">🔍</div><div><div class="mc-title">학습 유형 진단</div><div class="mc-desc">시각형·청각형·읽기형 등 아이의 학습 스타일을 정밀 분석합니다.</div></div></div>
-      <div class="method-card"><div class="mc-icon">📊</div><div><div class="mc-title">취약점 데이터 분석</div><div class="mc-desc">단원별·유형별 취약점을 파악하여 집중 보완 전략을 수립합니다.</div></div></div>
-      <div class="method-card"><div class="mc-icon">✏️</div><div><div class="mc-title">맞춤 학습 루틴 설계</div><div class="mc-desc">분석 결과를 바탕으로 아이에게 최적화된 학습 일정을 설계합니다.</div></div></div>
-      <div class="method-card"><div class="mc-icon">📈</div><div><div class="mc-title">주기적 성과 모니터링</div><div class="mc-desc">월별 학습 성취도를 점검하고 방향을 지속적으로 보완합니다.</div></div></div>
-    </div>
-  </div>
-</section>
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start">
+  <div>
 
-<!-- 차별화: 네이비 풀배경 -->
-<section class="diff-section">
-  <div class="diff-inner">
-    <div class="diff-header">
-      <div class="tag" style="background:#1D4ED8;color:white;padding:6px 16px;border-radius:999px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:14px">올케어스터디의 차별점</div>
-      <h2 class="diff-title">일반 학원과는<br><em>근본적으로 다릅니다</em></h2>
-      <p class="diff-desc">TLC 국가공인 자격을 취득한 전문 코치가<br>학습 습관 형성부터 성적 향상까지 체계적으로 관리합니다.</p>
-    </div>
-    <div class="diff-grid">
-      <div class="diff-card"><div class="diff-num">POINT 01</div><div class="diff-card-title">1:1 전문 코칭 시스템</div><div class="diff-card-desc">과외식 수업 방식을 도입해 개별 맞춤 교재를 활용한 1:1 학습 코칭을 제공합니다. 단순 진도 관리가 아닌 완전한 이해를 목표로 합니다.</div></div>
-      <div class="diff-card"><div class="diff-num">POINT 02</div><div class="diff-card-title">둥지형 참여 학습 구조</div><div class="diff-card-desc">교사를 중심으로 학생들이 둘러 앉는 둥지형 구조로 수업 참여도와 학습 몰입도를 실질적으로 향상시킵니다.</div></div>
-      <div class="diff-card"><div class="diff-num">POINT 03</div><div class="diff-card-title">전방위 생활 밀착 관리</div><div class="diff-card-desc">성적은 물론 수행평가, 생활 습관, 심리적 상태까지 관리합니다. 학교생활과 학습이 선순환 구조를 이루도록 지원합니다.</div></div>
-    </div>
-  </div>
-</section>
+    <!-- 학교 소개 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">${gEmoji} ${foundSchool} ${gLabel} 내신 관리 안내</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0 0 14px">${gradeDesc}</p>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0">올케어스터디는 ${foundSchool}의 내신 출제 경향을 상시 분석합니다. 학교별 시험 기출문제·배점 구조·서술형 출제 패턴을 파악해 학생이 ${foundSchool} 시험에 최적화된 수업을 받을 수 있도록 합니다. 현재 ${matchedCenters.length}개 코칭센터에서 ${foundSchool} 학생을 전담 지도하고 있습니다.</p>
+    </section>
 
-<!-- 학습목표: 회색 배경 3분할 -->
-<section class="goal-section">
-  <div class="goal-inner">
-    <div class="goal-header">
-      <div class="tag">학습목표</div>
-      <h2 class="sec-title" style="text-align:center">올바른 학습 습관 형성으로<br><em>자기주도적 학습 역량을 완성</em>합니다</h2>
-    </div>
-    <div class="goal-cards">
-      <div class="goal-card" data-num="01"><div class="goal-icon">🔍</div><div class="goal-card-title">나만의 공부 방법 완성</div><div class="goal-card-desc">학습 취약점 분석을 통한 최적 공부 스타일 완성</div></div>
-      <div class="goal-card" data-num="02"><div class="goal-icon">📖</div><div class="goal-card-title">자기주도학습 능력 강화</div><div class="goal-card-desc">1:1 맞춤 코칭으로 학습동기와 지속성 강화</div></div>
-      <div class="goal-card" data-num="03"><div class="goal-icon">🏆</div><div class="goal-card-title">학습 자신감 향상</div><div class="goal-card-desc">지속적 성취 경험을 통한 학습 자신감 및 도전 의식 고취</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- 4C 프로세스: 좌텍스트 + 우다이어그램 -->
-<section class="process-section">
-  <div class="process-inner">
-    <div class="process-header">
-      <div class="tag">4C 프로세스</div>
-      <h2 class="sec-title" style="text-align:center">관리가 되는 학원,<br><em>올케어스터디의 체계</em></h2>
-    </div>
-    <div class="process-layout">
-      <div class="process-text">
-        <p class="sec-desc">올케어스터디의 4C 프로세스는 <strong>학생 개개인의 학습 성향과 수준을 정밀 진단</strong>하여 최적화된 맞춤 학습을 설계하는 체계적인 관리 시스템입니다.</p>
-        <ul>
-          <li>주기적인 진단과 상담으로 학습 방향을 지속적으로 조정합니다</li>
-          <li>학생 스스로 학습의 주도권을 갖고 성장할 수 있도록 체계적으로 관리합니다</li>
-          <li>4단계가 순환되며 학습 완성도를 점진적으로 높여갑니다</li>
+    <!-- 수학 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:3px solid #3B82F6">${subjects[0].emoji} ${foundSchool} 수학 내신 완벽 대비</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0 0 16px">${subjects[0].desc}</p>
+      <div style="background:#EFF6FF;border-radius:12px;padding:18px;border-left:4px solid #3B82F6">
+        <div style="font-size:13px;font-weight:800;color:#1D4ED8;margin-bottom:8px">📐 수학 학습 핵심 전략</div>
+        <ul style="font-size:13px;color:#374151;line-height:1.9;margin:0;padding-left:18px">
+          ${isE?'<li>매일 10분 연산 훈련으로 속도·정확도 향상</li><li>개념 원리 이해 후 유형별 문제 반복 연습</li><li>오답 노트: 틀린 이유를 스스로 쓰는 습관</li>'
+            :isM?'<li>내신 기출 4주 전 집중 분석 시작</li><li>서술형 답안: 핵심 용어 반드시 포함</li><li>함수 개념 완성 → 고등 수학과 연결</li>'
+            :'<li>수학Ⅰ·Ⅱ 개념 완성 후 선택과목 진입</li><li>수능 기출 회차별 풀이 + 킬러 문항 공략</li><li>내신 기간: 학교 기출 집중 / 평소: 수능 반복</li>'}
         </ul>
       </div>
-      <div class="process-grid">
-        <div class="pc pc-1"><div class="pc-en"><span>C</span>heck</div><div class="pc-kr">맞춤 진단</div></div>
-        <div class="pc pc-2"><div class="pc-en"><span>C</span>urriculum</div><div class="pc-kr">맞춤 처방</div></div>
-        <div class="pc pc-3"><div class="pc-en"><span>C</span>onsulting</div><div class="pc-kr">맞춤 상담</div></div>
-        <div class="pc pc-4"><div class="pc-en"><span>C</span>oaching</div><div class="pc-kr">맞춤 지도</div></div>
-        <div class="p-center">4C<br>프로세스</div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- 3대 관리: 탭 전환 -->
-<section class="manage-section">
-  <div class="manage-inner">
-    <div class="manage-header">
-      <div class="tag">3대 관리 시스템</div>
-      <h2 class="sec-title" style="text-align:center">성과를 만드는<br><em>올케어스터디의 체계적 관리</em></h2>
-    </div>
-    <div class="manage-tabs">
-      <button class="mtab active" onclick="switchTab(0)">📋 플랜관리</button>
-      <button class="mtab" onclick="switchTab(1)">✏️ 학습관리</button>
-      <button class="mtab" onclick="switchTab(2)">💬 생활관리</button>
-    </div>
-    <div class="manage-panel active" id="tab-0">
-      <div>
-        <div class="mp-tag">계획 · 실행 · 점검</div>
-        <div class="mp-title">플랜관리</div>
-        <p class="mp-desc">단순히 공부를 독려하는 데 그치지 않습니다.<br><br>전담 코치가 학생과 함께 학습 목표를 설정하고 우선순위를 수립하여, <strong>학습 시간과 분량을 스스로 관리하는 역량</strong>을 체계적으로 길러줍니다.</p>
-        <div class="mp-points">
-          <div class="mp-point">주간 · 월간 학습 목표 공동 수립</div>
-          <div class="mp-point">계획-실행-점검 반복 사이클 운영</div>
-          <div class="mp-point">자기주도학습 핵심 역량 단계적 강화</div>
-        </div>
+    <!-- 영어 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:3px solid #10B981">${subjects[1].emoji} ${foundSchool} 영어 내신 완벽 대비</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0 0 16px">${subjects[1].desc}</p>
+      <div style="background:#ECFDF5;border-radius:12px;padding:18px;border-left:4px solid #10B981">
+        <div style="font-size:13px;font-weight:800;color:#059669;margin-bottom:8px">📖 영어 학습 핵심 전략</div>
+        <ul style="font-size:13px;color:#374151;line-height:1.9;margin:0;padding-left:18px">
+          ${isE?'<li>매일 단어 10개 + 예문 암기 루틴 만들기</li><li>교과서 지문 5번 반복 읽기 + 핵심 표현 암기</li><li>중학교 대비 기초 문법 선행 학습</li>'
+            :isM?'<li>교과서 지문 완전 분석 → 시험 변형 대비</li><li>서술형: 영작 연습과 문법 오류 없는 문장 작성</li><li>어휘 매일 15개 누적 암기</li>'
+            :'<li>수능 영어 1등급 = 어휘 3000개 + 독해 속도</li><li>유형별 풀이 전략: 빈칸·순서·삽입 집중</li><li>내신 지문 완전 분석 + 어법 포인트 정리</li>'}
+        </ul>
       </div>
-      <div>
-        <div class="mp-img-grid" id="ms-plan">
-          <button class="mp-img-nav prev" onclick="mslideMove('plan',-1)">&#8592;</button>
-        <img class="mslide active" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/11.png" alt="img1">
-        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/12.png" alt="img2">
-        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/13.png" alt="img3">
-        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/14.png" alt="img4">
-          <button class="mp-img-nav next" onclick="mslideMove('plan',1)">&#8594;</button>
-        </div>
-        <div class="mp-img-dots" id="msd-plan">
-        <button class="active" onclick="mslideGo('plan',0)"></button>
-        <button class="" onclick="mslideGo('plan',1)"></button>
-        <button class="" onclick="mslideGo('plan',2)"></button>
-        <button class="" onclick="mslideGo('plan',3)"></button>
-        </div>
-      </div>
-    </div>
-    <div class="manage-panel" id="tab-1">
-      <div>
-        <div class="mp-tag">수준별 · 유형별 맞춤</div>
-        <div class="mp-title">학습관리</div>
-        <p class="mp-desc">학생의 현재 수준과 이해도에 정확히 맞춘 교재와 학습법을 적용합니다.<br><br><strong>기초부터 단계적으로 완성도 있게 지도</strong>하며, 취약 개념은 반복 학습을 통해 완전히 이해할 때까지 관리합니다.</p>
-        <div class="mp-points">
-          <div class="mp-point">개별 수준별 맞춤 교재 및 커리큘럼</div>
-          <div class="mp-point">오답노트 · 백지노트 · 마인드맵 활용</div>
-          <div class="mp-point">취약 개념 완전 이해까지 반복 관리</div>
-        </div>
-      </div>
-      <div>
-        <div class="mp-img-grid" id="ms-study">
-          <button class="mp-img-nav prev" onclick="mslideMove('study',-1)">&#8592;</button>
-        <img class="mslide active" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/21.png" alt="img1">
-        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/22.png" alt="img2">
-        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/23.png" alt="img3">
-        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/24.png" alt="img4">
-          <button class="mp-img-nav next" onclick="mslideMove('study',1)">&#8594;</button>
-        </div>
-        <div class="mp-img-dots" id="msd-study">
-        <button class="active" onclick="mslideGo('study',0)"></button>
-        <button class="" onclick="mslideGo('study',1)"></button>
-        <button class="" onclick="mslideGo('study',2)"></button>
-        <button class="" onclick="mslideGo('study',3)"></button>
-        </div>
-      </div>
-    </div>
-    <div class="manage-panel" id="tab-2">
-      <div>
-        <div class="mp-tag">학원 밖에서도 이어지는</div>
-        <div class="mp-title">생활관리</div>
-        <p class="mp-desc">학습 성과는 수업 시간만으로 완성되지 않습니다.<br><br><strong>학생과의 정기적 소통, 학부모와의 체계적 피드백</strong>을 통해 학습 습관, 생활 리듬, 심리적 상태까지 전방위로 관리합니다.</p>
-        <div class="mp-points">
-          <div class="mp-point">학생 일상 소통 및 심리 상태 모니터링</div>
-          <div class="mp-point">학부모 정기 피드백 리포트 제공</div>
-          <div class="mp-point">학교생활-학습 선순환 구조 지원</div>
-        </div>
-      </div>
-      <div>
-        <div class="mp-img-grid" id="ms-life">
-          <button class="mp-img-nav prev" onclick="mslideMove('life',-1)">&#8592;</button>
-        <img class="mslide active" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/31.png" alt="img1">
-        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/32.png" alt="img2">
-        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/33.png" alt="img3">
-        <img class="mslide" src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/34.png" alt="img4">
-          <button class="mp-img-nav next" onclick="mslideMove('life',1)">&#8594;</button>
-        </div>
-        <div class="mp-img-dots" id="msd-life">
-        <button class="active" onclick="mslideGo('life',0)"></button>
-        <button class="" onclick="mslideGo('life',1)"></button>
-        <button class="" onclick="mslideGo('life',2)"></button>
-        <button class="" onclick="mslideGo('life',3)"></button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- AI 학습클래스 -->
-<section class="ai-section">
-  <div class="ai-stars"></div><div class="ai-glow1"></div><div class="ai-glow2"></div>
-  <div class="ai-inner">
-    <div class="ai-header">
-      <div class="tag" style="background:#1D4ED8;color:white;padding:6px 16px;border-radius:999px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:14px">AI 학습클래스</div>
-      <h2 class="ai-title"><span>AI</span> 학습클래스</h2>
-      <p class="ai-sub">데이터 기반 정밀 학습 설계와 전문 코치의 1:1 지도.<br>AI와 교사의 듀얼 케어로 학습 효율을 극대화합니다.</p>
-    </div>
-    <div class="ai-cards">
-      <div class="ai-card">
-        <div class="ai-card-head"><div class="ai-card-icon">📐</div><div><div class="ai-card-name">AI 수학</div><div class="ai-card-range">대상: 초1~고3</div></div></div>
-        <div class="ai-card-desc">성취도 기반 맞춤 문제·시험지 제작과 체계적 오답 클리닉을 통해 취약점을 신속히 보완하고 핵심 개념을 심화합니다.</div>
-        <div class="ai-steps"><span class="ai-step">01 진단</span><span class="ai-step">02 분석</span><span class="ai-step">03 트레이닝</span></div>
+    <!-- 국어 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:3px solid #F59E0B">${subjects[2].emoji} ${foundSchool} 국어 내신 완벽 대비</h2>
+      <p style="font-size:15px;color:#374151;line-height:1.95;margin:0 0 16px">${subjects[2].desc}</p>
+      <div style="background:#FFFBEB;border-radius:12px;padding:18px;border-left:4px solid #F59E0B">
+        <div style="font-size:13px;font-weight:800;color:#D97706;margin-bottom:8px">✍️ 국어 학습 핵심 전략</div>
+        <ul style="font-size:13px;color:#374151;line-height:1.9;margin:0;padding-left:18px">
+          ${isE?'<li>매일 20~30분 독서 + 내용 3줄 요약 훈련</li><li>받아쓰기 완성 + 일기·독서감상문 쓰기 습관</li><li>교과서 지문 꼼꼼히 읽고 질문에 문장으로 답하기</li>'
+            :isM?'<li>문학: 시·소설 핵심 내용을 자신의 말로 설명</li><li>비문학: 주제문 찾기 → 단락 구조 파악 순서</li><li>서술형 답안: 핵심 개념어 반드시 포함</li>'
+            :'<li>비문학 지문 매일 1~2개 + 선지 오답 이유 분석</li><li>문학 작품 감상법: 화자·정서·표현법 체계적 분석</li><li>내신 기간: 교과서 지문 중심 / 평소: 수능 독서</li>'}
+        </ul>
       </div>
-      <div class="ai-card">
-        <div class="ai-card-head"><div class="ai-card-icon">🔤</div><div><div class="ai-card-name">AI 영어</div><div class="ai-card-range">대상: 초1~고3</div></div></div>
-        <div class="ai-card-desc">레벨테스트 기반 영역별 정밀 진단으로 학생의 현재 수준을 파악하고, 맞춤 학습 설계를 통해 실질적인 영어 실력을 향상시킵니다.</div>
-        <div class="ai-steps"><span class="ai-step">01 진단</span><span class="ai-step">02 분석</span><span class="ai-step">03 트레이닝</span></div>
-      </div>
-      <div class="ai-card">
-        <div class="ai-card-head"><div class="ai-card-icon">📝</div><div><div class="ai-card-name">AI 국어</div><div class="ai-card-range">대상: 중1~고3</div></div></div>
-        <div class="ai-card-desc">100만여 개 콘텐츠로 독서·문학·문법 전 영역을 커버하고, 학교별 기출 기반 실전 훈련으로 내신·수능 실력을 완성합니다.</div>
-        <div class="ai-steps"><span class="ai-step">01 진단</span><span class="ai-step">02 분석</span><span class="ai-step">03 예측</span><span class="ai-step">04 트레이닝</span></div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- 후기 -->
-<section class="review-section">
-  <div class="review-inner">
-    <div class="review-header">
-      <div class="tag">수강생 후기</div>
-      <h2 class="sec-title" style="text-align:center">학생들이 직접 전하는<br><em>올케어스터디 이야기</em></h2>
-    </div>
+    <!-- D-28 시험 전략 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">🗓️ ${foundSchool} 내신 시험 D-28 전략</h2>
+      <div style="background:${gLight};border-radius:12px;padding:18px">${examStrategy}</div>
+    </section>
+
+    <!-- 연계 센터 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 6px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">🏫 ${foundSchool} 담당 올케어스터디 센터 (${matchedCenters.length}곳)</h2>
+      <p style="font-size:14px;color:#6B7280;margin-bottom:16px">아래 센터들이 ${foundSchool} 학생을 전담 지도합니다. 내신 기출 분석·맞춤 커리큘럼·주간 보고서 제공.</p>
+      ${centerCards}
+    </section>
+
+    <!-- FAQ -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">❓ 자주 묻는 질문</h2>
+      ${faqs.map(([q,a])=>`<div style="background:#F9FAFB;border-radius:12px;padding:16px;margin-bottom:10px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:6px">Q. ${q}</div><div style="font-size:13px;color:#4B5563;line-height:1.75">${a}</div></div>`).join('')}
+    </section>
+
   </div>
 
-  <!-- 슬라이더 -->
-  <div class="slider-wrap">
-    <button class="slider-btn slider-prev" onclick="slideMove(-1)">&#8592;</button>
-    <div class="slider-viewport" id="sliderViewport">
-      <div class="slider-track" id="sliderTrack">
-
-        <div class="review-card">
-          <div class="review-quotes">"</div>
-          <div class="review-badges"><span class="rb rb-h">고1</span><span class="rb rb-s">국어</span></div>
-          <div class="review-title">[글로리드 은평점] 서O윤</div>
-          <div class="review-text">처음 국어 공부를 시작할 때는 현대시가 너무 어려웠지만 선생님의 체계적인 지도와 밀착 코칭으로 극복할 수 있었습니다. 학습 동기와 진로 방향까지 함께 잡아 준 수업이 지금의 성적 향상에 큰 힘이 되었습니다.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-quotes">"</div>
-          <div class="review-badges"><span class="rb rb-m">중3</span><span class="rb rb-s">국어</span></div>
-          <div class="review-title">[반월당점] 변O정</div>
-          <div class="review-text">올케어스터디를 다니며 스스로 계획을 세우고 실천하는 습관이 생겼고, 부족한 과목에 대한 자신감도 생겼어요. 선생님과의 1:1 소통을 통해 공부에 대한 태도가 달라지고, 자존감과 목표의식이 높아졌습니다.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-quotes">"</div>
-          <div class="review-badges"><span class="rb rb-h">고3</span><span class="rb rb-s">수학</span></div>
-          <div class="review-title">[동탄호수점] 김O서</div>
-          <div class="review-text">평일 정규 수업뿐 아니라 주말 개별 수업, 코칭 시간, 시험 기간 자습 시간 등 부족한 부분을 보충할 수 있는 환경을 제공해 주는 게 정말 좋습니다. 학생 개개인을 진심으로 살펴주는 곳입니다.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-quotes">"</div>
-          <div class="review-badges"><span class="rb rb-m">중2</span><span class="rb rb-s">수학</span></div>
-          <div class="review-title">[수지점] 이O준</div>
-          <div class="review-text">수학을 포기하려 했는데 선생님이 기초부터 차근차근 잡아주셨어요. 단원별로 약점을 짚어주고 오답 노트 작성하는 방법까지 알려주셔서 이번 중간고사에서 20점이나 올랐습니다.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-quotes">"</div>
-          <div class="review-badges"><span class="rb rb-e">초6</span><span class="rb rb-s">영어</span></div>
-          <div class="review-title">[고양일산점] 박O연 학부모</div>
-          <div class="review-text">아이가 영어에 흥미가 없었는데 수준에 맞는 교재로 시작하니 거부감 없이 잘 따라가더라고요. 선생님과 매주 소통해 주셔서 부모로서 안심이 많이 됐습니다.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-quotes">"</div>
-          <div class="review-badges"><span class="rb rb-h">고2</span><span class="rb rb-s">국어·영어</span></div>
-          <div class="review-title">[성북점] 최O현</div>
-          <div class="review-text">혼자 공부하면 계획만 세우다 끝났는데, 코치 선생님이 옆에서 같이 체크해 주니까 실제로 실행이 됩니다. 수행평가 준비도 학원에서 같이 도와주셔서 내신 관리가 훨씬 수월해졌어요.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-quotes">"</div>
-          <div class="review-badges"><span class="rb rb-m">중1</span><span class="rb rb-s">수학</span></div>
-          <div class="review-title">[남양주점] 정O아 학부모</div>
-          <div class="review-text">중학교 올라가면서 수학이 갑자기 어려워졌는데, 선생님이 개념부터 다시 잡아주셨어요. 학원 다녀온 날은 아이가 표정이 달라요. 스스로 문제집 펴는 횟수가 눈에 띄게 늘었습니다.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-quotes">"</div>
-          <div class="review-badges"><span class="rb rb-h">고1</span><span class="rb rb-s">수학·과학</span></div>
-          <div class="review-title">[부천점] 윤O빈</div>
-          <div class="review-text">고등학교 올라와서 처음엔 정말 막막했는데, 선생님이 공부 방법 자체를 바꿔 주셨어요. 어떻게 개념을 정리하고 문제에 적용하는지 체계가 생겼고, 첫 시험에서 기대 이상의 결과가 나왔습니다.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-quotes">"</div>
-          <div class="review-badges"><span class="rb rb-m">중3</span><span class="rb rb-s">영어</span></div>
-          <div class="review-title">[대구달서점] 김O린</div>
-          <div class="review-text">내신 영어는 학교 시험에 딱 맞춰서 준비해 주시고, AI 영어로 부족한 어휘랑 독해도 같이 잡을 수 있어서 좋았어요. 한 곳에서 두 가지를 다 해결하는 느낌이라 효율적이었습니다.</div>
-        </div>
-
-      </div>
+  <!-- 사이드바 -->
+  <div style="position:sticky;top:100px">
+    <div style="background:linear-gradient(135deg,${gColor},${gColor}BB);border-radius:16px;padding:20px;margin-bottom:14px;text-align:center;color:white">
+      <div style="font-size:22px;margin-bottom:6px">${gEmoji}</div>
+      <div style="font-size:14px;font-weight:900;margin-bottom:4px">${foundSchool}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.7);margin-bottom:14px">${gLabel} 수학·영어·국어 전문</div>
+      <a href="/contact?type=academy&school=${encodeURIComponent(foundSchool)}" style="display:block;background:white;color:#0F2044;padding:11px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none;margin-bottom:7px">✉️ 무료 상담 신청</a>
+      <a href="tel:01068348080" style="display:block;background:rgba(255,255,255,.15);color:white;padding:11px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none">📞 010-6834-8080</a>
     </div>
-    <button class="slider-btn slider-next" onclick="slideMove(1)">&#8594;</button>
+    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:18px;margin-bottom:14px">
+      <h3 style="font-size:13px;font-weight:900;color:#0F2044;margin:0 0 10px">📊 관리 과목</h3>
+      ${subjects.map(s=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #F1F5F9"><span style="font-size:16px">${s.emoji}</span><span style="font-size:13px;font-weight:700;color:#0F2044">${s.ko}</span><span style="font-size:11px;color:${s.color};font-weight:700;margin-left:auto">내신 전문</span></div>`).join('')}
+    </div>
+    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:18px">
+      <h3 style="font-size:13px;font-weight:900;color:#0F2044;margin:0 0 10px">⏰ 상담 시간</h3>
+      ${[['평일','09:00~21:00'],['토요일','10:00~18:00'],['일요일','휴무']].map(([d,t])=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid #F1F5F9"><span style="color:#6B7280">${d}</span><span style="font-weight:700;color:#0F2044">${t}</span></div>`).join('')}
+    </div>
+  </div>
   </div>
 
-  <!-- 도트 -->
-  <div class="slider-dots" id="sliderDots"></div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
-  <h2 class="cta-title">지금 바로 가까운 센터에서<br>무료 상담을 받아보세요</h2>
-  <p class="cta-sub">전국 200여 개 직영센터에서 전문 코치와 1:1 학습 상담을 진행합니다.</p>
-  <div class="cta-btns">
-    <a href="/academy/all" class="btn-white">📍 센터 찾기</a>
-    <a href="/contact?type=academy" class="btn-outline">✉️ 학원 문의하기</a>
+  <div class="cta-box" style="margin-top:24px">
+    <h3>${foundSchool} 수학·영어·국어 ${gLabel} 무료 상담</h3>
+    <p>내신 기출 분석 · 첫 수업 무료 · 48시간 내 매칭</p>
+    <div class="cta-btns">
+      <a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a>
+      <a class="btn-o" href="/contact?type=academy&school=${encodeURIComponent(foundSchool)}">✉️ 무료 상담 신청</a>
+    </div>
   </div>
-</section>`;
+  <div class="keyword-box" style="margin-top:20px">
+    <div class="keyword-title">🔍 관련 검색어</div>
+    <div class="keyword-tags">
+      <span class="keyword-tag">${foundSchool} 수학 과외</span>
+      <span class="keyword-tag">${foundSchool} 영어 과외</span>
+      <span class="keyword-tag">${foundSchool} 국어 과외</span>
+      <span class="keyword-tag">${foundSchool} 내신</span>
+      <span class="keyword-tag">${foundSchool} 학원</span>
+      <span class="keyword-tag">${foundSchool} ${gLabel} 과외</span>
+      <span class="keyword-tag">${matchedCenters[0]?.d||''} ${gLabel} 수학</span>
+      <span class="keyword-tag">${matchedCenters[0]?.d||''} 학원</span>
+    </div>
+  </div>
+</div>`;
 
-  const isoDateIntro = new Date().toISOString().slice(0,10);
-  return `<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>올케어스터디 학원 소개 | 전국 1:1 학습코칭 전문</title>
-<meta name="description" content="올케어스터디는 전국 초·중·고 1:1 맞춤 학습코칭 전문 기관입니다. 수학·영어·국어·과학 내신·수능 대비. 검증된 선생님 무료 상담 010-6834-8080">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://allcarestudy.com/academy/intro">
-<meta property="og:title" content="올케어스터디 학원 소개 | 전국 1:1 학습코칭 전문">
-<meta property="og:description" content="전국 초·중·고 1:1 맞춤 학습코칭 전문. 수학·영어·국어·과학 검증 선생님. 무료 상담 010-6834-8080">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://allcarestudy.com/academy/intro">
-<meta property="og:site_name" content="올케어스터디">
-<meta property="og:locale" content="ko_KR">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","description":"전국 초·중·고 1:1 맞춤 학습코칭 전문 기관","areaServed":"KR","dateModified":"${isoDateIntro}"}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://allcarestudy.com"},{"@type":"ListItem","position":2,"name":"학원소개","item":"https://allcarestudy.com/academy/intro"}]}</script>
-<meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd">
-<style>${introStyle}</style>
-</head>
-<body>
-${introBody}
-<script>${introScript}<\/script>
-</body>
-</html>`;
+  return wrap(title, desc, canonical, body, bc);
 }
-
-
 
 function makeAcademyPage() {
   const SIDO_ORDER = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','강원','제주'];
 
   const body = `
-  <div style="max-width:1100px;margin:0 auto;padding:160px 48px 80px">
+  <div style="max-width:1100px;margin:0 auto;padding:clamp(90px,15vw,160px) clamp(16px,4vw,48px) 80px">
     <div style="margin-bottom:8px;font-size:13px;color:#9CA3AF"><a href="/" style="color:#9CA3AF;text-decoration:none">홈</a> › <span>학원 찾기</span></div>
     <h1 style="font-size:32px;font-weight:900;color:#0F2044;margin-bottom:6px">코칭센터 찾기</h1>
     <p style="font-size:15px;color:#6B7280;margin-bottom:24px">총 <strong style="color:#1D4ED8" id="total-count">${CENTERS.length}개</strong> 센터</p>
 
     <!-- 시도 탭 -->
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #E5E7EB" id="sido-tabs"></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #E5E7EB" id="sido-tabs"></div>
 
     <!-- 구/시 서브탭 -->
     <div id="district-bar" style="display:none;flex-wrap:wrap;gap:6px;margin-bottom:24px;padding:14px 16px;background:white;border-radius:12px;border:1px solid #E5E7EB"></div>
 
     <!-- 카드 그리드 -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch" id="card-grid"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch" id="card-grid"><style>@media(max-width:640px){#card-grid{grid-template-columns:1fr!important;gap:12px!important}}@media(max-width:960px) and (min-width:641px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}</style></div>
   </div>
 
   <!-- 문의 모달 -->
@@ -3148,24 +3266,24 @@ function makeAcademyPage() {
   let currentSido = null;
   let currentDistrict = '전체';
 
-  const existingSido = new Set(CENTERS.map(c => c.sido));
+  const existingSido = new Set(CENTERS.map(c => c.s));
   const sidoList = SIDO_ORDER.filter(s => existingSido.has(s));
   const sidoCounts = {};
-  CENTERS.forEach(c => { sidoCounts[c.sido] = (sidoCounts[c.sido]||0)+1; });
+  CENTERS.forEach(c => { sidoCounts[c.s] = (sidoCounts[c.s]||0)+1; });
 
   function getDistricts(sido) {
     const map = {};
-    CENTERS.filter(c => c.sido===sido).forEach(c => { map[c.district]=(map[c.district]||0)+1; });
+    CENTERS.filter(c => c.s===sido).forEach(c => { map[c.d]=(map[c.d]||0)+1; });
     return Object.entries(map).sort((a,b)=>b[1]-a[1]);
   }
 
   function renderSidoTabs() {
     const el = document.getElementById('sido-tabs');
     const allActive = currentSido === null;
-    let html = \`<button onclick="selectSido(null)" style="padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;border:1.5px solid \${allActive?'#1D4ED8':'#E5E7EB'};\${allActive?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">전체 <span style="font-size:11px;opacity:0.7">\${CENTERS.length}</span></button>\`;
+    let html = \`<button onclick="selectSido(null)" style="padding:6px 13px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;border:1.5px solid \${allActive?'#1D4ED8':'#E5E7EB'};\${allActive?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">전체 <span style="font-size:11px;opacity:0.7">\${CENTERS.length}</span></button>\`;
     sidoList.forEach(s => {
       const active = s === currentSido;
-      html += \`<button onclick="selectSido('\${s}')" style="padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;border:1.5px solid \${active?'#1D4ED8':'#E5E7EB'};\${active?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">\${s} <span style="font-size:11px;opacity:0.7">\${sidoCounts[s]}</span></button>\`;
+      html += \`<button onclick="selectSido('\${s}')" style="padding:6px 13px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;border:1.5px solid \${active?'#1D4ED8':'#E5E7EB'};\${active?'background:#1D4ED8;color:white;':'background:white;color:#374151;'}">\${s} <span style="font-size:11px;opacity:0.7">\${sidoCounts[s]}</span></button>\`;
     });
     el.innerHTML = html;
   }
@@ -3187,31 +3305,34 @@ function makeAcademyPage() {
 
   function renderCards() {
     const filtered = CENTERS.filter(c =>
-      (currentSido===null || c.sido===currentSido) &&
-      (currentDistrict==='전체' || c.district===currentDistrict)
+      (currentSido===null || c.s===currentSido) &&
+      (currentDistrict==='전체' || c.d===currentDistrict)
     );
     document.getElementById('total-count').textContent = filtered.length+'개';
     document.getElementById('card-grid').innerHTML = filtered.length ? filtered.map((c,i) => {
       const uid = (currentSido||'all')+(currentDistrict||'')+i;
-      const cname = (c.officialName||c.name).replace(/'/g,"\\\\'");
-      const dirHtml = c.directions
-        ? \`<div id="d\${uid}" style="display:none;font-size:11px;color:#374151;line-height:1.6;background:#F8FAFC;border-radius:8px;padding:8px 10px;margin-top:6px;white-space:pre-line">\${c.directions.replace(/</g,'&lt;')}</div><button id="b\${uid}" onclick="var d=document.getElementById('d\${uid}');var b=document.getElementById('b\${uid}');if(d.style.display==='none'){d.style.display='block';b.textContent='📍 위치안내 접기'}else{d.style.display='none';b.textContent='📍 위치안내 보기'}" style="margin-top:4px;background:none;border:none;color:#3B82F6;font-size:11px;font-weight:700;cursor:pointer;padding:0">📍 위치안내 보기</button>\`
+      const cname = (c.on||c.n).replace(/'/g,"\\\\'");
+      const dirHtml = c.dir
+        ? \`<div id="d\${uid}" style="display:none;font-size:11px;color:#374151;line-height:1.6;background:#F8FAFC;border-radius:8px;padding:8px 10px;margin-top:6px;white-space:pre-line">\${c.dir.replace(/</g,'&lt;')}</div><button id="b\${uid}" onclick="var d=document.getElementById('d\${uid}');var b=document.getElementById('b\${uid}');if(d.style.display==='none'){d.style.display='block';b.textContent='📍 위치안내 접기'}else{d.style.display='none';b.textContent='📍 위치안내 보기'}" style="margin-top:4px;background:none;border:none;color:#3B82F6;font-size:11px;font-weight:700;cursor:pointer;padding:0">📍 위치안내 보기</button>\`
         : '';
       return \`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:20px 22px;display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,0.10)';this.style.borderColor='#93C5FD'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#E5E7EB'">
         <div style="margin-bottom:10px">
-          <div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:3px">\${c.sido} \${c.district}</div>
-          <div style="font-size:16px;font-weight:900;color:#0F2044;line-height:1.3">\${c.officialName||c.name}</div>
-          \${c.regNo?'<div style="font-size:10px;color:#9CA3AF;margin-top:2px">'+c.regNo+'</div>':''}
+          <div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:3px">\${c.s} \${c.d}</div>
+          <div style="font-size:14px;font-weight:900;color:#0F2044;line-height:1.3">\${c.on||c.n}</div>
+          \
         </div>
-        <div style="font-size:11px;color:#6B7280;line-height:1.5;display:flex;gap:5px;align-items:flex-start;margin-bottom:6px"><span style="flex-shrink:0">📍</span><span>\${c.address}</span></div>
+        <div style="font-size:11px;color:#6B7280;line-height:1.5;display:flex;gap:5px;align-items:flex-start;margin-bottom:6px"><span style="flex-shrink:0">📍</span><span>\${c.a}</span></div>
         \${dirHtml}
         <div style="margin-top:auto;padding-top:12px;border-top:1px solid #F1F5F9;display:flex;flex-direction:column;gap:6px">
-          \${c.target_elem?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#FEF3C7;color:#D97706;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">초등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.target_elem+'</span></div>':''}
-          \${c.target_mid?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#DCFCE7;color:#16A34A;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">중등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.target_mid+'</span></div>':''}
-          \${c.target_high?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#EFF6FF;color:#2563EB;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.target_high+'</span></div>':''}
-          \${!c.target_elem&&!c.target_mid&&!c.target_high?'<div style="font-size:11px;color:#D1D5DB">대상학교 정보 없음</div>':''}
+          \${c.te?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#FEF3C7;color:#D97706;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">초등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.te+'</span></div>':''}
+          \${c.tm?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#DCFCE7;color:#16A34A;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">중등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.tm+'</span></div>':''}
+          \${c.th?'<div style="display:flex;gap:6px;align-items:flex-start"><span style="flex-shrink:0;white-space:nowrap;background:#EFF6FF;color:#2563EB;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span style="font-size:12px;color:#374151;line-height:1.5">'+c.th+'</span></div>':''}
+          \${!c.te&&!c.tm&&!c.th?'<div style="font-size:11px;color:#D1D5DB">대상학교 정보 없음</div>':''}
         </div>
-        <button onclick="location.href='/contact?type=academy&center='+encodeURIComponent('\${cname}')" style="display:block;width:100%;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;margin-top:14px;border:none;cursor:pointer;font-family:inherit">✉️ 문의하기</button>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <a href="/academy/center/\${makeCenterSlug(c.n||'')}" style="flex:1;display:block;text-align:center;background:#EFF6FF;color:#1D4ED8;padding:11px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid #DBEAFE">📋 상세보기</a>
+          <button onclick="location.href='/contact?type=academy&center='+encodeURIComponent('\${cname}')" style="flex:1;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:inherit">✉️ 상담</button>
+        </div>
       </div>\`;
     }).join('') : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#9CA3AF">해당 지역 센터가 없습니다</div>';
   }
@@ -3286,55 +3407,6 @@ function makeAcademyPage() {
 
 function makeContactPage() {
   const body = `
-  <style>
-  .cf-page{max-width:1100px;margin:0 auto;padding:180px 24px 0;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
-  .info-badge2{display:inline-flex;align-items:center;gap:8px;background:#DBEAFE;color:#1D4ED8;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:16px}
-  .cf-info-title{font-size:38px;font-weight:900;color:#0F2044;line-height:1.2;margin-bottom:14px;letter-spacing:-1px}
-  .cf-info-title em{color:#1D4ED8;font-style:normal}
-  .cf-info-sub{font-size:15px;color:#6B7280;line-height:1.8;margin-bottom:40px}
-  .cf-contact-cards{display:flex;flex-direction:column;gap:14px;margin-bottom:40px}
-  .cf-contact-card{background:white;border:1px solid #E5E7EB;border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:16px;transition:.2s}
-  .cf-contact-card:hover{border-color:#93C5FD;box-shadow:0 4px 20px rgba(29,78,216,.08)}
-  .ccc-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-  .ccc-blue{background:#EFF6FF}.ccc-green{background:#F0FDF4}.ccc-orange{background:#FFF7ED}
-  .ccc-label{font-size:12px;color:#9CA3AF;margin-bottom:3px;font-weight:600}
-  .ccc-value{font-size:16px;font-weight:800;color:#0F2044}
-  .ccc-desc{font-size:12px;color:#6B7280;margin-top:2px}
-  .cf-proc-title{font-size:15px;font-weight:800;color:#0F2044;margin-bottom:16px}
-  .cf-steps{display:flex;flex-direction:column;gap:0}
-  .cf-step{display:flex;gap:14px;align-items:flex-start;position:relative}
-  .cf-step:not(:last-child)::after{content:'';position:absolute;left:15px;top:34px;width:2px;height:calc(100% - 10px);background:#E5E7EB}
-  .cf-step-num{width:32px;height:32px;border-radius:50%;background:#0F2044;color:white;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1}
-  .cf-step-body{padding-bottom:24px}
-  .cf-step-t{font-size:14px;font-weight:800;color:#0F2044;margin-bottom:3px}
-  .cf-step-d{font-size:13px;color:#6B7280;line-height:1.6}
-  .cf-form-card{background:white;border-radius:24px;padding:40px 36px;box-shadow:0 8px 48px rgba(15,32,68,.10),0 2px 8px rgba(0,0,0,.04)}
-  .cf-form-title{font-size:22px;font-weight:900;color:#0F2044;margin-bottom:4px}
-  .cf-form-sub{font-size:13px;color:#9CA3AF;margin-bottom:24px}
-  .cf-field{margin-bottom:18px}
-  .cf-field label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:7px}
-  .cf-input{width:100%;padding:13px 16px;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s,box-shadow .2s;background:white;color:#1F2937;box-sizing:border-box}
-  .cf-input:focus{border-color:#3B82F6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
-  .cf-field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .cf-addr-row{display:flex;gap:8px;margin-bottom:8px}
-  .cf-addr-row .cf-input{flex:1}
-  .cf-search-btn{padding:13px 16px;background:#0F2044;color:white;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s}
-  .cf-search-btn:hover{background:#1D4ED8}
-  .cf-chips{display:flex;flex-wrap:wrap;gap:8px}
-  .cf-chip{padding:8px 14px;border:1.5px solid #E5E7EB;border-radius:999px;font-size:13px;font-weight:600;color:#6B7280;cursor:pointer;transition:.2s;background:white;user-select:none}
-  .cf-chip:hover{border-color:#93C5FD;color:#1D4ED8}
-  .cf-chip.active{background:#EFF6FF;border-color:#3B82F6;color:#1D4ED8;font-weight:800}
-  .cf-agree-box{background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 18px;margin-bottom:20px}
-  .cf-agree-title{font-size:12px;font-weight:800;color:#374151;margin-bottom:8px}
-  .cf-agree-content{font-size:11px;color:#9CA3AF;line-height:1.7;margin-bottom:12px}
-  .cf-agree-check{display:flex;align-items:center;gap:10px;cursor:pointer}
-  .cf-agree-check input{width:16px;height:16px;accent-color:#1D4ED8;flex-shrink:0}
-  .cf-agree-check span{font-size:13px;font-weight:700;color:#0F2044}
-  .cf-error-msg{display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:14px}
-  .cf-submit-btn{width:100%;padding:16px;background:linear-gradient(135deg,#0F2044,#1D4ED8);color:white;border:none;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;transition:.2s;font-family:inherit;letter-spacing:.5px;box-shadow:0 4px 16px rgba(29,78,216,.3)}
-  .cf-submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,78,216,.4)}
-  @media(max-width:900px){.cf-page{grid-template-columns:1fr;padding:160px 16px 60px}.cf-field-row{grid-template-columns:1fr}.cf-form-card{padding:28px 20px}}
-  </style>
 
   <div style="background:#F0F4FF;padding-bottom:80px">
   <div class="cf-page">
@@ -3500,919 +3572,45 @@ function makeContactPage() {
 }
 
 function makeHomePage(){
-  return `<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>올케어스터디 - 지역별 과외·학원 정보 No.1</title>
-<meta name="description" content="전국 지역별 1:1 맞춤 과외·학원 정보 플랫폼. 서울, 경기, 인천 등 내 지역 검증된 선생님 12,400명+. 수학, 영어, 과학 과외 무료 상담.">
-<meta name="keywords" content="과외, 학원, 지역별과외, 수학과외, 영어과외, 1:1과외, 초등과외, 중등과외, 고등과외, 올케어스터디, 서울과외, 경기과외">
-<meta name="robots" content="index, follow">
-<meta name="author" content="올케어스터디">
-<meta name="google-site-verification" content="st8_MGU2mfnaomGNCLUGBmiQsZD50WNTWEUxzfmJ47E" />
-<meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd" />
-<link rel="canonical" href="https://allcarestudy.com/">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://allcarestudy.com/">
-<meta property="og:title" content="올케어스터디 - 지역별 과외·학원 정보 No.1">
-<meta property="og:description" content="전국 지역별 1:1 맞춤 과외·학원 정보 플랫폼. 검증된 선생님 12,400명+. 무료 상담 신청.">
-<meta property="og:site_name" content="올케어스터디">
-<meta property="og:locale" content="ko_KR">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="올케어스터디 - 지역별 과외·학원 정보 No.1">
-<meta name="twitter:description" content="전국 지역별 1:1 맞춤 과외·학원 정보 플랫폼. 검증된 선생님 12,400명+.">
-
-<!-- Schema.org 구조화 데이터 -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  "name": "올케어스터디",
-  "url": "https://allcarestudy.com",
-  "description": "전국 지역별 1:1 맞춤 과외·학원 정보 플랫폼",
-  "telephone": "010-6834-8080",
-  "areaServed": "KR",
-  "serviceType": ["과외", "학원", "학습코칭"]
-}
-</script>
-
-<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
-<style>
-:root {
-  --navy: #0F2044;
-  --navy-mid: #1E3A6E;
-  --navy-light: #2563EB;
-  --blue: #3B82F6;
-  --blue-pale: #EFF6FF;
-  --blue-border: #BFDBFE;
-  --sky: #60A5FA;
-  --text-dark: #0F2044;
-  --text-mid: #374151;
-  --text-muted: #9CA3AF;
-  --bg: #F8FAFF;
-  --white: #FFFFFF;
-  --border: #E5E7EB;
-  --shadow-sm: 0 1px 6px rgba(0,0,0,0.06);
-  --shadow: 0 4px 24px rgba(0,0,0,0.09);
-  --shadow-lg: 0 12px 48px rgba(15,32,68,0.15);
-  --radius: 14px;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}
-a{text-decoration:none;color:inherit}
-button{cursor:pointer;font-family:inherit}
-
-/* HEADER */
-header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}
-.hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}
-.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(29,78,216,0.35);flex-shrink:0}
-.logo-name{display:flex;flex-direction:column;line-height:1.15}
-.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0A1628}
-.logo-main em{font-style:normal;color:var(--sky)}
-.logo-sub{font-size:10px;color:rgba(15,32,68,0.6);font-weight:700;letter-spacing:3px}
-.vpill{border:1.5px solid rgba(15,32,68,0.2);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(15,32,68,0.04)}
-.vpill .vl{font-size:10px;color:rgba(15,32,68,0.5);font-weight:600}
-.vpill .vc{font-size:15px;font-weight:900;color:#1D4ED8;letter-spacing:-0.5px}
-.gnb{margin-left:auto;display:flex;align-items:center;gap:2px}
-.gi{position:relative}
-.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap}
-.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}
-.arr{width:14px;height:14px;transition:transform .2s;color:rgba(255,255,255,0.4)}
-.gi:hover .arr{transform:rotate(180deg);color:var(--sky)}
-.drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:var(--navy);border-radius:12px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}
-.gi:hover .drop{opacity:1;visibility:visible}
-.drop a{display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);transition:all .15s}
-.drop a:hover{background:rgba(255,255,255,0.1);color:white}
-.hsearch{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all .2s;flex-shrink:0}
-.hsearch:hover{border-color:var(--sky);color:var(--sky)}
-
-/* HERO */
-.hero{margin-top:136px;position:relative;overflow:hidden}
-.hslider{display:flex;transition:transform .65s cubic-bezier(.4,0,.2,1)}
-.slide{min-width:100%;height:460px;display:flex;align-items:center}
-.s1{background:linear-gradient(130deg,#0F2044 0%,#1E3A6E 50%,#1D4ED8 100%)}
-.s2{background:linear-gradient(130deg,#0C4A6E 0%,#0369A1 50%,#0EA5E9 100%)}
-.s3{background:linear-gradient(130deg,#1E1B4B 0%,#3730A3 50%,#4F46E5 100%)}
-.sin{max-width:1280px;margin:0 auto;padding:0 80px;width:100%;display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:center}
-.seb{display:inline-flex;align-items:center;gap:6px;background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.25);border-radius:999px;padding:4px 14px;font-size:12px;font-weight:700;color:var(--sky);margin-bottom:18px}
-.sdot{width:6px;height:6px;background:var(--sky);border-radius:50%;animation:blink 1.6s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.scap{font-size:14px;color:rgba(255,255,255,.65);margin-bottom:8px}
-.stitle{font-size:clamp(28px,3.5vw,46px);font-weight:900;line-height:1.15;letter-spacing:-1.5px;color:white;margin-bottom:14px}
-.stitle .hl{color:var(--sky)}
-.sdesc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:28px}
-.sbtns{display:flex;gap:12px}
-.bph{background:var(--blue);color:white;border:none;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:700;transition:all .2s;box-shadow:0 6px 20px rgba(59,130,246,.4)}
-.bph:hover{background:#2563EB;transform:translateY(-2px)}
-.bps{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);padding:13px 24px;border-radius:10px;font-size:14px;font-weight:600;transition:all .2s}
-.bps:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5)}
-.svis{display:flex;align-items:center;justify-content:center}
-.vc-card{background:rgba(255,255,255,.07);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:28px;width:100%}
-.vch{display:flex;align-items:center;gap:10px;margin-bottom:20px}
-.vci{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--sky));display:flex;align-items:center;justify-content:center;font-size:22px}
-.vct{font-size:15px;font-weight:800;color:white}
-.vcs{font-size:12px;color:rgba(255,255,255,.5)}
-.vcst{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
-.vcsi{background:rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}
-.vcn{font-size:20px;font-weight:900;color:var(--sky);letter-spacing:-.5px}
-.vcl{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
-.vcb{background:rgba(255,255,255,.06);border-radius:8px;padding:12px 14px}
-.vcbl{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}
-.vcbt{height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;margin-bottom:8px}
-.vcbf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--sky))}
-.hdots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
-.hdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);border:none;cursor:pointer;padding:0;transition:all .3s}
-.hdot.on{background:var(--sky);width:24px;border-radius:4px}
-
-/* STRENGTH */
-.strength{background:white;padding:80px 0;border-bottom:1px solid var(--border)}
-.sw{max-width:1280px;margin:0 auto;padding:0 48px}
-.sh{text-align:center;margin-bottom:52px}
-.se{display:inline-block;font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
-.st{font-size:clamp(22px,3vw,34px);font-weight:900;letter-spacing:-1px;color:var(--navy);line-height:1.25}
-.st .hl{color:var(--blue)}
-.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.sc{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
-.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--blue));opacity:0;transition:opacity .3s}
-.sc:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--blue-border);background:white}
-.sc:hover::before{opacity:1}
-.se2{font-size:36px;margin-bottom:12px;display:block}
-.sn{font-size:36px;font-weight:900;color:var(--navy-light);letter-spacing:-1px;line-height:1;margin-bottom:4px}
-.sl{font-size:12px;color:var(--text-muted);font-weight:500}
-.sd{font-size:12px;color:var(--text-mid);margin-top:8px;line-height:1.5}
-
-/* REVIEWS */
-.reviews{padding:80px 0;background:var(--blue-pale)}
-.rw{overflow:hidden;margin-top:48px}
-.rt{display:flex;gap:20px;animation:scrollL 30s linear infinite;width:max-content}
-.rt:hover{animation-play-state:paused}
-@keyframes scrollL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.rc{width:280px;flex-shrink:0;background:white;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm);border:1px solid var(--blue-border)}
-.rb{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;color:white;margin-bottom:12px}
-.rtitle{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:8px;line-height:1.35}
-.rtext{font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:14px}
-.rname{font-size:12px;color:var(--text-muted)}
-.rstar{color:#FBBF24;font-size:13px;margin-bottom:6px}
-
-/* SPECIAL */
-.special{padding:80px 0;background:white}
-.spg{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px}
-.spc{background:var(--bg);border-radius:var(--radius);padding:32px 28px;border:1px solid var(--border);display:flex;gap:20px;align-items:flex-start;transition:all .3s}
-.spc:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border);background:white}
-.spi{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.ic1{background:linear-gradient(135deg,#EFF6FF,#BFDBFE)}
-.ic2{background:linear-gradient(135deg,#F0FDF4,#BBF7D0)}
-.ic3{background:linear-gradient(135deg,#F0F9FF,#BAE6FD)}
-.ic4{background:linear-gradient(135deg,#EEF2FF,#C7D2FE)}
-.spt h4{font-size:16px;font-weight:800;margin-bottom:6px;color:var(--navy)}
-.spt p{font-size:13px;color:var(--text-muted);line-height:1.65}
-
-/* DIAGNOSIS */
-.diagnosis{padding:80px 0;background:var(--bg)}
-.diag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
-.diag-card{background:white;border-radius:var(--radius);padding:28px 24px;border:1px solid var(--border);transition:all .3s;cursor:default;position:relative;overflow:hidden}
-.diag-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s}
-.diag-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border)}
-.diag-card:hover::after{opacity:1}
-.dc1::after{background:linear-gradient(90deg,#16A34A,#4ADE80)}
-.dc2::after{background:linear-gradient(90deg,#DB2777,#F472B6)}
-.dc3::after{background:linear-gradient(90deg,#2563EB,#60A5FA)}
-.dc4::after{background:linear-gradient(90deg,#D97706,#FCD34D)}
-.dc5::after{background:linear-gradient(90deg,#7C3AED,#A78BFA)}
-.dc6::after{background:linear-gradient(90deg,#0D9488,#34D399)}
-.diag-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;margin-bottom:14px}
-.db1{background:#DCFCE7;color:#16A34A}
-.db2{background:#FCE7F3;color:#DB2777}
-.db3{background:#DBEAFE;color:#1D4ED8}
-.db4{background:#FEF3C7;color:#D97706}
-.db5{background:#EDE9FE;color:#7C3AED}
-.db6{background:#CCFBF1;color:#0F766E}
-.diag-icon{font-size:32px;margin-bottom:12px;display:block}
-.diag-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:6px}
-.diag-desc{font-size:12px;color:var(--text-muted);line-height:1.6}
-.diag-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
-.diag-tag{font-size:10px;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 8px}
-
-/* FOOTER */
-footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
-.fi{max-width:1280px;margin:0 auto;padding:0 48px}
-.ft{display:flex;justify-content:space-between;padding-bottom:32px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,.08);gap:48px}
-.flm{font-size:20px;font-weight:900;color:white}
-.flm em{font-style:normal;color:var(--sky)}
-.fdesc{font-size:13px;line-height:1.7;margin-top:8px;max-width:260px}
-.flinks{display:flex;gap:48px}
-.fc h5{color:rgba(255,255,255,.8);font-size:13px;font-weight:700;margin-bottom:14px}
-.fc a{display:block;font-size:12px;color:rgba(255,255,255,.4);margin-bottom:8px;transition:color .2s}
-.fc a:hover{color:rgba(255,255,255,.8)}
-.fph{text-align:right}
-.fph span{font-size:11px;color:rgba(255,255,255,.4);display:block;margin-bottom:4px}
-.fph strong{font-size:22px;font-weight:900;color:white;letter-spacing:-.5px}
-.fb2{display:flex;justify-content:space-between;align-items:center;font-size:11px}
-.fnotice{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 16px;font-size:11px;color:rgba(255,255,255,.35);line-height:1.6;margin-bottom:20px}
-
-/* FLOATS */
-.floats{position:fixed;right:24px;bottom:40px;display:flex;flex-direction:column;gap:10px;z-index:9999}
-.fbtn{display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;border:none;font-size:14px;font-weight:700;box-shadow:var(--shadow-lg);transition:all .25s;white-space:nowrap}
-.fbtn:hover{transform:translateX(-4px) scale(1.03)}
-.fb1{background:var(--blue);color:white}
-
-
-/* MEGA MENU */
-.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:var(--navy);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}
-.gi:hover .mega-drop{opacity:1;visibility:visible}
-.mega-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}
-.mega-tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:all .2s;font-family:inherit}
-.mega-tab.on{background:var(--blue);color:white}
-.mega-tab:hover:not(.on){background:rgba(255,255,255,.08);color:white}
-.mega-panel{display:none}
-.mega-panel.on{display:block}
-.mega-rt{font-size:10px;font-weight:700;color:var(--sky);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}
-.mega-rt:first-child{margin-top:0}
-.mega-btns{display:flex;flex-wrap:wrap;gap:6px}
-.mega-btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .18s;text-decoration:none}
-.mega-btn:hover{background:var(--blue);color:white;border-color:var(--blue)}
-
-/* HAMBURGER */
-.hburg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;flex-shrink:0}
-.hburg span{display:block;width:22px;height:2px;background:#0F2044;border-radius:2px;transition:all .3s}
-.hburg.on span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-.hburg.on span:nth-child(2){opacity:0}
-.hburg.on span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-/* MOBILE MENU */
-.mob-menu{position:fixed;top:72px;left:0;right:0;bottom:0;background:var(--navy);z-index:299;overflow-y:auto;transform:translateX(100%);transition:transform .3s ease}
-.mob-menu.on{transform:translateX(0)}
-.mob-inner{padding:24px 20px}
-.mob-section{margin-bottom:28px}
-.mob-title{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--sky);text-transform:uppercase;margin-bottom:12px}
-.mob-links{display:flex;flex-wrap:wrap;gap:8px}
-.mob-links a{padding:8px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;font-size:14px;font-weight:600;color:rgba(255,255,255,.8);transition:all .2s}
-.mob-links a:hover{background:var(--blue);border-color:var(--blue);color:white}
-.mob-cta{display:flex;flex-direction:column;gap:10px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
-.mob-cta button{padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all .2s}
-.mob-cta button:first-child{background:var(--blue);color:white}
-.mob-cta button:last-child{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.2)}
-
-/* FADE UP */
-.fu{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}
-.fu.vis{opacity:1;transform:translateY(0)}
-
-/* ══ MOBILE ══ */
-@media(max-width:768px){
-  /* HEADER */
-  .hw{padding:0 16px;height:72px;gap:10px}
-  .logo-sub{display:none}
-  .logo-main{font-size:15px}
-  .logo-mark{width:32px;height:32px}
-  .vpill{padding:4px 10px}
-  .vpill .vc{font-size:13px}
-  .vpill .vl{font-size:9px}
-  .gnb{display:none}
-  .hsearch{display:none}
-  .hburg{display:flex;margin-left:auto}
-
-  /* HERO */
-  .hero{margin-top:72px}
-  .slide{height:auto;min-height:420px;padding:32px 0 24px}
-  .sin{grid-template-columns:1fr;padding:0 20px;gap:24px}
-  .svis{display:none}
-  .stitle{font-size:32px;letter-spacing:-1px}
-  .seb{font-size:11px}
-  .scap{font-size:13px}
-  .sdesc{font-size:13px;margin-bottom:20px}
-  .sbtns{flex-direction:column;gap:8px}
-  .bph,.bps{width:100%;text-align:center;padding:12px 20px}
-  .hdots{bottom:12px}
-
-  /* STRENGTH */
-  .strength{padding:48px 0}
-  .sw{padding:0 16px}
-  .sh{margin-bottom:32px}
-  .st{font-size:22px}
-  .sg{grid-template-columns:1fr 1fr;gap:12px}
-  .sc{padding:20px 14px}
-  .se2{font-size:28px;margin-bottom:8px}
-  .sn{font-size:26px}
-
-  /* REVIEWS */
-  .reviews{padding:48px 0}
-  .rc{width:240px;padding:18px}
-
-  /* SPECIAL */
-  .special{padding:48px 0}
-  .spg{grid-template-columns:1fr;gap:12px}
-  .spc{padding:20px}
-
-  /* DIAGNOSIS */
-  .diagnosis{padding:48px 0}
-  .diag-grid{grid-template-columns:1fr 1fr;gap:12px}
-  .diag-card{padding:18px 14px}
-  .diag-icon{font-size:24px;margin-bottom:8px}
-  .diag-title{font-size:13px}
-  .diag-desc{font-size:11px}
-  .diag-tags{display:none}
-
-  /* FOOTER */
-  footer{padding:32px 0 24px}
-  .fi{padding:0 16px}
-  .ft{flex-direction:column;gap:24px;padding-bottom:24px}
-  .flinks{flex-wrap:wrap;gap:24px}
-  .fph{text-align:left}
-  .fph strong{font-size:18px}
-  .fb2{flex-direction:column;gap:6px;align-items:flex-start}
-
-  /* FLOATS */
-  .floats{right:12px;bottom:24px;gap:8px}
-  .fbtn{padding:12px 16px;font-size:13px}
-  .diag-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  #region-section{padding:40px 20px}
-  #region-section h2{font-size:22px}
-  #region-section > div > div:last-child{grid-template-columns:repeat(2,1fr);gap:8px}
-  #region-section a{padding:10px 12px;font-size:13px}
-
-  #fpanel-region > div,#fpanel-subject > div,#fpanel-academy > div,#fpanel-conv > div{grid-template-columns:repeat(3,1fr);gap:6px}
-  #fpanel-region a,#fpanel-subject a,#fpanel-academy a,#fpanel-conv a{padding:9px 5px;font-size:11px;gap:3px;white-space:normal;word-break:keep-all}
-}
-
-@media(max-width:400px){
-  .diag-grid{grid-template-columns:1fr}
-  .sg{grid-template-columns:1fr 1fr}
-  .stitle{font-size:28px}
-}
-</style>
-</head>
-<body>
-
-<header>
-  <div class="hw">
-    <a href="#" class="logo">
-      <div class="logo-mark">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="logo-name">
-        <span class="logo-main"><em>올케어</em>스터디</span>
-        <span class="logo-sub">ALLCARE STUDY</span>
-      </div>
-    </a>
-
-    <div class="vpill">
-      <span class="vl">누적 방문자</span>
-      <span class="vc" id="vc">353,112명</span>
+  const sidoLinks=Object.entries(SIDO_EN).map(([kr,en])=>
+    `<a href="/${en}" style="display:inline-block;padding:10px 16px;background:#EFF6FF;border:1.5px solid #DBEAFE;border-radius:10px;font-size:14px;font-weight:700;color:#1D4ED8;text-decoration:none;margin:4px">${kr.replace(/특별자치도|특별자치시|특별시|광역시|도$/g,'')}</a>`
+  ).join('');
+  const body=`<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"올케어스터디","url":"https://allcarestudy.com","potentialAction":{"@type":"SearchAction","target":"https://allcarestudy.com/search?q={search_term_string}","query-input":"required name=search_term_string"}},{"@context":"https://schema.org","@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60},"contactPoint":{"@type":"ContactPoint","telephone":"010-6834-8080","contactType":"customer service"}}]</script><div class="wrap" style="padding-top:140px">
+  <div style="text-align:center;padding:60px 24px 40px">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:#DBEAFE;color:#1D4ED8;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:20px">🏆 전국 1위 1:1 맞춤 과외 플랫폼</div>
+    <h1 style="font-size:42px;font-weight:900;color:#0F2044;line-height:1.2;margin:0 0 16px">우리 아이 성적을<br><span style="color:#1D4ED8">확실히 올려드립니다</span></h1>
+    <p style="font-size:17px;color:#6B7280;line-height:1.8;margin:0 0 36px">전국 초·중·고 1:1 맞춤 방문 과외·학원 정보<br>검증된 선생님 48시간 내 매칭·첫 수업 무료</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="/contact?type=tutoring" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#0F2044,#1D4ED8);color:white;padding:16px 32px;border-radius:14px;font-size:16px;font-weight:900;text-decoration:none">👨‍🏫 과외 무료 상담하기</a>
+      <a href="/contact?type=academy" style="display:inline-flex;align-items:center;gap:8px;background:white;color:#0F2044;padding:16px 32px;border-radius:14px;font-size:16px;font-weight:700;text-decoration:none;border:2px solid #E5E7EB">🏫 학원 상담하기</a>
     </div>
-
-    <nav class="gnb">
-      <!-- 지역별수업 메가메뉴 -->
-      <div class="gi" id="gi-region">
-        <button class="gb" onclick="toggleMega('region')">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="mega-drop" id="mega-region">
-          <div class="mega-tabs">
-            <button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button>
-            <button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button>
-            <button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button>
-          </div>
-          <!-- 지역별 -->
-          <div class="mega-panel on" id="region-local">
-            <div class="mega-btns">
-              <a class="mega-btn" href="/seoul">🏙 서울</a>
-              <a class="mega-btn" href="/gyeonggi">🌿 경기</a>
-              <a class="mega-btn" href="/incheon">🌊 인천</a>
-              <a class="mega-btn" href="/busan">🐟 부산</a>
-              <a class="mega-btn" href="/daegu">🍎 대구</a>
-              <a class="mega-btn" href="/daejeon">🌾 대전</a>
-              <a class="mega-btn" href="/gwangju">🌸 광주</a>
-              <a class="mega-btn" href="/ulsan">⚙️ 울산</a>
-              <a class="mega-btn" href="/sejong">🏛 세종</a>
-              <a class="mega-btn" href="/gangwon">🏔 강원</a>
-              <a class="mega-btn" href="/chungbuk">🌻 충북</a>
-              <a class="mega-btn" href="/chungnam">🌊 충남</a>
-              <a class="mega-btn" href="/jeonbuk">🌾 전북</a>
-              <a class="mega-btn" href="/jeonnam">🍵 전남</a>
-              <a class="mega-btn" href="/gyeongbuk">🍎 경북</a>
-              <a class="mega-btn" href="/gyeongnam">🌊 경남</a>
-              <a class="mega-btn" href="/jeju">🌺 제주</a>
-            </div>
-          </div>
-          <!-- 학년별 -->
-          <div class="mega-panel" id="region-grade">
-            <div class="mega-btns">
-              <a class="mega-btn" href="/seoul/gangnam/daechidong/elementary/math">🎒 초등 과외</a>
-              <a class="mega-btn" href="/seoul/gangnam/daechidong/middle/math">📚 중등 과외</a>
-              <a class="mega-btn" href="/seoul/gangnam/daechidong/high/math">🎓 고등 과외</a>
-            </div>
-          </div>
-          <!-- 학교별 -->
-          <div class="mega-panel" id="region-school">
-            <div class="mega-rt">시도별 학교 과외</div>
-            <div class="mega-btns">
-              <a class="mega-btn" href="/school/seoul">서울</a>
-              <a class="mega-btn" href="/school/gyeonggi">경기</a>
-              <a class="mega-btn" href="/school/incheon">인천</a>
-              <a class="mega-btn" href="/school/busan">부산</a>
-              <a class="mega-btn" href="/school/daegu">대구</a>
-              <a class="mega-btn" href="/school/gwangju">광주</a>
-              <a class="mega-btn" href="/school/daejeon">대전</a>
-              <a class="mega-btn" href="/school/ulsan">울산</a>
-              <a class="mega-btn" href="/school/sejong">세종</a>
-              <a class="mega-btn" href="/school/gangwon">강원</a>
-              <a class="mega-btn" href="/school/chungbuk">충북</a>
-              <a class="mega-btn" href="/school/chungnam">충남</a>
-              <a class="mega-btn" href="/school/jeonbuk">전북</a>
-              <a class="mega-btn" href="/school/jeonnam">전남</a>
-              <a class="mega-btn" href="/school/gyeongbuk">경북</a>
-              <a class="mega-btn" href="/school/gyeongnam">경남</a>
-              <a class="mega-btn" href="/school/jeju">제주</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 과목수업 -->
-      <div class="gi">
-        <button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/seoul/gangnam/daichi/high2/math">수학</a><a href="/seoul/gangnam/daichi/high2/english">영어</a><a href="/seoul/gangnam/daichi/high2/science">과학</a><a href="/seoul/gangnam/daichi/high2/korean">국어</a><a href="/seoul/gangnam/daichi/high2/social">사회</a><a href="/seoul/gangnam/daichi/high2/coding">코딩</a><a href="/seoul/gangnam/daichi/high2/math">검정고시</a><a href="/academy/all">코칭 수업</a></div>
-      </div>
-      <!-- 학원수업 - 바로 이동 -->
-      <div class="gi">
-        <button class="gb" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div>
-      </div>
-      <!-- 회화수업 -->
-      <div class="gi">
-        <button class="gb">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/seoul/gangnam/daichi/high2/english">영어회화</a><a href="/seoul/gangnam/daichi/high2/english">중국어회화</a><a href="/seoul/gangnam/daichi/high2/english">일본어회화</a></div>
-      </div>
-      <!-- 문의하기 -->
-      <div class="gi">
-        <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
-      </div>
-    </nav>
-
-    <button class="hsearch">
-      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    </button>
-    <!-- 모바일 햄버거 -->
-    <button class="hburg" id="hburg" onclick="toggleMobileMenu()">
-      <span></span><span></span><span></span>
-    </button>
+    <p style="margin-top:16px;font-size:14px;color:#9CA3AF">📞 010-6834-8080 · 평일 09~21시 · 주말 10~18시</p>
   </div>
-</header>
-
-<!-- 모바일 메뉴 -->
-<div class="mob-menu" id="mobMenu">
-  <div class="mob-inner">
-    <div class="mob-section">
-      <div class="mob-title">📍 지역별수업</div>
-      <div class="mob-links">
-        <a href="/seoul">서울</a>
-        <a href="/gyeonggi">경기</a>
-        <a href="/incheon">인천</a>
-        <a href="/busan">부산</a>
-        <a href="/daegu">대구</a>
-        <a href="/daejeon">대전</a>
-        <a href="/gwangju">광주</a>
-        <a href="/ulsan">울산</a>
-        <a href="/sejong">세종</a>
-        <a href="/gangwon">강원</a>
-        <a href="/chungbuk">충북</a>
-        <a href="/chungnam">충남</a>
-        <a href="/jeonbuk">전북</a>
-        <a href="/jeonnam">전남</a>
-        <a href="/gyeongbuk">경북</a>
-        <a href="/gyeongnam">경남</a>
-        <a href="/jeju">제주</a>
-      </div>
-    </div>
-    <div class="mob-section">
-      <div class="mob-title">📚 과목수업</div>
-      <div class="mob-links">
-        <a href="#">수학</a><a href="#">영어</a><a href="#">과학</a><a href="#">국어</a><a href="#">사회/역사</a><a href="#">코딩</a><a href="#">검정고시</a><a href="#">코칭 수업</a>
-      </div>
-    </div>
-    <div class="mob-section">
-      <div class="mob-title">🏫 학원수업</div>
-      <div class="mob-links">
-        <a href="/academy/intro">🏫 학원소개</a><a href="/academy/all">📍 센터찾기</a>
-      </div>
-    </div>
-    <div class="mob-section">
-      <div class="mob-title">🗣 회화수업</div>
-      <div class="mob-links">
-        <a href="#">영어회화</a><a href="#">중국어회화</a><a href="#">일본어회화</a>
-      </div>
-    </div>
-    <div class="mob-section">
-      <div class="mob-title">✉️ 문의하기</div>
-      <div class="mob-links">
-        <a href="/contact">문의 양식</a>
-      </div>
-    </div>
-    <div class="mob-cta">
-      <button onclick="window.location.href='tel:01068348080'">📞 전화상담</button>
-      <button onclick="window.location.href='/contact'">✉️ 문의하기</button>
-    </div>
+  <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:20px;padding:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center;margin-bottom:50px">
+    <div><div style="font-size:28px;font-weight:900;color:white">12,000+</div><div style="font-size:12px;color:rgba(255,255,255,.7)">등록 선생님</div></div>
+    <div><div style="font-size:28px;font-weight:900;color:white">228,000+</div><div style="font-size:12px;color:rgba(255,255,255,.7)">SEO 페이지</div></div>
+    <div><div style="font-size:28px;font-weight:900;color:white">48시간</div><div style="font-size:12px;color:rgba(255,255,255,.7)">매칭 보장</div></div>
+    <div><div style="font-size:28px;font-weight:900;color:white">96%</div><div style="font-size:12px;color:rgba(255,255,255,.7)">만족도</div></div>
   </div>
-</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hslider" id="hs">
-    <div class="slide s1">
-      <div class="sin">
-        <div>
-          <div class="seb"><div class="sdot"></div> No.1 지역별 과외 플랫폼</div>
-          <p class="scap">우리 아이에게 딱 맞는 선생님을 찾아드립니다</p>
-          <h1 class="stitle">내 지역 최고의<br><span class="hl">1:1 맞춤 과외</span><br>지금 찾아보세요</h1>
-          <p class="sdesc">전국 검증된 선생님 12,400명+<br>지역별·과목별·학년별로 딱 맞는 수업 연결</p>
-          <div class="sbtns">
-            <button class="bph" onclick="document.getElementById('region-section').scrollIntoView({behavior:'smooth'})">지역별 과외 찾기 →</button>
-            <button class="bps" onclick="window.location.href='/contact'">✉️ 문의하기</button>
-          </div>
-        </div>
-        <div class="svis">
-          <div class="vc-card">
-            <div class="vch"><div class="vci">📍</div><div><div class="vct">강남구 수학 과외</div><div class="vcs">매칭 완료 · 오늘 기준</div></div></div>
-            <div class="vcst">
-              <div class="vcsi"><div class="vcn">247</div><div class="vcl">등록 선생님</div></div>
-              <div class="vcsi"><div class="vcn">98%</div><div class="vcl">만족도</div></div>
-            </div>
-            <div class="vcb">
-              <div class="vcbl"><span>이번 달 매칭률</span><span style="color:var(--sky);font-weight:700">94%</span></div>
-              <div class="vcbt"><div class="vcbf" style="width:94%"></div></div>
-              <div class="vcbl"><span>학부모 재등록률</span><span style="color:var(--sky);font-weight:700">87%</span></div>
-              <div class="vcbt"><div class="vcbf" style="width:87%"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slide s2">
-      <div class="sin">
-        <div>
-          <div class="seb"><div class="sdot"></div> 35년 교육 노하우</div>
-          <p class="scap">검증된 학원 정보를 한눈에 확인하세요</p>
-          <h1 class="stitle">우리 동네<br><span class="hl">믿을 수 있는</span><br>학원 정보</h1>
-          <p class="sdesc">학원 비교부터 후기까지<br>올케어스터디에서 모두 확인하세요</p>
-          <div class="sbtns">
-            <a href="/academy/all" style="display:inline-block;text-decoration:none"><button class="bph">학원 찾기 →</button></a>
-          </div>
-        </div>
-        <div class="svis">
-          <div class="vc-card">
-            <div class="vch"><div class="vci">🏫</div><div><div class="vct">서초구 영어 학원</div><div class="vcs">실시간 업데이트</div></div></div>
-            <div class="vcst">
-              <div class="vcsi"><div class="vcn">1,240</div><div class="vcl">등록 학원</div></div>
-              <div class="vcsi"><div class="vcn">4.8★</div><div class="vcl">평균 평점</div></div>
-            </div>
-            <div class="vcb">
-              <div class="vcbl"><span>정보 업데이트율</span><span style="color:var(--sky);font-weight:700">96%</span></div>
-              <div class="vcbt"><div class="vcbf" style="width:96%"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slide s3">
-      <div class="sin">
-        <div>
-          <div class="seb"><div class="sdot"></div> AI 맞춤 진단</div>
-          <p class="scap">6가지 맞춤 진단으로 약점을 파악하세요</p>
-          <h1 class="stitle">AI 데이터 기반<br><span class="hl">성적 향상</span><br>맞춤 전략</h1>
-          <p class="sdesc">100만 누적 데이터로<br>우리 아이의 약점을 정확히 찾아냅니다</p>
-          <div class="sbtns">
-          </div>
-        </div>
-        <div class="svis">
-          <div class="vc-card">
-            <div class="vch"><div class="vci">🎯</div><div><div class="vct">AI 학습 진단 결과</div><div class="vcs">김○○ · 중학교 2학년</div></div></div>
-            <div class="vcst">
-              <div class="vcsi"><div class="vcn">상위 8%</div><div class="vcl">수학 성취도</div></div>
-              <div class="vcsi"><div class="vcn">+23점</div><div class="vcl">3개월 향상</div></div>
-            </div>
-            <div class="vcb">
-              <div class="vcbl"><span>수학</span><span style="color:var(--sky);font-weight:700">92%</span></div>
-              <div class="vcbt"><div class="vcbf" style="width:92%"></div></div>
-              <div class="vcbl"><span>영어</span><span style="color:var(--sky);font-weight:700">78%</span></div>
-              <div class="vcbt"><div class="vcbf" style="width:78%"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <h2 style="text-align:center;font-size:26px;font-weight:900;color:#0F2044;margin-bottom:24px">과목별 과외</h2>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:40px;justify-items:center">
+    ${[['math','📐','수학','#3B82F6','#EFF6FF'],['english','📖','영어','#10B981','#ECFDF5'],['korean','✍️','국어','#F59E0B','#FFFBEB'],['science','🔬','과학','#8B5CF6','#F5F3FF'],['social','🌏','사회','#EF4444','#FEF2F2'],['coding','💻','코딩','#06B6D4','#ECFEFF'],['essay','📝','논술','#EC4899','#FDF2F8']].map(([en,e,ko,c,bg])=>`<a href="/subject/${en}" style="background:${bg};border:1.5px solid ${c}30;border-radius:12px;padding:16px;text-decoration:none;text-align:center;display:block"><div style="font-size:20px;margin-bottom:4px">${e}</div><div style="font-size:13px;font-weight:800;color:${c}">${ko}</div></a>`).join('')}
   </div>
-  <div class="hdots">
-    <button class="hdot on" onclick="gs(0)"></button>
-    <button class="hdot" onclick="gs(1)"></button>
-    <button class="hdot" onclick="gs(2)"></button>
+  <h2 style="text-align:center;font-size:26px;font-weight:900;color:#0F2044;margin-bottom:14px">지역별 과외</h2>
+  <div style="text-align:center;margin-bottom:50px">${sidoLinks}</div>
+  <h2 style="text-align:center;font-size:26px;font-weight:900;color:#0F2044;margin-bottom:20px">학년별 과외 가이드</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:50px">
+    <a href="/grade/elementary/1" style="background:#EFF6FF;border:1.5px solid #DBEAFE;border-radius:14px;padding:22px;text-decoration:none;display:block"><div style="font-size:22px;margin-bottom:6px">🎒</div><div style="font-size:16px;font-weight:900;color:#1D4ED8;margin-bottom:4px">초등 과외</div><div style="font-size:13px;color:#6B7280">초1~초6 맞춤 가이드</div></a>
+    <a href="/grade/middle/1" style="background:#ECFDF5;border:1.5px solid #A7F3D0;border-radius:14px;padding:22px;text-decoration:none;display:block"><div style="font-size:22px;margin-bottom:6px">📚</div><div style="font-size:16px;font-weight:900;color:#10B981;margin-bottom:4px">중등 과외</div><div style="font-size:13px;color:#6B7280">중1~중3 내신관리</div></a>
+    <a href="/grade/high/1" style="background:#F5F3FF;border:1.5px solid #DDD6FE;border-radius:14px;padding:22px;text-decoration:none;display:block"><div style="font-size:22px;margin-bottom:6px">🎓</div><div style="font-size:16px;font-weight:900;color:#8B5CF6;margin-bottom:4px">고등 과외</div><div style="font-size:13px;color:#6B7280">고1~고3 수능 전략</div></a>
   </div>
-  <button onclick="gs((cur+1)%3)" style="position:absolute;right:24px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.5)'">&#8250;</button>
-</section>
-
-<!-- STRENGTH -->
-<section class="strength">
-  <div class="sw">
-    <div class="sh fu">
-      <div class="se">OUR STRENGTH</div>
-      <h2 class="st">35년의 교육 노하우,<br><span class="hl">올케어스터디가 다릅니다</span></h2>
-    </div>
-    <div class="sg">
-      <div class="sc fu"><span class="se2">🏆</span><div class="sn">35년</div><div class="sl">No.1 청소년 학습코칭</div><div class="sd">남다른 교육·코칭 노하우</div></div>
-      <div class="sc fu" style="transition-delay:.1s"><span class="se2">👨‍🏫</span><div class="sn">4,000명</div><div class="sl">최정예 전문 학습코치</div><div class="sd">검증된 1:1 밀착 관리</div></div>
-      <div class="sc fu" style="transition-delay:.2s"><span class="se2">📈</span><div class="sn">100만명</div><div class="sl">누적 체험 회원수</div><div class="sd">월평균 3만명 진행</div></div>
-      <div class="sc fu" style="transition-delay:.3s"><span class="se2">⭐</span><div class="sn">96.7%</div><div class="sl">학습 만족도</div><div class="sd">학생·학부모 모두 만족</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- REGION SELECT -->
-<section id="region-section" style="padding:56px 48px;background:white;border-bottom:1px solid #E5E7EB">
-  <div style="max-width:1100px;margin:0 auto">
-    <div style="text-align:center;margin-bottom:32px">
-      <div style="font-size:12px;font-weight:700;color:#3B82F6;letter-spacing:2px;margin-bottom:10px">FIND YOUR CLASS</div>
-      <h2 style="font-size:26px;font-weight:900;color:#0F2044">수업 찾기</h2>
-      <p style="font-size:14px;color:#9CA3AF;margin-top:6px">원하는 카테고리를 선택하세요</p>
-    </div>
-    <!-- 탭 -->
-    <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;justify-content:center" id="find-tabs">
-      <button onclick="switchFind('region')" id="ftab-region" style="padding:10px 22px;border-radius:999px;border:1.5px solid #3B82F6;background:#3B82F6;color:white;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">🏙 지역별 과외</button>
-      <button onclick="switchFind('subject')" id="ftab-subject" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">📚 과목별 과외</button>
-      <button onclick="switchFind('academy')" id="ftab-academy" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">🏫 학원 찾기</button>
-      <button onclick="switchFind('conv')" id="ftab-conv" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">🗣 회화수업</button>
-      <button onclick="window.location.href='/contact'" id="ftab-contact" style="padding:10px 22px;border-radius:999px;border:1.5px solid #1D4ED8;background:white;color:#1D4ED8;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;font-family:inherit">✉️ 문의하기</button>
-    </div>
-    <!-- 패널 -->
-    <div id="fpanel-region">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-      <a href="/seoul" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🏙 서울</a>
-      <a href="/gyeonggi" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌿 경기</a>
-      <a href="/incheon" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌊 인천</a>
-      <a href="/busan" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🐟 부산</a>
-      <a href="/daegu" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🍎 대구</a>
-      <a href="/daejeon" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌾 대전</a>
-      <a href="/gwangju" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌸 광주</a>
-      <a href="/ulsan" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">⚙️ 울산</a>
-      <a href="/sejong" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🏛 세종</a>
-      <a href="/gangwon" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🏔 강원</a>
-      <a href="/chungbuk" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌻 충북</a>
-      <a href="/chungnam" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌊 충남</a>
-      <a href="/jeonbuk" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌾 전북</a>
-      <a href="/jeonnam" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🍵 전남</a>
-      <a href="/gyeongbuk" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🍎 경북</a>
-      <a href="/gyeongnam" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌊 경남</a>
-      <a href="/jeju" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌺 제주</a>
-    </div>
-    </div>
-    <div id="fpanel-subject" style="display:none">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">📐 수학</a>
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">📖 영어</a>
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🔬 과학</a>
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">📝 국어</a>
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🗺 사회/역사</a>
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">💻 코딩</a>
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">📋 검정고시</a>
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🎯 코칭 수업</a>
-    </div>
-    </div>
-    <div id="fpanel-academy" style="display:none">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-      <a href="/academy/seoul" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🏙서울<span style="font-size:12px;color:#3B82F6;font-weight:700">24곳</span></a>
-      <a href="/academy/gyeonggi" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌿경기<span style="font-size:12px;color:#3B82F6;font-weight:700">100곳</span></a>
-      <a href="/academy/incheon" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊인천<span style="font-size:12px;color:#3B82F6;font-weight:700">10곳</span></a>
-      <a href="/academy/busan" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🐟부산<span style="font-size:12px;color:#3B82F6;font-weight:700">5곳</span></a>
-      <a href="/academy/daegu" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🍎대구<span style="font-size:12px;color:#3B82F6;font-weight:700">16곳</span></a>
-      <a href="/academy/daejeon" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌾대전<span style="font-size:12px;color:#3B82F6;font-weight:700">9곳</span></a>
-      <a href="/academy/gwangju" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌸광주<span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
-      <a href="/academy/ulsan" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">⚙️울산<span style="font-size:12px;color:#3B82F6;font-weight:700">4곳</span></a>
-      <a href="/academy/gangwon" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🏔강원<span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
-      <a href="/academy/chungbuk" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌻충북<span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
-      <a href="/academy/chungnam" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊충남<span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
-      <a href="/academy/jeonbuk" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌾전북<span style="font-size:12px;color:#3B82F6;font-weight:700">3곳</span></a>
-      <a href="/academy/gyeongbuk" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🍎경북<span style="font-size:12px;color:#3B82F6;font-weight:700">5곳</span></a>
-      <a href="/academy/gyeongnam" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊경남<span style="font-size:12px;color:#3B82F6;font-weight:700">3곳</span></a>
-      <a href="/academy/jeju" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌺제주<span style="font-size:12px;color:#3B82F6;font-weight:700">1곳</span></a>
-    </div>
-    </div>
-    <div id="fpanel-conv" style="display:none">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🇺🇸영어</a>
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🇨🇳중국어</a>
-      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🇯🇵일본어</a>
-    </div>
-    </div>
-  </div>
-</section>
-<script>
-function switchFind(tab){
-  ['region','subject','academy','conv'].forEach(function(t){
-    var panel = document.getElementById('fpanel-'+t);
-    var btn = document.getElementById('ftab-'+t);
-    if(t===tab){
-      panel.style.display='block';
-      btn.style.background='#3B82F6';btn.style.color='white';btn.style.borderColor='#3B82F6';
-    }else{
-      panel.style.display='none';
-      btn.style.background='white';btn.style.color='#374151';btn.style.borderColor='#E5E7EB';
-    }
-  });
-  var cbtn = document.getElementById('ftab-contact');
-  if(cbtn){ cbtn.style.background='white';cbtn.style.color='#1D4ED8';cbtn.style.borderColor='#1D4ED8'; }
-}
-</script>
-
-<!-- REVIEWS -->
-
-<section class="reviews">
-  <div class="sw">
-    <div class="sh fu">
-      <div class="se">REAL REVIEWS</div>
-      <h2 class="st">직접 경험한 학부모·학생의<br><span class="hl">생생한 성적 향상 스토리</span></h2>
-    </div>
-  </div>
-  <div class="rw">
-    <div class="rt">
-      <div class="rc"><span class="rb" style="background:#1D4ED8">연세대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">6개월 만에 내신 4등급 → 1등급</div><div class="rtext">코치 선생님이 제 약점을 정확히 짚어주셔서 단기간에 성적이 확 올랐어요.</div><div class="rname">이*윤 회원 (고2)</div></div>
-      <div class="rc"><span class="rb" style="background:#15803D">이화여대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수시 학생부로 이화여대 합격!</div><div class="rtext">학생기록부 관리부터 면접 준비까지 체계적으로 도와주셔서 합격할 수 있었어요.</div><div class="rname">김*연 회원 (고3)</div></div>
-      <div class="rc"><span class="rb" style="background:#7C3AED">서울대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수능 수학 2등급 → 만점!</div><div class="rtext">올케어스터디 덕분에 제 실력이 어느 정도인지 정확히 알고 집중 공략할 수 있었습니다.</div><div class="rname">정*원 회원 (고3)</div></div>
-      <div class="rc"><span class="rb" style="background:#B45309">경희대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">중학생 때부터 시작해서 목표 달성</div><div class="rtext">중2 때부터 꾸준히 관리받았더니 고3이 되니 여유가 생기더라고요. 정말 추천합니다.</div><div class="rname">전*빈 회원 학부모</div></div>
-      <div class="rc"><span class="rb" style="background:#0F766E">고려대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">공부 습관이 완전히 바뀌었어요</div><div class="rtext">스스로 계획 세우고 실천하는 법을 배웠어요. 성적보다 공부 자신감이 생긴 게 더 큰 수확이에요.</div><div class="rname">박*준 회원 (중3)</div></div>
-      <div class="rc"><span class="rb" style="background:#BE185D">한양대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">아이가 먼저 공부하겠다고 해요</div><div class="rtext">예전엔 억지로 책상에 앉혔는데, 지금은 스스로 계획 짜고 공부합니다. 정말 감사해요.</div><div class="rname">최*아 회원 학부모</div></div>
-      <!-- 루프 복제 -->
-      <div class="rc"><span class="rb" style="background:#1D4ED8">연세대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">6개월 만에 내신 4등급 → 1등급</div><div class="rtext">코치 선생님이 제 약점을 정확히 짚어주셔서 단기간에 성적이 확 올랐어요.</div><div class="rname">이*윤 회원 (고2)</div></div>
-      <div class="rc"><span class="rb" style="background:#15803D">이화여대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수시 학생부로 이화여대 합격!</div><div class="rtext">학생기록부 관리부터 면접 준비까지 체계적으로 도와주셔서 합격할 수 있었어요.</div><div class="rname">김*연 회원 (고3)</div></div>
-      <div class="rc"><span class="rb" style="background:#7C3AED">서울대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수능 수학 2등급 → 만점!</div><div class="rtext">올케어스터디 덕분에 제 실력이 어느 정도인지 정확히 알고 집중 공략할 수 있었습니다.</div><div class="rname">정*원 회원 (고3)</div></div>
-      <div class="rc"><span class="rb" style="background:#B45309">경희대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">중학생 때부터 시작해서 목표 달성</div><div class="rtext">중2 때부터 꾸준히 관리받았더니 고3이 되니 여유가 생기더라고요. 정말 추천합니다.</div><div class="rname">전*빈 회원 학부모</div></div>
-      <div class="rc"><span class="rb" style="background:#0F766E">고려대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">공부 습관이 완전히 바뀌었어요</div><div class="rtext">스스로 계획 세우고 실천하는 법을 배웠어요. 성적보다 공부 자신감이 생긴 게 더 큰 수확이에요.</div><div class="rname">박*준 회원 (중3)</div></div>
-      <div class="rc"><span class="rb" style="background:#BE185D">한양대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">아이가 먼저 공부하겠다고 해요</div><div class="rtext">예전엔 억지로 책상에 앉혔는데, 지금은 스스로 계획 짜고 공부합니다. 정말 감사해요.</div><div class="rname">최*아 회원 학부모</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- SPECIAL -->
-<section class="special">
-  <div class="sw">
-    <div class="sh fu">
-      <div class="se">SPECIAL POINT</div>
-      <h2 class="st">우리 아이 성적,<br><span class="hl">왜 올케어스터디여야 할까요?</span></h2>
-      <p style="font-size:14px;color:var(--text-muted);margin-top:12px;line-height:1.7;word-break:keep-all">단순한 과외 중개가 아닙니다. 학습 진단부터 목표 설계, 실행 관리까지 아이의 성장을 함께 책임집니다.</p>
-    </div>
-    <div class="spg fu">
-      <div class="spc"><div class="spi ic1">🎯</div><div class="spt"><h4>학교·교재 맞춤 1:1 대비</h4><p>전국 모든 학교의 교과서·부교재를 분석해 내 학교 시험에 딱 맞는 맞춤 수업을 제공합니다.</p></div></div>
-      <div class="spc"><div class="spi ic2">🔍</div><div class="spt"><h4>변형문제 완벽 대응 전략</h4><p>기본 개념부터 심화 응용까지 단계별로 훈련해 어떤 문제 유형에도 당황하지 않는 실력을 만듭니다.</p></div></div>
-      <div class="spc"><div class="spi ic3">🧠</div><div class="spt"><h4>AI 기반 학습 취약점 분석</h4><p>100만 건의 누적 학습 데이터로 아이의 취약점을 정밀하게 찾아내고 집중 보완합니다.</p></div></div>
-      <div class="spc"><div class="spi ic4">📆</div><div class="spt"><h4>시험 일정 연동 플래닝</h4><p>학사일정·시험 일정에 맞춰 역산 계획표를 설계하고 매주 실천 여부를 함께 점검합니다.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- DIAGNOSIS -->
-<section class="diagnosis">
-  <div class="sw">
-    <div class="sh fu">
-      <div class="se">DIAGNOSIS PROGRAM</div>
-      <h2 class="st">6가지 정밀 진단검사<br><span class="hl">무엇이 있는지 확인해보세요</span></h2>
-      <p style="font-size:14px;color:var(--text-muted);margin-top:12px;line-height:1.7;word-break:keep-all">학습부터 진로, 부모 코칭까지<br>자세한 내용은 상담을 통해 안내드립니다.</p>
-    </div>
-    <div class="diag-grid fu">
-      <div class="diag-card dc1">
-        <span class="diag-badge db1">무료 체험</span>
-        <span class="diag-icon">📊</span>
-        <div class="diag-title">학습진단검사</div>
-        <div class="diag-desc">학습 성격 유형, 동기, 요인을 분석해 공부 방향을 잡아드립니다.</div>
-        <div class="diag-tags"><span class="diag-tag">학습 성격 유형</span><span class="diag-tag">학습 동기 분석</span><span class="diag-tag">학습 요인</span></div>
-      </div>
-      <div class="diag-card dc2">
-        <span class="diag-badge db2">무료 체험</span>
-        <span class="diag-icon">✅</span>
-        <div class="diag-title">자기주도검사</div>
-        <div class="diag-desc">계획 수립·실천 능력과 자기평가 역량을 객관적으로 측정합니다.</div>
-        <div class="diag-tags"><span class="diag-tag">자기주도성</span><span class="diag-tag">계획 수립</span><span class="diag-tag">자기평가</span></div>
-      </div>
-      <div class="diag-card dc3">
-        <span class="diag-badge db3">회원용</span>
-        <span class="diag-icon">💼</span>
-        <div class="diag-title">진로적성검사</div>
-        <div class="diag-desc">직업 성격 유형과 진로 탐색·준비 수준을 진단합니다.</div>
-        <div class="diag-tags"><span class="diag-tag">직업 성격 유형</span><span class="diag-tag">진로 탐색</span><span class="diag-tag">전공 계열</span></div>
-      </div>
-      <div class="diag-card dc4">
-        <span class="diag-badge db4">회원용</span>
-        <span class="diag-icon">📐</span>
-        <div class="diag-title">학습유형검사</div>
-        <div class="diag-desc">학습 성향, 의지, 스타일, 행동을 파악해 최적 공부법을 안내합니다.</div>
-        <div class="diag-tags"><span class="diag-tag">학습성향</span><span class="diag-tag">학습의지</span><span class="diag-tag">학습스타일</span></div>
-      </div>
-      <div class="diag-card dc5">
-        <span class="diag-badge db5">회원용</span>
-        <span class="diag-icon">🎓</span>
-        <div class="diag-title">입시예측검사</div>
-        <div class="diag-desc">목표 고교·대학 합격 가능성과 수시·정시 전략을 예측합니다.</div>
-        <div class="diag-tags"><span class="diag-tag">고교 합격 진단</span><span class="diag-tag">대학 합격 예측</span><span class="diag-tag">수시·정시</span></div>
-      </div>
-      <div class="diag-card dc6">
-        <span class="diag-badge db6">회원용</span>
-        <span class="diag-icon">👨‍👩‍👧</span>
-        <div class="diag-title">부모코칭검사</div>
-        <div class="diag-desc">자녀와의 의사소통 유형과 양육 스타일을 진단해 관계를 개선합니다.</div>
-        <div class="diag-tags"><span class="diag-tag">양육 스타일</span><span class="diag-tag">의사소통 분석</span><span class="diag-tag">관계 점검</span></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="fi">
-    <div class="fnotice">⚠️ 안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</div>
-    <div class="ft">
-      <div>
-        <div class="flm" style="display:flex;align-items:center;gap:10px">
-          <div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span style="letter-spacing:2px"><em>올케어</em>스터디</span>
-        </div>
-        <p class="fdesc">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p>
-      </div>
-      <div class="fph"><span>📞 무료 상담 전화</span><strong>010-6834-8080</strong></div>
-    </div>
-    <div class="fb2">
-      <span>© 2026 올케어스터디. All rights reserved.</span>
-    </div>
-  </div>
-</footer>
-
-<div class="floats" id="floats">
-  <a class="fbtn fb1" href="tel:01068348080">📞 전화상담</a>
-  <a class="fbtn fb2" id="floats-contact-btn" href="/contact?type=tutoring">👨‍🏫 과외 상담하기</a>
-</div>
-<script>
-(function(){
-  // 현재 URL 기준으로 상담 타입 자동 결정
-  var path = window.location.pathname;
-  var isAcademy = path.indexOf('/academy') === 0;
-  var btn = document.getElementById('floats-contact-btn');
-  if(btn){
-    if(isAcademy){
-      btn.href = '/contact?type=academy';
-      btn.textContent = '🏫 학원 상담하기';
-    } else {
-      btn.href = '/contact?type=tutoring';
-      btn.textContent = '👨‍🏫 과외 상담하기';
-    }
-  }
-  var floats = document.getElementById('floats');
-  var footer = document.querySelector('footer');
-  function adjustFloats(){
-    var footerTop = footer.getBoundingClientRect().top;
-    var windowH = window.innerHeight;
-    var floatsH = floats.offsetHeight;
-    if(footerTop < windowH){
-      floats.style.bottom = (windowH - footerTop + 60) + 'px';
-    } else {
-      floats.style.bottom = '60px';
-    }
-  }
-  window.addEventListener('scroll', adjustFloats);
-  window.addEventListener('resize', adjustFloats);
-  adjustFloats();
-})();
-</script>
-
-<script>
-function toggleMobileMenu(){
-  const m=document.getElementById('mobMenu');
-  const b=document.getElementById('hburg');
-  m.classList.toggle('on');
-  b.classList.toggle('on');
-}
-
-function switchTab(menu,tab){
-  document.querySelectorAll('#mega-'+menu+' .mega-tab').forEach((t,i)=>t.classList.remove('on'));
-  document.querySelectorAll('#mega-'+menu+' .mega-panel').forEach(p=>p.classList.remove('on'));
-  event.target.classList.add('on');
-  document.getElementById(menu+'-'+tab).classList.add('on');
-}
-
-let cnt=353112;
-setInterval(()=>{cnt+=Math.floor(Math.random()*3);document.getElementById('vc').textContent=cnt.toLocaleString('ko-KR')+'명';},3000);
-let cur=0;
-function gs(n){cur=n;document.getElementById('hs').style.transform='translateX(-'+(n*100)+'%)';document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===n));}
-setInterval(()=>gs((cur+1)%3),4500);
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.15});
-document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
-</script>
-</body>
-</html>
-`;
+  <div class="cta-box"><h3>지금 바로 무료 상담</h3><p>48시간 내 매칭·첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
+</div>`;
+  const _homeLd = JSON.stringify([
+    {"@context":"https://schema.org","@type":"WebSite","name":"올케어스터디","url":"https://allcarestudy.com","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://allcarestudy.com/search?q={search_term_string}"},"query-input":"required name=search_term_string"}},
+    {"@context":"https://schema.org","@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60},"contactPoint":{"@type":"ContactPoint","telephone":"010-6834-8080","contactType":"customer service","availableLanguage":"Korean"},"sameAs":["https://allcarestudy.com"]}
+  ]);
+  return wrap('올케어스터디 | 전국 1:1 맞춤 과외·학원 정보','전국 초·중·고 1:1 맞춤 과외. 검증 선생님 48시간 매칭. 무료상담 010-6834-8080','/',body,[]);
 }
 
 // ── 사이트맵 ──────────────────────────────────────────────
@@ -4426,6 +3624,13 @@ function serveSitemap() {
     url('/', 'daily', '1.0'),
     url('/academy/intro', 'monthly', '0.8'),
     url('/academy/all', 'weekly', '0.7'),
+    ...CENTERS.map(c=>url('/academy/center/'+makeCenterSlug(c.n),'monthly','0.6')),
+    // 학교별 페이지 - 각 센터의 초/중/고 학교별
+    ...CENTERS.flatMap(c=>[
+      ...(c.te||'').split(',').filter(s=>s.trim()).map(s=>url('/academy/school/e/'+makeSchoolSlug('E',s.trim()),'monthly','0.6')),
+      ...(c.tm||'').split(',').filter(s=>s.trim()).map(s=>url('/academy/school/m/'+makeSchoolSlug('M',s.trim()),'monthly','0.6')),
+      ...(c.th||'').split(',').filter(s=>s.trim()).map(s=>url('/academy/school/h/'+makeSchoolSlug('H',s.trim()),'monthly','0.6')),
+    ]),
     url('/contact', 'monthly', '0.6')];
 
   // 전국 REGIONS 동별 × 과목 (sitemap)
@@ -4679,6 +3884,16 @@ export default {
       }
     }
 
+    // 학년별 과외 정보 페이지
+    if(path.startsWith('/subject/')){const subEn=path.slice(9).split('/')[0];if(subEn){const p=makeSubjectPage(subEn);if(p)return new Response(p,{headers:h});}}
+    if (path.startsWith('/grade/')) {
+      const parts = path.slice(7).split('/').filter(Boolean);
+      // /grade/{type}/{num} → 예: /grade/elementary/1
+      if (parts.length === 2) {
+        const page = makeGradePage(parts[0], parts[1]);
+        if (page) return new Response(page, {headers:h});
+      }
+    }
     // 학교별 과외 페이지 라우팅
     if (path.startsWith('/school')) {
       const parts = path.slice(1).split('/').filter(Boolean);
@@ -4737,8 +3952,66 @@ export default {
     if (path === '/academy/intro') return new Response(makeAcademyIntroPage(), { headers: h });
 
     // 학원 찾기
-    if (path === '/academy' || path.startsWith('/academy/')) {
-      return new Response(makeAcademyPage(), { headers: h });
+    if (path.startsWith('/academy/school/')) {
+      // /academy/school/{grade}/{slug}
+      const parts2 = path.slice(16).split('/');
+      if (parts2.length >= 2) {
+        const grade = parts2[0].toUpperCase(); // E, M, H
+        const schoolSlug = parts2[1];
+        if (['E','M','H'].includes(grade) && schoolSlug) {
+          const p = makeCenterSchoolPage(grade, schoolSlug);
+          if (p) return new Response(p, {headers:h});
+        }
+      }
+    }
+    if (path.startsWith('/academy/center/')) {
+      const slug = path.slice(16).split('/')[0];
+      if (slug) {
+        const p = makeCenterPage(slug);
+        if (p) return new Response(p, {headers:h});
+      }
+    }
+    if (path === '/academy/intro') return new Response(makeAcademyIntroPage(), {headers:h});
+    if (path === '/academy' || path.startsWith('/academy/')) return new Response(makeAcademyPage(), {headers:h});
+    if (path === '/favicon.ico' || path === '/favicon-32.png' || path === '/favicon-16.png') {
+      // 올케어스터디 파비콘 - 파란 배경에 흰색 S 아이콘 SVG → PNG 변환
+      const svgFavicon = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+        <rect width="32" height="32" rx="8" fill="#1D4ED8"/>
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="translate(6,6) scale(0.75)"/>
+      </svg>`;
+      return new Response(svgFavicon, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
+    }
+    if (path === '/apple-touch-icon.png') {
+      const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+        <rect width="180" height="180" rx="40" fill="#0F2044"/>
+        <path d="M90 20L20 55l70 35 70-35-70-35zM20 125l70 35 70-35M20 90l70 35 70-35" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>`;
+      return new Response(svgIcon, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
+    }
+    if (path === '/logo.png' || path === '/og-image.png') {
+      // 구글 검색결과 로고 / OG 이미지
+      const isOg = path === '/og-image.png';
+      const w = isOg ? 1200 : 200;
+      const h = isOg ? 630 : 60;
+      const svgLogo = isOg
+        ? `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+            <rect width="${w}" height="${h}" fill="#0F2044"/>
+            <rect x="60" y="215" width="1080" height="200" rx="20" fill="rgba(255,255,255,0.05)"/>
+            <circle cx="120" cy="315" r="60" fill="#1D4ED8"/>
+            <path d="M120 275L80 295l40 20 40-20-40-20zM80 335l40 20 40-20M80 315l40 20 40-20" stroke="white" stroke-width="8" stroke-linecap="round" fill="none"/>
+            <text x="200" y="300" font-family="Arial,sans-serif" font-size="52" font-weight="900" fill="white"><tspan fill="#60A5FA">올케어</tspan>스터디</text>
+            <text x="200" y="360" font-family="Arial,sans-serif" font-size="28" fill="rgba(255,255,255,0.7)">전국 1:1 맞춤 과외·학원 정보 No.1</text>
+            <text x="200" y="420" font-family="Arial,sans-serif" font-size="22" fill="rgba(255,255,255,0.5)">allcarestudy.com · 010-6834-8080</text>
+          </svg>`
+        : `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+            <rect width="${w}" height="${h}" rx="8" fill="white"/>
+            <circle cx="30" cy="30" r="24" fill="#1D4ED8"/>
+            <path d="M30 10L12 19l18 9 18-9-18-9zM12 37l18 9 18-9M12 28l18 9 18-9" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+            <text x="62" y="22" font-family="Arial,sans-serif" font-size="14" font-weight="900" fill="#60A5FA">올케어</text>
+            <text x="62" y="22" font-family="Arial,sans-serif" font-size="14" font-weight="900" fill="#0F2044" dx="42">스터디</text>
+            <text x="62" y="40" font-family="Arial,sans-serif" font-size="9" fill="#6B7280">ALLCARE STUDY</text>
+          </svg>`;
+      return new Response(svgLogo, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
     }
     if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 
