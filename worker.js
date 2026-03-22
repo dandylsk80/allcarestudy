@@ -2594,125 +2594,68 @@ function makeArticlePage(rk, ak, gk, sk) {
 // ── 학원 찾기 페이지 ──────────────────────────
 
 function makeAcademyIntroPage() {
-  const canonical = '/academy/intro';
-  const title = '올케어스터디 학원 코칭센터 소개 | 전국 ' + CENTERS.length + '개 센터';
-  const desc = '올케어스터디 공식 학습 코칭센터. 3단계 검증 코치, 1:1 맞춤 커리큘럼, 주간 보고서 제공. 초·중·고 내신·수능 전문. 무료 상담 010-6834-8080';
-  const bc = [{name:'홈',url:'/'},{name:'학원 소개',url:'/academy/intro'}];
+  const centers_by_sido = {};
+  CENTERS.forEach(c => {
+    const sido = c.s || '기타';
+    if (!centers_by_sido[sido]) centers_by_sido[sido] = [];
+    centers_by_sido[sido].push(c);
+  });
 
-  // 시도별 센터 수
-  const sidoCnt = {};
-  CENTERS.forEach(c=>{ sidoCnt[c.s||'기타']=(sidoCnt[c.s||'기타']||0)+1; });
+  const sido_order = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','전남','강원','제주'];
+
+  const centerCards = sido_order
+    .filter(s => centers_by_sido[s])
+    .map(sido => {
+      const cs = centers_by_sido[sido];
+      const cards = cs.map(c => {
+        const schools = [
+          ...(c.te||'').split(',').filter(s=>s.trim()).slice(0,2),
+          ...(c.tm||'').split(',').filter(s=>s.trim()).slice(0,2),
+          ...(c.th||'').split(',').filter(s=>s.trim()).slice(0,2),
+        ].filter(Boolean).slice(0,4);
+        return `<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:20px">
+          <div style="font-size:16px;font-weight:900;color:#0F2044;margin-bottom:4px">${c.on||c.n}</div>
+          <div style="font-size:12px;color:#3B82F6;font-weight:700;margin-bottom:10px">${c.s||''} ${c.d||''}</div>
+          <div style="font-size:12px;color:#6B7280;margin-bottom:10px">📍 ${c.a||''}</div>
+          ${schools.length ? `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px">${schools.map(sch=>`<span style="background:#F1F5F9;border-radius:6px;padding:2px 8px;font-size:11px;color:#374151;font-weight:600">${sch}</span>`).join('')}</div>` : ''}
+          <div style="display:flex;gap:8px">
+            <a href="/academy/center/${makeCenterSlug(c.n)}" style="flex:1;display:block;text-align:center;background:#EFF6FF;color:#1D4ED8;padding:9px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none">📋 센터 상세</a>
+            <button onclick="location.href='/contact?type=academy&center='+encodeURIComponent('${(c.on||c.n).replace(/'/g,"\'")}');void 0" style="flex:1;text-align:center;background:#1D4ED8;color:white;padding:9px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:inherit">✉️ 문의하기</button>
+          </div>
+        </div>`;
+      }).join('');
+      return `<div style="margin-bottom:36px">
+        <h3 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-bottom:10px;border-bottom:2px solid #E5E7EB">${sido} <span style="font-size:14px;color:#6B7280;font-weight:500">(${cs.length}개 센터)</span></h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">${cards}</div>
+      </div>`;
+    }).join('');
 
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <span>학원 소개</span></div>
-
-  <!-- 히어로 -->
-  <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:22px;padding:60px 48px;text-align:center;margin-bottom:48px;color:white">
-    <div style="font-size:12px;font-weight:800;color:rgba(255,255,255,.55);letter-spacing:2px;margin-bottom:12px">🏫 OFFICIAL COACHING CENTER</div>
-    <h1 style="font-size:36px;font-weight:900;margin:0 0 14px;line-height:1.3">올케어스터디<br>학습 코칭센터 소개</h1>
-    <p style="font-size:16px;color:rgba(255,255,255,.8);margin:0 0 28px;line-height:1.8">전국 ${CENTERS.length}개 공식 코칭센터 운영 중<br>초·중·고 1:1 맞춤 코칭 · 내신·수능 전문</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <a href="/academy/all" style="background:white;color:#0F2044;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:900;text-decoration:none">🗺️ 센터 찾기</a>
-      <a href="/contact?type=academy" style="background:rgba(255,255,255,.15);color:white;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,.3)">✉️ 무료 상담</a>
+  <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:20px;padding:48px;text-align:center;margin-bottom:40px;color:white">
+    <h1 style="font-size:30px;font-weight:900;margin:0 0 12px">올케어스터디 코칭센터</h1>
+    <p style="font-size:16px;color:rgba(255,255,255,.8);margin:0 0 24px">전국 ${CENTERS.length}개 공식 코칭센터 · 초·중·고 1:1 맞춤 코칭</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="/academy/all" style="background:white;color:#0F2044;padding:11px 22px;border-radius:10px;font-size:14px;font-weight:900;text-decoration:none">🗺️ 지역별 센터 찾기</a>
+      <a href="/contact?type=academy" style="background:rgba(255,255,255,.15);color:white;padding:11px 22px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,.3)">✉️ 무료 상담</a>
     </div>
   </div>
-
-  <!-- 수치 -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:56px">
-    ${[
-      ['🏫','전국 코칭센터',CENTERS.length+'개','#1D4ED8','#EFF6FF'],
-      ['👨‍🏫','검증된 코치','12,000+명','#10B981','#ECFDF5'],
-      ['📊','주간 보고서','매 수업 제공','#8B5CF6','#F5F3FF'],
-      ['🎁','첫 수업','무료 체험','#F59E0B','#FFFBEB'],
-    ].map(([e,l,v,c,bg])=>`<div style="background:${bg};border:1.5px solid ${c}25;border-radius:16px;padding:22px;text-align:center"><div style="font-size:28px;margin-bottom:8px">${e}</div><div style="font-size:13px;font-weight:900;color:#0F2044;margin-bottom:4px">${l}</div><div style="font-size:16px;font-weight:900;color:${c}">${v}</div></div>`).join('')}
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:40px">
+    ${[['🏫','전국 센터',CENTERS.length+'개'],['✅','검증 코치','3단계 심사'],['📊','학습 보고서','매 수업 제공'],['🎁','첫 수업','무료 체험']].map(([e,l,v])=>`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:18px;text-align:center"><div style="font-size:24px;margin-bottom:6px">${e}</div><div style="font-size:12px;font-weight:700;color:#6B7280;margin-bottom:3px">${l}</div><div style="font-size:16px;font-weight:900;color:#0F2044">${v}</div></div>`).join('')}
   </div>
-
-  <!-- 올케어스터디만의 차별점 -->
-  <h2 style="font-size:26px;font-weight:900;color:#0F2044;text-align:center;margin-bottom:10px">올케어스터디 코칭센터만의 차별점</h2>
-  <p style="text-align:center;color:#6B7280;font-size:15px;margin-bottom:32px">학원 수업만으로는 해결하기 어려운 개인 취약점을 1:1로 완벽하게 보완합니다</p>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:56px">
-    ${[
-      ['🎯','학교 내신 기출 완벽 분석','시험 출제 경향·배점·서술형 패턴을 철저히 분석해 최적화된 수업을 제공합니다. 단순 학원 수업으로는 얻을 수 없는 개인 맞춤형 지도입니다.'],
-      ['✅','3단계 코치 검증 시스템','학력 → 경력 → 수업시연 3단계를 모두 통과한 코치만 배정합니다. 평균 합격률 15% 이하의 엄격한 심사를 거칩니다.'],
-      ['⚡','48시간 내 코치 매칭','상담 후 48시간 내 최적의 코치를 연결합니다. 긴급한 시험 대비도 신속하게 지원합니다.'],
-      ['📊','주간 학습 보고서 제공','매 수업 후 학습 내용·진도·성취도를 카카오톡으로 학부모님께 전송합니다. 투명한 성적 관리가 가능합니다.'],
-      ['🎁','첫 수업 무료 체험','첫 체험 수업은 무료입니다. 코치와 학생의 케미를 직접 확인하세요. 마음에 안 들면 코치 무료 교체도 가능합니다.'],
-      ['📍','전국 ${CENTERS.length}개 센터 운영','서울·경기·인천·대전·대구·광주·부산 등 전국 주요 지역에 코칭센터를 운영합니다.'],
-    ].map(([e,t,d])=>`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:18px;padding:28px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,.08)'" onmouseout="this.style.boxShadow='none'"><div style="font-size:32px;margin-bottom:12px">${e}</div><div style="font-size:16px;font-weight:800;color:#0F2044;margin-bottom:9px">${t}</div><p style="font-size:13px;color:#6B7280;line-height:1.8;margin:0">${d}</p></div>`).join('')}
-  </div>
-
-  <!-- 수업 진행 방식 -->
-  <div style="background:#F8FAFF;border-radius:20px;padding:48px;margin-bottom:56px">
-    <h2 style="font-size:26px;font-weight:900;color:#0F2044;text-align:center;margin-bottom:10px">수업 진행 방식</h2>
-    <p style="text-align:center;color:#6B7280;font-size:15px;margin-bottom:36px">상담부터 성적 향상까지, 올케어스터디가 함께합니다</p>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
-      ${[
-        ['1','🎯','무료 상담','현재 성적·목표를 파악하고 최적 코치를 배정합니다'],
-        ['2','📊','수준 진단','1:1 진단으로 정확한 취약점을 파악합니다'],
-        ['3','📋','커리큘럼','내신·수능 목표에 맞는 맞춤 커리큘럼을 설계합니다'],
-        ['4','✏️','정규 수업','1:1 집중 수업으로 모르는 부분을 즉시 해결합니다'],
-        ['5','🏆','성적 향상','주간 보고서로 성과를 추적하고 목표 등급을 달성합니다'],
-      ].map(([n,e,t,d])=>`<div style="background:white;border-radius:14px;padding:20px;text-align:center;border-top:3px solid #1D4ED8"><div style="width:28px;height:28px;background:#1D4ED8;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:900;margin:0 auto 10px">${n}</div><div style="font-size:22px;margin-bottom:8px">${e}</div><div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:6px">${t}</div><p style="font-size:11px;color:#6B7280;line-height:1.6;margin:0">${d}</p></div>`).join('')}
-    </div>
-  </div>
-
-  <!-- 시도별 센터 현황 -->
-  <h2 style="font-size:26px;font-weight:900;color:#0F2044;text-align:center;margin-bottom:10px">전국 코칭센터 현황</h2>
-  <p style="text-align:center;color:#6B7280;font-size:15px;margin-bottom:32px">총 ${CENTERS.length}개 공식 센터 운영 중</p>
-  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px">
-    ${Object.entries(sidoCnt).sort((a,b)=>b[1]-a[1]).map(([sido,cnt])=>`<a href="/academy/all?sido=${encodeURIComponent(sido)}" style="display:inline-flex;align-items:center;gap:6px;background:white;border:1.5px solid #DBEAFE;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:#1D4ED8;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#1D4ED8';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='#1D4ED8'">${sido} <span style="background:#EFF6FF;border-radius:999px;padding:1px 7px;font-size:11px">${cnt}</span></a>`).join('')}
-  </div>
-  <div style="text-align:center;margin-bottom:56px">
-    <a href="/academy/all" style="display:inline-flex;align-items:center;gap:8px;background:#1D4ED8;color:white;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:900;text-decoration:none">🗺️ 내 지역 센터 찾기 →</a>
-  </div>
-
-  <!-- 수업료 안내 -->
-  <div style="background:linear-gradient(135deg,#F0F9FF,#E0F2FE);border-radius:20px;padding:48px;margin-bottom:56px;text-align:center">
-    <h2 style="font-size:26px;font-weight:900;color:#0F2044;margin-bottom:10px">수업료 안내</h2>
-    <p style="color:#6B7280;font-size:15px;margin-bottom:32px">코치 학력·경력·담당 과목에 따라 다르며, 상담 후 투명하게 안내해드립니다</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:600px;margin:0 auto 24px">
-      ${[['초등','월 180만원~','#3B82F6'],['중등','월 200만원~','#10B981'],['고등','월 240만원~','#8B5CF6']].map(([g,p,c])=>`<div style="background:white;border-radius:14px;padding:20px;border-top:4px solid ${c}"><div style="font-size:14px;font-weight:900;color:#0F2044;margin-bottom:6px">${g}</div><div style="font-size:18px;font-weight:900;color:${c}">${p}</div><div style="font-size:11px;color:#9CA3AF;margin-top:4px">첫 수업 무료</div></div>`).join('')}
-    </div>
-    <p style="font-size:13px;color:#6B7280">위 금액은 기준가이며, 지역·과목·학년에 따라 달라집니다. 상담 후 정확한 금액을 안내해드립니다.</p>
-  </div>
-
-  <!-- FAQ -->
-  <h2 style="font-size:26px;font-weight:900;color:#0F2044;text-align:center;margin-bottom:32px">자주 묻는 질문</h2>
-  <div style="max-width:700px;margin:0 auto 56px">
-    ${[
-      ['학원과 코칭의 차이가 무엇인가요?','학원은 그룹 수업 위주라 개인 취약점을 집중적으로 다루기 어렵습니다. 올케어스터디는 1:1 맞춤 코칭으로 학생 개개인의 취약 부분을 정확히 집어 지도합니다. 학원과 병행하는 방식도 효과적입니다.'],
-      ['코치는 어떻게 검증하나요?','학력 서류 확인 → 과외/강의 경력 확인 → 실제 수업시연 3단계를 모두 통과한 코치만 배정합니다. 평균 합격률은 15% 이하입니다.'],
-      ['얼마나 공부하면 성적이 오르나요?','보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 시험 전 단기 집중 코칭(4~8주)도 운영합니다.'],
-      ['온라인 수업도 가능한가요?','네, 전국 어디서나 Zoom·카카오 화상 수업이 가능합니다. 코칭 센터 인근 지역이 아니어도 동일한 품질의 수업을 받을 수 있습니다.'],
-    ].map(([q,a])=>`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:12px"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. ${q}</div><div style="font-size:14px;color:#4B5563;line-height:1.8">${a}</div></div>`).join('')}
-  </div>
-
-  <div class="cta-box">
-    <h3>올케어스터디 학원 무료 상담</h3>
-    <p>전국 ${CENTERS.length}개 코칭센터 · 첫 수업 무료 · 48시간 내 코치 매칭</p>
-    <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a>
-      <a class="btn-o" href="/contact?type=academy">✉️ 무료 상담 신청</a>
-    </div>
-  </div>
-
-  <div class="keyword-box" style="margin-top:20px">
-    <div class="keyword-title">🔍 관련 검색어</div>
-    <div class="keyword-tags">
-      <span class="keyword-tag">올케어스터디</span>
-      <span class="keyword-tag">학원 코칭센터</span>
-      <span class="keyword-tag">1:1 학습 코칭</span>
-      <span class="keyword-tag">초등 학원</span>
-      <span class="keyword-tag">중등 학원</span>
-      <span class="keyword-tag">고등 학원</span>
-      <span class="keyword-tag">수학 코칭</span>
-      <span class="keyword-tag">영어 코칭</span>
-    </div>
-  </div>
+  ${centerCards}
+  <div class="cta-box"><h3>가까운 센터 무료 상담</h3><p>첫 수업 무료 · 48시간 내 코치 매칭</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=academy">✉️ 상담 신청</a></div></div>
 </div>`;
 
-  return wrap(title, desc, canonical, body, bc);
+  return wrap(
+    '올케어스터디 코칭센터 학원 소개 | 전국 ' + CENTERS.length + '개 센터',
+    '올케어스터디 공식 학습 코칭센터. 전국 ' + CENTERS.length + '개 센터. 초·중·고 1:1 맞춤 코칭. 무료 상담 010-6834-8080',
+    '/academy/intro',
+    body,
+    [{name:'홈',url:'/'},{name:'학원 소개',url:'/academy/intro'}]
+  );
 }
+
 
 
 
