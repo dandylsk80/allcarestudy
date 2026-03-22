@@ -966,38 +966,43 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
 </div>
 <script>
 (function(){
-  // 현재 URL 기준으로 상담 타입 자동 결정
-  var path = window.location.pathname;
-  var isAcademy = path.indexOf('/academy') === 0;
-  var btn = document.getElementById('float-contact-btn');
-  if(btn){
-    if(isAcademy){
-      btn.href = '/contact?type=academy';
-      btn.textContent = '🏫 학원 상담하기';
-    } else {
-      btn.href = '/contact?type=tutoring';
-      btn.textContent = '👨‍🏫 과외 상담하기';
+  try {
+    var path = window.location.pathname;
+    var isAcademy = path.indexOf('/academy') === 0;
+    var btn = document.getElementById('float-contact-btn');
+    if(btn){
+      if(isAcademy){
+        btn.href = '/contact?type=academy';
+        btn.textContent = '🏫 학원 상담하기';
+      } else {
+        btn.href = '/contact?type=tutoring';
+        btn.textContent = '👨‍🏫 과외 상담하기';
+      }
     }
-  }
-  var el = document.getElementById('float-btns');
-  var footer = document.querySelector('footer');
-  if(!el || !footer) return;
-  function update(){
-    var footerTop = footer.getBoundingClientRect().top;
-    var winH = window.innerHeight;
-    if(footerTop < winH){
-      el.style.position = 'absolute';
-      el.style.bottom = 'auto';
-      el.style.top = (window.scrollY + footerTop - el.offsetHeight - 60) + 'px';
-    } else {
-      el.style.position = 'fixed';
-      el.style.bottom = '60px';
-      el.style.top = 'auto';
+    var el = document.getElementById('float-btns');
+    var footer = document.querySelector('footer');
+    if(!el || !footer) return;
+    function update(){
+      try {
+        if(!el || !footer) return;
+        var footerTop = footer.getBoundingClientRect().top;
+        var winH = window.innerHeight;
+        var elH = el.offsetHeight || 0;
+        if(footerTop < winH){
+          el.style.position = 'absolute';
+          el.style.bottom = 'auto';
+          el.style.top = (window.scrollY + footerTop - elH - 60) + 'px';
+        } else {
+          el.style.position = 'fixed';
+          el.style.bottom = '60px';
+          el.style.top = 'auto';
+        }
+      } catch(e){}
     }
-  }
-  window.addEventListener('scroll', update, {passive:true});
-  window.addEventListener('resize', update, {passive:true});
-  update();
+    window.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update, {passive:true});
+    update();
+  } catch(e){}
 })();
 
 function toggleMega(id){
@@ -3301,46 +3306,711 @@ function makeContactPage() {
 }
 
 function makeHomePage(){
-  const sidoLinks=Object.entries(SIDO_EN).map(([kr,en])=>
-    `<a href="/${en}" style="display:inline-block;padding:10px 16px;background:#EFF6FF;border:1.5px solid #DBEAFE;border-radius:10px;font-size:14px;font-weight:700;color:#1D4ED8;text-decoration:none;margin:4px">${kr.replace(/특별자치도|특별자치시|특별시|광역시|도$/g,'')}</a>`
-  ).join('');
-  const body=`<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"올케어스터디","url":"https://allcarestudy.com","potentialAction":{"@type":"SearchAction","target":"https://allcarestudy.com/search?q={search_term_string}","query-input":"required name=search_term_string"}},{"@context":"https://schema.org","@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60},"contactPoint":{"@type":"ContactPoint","telephone":"010-6834-8080","contactType":"customer service"}}]</script><div class="wrap" style="padding-top:140px">
-  <div style="text-align:center;padding:60px 24px 40px">
-    <div style="display:inline-flex;align-items:center;gap:8px;background:#DBEAFE;color:#1D4ED8;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:20px">🏆 전국 1위 1:1 맞춤 과외 플랫폼</div>
-    <h1 style="font-size:42px;font-weight:900;color:#0F2044;line-height:1.2;margin:0 0 16px">우리 아이 성적을<br><span style="color:#1D4ED8">확실히 올려드립니다</span></h1>
-    <p style="font-size:17px;color:#6B7280;line-height:1.8;margin:0 0 36px">전국 초·중·고 1:1 맞춤 방문 과외·학원 정보<br>검증된 선생님 48시간 내 매칭·첫 수업 무료</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <a href="/contact?type=tutoring" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#0F2044,#1D4ED8);color:white;padding:16px 32px;border-radius:14px;font-size:16px;font-weight:900;text-decoration:none">👨‍🏫 과외 무료 상담하기</a>
-      <a href="/contact?type=academy" style="display:inline-flex;align-items:center;gap:8px;background:white;color:#0F2044;padding:16px 32px;border-radius:14px;font-size:16px;font-weight:700;text-decoration:none;border:2px solid #E5E7EB">🏫 학원 상담하기</a>
-    </div>
-    <p style="margin-top:16px;font-size:14px;color:#9CA3AF">📞 010-6834-8080 · 평일 09~21시 · 주말 10~18시</p>
-  </div>
-  <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:20px;padding:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center;margin-bottom:50px">
-    <div><div style="font-size:28px;font-weight:900;color:white">12,000+</div><div style="font-size:12px;color:rgba(255,255,255,.7)">등록 선생님</div></div>
-    <div><div style="font-size:28px;font-weight:900;color:white">228,000+</div><div style="font-size:12px;color:rgba(255,255,255,.7)">SEO 페이지</div></div>
-    <div><div style="font-size:28px;font-weight:900;color:white">48시간</div><div style="font-size:12px;color:rgba(255,255,255,.7)">매칭 보장</div></div>
-    <div><div style="font-size:28px;font-weight:900;color:white">96%</div><div style="font-size:12px;color:rgba(255,255,255,.7)">만족도</div></div>
-  </div>
-  <h2 style="text-align:center;font-size:26px;font-weight:900;color:#0F2044;margin-bottom:24px">과목별 과외</h2>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:40px;justify-items:center">
-    ${[['math','📐','수학','#3B82F6','#EFF6FF'],['english','📖','영어','#10B981','#ECFDF5'],['korean','✍️','국어','#F59E0B','#FFFBEB'],['science','🔬','과학','#8B5CF6','#F5F3FF'],['social','🌏','사회','#EF4444','#FEF2F2'],['coding','💻','코딩','#06B6D4','#ECFEFF'],['essay','📝','논술','#EC4899','#FDF2F8']].map(([en,e,ko,c,bg])=>`<a href="/subject/${en}" style="background:${bg};border:1.5px solid ${c}30;border-radius:12px;padding:16px;text-decoration:none;text-align:center;display:block"><div style="font-size:20px;margin-bottom:4px">${e}</div><div style="font-size:13px;font-weight:800;color:${c}">${ko}</div></a>`).join('')}
-  </div>
-  <h2 style="text-align:center;font-size:26px;font-weight:900;color:#0F2044;margin-bottom:14px">지역별 과외</h2>
-  <div style="text-align:center;margin-bottom:50px">${sidoLinks}</div>
-  <h2 style="text-align:center;font-size:26px;font-weight:900;color:#0F2044;margin-bottom:20px">학년별 과외 가이드</h2>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:50px">
-    <a href="/grade/elementary/1" style="background:#EFF6FF;border:1.5px solid #DBEAFE;border-radius:14px;padding:22px;text-decoration:none;display:block"><div style="font-size:22px;margin-bottom:6px">🎒</div><div style="font-size:16px;font-weight:900;color:#1D4ED8;margin-bottom:4px">초등 과외</div><div style="font-size:13px;color:#6B7280">초1~초6 맞춤 가이드</div></a>
-    <a href="/grade/middle/1" style="background:#ECFDF5;border:1.5px solid #A7F3D0;border-radius:14px;padding:22px;text-decoration:none;display:block"><div style="font-size:22px;margin-bottom:6px">📚</div><div style="font-size:16px;font-weight:900;color:#10B981;margin-bottom:4px">중등 과외</div><div style="font-size:13px;color:#6B7280">중1~중3 내신관리</div></a>
-    <a href="/grade/high/1" style="background:#F5F3FF;border:1.5px solid #DDD6FE;border-radius:14px;padding:22px;text-decoration:none;display:block"><div style="font-size:22px;margin-bottom:6px">🎓</div><div style="font-size:16px;font-weight:900;color:#8B5CF6;margin-bottom:4px">고등 과외</div><div style="font-size:13px;color:#6B7280">고1~고3 수능 전략</div></a>
-  </div>
-  <div class="cta-box"><h3>지금 바로 무료 상담</h3><p>48시간 내 매칭·첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
-</div>`;
-  const _homeLd = JSON.stringify([
-    {"@context":"https://schema.org","@type":"WebSite","name":"올케어스터디","url":"https://allcarestudy.com","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://allcarestudy.com/search?q={search_term_string}"},"query-input":"required name=search_term_string"}},
-    {"@context":"https://schema.org","@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60},"contactPoint":{"@type":"ContactPoint","telephone":"010-6834-8080","contactType":"customer service","availableLanguage":"Korean"},"sameAs":["https://allcarestudy.com"]}
-  ]);
-  return wrap('올케어스터디 | 전국 1:1 맞춤 과외·학원 정보','전국 초·중·고 1:1 맞춤 과외. 검증 선생님 48시간 매칭. 무료상담 010-6834-8080','/',body,[]);
+  const body=`<style>
+:root {
+  --navy: #0F2044;
+  --navy-mid: #1E3A6E;
+  --navy-light: #2563EB;
+  --blue: #3B82F6;
+  --blue-pale: #EFF6FF;
+  --blue-border: #BFDBFE;
+  --sky: #60A5FA;
+  --text-dark: #0F2044;
+  --text-mid: #374151;
+  --text-muted: #9CA3AF;
+  --bg: #F8FAFF;
+  --white: #FFFFFF;
+  --border: #E5E7EB;
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.06);
+  --shadow: 0 4px 24px rgba(0,0,0,0.09);
+  --shadow-lg: 0 12px 48px rgba(15,32,68,0.15);
+  --radius: 14px;
 }
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}
+.hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(29,78,216,0.35);flex-shrink:0}
+.logo-name{display:flex;flex-direction:column;line-height:1.15}
+.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0A1628}
+.logo-main em{font-style:normal;color:var(--sky)}
+.logo-sub{font-size:10px;color:rgba(15,32,68,0.6);font-weight:700;letter-spacing:3px}
+.vpill{border:1.5px solid rgba(15,32,68,0.2);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(15,32,68,0.04)}
+.vpill .vl{font-size:10px;color:rgba(15,32,68,0.5);font-weight:600}
+.vpill .vc{font-size:15px;font-weight:900;color:#1D4ED8;letter-spacing:-0.5px}
+.gnb{margin-left:auto;display:flex;align-items:center;gap:2px}
+.gi{position:relative}
+.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap}
+.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}
+.arr{width:14px;height:14px;transition:transform .2s;color:rgba(255,255,255,0.4)}
+.gi:hover .arr{transform:rotate(180deg);color:var(--sky)}
+.drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:var(--navy);border-radius:12px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}
+.gi:hover .drop{opacity:1;visibility:visible}
+.drop a{display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);transition:all .15s}
+.drop a:hover{background:rgba(255,255,255,0.1);color:white}
+.hsearch{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all .2s;flex-shrink:0}
+.hsearch:hover{border-color:var(--sky);color:var(--sky)}
+
+/* HERO */
+.hero{margin-top:136px;position:relative;overflow:hidden}
+.hslider{display:flex;transition:transform .65s cubic-bezier(.4,0,.2,1)}
+.slide{min-width:100%;height:460px;display:flex;align-items:center}
+.s1{background:linear-gradient(130deg,#0F2044 0%,#1E3A6E 50%,#1D4ED8 100%)}
+.s2{background:linear-gradient(130deg,#0C4A6E 0%,#0369A1 50%,#0EA5E9 100%)}
+.s3{background:linear-gradient(130deg,#1E1B4B 0%,#3730A3 50%,#4F46E5 100%)}
+.sin{max-width:1280px;margin:0 auto;padding:0 80px;width:100%;display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:center}
+.seb{display:inline-flex;align-items:center;gap:6px;background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.25);border-radius:999px;padding:4px 14px;font-size:12px;font-weight:700;color:var(--sky);margin-bottom:18px}
+.sdot{width:6px;height:6px;background:var(--sky);border-radius:50%;animation:blink 1.6s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.scap{font-size:14px;color:rgba(255,255,255,.65);margin-bottom:8px}
+.stitle{font-size:clamp(28px,3.5vw,46px);font-weight:900;line-height:1.15;letter-spacing:-1.5px;color:white;margin-bottom:14px}
+.stitle .hl{color:var(--sky)}
+.sdesc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:28px}
+.sbtns{display:flex;gap:12px}
+.bph{background:var(--blue);color:white;border:none;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:700;transition:all .2s;box-shadow:0 6px 20px rgba(59,130,246,.4)}
+.bph:hover{background:#2563EB;transform:translateY(-2px)}
+.bps{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);padding:13px 24px;border-radius:10px;font-size:14px;font-weight:600;transition:all .2s}
+.bps:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5)}
+.svis{display:flex;align-items:center;justify-content:center}
+.vc-card{background:rgba(255,255,255,.07);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:28px;width:100%}
+.vch{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.vci{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--sky));display:flex;align-items:center;justify-content:center;font-size:22px}
+.vct{font-size:15px;font-weight:800;color:white}
+.vcs{font-size:12px;color:rgba(255,255,255,.5)}
+.vcst{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.vcsi{background:rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}
+.vcn{font-size:20px;font-weight:900;color:var(--sky);letter-spacing:-.5px}
+.vcl{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
+.vcb{background:rgba(255,255,255,.06);border-radius:8px;padding:12px 14px}
+.vcbl{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.vcbt{height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.vcbf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--sky))}
+.hdots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+.hdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);border:none;cursor:pointer;padding:0;transition:all .3s}
+.hdot.on{background:var(--sky);width:24px;border-radius:4px}
+
+/* STRENGTH */
+.strength{background:white;padding:80px 0;border-bottom:1px solid var(--border)}
+.sw{max-width:1280px;margin:0 auto;padding:0 48px}
+.sh{text-align:center;margin-bottom:52px}
+.se{display:inline-block;font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.st{font-size:clamp(22px,3vw,34px);font-weight:900;letter-spacing:-1px;color:var(--navy);line-height:1.25}
+.st .hl{color:var(--blue)}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.sc{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--blue));opacity:0;transition:opacity .3s}
+.sc:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--blue-border);background:white}
+.sc:hover::before{opacity:1}
+.se2{font-size:36px;margin-bottom:12px;display:block}
+.sn{font-size:36px;font-weight:900;color:var(--navy-light);letter-spacing:-1px;line-height:1;margin-bottom:4px}
+.sl{font-size:12px;color:var(--text-muted);font-weight:500}
+.sd{font-size:12px;color:var(--text-mid);margin-top:8px;line-height:1.5}
+
+/* REVIEWS */
+.reviews{padding:80px 0;background:var(--blue-pale)}
+.rw{overflow:hidden;margin-top:48px}
+.rt{display:flex;gap:20px;animation:scrollL 30s linear infinite;width:max-content}
+.rt:hover{animation-play-state:paused}
+@keyframes scrollL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.rc{width:280px;flex-shrink:0;background:white;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm);border:1px solid var(--blue-border)}
+.rb{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;color:white;margin-bottom:12px}
+.rtitle{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:8px;line-height:1.35}
+.rtext{font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:14px}
+.rname{font-size:12px;color:var(--text-muted)}
+.rstar{color:#FBBF24;font-size:13px;margin-bottom:6px}
+
+/* SPECIAL */
+.special{padding:80px 0;background:white}
+.spg{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px}
+.spc{background:var(--bg);border-radius:var(--radius);padding:32px 28px;border:1px solid var(--border);display:flex;gap:20px;align-items:flex-start;transition:all .3s}
+.spc:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border);background:white}
+.spi{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.ic1{background:linear-gradient(135deg,#EFF6FF,#BFDBFE)}
+.ic2{background:linear-gradient(135deg,#F0FDF4,#BBF7D0)}
+.ic3{background:linear-gradient(135deg,#F0F9FF,#BAE6FD)}
+.ic4{background:linear-gradient(135deg,#EEF2FF,#C7D2FE)}
+.spt h4{font-size:16px;font-weight:800;margin-bottom:6px;color:var(--navy)}
+.spt p{font-size:13px;color:var(--text-muted);line-height:1.65}
+
+/* DIAGNOSIS */
+.diagnosis{padding:80px 0;background:var(--bg)}
+.diag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
+.diag-card{background:white;border-radius:var(--radius);padding:28px 24px;border:1px solid var(--border);transition:all .3s;cursor:default;position:relative;overflow:hidden}
+.diag-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s}
+.diag-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border)}
+.diag-card:hover::after{opacity:1}
+.dc1::after{background:linear-gradient(90deg,#16A34A,#4ADE80)}
+.dc2::after{background:linear-gradient(90deg,#DB2777,#F472B6)}
+.dc3::after{background:linear-gradient(90deg,#2563EB,#60A5FA)}
+.dc4::after{background:linear-gradient(90deg,#D97706,#FCD34D)}
+.dc5::after{background:linear-gradient(90deg,#7C3AED,#A78BFA)}
+.dc6::after{background:linear-gradient(90deg,#0D9488,#34D399)}
+.diag-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;margin-bottom:14px}
+.db1{background:#DCFCE7;color:#16A34A}
+.db2{background:#FCE7F3;color:#DB2777}
+.db3{background:#DBEAFE;color:#1D4ED8}
+.db4{background:#FEF3C7;color:#D97706}
+.db5{background:#EDE9FE;color:#7C3AED}
+.db6{background:#CCFBF1;color:#0F766E}
+.diag-icon{font-size:32px;margin-bottom:12px;display:block}
+.diag-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:6px}
+.diag-desc{font-size:12px;color:var(--text-muted);line-height:1.6}
+.diag-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.diag-tag{font-size:10px;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 8px}
+
+/* FOOTER */
+footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
+.fi{max-width:1280px;margin:0 auto;padding:0 48px}
+.ft{display:flex;justify-content:space-between;padding-bottom:32px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,.08);gap:48px}
+.flm{font-size:20px;font-weight:900;color:white}
+.flm em{font-style:normal;color:var(--sky)}
+.fdesc{font-size:13px;line-height:1.7;margin-top:8px;max-width:260px}
+.flinks{display:flex;gap:48px}
+.fc h5{color:rgba(255,255,255,.8);font-size:13px;font-weight:700;margin-bottom:14px}
+.fc a{display:block;font-size:12px;color:rgba(255,255,255,.4);margin-bottom:8px;transition:color .2s}
+.fc a:hover{color:rgba(255,255,255,.8)}
+.fph{text-align:right}
+.fph span{font-size:11px;color:rgba(255,255,255,.4);display:block;margin-bottom:4px}
+.fph strong{font-size:22px;font-weight:900;color:white;letter-spacing:-.5px}
+.fb2{display:flex;justify-content:space-between;align-items:center;font-size:11px}
+.fnotice{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 16px;font-size:11px;color:rgba(255,255,255,.35);line-height:1.6;margin-bottom:20px}
+
+/* FLOATS */
+.floats{position:fixed;right:24px;bottom:40px;display:flex;flex-direction:column;gap:10px;z-index:9999}
+.fbtn{display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;border:none;font-size:14px;font-weight:700;box-shadow:var(--shadow-lg);transition:all .25s;white-space:nowrap}
+.fbtn:hover{transform:translateX(-4px) scale(1.03)}
+.fb1{background:var(--blue);color:white}
+
+
+/* MEGA MENU */
+.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:var(--navy);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}
+.gi:hover .mega-drop{opacity:1;visibility:visible}
+.mega-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}
+.mega-tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:all .2s;font-family:inherit}
+.mega-tab.on{background:var(--blue);color:white}
+.mega-tab:hover:not(.on){background:rgba(255,255,255,.08);color:white}
+.mega-panel{display:none}
+.mega-panel.on{display:block}
+.mega-rt{font-size:10px;font-weight:700;color:var(--sky);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}
+.mega-rt:first-child{margin-top:0}
+.mega-btns{display:flex;flex-wrap:wrap;gap:6px}
+.mega-btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .18s;text-decoration:none}
+.mega-btn:hover{background:var(--blue);color:white;border-color:var(--blue)}
+
+/* HAMBURGER */
+.hburg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;flex-shrink:0}
+.hburg span{display:block;width:22px;height:2px;background:#0F2044;border-radius:2px;transition:all .3s}
+.hburg.on span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hburg.on span:nth-child(2){opacity:0}
+.hburg.on span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+/* MOBILE MENU */
+.mob-menu{position:fixed;top:72px;left:0;right:0;bottom:0;background:var(--navy);z-index:299;overflow-y:auto;transform:translateX(100%);transition:transform .3s ease}
+.mob-menu.on{transform:translateX(0)}
+.mob-inner{padding:24px 20px}
+.mob-section{margin-bottom:28px}
+.mob-title{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--sky);text-transform:uppercase;margin-bottom:12px}
+.mob-links{display:flex;flex-wrap:wrap;gap:8px}
+.mob-links a{padding:8px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;font-size:14px;font-weight:600;color:rgba(255,255,255,.8);transition:all .2s}
+.mob-links a:hover{background:var(--blue);border-color:var(--blue);color:white}
+.mob-cta{display:flex;flex-direction:column;gap:10px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
+.mob-cta button{padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all .2s}
+.mob-cta button:first-child{background:var(--blue);color:white}
+.mob-cta button:last-child{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.2)}
+
+/* FADE UP */
+.fu{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}
+.fu.vis{opacity:1;transform:translateY(0)}
+
+/* ══ MOBILE ══ */
+@media(max-width:768px){
+  /* HEADER */
+  .hw{padding:0 16px;height:72px;gap:10px}
+  .logo-sub{display:none}
+  .logo-main{font-size:15px}
+  .logo-mark{width:32px;height:32px}
+  .vpill{padding:4px 10px}
+  .vpill .vc{font-size:13px}
+  .vpill .vl{font-size:9px}
+  .gnb{display:none}
+  .hsearch{display:none}
+  .hburg{display:flex;margin-left:auto}
+
+  /* HERO */
+  .hero{margin-top:72px}
+  .slide{height:auto;min-height:420px;padding:32px 0 24px}
+  .sin{grid-template-columns:1fr;padding:0 20px;gap:24px}
+  .svis{display:none}
+  .stitle{font-size:32px;letter-spacing:-1px}
+  .seb{font-size:11px}
+  .scap{font-size:13px}
+  .sdesc{font-size:13px;margin-bottom:20px}
+  .sbtns{flex-direction:column;gap:8px}
+  .bph,.bps{width:100%;text-align:center;padding:12px 20px}
+  .hdots{bottom:12px}
+
+  /* STRENGTH */
+  .strength{padding:48px 0}
+  .sw{padding:0 16px}
+  .sh{margin-bottom:32px}
+  .st{font-size:22px}
+  .sg{grid-template-columns:1fr 1fr;gap:12px}
+  .sc{padding:20px 14px}
+  .se2{font-size:28px;margin-bottom:8px}
+  .sn{font-size:26px}
+
+  /* REVIEWS */
+  .reviews{padding:48px 0}
+  .rc{width:240px;padding:18px}
+
+  /* SPECIAL */
+  .special{padding:48px 0}
+  .spg{grid-template-columns:1fr;gap:12px}
+  .spc{padding:20px}
+
+  /* DIAGNOSIS */
+  .diagnosis{padding:48px 0}
+  .diag-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .diag-card{padding:18px 14px}
+  .diag-icon{font-size:24px;margin-bottom:8px}
+  .diag-title{font-size:13px}
+  .diag-desc{font-size:11px}
+  .diag-tags{display:none}
+
+  /* FOOTER */
+  footer{padding:32px 0 24px}
+  .fi{padding:0 16px}
+  .ft{flex-direction:column;gap:24px;padding-bottom:24px}
+  .flinks{flex-wrap:wrap;gap:24px}
+  .fph{text-align:left}
+  .fph strong{font-size:18px}
+  .fb2{flex-direction:column;gap:6px;align-items:flex-start}
+
+  /* FLOATS */
+  .floats{right:12px;bottom:24px;gap:8px}
+  .fbtn{padding:12px 16px;font-size:13px}
+  .diag-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  #region-section{padding:40px 20px}
+  #region-section h2{font-size:22px}
+  #region-section > div > div:last-child{grid-template-columns:repeat(2,1fr);gap:8px}
+  #region-section a{padding:10px 12px;font-size:13px}
+
+  #fpanel-region > div,#fpanel-subject > div,#fpanel-academy > div,#fpanel-conv > div{grid-template-columns:repeat(3,1fr);gap:6px}
+  #fpanel-region a,#fpanel-subject a,#fpanel-academy a,#fpanel-conv a{padding:9px 5px;font-size:11px;gap:3px;white-space:normal;word-break:keep-all}
+}
+
+@media(max-width:400px){
+  .diag-grid{grid-template-columns:1fr}
+  .sg{grid-template-columns:1fr 1fr}
+  .stitle{font-size:28px}
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "올케어스터디",
+  "url": "https://allcarestudy.com",
+  "description": "전국 지역별 1:1 맞춤 과외·학원 정보 플랫폼",
+  "telephone": "010-6834-8080",
+  "areaServed": "KR",
+  "serviceType": ["과외", "학원", "학습코칭"]
+}
+</script>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hslider" id="hs">
+    <div class="slide s1">
+      <div class="sin">
+        <div>
+          <div class="seb"><div class="sdot"></div> No.1 지역별 과외 플랫폼</div>
+          <p class="scap">우리 아이에게 딱 맞는 선생님을 찾아드립니다</p>
+          <h1 class="stitle">내 지역 최고의<br><span class="hl">1:1 맞춤 과외</span><br>지금 찾아보세요</h1>
+          <p class="sdesc">전국 검증된 선생님 12,400명+<br>지역별·과목별·학년별로 딱 맞는 수업 연결</p>
+          <div class="sbtns">
+            <button class="bph" onclick="document.getElementById('region-section').scrollIntoView({behavior:'smooth'})">지역별 과외 찾기 →</button>
+            <button class="bps" onclick="window.location.href='/contact'">✉️ 문의하기</button>
+          </div>
+        </div>
+        <div class="svis">
+          <div class="vc-card">
+            <div class="vch"><div class="vci">📍</div><div><div class="vct">강남구 수학 과외</div><div class="vcs">매칭 완료 · 오늘 기준</div></div></div>
+            <div class="vcst">
+              <div class="vcsi"><div class="vcn">247</div><div class="vcl">등록 선생님</div></div>
+              <div class="vcsi"><div class="vcn">98%</div><div class="vcl">만족도</div></div>
+            </div>
+            <div class="vcb">
+              <div class="vcbl"><span>이번 달 매칭률</span><span style="color:var(--sky);font-weight:700">94%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:94%"></div></div>
+              <div class="vcbl"><span>학부모 재등록률</span><span style="color:var(--sky);font-weight:700">87%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:87%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide s2">
+      <div class="sin">
+        <div>
+          <div class="seb"><div class="sdot"></div> 35년 교육 노하우</div>
+          <p class="scap">검증된 학원 정보를 한눈에 확인하세요</p>
+          <h1 class="stitle">우리 동네<br><span class="hl">믿을 수 있는</span><br>학원 정보</h1>
+          <p class="sdesc">학원 비교부터 후기까지<br>올케어스터디에서 모두 확인하세요</p>
+          <div class="sbtns">
+            <a href="/academy/all" style="display:inline-block;text-decoration:none"><button class="bph">학원 찾기 →</button></a>
+          </div>
+        </div>
+        <div class="svis">
+          <div class="vc-card">
+            <div class="vch"><div class="vci">🏫</div><div><div class="vct">서초구 영어 학원</div><div class="vcs">실시간 업데이트</div></div></div>
+            <div class="vcst">
+              <div class="vcsi"><div class="vcn">1,240</div><div class="vcl">등록 학원</div></div>
+              <div class="vcsi"><div class="vcn">4.8★</div><div class="vcl">평균 평점</div></div>
+            </div>
+            <div class="vcb">
+              <div class="vcbl"><span>정보 업데이트율</span><span style="color:var(--sky);font-weight:700">96%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:96%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide s3">
+      <div class="sin">
+        <div>
+          <div class="seb"><div class="sdot"></div> AI 맞춤 진단</div>
+          <p class="scap">6가지 맞춤 진단으로 약점을 파악하세요</p>
+          <h1 class="stitle">AI 데이터 기반<br><span class="hl">성적 향상</span><br>맞춤 전략</h1>
+          <p class="sdesc">100만 누적 데이터로<br>우리 아이의 약점을 정확히 찾아냅니다</p>
+          <div class="sbtns">
+          </div>
+        </div>
+        <div class="svis">
+          <div class="vc-card">
+            <div class="vch"><div class="vci">🎯</div><div><div class="vct">AI 학습 진단 결과</div><div class="vcs">김○○ · 중학교 2학년</div></div></div>
+            <div class="vcst">
+              <div class="vcsi"><div class="vcn">상위 8%</div><div class="vcl">수학 성취도</div></div>
+              <div class="vcsi"><div class="vcn">+23점</div><div class="vcl">3개월 향상</div></div>
+            </div>
+            <div class="vcb">
+              <div class="vcbl"><span>수학</span><span style="color:var(--sky);font-weight:700">92%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:92%"></div></div>
+              <div class="vcbl"><span>영어</span><span style="color:var(--sky);font-weight:700">78%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:78%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hdots">
+    <button class="hdot on" onclick="gs(0)"></button>
+    <button class="hdot" onclick="gs(1)"></button>
+    <button class="hdot" onclick="gs(2)"></button>
+  </div>
+  <button onclick="gs((cur+1)%3)" style="position:absolute;right:24px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.5)'">&#8250;</button>
+</section>
+
+<!-- STRENGTH -->
+<section class="strength">
+  <div class="sw">
+    <div class="sh fu">
+      <div class="se">OUR STRENGTH</div>
+      <h2 class="st">35년의 교육 노하우,<br><span class="hl">올케어스터디가 다릅니다</span></h2>
+    </div>
+    <div class="sg">
+      <div class="sc fu"><span class="se2">🏆</span><div class="sn">35년</div><div class="sl">No.1 청소년 학습코칭</div><div class="sd">남다른 교육·코칭 노하우</div></div>
+      <div class="sc fu" style="transition-delay:.1s"><span class="se2">👨‍🏫</span><div class="sn">4,000명</div><div class="sl">최정예 전문 학습코치</div><div class="sd">검증된 1:1 밀착 관리</div></div>
+      <div class="sc fu" style="transition-delay:.2s"><span class="se2">📈</span><div class="sn">100만명</div><div class="sl">누적 체험 회원수</div><div class="sd">월평균 3만명 진행</div></div>
+      <div class="sc fu" style="transition-delay:.3s"><span class="se2">⭐</span><div class="sn">96.7%</div><div class="sl">학습 만족도</div><div class="sd">학생·학부모 모두 만족</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REGION SELECT -->
+<section id="region-section" style="padding:56px 48px;background:white;border-bottom:1px solid #E5E7EB">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="font-size:12px;font-weight:700;color:#3B82F6;letter-spacing:2px;margin-bottom:10px">FIND YOUR CLASS</div>
+      <h2 style="font-size:26px;font-weight:900;color:#0F2044">수업 찾기</h2>
+      <p style="font-size:14px;color:#9CA3AF;margin-top:6px">원하는 카테고리를 선택하세요</p>
+    </div>
+    <!-- 탭 -->
+    <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;justify-content:center" id="find-tabs">
+      <button onclick="switchFind('region')" id="ftab-region" style="padding:10px 22px;border-radius:999px;border:1.5px solid #3B82F6;background:#3B82F6;color:white;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">🏙 지역별 과외</button>
+      <button onclick="switchFind('subject')" id="ftab-subject" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">📚 과목별 과외</button>
+      <button onclick="switchFind('academy')" id="ftab-academy" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">🏫 학원 찾기</button>
+      <button onclick="switchFind('conv')" id="ftab-conv" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">🗣 회화수업</button>
+      <button onclick="window.location.href='/contact'" id="ftab-contact" style="padding:10px 22px;border-radius:999px;border:1.5px solid #1D4ED8;background:white;color:#1D4ED8;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;font-family:inherit">✉️ 문의하기</button>
+    </div>
+    <!-- 패널 -->
+    <div id="fpanel-region">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <a href="/seoul" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🏙 서울</a>
+      <a href="/gyeonggi" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌿 경기</a>
+      <a href="/incheon" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌊 인천</a>
+      <a href="/busan" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🐟 부산</a>
+      <a href="/daegu" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🍎 대구</a>
+      <a href="/daejeon" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌾 대전</a>
+      <a href="/gwangju" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌸 광주</a>
+      <a href="/ulsan" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">⚙️ 울산</a>
+      <a href="/sejong" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🏛 세종</a>
+      <a href="/gangwon" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🏔 강원</a>
+      <a href="/chungbuk" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌻 충북</a>
+      <a href="/chungnam" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌊 충남</a>
+      <a href="/jeonbuk" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌾 전북</a>
+      <a href="/jeonnam" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🍵 전남</a>
+      <a href="/gyeongbuk" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🍎 경북</a>
+      <a href="/gyeongnam" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌊 경남</a>
+      <a href="/jeju" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🌺 제주</a>
+    </div>
+    </div>
+    <div id="fpanel-subject" style="display:none">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">📐 수학</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">📖 영어</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🔬 과학</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">📝 국어</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🗺 사회/역사</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">💻 코딩</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">📋 검정고시</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🎯 코칭 수업</a>
+    </div>
+    </div>
+    <div id="fpanel-academy" style="display:none">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      <a href="/academy/seoul" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🏙서울<span style="font-size:12px;color:#3B82F6;font-weight:700">24곳</span></a>
+      <a href="/academy/gyeonggi" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌿경기<span style="font-size:12px;color:#3B82F6;font-weight:700">100곳</span></a>
+      <a href="/academy/incheon" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊인천<span style="font-size:12px;color:#3B82F6;font-weight:700">10곳</span></a>
+      <a href="/academy/busan" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🐟부산<span style="font-size:12px;color:#3B82F6;font-weight:700">5곳</span></a>
+      <a href="/academy/daegu" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🍎대구<span style="font-size:12px;color:#3B82F6;font-weight:700">16곳</span></a>
+      <a href="/academy/daejeon" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌾대전<span style="font-size:12px;color:#3B82F6;font-weight:700">9곳</span></a>
+      <a href="/academy/gwangju" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌸광주<span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
+      <a href="/academy/ulsan" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">⚙️울산<span style="font-size:12px;color:#3B82F6;font-weight:700">4곳</span></a>
+      <a href="/academy/gangwon" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🏔강원<span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
+      <a href="/academy/chungbuk" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌻충북<span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
+      <a href="/academy/chungnam" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊충남<span style="font-size:12px;color:#3B82F6;font-weight:700">6곳</span></a>
+      <a href="/academy/jeonbuk" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌾전북<span style="font-size:12px;color:#3B82F6;font-weight:700">3곳</span></a>
+      <a href="/academy/gyeongbuk" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🍎경북<span style="font-size:12px;color:#3B82F6;font-weight:700">5곳</span></a>
+      <a href="/academy/gyeongnam" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊경남<span style="font-size:12px;color:#3B82F6;font-weight:700">3곳</span></a>
+      <a href="/academy/jeju" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌺제주<span style="font-size:12px;color:#3B82F6;font-weight:700">1곳</span></a>
+    </div>
+    </div>
+    <div id="fpanel-conv" style="display:none">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🇺🇸영어</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🇨🇳중국어</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.color='#0F2044';this.style.background='#F8FAFF'">🇯🇵일본어</a>
+    </div>
+    </div>
+  </div>
+</section>
+<script>
+function switchFind(tab){
+  ['region','subject','academy','conv'].forEach(function(t){
+    var panel = document.getElementById('fpanel-'+t);
+    var btn = document.getElementById('ftab-'+t);
+    if(t===tab){
+      panel.style.display='block';
+      btn.style.background='#3B82F6';btn.style.color='white';btn.style.borderColor='#3B82F6';
+    }else{
+      panel.style.display='none';
+      btn.style.background='white';btn.style.color='#374151';btn.style.borderColor='#E5E7EB';
+    }
+  });
+  var cbtn = document.getElementById('ftab-contact');
+  if(cbtn){ cbtn.style.background='white';cbtn.style.color='#1D4ED8';cbtn.style.borderColor='#1D4ED8'; }
+}
+</script>
+
+<!-- REVIEWS -->
+
+<section class="reviews">
+  <div class="sw">
+    <div class="sh fu">
+      <div class="se">REAL REVIEWS</div>
+      <h2 class="st">직접 경험한 학부모·학생의<br><span class="hl">생생한 성적 향상 스토리</span></h2>
+    </div>
+  </div>
+  <div class="rw">
+    <div class="rt">
+      <div class="rc"><span class="rb" style="background:#1D4ED8">연세대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">6개월 만에 내신 4등급 → 1등급</div><div class="rtext">코치 선생님이 제 약점을 정확히 짚어주셔서 단기간에 성적이 확 올랐어요.</div><div class="rname">이*윤 회원 (고2)</div></div>
+      <div class="rc"><span class="rb" style="background:#15803D">이화여대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수시 학생부로 이화여대 합격!</div><div class="rtext">학생기록부 관리부터 면접 준비까지 체계적으로 도와주셔서 합격할 수 있었어요.</div><div class="rname">김*연 회원 (고3)</div></div>
+      <div class="rc"><span class="rb" style="background:#7C3AED">서울대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수능 수학 2등급 → 만점!</div><div class="rtext">올케어스터디 덕분에 제 실력이 어느 정도인지 정확히 알고 집중 공략할 수 있었습니다.</div><div class="rname">정*원 회원 (고3)</div></div>
+      <div class="rc"><span class="rb" style="background:#B45309">경희대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">중학생 때부터 시작해서 목표 달성</div><div class="rtext">중2 때부터 꾸준히 관리받았더니 고3이 되니 여유가 생기더라고요. 정말 추천합니다.</div><div class="rname">전*빈 회원 학부모</div></div>
+      <div class="rc"><span class="rb" style="background:#0F766E">고려대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">공부 습관이 완전히 바뀌었어요</div><div class="rtext">스스로 계획 세우고 실천하는 법을 배웠어요. 성적보다 공부 자신감이 생긴 게 더 큰 수확이에요.</div><div class="rname">박*준 회원 (중3)</div></div>
+      <div class="rc"><span class="rb" style="background:#BE185D">한양대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">아이가 먼저 공부하겠다고 해요</div><div class="rtext">예전엔 억지로 책상에 앉혔는데, 지금은 스스로 계획 짜고 공부합니다. 정말 감사해요.</div><div class="rname">최*아 회원 학부모</div></div>
+      <!-- 루프 복제 -->
+      <div class="rc"><span class="rb" style="background:#1D4ED8">연세대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">6개월 만에 내신 4등급 → 1등급</div><div class="rtext">코치 선생님이 제 약점을 정확히 짚어주셔서 단기간에 성적이 확 올랐어요.</div><div class="rname">이*윤 회원 (고2)</div></div>
+      <div class="rc"><span class="rb" style="background:#15803D">이화여대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수시 학생부로 이화여대 합격!</div><div class="rtext">학생기록부 관리부터 면접 준비까지 체계적으로 도와주셔서 합격할 수 있었어요.</div><div class="rname">김*연 회원 (고3)</div></div>
+      <div class="rc"><span class="rb" style="background:#7C3AED">서울대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수능 수학 2등급 → 만점!</div><div class="rtext">올케어스터디 덕분에 제 실력이 어느 정도인지 정확히 알고 집중 공략할 수 있었습니다.</div><div class="rname">정*원 회원 (고3)</div></div>
+      <div class="rc"><span class="rb" style="background:#B45309">경희대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">중학생 때부터 시작해서 목표 달성</div><div class="rtext">중2 때부터 꾸준히 관리받았더니 고3이 되니 여유가 생기더라고요. 정말 추천합니다.</div><div class="rname">전*빈 회원 학부모</div></div>
+      <div class="rc"><span class="rb" style="background:#0F766E">고려대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">공부 습관이 완전히 바뀌었어요</div><div class="rtext">스스로 계획 세우고 실천하는 법을 배웠어요. 성적보다 공부 자신감이 생긴 게 더 큰 수확이에요.</div><div class="rname">박*준 회원 (중3)</div></div>
+      <div class="rc"><span class="rb" style="background:#BE185D">한양대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">아이가 먼저 공부하겠다고 해요</div><div class="rtext">예전엔 억지로 책상에 앉혔는데, 지금은 스스로 계획 짜고 공부합니다. 정말 감사해요.</div><div class="rname">최*아 회원 학부모</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIAL -->
+<section class="special">
+  <div class="sw">
+    <div class="sh fu">
+      <div class="se">SPECIAL POINT</div>
+      <h2 class="st">우리 아이 성적,<br><span class="hl">왜 올케어스터디여야 할까요?</span></h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-top:12px;line-height:1.7;word-break:keep-all">단순한 과외 중개가 아닙니다. 학습 진단부터 목표 설계, 실행 관리까지 아이의 성장을 함께 책임집니다.</p>
+    </div>
+    <div class="spg fu">
+      <div class="spc"><div class="spi ic1">🎯</div><div class="spt"><h4>학교·교재 맞춤 1:1 대비</h4><p>전국 모든 학교의 교과서·부교재를 분석해 내 학교 시험에 딱 맞는 맞춤 수업을 제공합니다.</p></div></div>
+      <div class="spc"><div class="spi ic2">🔍</div><div class="spt"><h4>변형문제 완벽 대응 전략</h4><p>기본 개념부터 심화 응용까지 단계별로 훈련해 어떤 문제 유형에도 당황하지 않는 실력을 만듭니다.</p></div></div>
+      <div class="spc"><div class="spi ic3">🧠</div><div class="spt"><h4>AI 기반 학습 취약점 분석</h4><p>100만 건의 누적 학습 데이터로 아이의 취약점을 정밀하게 찾아내고 집중 보완합니다.</p></div></div>
+      <div class="spc"><div class="spi ic4">📆</div><div class="spt"><h4>시험 일정 연동 플래닝</h4><p>학사일정·시험 일정에 맞춰 역산 계획표를 설계하고 매주 실천 여부를 함께 점검합니다.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSIS -->
+<section class="diagnosis">
+  <div class="sw">
+    <div class="sh fu">
+      <div class="se">DIAGNOSIS PROGRAM</div>
+      <h2 class="st">6가지 정밀 진단검사<br><span class="hl">무엇이 있는지 확인해보세요</span></h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-top:12px;line-height:1.7;word-break:keep-all">학습부터 진로, 부모 코칭까지<br>자세한 내용은 상담을 통해 안내드립니다.</p>
+    </div>
+    <div class="diag-grid fu">
+      <div class="diag-card dc1">
+        <span class="diag-badge db1">무료 체험</span>
+        <span class="diag-icon">📊</span>
+        <div class="diag-title">학습진단검사</div>
+        <div class="diag-desc">학습 성격 유형, 동기, 요인을 분석해 공부 방향을 잡아드립니다.</div>
+        <div class="diag-tags"><span class="diag-tag">학습 성격 유형</span><span class="diag-tag">학습 동기 분석</span><span class="diag-tag">학습 요인</span></div>
+      </div>
+      <div class="diag-card dc2">
+        <span class="diag-badge db2">무료 체험</span>
+        <span class="diag-icon">✅</span>
+        <div class="diag-title">자기주도검사</div>
+        <div class="diag-desc">계획 수립·실천 능력과 자기평가 역량을 객관적으로 측정합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">자기주도성</span><span class="diag-tag">계획 수립</span><span class="diag-tag">자기평가</span></div>
+      </div>
+      <div class="diag-card dc3">
+        <span class="diag-badge db3">회원용</span>
+        <span class="diag-icon">💼</span>
+        <div class="diag-title">진로적성검사</div>
+        <div class="diag-desc">직업 성격 유형과 진로 탐색·준비 수준을 진단합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">직업 성격 유형</span><span class="diag-tag">진로 탐색</span><span class="diag-tag">전공 계열</span></div>
+      </div>
+      <div class="diag-card dc4">
+        <span class="diag-badge db4">회원용</span>
+        <span class="diag-icon">📐</span>
+        <div class="diag-title">학습유형검사</div>
+        <div class="diag-desc">학습 성향, 의지, 스타일, 행동을 파악해 최적 공부법을 안내합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">학습성향</span><span class="diag-tag">학습의지</span><span class="diag-tag">학습스타일</span></div>
+      </div>
+      <div class="diag-card dc5">
+        <span class="diag-badge db5">회원용</span>
+        <span class="diag-icon">🎓</span>
+        <div class="diag-title">입시예측검사</div>
+        <div class="diag-desc">목표 고교·대학 합격 가능성과 수시·정시 전략을 예측합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">고교 합격 진단</span><span class="diag-tag">대학 합격 예측</span><span class="diag-tag">수시·정시</span></div>
+      </div>
+      <div class="diag-card dc6">
+        <span class="diag-badge db6">회원용</span>
+        <span class="diag-icon">👨‍👩‍👧</span>
+        <div class="diag-title">부모코칭검사</div>
+        <div class="diag-desc">자녀와의 의사소통 유형과 양육 스타일을 진단해 관계를 개선합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">양육 스타일</span><span class="diag-tag">의사소통 분석</span><span class="diag-tag">관계 점검</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<script>
+function switchFind(tab){
+  ['region','subject','academy','conv'].forEach(function(t){
+    var panel = document.getElementById('fpanel-'+t);
+    var btn = document.getElementById('ftab-'+t);
+    if(t===tab){
+      panel.style.display='block';
+      btn.style.background='#3B82F6';btn.style.color='white';btn.style.borderColor='#3B82F6';
+    }else{
+      panel.style.display='none';
+      btn.style.background='white';btn.style.color='#374151';btn.style.borderColor='#E5E7EB';
+    }
+  });
+  var cbtn = document.getElementById('ftab-contact');
+  if(cbtn){ cbtn.style.background='white';cbtn.style.color='#1D4ED8';cbtn.style.borderColor='#1D4ED8'; }
+}
+</script>
+<script>
+(function(){
+  var floats = document.getElementById('floats');
+  var footer = document.querySelector('footer');
+  if(!footer) return;
+  function adjustFloats(){
+    try {
+      if(!floats || !footer) return;
+      var footerTop = footer.getBoundingClientRect().top;
+      var windowH = window.innerHeight;
+      if(footerTop < windowH){
+        floats.style.bottom = (windowH - footerTop + 60) + 'px';
+      } else {
+        floats.style.bottom = '60px';
+      }
+    } catch(e){}
+  }
+  window.addEventListener('scroll', adjustFloats, {passive:true});
+  window.addEventListener('resize', adjustFloats, {passive:true});
+  adjustFloats();
+})();
+</script>
+<script>
+function toggleMobileMenu(){
+  const m=document.getElementById('mobMenu');
+  const b=document.getElementById('hburg');
+  if(m)m.classList.toggle('on');
+  if(b)b.classList.toggle('on');
+}
+
+function switchTab(menu,tab){
+  document.querySelectorAll('#mega-'+menu+' .mega-tab').forEach((t,i)=>t.classList.remove('on'));
+  document.querySelectorAll('#mega-'+menu+' .mega-panel').forEach(p=>p.classList.remove('on'));
+  event.target.classList.add('on');
+  const panel=document.getElementById(menu+'-'+tab);
+  if(panel)panel.classList.add('on');
+}
+
+(function(){
+  const vcEl=document.getElementById('vc');
+  if(vcEl){
+    let cnt=353112;
+    setInterval(()=>{cnt+=Math.floor(Math.random()*3);vcEl.textContent=cnt.toLocaleString('ko-KR')+'명';},3000);
+  }
+  const hsEl=document.getElementById('hs');
+  if(hsEl){
+    let cur=0;
+    window.gs=function(n){cur=n;hsEl.style.transform='translateX(-'+(n*100)+'%)';document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===n));};
+    setInterval(()=>window.gs((cur+1)%3),4500);
+  }
+  try{
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.15});
+    document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
+  }catch(e){}
+})();
+</script>`;
+  return wrap('올케어스터디 | 전국 1:1 맞춤 과외·학원 정보','전국 초·중·고 1:1 맞춤 과외 플랫폼. 검증된 선생님 48시간 내 매칭. 수학·영어·국어·과학 방문과외. 무료상담 010-6834-8080','/',body,[]);
+}
+
+
 
 // ── 사이트맵 ──────────────────────────────────────────────
 
