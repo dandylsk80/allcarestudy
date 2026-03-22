@@ -882,8 +882,25 @@ const HEADER = `<header>
             </div>
           </div>
           <div class="mega-panel" id="region-school">
+            <div class="mega-rt">시도별 학교 과외</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="/seoul">학교별 과외 전체 보기 →</a>
+              <a class="mega-btn" href="/school/seoul">서울</a>
+              <a class="mega-btn" href="/school/gyeonggi">경기</a>
+              <a class="mega-btn" href="/school/incheon">인천</a>
+              <a class="mega-btn" href="/school/busan">부산</a>
+              <a class="mega-btn" href="/school/daegu">대구</a>
+              <a class="mega-btn" href="/school/gwangju">광주</a>
+              <a class="mega-btn" href="/school/daejeon">대전</a>
+              <a class="mega-btn" href="/school/ulsan">울산</a>
+              <a class="mega-btn" href="/school/sejong">세종</a>
+              <a class="mega-btn" href="/school/gangwon">강원</a>
+              <a class="mega-btn" href="/school/chungbuk">충북</a>
+              <a class="mega-btn" href="/school/chungnam">충남</a>
+              <a class="mega-btn" href="/school/jeonbuk">전북</a>
+              <a class="mega-btn" href="/school/jeonnam">전남</a>
+              <a class="mega-btn" href="/school/gyeongbuk">경북</a>
+              <a class="mega-btn" href="/school/gyeongnam">경남</a>
+              <a class="mega-btn" href="/school/jeju">제주</a>
             </div>
           </div>
         </div>
@@ -962,8 +979,25 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
             </div>
           </div>
           <div class="mega-panel" id="region-school">
+            <div class="mega-rt">시도별 학교 과외</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="/seoul">학교별 과외 전체 보기 →</a>
+              <a class="mega-btn" href="/school/seoul">서울</a>
+              <a class="mega-btn" href="/school/gyeonggi">경기</a>
+              <a class="mega-btn" href="/school/incheon">인천</a>
+              <a class="mega-btn" href="/school/busan">부산</a>
+              <a class="mega-btn" href="/school/daegu">대구</a>
+              <a class="mega-btn" href="/school/gwangju">광주</a>
+              <a class="mega-btn" href="/school/daejeon">대전</a>
+              <a class="mega-btn" href="/school/ulsan">울산</a>
+              <a class="mega-btn" href="/school/sejong">세종</a>
+              <a class="mega-btn" href="/school/gangwon">강원</a>
+              <a class="mega-btn" href="/school/chungbuk">충북</a>
+              <a class="mega-btn" href="/school/chungnam">충남</a>
+              <a class="mega-btn" href="/school/jeonbuk">전북</a>
+              <a class="mega-btn" href="/school/jeonnam">전남</a>
+              <a class="mega-btn" href="/school/gyeongbuk">경북</a>
+              <a class="mega-btn" href="/school/gyeongnam">경남</a>
+              <a class="mega-btn" href="/school/jeju">제주</a>
             </div>
           </div>
         </div>
@@ -1748,6 +1782,121 @@ function schoolFromSlug(sidoEn, gugunKr, schoolRoman, grade) {
     }
   }
   return null;
+}
+
+// ── 학교별 과외 인덱스 페이지들 ─────────────────────────────────────────────
+
+const SIDO_KR_MAP = {
+  'seoul':'서울특별시','gyeonggi':'경기도','incheon':'인천광역시','busan':'부산광역시',
+  'daegu':'대구광역시','gwangju':'광주광역시','daejeon':'대전광역시','ulsan':'울산광역시',
+  'sejong':'세종특별자치시','gangwon':'강원특별자치도','chungbuk':'충청북도','chungnam':'충청남도',
+  'jeonbuk':'전북특별자치도','jeonnam':'전라남도','gyeongbuk':'경상북도','gyeongnam':'경상남도','jeju':'제주특별자치도'
+};
+
+function makeSchoolIndexPage() {
+  const sidoList = Object.entries(SIDO_KR_MAP).map(([en,kr])=>
+    `<a class="mega-btn" style="display:inline-block;padding:12px 20px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-weight:700;color:var(--text-dark);text-decoration:none;margin:6px;transition:all .2s" href="/school/${en}">${kr}</a>`
+  ).join('');
+  const title = '학교별 과외 | 전국 초등·중등·고등 학교별 1:1 맞춤 과외 - 올케어스터디';
+  const desc = '전국 12,000개 학교별 맞춤 1:1 과외. 학교 기출 완벽 분석. 수학·영어·국어·과학 내신 대비. 무료 상담 010-6834-8080';
+  const body = `<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <span>학교별 과외</span></div>
+  <h1 class="art-title">🏫 학교별 과외 | 전국 초등·중등·고등 1:1 맞춤 과외</h1>
+  <div class="art-body">
+    <p>올케어스터디는 전국 12,000개 이상의 초등·중등·고등학교 재학생을 위한 학교별 맞춤 1:1 과외를 연결합니다. 학교 기출 문제를 완벽히 파악한 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <h2>시도별 학교 과외 찾기</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin:20px 0">${sidoList}</div>
+  </div>
+</div>`;
+  return wrap(title, desc, '/school', body, [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'}]);
+}
+
+function makeSchoolSidoPage(sidoEn) {
+  const sidoKr = SIDO_KR_MAP[sidoEn];
+  if (!sidoKr) return null;
+  const sidoSchools = SCHOOL_MAP[sidoEn];
+  if (!sidoSchools) return null;
+
+  const gugunLinks = Object.keys(sidoSchools).map(gugun => {
+    const gr = DISTRICT_EN[gugun] || toRoman(gugun);
+    const schoolCnt = Object.values(sidoSchools[gugun]).reduce((a,v)=>a+(Array.isArray(v)?v.length:0),0);
+    return `<a class="subj-link" href="/school/${sidoEn}/${gr}"><span>🏫 ${gugun} (${schoolCnt}개)</span><span>→</span></a>`;
+  }).join('');
+
+  const title = `${sidoKr} 학교별 과외 | ${sidoKr} 초등·중등·고등 학교 1:1 과외 - 올케어스터디`;
+  const desc = `${sidoKr} 학교별 맞춤 1:1 과외. 학교 기출 완벽 분석. 무료 상담 010-6834-8080`;
+  const body = `<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/school">학교별 과외</a> › <span>${sidoKr}</span></div>
+  <h1 class="art-title">🏫 ${sidoKr} 학교별 과외</h1>
+  <div class="art-body">
+    <p>${sidoKr} 지역 초등·중등·고등학교 재학생을 위한 학교별 맞춤 1:1 과외를 연결합니다. 해당 학교 기출을 완벽히 파악한 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <h2>${sidoKr} 구군별 학교 과외</h2>
+    <div class="subj-grid">${gugunLinks}</div>
+  </div>
+  <div class="cta-box">
+    <h3>${sidoKr} 학교 과외 무료 상담</h3>
+    <p>24시간 내 전문 코디네이터가 연락드립니다</p>
+    <div class="cta-btns">
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
+    </div>
+  </div>
+</div>`;
+  return wrap(title, desc, `/school/${sidoEn}`, body, [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:sidoKr,url:`/school/${sidoEn}`}]);
+}
+
+function makeSchoolGugunPage(sidoEn, gugunRoman) {
+  const sidoKr = SIDO_KR_MAP[sidoEn];
+  if (!sidoKr) return null;
+  const sidoSchools = SCHOOL_MAP[sidoEn];
+  if (!sidoSchools) return null;
+
+  // 구군 한글 찾기
+  let gugunKr = null;
+  for (const [k] of Object.entries(DISTRICT_EN)) {
+    if ((DISTRICT_EN[k]||toRoman(k)) === gugunRoman) { gugunKr = k; break; }
+  }
+  if (!gugunKr) {
+    for (const g of Object.keys(sidoSchools)) {
+      if (toRoman(g) === gugunRoman) { gugunKr = g; break; }
+    }
+  }
+  if (!gugunKr) return null;
+  const gugunData = sidoSchools[gugunKr];
+  if (!gugunData) return null;
+
+  const GRADE_LABEL = {E:'초등학교',M:'중학교',H:'고등학교'};
+  let schoolBlocks = '';
+  for (const [grade, names] of Object.entries(gugunData)) {
+    if (!Array.isArray(names) || names.length === 0) continue;
+    const suffix = grade==='E'?'초등학교':grade==='M'?'중학교':'고등학교';
+    const label = GRADE_LABEL[grade];
+    const links = names.map(n => {
+      const sr = toRoman(n);
+      return `<a class="subj-link" href="/school/${sidoEn}/${gugunRoman}/${sr}"><span>🏫 ${n+suffix}</span><span>→</span></a>`;
+    }).join('');
+    schoolBlocks += `<h3>${label} (${names.length}개)</h3><div class="subj-grid">${links}</div>`;
+  }
+
+  const title = `${gugunKr} 학교별 과외 | ${gugunKr} 초등·중등·고등 학교 1:1 과외 - 올케어스터디`;
+  const desc = `${gugunKr} 학교별 맞춤 1:1 과외. 학교 기출 완벽 분석. 무료 상담 010-6834-8080`;
+  const body = `<div class="wrap">
+  <div class="bc"><a href="/">홈</a> › <a href="/school">학교별 과외</a> › <a href="/school/${sidoEn}">${sidoKr}</a> › <span>${gugunKr}</span></div>
+  <h1 class="art-title">🏫 ${gugunKr} 학교별 과외</h1>
+  <div class="art-body">
+    <p>${gugunKr} 지역 초등·중등·고등학교 재학생을 위한 학교별 맞춤 1:1 과외를 연결합니다. 해당 학교 기출을 완벽히 파악한 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    ${schoolBlocks}
+  </div>
+  <div class="cta-box">
+    <h3>${gugunKr} 학교 과외 무료 상담</h3>
+    <p>24시간 내 전문 코디네이터가 연락드립니다</p>
+    <div class="cta-btns">
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
+    </div>
+  </div>
+</div>`;
+  return wrap(title, desc, `/school/${sidoEn}/${gugunRoman}`, body, [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:sidoKr,url:`/school/${sidoEn}`},{name:gugunKr,url:`/school/${sidoEn}/${gugunRoman}`}]);
 }
 
 function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
@@ -3761,8 +3910,25 @@ footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}
           </div>
           <!-- 학교별 -->
           <div class="mega-panel" id="region-school">
+            <div class="mega-rt">시도별 학교 과외</div>
             <div class="mega-btns">
-              <a class="mega-btn" href="/seoul">학교별 과외 전체 보기 →</a>
+              <a class="mega-btn" href="/school/seoul">서울</a>
+              <a class="mega-btn" href="/school/gyeonggi">경기</a>
+              <a class="mega-btn" href="/school/incheon">인천</a>
+              <a class="mega-btn" href="/school/busan">부산</a>
+              <a class="mega-btn" href="/school/daegu">대구</a>
+              <a class="mega-btn" href="/school/gwangju">광주</a>
+              <a class="mega-btn" href="/school/daejeon">대전</a>
+              <a class="mega-btn" href="/school/ulsan">울산</a>
+              <a class="mega-btn" href="/school/sejong">세종</a>
+              <a class="mega-btn" href="/school/gangwon">강원</a>
+              <a class="mega-btn" href="/school/chungbuk">충북</a>
+              <a class="mega-btn" href="/school/chungnam">충남</a>
+              <a class="mega-btn" href="/school/jeonbuk">전북</a>
+              <a class="mega-btn" href="/school/jeonnam">전남</a>
+              <a class="mega-btn" href="/school/gyeongbuk">경북</a>
+              <a class="mega-btn" href="/school/gyeongnam">경남</a>
+              <a class="mega-btn" href="/school/jeju">제주</a>
             </div>
           </div>
         </div>
@@ -4514,13 +4680,27 @@ export default {
     }
 
     // 학교별 과외 페이지 라우팅
-    // URL: /school/{sidoEn}/{gugunRoman}/{schoolRoman} (메인)
-    // URL: /school/{sidoEn}/{gugunRoman}/{schoolRoman}/{subjectEn} (과목)
-    // 학교급(E/M/H)은 SCHOOL_MAP에서 자동 감지
-    if (path.startsWith('/school/')) {
+    if (path.startsWith('/school')) {
       const parts = path.slice(1).split('/').filter(Boolean);
-      // parts[0]='school', [1]=sidoEn, [2]=gugunRoman, [3]=schoolRoman, [4]=subjectEn?
-      if (parts.length >= 4) {
+      // /school → 전체 목록
+      // /school/{sidoEn} → 시도별 학교 목록
+      // /school/{sidoEn}/{gugunRoman} → 구군별 학교 목록
+      // /school/{sidoEn}/{gugunRoman}/{schoolRoman} → 학교 메인
+      // /school/{sidoEn}/{gugunRoman}/{schoolRoman}/{subjectEn} → 학교+과목
+
+      if (parts.length === 1) {
+        // /school → 시도 선택 페이지
+        const page = makeSchoolIndexPage();
+        if (page) return new Response(page, {headers:h});
+      } else if (parts.length === 2) {
+        // /school/{sidoEn} → 시도별 구군 목록
+        const page = makeSchoolSidoPage(parts[1]);
+        if (page) return new Response(page, {headers:h});
+      } else if (parts.length === 3) {
+        // /school/{sidoEn}/{gugunRoman} → 구군별 학교 목록
+        const page = makeSchoolGugunPage(parts[1], parts[2]);
+        if (page) return new Response(page, {headers:h});
+      } else if (parts.length >= 4) {
         const [, sidoEn, gugunRoman, schoolRoman, subjectEn] = parts;
         const grades = ['E','M','H'];
         if (subjectEn) {
