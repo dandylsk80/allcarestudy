@@ -3326,15 +3326,11 @@ function makeCenterPage(slug) {
     ...thList.map(s=>makeSchoolRow(s,'H','#1D4ED8','#DBEAFE','고등')),
   ].join('');
 
-  // 인근 센터
-  const nearby=CENTERS.filter(c=>c.s===sido&&c.n!==n).slice(0,3)
-    .map(c=>`<a href="/academy/center/${makeCenterSlug(c.n)}" style="display:block;padding:10px 12px;background:#F9FAFB;border:1.5px solid #E5E7EB;border-radius:10px;text-decoration:none;margin-bottom:7px"><span style="font-size:13px;font-weight:700;color:#0F2044">${c.on||c.n}</span> <span style="font-size:11px;color:#9CA3AF">${c.d}</span></a>`).join('');
+  const nearby='';
 
   // 대표 학교 키워드
   const repSchool=tmList[0]||thList[0]||teList[0]||'';
-  const seoTitle=repSchool
-    ?`${repSchool} 근처 수학·영어 학원 | ${dong} ${fullName}`
-    :`${dist} ${dong} 수학·영어 학원 | ${fullName}`;
+  const seoTitle=`${dist} ${dong} 수학·영어 학원 | ${fullName}`;
 
   // 학습 내용 (SEO 본문)
   const elemSection=teList.length?`
@@ -3446,10 +3442,7 @@ function makeCenterPage(slug) {
         ${availSubj.map(s=>`<span style="background:${s.color}12;border:1px solid ${s.color}30;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;color:${s.color}">${s.icon} ${s.ko}</span>`).join('')}
       </div>
     </div>
-    ${nearby?`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:16px">
-      <div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:10px">${sido} 인근 센터</div>
-      ${nearby}
-    </div>`:''}
+
   </div>
   </div>
 
@@ -3848,6 +3841,326 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
 }
 
 
+
+function makeConversationPage(lang) {
+  const LANG_MAP = {
+    english: {
+      ko:'영어 회화',
+      sub:'English Conversation',
+      emoji:'🇬🇧',
+      color:'#1D4ED8',
+      bg:'#EFF6FF',
+      lc:'#DBEAFE',
+      thumb:'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1200&q=80',
+      tag:'영어회화 | 비즈니스영어 | 생활영어 | 영어자격증',
+    },
+    chinese: {
+      ko:'중국어 회화',
+      sub:'Chinese Conversation',
+      emoji:'🇨🇳',
+      color:'#DC2626',
+      bg:'#FEF2F2',
+      lc:'#FECACA',
+      thumb:'https://images.unsplash.com/photo-1547190027-9156686aa2f0?w=1200&q=80',
+      tag:'중국어회화 | HSK | 비즈니스중국어 | 생활중국어',
+    },
+    japanese: {
+      ko:'일본어 회화',
+      sub:'Japanese Conversation',
+      emoji:'🇯🇵',
+      color:'#9F1239',
+      bg:'#FFF1F2',
+      lc:'#FECDD3',
+      thumb:'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1200&q=80',
+      tag:'일본어회화 | JLPT | 비즈니스일본어 | 생활일본어',
+    },
+  };
+
+  const info = LANG_MAP[lang];
+  if (!info) return null;
+  const { ko, sub, emoji, color, bg, lc, thumb, tag } = info;
+
+  // 언어별 상세 데이터
+  const DATA = {
+    english: {
+      intro: `영어 회화는 단순히 외국어를 배우는 것이 아닙니다. 글로벌 시대에 영어는 취업, 승진, 해외여행, 비즈니스, 자기계발까지 삶의 모든 영역에서 필요한 핵심 역량입니다. 하지만 많은 분들이 학교에서 수년간 영어를 공부했음에도 막상 외국인 앞에 서면 한 마디도 못하는 경험을 합니다. 이것은 능력의 문제가 아니라 <strong style="color:${color}">말하기 훈련</strong>이 부족했기 때문입니다.`,
+      why_title: '왜 영어 회화가 필요한가요?',
+      why_content: `현재 전 세계 비즈니스 커뮤니케이션의 70% 이상이 영어로 이루어집니다. 국내 대기업 취업 시 영어 인터뷰는 이미 기본 요건이며, 외국계 기업 취업에서는 필수입니다. 해외 출장, 원격 근무, 글로벌 프로젝트에서 영어 회화 능력은 직접적인 연봉 차이로 이어집니다. 취미·여행 측면에서도 영어 회화를 구사하면 해외여행의 깊이가 완전히 달라지고, 영어 콘텐츠(영화·드라마·유튜브·팟캐스트)를 자막 없이 즐길 수 있습니다.`,
+      sections: [
+        {
+          title: '📋 영어 회화 수업 종류',
+          color: '#1D4ED8',
+          bg: '#EFF6FF',
+          items: [
+            ['생활 영어 회화', '일상 대화, 쇼핑, 식당, 길 묻기, 전화 영어 등 실생활에서 바로 쓰는 표현을 익힙니다. 초보자도 4주면 기본 대화가 가능해집니다.'],
+            ['비즈니스 영어', '이메일 작성, 프레젠테이션, 미팅 영어, 전화 응대, 협상 표현까지. 직장인이 가장 많이 찾는 과정으로 업무 효율이 즉시 높아집니다.'],
+            ['여행 영어', '공항, 호텔, 관광지, 긴급상황 대처까지. 해외여행 전 4~8주 집중 과정으로 여행의 질이 완전히 달라집니다.'],
+            ['영어 자격증 대비', 'TOEIC Speaking, OPIc, TEPS Speaking 등 취업·승진에 필요한 영어 말하기 자격증을 집중 준비합니다.'],
+            ['취미 영어', '영화·드라마 대사로 배우는 영어, 팝송 영어, 미국 문화와 함께하는 영어. 재미있게 꾸준히 유지할 수 있는 방법입니다.'],
+          ]
+        },
+        {
+          title: '📚 영어 회화 공부 방법',
+          color: '#1D4ED8',
+          bg: '#EFF6FF',
+          items: [
+            ['쉐도잉(Shadowing)', '원어민 음성을 들으면서 동시에 따라 말하는 훈련입니다. 발음·억양·속도를 자연스럽게 익히는 가장 효과적인 방법으로, 매일 15분씩 3개월이면 발음이 눈에 띄게 좋아집니다.'],
+            ['영어 일기 쓰기 + 말하기', '오늘 하루를 영어로 3문장 쓰고, 소리 내어 읽는 훈련입니다. 쓰기와 말하기를 동시에 훈련할 수 있어 초보자에게 특히 효과적입니다.'],
+            ['패턴 영어 반복 훈련', '\"I used to...\", \"Have you ever...?\" 같은 핵심 패턴 20개를 완벽히 익히면 일상 대화의 80%가 해결됩니다. 패턴을 외우고 다양한 상황에 응용하는 연습이 핵심입니다.'],
+            ['1:1 회화 코칭', '혼자 공부할 때의 가장 큰 문제는 내 발음과 표현이 맞는지 확인이 안 된다는 점입니다. 1:1 코치와 함께하면 즉각적인 피드백으로 잘못된 습관을 빠르게 교정할 수 있습니다.'],
+            ['미디어 노출 극대화', '유튜브 영어 채널, 영어 팟캐스트, 넷플릭스 영어 자막 시청을 매일 30분씩 습관화합니다. 귀가 먼저 뚫려야 입이 열립니다.'],
+          ]
+        },
+        {
+          title: '💼 비즈니스 영어 회화',
+          color: '#1D4ED8',
+          bg: '#EFF6FF',
+          items: [
+            ['이메일 영어', '업무 이메일의 시작(Opening)·본문·마무리(Closing) 표현을 체계적으로 익힙니다. 정중하면서도 명확한 비즈니스 이메일 작성법을 마스터합니다.'],
+            ['회의·프레젠테이션 영어', '의견 제시, 동의·반대 표현, 질문하기, 발표 시작·마무리 표현 등 실제 회의에서 자신감 있게 발언하는 방법을 훈련합니다.'],
+            ['전화·화상회의 영어', '국제 전화·줌 미팅에서 자주 쓰는 표현과 전화 영어 특유의 어려움(발음, 빠른 속도)을 극복하는 전략을 연습합니다.'],
+          ]
+        },
+        {
+          title: '🏆 영어 말하기 자격증',
+          color: '#1D4ED8',
+          bg: '#EFF6FF',
+          items: [
+            ['TOEIC Speaking', '직장인 취업·승진 필수 자격증. Level 6(130점) 이상이면 대부분 기업 요건 충족. 15문항 20분 시험으로, 읽기·묘사·의견 제시 유형별 전략이 핵심입니다.'],
+            ['OPIc (Oral Proficiency Interview)', '자연스러운 인터뷰 형식으로 진행. IM(Intermediate Mid) 이상이 목표. 자기소개·서베이 주제 완벽 준비와 자연스러운 전환 표현이 고득점 비결입니다.'],
+            ['IELTS Speaking', '해외 대학 진학, 해외 취업, 이민 비자에 필요. Band 6.0 이상 목표. 파트 1·2·3 각 단계별 전략과 Fluency 훈련이 중요합니다.'],
+          ]
+        },
+      ],
+      study_tips: [
+        '매일 15분, 주 5일 — 주 2시간 몰아서 하는 것보다 매일 15분이 훨씬 효과적입니다',
+        '소리 내어 말하기 — 속으로 읽는 것과 소리 내어 말하는 것은 완전히 다릅니다. 반드시 소리 내어 연습하세요',
+        '틀려도 계속 말하기 — 완벽한 문장을 만들려다가 침묵하는 것이 가장 나쁜 습관입니다',
+        '녹음 후 자기 평가 — 자신의 영어를 녹음해서 들어보면 개선할 점이 명확히 보입니다',
+        '문화도 함께 배우기 — 언어는 문화를 담고 있습니다. 영어권 문화를 이해하면 자연스러운 표현이 쉬워집니다',
+      ],
+    },
+    chinese: {
+      intro: `중국어는 전 세계 14억 명이 사용하는 언어로, 비즈니스·무역·관광 분야에서 영어 다음으로 중요한 언어가 됐습니다. 한국과 중국의 교역 규모는 세계 1위 수준으로, 제조업·무역·IT·관광 등 거의 모든 산업에서 중국어 구사 능력은 핵심 경쟁력입니다. 특히 중국어는 성조(4성)가 있어 발음을 처음부터 정확히 배우는 것이 매우 중요합니다. <strong style="color:${color}">1:1 회화 코칭</strong>으로 발음부터 제대로 잡아야 나중에 교정 비용이 들지 않습니다.`,
+      why_title: '왜 중국어 회화가 필요한가요?',
+      why_content: `한국의 대중국 수출입 규모는 전체의 25% 이상을 차지합니다. 제조업, 무역, 유통, IT, 게임, 엔터테인먼트 등 중국과 연계된 산업에서 중국어 능통자는 취업 시 명확한 우위를 가집니다. 또한 중국어를 배우면 일본어, 한자 문화권 전체를 이해하는 데 도움이 되며, 관광 측면에서도 중국·대만·홍콩 등 중화권 여행이 풍부해집니다.`,
+      sections: [
+        {
+          title: '📋 중국어 회화 수업 종류',
+          color: '#DC2626',
+          bg: '#FEF2F2',
+          items: [
+            ['입문 중국어 회화', '성조(4성) 발음부터 시작합니다. 핀인(발음 기호) 완성 후 기초 인사·자기소개·숫자·시간 표현을 익힙니다. 3개월이면 기본 회화가 가능합니다.'],
+            ['생활 중국어', '쇼핑, 식당, 교통, 숙박, 길 묻기 등 일상에서 바로 쓰는 표현을 집중적으로 학습합니다. 중국 여행 전 필수 과정입니다.'],
+            ['비즈니스 중국어', '업무 이메일, 미팅, 협상, 접대 표현 등 실무에서 필요한 중국어를 익힙니다. 중국 거래처 관리, 출장 대화에 즉시 활용 가능합니다.'],
+            ['HSK 자격증 대비', 'HSK 3급(일상 대화), HSK 4급(업무 활용), HSK 5급(고급 표현)까지 단계별 준비를 합니다. 취업·진학에 필수적인 공인 중국어 능력 시험입니다.'],
+            ['취미 중국어', '중국 드라마·영화·노래로 배우는 중국어입니다. 재미있게 학습하면서 현지 문화까지 이해할 수 있습니다.'],
+          ]
+        },
+        {
+          title: '📚 중국어 회화 공부 방법',
+          color: '#DC2626',
+          bg: '#FEF2F2',
+          items: [
+            ['성조(4성) 완벽 정복', '중국어는 같은 발음이라도 성조에 따라 의미가 완전히 달라집니다. 처음 2~4주를 성조 훈련에만 집중하면 이후 학습 속도가 3배 빨라집니다.'],
+            ['핀인 읽기 완성', '한국어 영어 발음 기호처럼 중국어에는 핀인이 있습니다. 핀인을 완성하면 모든 중국어 단어를 스스로 읽을 수 있습니다. 2~3주면 기본 핀인 완성이 가능합니다.'],
+            ['패턴 중심 회화 훈련', '\"我想...(나는 ~하고 싶다)\", \"你能...吗?(~할 수 있어요?)\" 등 핵심 패턴 30개를 익히면 일상 대화의 70%가 해결됩니다.'],
+            ['중드(중국 드라마) 활용', '자막과 함께 중국 드라마를 보면서 자연스러운 표현을 습득합니다. 특히 현대 드라마는 실생활 회화에 즉시 응용할 수 있는 표현이 풍부합니다.'],
+            ['1:1 코칭으로 발음 교정', '중국어 발음은 혼자 공부하면 나쁜 습관이 생기기 쉽습니다. 1:1 코치의 실시간 피드백으로 초반에 정확한 발음을 잡는 것이 중요합니다.'],
+          ]
+        },
+        {
+          title: '💼 비즈니스 중국어',
+          color: '#DC2626',
+          bg: '#FEF2F2',
+          items: [
+            ['중국어 비즈니스 이메일', '정중한 인사, 요청, 확인, 감사 표현 등 업무 이메일에서 자주 쓰는 표현을 패턴별로 익힙니다.'],
+            ['중국 거래처 미팅 회화', '처음 만남 인사, 명함 교환, 식사·접대 대화, 가격 협상 표현 등 실무 중국어를 집중 훈련합니다.'],
+            ['중국어 전화 영어', '전화로 예약, 확인, 불만 처리, 긴급 상황 대응하는 표현을 익힙니다.'],
+          ]
+        },
+        {
+          title: '🏆 중국어 자격증 (HSK)',
+          color: '#DC2626',
+          bg: '#FEF2F2',
+          items: [
+            ['HSK 3급', '150개 단어, 일상적인 중국어 대화 가능. 대학 입학·기업 신입 지원 시 활용. 3~4개월 준비로 취득 가능합니다.'],
+            ['HSK 4급', '1200개 단어, 비교적 유창한 회화 가능. 취업 시 경쟁력 있는 자격증. 6~9개월 준비 권장합니다.'],
+            ['HSK 5급', '2500개 단어, 중국어로 업무 처리 가능. 통역·번역·무역직 취업 우대. 1~1.5년 준비가 필요합니다.'],
+          ]
+        },
+      ],
+      study_tips: [
+        '성조는 타협 없이 — 처음부터 정확한 성조로 배우지 않으면 나중에 교정이 매우 힘듭니다',
+        '손으로 한자 쓰기 — 한자를 손으로 쓰면 기억에 오래 남습니다. 매일 5개씩 써보세요',
+        '중국 드라마 활용 — 부담 없이 자막과 함께 즐기면서 자연스러운 표현을 습득하세요',
+        '말하기 녹음 비교 — 원어민 발음과 자신의 발음을 녹음해 비교하면 개선점이 명확해집니다',
+        '꾸준함이 핵심 — 중국어는 성조 때문에 꾸준한 연습이 필수입니다. 매일 20분이 1주일에 3시간보다 효과적입니다',
+      ],
+    },
+    japanese: {
+      intro: `일본어는 한국인이 가장 빠르게 배울 수 있는 외국어입니다. 문장 구조가 한국어와 거의 동일하고, 한자를 이미 어느 정도 알고 있어 어휘 습득도 빠릅니다. 일본과 한국은 지리적으로 가장 가까운 나라로, 관광·문화·비즈니스·취업 등 다양한 분야에서 일본어 능력이 직접적인 기회를 만들어줍니다. 히라가나·가타카나 46자를 익히면 2~3개월 만에 기본 회화가 가능합니다. <strong style="color:${color}">1:1 맞춤 회화 코칭</strong>으로 올바른 발음과 자연스러운 표현을 처음부터 제대로 배울 수 있습니다.`,
+      why_title: '왜 일본어 회화가 필요한가요?',
+      why_content: `일본은 한국인이 가장 많이 방문하는 해외 여행지 1위입니다. 오사카·도쿄·후쿠오카 여행에서 일본어를 조금이라도 할 수 있으면 현지 맛집, 숨겨진 명소, 현지인과의 소통이 가능해집니다. 취업 측면에서도 한국의 일본계 기업, 일본 취업, 온라인 번역·통역 프리랜서 등 일본어 능통자의 수요는 지속적으로 높습니다. K-POP·한류의 영향으로 일본 현지 비즈니스 기회도 크게 늘고 있습니다.`,
+      sections: [
+        {
+          title: '📋 일본어 회화 수업 종류',
+          color: '#9F1239',
+          bg: '#FFF1F2',
+          items: [
+            ['입문 일본어 회화', '히라가나·가타카나(총 92자)를 2주 안에 완성하고, 기초 인사·자기소개·숫자·쇼핑 표현을 익힙니다. 한국인은 발음이 쉬워 진도가 빠릅니다.'],
+            ['생활 일본어', '여행, 쇼핑, 식당, 교통, 숙박 등 일상에서 바로 쓰는 표현을 집중 학습합니다. 일본 여행 전 4~6주 집중 과정으로 준비하는 분들이 많습니다.'],
+            ['비즈니스 일본어', '경어(敬語, けいご) 사용법, 이메일, 미팅, 전화 응대 등 일본 직장 문화에 맞는 표현을 익힙니다. 일본 특유의 경어 문화를 이해하지 못하면 실수하기 쉽습니다.'],
+            ['JLPT 자격증 대비', 'N5(입문)부터 N2(취업), N1(고급)까지 단계별 준비. 취업·대학원 진학에 필요한 공인 일본어 능력 시험입니다.'],
+            ['일본 문화 회화', '애니메이션·드라마·게임에서 쓰는 일본어. 오타쿠 문화와 연결해 재미있게 배우는 과정으로 꾸준히 유지하기 좋습니다.'],
+          ]
+        },
+        {
+          title: '📚 일본어 회화 공부 방법',
+          color: '#9F1239',
+          bg: '#FFF1F2',
+          items: [
+            ['히라가나·가타카나 완성 우선', '알파벳 같은 기본 문자를 먼저 완성해야 합니다. 2주면 충분히 가능하며, 이후 모든 학습이 훨씬 수월해집니다.'],
+            ['한자(漢字) 활용', '한국인은 이미 한자 어휘를 알고 있어 일본어 단어 습득이 빠릅니다. 한자를 적극 활용하면 어휘 학습 속도가 2배 빨라집니다.'],
+            ['드라마·애니메이션 활용', '일본 드라마나 애니메이션에 나오는 표현을 따라 말하는 연습을 합니다. 자연스러운 인토네이션과 표현을 동시에 익힐 수 있습니다.'],
+            ['경어 패턴 익히기', '일본어는 경어 사용이 매우 중요합니다. 丁寧語(정중어), 尊敬語(존경어), 謙譲語(겸양어) 기본 패턴을 익히면 비즈니스 상황에서 자신감이 생깁니다.'],
+            ['1:1 코칭으로 빠른 성장', '일본어는 혼자 공부할 때 발음(특히 장음, 촉음)과 경어 사용에서 오류가 생기기 쉽습니다. 1:1 코치의 즉각적인 피드백이 빠른 성장의 핵심입니다.'],
+          ]
+        },
+        {
+          title: '💼 비즈니스 일본어',
+          color: '#9F1239',
+          bg: '#FFF1F2',
+          items: [
+            ['일본어 경어(敬語) 완성', '일본 직장 문화의 핵심인 경어를 체계적으로 익힙니다. 같은 의미도 상황에 따라 적절한 경어를 쓰지 않으면 실례가 될 수 있습니다.'],
+            ['비즈니스 이메일 일본어', '업무 메일의 시작·본문·마무리 표현, 정중한 요청·거절·감사 표현을 패턴별로 익힙니다.'],
+            ['미팅·접대 일본어', '처음 만남, 명함 교환, 식사·접대 대화, 제안·협상 표현 등 일본 비즈니스 현장에서 필요한 표현을 집중 훈련합니다.'],
+          ]
+        },
+        {
+          title: '🏆 JLPT 자격증',
+          color: '#9F1239',
+          bg: '#FFF1F2',
+          items: [
+            ['JLPT N5·N4', '입문~초급. 기본 인사, 일상 대화 가능. 일본어 공부를 시작한 분의 첫 목표. 3~6개월 준비로 취득 가능합니다.'],
+            ['JLPT N3', '중급. 일상적인 상황에서 자연스러운 대화 가능. 관광·서비스업 취업 시 유리. 6~12개월 준비 권장합니다.'],
+            ['JLPT N2', '상급. 업무에서 일본어 사용 가능. 일본계 기업·일본 취업 지원 시 가장 많이 요구되는 레벨. 1~1.5년 준비가 필요합니다.'],
+          ]
+        },
+      ],
+      study_tips: [
+        '문자부터 완성 — 히라가나·가타카나를 먼저 완성해야 이후 학습이 수월합니다',
+        '드라마·애니 적극 활용 — 좋아하는 콘텐츠로 배우면 꾸준히 유지하기 쉽습니다',
+        '한자 공부 병행 — 한국인의 강점! 한자를 아는 만큼 일본어 어휘 학습이 빨라집니다',
+        '소리 내어 말하기 훈련 — 속으로만 읽지 말고 반드시 소리 내어 말하며 연습하세요',
+        '경어 패턴 암기 — 비즈니스·여행에서 기본 경어 패턴 10개만 알아도 인상이 완전히 달라집니다',
+      ],
+    },
+  };
+
+  const d = DATA[lang];
+  if (!d) return null;
+
+  // 섹션 HTML 생성
+  const sectionsHtml = d.sections.map(sec => `
+    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 18px;padding-left:14px;border-left:5px solid ${sec.color}">${sec.title}</h2>
+      ${sec.items.map(([t,desc], i) => `
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;${i < sec.items.length-1 ? 'border-bottom:1px solid #F1F5F9' : ''}">
+          <div style="min-width:28px;height:28px;background:${sec.color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:900;flex-shrink:0">${i+1}</div>
+          <div>
+            <div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:5px">${t}</div>
+            <p style="font-size:14px;color:#374151;line-height:1.85;margin:0">${desc}</p>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+
+  // 학습 팁
+  const tipsHtml = d.study_tips.map(tip => `
+    <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #F1F5F9">
+      <span style="color:${color};font-weight:900;font-size:16px;flex-shrink:0">✓</span>
+      <span style="font-size:14px;color:#374151;line-height:1.75">${tip}</span>
+    </div>`).join('');
+
+  // 다른 언어 링크
+  const otherLangs = Object.entries(LANG_MAP).filter(([k]) => k !== lang)
+    .map(([k, v]) => `<a href="/conversation/${k}" style="display:inline-flex;align-items:center;gap:8px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:12px 18px;text-decoration:none;margin:6px;transition:all .2s" onmouseover="this.style.borderColor='${v.color}'" onmouseout="this.style.borderColor='#E5E7EB'"><span style="font-size:20px">${v.emoji}</span><div><div style="font-size:14px;font-weight:800;color:#0F2044">${v.ko}</div><div style="font-size:11px;color:#9CA3AF">${v.sub}</div></div></a>`).join('');
+
+  const canonical = `/conversation/${lang}`;
+  const title = `${ko} | 자격증·비즈니스·생활·취미 완벽 가이드 - 올케어스터디`;
+  const desc = `${ko} 수업 전문. 생활회화·비즈니스·자격증 대비·취미까지. 1:1 맞춤 코칭. 무료 상담 010-6834-8080`;
+  const bc = [{name:'홈',url:'/'},{name:'회화 수업',url:'/conversation'},{name:ko,url:canonical}];
+
+  const body = `<div class="wrap">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation">회화 수업</a> &rsaquo; <span>${ko}</span></div>
+
+  <!-- 히어로 -->
+  <div style="position:relative;width:100%;height:300px;border-radius:22px;overflow:hidden;margin-bottom:32px">
+    <img src="${thumb}" alt="${ko}" style="width:100%;height:100%;object-fit:cover" loading="eager" onerror="this.parentElement.style.background='linear-gradient(135deg,${color},${color}99)';this.remove()">
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,32,68,.88),rgba(15,32,68,.2))"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:40px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:${color};color:white;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:14px;width:fit-content">${emoji} ${ko} 전문 코칭</div>
+      <h1 style="font-size:32px;font-weight:900;color:white;margin:0 0 10px;line-height:1.25">${ko} 완벽 가이드</h1>
+      <p style="font-size:15px;color:rgba(255,255,255,.8);margin:0">${tag}</p>
+    </div>
+  </div>
+
+  <!-- 수치 -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px">
+    ${[['48시간','코치 매칭','#1D4ED8','#EFF6FF'],['3단계','코치 검증','#10B981','#ECFDF5'],['무료','첫 수업','#F59E0B','#FFFBEB'],['전국','방문 코칭','#8B5CF6','#F5F3FF']].map(([v,l,c,bg])=>`<div style="background:${bg};border-radius:14px;padding:16px;text-align:center;border:1.5px solid ${c}20"><div style="font-size:20px;font-weight:900;color:${c}">${v}</div><div style="font-size:11px;color:#6B7280;margin-top:3px">${l}</div></div>`).join('')}
+  </div>
+
+  <!-- 소개 -->
+  <section style="background:${bg};border-left:5px solid ${color};border-radius:0 16px 16px 0;padding:24px 26px;margin-bottom:24px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 12px">${emoji} ${ko}란?</h2>
+    <p style="font-size:15px;color:#374151;line-height:2;margin:0">${d.intro.replace('${color}', color)}</p>
+  </section>
+
+  <!-- 왜 필요한가 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:24px">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-left:14px;border-left:5px solid ${color}">${d.why_title}</h2>
+    <p style="font-size:15px;color:#374151;line-height:2;margin:0">${d.why_content}</p>
+  </section>
+
+  <!-- 섹션들 -->
+  ${sectionsHtml}
+
+  <!-- 학습 팁 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:24px">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid ${color}">💡 ${ko} 공부 핵심 5가지</h2>
+    ${tipsHtml}
+  </section>
+
+  <!-- 다른 언어 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:24px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 언어 회화도 보기</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">${otherLangs}</div>
+  </section>
+
+  <div class="cta-box">
+    <h3>${ko} 무료 상담</h3>
+    <p>1:1 맞춤 ${ko} 코칭 · 첫 수업 무료 · 48시간 내 코치 매칭</p>
+    <div class="cta-btns">
+      <a class="btn-p" href="tel:01068348080">010-6834-8080</a>
+      <a class="btn-o" href="/contact?type=tutoring&subject=conversation_${lang}">무료 상담 신청</a>
+    </div>
+  </div>
+  <div class="keyword-box" style="margin-top:20px">
+    <div class="keyword-title">관련 검색어</div>
+    <div class="keyword-tags">
+      <span class="keyword-tag">${ko}</span>
+      <span class="keyword-tag">${ko} 수업</span>
+      <span class="keyword-tag">비즈니스 ${ko.replace(' 회화','')}</span>
+      <span class="keyword-tag">${ko} 자격증</span>
+      <span class="keyword-tag">생활 ${ko.replace(' 회화','')}</span>
+      <span class="keyword-tag">${ko} 독학</span>
+      <span class="keyword-tag">1:1 ${ko}</span>
+    </div>
+  </div>
+</div>`;
+
+  return wrap(title, desc, canonical, body, bc);
+}
 
 function makeAcademyPage() {
   const SIDO_ORDER = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','강원','제주'];
@@ -5429,6 +5742,10 @@ export default {
         if (p) return new Response(p, {headers:h});
       }
     }
+    // 회화 수업
+    if (path === '/conversation/english') return new Response(makeConversationPage('english'), {headers:h});
+    if (path === '/conversation/chinese') return new Response(makeConversationPage('chinese'), {headers:h});
+    if (path === '/conversation/japanese') return new Response(makeConversationPage('japanese'), {headers:h});
     if (path === '/academy/intro') return new Response(makeAcademyIntroPage(), {headers:h});
     if (path === '/academy' || path.startsWith('/academy/')) return new Response(makeAcademyPage(), {headers:h});
     if (path === '/favicon.ico' || path === '/favicon-32.png' || path === '/favicon-16.png') {
