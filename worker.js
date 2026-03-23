@@ -3618,6 +3618,16 @@ function makeAcademyPage() {
   <script>
   const CENTERS = ${JSON.stringify(CENTERS)};
   const SIDO_ORDER = ${JSON.stringify(SIDO_ORDER)};
+
+  // 센터 슬러그 생성 (서버와 동일 로직)
+  function makeCenterSlug(name){
+    let h=0;for(let i=0;i<name.length;i++)h=(h*31+name.charCodeAt(i))>>>0;
+    const cho='ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
+    const rm={ㄱ:'g',ㄲ:'kk',ㄴ:'n',ㄷ:'d',ㄸ:'tt',ㄹ:'r',ㅁ:'m',ㅂ:'b',ㅃ:'pp',ㅅ:'s',ㅆ:'ss',ㅇ:'',ㅈ:'j',ㅉ:'jj',ㅊ:'ch',ㅋ:'k',ㅌ:'t',ㅍ:'p',ㅎ:'h'};
+    let r='';for(const ch of name){const code=ch.charCodeAt(0)-0xAC00;if(code>=0&&code<11172){const ci=Math.floor(code/28/21);r+=rm[cho[ci]]||'';}else if(/[a-z0-9]/i.test(ch))r+=ch.toLowerCase();}
+    return (r.slice(0,12)+h.toString(36)).slice(0,16);
+  }
+
   let currentSido = null;
   let currentDistrict = '전체';
 
