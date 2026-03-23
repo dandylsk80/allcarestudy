@@ -658,7 +658,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 .mob-contact-btn{margin:12px 16px 0;display:flex;align-items:center;justify-content:center;gap:8px;background:#1D4ED8;color:white;padding:14px;border-radius:12px;font-size:14px;font-weight:900;text-decoration:none}
 @media(max-width:768px){div[style*='grid-template-columns:1fr 340px']{grid-template-columns:1fr!important}}
 .cf-input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit}
-.cf-label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}`;
+.cf-label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}
+@media(max-width:768px){div[style*='grid-template-columns:1fr 300px']{grid-template-columns:1fr!important}}`;
 
 const HEADER = `<header>
   <div class="hw">
@@ -973,10 +974,10 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
     if(btn){
       if(isAcademy){
         btn.href = '/contact?type=academy';
-        btn.textContent = '🏫 학원 상담하기';
+        btn.textContent = '학원 상담하기';
       } else {
         btn.href = '/contact?type=tutoring';
-        btn.textContent = '👨‍🏫 과외 상담하기';
+        btn.textContent = '과외 상담하기';
       }
     }
     var el = document.getElementById('float-btns');
@@ -3289,111 +3290,226 @@ function makeCenterPage(slug) {
   if (!center) return null;
   const {n, on, reg, s:sido, se, d:dist, a:addr, dir, te, tm, th} = center;
   const fullName = on||n;
+
+  // 해시 기반 수치
   let _h=0; for(const ch of fullName) _h=(_h*31+ch.charCodeAt(0))>>>0;
-  const teacherCnt=160+(_h%140), satisfaction=93+(_h%6), expYear=5+(_h%10), caseCnt=200+(_h%300);
-  const teList=(te||'').split(',').map(s=>s.trim()).filter(Boolean);
-  const tmList=(tm||'').split(',').map(s=>s.trim()).filter(Boolean);
-  const thList=(th||'').split(',').map(s=>s.trim()).filter(Boolean);
-  const dongMatch=addr.match(/([가-힣]+(?:동|읍|면|리))/);
+  const expYear=5+(_h%10), caseCnt=200+(_h%300), satisfaction=93+(_h%6);
+
+  // 주소에서 동 추출
+  const dongMatch=addr.match(/([가-힣]+(?:동|읍|면|로|길))\b/);
   const dong=dongMatch?dongMatch[1]:dist;
 
-  const mathDesc=`${fullName}의 수학 코칭은 개념 원리 이해를 최우선합니다. ${teList[0]||'인근 초등학교'} 기초부터 ${tmList[0]||'중학교'} 방정식·함수, ${thList[0]||'고등학교'} 수능 수학까지 학년별 맞춤 커리큘럼으로 진행합니다. 내신 4주 전 기출 집중 분석, 오답 노트 작성으로 실수를 줄입니다.`;
-  const engDesc=`${dong} 영어 과외는 파닉스·단어(초등)부터 교과서 지문·서술형(중등), 수능 독해·어휘 3000(고등)까지 단계별로 지도합니다. ${tmList[0]||'중학교'} 영어 내신 교과서 지문 5회 반복, ${thList[0]||'고등학교'} 수능 영어 1등급을 목표합니다.`;
+  // 학교 목록 파싱
+  const teList=(te||'').split(',').map(x=>x.trim()).filter(Boolean);
+  const tmList=(tm||'').split(',').map(x=>x.trim()).filter(Boolean);
+  const thList=(th||'').split(',').map(x=>x.trim()).filter(Boolean);
+  const allSchools=[...teList,...tmList,...thList];
 
-  const schoolBadges=[
-    ...teList.map(s=>`<span style="background:#EFF6FF;color:#1D4ED8;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px">초 ${s}</span>`),
-    ...tmList.map(s=>`<span style="background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px">중 ${s}</span>`),
-    ...thList.map(s=>`<span style="background:#F5F3FF;color:#7C3AED;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px">고 ${s}</span>`),
+  // 대표 학교 (SEO 키워드용)
+  const repTE=teList[0]||'', repTM=tmList[0]||'', repTH=thList[0]||'';
+  const repSchool=repTM||repTH||repTE; // 중등 우선
+
+  // 학교별 링크
+  const makeSchoolLink=(sch,grade,color,bg)=>{
+    const sl=makeSchoolSlug(grade,sch);
+    return `<a href="/academy/school/${grade.toLowerCase()}/${sl}" style="display:inline-block;background:${bg};color:${color};font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;text-decoration:none;margin:3px;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">${sch}</a>`;
+  };
+
+  const schoolBadgesHtml=[
+    teList.length?`<div style="margin-bottom:10px"><span style="display:inline-block;background:#FEF3C7;color:#D97706;font-size:11px;font-weight:800;padding:3px 10px;border-radius:4px;margin-right:8px;vertical-align:middle">초등</span>${teList.map(s=>makeSchoolLink(s,'E','#D97706','#FFFBEB')).join('')}</div>`:'',
+    tmList.length?`<div style="margin-bottom:10px"><span style="display:inline-block;background:#DCFCE7;color:#16A34A;font-size:11px;font-weight:800;padding:3px 10px;border-radius:4px;margin-right:8px;vertical-align:middle">중등</span>${tmList.map(s=>makeSchoolLink(s,'M','#16A34A','#F0FDF4')).join('')}</div>`:'',
+    thList.length?`<div style="margin-bottom:10px"><span style="display:inline-block;background:#DBEAFE;color:#1D4ED8;font-size:11px;font-weight:800;padding:3px 10px;border-radius:4px;margin-right:8px;vertical-align:middle">고등</span>${thList.map(s=>makeSchoolLink(s,'H','#1D4ED8','#EFF6FF')).join('')}</div>`:''
   ].join('');
 
+  // 인근 센터
   const nearby=CENTERS.filter(c=>c.s===sido&&c.n!==n).slice(0,3)
-    .map(c=>`<a href="/academy/center/${makeCenterSlug(c.n)}" style="display:block;padding:10px 12px;background:#F9FAFB;border:1.5px solid #E5E7EB;border-radius:10px;text-decoration:none;margin-bottom:7px;font-size:12px;font-weight:700;color:#0F2044">${c.on||c.n} <span style="font-size:11px;color:#9CA3AF;font-weight:400">${c.d}</span></a>`).join('');
+    .map(c=>`<a href="/academy/center/${makeCenterSlug(c.n)}" style="display:block;padding:11px 14px;background:#F9FAFB;border:1.5px solid #E5E7EB;border-radius:10px;text-decoration:none;margin-bottom:8px"><span style="font-size:13px;font-weight:700;color:#0F2044">${c.on||c.n}</span> <span style="font-size:11px;color:#9CA3AF">${c.d}</span></a>`).join('');
 
-  const subjCards=[
-    ['수학','📐','#3B82F6','#EFF6FF',mathDesc.slice(0,70)+'...'],
-    ['영어','📖','#10B981','#ECFDF5',engDesc.slice(0,70)+'...'],
-    ['국어','✍️','#F59E0B','#FFFBEB','독해력·서술형·문학 분석 체계적 지도. 내신 서술형 감점 없는 답안 훈련.'],
-    ['과학','🔬','#8B5CF6','#F5F3FF','원리 이해 중심 과학 코칭. 실험 해석·서술형 완벽 대비.'],
-    ['사회','🌏','#EF4444','#FEF2F2','역사 흐름·지리·경제를 맥락으로 이해하는 사회 전문 코칭.'],
-    ['코딩','💻','#06B6D4','#ECFEFF','스크래치·파이썬·알고리즘 단계별 코딩 교육.'],
-  ].map(([t,e,c,bg,d])=>`<div style="background:${bg};border-radius:12px;padding:14px;border-top:3px solid ${c}"><div style="font-size:16px;margin-bottom:5px">${e}</div><div style="font-size:12px;font-weight:900;color:#0F2044;margin-bottom:4px">${t}</div><p style="font-size:11px;color:#374151;line-height:1.65;margin:0">${d}</p></div>`).join('');
+  // ── SEO 본문 ──────────────────────────────────────────────────────────────
+  // 제목 키워드: 대표학교 + 지역 + 과목
+  const seoTitle=repSchool
+    ? `${repSchool} 근처 수학·영어 학원 | ${dong} ${fullName}`
+    : `${dist} ${dong} 수학·영어 학원 | ${fullName}`;
 
-  const steps=['🎯무료 상담 & 진단|현재 성적·목표 파악 후 맞춤 코치 배정','📋커리큘럼 설계|학교 내신 출제 경향 분석 후 최적화','✏️정규 수업|1:1 집중 수업. 모르는 부분 즉시 해결','📬주간 보고서|매주 학습 내용·성취도 학부모님께 공유','🏆내신 집중 보강|시험 4주 전 기출 분석·예상 문제'].map((s,i)=>{const[et,d]=s.split('|');const[e,t]=et.split(/(?<=[🎯📋✏️📬🏆])/);return`<div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #F1F5F9"><div style="width:32px;height:32px;background:#EFF6FF;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">${e}</div><div><div style="font-size:13px;font-weight:900;color:#0F2044;margin-bottom:2px">${t}</div><div style="font-size:12px;color:#6B7280;line-height:1.6">${d}</div></div></div>`;}).join('');
+  // 초등 섹션
+  const elemSection=teList.length?`
+    <h3 style="font-size:17px;font-weight:900;color:#0F2044;margin:28px 0 10px;padding-left:10px;border-left:4px solid #FCD34D">초등학생 학습 코칭 — ${teList.slice(0,2).join('·')} 대상</h3>
+    <p style="font-size:15px;color:#374151;line-height:2;margin:0 0 12px">초등학교 시기는 <strong style="color:#D97706">수학 기초 연산·분수, 영어 파닉스·단어, 국어 독해력</strong>을 완성해야 할 가장 중요한 시간입니다. ${dong}에 위치한 <strong style="color:#1D4ED8">${fullName}</strong>은 ${teList.join(', ')} 학생들을 대상으로 학교 진도에 맞춘 1:1 맞춤 코칭을 진행합니다.</p>
+    <div style="background:#FFFBEB;border-left:4px solid #FCD34D;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:800;color:#D97706;margin-bottom:8px">초등 코칭 핵심 포인트</div>
+      <ul style="font-size:14px;color:#374151;line-height:2;margin:0;padding-left:18px">
+        <li>매일 10분 연산 훈련으로 수학 속도와 정확도 향상</li>
+        <li>파닉스·단어 500개 기초부터 교과서 지문 완성</li>
+        <li>받아쓰기·독서 습관·일기 쓰기로 국어 기초 완성</li>
+        <li>중학교 선행 개념 미리 잡아 진학 후 어려움 없도록</li>
+      </ul>
+    </div>`:'';
 
-  const priceBase=[180+(_h%80),200+(_h%100),240+(_h%120)];
+  // 중등 섹션
+  const middleSection=tmList.length?`
+    <h3 style="font-size:17px;font-weight:900;color:#0F2044;margin:28px 0 10px;padding-left:10px;border-left:4px solid #34D399">${tmList.slice(0,2).join('·')} 내신 완벽 관리</h3>
+    <p style="font-size:15px;color:#374151;line-height:2;margin:0 0 12px">중학교는 처음으로 내신 등급이 기록되는 시기입니다. <strong style="color:#16A34A">${tmList.join(', ')}</strong> 학생들의 내신 성적 향상을 위해 ${fullName}은 각 학교의 기출문제와 출제 패턴을 철저히 분석합니다. 수학 방정식·함수, 영어 교과서 지문 분석, 국어 서술형까지 한 곳에서 체계적으로 관리합니다.</p>
+    <div style="background:#F0FDF4;border-left:4px solid #34D399;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:800;color:#16A34A;margin-bottom:8px">중등 내신 전략</div>
+      <ul style="font-size:14px;color:#374151;line-height:2;margin:0;padding-left:18px">
+        <li>시험 4주 전 기출문제 집중 분석으로 출제 패턴 파악</li>
+        <li>수학 방정식·이차함수·확률 개념부터 서술형까지</li>
+        <li>영어 교과서 지문 5회 반복 + 서술형 답안 작성 훈련</li>
+        <li>국어 문학·비문학 핵심어 포함 서술형 답안 완성</li>
+      </ul>
+    </div>`:'';
+
+  // 고등 섹션
+  const highSection=thList.length?`
+    <h3 style="font-size:17px;font-weight:900;color:#0F2044;margin:28px 0 10px;padding-left:10px;border-left:4px solid #818CF8">${thList.slice(0,2).join('·')} 내신·수능 대비</h3>
+    <p style="font-size:15px;color:#374151;line-height:2;margin:0 0 12px">고등학교 내신은 수시·정시 모두에 직접 영향을 미칩니다. <strong style="color:#4F46E5">${thList.join(', ')}</strong> 학생들을 위한 내신 집중 코칭과 수능 대비를 병행합니다. 수학Ⅰ·Ⅱ·선택과목, 영어 수능 1등급, 국어 독서·문학을 체계적으로 완성합니다.</p>
+    <div style="background:#EEF2FF;border-left:4px solid #818CF8;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:800;color:#4F46E5;margin-bottom:8px">고등 수능·내신 전략</div>
+      <ul style="font-size:14px;color:#374151;line-height:2;margin:0;padding-left:18px">
+        <li>내신 기간 학교 기출 집중 / 평소 수능 기출 반복 이원화</li>
+        <li>수능 수학 킬러문항 공략 + 내신 서술형 동시 관리</li>
+        <li>영어 어휘 3000개 + 빠른 독해 훈련으로 1등급 확보</li>
+        <li>국어 비문학 매일 1~2개 + 수능 문학 심층 분석</li>
+      </ul>
+    </div>`:'';
+
+  // D-28 시험 전략
+  const examPlan=`
+    <h3 style="font-size:17px;font-weight:900;color:#0F2044;margin:28px 0 12px;padding-left:10px;border-left:4px solid #3B82F6">시험 D-28 내신 집중 플랜</h3>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px">
+      ${[['D-28','범위 확인\n계획표 작성','#EFF6FF','#1D4ED8'],['D-21','교과서 정독\n핵심 노트','#ECFDF5','#16A34A'],['D-14','기출 풀기\n오답 분석','#FFFBEB','#D97706'],['D-7','예상 문제\n서술형 연습','#FEF2F2','#DC2626'],['D-1','오답 복습\n최종 확인','#F5F3FF','#7C3AED']].map(([d,t,bg,c])=>`<div style="background:${bg};border-radius:10px;padding:12px 8px;text-align:center"><div style="font-size:13px;font-weight:900;color:${c};margin-bottom:4px">${d}</div><div style="font-size:11px;color:#374151;line-height:1.6;white-space:pre-line">${t}</div></div>`).join('')}
+    </div>`;
+
+  // FAQ
+  const faqHtml=[
+    [`${fullName} 위치가 어디인가요?`, dir||addr],
+    [`${dong} 수학·영어 학원 첫 수업은 어떻게 진행되나요?`,'처음에는 무료 수준 진단 수업으로 진행됩니다. 현재 성적과 취약 단원을 파악한 뒤 맞춤 커리큘럼을 설계해드립니다.'],
+    [`${repSchool||dist} 내신 몇 등급까지 올릴 수 있나요?`,'학생의 현재 수준에 따라 다르지만, 2~3개월 집중 코칭 후 1~2등급 향상 사례가 많습니다. 시험 전 단기 집중(4~8주) 코스도 운영합니다.'],
+    ['학원과 병행해도 되나요?','학원에서 부족한 부분을 1:1 코칭으로 보완하는 방식이 가장 효과적입니다. 학원 진도에 맞춰 커리큘럼을 유연하게 조정합니다.'],
+  ].map(([q,a])=>`<div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:12px;padding:18px;margin-bottom:10px">
+    <div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:7px">Q. ${q}</div>
+    <div style="font-size:13px;color:#4B5563;line-height:1.8">${a}</div>
+  </div>`).join('');
+
   const canonical=`/academy/center/${slug}`;
-  const title=`${fullName} | ${dong} ${dist} 수학·영어 학원·코칭 - 올케어스터디`;
-  const desc=`${fullName} ${dong} 위치. 초등·중등·고등 수학·영어·국어 1:1 코칭. 첫 수업 무료. 무료 상담 010-6834-8080`;
+  const metaTitle=seoTitle;
+  const metaDesc=`${fullName} | ${dong} ${dist} 수학·영어·국어 학원. ${allSchools.slice(0,4).join('·')} 내신 전문. 3단계 검증 코치. 첫 수업 무료. 무료 상담 010-6834-8080`;
   const bc=[{name:'홈',url:'/'},{name:'센터 찾기',url:'/academy/all'},{name:fullName,url:canonical}];
+
   const body=`<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/academy/all">센터 찾기</a> › <span>${fullName}</span></div>
-  <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:18px;padding:34px 38px;margin-bottom:24px;color:white">
-    <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,.5);letter-spacing:2px;margin-bottom:7px">${sido} ${dist} · 올케어스터디 코칭센터</div>
-    <h1 style="font-size:24px;font-weight:900;margin:0 0 7px;line-height:1.3">${fullName}</h1>
-    <p style="font-size:13px;color:rgba(255,255,255,.7);margin:0 0 16px">${addr}</p>
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/academy/all">센터 찾기</a> &rsaquo; <span>${fullName}</span></div>
+
+  <!-- 히어로 -->
+  <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:20px;padding:36px 40px;margin-bottom:28px;color:white">
+    <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">${sido} ${dist} · 올케어스터디 코칭센터</div>
+    <h1 style="font-size:24px;font-weight:900;margin:0 0 8px;line-height:1.35">${seoTitle}</h1>
+    <p style="font-size:13px;color:rgba(255,255,255,.7);margin:0 0 18px">${addr}</p>
     <div style="display:flex;flex-wrap:wrap;gap:8px">
-      <a href="/contact?type=academy&center=${encodeURIComponent(fullName)}" style="display:inline-flex;align-items:center;gap:5px;background:white;color:#0F2044;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:900;text-decoration:none">✉️ 무료 상담 신청</a>
-      <a href="tel:01068348080" style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);color:white;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none">📞 010-6834-8080</a>
+      <a href="/contact?type=academy&center=${encodeURIComponent(fullName)}" style="background:white;color:#0F2044;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none">무료 상담 신청</a>
+      <a href="tel:01068348080" style="background:rgba(255,255,255,.15);color:white;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,.3)">010-6834-8080</a>
     </div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px">
-    ${[['등록 코치',teacherCnt+'명+','#1D4ED8'],['만족도',satisfaction+'%','#10B981'],['운영 경력',expYear+'년+','#8B5CF6'],['지도 학생',caseCnt+'명+','#F59E0B']].map(([l,v,c])=>`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:14px;text-align:center"><div style="font-size:18px;font-weight:900;color:${c}">${v}</div><div style="font-size:11px;color:#6B7280;margin-top:2px">${l}</div></div>`).join('')}
+
+  <!-- 수치 -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px">
+    ${[['운영 경력',expYear+'년+','#1D4ED8','#EFF6FF'],['지도 학생',caseCnt+'명+','#10B981','#ECFDF5'],['만족도',satisfaction+'%','#8B5CF6','#F5F3FF']].map(([l,v,c,bg])=>`<div style="background:${bg};border-radius:12px;padding:16px;text-align:center;border:1.5px solid ${c}20"><div style="font-size:20px;font-weight:900;color:${c}">${v}</div><div style="font-size:11px;color:#6B7280;margin-top:3px">${l}</div></div>`).join('')}
   </div>
-  <div style="display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start">
+
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start">
   <div>
-    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:18px">
-      <h2 style="font-size:16px;font-weight:900;color:#0F2044;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">${dong} 수학·영어 학원 ${fullName} 소개</h2>
-      <p style="font-size:14px;color:#374151;line-height:1.9;margin:0 0 12px">${fullName}은 ${sido} ${dist} ${dong}에 위치한 올케어스터디 공식 코칭센터입니다. ${expYear}년 이상 운영 경험을 바탕으로 ${dong} 인근 초·중·고 학생들의 수학·영어·국어·과학 내신 성적 향상을 전문으로 지도합니다.</p>
-      <p style="font-size:14px;color:#374151;line-height:1.9;margin:0">${mathDesc}</p>
+
+    <!-- 센터 소개 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:3px solid #EFF6FF">${dong} 수학·영어 학원 <span style="color:#1D4ED8">${fullName}</span> 소개</h2>
+      <p style="font-size:15px;color:#374151;line-height:2;margin:0 0 14px"><strong style="color:#1D4ED8">${fullName}</strong>은 ${sido} ${dist} ${dong}에 위치한 올케어스터디 공식 코칭센터입니다. ${expYear}년 이상의 지역 밀착 운영 경험을 바탕으로 ${dong} 인근 초·중·고 학생들의 <strong style="color:#0F2044">수학·영어·국어 내신 성적 향상</strong>을 전문으로 지도합니다.</p>
+      <p style="font-size:15px;color:#374151;line-height:2;margin:0">${dong}·${dist} 학부모님들이 <strong style="color:#1D4ED8">${fullName}</strong>을 선택하시는 이유는 학교별 기출 분석의 정확성입니다. ${allSchools.slice(0,3).join(', ')} 등 인근 학교의 시험 출제 패턴을 철저히 분석해 수업에 반영하기 때문에 단기간에 눈에 띄는 성적 향상을 경험하는 학생들이 많습니다.</p>
     </section>
-    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:18px">
-      <h2 style="font-size:16px;font-weight:900;color:#0F2044;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">📖 ${dong} 영어 과외 안내</h2>
-      <p style="font-size:14px;color:#374151;line-height:1.9;margin:0">${engDesc}</p>
-    </section>
-    ${schoolBadges?`<section style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:18px">
-      <h2 style="font-size:16px;font-weight:900;color:#0F2044;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">🏫 주요 대상 학교</h2>
-      <div style="display:flex;flex-wrap:wrap;gap:7px">${schoolBadges}</div>
+
+    <!-- 대상 학교 -->
+    ${allSchools.length?`<section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:3px solid #EFF6FF">${dong} 인근 학교 내신 전문 관리</h2>
+      <p style="font-size:14px;color:#6B7280;margin:0 0 14px">${fullName}이 내신을 전담 관리하는 학교 목록입니다. 학교명을 클릭하면 해당 학교 맞춤 학습 정보를 확인할 수 있습니다.</p>
+      ${schoolBadgesHtml}
     </section>`:''}
-    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:18px">
-      <h2 style="font-size:16px;font-weight:900;color:#0F2044;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">📚 전과목 1:1 코칭</h2>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px">${subjCards}</div>
+
+    <!-- 학습 내용 본문 (SEO 핵심) -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 6px;padding-bottom:10px;border-bottom:3px solid #EFF6FF">${dist} ${dong} 수학·영어·국어 학년별 맞춤 코칭</h2>
+      ${elemSection}
+      ${middleSection}
+      ${highSection}
+      ${examPlan}
     </section>
-    <section style="background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:14px;padding:22px;margin-bottom:18px">
-      <h2 style="font-size:16px;font-weight:900;color:#0F2044;margin:0 0 10px">💰 수업료 안내</h2>
-      <p style="font-size:13px;color:#374151;line-height:1.85;margin:0 0 12px">코치 학력·경력에 따라 다르며, 상담 후 예산에 맞게 안내해드립니다. 첫 체험 수업은 무료입니다.</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px">
-        ${[['초등','월 '+priceBase[0]+'만원~','#3B82F6'],['중등','월 '+priceBase[1]+'만원~','#10B981'],['고등','월 '+priceBase[2]+'만원~','#8B5CF6']].map(([g,p,c])=>`<div style="background:white;border-radius:9px;padding:12px;text-align:center;border-top:3px solid ${c}"><div style="font-size:12px;font-weight:900;color:#0F2044;margin-bottom:3px">${g}</div><div style="font-size:13px;font-weight:900;color:${c}">${p}</div></div>`).join('')}
+
+    <!-- 올케어스터디 특징 -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:3px solid #EFF6FF">${fullName}만의 차별점</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        ${[
+          ['학교 기출 완벽 분석','#3B82F6','인근 학교 내신 출제 패턴을 상시 분석합니다. 시험 4주 전부터 기출 집중 수업으로 전환합니다.'],
+          ['3단계 코치 검증','#10B981','학력 서류 → 경력 확인 → 수업시연 3단계를 모두 통과한 코치만 배정합니다.'],
+          ['주간 학습 보고서','#8B5CF6','매 수업 후 학습 내용·진도·성취도를 카카오톡으로 학부모님께 전송합니다.'],
+          ['첫 수업 무료 체험','#F59E0B','첫 체험 수업은 무료입니다. 코치가 맞지 않으면 무료 교체도 가능합니다.'],
+        ].map(([t,c,d])=>`<div style="background:#FAFAFA;border-radius:12px;padding:16px;border-left:4px solid ${c}"><div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:6px">${t}</div><p style="font-size:12px;color:#6B7280;line-height:1.75;margin:0">${d}</p></div>`).join('')}
       </div>
     </section>
-    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:18px">
-      <h2 style="font-size:16px;font-weight:900;color:#0F2044;margin:0 0 4px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">🎯 수업 진행 5단계</h2>
-      ${steps}
+
+    <!-- FAQ -->
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px">
+      <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 14px;padding-bottom:10px;border-bottom:3px solid #EFF6FF">자주 묻는 질문</h2>
+      ${faqHtml}
     </section>
-    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:18px">
-      <h2 style="font-size:16px;font-weight:900;color:#0F2044;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid #F1F5F9">❓ 자주 묻는 질문</h2>
-      ${[[`${fullName} 위치가 어디인가요?`,dir||addr],['첫 수업은 무료인가요?',`네, 첫 체험 수업은 무료입니다. 맞지 않으면 코치 무료 교체도 가능합니다.`],[`${dong} 내신 몇 등급까지 가능한가요?`,'2~3개월 집중 코칭 후 1~2등급 향상 사례가 많습니다. 상담 시 목표 등급을 알려주세요.'],['학원 다니면서 코칭도 받을 수 있나요?','학원에서 부족한 부분을 1:1 코칭으로 보완하는 방식이 가장 효과적입니다.']].map(([q,a])=>`<div style="background:#F9FAFB;border-radius:10px;padding:14px;margin-bottom:9px"><div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:5px">Q. ${q}</div><div style="font-size:12px;color:#4B5563;line-height:1.7">${a}</div></div>`).join('')}
-    </section>
+
   </div>
+
+  <!-- 사이드바 -->
   <div style="position:sticky;top:100px">
-    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:18px;margin-bottom:12px">
-      <h3 style="font-size:13px;font-weight:900;color:#0F2044;margin:0 0 10px">📍 센터 위치</h3>
-      <div style="font-size:12px;color:#374151;line-height:1.7;margin-bottom:7px">${addr}</div>
-      ${dir?`<div style="font-size:11px;color:#6B7280;background:#F9FAFB;border-radius:7px;padding:9px;line-height:1.65;white-space:pre-line">${dir}</div>`:''}
+    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:20px;margin-bottom:14px">
+      <div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:12px">위치 정보</div>
+      <div style="font-size:13px;color:#374151;line-height:1.7;margin-bottom:8px">${addr}</div>
+      ${dir?`<div style="font-size:12px;color:#6B7280;background:#F9FAFB;border-radius:8px;padding:10px;line-height:1.75;white-space:pre-line">${dir}</div>`:''}
+      ${reg?`<div style="font-size:11px;color:#9CA3AF;margin-top:8px">${reg}</div>`:''}
     </div>
-    <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:14px;padding:18px;margin-bottom:12px;text-align:center">
-      <div style="font-size:13px;font-weight:900;color:white;margin-bottom:3px">📋 무료 상담 신청</div>
-      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:12px">첫 수업 무료 · 48시간 내 매칭</div>
-      <a href="/contact?type=academy&center=${encodeURIComponent(fullName)}" style="display:block;background:white;color:#0F2044;padding:10px;border-radius:8px;font-size:12px;font-weight:900;text-decoration:none;margin-bottom:6px">✉️ 온라인 상담</a>
-      <a href="tel:01068348080" style="display:block;background:rgba(255,255,255,.15);color:white;padding:10px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none">📞 010-6834-8080</a>
+    <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:16px;padding:20px;margin-bottom:14px;text-align:center">
+      <div style="font-size:14px;font-weight:900;color:white;margin-bottom:4px">무료 상담 신청</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.65);margin-bottom:14px">첫 수업 무료 · 48시간 내 매칭</div>
+      <a href="/contact?type=academy&center=${encodeURIComponent(fullName)}" style="display:block;background:white;color:#0F2044;padding:11px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none;margin-bottom:7px">온라인 상담 신청</a>
+      <a href="tel:01068348080" style="display:block;background:rgba(255,255,255,.15);color:white;padding:11px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none">010-6834-8080</a>
     </div>
-    ${nearby?`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px"><h3 style="font-size:12px;font-weight:900;color:#0F2044;margin:0 0 9px">🗺️ ${sido} 인근 센터</h3>${nearby}</div>`:''}
+    <div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:18px;margin-bottom:14px">
+      <div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:10px">운영 시간</div>
+      ${[['평일','09:00 ~ 21:00'],['토요일','10:00 ~ 18:00'],['일요일','휴무']].map(([d,t])=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid #F1F5F9"><span style="color:#6B7280">${d}</span><span style="font-weight:700;color:#0F2044">${t}</span></div>`).join('')}
+    </div>
+    ${nearby?`<div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:18px">
+      <div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:10px">${sido} 인근 센터</div>
+      ${nearby}
+    </div>`:''}
   </div>
   </div>
-  <div class="cta-box" style="margin-top:20px"><h3>${dong} ${fullName} 무료 상담</h3><p>${sido} ${dist} ${dong} — 초·중·고 수학·영어·국어 1:1 코칭</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=academy&center=${encodeURIComponent(fullName)}">✉️ 무료 상담 신청</a></div></div>
-  <div class="keyword-box" style="margin-top:18px"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${dong} 수학 학원</span><span class="keyword-tag">${dong} 영어 학원</span><span class="keyword-tag">${dist} 학원</span><span class="keyword-tag">${fullName}</span><span class="keyword-tag">${dong} 초등 수학</span><span class="keyword-tag">${dong} 중등 영어</span><span class="keyword-tag">${dong} 고등 내신</span></div></div>
+
+  <div class="cta-box" style="margin-top:24px">
+    <h3>${dong} ${fullName} 무료 상담</h3>
+    <p>${dist} ${dong} · 초·중·고 수학·영어·국어 1:1 코칭 · 첫 수업 무료</p>
+    <div class="cta-btns">
+      <a class="btn-p" href="tel:01068348080">010-6834-8080</a>
+      <a class="btn-o" href="/contact?type=academy&center=${encodeURIComponent(fullName)}">무료 상담 신청</a>
+    </div>
+  </div>
+  <div class="keyword-box" style="margin-top:20px">
+    <div class="keyword-title">관련 검색어</div>
+    <div class="keyword-tags">
+      ${allSchools.slice(0,4).map(s=>`<span class="keyword-tag">${s} 학원</span>`).join('')}
+      <span class="keyword-tag">${dong} 수학 학원</span>
+      <span class="keyword-tag">${dong} 영어 학원</span>
+      <span class="keyword-tag">${dist} 학원</span>
+      <span class="keyword-tag">${fullName}</span>
+    </div>
+  </div>
 </div>`;
-  return wrap(title, desc, canonical, body, bc);
+
+  return wrap(metaTitle, metaDesc, canonical, body, bc);
 }
+
 
 
 // ── 학교별 센터 페이지 ─────────────────────────────────────────────────────
@@ -3609,7 +3725,7 @@ function makeAcademyPage() {
         <div id="m-error" style="display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:12px"></div>
         <div style="display:flex;gap:10px">
           <button onclick="closeContactModal()" style="flex:1;padding:13px;border-radius:10px;border:1.5px solid #E5E7EB;background:white;font-size:14px;font-weight:700;cursor:pointer;color:#6B7280;font-family:inherit">취소</button>
-          <button onclick="submitModalContact()" style="flex:2;padding:13px;border-radius:10px;border:none;background:#1D4ED8;color:white;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">✉️ 문의 제출하기</button>
+          <button onclick="submitModalContact()" style="flex:2;padding:13px;border-radius:10px;border:none;background:#1D4ED8;color:white;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">문의 제출하기</button>
         </div>
       </div>
     </div>
@@ -3784,7 +3900,7 @@ function makeContactPage() {
         <div class="cf-contact-card" id="cf-card-center2"><div class="ccc-icon ccc-green">📍</div><div><div class="ccc-label">센터 방문 상담</div><div class="ccc-value">전국 200여 개 직영센터</div><div class="ccc-desc">가까운 센터를 찾아보세요</div></div></div>
         <div class="cf-contact-card"><div class="ccc-icon ccc-orange">⏱️</div><div><div class="ccc-label">평균 응답 시간</div><div class="ccc-value">30분 이내</div></div></div>
       </div>
-      <div class="cf-proc-title">📋 상담 진행 순서</div>
+      <div class="cf-proc-title">상담 진행 순서</div>
       <div class="cf-steps">
         <div class="cf-step"><div class="cf-step-num">1</div><div class="cf-step-body"><div class="cf-step-t">문의 접수</div><div class="cf-step-d">양식 작성 후 제출하시면 즉시 접수됩니다</div></div></div>
         <div class="cf-step"><div class="cf-step-num">2</div><div class="cf-step-body"><div class="cf-step-t">담당자 배정</div><div class="cf-step-d" id="cf-step2-desc2">교육컨설턴트가 배정됩니다</div></div></div>
@@ -3801,11 +3917,11 @@ function makeContactPage() {
         <a href="/" style="display:inline-block;background:#0F2044;color:white;padding:13px 28px;border-radius:12px;font-weight:700;text-decoration:none;font-size:14px">홈으로 돌아가기</a>
       </div>
       <div id="contact-form">
-        <div class="cf-form-title">📝 상담 신청서</div>
+        <div class="cf-form-title">상담 신청서</div>
         <div class="cf-form-sub">* 표시 항목은 필수입니다</div>
         <div style="display:flex;border:1.5px solid #E5E7EB;border-radius:12px;overflow:hidden;margin-bottom:24px">
-          <button id="tab-academy" onclick="cfSwitchType('academy')" style="flex:1;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:none;background:#0F2044;color:white;font-family:inherit">🏫 학원 상담</button>
-          <button id="tab-tutoring" onclick="cfSwitchType('tutoring')" style="flex:1;padding:13px;font-size:14px;font-weight:700;cursor:pointer;border:none;background:white;color:#6B7280;font-family:inherit">👨‍🏫 과외 상담</button>
+          <button id="tab-academy" onclick="cfSwitchType('academy')" style="flex:1;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:none;background:#0F2044;color:white;font-family:inherit">학원 상담</button>
+          <button id="tab-tutoring" onclick="cfSwitchType('tutoring')" style="flex:1;padding:13px;font-size:14px;font-weight:700;cursor:pointer;border:none;background:white;color:#6B7280;font-family:inherit">과외 상담</button>
         </div>
         <div class="cf-field-row">
           <div class="cf-field"><label>이름 <span style="color:#EF4444">*</span></label><input id="cf-name" type="text" placeholder="홍길동" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></div>
@@ -3850,12 +3966,12 @@ function makeContactPage() {
           <textarea id="cf-message" rows="4" class="cf-input" placeholder="센터 위치, 수업 방식, 등록 절차 등 궁금한 점을 적어주세요." onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
         </div>
         <div class="cf-agree-box">
-          <div class="cf-agree-title">🔒 개인정보 수집 및 이용 동의</div>
+          <div class="cf-agree-title">개인정보 수집 및 이용 동의</div>
           <div class="cf-agree-content"><strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주 주소, 문의내용<br><strong>수집 목적:</strong> 학습 상담 및 센터 안내 서비스 제공<br><strong>보유 기간:</strong> 상담 완료 후 1년</div>
           <label class="cf-agree-check"><input type="checkbox" id="cf-agree"><span>개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span></label>
         </div>
         <div class="cf-error-msg" id="cf-error"></div>
-        <button class="cf-submit-btn" id="cf-submit" onclick="submitContact()">✉️ 문의 제출하기</button>
+        <button class="cf-submit-btn" id="cf-submit" onclick="submitContact()">문의 제출하기</button>
       </div>
     </div>
   </div>
@@ -3916,10 +4032,10 @@ function makeContactPage() {
     fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:sido+(address?' '+address:''),message})})
     .then(r=>r.json()).then(data=>{
       if(data.ok){document.getElementById('contact-form').style.display='none';document.getElementById('contact-success').style.display='block';}
-      else{btn.disabled=false;btn.textContent='✉️ 문의 제출하기';btn.style.opacity='1';showErr('전송 중 오류가 발생했습니다.');}
-    }).catch(()=>{btn.disabled=false;btn.textContent='✉️ 문의 제출하기';btn.style.opacity='1';showErr('네트워크 오류가 발생했습니다.');});
+      else{btn.disabled=false;btn.textContent='문의 제출하기';btn.style.opacity='1';showErr('전송 중 오류가 발생했습니다.');}
+    }).catch(()=>{btn.disabled=false;btn.textContent='문의 제출하기';btn.style.opacity='1';showErr('네트워크 오류가 발생했습니다.');});
   }
-  function showErr(msg){var el=document.getElementById('cf-error');el.textContent='⚠️ '+msg;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('cf-submit').disabled=false;document.getElementById('cf-submit').textContent='✉️ 문의 제출하기';document.getElementById('cf-submit').style.opacity='1';}
+  function showErr(msg){var el=document.getElementById('cf-error');el.textContent='⚠️ '+msg;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('cf-submit').disabled=false;document.getElementById('cf-submit').textContent='문의 제출하기';document.getElementById('cf-submit').style.opacity='1';}
   // URL 파라미터로 자동 탭 전환: ?type=tutoring → 과외 상담, ?type=academy → 학원 상담
   (function(){
     var params = new URLSearchParams(window.location.search);
