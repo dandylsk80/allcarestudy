@@ -974,10 +974,10 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
     if(btn){
       if(isAcademy){
         btn.href = '/contact?type=academy';
-        btn.textContent = '학원 상담하기';
+        btn.textContent = '상담하기';
       } else {
         btn.href = '/contact?type=tutoring';
-        btn.textContent = '과외 상담하기';
+        btn.textContent = '상담하기';
       }
     }
     var el = document.getElementById('float-btns');
