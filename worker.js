@@ -169,7 +169,7 @@ const CENTERS=[{"n":"하남풍산점","on":"하남풍산점와와학습코칭학
 function generateAreaFeature(ak, schools) {
   let _h=0; for(let i=0;i<ak.length;i++) _h=(_h*31+ak.charCodeAt(i))>>>0;
   const t=[
-    `${ak} 과외는 초1~고3 전 학년 수학·영어·국어·과학·사회·코딩·논술 1:1 방문 과외를 연결합니다. ${schools} 내신 기출을 철저히 분석한 검증 선생님이 학생 수준에 맞는 커리큘럼을 제공합니다. 무료 상담 48시간 내 최적 선생님 연결.`,
+    `${ak} 과외는 초1~고3 전 학년 수학·영어·국어·과학·사회·코딩·논술 1:1 방문 과외를 연결합니다. ${schools} 내신 기출을 철저히 분석한 검증 선생님이 학생 수준에 맞는 커리큘럼을 제공합니다. 무료 상담 빠르게 최적 선생님 연결.`,
     `${ak} 1:1 방문 과외 전문. ${schools} 기출 분석 선생님. 초등·중등·고등 전 학년 내신·수능 맞춤 커리큘럼. 학력·경력·수업시연 3단계 검증. 무료 상담 010-6834-8080`,
     `${ak} 맞춤 1:1 과외. ${schools} 내신 관리 전문. 수학·영어·국어·과학 검증 선생님. 매주 학습 보고서 제공.`,
   ];
@@ -182,7 +182,7 @@ const REGIONS = {
     areas: {
       '강남구': {
         dongs: ['대치동','압구정동','역삼동','청담동','논현동','도곡동','삼성동','개포동','신사동','수서동','일원동','세곡동','자곡동','율현동'],
-        feature: '강남구 과외는 대치동·압구정·역삼·청담 전 지역에서 수학 과외, 영어 과외, 국어 과외, 과학 과외를 1:1 방문 과외로 연결해드립니다. 강남구 초등 과외·중등 과외·고등 과외 전 학년 내신 대비와 수능 대비를 전담하며, 강남 학원가 기출 문제 분석에 특화된 검증 선생님을 매칭합니다. 강남구 수학 과외·영어 과외 선생님은 학력·경력·수업 시연 검증을 완료한 분들로만 구성되어 있습니다. 무료 상담 후 48시간 내 강남구 맞춤 과외 선생님을 연결해드립니다.',
+        feature: '강남구 과외는 대치동·압구정·역삼·청담 전 지역에서 수학 과외, 영어 과외, 국어 과외, 과학 과외를 1:1 방문 과외로 연결해드립니다. 강남구 초등 과외·중등 과외·고등 과외 전 학년 내신 대비와 수능 대비를 전담하며, 강남 학원가 기출 문제 분석에 특화된 검증 선생님을 매칭합니다. 강남구 수학 과외·영어 과외 선생님은 학력·경력·수업 시연 검증을 완료한 분들로만 구성되어 있습니다. 무료 상담 후 빠르게 강남구 맞춤 과외 선생님을 연결해드립니다.',
         schools: '휘문고, 단대부고, 중동고, 숙명여고, 경기고, 개포고'
       },
       '서초구': { dongs:["개포동", "방배동", "양재동", "우면동", "원지동", "도곡동", "잠원동", "반포동", "서초동", "내곡동", "염곡동", "신원동", "역삼동", "신사동", "서초1동", "서초2동", "서초3동", "반포본동", "반포1동", "반포2동", "반포3동", "방배본동", "방배1동", "방배2동", "방배3동", "도곡1동", "도곡2동"], feature:'', schools:'세화고, 반포고, 상문고' },
@@ -1203,7 +1203,7 @@ const CATEGORY_TEMPLATES = {
     english: [
       '{dong} 영어과외는 {schools} 내신 영어 기출을 완벽 분석해 시험에 최적화된 1:1 맞춤 수업을 제공합니다. 독해·어법·서술형 전 영역을 체계적으로 다루며 내신 1등급을 목표로 합니다.',
       '{dong} 영어과외는 {schools} 학교 스타일에 맞는 내신 영어 지도와 함께 수능 영어 독해 훈련을 병행합니다. 합리적인 비용으로 검증된 선생님의 1:1 방문 과외를 받을 수 있습니다.',
-      '{dong}에서 영어 과외를 시작하면 {schools} 내신 영어와 수능 영어를 동시에 준비할 수 있습니다. 학생의 현재 수준과 목표에 맞는 최적의 영어 선생님을 48시간 내 연결해드립니다.'],
+      '{dong}에서 영어 과외를 시작하면 {schools} 내신 영어와 수능 영어를 동시에 준비할 수 있습니다. 학생의 현재 수준과 목표에 맞는 최적의 영어 선생님을 빠르게 연결해드립니다.'],
     reviews: [
       '{dong} 수학 과외 시작하고 {schools} 중간고사에서 등급이 올랐어요. 선생님이 취약 단원을 정확히 짚어주셨습니다. — {dong} 학부모',
       '{dong} 영어 과외 받고 처음으로 내신 영어 2등급 받았어요. {schools} 시험 스타일을 너무 잘 아시더라고요. — {dong} 학부모',
@@ -1348,7 +1348,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   <div class="art-body">
     <h2>${dong} 과외 안내</h2>
     <p>${intro}</p>
-    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <p>올케어스터디는 <strong>${gu} ${dong}</strong> 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 빠르게 매칭해드립니다.</p>
     <p>주요 학교: <strong>${schools}</strong></p>
     ${schoolsHtml}
     <h2>${dong} 과외 특징</h2>
@@ -1356,7 +1356,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
     <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. 학생과 선생님의 수업 스타일이 맞지 않으면 부담 없이 교체 가능합니다.</p>
     <p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도를 정리해 학부모님께 공유합니다. 투명한 학습 관리로 성적 변화를 직접 확인할 수 있습니다.</p>
     <p><strong>④ 취약점 집중 보완</strong> — 단원별 취약점을 정확히 파악하고 집중 보완합니다. 학원 수업에서 놓친 부분을 1:1로 완전히 채워드립니다.</p>
-    <p><strong>⑤ 48시간 내 매칭</strong> — 상담 신청 후 48시간 내에 ${dong} 지역 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
+    <p><strong>⑤ 빠르게 매칭</strong> — 상담 신청 후 빠르게에 ${dong} 지역 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
 
     <h2>${dong} 수업 진행 방식</h2>
     <p>첫 수업 전 학생의 현재 실력과 목표를 파악하는 <strong>학습 진단</strong>을 진행합니다. 진단 결과를 바탕으로 맞춤 커리큘럼을 설계하고, 주 2~3회 방문 수업으로 체계적으로 진행합니다.</p>
@@ -1846,7 +1846,7 @@ function makeSubjectPage(subjectEn) {
     </div>
   </div>
   <div style="background:linear-gradient(135deg,${color},${color}CC);border-radius:16px;padding:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center;margin-bottom:32px">
-    <div><div style="font-size:20px;font-weight:900;color:white">48시간</div><div style="font-size:11px;color:rgba(255,255,255,.7)">매칭 보장</div></div>
+    <div><div style="font-size:20px;font-weight:900;color:white">빠른</div><div style="font-size:11px;color:rgba(255,255,255,.7)">매칭 보장</div></div>
     <div><div style="font-size:20px;font-weight:900;color:white">3단계</div><div style="font-size:11px;color:rgba(255,255,255,.7)">선생님 검증</div></div>
     <div><div style="font-size:20px;font-weight:900;color:white">무료</div><div style="font-size:11px;color:rgba(255,255,255,.7)">첫 체험 수업</div></div>
     <div><div style="font-size:20px;font-weight:900;color:white">전국</div><div style="font-size:11px;color:rgba(255,255,255,.7)">방문 과외</div></div>
@@ -1872,7 +1872,7 @@ function makeSubjectPage(subjectEn) {
     <div class="subj-grid">${otherLinks}</div>
     <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${ko} 과외</span><span class="keyword-tag">${ko} 공부법</span><span class="keyword-tag">${ko} 내신</span><span class="keyword-tag">${ko} 수능</span><span class="keyword-tag">${ko} 1:1과외</span><span class="keyword-tag">${ko} 방문과외</span></div></div>
   </div>
-  <div class="cta-box"><h3>${ko} 과외 무료 상담</h3><p>검증된 ${ko} 전문 선생님을 48시간 내 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
+  <div class="cta-box"><h3>${ko} 과외 무료 상담</h3><p>검증된 ${ko} 전문 선생님을 빠르게 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
 </div>`;
   return wrap(title, desc, canonical, body, bc);
 }
@@ -1964,7 +1964,7 @@ function makeGradePage(gradeType, gradeNum) {
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px">🎯 핵심 공부 방법</h2>
     ${fCards}
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">⚡ 핵심 전략</h2>
-    <div style="background:linear-gradient(135deg,${color}15,${color}05);border-radius:14px;padding:22px;border:1.5px solid ${color}25;margin-bottom:20px"><p style="font-size:14px;color:#1F2937;line-height:1.9;margin:0">${strategy} 올케어스터디는 ${label} 전문 선생님을 48시간 내 매칭해드립니다.</p></div>
+    <div style="background:linear-gradient(135deg,${color}15,${color}05);border-radius:14px;padding:22px;border:1.5px solid ${color}25;margin-bottom:20px"><p style="font-size:14px;color:#1F2937;line-height:1.9;margin:0">${strategy} 올케어스터디는 ${label} 전문 선생님을 빠르게 매칭해드립니다.</p></div>
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">📐 수학 & 영어 핵심 학습법</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
       <div style="background:white;border:1.5px solid #BFDBFE;border-radius:12px;padding:16px"><div style="font-size:13px;font-weight:900;color:#3B82F6;margin-bottom:7px">📐 수학 3원칙</div><p style="font-size:12px;color:#374151;line-height:1.75;margin:0">① 개념 먼저 — 공식보다 원리 이해<br>② 오답 노트 — 틀린 이유 직접 기록<br>③ 매일 30분 연산 훈련</p></div>
@@ -1979,7 +1979,7 @@ function makeGradePage(gradeType, gradeNum) {
     <p style="font-size:14px;color:#374151;line-height:1.9;margin:16px 0">서울·경기·인천·부산·대구·광주·대전·울산·세종·강원·충북·충남·전북·전남·경북·경남·제주 전국 모든 지역에서 ${label} 과외가 가능합니다. 온라인 과외도 지원합니다.</p>
     <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${label} 공부법</span><span class="keyword-tag">${label} 과외</span><span class="keyword-tag">${label} 수학</span><span class="keyword-tag">${label} 영어</span><span class="keyword-tag">${label} 내신</span><span class="keyword-tag">${label} 1:1과외</span></div></div>
   </div>
-  <div class="cta-box"><h3>${label} 맞춤 과외 무료 상담</h3><p>${label} 전문 선생님을 48시간 내 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
+  <div class="cta-box"><h3>${label} 맞춤 과외 무료 상담</h3><p>${label} 전문 선생님을 빠르게 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
 </div>`;
   return wrap(title, desc, canonical, body, bc);
 }
@@ -2004,7 +2004,7 @@ function makeSchoolIndexPage() {
   <div class="bc"><a href="/">홈</a> › <span>학교별 과외</span></div>
   <h1 class="art-title">🏫 학교별 과외 | 전국 초등·중등·고등 1:1 맞춤 과외</h1>
   <div class="art-body">
-    <p>올케어스터디는 전국 12,000개 이상의 초등·중등·고등학교 재학생을 위한 학교별 맞춤 1:1 과외를 연결합니다. 학교 기출 문제를 완벽히 파악한 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <p>올케어스터디는 전국 12,000개 이상의 초등·중등·고등학교 재학생을 위한 학교별 맞춤 1:1 과외를 연결합니다. 학교 기출 문제를 완벽히 파악한 검증된 선생님을 빠르게 매칭해드립니다.</p>
     <h2>시도별 학교 과외 찾기</h2>
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin:20px 0">${sidoList}</div>
   </div>
@@ -2030,7 +2030,7 @@ function makeSchoolSidoPage(sidoEn) {
   <div class="bc"><a href="/">홈</a> › <a href="/school">학교별 과외</a> › <span>${sidoKr}</span></div>
   <h1 class="art-title">🏫 ${sidoKr} 학교별 과외</h1>
   <div class="art-body">
-    <p>${sidoKr} 지역 초등·중등·고등학교 재학생을 위한 학교별 맞춤 1:1 과외를 연결합니다. 해당 학교 기출을 완벽히 파악한 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <p>${sidoKr} 지역 초등·중등·고등학교 재학생을 위한 학교별 맞춤 1:1 과외를 연결합니다. 해당 학교 기출을 완벽히 파악한 검증된 선생님을 빠르게 매칭해드립니다.</p>
     <h2>${sidoKr} 구군별 학교 과외</h2>
     <div class="subj-grid">${gugunLinks}</div>
   </div>
@@ -2085,7 +2085,7 @@ function makeSchoolGugunPage(sidoEn, gugunRoman) {
   <div class="bc"><a href="/">홈</a> › <a href="/school">학교별 과외</a> › <a href="/school/${sidoEn}">${sidoKr}</a> › <span>${gugunKr}</span></div>
   <h1 class="art-title">🏫 ${gugunKr} 학교별 과외</h1>
   <div class="art-body">
-    <p>${gugunKr} 지역 초등·중등·고등학교 재학생을 위한 학교별 맞춤 1:1 과외를 연결합니다. 해당 학교 기출을 완벽히 파악한 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <p>${gugunKr} 지역 초등·중등·고등학교 재학생을 위한 학교별 맞춤 1:1 과외를 연결합니다. 해당 학교 기출을 완벽히 파악한 검증된 선생님을 빠르게 매칭해드립니다.</p>
     ${schoolBlocks}
   </div>
   <div class="cta-box">
@@ -2155,13 +2155,13 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
     <h2>${name} 과외 안내</h2>
     <p>${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 학교별 시험 출제 경향이 뚜렷해 내신 전문 과외의 효과가 큽니다.</p>
     <p>${regionDesc}</p>
-    <p>올케어스터디는 <strong>${name}</strong> 재학생을 위한 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. ${name} 시험 출제 경향을 완벽히 파악한 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <p>올케어스터디는 <strong>${name}</strong> 재학생을 위한 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. ${name} 시험 출제 경향을 완벽히 파악한 검증된 선생님을 빠르게 매칭해드립니다.</p>
     <h2>${name} 과외 특징</h2>
     <p><strong>① ${name} 기출 완벽 분석</strong> — ${name} 시험 출제 경향·유형·빈도를 철저히 분석해 내신 최적화 수업을 진행합니다. 시험 직전 4주 집중 대비 프로그램을 별도로 운영합니다.</p>
     <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. ${name} 출신 또는 해당 학교 수업 경험이 있는 선생님을 우선 추천합니다.</p>
     <p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도를 정리해 학부모님께 공유합니다. 투명한 학습 관리로 성적 변화를 직접 확인할 수 있습니다.</p>
     <p><strong>④ 취약점 집중 보완</strong> — 단원별 취약점을 정확히 파악하고 집중 보완합니다. 학원 수업에서 놓친 부분을 1:1로 완전히 채워드립니다.</p>
-    <p><strong>⑤ 48시간 내 매칭</strong> — 상담 신청 후 48시간 내에 ${name} 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
+    <p><strong>⑤ 빠르게 매칭</strong> — 상담 신청 후 빠르게에 ${name} 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
     <h2>${name} 수업 진행 방식</h2>
     <p>첫 수업 전 학생의 현재 실력과 ${name} 내신 목표를 파악하는 <strong>학습 진단</strong>을 진행합니다. 진단 결과를 바탕으로 ${name} 시험에 최적화된 맞춤 커리큘럼을 설계하고, 주 2~3회 방문 수업으로 체계적으로 진행합니다.</p>
     <p><strong>수업 3단계</strong>: 개념 정리 → ${name} 기출 유형 풀이 → 오답 분석 및 취약점 보완. 매 수업마다 전 시간 내용을 복습하고 새 내용을 학습하는 방식으로 기억 정착률을 높입니다.</p>
@@ -2277,7 +2277,7 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
   <div class="art-body">
     <h2>${name} ${subject}과외 안내</h2>
     <p>${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 올케어스터디는 ${name} 재학생을 위한 ${gradeLabel} ${subject} 전문 1:1 방문 과외를 연결합니다.</p>
-    <p>${name} ${subject} 시험 출제 경향을 완벽히 파악한 검증된 선생님을 48시간 내 매칭해드립니다. ${name} 내신 성적 향상을 최우선 목표로 맞춤 커리큘럼을 설계합니다.</p>
+    <p>${name} ${subject} 시험 출제 경향을 완벽히 파악한 검증된 선생님을 빠르게 매칭해드립니다. ${name} 내신 성적 향상을 최우선 목표로 맞춤 커리큘럼을 설계합니다.</p>
     <h2>${name} ${subject}과외 선생님 특징</h2>
     <p><strong>① ${name} 기출 완벽 분석</strong> — ${name} ${subject} 시험 출제 경향·유형·빈도를 철저히 분석해 내신 최적화 수업을 진행합니다.</p>
     <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. ${name} 수업 경험이 있는 선생님을 우선 추천합니다.</p>
@@ -2340,14 +2340,14 @@ function makeSidoPage(rk) {
   </div>
   <div class="art-body">
     <h2>${r.label} 과외 안내</h2>
-    <p>올케어스터디는 <strong>${r.label}</strong> 전 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <p>올케어스터디는 <strong>${r.label}</strong> 전 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 빠르게 매칭해드립니다.</p>
     <p>${r.label} 지역 학부모님들이 올케어스터디를 선택하는 이유는 명확합니다. 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정하고, 매 수업 후 주간 학습 보고서를 제공해 학습 현황을 투명하게 공유합니다. 학생과 선생님이 맞지 않으면 언제든 무료 교체가 가능합니다.</p>
     <h2>${r.label} 과외 특징</h2>
     <p><strong>① 지역 학교 기출 완벽 분석</strong> — ${r.label} 각 학교 시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다. 단원별 출제 빈도와 유형을 파악해 시험 직전 집중 대비가 가능합니다.</p>
     <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. 학생과 맞지 않으면 언제든 부담 없이 교체 가능합니다.</p>
     <p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도를 정리해 학부모님께 공유합니다. 투명한 학습 관리로 성적 변화를 직접 확인할 수 있습니다.</p>
     <p><strong>④ 취약점 집중 보완</strong> — 단원별 취약점을 정확히 파악하고 집중 보완합니다. 학원 수업에서 놓친 부분을 1:1로 완전히 채워드립니다.</p>
-    <p><strong>⑤ 48시간 내 매칭</strong> — 상담 신청 후 48시간 내에 ${r.label} 지역 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
+    <p><strong>⑤ 빠르게 매칭</strong> — 상담 신청 후 빠르게에 ${r.label} 지역 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
     <h2>${r.label} 수업 진행 방식</h2>
     <p>첫 수업 전 학생의 현재 실력과 목표를 파악하는 <strong>학습 진단</strong>을 진행합니다. 진단 결과를 바탕으로 맞춤 커리큘럼을 설계하고, 주 2~3회 방문 수업으로 체계적으로 진행합니다.</p>
     <p><strong>수업 진행 3단계</strong>: 개념 정리 → 유형별 문제 풀이 → 오답 분석 및 취약점 보완. 매 수업마다 전 시간 내용을 복습하고 새 내용을 학습하는 방식으로 기억 정착률을 높입니다. 시험 기간에는 집중 보충 수업을 추가로 제공합니다.</p>
@@ -2454,14 +2454,14 @@ function makeAreaPage(rk, ak) {
   <div class="art-body">
     <h2>${ak} 과외 안내</h2>
     ${distDesc.split('<br><br>').map(p => `<p>${p}</p>`).join('\n    ')}
-    <p>올케어스터디는 <strong>${ak}</strong> 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 48시간 내 매칭해드립니다.</p>
+    <p>올케어스터디는 <strong>${ak}</strong> 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 빠르게 매칭해드립니다.</p>
     <p>인근 주요 학교: <strong>${area.schools}</strong> 시험 출제 경향을 완벽히 파악한 선생님을 매칭해드립니다.</p>
     <h2>${ak} 과외 특징</h2>
     <p><strong>① 학교 기출 완벽 분석</strong> — ${area.schools} 시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다. 단원별 출제 빈도와 유형을 파악해 시험 직전 집중 대비가 가능합니다.</p>
     <p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. 학생과 맞지 않으면 언제든 부담 없이 교체 가능합니다.</p>
     <p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도를 정리해 학부모님께 공유합니다. 투명한 학습 관리로 성적 변화를 직접 확인할 수 있습니다.</p>
     <p><strong>④ 취약점 집중 보완</strong> — 단원별 취약점을 정확히 파악하고 집중 보완합니다. 학원 수업에서 놓친 부분을 1:1로 완전히 채워드립니다.</p>
-    <p><strong>⑤ 48시간 내 매칭</strong> — 상담 신청 후 48시간 내에 ${ak} 지역 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
+    <p><strong>⑤ 빠르게 매칭</strong> — 상담 신청 후 빠르게에 ${ak} 지역 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
     <h2>${ak} 수업 진행 방식</h2>
     <p>첫 수업 전 학생의 현재 실력과 목표를 파악하는 <strong>학습 진단</strong>을 진행합니다. 진단 결과를 바탕으로 맞춤 커리큘럼을 설계하고, 주 2~3회 방문 수업으로 체계적으로 진행합니다.</p>
     <p><strong>수업 진행 3단계</strong>: 개념 정리 → 유형별 문제 풀이 → 오답 분석 및 취약점 보완. 매 수업마다 전 시간 내용을 복습하고 새 내용을 학습하는 방식으로 기억 정착률을 높입니다. 시험 기간에는 집중 보충 수업을 추가로 제공합니다.</p>
@@ -3432,7 +3432,7 @@ function makeCenterPage(slug) {
     </div>
     <div style="background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:16px;padding:20px;margin-bottom:12px;text-align:center">
       <div style="font-size:14px;font-weight:900;color:white;margin-bottom:4px">무료 상담 신청</div>
-      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:14px">첫 수업 무료 · 48시간 내 매칭</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:14px">첫 수업 무료 · 빠르게 매칭</div>
       <a href="/contact?type=academy&center=${encodeURIComponent(fullName)}" style="display:block;background:white;color:#0F2044;padding:11px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none;margin-bottom:7px">온라인 상담 신청</a>
       <a href="tel:01068348080" style="display:block;background:rgba(255,255,255,.15);color:white;padding:11px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none">010-6834-8080</a>
     </div>
@@ -3550,7 +3550,7 @@ function makeCenterSchoolPage(grade, schoolSlug) {
     <h1 style="font-size:28px;font-weight:900;color:#0F2044;margin:0 0 12px;display:flex;align-items:center;gap:10px">
       ${grade==='E'?'🎒':grade==='M'?'📚':'🎓'} ${foundSchool} ${gLabel} 학원
     </h1>
-    <p style="font-size:15px;color:#6B7280;line-height:1.8;margin:0">${foundSchool} ${gLabel} 재학생을 위한 과목별 맞춤 1:1 코칭을 연결합니다.<br>해당 학교 기출을 완벽히 파악한 검증된 코치를 48시간 내 매칭해드립니다.</p>
+    <p style="font-size:15px;color:#6B7280;line-height:1.8;margin:0">${foundSchool} ${gLabel} 재학생을 위한 과목별 맞춤 1:1 코칭을 연결합니다.<br>해당 학교 기출을 완벽히 파악한 검증된 코치를 빠르게 매칭해드립니다.</p>
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:36px">
@@ -3819,7 +3819,7 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
 
   <div class="cta-box" style="margin-top:20px">
     <h3>${foundSchool} ${subjKo} 무료 상담</h3>
-    <p>${gLabel} ${subjKo.replace('학원','')} 내신 기출 분석 · 첫 수업 무료 · 48시간 내 매칭</p>
+    <p>${gLabel} ${subjKo.replace('학원','')} 내신 기출 분석 · 첫 수업 무료 · 빠르게 매칭</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">010-6834-8080</a>
       <a class="btn-o" href="/contact?type=academy&school=${encodeURIComponent(foundSchool)}&subject=${subjectEn}">무료 상담 신청</a>
@@ -3847,7 +3847,7 @@ function makeConversationPage(lang) {
     english: {
       ko:'영어 회화',
       sub:'English Conversation',
-      emoji:'🇬🇧',
+      emoji:'📚',
       color:'#1D4ED8',
       bg:'#EFF6FF',
       lc:'#DBEAFE',
@@ -3907,7 +3907,7 @@ function makeConversationPage(lang) {
             ['쉐도잉(Shadowing)', '원어민 음성을 들으면서 동시에 따라 말하는 훈련입니다. 발음·억양·속도를 자연스럽게 익히는 가장 효과적인 방법으로, 매일 15분씩 3개월이면 발음이 눈에 띄게 좋아집니다.'],
             ['영어 일기 쓰기 + 말하기', '오늘 하루를 영어로 3문장 쓰고, 소리 내어 읽는 훈련입니다. 쓰기와 말하기를 동시에 훈련할 수 있어 초보자에게 특히 효과적입니다.'],
             ['패턴 영어 반복 훈련', '\"I used to...\", \"Have you ever...?\" 같은 핵심 패턴 20개를 완벽히 익히면 일상 대화의 80%가 해결됩니다. 패턴을 외우고 다양한 상황에 응용하는 연습이 핵심입니다.'],
-            ['1:1 회화 코칭', '혼자 공부할 때의 가장 큰 문제는 내 발음과 표현이 맞는지 확인이 안 된다는 점입니다. 1:1 코치와 함께하면 즉각적인 피드백으로 잘못된 습관을 빠르게 교정할 수 있습니다.'],
+            ['1:1 화상 회화 수업', '혼자 공부할 때의 가장 큰 문제는 내 발음과 표현이 맞는지 확인이 안 된다는 점입니다. 1:1 화상 수업으로 즉각적인 피드백으로 잘못된 습관을 빠르게 교정할 수 있습니다.'],
             ['미디어 노출 극대화', '유튜브 영어 채널, 영어 팟캐스트, 넷플릭스 영어 자막 시청을 매일 30분씩 습관화합니다. 귀가 먼저 뚫려야 입이 열립니다.'],
           ]
         },
@@ -3941,7 +3941,7 @@ function makeConversationPage(lang) {
       ],
     },
     chinese: {
-      intro: `중국어는 전 세계 14억 명이 사용하는 언어로, 비즈니스·무역·관광 분야에서 영어 다음으로 중요한 언어가 됐습니다. 한국과 중국의 교역 규모는 세계 1위 수준으로, 제조업·무역·IT·관광 등 거의 모든 산업에서 중국어 구사 능력은 핵심 경쟁력입니다. 특히 중국어는 성조(4성)가 있어 발음을 처음부터 정확히 배우는 것이 매우 중요합니다. <strong style="color:${color}">1:1 회화 코칭</strong>으로 발음부터 제대로 잡아야 나중에 교정 비용이 들지 않습니다.`,
+      intro: `중국어는 전 세계 14억 명이 사용하는 언어로, 비즈니스·무역·관광 분야에서 영어 다음으로 중요한 언어가 됐습니다. 한국과 중국의 교역 규모는 세계 1위 수준으로, 제조업·무역·IT·관광 등 거의 모든 산업에서 중국어 구사 능력은 핵심 경쟁력입니다. 특히 중국어는 성조(4성)가 있어 발음을 처음부터 정확히 배우는 것이 매우 중요합니다. <strong style="color:${color}">1:1 화상 회화 수업</strong>으로 발음부터 제대로 잡아야 나중에 교정 비용이 들지 않습니다.`,
       why_title: '왜 중국어 회화가 필요한가요?',
       why_content: `한국의 대중국 수출입 규모는 전체의 25% 이상을 차지합니다. 제조업, 무역, 유통, IT, 게임, 엔터테인먼트 등 중국과 연계된 산업에서 중국어 능통자는 취업 시 명확한 우위를 가집니다. 또한 중국어를 배우면 일본어, 한자 문화권 전체를 이해하는 데 도움이 되며, 관광 측면에서도 중국·대만·홍콩 등 중화권 여행이 풍부해집니다.`,
       sections: [
@@ -3966,7 +3966,7 @@ function makeConversationPage(lang) {
             ['핀인 읽기 완성', '한국어 영어 발음 기호처럼 중국어에는 핀인이 있습니다. 핀인을 완성하면 모든 중국어 단어를 스스로 읽을 수 있습니다. 2~3주면 기본 핀인 완성이 가능합니다.'],
             ['패턴 중심 회화 훈련', '\"我想...(나는 ~하고 싶다)\", \"你能...吗?(~할 수 있어요?)\" 등 핵심 패턴 30개를 익히면 일상 대화의 70%가 해결됩니다.'],
             ['중드(중국 드라마) 활용', '자막과 함께 중국 드라마를 보면서 자연스러운 표현을 습득합니다. 특히 현대 드라마는 실생활 회화에 즉시 응용할 수 있는 표현이 풍부합니다.'],
-            ['1:1 코칭으로 발음 교정', '중국어 발음은 혼자 공부하면 나쁜 습관이 생기기 쉽습니다. 1:1 코치의 실시간 피드백으로 초반에 정확한 발음을 잡는 것이 중요합니다.'],
+            ['1:1 화상 수업으로 발음 교정', '중국어 발음은 혼자 공부하면 나쁜 습관이 생기기 쉽습니다. 1:1 코치의 실시간 피드백으로 초반에 정확한 발음을 잡는 것이 중요합니다.'],
           ]
         },
         {
@@ -3999,7 +3999,7 @@ function makeConversationPage(lang) {
       ],
     },
     japanese: {
-      intro: `일본어는 한국인이 가장 빠르게 배울 수 있는 외국어입니다. 문장 구조가 한국어와 거의 동일하고, 한자를 이미 어느 정도 알고 있어 어휘 습득도 빠릅니다. 일본과 한국은 지리적으로 가장 가까운 나라로, 관광·문화·비즈니스·취업 등 다양한 분야에서 일본어 능력이 직접적인 기회를 만들어줍니다. 히라가나·가타카나 46자를 익히면 2~3개월 만에 기본 회화가 가능합니다. <strong style="color:${color}">1:1 맞춤 회화 코칭</strong>으로 올바른 발음과 자연스러운 표현을 처음부터 제대로 배울 수 있습니다.`,
+      intro: `일본어는 한국인이 가장 빠르게 배울 수 있는 외국어입니다. 문장 구조가 한국어와 거의 동일하고, 한자를 이미 어느 정도 알고 있어 어휘 습득도 빠릅니다. 일본과 한국은 지리적으로 가장 가까운 나라로, 관광·문화·비즈니스·취업 등 다양한 분야에서 일본어 능력이 직접적인 기회를 만들어줍니다. 히라가나·가타카나 46자를 익히면 2~3개월 만에 기본 회화가 가능합니다. <strong style="color:${color}">1:1 맞춤 화상 회화 수업</strong>으로 올바른 발음과 자연스러운 표현을 처음부터 제대로 배울 수 있습니다.`,
       why_title: '왜 일본어 회화가 필요한가요?',
       why_content: `일본은 한국인이 가장 많이 방문하는 해외 여행지 1위입니다. 오사카·도쿄·후쿠오카 여행에서 일본어를 조금이라도 할 수 있으면 현지 맛집, 숨겨진 명소, 현지인과의 소통이 가능해집니다. 취업 측면에서도 한국의 일본계 기업, 일본 취업, 온라인 번역·통역 프리랜서 등 일본어 능통자의 수요는 지속적으로 높습니다. K-POP·한류의 영향으로 일본 현지 비즈니스 기회도 크게 늘고 있습니다.`,
       sections: [
@@ -4024,7 +4024,7 @@ function makeConversationPage(lang) {
             ['한자(漢字) 활용', '한국인은 이미 한자 어휘를 알고 있어 일본어 단어 습득이 빠릅니다. 한자를 적극 활용하면 어휘 학습 속도가 2배 빨라집니다.'],
             ['드라마·애니메이션 활용', '일본 드라마나 애니메이션에 나오는 표현을 따라 말하는 연습을 합니다. 자연스러운 인토네이션과 표현을 동시에 익힐 수 있습니다.'],
             ['경어 패턴 익히기', '일본어는 경어 사용이 매우 중요합니다. 丁寧語(정중어), 尊敬語(존경어), 謙譲語(겸양어) 기본 패턴을 익히면 비즈니스 상황에서 자신감이 생깁니다.'],
-            ['1:1 코칭으로 빠른 성장', '일본어는 혼자 공부할 때 발음(특히 장음, 촉음)과 경어 사용에서 오류가 생기기 쉽습니다. 1:1 코치의 즉각적인 피드백이 빠른 성장의 핵심입니다.'],
+            ['1:1 화상 수업으로 빠른 성장', '일본어는 혼자 공부할 때 발음(특히 장음, 촉음)과 경어 사용에서 오류가 생기기 쉽습니다. 1:1 코치의 즉각적인 피드백이 빠른 성장의 핵심입니다.'],
           ]
         },
         {
@@ -4099,7 +4099,7 @@ function makeConversationPage(lang) {
     <img src="${thumb}" alt="${ko}" style="width:100%;height:100%;object-fit:cover" loading="eager" onerror="this.parentElement.style.background='linear-gradient(135deg,${color},${color}99)';this.remove()">
     <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,32,68,.88),rgba(15,32,68,.2))"></div>
     <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:40px">
-      <div style="display:inline-flex;align-items:center;gap:8px;background:${color};color:white;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:14px;width:fit-content">${emoji} ${ko} 전문 코칭</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:${color};color:white;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:14px;width:fit-content">${emoji} ${ko} 화상 수업</div>
       <h1 style="font-size:32px;font-weight:900;color:white;margin:0 0 10px;line-height:1.25">${ko} 완벽 가이드</h1>
       <p style="font-size:15px;color:rgba(255,255,255,.8);margin:0">${tag}</p>
     </div>
@@ -4107,7 +4107,7 @@ function makeConversationPage(lang) {
 
   <!-- 수치 -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px">
-    ${[['48시간','코치 매칭','#1D4ED8','#EFF6FF'],['3단계','코치 검증','#10B981','#ECFDF5'],['무료','첫 수업','#F59E0B','#FFFBEB'],['전국','방문 코칭','#8B5CF6','#F5F3FF']].map(([v,l,c,bg])=>`<div style="background:${bg};border-radius:14px;padding:16px;text-align:center;border:1.5px solid ${c}20"><div style="font-size:20px;font-weight:900;color:${c}">${v}</div><div style="font-size:11px;color:#6B7280;margin-top:3px">${l}</div></div>`).join('')}
+    ${[['빠르게','코치 매칭','#1D4ED8','#EFF6FF'],['3단계','코치 검증','#10B981','#ECFDF5'],['무료','첫 수업','#F59E0B','#FFFBEB'],['화상','수업 진행','#8B5CF6','#F5F3FF']].map(([v,l,c,bg])=>`<div style="background:${bg};border-radius:14px;padding:16px;text-align:center;border:1.5px solid ${c}20"><div style="font-size:20px;font-weight:900;color:${c}">${v}</div><div style="font-size:11px;color:#6B7280;margin-top:3px">${l}</div></div>`).join('')}
   </div>
 
   <!-- 소개 -->
@@ -4139,7 +4139,7 @@ function makeConversationPage(lang) {
 
   <div class="cta-box">
     <h3>${ko} 무료 상담</h3>
-    <p>1:1 맞춤 ${ko} 코칭 · 첫 수업 무료 · 48시간 내 코치 매칭</p>
+    <p>1:1 맞춤 ${ko} 코칭 · 첫 수업 무료 · 빠르게 코치 매칭</p>
     <div class="cta-btns">
       <a class="btn-p" href="tel:01068348080">010-6834-8080</a>
       <a class="btn-o" href="/contact?type=tutoring&subject=conversation_${lang}">무료 상담 신청</a>
@@ -4178,7 +4178,7 @@ function makeAcademyPage() {
     <div id="district-bar" style="display:none;flex-wrap:wrap;gap:6px;margin-bottom:24px;padding:14px 16px;background:white;border-radius:12px;border:1px solid #E5E7EB"></div>
 
     <!-- 카드 그리드 -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch" id="card-grid"><style>@media(max-width:640px){#card-grid{grid-template-columns:1fr!important;gap:12px!important}}@media(max-width:960px) and (min-width:641px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}</style></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch" id="card-grid"><style>@media(max-width:768px){#card-grid{grid-template-columns:1fr!important;gap:12px!important}}@media(max-width:960px) and (min-width:641px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}</style></div>
   </div>
 
   <!-- 문의 모달 -->
@@ -4312,9 +4312,9 @@ function makeAcademyPage() {
         <div style="font-size:11px;color:#6B7280;line-height:1.5;display:flex;gap:5px;align-items:flex-start;margin-bottom:6px"><span style="flex-shrink:0">📍</span><span>\${c.a}</span></div>
         \${dirHtml}
         <div style="margin-top:auto;padding-top:12px;border-top:1px solid #F1F5F9;display:flex;flex-direction:column;gap:6px">
-          \${c.te?'<div style="display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap"><span style="flex-shrink:0;white-space:nowrap;background:#FEF3C7;color:#D97706;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">초등</span><span style="font-size:12px;line-height:1.9">'+c.te.split(',').map(function(s){var t=s.trim();return'<a href="/academy/school/e/'+makeSchoolSlug('E',t)+'" style="color:#D97706;font-weight:700;text-decoration:underline;text-underline-offset:2px;margin-right:4px">'+t+'</a>';}).join('')+'</span></div>':''}
-          \${c.tm?'<div style="display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap"><span style="flex-shrink:0;white-space:nowrap;background:#DCFCE7;color:#16A34A;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">중등</span><span style="font-size:12px;line-height:1.9">'+c.tm.split(',').map(function(s){var t=s.trim();return'<a href="/academy/school/m/'+makeSchoolSlug('M',t)+'" style="color:#16A34A;font-weight:700;text-decoration:underline;text-underline-offset:2px;margin-right:4px">'+t+'</a>';}).join('')+'</span></div>':''}
-          \${c.th?'<div style="display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap"><span style="flex-shrink:0;white-space:nowrap;background:#EFF6FF;color:#2563EB;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span style="font-size:12px;line-height:1.9">'+c.th.split(',').map(function(s){var t=s.trim();return'<a href="/academy/school/h/'+makeSchoolSlug('H',t)+'" style="color:#2563EB;font-weight:700;text-decoration:underline;text-underline-offset:2px;margin-right:4px">'+t+'</a>';}).join('')+'</span></div>':''}
+          \${c.te?'<div style="display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap"><span style="flex-shrink:0;white-space:nowrap;background:#FEF3C7;color:#D97706;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">초등</span><span style="font-size:12px;line-height:1.9">'+c.te.split(',').map(function(s){var t=s.trim();return'<a href="/academy/school/e/'+makeSchoolSlug('E',t)+'" style="color:#D97706;font-weight:700;text-decoration:none;margin-right:4px">'+t+'</a>';}).join('')+'</span></div>':''}
+          \${c.tm?'<div style="display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap"><span style="flex-shrink:0;white-space:nowrap;background:#DCFCE7;color:#16A34A;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">중등</span><span style="font-size:12px;line-height:1.9">'+c.tm.split(',').map(function(s){var t=s.trim();return'<a href="/academy/school/m/'+makeSchoolSlug('M',t)+'" style="color:#16A34A;font-weight:700;text-decoration:none;margin-right:4px">'+t+'</a>';}).join('')+'</span></div>':''}
+          \${c.th?'<div style="display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap"><span style="flex-shrink:0;white-space:nowrap;background:#EFF6FF;color:#2563EB;padding:2px 7px;border-radius:4px;font-weight:700;font-size:11px">고등</span><span style="font-size:12px;line-height:1.9">'+c.th.split(',').map(function(s){var t=s.trim();return'<a href="/academy/school/h/'+makeSchoolSlug('H',t)+'" style="color:#2563EB;font-weight:700;text-decoration:none;margin-right:4px">'+t+'</a>';}).join('')+'</span></div>':''}
           \${!c.te&&!c.tm&&!c.th?'<div style="font-size:11px;color:#D1D5DB">대상학교 정보 없음</div>':''}
         </div>
         <div style="display:flex;gap:8px;margin-top:14px">
@@ -4397,7 +4397,7 @@ function makeContactPage(type) {
   const isAcademy = type === 'academy';
   const canonical = '/contact';
   const title = '올케어스터디 무료 상담 문의 | 1:1 맞춤 과외·학원 코칭';
-  const desc = '올케어스터디 무료 상담. 과외·학원 코칭 문의. 48시간 내 답변. 010-6834-8080';
+  const desc = '올케어스터디 무료 상담. 과외·학원 코칭 문의. 빠르게 답변. 010-6834-8080';
   const bc = [{name:'홈',url:'/'},{name:'문의하기',url:'/contact'}];
 
   const body = `
@@ -5373,7 +5373,7 @@ function switchTab(menu,tab){
   }catch(e){}
 })();
 </script>`;
-  return wrap('올케어스터디 | 전국 1:1 맞춤 과외·학원 정보','전국 초·중·고 1:1 맞춤 과외 플랫폼. 검증된 선생님 48시간 내 매칭. 수학·영어·국어·과학 방문과외. 무료상담 010-6834-8080','/',body,[]);
+  return wrap('올케어스터디 | 전국 1:1 맞춤 과외·학원 정보','전국 초·중·고 1:1 맞춤 과외 플랫폼. 검증된 선생님 빠르게 매칭. 수학·영어·국어·과학 방문과외. 무료상담 010-6834-8080','/',body,[]);
 }
 
 
