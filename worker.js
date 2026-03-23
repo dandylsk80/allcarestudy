@@ -659,7 +659,10 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 @media(max-width:768px){div[style*='grid-template-columns:1fr 340px']{grid-template-columns:1fr!important}}
 .cf-input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit}
 .cf-label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}
-@media(max-width:768px){div[style*='grid-template-columns:1fr 300px']{grid-template-columns:1fr!important}}`;
+@media(max-width:768px){div[style*='grid-template-columns:1fr 300px']{grid-template-columns:1fr!important}}
+#card-grid{display:grid}
+@media(max-width:767px){#card-grid{grid-template-columns:1fr!important;gap:10px!important}}
+@media(min-width:768px) and (max-width:1023px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}`;
 
 const HEADER = `<header>
   <div class="hw">
@@ -4178,7 +4181,12 @@ function makeAcademyPage() {
     <div id="district-bar" style="display:none;flex-wrap:wrap;gap:6px;margin-bottom:24px;padding:14px 16px;background:white;border-radius:12px;border:1px solid #E5E7EB"></div>
 
     <!-- 카드 그리드 -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch" id="card-grid"><style>@media(max-width:768px){#card-grid{grid-template-columns:1fr!important;gap:12px!important}}@media(max-width:960px) and (min-width:641px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}</style></div>
+    <style>
+#card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+@media(max-width:767px){#card-grid{grid-template-columns:1fr!important;gap:10px!important}}
+@media(min-width:768px) and (max-width:1023px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}
+</style>
+<div id="card-grid"></div>
   </div>
 
   <!-- 문의 모달 -->
