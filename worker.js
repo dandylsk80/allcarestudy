@@ -3649,64 +3649,64 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
   // ── 과목별 상세 본문 (3000자+ 목표) ──
   const contentMap={
     math:{
-      intro:`${foundSchool} ${gLabel} 수학 내신에서 가장 많이 하는 실수는 개념을 이해하지 못한 채 공식만 외우는 것입니다. 공식을 암기해 풀 수 있는 문제는 전체의 40%에 불과합니다. 나머지 60%는 원리를 이해해야 풀 수 있는 응용·서술형 문제입니다. 올케어스터디는 ${foundSchool} 기출문제를 분석해 자주 출제되는 유형과 배점 구조를 파악하고, 그에 맞춘 개인 맞춤 커리큘럼으로 지도합니다.`,
-      why:`${foundSchool} 수학 시험의 특징은 학교마다 다릅니다. 난이도 배분, 서술형 비중, 자주 나오는 단원이 모두 다릅니다. 올케어스터디 코치는 ${foundSchool}의 최근 3년 기출을 분석해 <strong style="color:${color}">어떤 유형의 문제가 자주 나오는지, 어디서 점수를 잃는지</strong>를 정확히 파악합니다. 학원 수업처럼 모든 학생에게 동일한 문제집을 푸는 방식이 아니라, 학생 개인의 취약 단원과 오답 패턴을 분석해 집중적으로 보완합니다.`,
+      intro:foundSchool+' '+gLabel+' 수학 내신에서 가장 많이 하는 실수는 개념을 이해하지 못한 채 공식만 외우는 것입니다. 공식을 암기해 풀 수 있는 문제는 전체의 40%에 불과합니다. 나머지 60%는 원리를 이해해야 풀 수 있는 응용·서술형 문제입니다. 올케어스터디는 '+foundSchool+' 기출문제를 분석해 자주 출제되는 유형과 배점 구조를 파악하고, 그에 맞춘 개인 맞춤 커리큘럼으로 지도합니다.',
+      why:foundSchool+' 수학 시험의 특징은 학교마다 다릅니다. 난이도 배분, 서술형 비중, 자주 나오는 단원이 모두 다릅니다. 올케어스터디 코치는 '+foundSchool+'의 최근 3년 기출을 분석해 <strong style="color:'+color+'">어떤 유형의 문제가 자주 나오는지, 어디서 점수를 잃는지</strong>를 정확히 파악합니다. 학원 수업처럼 모든 학생에게 동일한 문제집을 푸는 방식이 아니라, 학생 개인의 취약 단원과 오답 패턴을 분석해 집중적으로 보완합니다.',
       points:isE?['매일 10분 연산 훈련 — 속도와 정확도 동시 향상','분수·소수·도형 원리 이해 중심 학습','수학 일기: 오늘 배운 개념을 말로 설명하는 습관','중학교 대비 비율·비례·대수 선행 개념 완성']
             :isM?['시험 4주 전부터 학교 기출 집중 분석 및 단원별 공략','방정식·연립방정식·이차함수·확률 개념→응용 순서 학습','서술형 답안: 풀이 과정 단계별로 논리적으로 작성','오답 노트: 틀린 문제의 원인을 3가지로 분류 (개념/실수/응용)','시험 1주 전 예상 문제 자체 출제 → 실전 감각 향상']
             :['수능·내신 이원화 전략: 내신 기간 기출 집중 / 평소 수능 기출 반복','수학Ⅰ·Ⅱ 핵심 개념 완성 후 선택과목(미적분/기하/확통) 진입','킬러 문항(준킬러 포함) 공략 루틴 구성','내신 서술형: 채점 기준에 맞는 풀이 과정 작성 훈련','매주 모의 시험으로 실전 타임 감각 유지'],
       d28:['D-28: 시험 범위 확인 + 단원별 개념 정리 계획표 작성','D-21: 교과서 예제·연습문제 전 범위 완성 + 핵심 개념 노트','D-14: 학교 기출 2~3회 풀기 + 오답 완전 이해','D-7: 예상 문제 풀기 + 서술형 답안 작성 연습','D-1: 오답 노트 최종 복습 + 핵심 공식·개념 확인'],
-      tip:`수학 성적을 올리는 가장 빠른 방법은 <strong style="color:${color}">오답을 두 번 다시 틀리지 않는 것</strong>입니다. 한 번 틀린 문제는 반드시 오답 노트에 정리하고, 시험 전날 오답 노트만 복습해도 5~10점이 오르는 경험을 할 수 있습니다.`,
+      tip:'수학 성적을 올리는 가장 빠른 방법은 <strong style="color:'+color+'">오답을 두 번 다시 틀리지 않는 것</strong>입니다. 한 번 틀린 문제는 반드시 오답 노트에 정리하고, 시험 전날 오답 노트만 복습해도 5~10점이 오르는 경험을 할 수 있습니다.',
       reviews:[
-        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'수학 '+((passRate%3)+1)+'등급 향상', text:`처음에는 수학 시험 준비를 어떻게 해야 하는지도 몰랐는데, 선생님이 ${foundSchool} 기출문제를 하나하나 분석해주시면서 어떤 유형이 자주 나오는지 알게 됐어요. 2개월 만에 점수가 많이 올랐습니다.`},
-        {grade:isE?'초등 6학년':isM?'중학교 2학년':'고등학교 2학년', result:'내신 100점 달성', text:`혼자 공부할 때는 아무리 풀어도 비슷한 실수를 반복했는데, 오답 노트를 쓰는 방법을 배우고 나서 실수가 확 줄었어요. ${foundSchool} 내신에서 처음으로 좋은 점수를 받았습니다.`},
+        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'수학 '+((passRate%3)+1)+'등급 향상', text:'처음에는 수학 시험 준비를 어떻게 해야 하는지도 몰랐는데, 선생님이 '+foundSchool+' 기출문제를 하나하나 분석해주시면서 어떤 유형이 자주 나오는지 알게 됐어요. 2개월 만에 점수가 많이 올랐습니다.'},
+        {grade:isE?'초등 6학년':isM?'중학교 2학년':'고등학교 2학년', result:'내신 100점 달성', text:'혼자 공부할 때는 아무리 풀어도 비슷한 실수를 반복했는데, 오답 노트를 쓰는 방법을 배우고 나서 실수가 확 줄었어요. '+foundSchool+' 내신에서 처음으로 좋은 점수를 받았습니다.'},
       ]
     },
     english:{
-      intro:`${foundSchool} ${gLabel} 영어 내신에서 점수를 잃는 가장 큰 원인은 교과서 지문을 대충 읽는 것입니다. 영어 내신 시험은 교과서 지문에서 90% 이상 출제됩니다. 지문을 완전히 이해하고, 핵심 어휘를 암기하고, 서술형 유형에 맞게 답안을 작성하는 능력이 있어야 높은 점수를 받을 수 있습니다. 올케어스터디는 ${foundSchool}의 영어 교과서 지문과 서술형 출제 패턴을 분석해 최적화된 수업을 제공합니다.`,
-      why:`${foundSchool} 영어 시험은 교과서 지문 변형 문제와 서술형 비중이 높습니다. 단어만 외운다고 해결되지 않고, <strong style="color:${color}">지문의 구조와 핵심 문법 포인트</strong>를 정확히 이해해야 합니다. 올케어스터디 코치는 ${foundSchool}의 최근 시험에서 자주 나오는 문법 포인트, 서술형 유형, 변형 문제 패턴을 분석해 수업에 반영합니다.`,
+      intro:foundSchool+' '+gLabel+' 영어 내신에서 점수를 잃는 가장 큰 원인은 교과서 지문을 대충 읽는 것입니다. 영어 내신 시험은 교과서 지문에서 90% 이상 출제됩니다. 지문을 완전히 이해하고, 핵심 어휘를 암기하고, 서술형 유형에 맞게 답안을 작성하는 능력이 있어야 높은 점수를 받을 수 있습니다. 올케어스터디는 '+foundSchool+'의 영어 교과서 지문과 서술형 출제 패턴을 분석해 최적화된 수업을 제공합니다.',
+      why:foundSchool+' 영어 시험은 교과서 지문 변형 문제와 서술형 비중이 높습니다. 단어만 외운다고 해결되지 않고, <strong style="color:'+color+'">지문의 구조와 핵심 문법 포인트</strong>를 정확히 이해해야 합니다. 올케어스터디 코치는 '+foundSchool+'의 최근 시험에서 자주 나오는 문법 포인트, 서술형 유형, 변형 문제 패턴을 분석해 수업에 반영합니다.',
       points:isE?['파닉스 완성 → 단어 500개 기초 확립','교과서 지문 5번 읽기 + 핵심 표현 암기','매일 단어 10개 예문과 함께 암기하는 루틴','중학교 영어 준비: 기초 문법(be동사·일반동사) 선행']
             :isM?['교과서 지문 완전 분석: 단어·구문·해석·변형 패턴','서술형 답안: 문법 오류 없이 영어 문장 작성 훈련','매일 단어 15개 누적 암기 (시험 전 300~500개 완성)','문법 체계화: 관계사·분사·가정법 핵심 포인트 정리','서술형 빈칸·조건 영작 유형별 전략 학습']
             :['수능 1등급 = 어휘 3000개 + 독해 속도 + 유형별 전략','빈칸 추론·순서 배열·삽입·어법 유형 분류 공략','내신 지문 완전 분석 + 변형 문제 대비 훈련','EBS 연계 작품 심화 분석으로 수능 연계율 활용','듣기 1등급: 유형별 키워드 집중·받아쓰기 훈련'],
       d28:['D-28: 교과서 지문 목록 정리 + 단어 암기 시작','D-21: 지문별 핵심 어휘·구문·해석 완성','D-14: 문법 포인트 정리 + 서술형 유형 파악','D-7: 서술형 답안 직접 작성 연습 + 오답 분석','D-1: 암기 사항 최종 점검 + 모의 서술형 풀기'],
-      tip:`영어 성적을 올리는 핵심은 <strong style="color:${color}">매일 꾸준히 단어를 암기하는 것</strong>입니다. 시험 직전에 몰아서 외우면 금방 잊어버립니다. 매일 15개씩 예문과 함께 외우면, 시험 4주 전에 이미 400~500개의 어휘가 준비됩니다.`,
+      tip:'영어 성적을 올리는 핵심은 <strong style="color:'+color+'">매일 꾸준히 단어를 암기하는 것</strong>입니다. 시험 직전에 몰아서 외우면 금방 잊어버립니다. 매일 15개씩 예문과 함께 외우면, 시험 4주 전에 이미 400~500개의 어휘가 준비됩니다.',
       reviews:[
-        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'영어 '+(80+(_h%15))+'점 달성', text:`영어 단어를 외워도 시험에서 점수가 안 나와서 답답했는데, 선생님이 교과서 지문을 완전히 분석해주시고 서술형 답안 쓰는 방법을 가르쳐 주셨어요. ${foundSchool} 시험에서 처음으로 고득점을 받았습니다.`},
-        {grade:isE?'초등 6학년':isM?'중학교 2학년':'고등학교 2학년', result:'수능 영어 1등급', text:`혼자 공부할 때는 독해 문제가 너무 어려웠는데, 유형별 전략을 배우고 나서 풀이 속도가 많이 빨라졌어요. 빈칸 추론과 순서 배열은 이제 자신 있습니다.`},
+        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'영어 '+(80+(_h%15))+'점 달성', text:'영어 단어를 외워도 시험에서 점수가 안 나와서 답답했는데, 선생님이 교과서 지문을 완전히 분석해주시고 서술형 답안 쓰는 방법을 가르쳐 주셨어요. '+foundSchool+' 시험에서 처음으로 고득점을 받았습니다.'},
+        {grade:isE?'초등 6학년':isM?'중학교 2학년':'고등학교 2학년', result:'수능 영어 1등급', text:'혼자 공부할 때는 독해 문제가 너무 어려웠는데, 유형별 전략을 배우고 나서 풀이 속도가 많이 빨라졌어요. 빈칸 추론과 순서 배열은 이제 자신 있습니다.'},
       ]
     },
     korean:{
-      intro:`${foundSchool} ${gLabel} 국어 내신에서 가장 많이 실수하는 부분은 서술형 답안입니다. 내용은 알고 있는데 답안을 어떻게 써야 하는지 몰라서 점수를 잃는 경우가 많습니다. 국어 서술형은 <strong style="color:${color}">핵심 개념어를 반드시 포함</strong>하고, 문제에서 요구하는 조건을 모두 충족해야 점수를 받을 수 있습니다. 올케어스터디는 ${foundSchool}의 국어 출제 패턴을 분석해 서술형 답안 작성 능력을 체계적으로 키웁니다.`,
-      why:`${foundSchool} 국어 시험은 문학(시·소설)과 비문학(독서) 지문에서 출제되며, 서술형 비중이 학년이 올라갈수록 높아집니다. <strong style="color:${color}">단순 암기보다 지문을 분석하고 자신의 언어로 표현하는 능력</strong>이 중요합니다. 화자의 정서, 소설의 인물·사건·배경, 비문학의 주제와 논지를 파악하는 훈련을 합니다.`,
+      intro:foundSchool+' '+gLabel+' 국어 내신에서 가장 많이 실수하는 부분은 서술형 답안입니다. 내용은 알고 있는데 답안을 어떻게 써야 하는지 몰라서 점수를 잃는 경우가 많습니다. 국어 서술형은 <strong style="color:'+color+'">핵심 개념어를 반드시 포함</strong>하고, 문제에서 요구하는 조건을 모두 충족해야 점수를 받을 수 있습니다. 올케어스터디는 '+foundSchool+'의 국어 출제 패턴을 분석해 서술형 답안 작성 능력을 체계적으로 키웁니다.',
+      why:foundSchool+' 국어 시험은 문학(시·소설)과 비문학(독서) 지문에서 출제되며, 서술형 비중이 학년이 올라갈수록 높아집니다. <strong style="color:'+color+'">단순 암기보다 지문을 분석하고 자신의 언어로 표현하는 능력</strong>이 중요합니다. 화자의 정서, 소설의 인물·사건·배경, 비문학의 주제와 논지를 파악하는 훈련을 합니다.',
       points:isE?['받아쓰기 완성 + 맞춤법 정확도 향상 훈련','매일 20분 독서 + 3줄 요약 습관 형성','교과서 지문 꼼꼼히 읽고 질문에 완성된 문장으로 답하기','독서감상문·일기 쓰기로 글쓰기 기초 완성']
             :isM?['문학 분석: 시 — 화자·정서·표현법 / 소설 — 인물·사건·배경 체계적 파악','비문학: 주제문 찾기 → 단락 구조 파악 → 선지 판단 4단계','서술형: 핵심 개념어 반드시 포함, 조건 충족 답안 작성 훈련','문법: 품사·문장 성분·어문 규정을 표로 정리','수행평가: 독서 기록·발표·토론 준비 지원']
             :['수능 독서: 매일 비문학 지문 1~2개 + 선지 오답 이유 분석','문학 심층 분석: 수능 자주 출제 작품 핵심 정리','내신 기간: 교과서 수록 작품 완전 분석 집중','서술형 고득점 전략: 채점 기준에 맞는 논리적 답안 구성','언어와 매체·화법과 작문 선택과목 집중 공략'],
       d28:['D-28: 시험 범위 작품·지문 목록 정리 및 분류','D-21: 문학 작품 핵심 내용 요약 + 비문학 지문 분석 완성','D-14: 문법 정리 + 기출 유형 풀기','D-7: 서술형 답안 직접 작성 연습 + 조건 충족 확인','D-1: 핵심 개념어 최종 암기 + 오답 분석'],
-      tip:`국어 서술형에서 가장 많이 틀리는 이유는 <strong style="color:${color}">"핵심어"를 넣지 않아서</strong>입니다. 채점자는 답안에서 특정 핵심 단어가 있는지 확인합니다. 문제를 읽을 때 반드시 핵심어를 먼저 찾고, 그 단어를 포함해서 답안을 작성하세요.`,
+      tip:'국어 서술형에서 가장 많이 틀리는 이유는 <strong style="color:'+color+'">"핵심어"를 넣지 않아서</strong>입니다. 채점자는 답안에서 특정 핵심 단어가 있는지 확인합니다. 문제를 읽을 때 반드시 핵심어를 먼저 찾고, 그 단어를 포함해서 답안을 작성하세요.',
       reviews:[
-        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'국어 서술형 만점', text:`서술형 답안을 어떻게 써야 하는지 항상 막막했는데, 선생님이 핵심어를 먼저 찾는 방법을 가르쳐 주셨어요. ${foundSchool} 시험에서 서술형을 거의 다 맞았습니다.`},
-        {grade:isE?'초등 6학년':isM?'중학교 2학년':'고등학교 2학년', result:'국어 '+(passRate)+'점', text:`비문학 지문을 읽으면 내용은 이해하는데 문제를 틀리는 경우가 많았어요. 주제문 찾기와 선지 분석 방법을 배우고 나서 정답률이 크게 올랐습니다.`},
+        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'국어 서술형 만점', text:'서술형 답안을 어떻게 써야 하는지 항상 막막했는데, 선생님이 핵심어를 먼저 찾는 방법을 가르쳐 주셨어요. '+foundSchool+' 시험에서 서술형을 거의 다 맞았습니다.'},
+        {grade:isE?'초등 6학년':isM?'중학교 2학년':'고등학교 2학년', result:'국어 '+(passRate)+'점', text:'비문학 지문을 읽으면 내용은 이해하는데 문제를 틀리는 경우가 많았어요. 주제문 찾기와 선지 분석 방법을 배우고 나서 정답률이 크게 올랐습니다.'},
       ]
     },
     science:{
-      intro:`${foundSchool} ${gLabel} 과학 내신에서 점수를 잃는 가장 큰 원인은 원리를 이해하지 못하고 결론만 암기하는 것입니다. 과학은 '왜 그런지'를 이해하면 변형 문제에도 흔들리지 않지만, 결론만 외우면 문제 유형이 조금만 바뀌어도 틀립니다. 올케어스터디는 ${foundSchool}의 과학 출제 패턴을 분석해 원리 이해 중심의 수업을 제공합니다.`,
-      why:`${foundSchool} 과학 시험은 실험 설계·결과 해석·서술형 비중이 높습니다. 단순 암기로는 한계가 있고, <strong style="color:${color}">실험 목적, 변인 통제, 결과 해석, 결론 도출</strong>의 흐름을 이해해야 합니다. 특히 단원 간 연결이 강한 과목이기 때문에 앞 단원에 구멍이 있으면 뒤 단원을 이해하기 어렵습니다.`,
+      intro:foundSchool+' '+gLabel+' 과학 내신에서 점수를 잃는 가장 큰 원인은 원리를 이해하지 못하고 결론만 암기하는 것입니다. 과학은 왜 그런지를 이해하면 변형 문제에도 흔들리지 않지만, 결론만 외우면 문제 유형이 조금만 바뀌어도 틀립니다. 올케어스터디는 '+foundSchool+'의 과학 출제 패턴을 분석해 원리 이해 중심의 수업을 제공합니다.',
+      why:foundSchool+' 과학 시험은 실험 설계·결과 해석·서술형 비중이 높습니다. 단순 암기로는 한계가 있고, <strong style="color:'+color+'">실험 목적, 변인 통제, 결과 해석, 결론 도출</strong>의 흐름을 이해해야 합니다. 특히 단원 간 연결이 강한 과목이기 때문에 앞 단원에 구멍이 있으면 뒤 단원을 이해하기 어렵습니다.',
       points:['원리 이해 우선 학습: 왜 그런지를 먼저 이해하고 암기','실험 설계·변인 통제·결과 해석 흐름 체계적 학습','단원 간 연결 개념 파악: 앞 단원 취약점 먼저 보완','서술형: 실험 결과를 원인과 결론으로 논리적 설명','암기 사항은 표와 그림으로 정리해 오래 기억'],
       d28:['D-28: 시험 범위 단원 개념 흐름도 작성','D-21: 핵심 실험·용어·공식 완성','D-14: 기출 유형 풀기 + 오답 원인 분석','D-7: 서술형 실험 설명 작성 연습','D-1: 핵심 공식·원리 최종 확인'],
-      tip:`과학 공부의 핵심은 <strong style="color:${color}">교과서 그림을 직접 손으로 그려보는 것</strong>입니다. 그림을 그리면서 원리를 설명할 수 있으면 시험에서 어떤 유형의 문제가 나와도 풀 수 있습니다.`,
+      tip:'과학 공부의 핵심은 <strong style="color:'+color+'">교과서 그림을 직접 손으로 그려보는 것</strong>입니다. 그림을 그리면서 원리를 설명할 수 있으면 시험에서 어떤 유형의 문제가 나와도 풀 수 있습니다.',
       reviews:[
-        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'과학 '+(75+(_h%20))+'점→'+(90+(_h%8))+'점', text:`과학 개념을 외우기만 했는데 점수가 안 나와서 답답했어요. 선생님이 왜 그런지를 이해시켜 주시고 실험 해석 방법을 알려주신 후부터 훨씬 수월해졌습니다.`},
-        {grade:isE?'초등 6학년':isM?'중학교 2학년':'고등학교 2학년', result:'서술형 고득점', text:`서술형에서 실험 결과를 원인과 결론으로 설명하는 방법을 배웠어요. ${foundSchool} 시험에서 서술형 점수가 크게 올랐습니다.`},
+        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'과학 '+(75+(_h%20))+'점→'+(90+(_h%8))+'점', text:'과학 개념을 외우기만 했는데 점수가 안 나와서 답답했어요. 선생님이 왜 그런지를 이해시켜 주시고 실험 해석 방법을 알려주신 후부터 훨씬 수월해졌습니다.'},
+        {grade:isE?'초등 6학년':isM?'중학교 2학년':'고등학교 2학년', result:'서술형 고득점', text:'서술형에서 실험 결과를 원인과 결론으로 설명하는 방법을 배웠어요. '+foundSchool+' 시험에서 서술형 점수가 크게 올랐습니다.'},
       ]
     },
     social:{
-      intro:`${foundSchool} ${gLabel} 사회 내신은 단순 암기보다 흐름과 맥락으로 이해하는 것이 핵심입니다. 역사는 인과관계, 지리는 환경과 인간의 상호작용, 경제는 수요·공급 메커니즘을 이해하면 암기 없이도 문제를 풀 수 있습니다. 올케어스터디는 ${foundSchool}의 사회 출제 패턴을 분석해 효율적인 학습 방법을 안내합니다.`,
-      why:`${foundSchool} 사회 시험은 지도·그래프·자료 해석 문제 비중이 높습니다. <strong style="color:${color}">단순 암기보다 시각 자료를 읽는 능력</strong>이 중요합니다. 역사는 사건의 흐름과 인과관계, 지리는 지도 읽기, 경제는 그래프 해석 능력을 함께 키워야 고득점이 가능합니다.`,
+      intro:foundSchool+' '+gLabel+' 사회 내신은 단순 암기보다 흐름과 맥락으로 이해하는 것이 핵심입니다. 역사는 인과관계, 지리는 환경과 인간의 상호작용, 경제는 수요·공급 메커니즘을 이해하면 암기 없이도 문제를 풀 수 있습니다. 올케어스터디는 '+foundSchool+'의 사회 출제 패턴을 분석해 효율적인 학습 방법을 안내합니다.',
+      why:foundSchool+' 사회 시험은 지도·그래프·자료 해석 문제 비중이 높습니다. <strong style="color:'+color+'">단순 암기보다 시각 자료를 읽는 능력</strong>이 중요합니다. 역사는 사건의 흐름과 인과관계, 지리는 지도 읽기, 경제는 그래프 해석 능력을 함께 키워야 고득점이 가능합니다.',
       points:['역사: 시대 흐름 먼저, 각 시대 핵심 사건·특징 3가지씩 정리','지도·그래프·자료 해석 능력 집중 강화','서술형: 인과관계 구조로 핵심 용어 포함 답안 작성','시사 연결: 교과서 내용을 뉴스·현실과 연결해 기억','수행평가: 보고서·발표·토론 준비 체계적 지원'],
       d28:['D-28: 시험 범위 흐름도·연표 직접 작성','D-21: 핵심 용어·개념 정리 + 자료 해석 문제 집중','D-14: 기출 유형 풀기 + 서술형 답안 작성','D-7: 인과관계 서술형 연습 + 오답 분석','D-1: 핵심 사건·개념어 최종 암기'],
-      tip:`사회 공부의 핵심은 <strong style="color:${color}">흐름도를 직접 그리는 것</strong>입니다. 역사는 연표, 지리는 지도, 경제는 순환 흐름도를 손으로 그리면서 이해하면 시험에서 어떤 유형이 나와도 풀 수 있습니다.`,
+      tip:'사회 공부의 핵심은 <strong style="color:'+color+'">흐름도를 직접 그리는 것</strong>입니다. 역사는 연표, 지리는 지도, 경제는 순환 흐름도를 손으로 그리면서 이해하면 시험에서 어떤 유형이 나와도 풀 수 있습니다.',
       reviews:[
-        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'사회 '+(78+(_h%18))+'점→'+(93+(_h%6))+'점', text:`역사를 외우기만 하다가 흐름으로 이해하는 방법을 배우니 훨씬 쉬워졌어요. ${foundSchool} 시험에서 처음으로 고득점을 받았습니다.`},
-        {grade:'학부모', result:'단기간 성적 향상', text:`사회를 어려워하던 아이가 선생님과 수업 후 자료 해석 문제를 재미있어하기 시작했어요. 서술형 점수가 특히 많이 올랐습니다.`},
+        {grade:isE?'초등 5학년':isM?'중학교 1학년':'고등학교 1학년', result:'사회 '+(78+(_h%18))+'점→'+(93+(_h%6))+'점', text:'역사를 외우기만 하다가 흐름으로 이해하는 방법을 배우니 훨씬 쉬워졌어요. '+foundSchool+' 시험에서 처음으로 고득점을 받았습니다.'},
+        {grade:'학부모', result:'단기간 성적 향상', text:'사회를 어려워하던 아이가 선생님과 수업 후 자료 해석 문제를 재미있어하기 시작했어요. 서술형 점수가 특히 많이 올랐습니다.'},
       ]
     },
   };
@@ -4090,171 +4090,283 @@ function makeAcademyPage() {
 }
 
 
-function makeContactPage() {
+function makeContactPage(type) {
+  const isAcademy = type === 'academy';
+  const canonical = '/contact';
+  const title = '올케어스터디 무료 상담 문의 | 1:1 맞춤 과외·학원 코칭';
+  const desc = '올케어스터디 무료 상담. 과외·학원 코칭 문의. 48시간 내 답변. 010-6834-8080';
+  const bc = [{name:'홈',url:'/'},{name:'문의하기',url:'/contact'}];
+
   const body = `
+<div style="background:#F0F4FF;min-height:100vh;padding-bottom:80px">
+<div style="max-width:1100px;margin:0 auto;padding:clamp(90px,12vw,140px) clamp(16px,4vw,48px) 0;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
 
-  <div style="background:#F0F4FF;padding-bottom:80px">
-  <div class="cf-page">
-    <div>
-      <div class="info-badge2">✉️ 문의하기</div>
-      <h1 class="cf-info-title">궁금한 점을<br><em>편하게 남겨주세요</em></h1>
-      <p class="cf-info-sub">올케어스터디 전문 상담사가<br>빠른 시일 내에 연락드리겠습니다.</p>
-      <div class="cf-contact-cards">
-        <div class="cf-contact-card"><div class="ccc-icon ccc-blue">📞</div><div><div class="ccc-label">전화 상담</div><div class="ccc-value">010-6834-8080</div></div></div>
-        <div class="cf-contact-card" id="cf-card-center2"><div class="ccc-icon ccc-green">📍</div><div><div class="ccc-label">센터 방문 상담</div><div class="ccc-value">전국 200여 개 직영센터</div><div class="ccc-desc">가까운 센터를 찾아보세요</div></div></div>
-        <div class="cf-contact-card"><div class="ccc-icon ccc-orange">⏱️</div><div><div class="ccc-label">평균 응답 시간</div><div class="ccc-value">30분 이내</div></div></div>
+  <!-- 왼쪽: 안내 -->
+  <div>
+    <div style="display:inline-flex;align-items:center;gap:6px;background:white;border:1.5px solid #DBEAFE;border-radius:999px;padding:5px 14px;font-size:12px;font-weight:700;color:#1D4ED8;margin-bottom:20px">
+      문의하기
+    </div>
+    <h1 style="font-size:36px;font-weight:900;color:#0F2044;line-height:1.25;margin:0 0 16px">궁금한 점을<br><em style="font-style:normal;color:#1D4ED8">편하게 남겨주세요</em></h1>
+    <p style="font-size:15px;color:#6B7280;line-height:1.9;margin:0 0 32px">올케어스터디 전문 상담사가<br>빠른 시일 내에 연락드리겠습니다.</p>
+
+    <!-- 연락처 카드들 -->
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px">
+      <div style="display:flex;align-items:center;gap:14px;background:white;border-radius:14px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+        <div style="width:42px;height:42px;background:#EFF6FF;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📞</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#9CA3AF;margin-bottom:2px">전화 상담</div>
+          <div style="font-size:16px;font-weight:900;color:#0F2044">010-6834-8080</div>
+        </div>
       </div>
-      <div class="cf-proc-title">상담 진행 순서</div>
-      <div class="cf-steps">
-        <div class="cf-step"><div class="cf-step-num">1</div><div class="cf-step-body"><div class="cf-step-t">문의 접수</div><div class="cf-step-d">양식 작성 후 제출하시면 즉시 접수됩니다</div></div></div>
-        <div class="cf-step"><div class="cf-step-num">2</div><div class="cf-step-body"><div class="cf-step-t">담당자 배정</div><div class="cf-step-d" id="cf-step2-desc2">교육컨설턴트가 배정됩니다</div></div></div>
-        <div class="cf-step"><div class="cf-step-num">3</div><div class="cf-step-body"><div class="cf-step-t">1:1 맞춤 상담</div><div class="cf-step-d">학생 상황에 맞는 학습 방향을 안내드립니다</div></div></div>
-        <div class="cf-step"><div class="cf-step-num">4</div><div class="cf-step-body"><div class="cf-step-t" id="cf-step4-text2">센터 등록</div><div class="cf-step-d" id="cf-step4-desc2">원하시면 가까운 센터 등록으로 연결됩니다</div></div></div>
+      <div style="display:flex;align-items:center;gap:14px;background:white;border-radius:14px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+        <div style="width:42px;height:42px;background:#ECFDF5;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📍</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#9CA3AF;margin-bottom:2px">센터 방문 상담</div>
+          <div style="font-size:15px;font-weight:800;color:#0F2044">전국 200여 개 직영센터</div>
+          <div style="font-size:12px;color:#6B7280">가까운 센터를 찾아보세요</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;background:white;border-radius:14px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+        <div style="width:42px;height:42px;background:#FFFBEB;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⏱</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#9CA3AF;margin-bottom:2px">평균 응답 시간</div>
+          <div style="font-size:15px;font-weight:800;color:#0F2044">30분 이내</div>
+        </div>
       </div>
     </div>
 
-    <div class="cf-form-card">
-      <div id="contact-success" style="display:none;text-align:center;padding:40px 0">
-        <div style="font-size:64px;margin-bottom:16px">✅</div>
-        <div style="font-size:22px;font-weight:900;color:#0F2044;margin-bottom:8px">문의가 접수되었습니다!</div>
-        <div style="font-size:14px;color:#6B7280;margin-bottom:24px;line-height:1.7">담당자가 확인 후<br>빠른 시일 내에 연락드리겠습니다.</div>
-        <a href="/" style="display:inline-block;background:#0F2044;color:white;padding:13px 28px;border-radius:12px;font-weight:700;text-decoration:none;font-size:14px">홈으로 돌아가기</a>
-      </div>
-      <div id="contact-form">
-        <div class="cf-form-title">상담 신청서</div>
-        <div class="cf-form-sub">* 표시 항목은 필수입니다</div>
-        <div style="display:flex;border:1.5px solid #E5E7EB;border-radius:12px;overflow:hidden;margin-bottom:24px">
-          <button id="tab-academy" onclick="cfSwitchType('academy')" style="flex:1;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:none;background:#0F2044;color:white;font-family:inherit">학원 상담</button>
-          <button id="tab-tutoring" onclick="cfSwitchType('tutoring')" style="flex:1;padding:13px;font-size:14px;font-weight:700;cursor:pointer;border:none;background:white;color:#6B7280;font-family:inherit">과외 상담</button>
+    <!-- 상담 진행 순서 -->
+    <div style="background:white;border-radius:16px;padding:22px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div style="font-size:14px;font-weight:900;color:#0F2044;margin-bottom:16px">상담 진행 순서</div>
+      ${[['1','온라인 접수','양식 작성 후 제출하시면 즉시 접수됩니다'],['2','담당자 배정','교육컨설턴트가 배정됩니다'],['3','1:1 맞춤 상담','학생 상황에 맞는 학습 방향을 안내드립니다'],['4','교사 배정','적합한 선생님을 매칭하여 수업을 연결해드립니다']].map(([n,t,d])=>`
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #F1F5F9">
+        <div style="width:26px;height:26px;background:#EFF6FF;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#1D4ED8;flex-shrink:0">${n}</div>
+        <div>
+          <div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:2px">${t}</div>
+          <div style="font-size:12px;color:#9CA3AF">${d}</div>
         </div>
-        <div class="cf-field-row">
-          <div class="cf-field"><label>이름 <span style="color:#EF4444">*</span></label><input id="cf-name" type="text" placeholder="홍길동" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></div>
-          <div class="cf-field"><label>연락처 <span style="color:#EF4444">*</span></label><input id="cf-phone" type="tel" placeholder="010-0000-0000" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></div>
-        </div>
-        <div class="cf-field">
-          <label>학년 / 나이 <span style="color:#EF4444">*</span></label>
-          <div class="cf-chips">
-            <div class="cf-chip" onclick="cfSelectGrade(this,'초등 1학년')">초1</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 2학년')">초2</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 3학년')">초3</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 4학년')">초4</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 5학년')">초5</div><div class="cf-chip" onclick="cfSelectGrade(this,'초등 6학년')">초6</div>
-            <div class="cf-chip" onclick="cfSelectGrade(this,'중학 1학년')">중1</div><div class="cf-chip" onclick="cfSelectGrade(this,'중학 2학년')">중2</div><div class="cf-chip" onclick="cfSelectGrade(this,'중학 3학년')">중3</div>
-            <div class="cf-chip" onclick="cfSelectGrade(this,'고등 1학년')">고1</div><div class="cf-chip" onclick="cfSelectGrade(this,'고등 2학년')">고2</div><div class="cf-chip" onclick="cfSelectGrade(this,'고등 3학년')">고3</div>
-            <div class="cf-chip" id="cf-chip-adult2" onclick="cfSelectGrade(this,'성인')" style="display:none">성인</div>
-          </div>
-          <input type="hidden" id="cf-grade">
-        </div>
-        <div class="cf-field">
-          <label>거주 주소 <span style="color:#EF4444">*</span></label>
-          <div class="cf-addr-row"><input id="cf-sido" type="text" placeholder="도로명 주소 (검색 또는 직접 입력)" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"><button class="cf-search-btn" onclick="searchContactAddress()">🔍 검색</button></div>
-          <input id="cf-address" type="text" placeholder="상세 주소 (예: 101동 502호)" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-        </div>
-        <div id="cf-fields-academy">
-          <div class="cf-field">
-            <label>관심 센터 이름</label><input id="cf-center" type="text" placeholder="예: 수지점" class="cf-input" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-          </div>
-          <div class="cf-field">
-            <label>원하는 수업 과목</label>
-            <div class="cf-chips"><div class="cf-chip" onclick="this.classList.toggle('active')">수학</div><div class="cf-chip" onclick="this.classList.toggle('active')">영어</div><div class="cf-chip" onclick="this.classList.toggle('active')">국어</div><div class="cf-chip" onclick="this.classList.toggle('active')">과학</div><div class="cf-chip" onclick="this.classList.toggle('active')">사회</div><div class="cf-chip" onclick="this.classList.toggle('active')">전과목</div></div>
-          </div>
-        </div>
-        <div id="cf-fields-tutoring" style="display:none">
-          <div class="cf-field-row">
-            <div class="cf-field"><label>희망 과목</label><select id="cf-subject" class="cf-input"><option value="">선택해주세요</option><option>수학</option><option>영어</option><option>국어</option><option>과학</option><option>사회</option><option>전과목</option></select></div>
-            <div class="cf-field"><label>수업 방식</label><select id="cf-method" class="cf-input"><option value="">선택해주세요</option><option>대면 (오프라인)</option><option>온라인</option><option>상관없음</option></select></div>
-          </div>
-          <div class="cf-field-row">
-            <div class="cf-field"><label>선생님 성별 선호</label><select id="cf-gender" class="cf-input"><option value="">상관없음</option><option>남자 선생님</option><option>여자 선생님</option></select></div>
-            <div class="cf-field"><label>주당 희망 수업 횟수</label><select id="cf-times" class="cf-input"><option value="">선택해주세요</option><option>주 1회</option><option>주 2회</option><option>주 3회</option><option>주 4회 이상</option></select></div>
-          </div>
-        </div>
-        <div class="cf-field">
-          <label>문의 내용</label>
-          <textarea id="cf-message" rows="4" class="cf-input" placeholder="센터 위치, 수업 방식, 등록 절차 등 궁금한 점을 적어주세요." onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
-        </div>
-        <div class="cf-agree-box">
-          <div class="cf-agree-title">개인정보 수집 및 이용 동의</div>
-          <div class="cf-agree-content"><strong>수집 항목:</strong> 이름, 학년/나이, 연락처, 거주 주소, 문의내용<br><strong>수집 목적:</strong> 학습 상담 및 센터 안내 서비스 제공<br><strong>보유 기간:</strong> 상담 완료 후 1년</div>
-          <label class="cf-agree-check"><input type="checkbox" id="cf-agree"><span>개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span></label>
-        </div>
-        <div class="cf-error-msg" id="cf-error"></div>
-        <button class="cf-submit-btn" id="cf-submit" onclick="submitContact()">문의 제출하기</button>
-      </div>
+      </div>`).join('')}
     </div>
   </div>
-  </div>
 
-  <script>
-  function cfSwitchType(type) {
-    document.getElementById('cf-fields-academy').style.display = type==='academy'?'block':'none';
-    document.getElementById('cf-fields-tutoring').style.display = type==='tutoring'?'block':'none';
-    var ta=document.getElementById('tab-academy'), tt=document.getElementById('tab-tutoring');
-    ta.style.background=type==='academy'?'#0F2044':'white'; ta.style.color=type==='academy'?'white':'#6B7280'; ta.style.fontWeight=type==='academy'?'800':'700';
-    tt.style.background=type==='tutoring'?'#0F2044':'white'; tt.style.color=type==='tutoring'?'white':'#6B7280'; tt.style.fontWeight=type==='tutoring'?'800':'700';
-    document.getElementById('cf-message').placeholder = type==='academy'
-      ? '센터 위치, 수업 방식, 등록 절차 등 궁금한 점을 적어주세요.'
-      : '원하시는 과외 방향, 학습 목표 등을 자유롭게 적어주세요.';
-    var adultChip = document.getElementById('cf-chip-adult2');
-    if(adultChip) adultChip.style.display = type==='tutoring' ? 'inline-block' : 'none';
-    var step4 = document.getElementById('cf-step4-text2');
-    if(step4) step4.textContent = type==='academy' ? '센터 등록' : '교사 배정';
-    var step4d = document.getElementById('cf-step4-desc2');
-    if(step4d) step4d.textContent = type==='academy' ? '원하시면 가까운 센터 등록으로 연결됩니다' : '적합한 선생님을 매칭하여 수업을 연결해드립니다';
-    var centerCard = document.getElementById('cf-card-center2');
-    if(centerCard) centerCard.style.display = type==='tutoring' ? 'none' : 'flex';
-  }
-  function cfSelectGrade(el, val) {
-    document.querySelectorAll('.cf-chip[data-grade]').forEach(c => c.classList.remove('active'));
-    el.setAttribute('data-grade','1'); el.classList.add('active');
-    document.getElementById('cf-grade').value = val;
-  }
-  (function(){
-    var p = new URLSearchParams(window.location.search);
-    var cn = p.get('center');
-    if(cn) {
-      var el = document.getElementById('cf-center');
-      if(el) { el.value = cn; el.style.borderColor='#3B82F6'; }
-    }
-  })();
-  function searchContactAddress() {
-    function openDaum() { new daum.Postcode({ oncomplete: function(data) { document.getElementById('cf-sido').value = data.roadAddress||data.jibunAddress; document.getElementById('cf-address').focus(); }}).open(); }
-    if (typeof daum!=='undefined'&&daum.Postcode) openDaum();
-    else { var s=document.createElement('script'); s.src='https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'; s.onload=openDaum; document.head.appendChild(s); }
-  }
-  function submitContact() {
-    var name=document.getElementById('cf-name').value.trim();
-    var grade=document.getElementById('cf-grade').value;
-    var phone=document.getElementById('cf-phone').value.trim();
-    var sido=document.getElementById('cf-sido').value.trim();
-    var address=document.getElementById('cf-address').value.trim();
-    var message=document.getElementById('cf-message').value.trim();
-    var agree=document.getElementById('cf-agree').checked;
-    if (!name)    { showErr('이름을 입력해주세요.'); return; }
-    if (!grade)   { showErr('학년/나이를 선택해주세요.'); return; }
-    if (!phone)   { showErr('연락처를 입력해주세요.'); return; }
-    if (!sido)    { showErr('거주 주소를 입력해주세요.'); return; }
-    if (!agree)   { showErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
-    var btn=document.getElementById('cf-submit');
-    btn.disabled=true; btn.textContent='제출 중...'; btn.style.opacity='.7';
-    fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:sido+(address?' '+address:''),message})})
-    .then(r=>r.json()).then(data=>{
-      if(data.ok){document.getElementById('contact-form').style.display='none';document.getElementById('contact-success').style.display='block';}
-      else{btn.disabled=false;btn.textContent='문의 제출하기';btn.style.opacity='1';showErr('전송 중 오류가 발생했습니다.');}
-    }).catch(()=>{btn.disabled=false;btn.textContent='문의 제출하기';btn.style.opacity='1';showErr('네트워크 오류가 발생했습니다.');});
-  }
-  function showErr(msg){var el=document.getElementById('cf-error');el.textContent='⚠️ '+msg;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('cf-submit').disabled=false;document.getElementById('cf-submit').textContent='문의 제출하기';document.getElementById('cf-submit').style.opacity='1';}
-  // URL 파라미터로 자동 탭 전환: ?type=tutoring → 과외 상담, ?type=academy → 학원 상담
-  (function(){
-    var params = new URLSearchParams(window.location.search);
-    var type = params.get('type');
-    var center = params.get('center');
-    if(type === 'tutoring') cfSwitchType('tutoring');
-    else if(type === 'academy') { cfSwitchType('academy'); }
-    else cfSwitchType('tutoring'); // 기본값: 과외 상담 (과외 페이지에서 대부분 유입)
-    // center 파라미터 자동 입력
-    if(center){ var ci=document.getElementById('cf-center'); if(ci) ci.value=decodeURIComponent(center); }
-  })();
-  </script>`;
-  const bcContact = [{name:'홈',url:'/'},{name:'문의하기',url:'/contact'}];
-  return wrap('문의하기 | 올케어스터디 과외 상담', '올케어스터디 과외 무료 상담 신청. 수학·영어·국어·과학 초등·중등·고등 1:1 방문 과외. 010-6834-8080', '/contact', body, bcContact);
+  <!-- 오른쪽: 폼 -->
+  <div style="background:white;border-radius:20px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,.08)">
+
+    <!-- 성공 메시지 (숨김) -->
+    <div id="modal-success" style="display:none;text-align:center;padding:40px 0">
+      <div style="font-size:56px;margin-bottom:14px">✅</div>
+      <div style="font-size:20px;font-weight:900;color:#0F2044;margin-bottom:8px">문의가 접수되었습니다!</div>
+      <div style="font-size:14px;color:#6B7280">빠른 시일 내에 연락드리겠습니다.</div>
+    </div>
+
+    <div id="modal-form">
+      <!-- 탭 -->
+      <div style="display:flex;background:#F9FAFB;border-radius:10px;padding:4px;margin-bottom:24px" id="type-tabs">
+        <button id="tab-academy" onclick="cfSwitchType('academy')"
+          style="flex:1;padding:11px;font-size:14px;font-weight:800;cursor:pointer;border:none;border-radius:8px;background:${isAcademy?'#0F2044':'transparent'};color:${isAcademy?'white':'#6B7280'};font-family:inherit;transition:all .2s">학원 상담</button>
+        <button id="tab-tutoring" onclick="cfSwitchType('tutoring')"
+          style="flex:1;padding:11px;font-size:14px;font-weight:800;cursor:pointer;border:none;border-radius:8px;background:${!isAcademy?'#0F2044':'transparent'};color:${!isAcademy?'white':'#6B7280'};font-family:inherit;transition:all .2s">과외 상담</button>
+      </div>
+
+      <div style="font-size:16px;font-weight:900;color:#0F2044;margin-bottom:20px">상담 신청서
+        <span style="font-size:12px;font-weight:500;color:#9CA3AF;margin-left:8px">* 표시 항목은 필수입니다</span>
+      </div>
+
+      <!-- 이름 -->
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">이름 <span style="color:#EF4444">*</span></label>
+        <input id="m-name" type="text" placeholder="홍길동"
+          style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s"
+          onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+      </div>
+
+      <!-- 연락처 -->
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">연락처 <span style="color:#EF4444">*</span></label>
+        <input id="m-phone" type="tel" placeholder="010-0000-0000"
+          style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s"
+          onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+      </div>
+
+      <!-- 학년 -->
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">학년 / 나이 <span style="color:#EF4444">*</span></label>
+        <select id="m-grade"
+          style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151;transition:border .2s"
+          onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+          <option value="">선택해주세요</option>
+          <option>초1</option><option>초2</option><option>초3</option>
+          <option>초4</option><option>초5</option><option>초6</option>
+          <option>중1</option><option>중2</option><option>중3</option>
+          <option>고1</option><option>고2</option><option>고3</option>
+        </select>
+      </div>
+
+      <!-- 주소 -->
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">거주 주소</label>
+        <div style="display:flex;gap:8px">
+          <input id="m-addr" type="text" placeholder="예: 서울 강남구 대치동"
+            style="flex:1;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s"
+            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+          <button onclick="searchContactAddress()"
+            style="padding:11px 16px;background:#EFF6FF;border:1.5px solid #DBEAFE;border-radius:10px;font-size:13px;font-weight:700;color:#1D4ED8;cursor:pointer;white-space:nowrap;font-family:inherit">검색</button>
+        </div>
+      </div>
+
+      <!-- 학원 상담 전용 -->
+      <div id="academy-fields">
+        <div style="margin-bottom:16px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">관심 센터 이름</label>
+          <input id="m-center" type="text" placeholder="예: 하남풍산점와와학습코칭학원"
+            style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s"
+            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">원하는 수업 과목</label>
+          <select id="m-subject-academy"
+            style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151;transition:border .2s"
+            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+            <option value="">선택해주세요</option>
+            <option>수학</option><option>영어</option><option>국어</option>
+            <option>과학</option><option>사회</option><option>전과목</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 과외 상담 전용 -->
+      <div id="tutoring-fields" style="display:none">
+        <div style="margin-bottom:16px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">희망 과목</label>
+          <select id="m-subject-tutoring"
+            style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151"
+            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+            <option value="">선택해주세요</option>
+            <option>수학</option><option>영어</option><option>국어</option>
+            <option>과학</option><option>사회</option><option>코딩</option><option>논술</option>
+          </select>
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">수업 방식</label>
+          <select id="m-method"
+            style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151"
+            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+            <option value="">선택해주세요</option>
+            <option>대면 (오프라인)</option><option>온라인</option><option>상관없음</option>
+          </select>
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">선생님 성별 선호</label>
+          <select id="m-gender"
+            style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151"
+            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+            <option value="">선택해주세요</option>
+            <option>상관없음</option><option>남자 선생님</option><option>여자 선생님</option>
+          </select>
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">주당 희망 수업 횟수</label>
+          <select id="m-freq"
+            style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151"
+            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+            <option value="">선택해주세요</option>
+            <option>주 1회</option><option>주 2회</option><option>주 3회</option><option>주 4회 이상</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 문의 내용 -->
+      <div style="margin-bottom:20px">
+        <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px">문의 내용</label>
+        <textarea id="m-msg" rows="4" placeholder="현재 성적, 목표 성적, 원하는 수업 방향 등 자유롭게 남겨주세요."
+          style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;resize:vertical;transition:border .2s"
+          onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
+      </div>
+
+      <!-- 개인정보 동의 -->
+      <div style="background:#F9FAFB;border-radius:10px;padding:14px;margin-bottom:20px">
+        <div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:8px">개인정보 수집 및 이용 동의</div>
+        <p style="font-size:12px;color:#6B7280;line-height:1.7;margin:0 0 10px">수집 항목: 이름, 연락처, 학년, 주소 / 수집 목적: 상담 및 교사 매칭 / 보유 기간: 상담 완료 후 1년</p>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#374151;cursor:pointer">
+          <input type="checkbox" id="m-agree" style="width:16px;height:16px;accent-color:#1D4ED8">
+          <span>개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span>
+        </label>
+      </div>
+
+      <!-- 제출 버튼 -->
+      <button onclick="submitContact()" id="submit-btn"
+        style="width:100%;padding:15px;background:linear-gradient(135deg,#0F2044,#1D4ED8);color:white;border:none;border-radius:12px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;transition:opacity .2s"
+        onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        문의 제출하기
+      </button>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+(function(){
+  // URL 파라미터로 초기 타입 설정
+  var params = new URLSearchParams(window.location.search);
+  var t = params.get('type') || '${isAcademy?"academy":"tutoring"}';
+  var center = params.get('center') || '';
+  var school = params.get('school') || '';
+  if(center && document.getElementById('m-center')) document.getElementById('m-center').value = center;
+  cfSwitchType(t);
+})();
+
+function cfSwitchType(type) {
+  var isA = type === 'academy';
+  var tabA = document.getElementById('tab-academy');
+  var tabT = document.getElementById('tab-tutoring');
+  var fA = document.getElementById('academy-fields');
+  var fT = document.getElementById('tutoring-fields');
+  if(!tabA) return;
+
+  tabA.style.background = isA ? '#0F2044' : 'transparent';
+  tabA.style.color = isA ? 'white' : '#6B7280';
+  tabT.style.background = !isA ? '#0F2044' : 'transparent';
+  tabT.style.color = !isA ? 'white' : '#6B7280';
+
+  if(fA) fA.style.display = isA ? 'block' : 'none';
+  if(fT) fT.style.display = !isA ? 'block' : 'none';
 }
+
+function searchContactAddress(){
+  var v = document.getElementById('m-addr').value;
+  if(v) alert('주소: ' + v + '\n직접 입력하신 주소로 진행합니다.');
+}
+
+function submitContact(){
+  var name = document.getElementById('m-name').value.trim();
+  var phone = document.getElementById('m-phone').value.trim();
+  var grade = document.getElementById('m-grade').value;
+  var agree = document.getElementById('m-agree').checked;
+  var btn = document.getElementById('submit-btn');
+
+  if(!name){ alert('이름을 입력해주세요.'); return; }
+  if(!phone){ alert('연락처를 입력해주세요.'); return; }
+  if(!grade){ alert('학년을 선택해주세요.'); return; }
+  if(!agree){ alert('개인정보 수집 및 이용에 동의해주세요.'); return; }
+
+  btn.disabled = true;
+  btn.textContent = '접수 중...';
+  btn.style.opacity = '0.7';
+
+  setTimeout(function(){
+    var form = document.getElementById('modal-form');
+    var success = document.getElementById('modal-success');
+    if(form) form.style.display = 'none';
+    if(success) success.style.display = 'block';
+  }, 800);
+}
+</script>
+`;
+
+  return wrap(title, desc, canonical, body, bc);
+}
+
 
 function makeHomePage(){
   const body=`<style>
