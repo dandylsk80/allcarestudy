@@ -574,7 +574,7 @@ footer{background:var(--navy);padding:28px 48px;margin-top:60px}
 .fl{font-size:14px;font-weight:900;color:white}.fl em{font-style:normal;color:var(--sky)}
 .fr{font-size:12px;color:rgba(255,255,255,.35)}
 .floats{position:fixed;right:24px;bottom:60px;display:flex;flex-direction:column;gap:10px;z-index:500}
-.fbtn{display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;border:none;font-size:13px;font-weight:700;box-shadow:0 8px 32px rgba(15,32,68,.2);transition:all .25s;cursor:pointer;white-space:nowrap;text-decoration:none}
+.fbtn{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;border:none;font-size:13px;font-weight:700;box-shadow:0 8px 32px rgba(15,32,68,.25);transition:all .25s;cursor:pointer;text-decoration:none}
 .fbtn:hover{transform:translateX(-4px)}.fb1{background:var(--blue);color:white}.fb2{background:var(--navy);color:white}
 .dong-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:24px 0}
 .dong-card{background:white;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .25s;display:block;text-decoration:none;color:inherit}
@@ -1136,7 +1136,6 @@ body{font-family:'Noto Sans KR',sans-serif;color:#1F2937;background:#fff;overflo
 .u4{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .u5{font-size:14px;color:var(--text-muted);margin-top:12px;line-height:1.7;word-break:keep-all}
 .u6{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}
-.u7{color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px}
 .u8{width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative}
 .u9{background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px}
 .u10{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151}
@@ -1469,8 +1468,8 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
   </div>
 </footer>
 <div class="floats" id="float-btns">
-  <a class="fbtn fb1" href="tel:01068348080">📞 전화상담</a>
-  <a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring">✉️ 상담하기</a>
+  <a class="fbtn fb1" href="tel:01068348080" title="전화상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a>
+  <a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring" title="상담하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></a>
 </div>
 <script>
 (function(){
@@ -1481,10 +1480,8 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
     if(btn){
       if(isAcademy){
         btn.href = '/contact?type=academy';
-        btn.textContent = '상담하기';
       } else {
         btn.href = '/contact?type=tutoring';
-        btn.textContent = '상담하기';
       }
     }
     var el = document.getElementById('float-btns');
@@ -2385,17 +2382,17 @@ function makeSubjectPage(subjectEn) {
     </div>
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px">🎯 ${ko} 성적 올리는 핵심 전략</h2>
     ${stCards}
-    <h2 class="u7">📚 학년별 ${ko} 학습 가이드</h2>
+    <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">📚 학년별 ${ko} 학습 가이드</h2>
     ${grCards}
-    <h2 class="u7">🗓️ 수업 진행 방식</h2>
+    <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">🗓️ 수업 진행 방식</h2>
     <div style="background:white;border:1px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:20px">
       ${['무료 상담 & 수준 진단|현재 ${ko} 실력과 목표를 파악하고 맞춤 선생님을 연결합니다.','무료 체험 수업|첫 수업은 무료입니다. 선생님과 학생의 케미를 직접 확인하세요.','맞춤 커리큘럼 설계|${ko} 내신·수능 목표에 최적화된 커리큘럼을 설계합니다.','정규 수업 & 주간 보고서|주 2~3회 방문 수업 후 매주 학습 보고서를 학부모님께 제공합니다.'].map((s,i)=>{const[t,d]=s.split('|');return`<div style="display:flex;gap:12px;align-items:flex-start;${i<3?'padding-bottom:12px':''}"><div style="min-width:28px;height:28px;background:${color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:12px;flex-shrink:0">${i+1}</div><div><div class="u30">${t}</div><div style="font-size:12px;color:#6B7280;line-height:1.6">${d}</div></div></div>`;}).join('')}
     </div>
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid #F59E0B;padding-bottom:8px;margin-top:32px">💡 ${ko} 공부 핵심 꿀팁</h2>
     <div style="background:#FFFBEB;border-radius:14px;padding:18px;border-left:5px solid #F59E0B;margin-bottom:20px"><p class="u20">${tip}</p></div>
-    <h2 class="u7">📍 전국 ${ko} 과외 지역 안내</h2>
+    <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">📍 전국 ${ko} 과외 지역 안내</h2>
     <p style="font-size:14px;color:#374151;line-height:1.9;margin-bottom:20px">서울·경기·인천·부산·대구·광주·대전·울산·세종·강원·충북·충남·전북·전남·경북·경남·제주 전국 모든 지역에서 ${ko} 과외가 가능합니다. 지역 내 선생님을 우선 배정하며, 학교 내신 기출을 잘 아는 선생님 위주로 추천해드립니다. 온라인 과외도 전국 어디서나 지원합니다.</p>
-    <h2 class="u7">📚 다른 과목 과외도 함께</h2>
+    <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">📚 다른 과목 과외도 함께</h2>
     <div class="subj-grid">${otherLinks}</div>
     <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${ko} 과외</span><span class="keyword-tag">${ko} 공부법</span><span class="keyword-tag">${ko} 내신</span><span class="keyword-tag">${ko} 수능</span><span class="keyword-tag">${ko} 1:1과외</span><span class="keyword-tag">${ko} 방문과외</span></div></div>
   </div>
@@ -2490,16 +2487,16 @@ function makeGradePage(gradeType, gradeNum) {
     </div>
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px">🎯 핵심 공부 방법</h2>
     ${fCards}
-    <h2 class="u7">⚡ 핵심 전략</h2>
+    <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">⚡ 핵심 전략</h2>
     <div style="background:linear-gradient(135deg,${color}15,${color}05);border-radius:14px;padding:22px;border:1.5px solid ${color}25;margin-bottom:20px"><p style="font-size:14px;color:#1F2937;line-height:1.9;margin:0">${strategy} 올케어스터디는 ${label} 전문 선생님을 빠르게 매칭해드립니다.</p></div>
-    <h2 class="u7">📐 수학 & 영어 핵심 학습법</h2>
+    <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">📐 수학 & 영어 핵심 학습법</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
       <div style="background:white;border:1.5px solid #BFDBFE;border-radius:12px;padding:16px"><div style="font-size:13px;font-weight:900;color:#3B82F6;margin-bottom:7px">📐 수학 3원칙</div><p class="u32">① 개념 먼저 — 공식보다 원리 이해<br>② 오답 노트 — 틀린 이유 직접 기록<br>③ 매일 30분 연산 훈련</p></div>
       <div style="background:white;border:1.5px solid #A7F3D0;border-radius:12px;padding:16px"><div style="font-size:13px;font-weight:900;color:#10B981;margin-bottom:7px">📖 영어 3원칙</div><p class="u32">① 단어 매일 암기 — 예문 포함<br>② 교과서 5번 읽기<br>③ 문법 체계적 순서로 정리</p></div>
     </div>
-    <h2 class="u7">📅 월별 학습 플랜</h2>
+    <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">📅 월별 학습 플랜</h2>
     <div style="overflow-x:auto;margin-bottom:20px"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="background:${color};color:white"><th style="padding:10px 12px;text-align:left">시기</th><th style="padding:10px 12px;text-align:left">수학</th><th style="padding:10px 12px;text-align:left">영어</th><th style="padding:10px 12px;text-align:left">목표</th></tr></thead><tbody>${planRows}</tbody></table></div>
-    <h2 class="u7">🎯 D-28일 시험 전략</h2>
+    <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">🎯 D-28일 시험 전략</h2>
     <div style="background:${lightColor};border-radius:12px;padding:18px;margin-bottom:20px">${['D-28|시험 범위 확인 + 계획표 작성','D-21|교과서 정독 + 핵심 노트 정리','D-14|기출 풀기 + 오답 분석','D-7|예상 문제 + 서술형 연습','D-1|오답 복습 + 핵심 확인'].map(r=>{const[d,t]=r.split('|');return`<div style="background:white;border-radius:8px;padding:9px 12px;display:flex;gap:10px;align-items:center;margin-bottom:6px"><span style="font-weight:900;color:${color};font-size:13px;min-width:42px">${d}</span><span style="font-size:12px;color:#374151">${t}</span></div>`;}).join('')}</div>
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid #6B7280;padding-bottom:8px;margin-top:32px">❓ 자주 묻는 질문</h2>
     ${faqH}
