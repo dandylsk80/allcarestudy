@@ -4866,7 +4866,7 @@ function makeContactPage(type) {
       </div>
 
       <!-- 학원 상담 전용 -->
-      <div id="academy-fields">
+      <div id="academy-fields" style="display:${isAcademy?'block':'none'}">
         <div style="margin-bottom:16px">
           <label class="u6">관심 센터 이름</label>
           <input id="m-center" type="text" placeholder="예: 하남풍산점와와학습코칭학원"
@@ -4886,7 +4886,7 @@ function makeContactPage(type) {
       </div>
 
       <!-- 과외 상담 전용 -->
-      <div id="tutoring-fields" style="display:none">
+      <div id="tutoring-fields" style="display:${isAcademy?'none':'block'}">
         <div style="margin-bottom:16px">
           <label class="u6">희망 과목</label>
           <select id="m-subject-tutoring"
