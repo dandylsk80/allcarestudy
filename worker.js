@@ -3264,7 +3264,7 @@ function mslideMove(sid, dir) {
     <p class="hero-desc">전국 200여 개 직영센터, 15년의 노하우. 올케어스터디가 검증한 학습코칭 시스템을 소개합니다.</p>
     <div class="hero-btns">
       <a href="/academy/all" class="btn-white">📍 센터 찾기</a>
-      <a href="/contact" class="btn-outline">✉️ 무료 상담</a>
+      <a href="/contact?type=tutoring" class="btn-outline">✉️ 무료 상담</a>
     </div>
   </div>
 </section>
@@ -3577,7 +3577,7 @@ function mslideMove(sid, dir) {
   <p class="cta-sub">전국 200여 개 직영센터에서 전문 코치와 1:1 학습 상담을 진행합니다.</p>
   <div class="cta-btns">
     <a href="/academy/all" class="btn-white">📍 센터 찾기</a>
-    <a href="/contact" class="btn-outline">✉️ 온라인 문의</a>
+    <a href="/contact?type=tutoring" class="btn-outline">✉️ 온라인 문의</a>
   </div>
 </section>`;
 
@@ -4664,7 +4664,7 @@ function makeAcademyPage() {
         </div>
         <div style="display:flex;gap:8px;margin-top:14px">
           <a href="/academy/center/\${makeCenterSlug(c.n||'')}" style="flex:1;display:block;text-align:center;background:#EFF6FF;color:#1D4ED8;padding:11px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid #DBEAFE">📋 상세보기</a>
-          <button onclick="location.href='/contact?type=academy&center='+encodeURIComponent('\${cname}')" style="flex:1;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:inherit">✉️ 상담</button>
+          <button onclick="location.href='/contact?type=academy&center='+encodeURIComponent(cname)" style="flex:1;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:inherit">✉️ 상담</button>
         </div>
       </div>\`;
     }).join('') : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#9CA3AF">해당 지역 센터가 없습니다</div>';
@@ -4739,7 +4739,7 @@ function makeAcademyPage() {
 
 
 function makeContactPage(type) {
-  const isAcademy = type === 'academy';
+  const isAcademy = (type||'tutoring') === 'academy';
   const canonical = '/contact';
   const title = '올케어스터디 무료 상담 문의 | 1:1 맞춤 과외·학원 코칭';
   const desc = '올케어스터디 무료 상담. 과외·학원 코칭 문의. 빠르게 답변. 010-6834-8080';
@@ -4957,7 +4957,7 @@ function makeContactPage(type) {
 (function(){
   // URL 파라미터로 초기 타입 설정
   var params = new URLSearchParams(window.location.search);
-  var t = params.get('type') || '${isAcademy?"academy":"tutoring"}';
+  var t = params.get('type') || 'tutoring';
   var center = params.get('center') || '';
   var school = params.get('school') || '';
   if(center && document.getElementById('m-center')) document.getElementById('m-center').value = center;
@@ -5043,7 +5043,7 @@ function makeHomePage(){
           <p class="sdesc">전국 검증된 선생님 12,400명+<br>지역별·과목별·학년별로 딱 맞는 수업 연결</p>
           <div class="sbtns">
             <button class="bph" onclick="document.getElementById('region-section').scrollIntoView({behavior:'smooth'})">지역별 과외 찾기 →</button>
-            <button class="bps" onclick="window.location.href='/contact'">✉️ 문의하기</button>
+            <button class="bps" onclick="window.location.href='/contact?type=tutoring'">✉️ 문의하기</button>
           </div>
         </div>
         <div class="svis">
@@ -5157,7 +5157,7 @@ function makeHomePage(){
       <button onclick="switchFind('subject')" id="ftab-subject" class="u3">📚 과목별 과외</button>
       <button onclick="switchFind('academy')" id="ftab-academy" class="u3">🏫 학원 찾기</button>
       <button onclick="switchFind('conv')" id="ftab-conv" style="padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit">🗣 회화수업</button>
-      <button onclick="window.location.href='/contact'" id="ftab-contact" style="padding:10px 22px;border-radius:999px;border:1.5px solid #1D4ED8;background:white;color:#1D4ED8;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;font-family:inherit">✉️ 문의하기</button>
+      <button onclick="window.location.href='/contact?type=tutoring'" id="ftab-contact" style="padding:10px 22px;border-radius:999px;border:1.5px solid #1D4ED8;background:white;color:#1D4ED8;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;font-family:inherit">✉️ 문의하기</button>
     </div>
     <!-- 패널 -->
     <div id="fpanel-region">
