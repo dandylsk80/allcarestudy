@@ -1954,7 +1954,27 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   for(let j=0;j<dong.length;j++) _dh2 = (_dh2*31+dong.charCodeAt(j))>>>0;
   const dInfoNums = [120+(_dh2%231), 91+(_dh2%9)];
   const gu = ak;
-  const schools = area.schools || `${ak} 주요 학교`;
+  // gradeEn에 따라 학교급에 맞는 학교 추출
+  const _gradeKey = (gradeEn==='elementary'||gradeEn.startsWith('elem')) ? 'E' : (gradeEn==='middle'||gradeEn.startsWith('mid')) ? 'M' : 'H';
+  const _gugunSchools = (() => {
+    // SCHOOL_MAP에서 해당 구군 + 학교급 학교 가져오기
+    const sidoData = SCHOOL_MAP[sidoEn];
+    if (!sidoData) return null;
+    // 구군 한글 찾기
+    for (const [gugunK, gradeData] of Object.entries(sidoData)) {
+      if ((DISTRICT_EN[gugunK] || toRoman(gugunK)) === guEn) {
+        const gradeSchools = gradeData[_gradeKey];
+        if (Array.isArray(gradeSchools) && gradeSchools.length) {
+          // 최대 4개 학교 + 학교급 suffix
+          const suffix = _gradeKey==='E'?'초등학교':_gradeKey==='M'?'중학교':'고등학교';
+          return gradeSchools.slice(0,4).map(n=>n+suffix).join(', ');
+        }
+        break;
+      }
+    }
+    return null;
+  })();
+  const schools = _gugunSchools || area.schools || `${ak} 주요 학교`;
   const sidoLabel = region.label || sido;
   const canonical = `/${sidoEn}/${guEn}/${toRoman(dongName)}/${gradeEn}/${subjectEn}`;
 
@@ -3831,6 +3851,7 @@ function makeCenterSchoolPage(grade, schoolSlug) {
   const gLabel=grade==='E'?'초등':grade==='M'?'중등':'고등';
   const gColor=grade==='E'?'#3B82F6':grade==='M'?'#10B981':'#8B5CF6';
   const mc=matchedCenters[0];
+  const fullName=mc.on||mc.n;
   const sido=mc.s||'', dist=mc.d||'';
 
   // 이 학교를 담당하는 센터들 중 가능한 과목 합산
@@ -3944,6 +3965,7 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
   const gLabel=grade==='E'?'초등':grade==='M'?'중등':'고등';
   const gEmoji=grade==='E'?'🎒':grade==='M'?'📚':'🎓';
   const mc=matchedCenters[0];
+  const fullName=mc.on||mc.n;
   const sido=mc.s||'', dist=mc.d||'';
   const isE=grade==='E', isM=grade==='M';
 
