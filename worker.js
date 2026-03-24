@@ -1271,7 +1271,7 @@ const HEADER = `<header>
       </div>
       <div class="gi">
         <button class="gb">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/seoul/gangnam/daichi/high2/english">영어회화</a><a href="/seoul/gangnam/daichi/high2/english">중국어회화</a><a href="/seoul/gangnam/daichi/high2/english">일본어회화</a></div>
+        <div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
@@ -1432,7 +1432,7 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
       </div>
       <div class="gi">
         <button class="gb" style="color:rgba(255,255,255,0.85)">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/seoul/gangnam/daichi/high2/english">영어회화</a><a href="/seoul/gangnam/daichi/high2/english">중국어회화</a><a href="/seoul/gangnam/daichi/high2/english">일본어회화</a></div>
+        <div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a>
