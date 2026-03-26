@@ -588,7 +588,7 @@ footer{background:var(--navy);padding:28px 48px;margin-top:60px}
 .dong-card-arrow{display:flex;align-items:center;gap:4px;margin-top:12px;font-size:12px;font-weight:700;color:var(--blue)}
 @media(max-width:768px){.dong-grid{grid-template-columns:1fr 1fr}.dong-card-img{height:130px}}
 @media(max-width:480px){.dong-grid{grid-template-columns:1fr}}
-@media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}}
+@media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}.u33{grid-template-columns:1fr 1fr!important}.u34{grid-template-columns:1fr!important}}
 header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}
 .hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}
 .logo{display:flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none}
@@ -661,6 +661,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 .cf-input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit}
 .cf-label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}
 @media(max-width:768px){div[style*='grid-template-columns:1fr 300px']{grid-template-columns:1fr!important}}
+@media(max-width:768px){div[style*='grid-template-columns:1fr 280px']{grid-template-columns:1fr!important}}
+@media(max-width:768px){div[style*='position:sticky;top:100px']{position:static!important}}
+@media(max-width:480px){div[style*='grid-template-columns:repeat(auto-fit,minmax(56px,1fr))']{grid-template-columns:repeat(3,1fr)!important}}
 #card-grid{display:grid}
 @media(max-width:767px){#card-grid{grid-template-columns:1fr!important;gap:10px!important}}
 @media(min-width:768px) and (max-width:1023px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}
@@ -4052,7 +4055,7 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
   };
   const cd=contentMap[subjectEn]||contentMap.math;
 
-  const d28Cards=`<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0">
+  const d28Cards=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:8px;margin:16px 0">
     ${['D-28','D-21','D-14','D-7','D-1'].map((d,i)=>{
       const cols=['#EFF6FF','#ECFDF5','#FFFBEB','#FEF2F2','#F5F3FF'];
       const tcols=['#1D4ED8','#16A34A','#D97706','#DC2626','#7C3AED'];
