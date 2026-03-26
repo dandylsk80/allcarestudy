@@ -2390,7 +2390,7 @@ function makeSubjectPage(subjectEn) {
     <div><div style="font-size:20px;font-weight:900;color:white">빠른</div><div style="font-size:11px;color:rgba(255,255,255,.7)">매칭 보장</div></div>
     <div><div style="font-size:20px;font-weight:900;color:white">3단계</div><div style="font-size:11px;color:rgba(255,255,255,.7)">선생님 검증</div></div>
     <div><div style="font-size:20px;font-weight:900;color:white">무료</div><div style="font-size:11px;color:rgba(255,255,255,.7)">첫 체험 수업</div></div>
-    <div><div style="font-size:20px;font-weight:900;color:white">전국</div><div style="font-size:11px;color:rgba(255,255,255,.7)">방문 과외</div></div>
+    <div><div style="font-size:20px;font-weight:900;color:white">전국</div><div style="font-size:11px;color:rgba(255,255,255,.7)">방문·화상 과외</div></div>
   </div>
   <div class="art-body">
     <div style="background:${lightColor};border-radius:14px;padding:22px;margin-bottom:26px;border-left:5px solid ${color}">
