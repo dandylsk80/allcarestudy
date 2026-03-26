@@ -1326,6 +1326,7 @@ const HEADER = `<header>
   <a class="mob-nav-item" href="/grade/middle/1">📚 중등 과외</a>
   <a class="mob-nav-item" href="/grade/high/1">🎓 고등 과외</a>
   <div class="mob-nav-section">학원 & 기타</div>
+  <a class="mob-nav-item" href="/academy/intro">🏢 학원소개</a>
   <a class="mob-nav-item" href="/academy/all">🏫 학원 찾기</a>
   <a class="mob-nav-item" href="/school">🏛 학교별 과외</a>
   <a class="mob-contact-btn" href="/contact?type=tutoring">✉️ 무료 상담하기</a>
