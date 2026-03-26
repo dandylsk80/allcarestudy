@@ -1709,7 +1709,7 @@ const CATEGORY_TEMPLATES = {
       '{dong} 수학과외는 군인 가족 이동에 맞춰 빠른 선생님 매칭과 유연한 수업 일정을 지원합니다.',
       '{dong}은 군부대 인근으로 전국에서 모인 군인 자녀들의 교육 수요가 특화된 지역입니다.'],
     english: [
-      '{dong} 영어과외는 군인 가족 특성에 맞춰 이사 직후 빠른 선생님 매칭으로 {schools} 내신 영어를 관리합니다.',
+      '{dong} 영어과외는 군인 가족 특성에 맞춰 이사 직후 빠른 선생님 매칭으로 {schools} 내신 ...',
       '{dong}은 군인 자녀 비율이 높아 전학 후 빠른 적응이 중요합니다.'],
     korean: [
       '{dong} 국어과외는 군인 가족 이동에 맞춰 빠른 매칭으로 전학 후에도 {schools} 국어 내신을 안정적으로 관리합니다.',
@@ -2534,7 +2534,7 @@ function makeSubjectPage(subjectEn) {
     ${grCards}
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">🗓️ 수업 진행 방식</h2>
     <div style="background:white;border:1px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:20px">
-      ${['무료 상담 & 수준 진단|현재 ${ko} 실력과 목표를 파악하고 맞춤 선생님을 연결합니다.','무료 체험 수업|첫 수업은 무료입니다. 선생님과 학생의 케미를 직접 확인하세요.','맞춤 커리큘럼 설계|${ko} 내신·수능 목표에 최적화된 커리큘럼을 설계합니다.','정규 수업 & 주간 보고서|주 2~3회 방문 수업 후 매주 학습 보고서를 학부모님께 제공합니다.'].map((s,i)=>{const[t,d]=s.split('|');return`<div style="display:flex;gap:12px;align-items:flex-start;${i<3?'padding-bottom:12px':''}"><div style="min-width:28px;height:28px;background:${color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:12px;flex-shrink:0">${i+1}</div><div><div class="u30">${t}</div><div style="font-size:12px;color:#6B7280;line-height:1.6">${d}</div></div></div>`;}).join('')}
+      ${[`무료 상담 & 수준 진단|현재 ${ko} 실력과 목표를 파악하고 맞춤 선생님을 연결합니다.`,`무료 체험 수업|첫 수업은 무료입니다. 선생님과 학생의 케미를 직접 확인하세요.`,`맞춤 커리큘럼 설계|${ko} 내신·수능 목표에 최적화된 커리큘럼을 설계합니다.`,`정규 수업 & 주간 보고서|주 2~3회 방문 수업 후 매주 학습 보고서를 학부모님께 제공합니다.`].map((s,i)=>{const[t,d]=s.split('|');return`<div style="display:flex;gap:12px;align-items:flex-start;${i<3?'padding-bottom:12px':''}"><div style="min-width:28px;height:28px;background:${color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:12px;flex-shrink:0">${i+1}</div><div><div class="u30">${t}</div><div style="font-size:12px;color:#6B7280;line-height:1.6">${d}</div></div></div>`;}).join('')}
     </div>
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid #F59E0B;padding-bottom:8px;margin-top:32px">💡 ${ko} 공부 핵심 꿀팁</h2>
     <div style="background:#FFFBEB;border-radius:14px;padding:18px;border-left:5px solid #F59E0B;margin-bottom:20px"><p class="u20">${tip}</p></div>
@@ -3796,18 +3796,13 @@ function makeCenterPage(slug) {
   const makeSchoolRow=(sch, grade, labelColor, labelBg, gradeLabel)=>{
     const sl=makeSchoolSlug(grade,sch);
     const base=`/academy/school/${grade.toLowerCase()}/${sl}`;
-    const subjLinks=availSubj.map(s=>`<a href="${base}/${s.en}" style="display:inline-flex;align-items:center;gap:4px;background:${s.color}10;border:1px solid ${s.color}30;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;color:${s.color};text-decoration:none" onmouseover="this.style.background='${s.color}25'" onmouseout="this.style.background='${s.color}10'">${s.icon} ${s.ko.replace('학원','')}</a>`).join('');
-    const rowId=`sr-${grade}-${sl}`;
-    return `<div style="border-bottom:1px solid #F1F5F9">
-      <button onclick="var p=document.getElementById('${rowId}');var isOpen=p.style.display!=='none';p.style.display=isOpen?'none':'flex';this.querySelector('.sarr').style.transform=isOpen?'rotate(0deg)':'rotate(90deg)'" style="width:100%;display:flex;align-items:center;gap:8px;padding:11px 4px;background:none;border:none;cursor:pointer;text-align:left">
+    const subjLinks=availSubj.map(s=>`<a href="${base}/${s.en}" style="display:inline-flex;align-items:center;gap:3px;background:white;border:1px solid ${s.color}40;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700;color:${s.color};text-decoration:none;white-space:nowrap" onmouseover="this.style.background='${s.color}12'" onmouseout="this.style.background='white'">${s.icon} ${s.ko}</a>`).join('');
+    return `<div style="display:flex;align-items:flex-start;gap:10px;padding:13px 0;border-bottom:1px solid #F1F5F9">
+      <a href="${base}" style="display:inline-flex;align-items:center;gap:7px;min-width:160px;text-decoration:none">
         <span style="background:${labelBg};color:${labelColor};font-size:10px;font-weight:800;padding:2px 7px;border-radius:4px;flex-shrink:0">${gradeLabel}</span>
-        <span style="font-size:14px;font-weight:800;color:#0F2044;flex:1">${sch}</span>
-        <span style="font-size:11px;color:#9CA3AF;flex-shrink:0">${availSubj.length}과목</span>
-        <span class="sarr" style="font-size:14px;color:#9CA3AF;transition:transform .2s;flex-shrink:0">›</span>
-      </button>
-      <div id="${rowId}" style="display:none;flex-wrap:wrap;gap:6px;padding:0 4px 12px">
-        ${subjLinks}
-      </div>
+        <span style="font-size:14px;font-weight:800;color:#0F2044">${sch}</span>
+      </a>
+      <div style="display:flex;flex-wrap:wrap;gap:5px">${subjLinks}</div>
     </div>`;
   };
 
