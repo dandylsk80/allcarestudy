@@ -5055,8 +5055,22 @@ function cfSwitchType(type) {
 }
 
 function searchContactAddress(){
-  var v = document.getElementById('m-addr').value;
-  if(v) alert('주소: ' + v + '\n직접 입력하신 주소로 진행합니다.');
+  function open(){
+    new daum.Postcode({
+      oncomplete: function(data){
+        var addr = data.roadAddress || data.jibunAddress;
+        document.getElementById('m-addr').value = addr;
+      }
+    }).open();
+  }
+  if(typeof daum !== 'undefined' && daum.Postcode){
+    open();
+  } else {
+    var s = document.createElement('script');
+    s.src = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+    s.onload = open;
+    document.head.appendChild(s);
+  }
 }
 
 function submitContact(){
