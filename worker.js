@@ -1309,6 +1309,12 @@ const HEADER = `<header>
     <a class="mob-subj-btn" href="/conversation/chinese"><span>🇨🇳</span><span>중국어회화</span></a>
     <a class="mob-subj-btn" href="/conversation/japanese"><span>🇯🇵</span><span>일본어회화</span></a>
   </div>
+  <div class="mob-nav-section">학원 & 기타</div>
+  <div class="mob-subj-grid">
+    <a class="mob-subj-btn" href="/academy/intro"><span>🏢</span><span>학원소개</span></a>
+    <a class="mob-subj-btn" href="/academy/all"><span>🏫</span><span>학원찾기</span></a>
+    <a class="mob-subj-btn" href="/school"><span>🏛</span><span>학교별과외</span></a>
+  </div>
   <div class="mob-nav-section">지역별 과외</div>
   <div class="mob-sido-grid">
     <a class="mob-sido-btn" href="/seoul">서울</a><a class="mob-sido-btn" href="/gyeonggi">경기</a>
@@ -1325,10 +1331,6 @@ const HEADER = `<header>
   <a class="mob-nav-item" href="/grade/elementary/1">🎒 초등 과외</a>
   <a class="mob-nav-item" href="/grade/middle/1">📚 중등 과외</a>
   <a class="mob-nav-item" href="/grade/high/1">🎓 고등 과외</a>
-  <div class="mob-nav-section">학원 & 기타</div>
-  <a class="mob-nav-item" href="/academy/intro">🏢 학원소개</a>
-  <a class="mob-nav-item" href="/academy/all">🏫 학원 찾기</a>
-  <a class="mob-nav-item" href="/school">🏛 학교별 과외</a>
   <a class="mob-contact-btn" href="/contact?type=tutoring">✉️ 무료 상담하기</a>
   <a class="mob-contact-btn" href="tel:01068348080" style="background:rgba(255,255,255,.1);margin-top:8px">📞 010-6834-8080</a>
 </nav>
@@ -4781,15 +4783,20 @@ function makeContactPage(type) {
   const bc = [{name:'홈',url:'/'},{name:'문의하기',url:'/contact'}];
 
   const body = `
-<div style="background:#F0F4FF;min-height:100vh;padding-bottom:80px">
+<div style="background:#F0F4FF;min-height:100vh;padding-bottom:80px;overflow-x:hidden">
 <style>
 @media(max-width:768px){
-  .contact-grid{grid-template-columns:1fr!important;gap:24px!important;padding-top:80px!important}
-  .contact-form-box{padding:20px!important}
-  .contact-left h1{font-size:26px!important}
+  .contact-wrap{overflow-x:hidden!important}
+  .contact-grid{grid-template-columns:1fr!important;gap:20px!important;padding:80px 16px 0!important;max-width:100%!important}
+  .contact-form-box{padding:18px!important;border-radius:14px!important}
+  .contact-left h1{font-size:24px!important}
+  .contact-left p{font-size:13px!important}
+  .contact-cards{gap:8px!important}
+  .contact-step-box{padding:16px!important}
 }
 </style>
-<div class="contact-grid" style="max-width:1100px;margin:0 auto;padding:clamp(90px,12vw,140px) clamp(16px,4vw,48px) 0;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+<div class="contact-wrap" style="overflow-x:hidden">
+<div class="contact-grid" style="max-width:1100px;margin:0 auto;padding:clamp(80px,10vw,140px) clamp(16px,4vw,48px) 0;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;box-sizing:border-box">
 
   <!-- 왼쪽: 안내 -->
   <div class="contact-left">
@@ -5052,6 +5059,8 @@ function submitContact(){
   }, 800);
 }
 </script>
+</div>
+</div>
 `;
 
   return wrap(title, desc, canonical, body, bc);
