@@ -3668,13 +3668,18 @@ function makeCenterPage(slug) {
   const makeSchoolRow=(sch, grade, labelColor, labelBg, gradeLabel)=>{
     const sl=makeSchoolSlug(grade,sch);
     const base=`/academy/school/${grade.toLowerCase()}/${sl}`;
-    const subjLinks=availSubj.map(s=>`<a href="${base}/${s.en}" style="display:inline-flex;align-items:center;gap:3px;background:white;border:1px solid ${s.color}40;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700;color:${s.color};text-decoration:none;white-space:nowrap" onmouseover="this.style.background='${s.color}12'" onmouseout="this.style.background='white'">${s.icon} ${s.ko}</a>`).join('');
-    return `<div style="display:flex;align-items:flex-start;gap:10px;padding:13px 0;border-bottom:1px solid #F1F5F9">
-      <a href="${base}" style="display:inline-flex;align-items:center;gap:7px;min-width:160px;text-decoration:none">
+    const subjLinks=availSubj.map(s=>`<a href="${base}/${s.en}" style="display:inline-flex;align-items:center;gap:4px;background:${s.color}10;border:1px solid ${s.color}30;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;color:${s.color};text-decoration:none" onmouseover="this.style.background='${s.color}25'" onmouseout="this.style.background='${s.color}10'">${s.icon} ${s.ko.replace('학원','')}</a>`).join('');
+    const rowId=`sr-${grade}-${sl}`;
+    return `<div style="border-bottom:1px solid #F1F5F9">
+      <button onclick="var p=document.getElementById('${rowId}');var isOpen=p.style.display!=='none';p.style.display=isOpen?'none':'flex';this.querySelector('.sarr').style.transform=isOpen?'rotate(0deg)':'rotate(90deg)'" style="width:100%;display:flex;align-items:center;gap:8px;padding:11px 4px;background:none;border:none;cursor:pointer;text-align:left">
         <span style="background:${labelBg};color:${labelColor};font-size:10px;font-weight:800;padding:2px 7px;border-radius:4px;flex-shrink:0">${gradeLabel}</span>
-        <span style="font-size:14px;font-weight:800;color:#0F2044">${sch}</span>
-      </a>
-      <div style="display:flex;flex-wrap:wrap;gap:5px">${subjLinks}</div>
+        <span style="font-size:14px;font-weight:800;color:#0F2044;flex:1">${sch}</span>
+        <span style="font-size:11px;color:#9CA3AF;flex-shrink:0">${availSubj.length}과목</span>
+        <span class="sarr" style="font-size:14px;color:#9CA3AF;transition:transform .2s;flex-shrink:0">›</span>
+      </button>
+      <div id="${rowId}" style="display:none;flex-wrap:wrap;gap:6px;padding:0 4px 12px">
+        ${subjLinks}
+      </div>
     </div>`;
   };
 
@@ -3742,7 +3747,7 @@ function makeCenterPage(slug) {
     <h2 style="font-size:17px;font-weight:900;color:#0F2044;margin:0 0 4px">
       ${fullName} 담당 학교 <span style="font-size:14px;color:#6B7280;font-weight:500">(${allSchools.length}개교)</span>
     </h2>
-    <p style="font-size:13px;color:#9CA3AF;margin:0 0 14px">학교명 클릭 → 과목별 학원 글 보기</p>
+    <p style="font-size:13px;color:#9CA3AF;margin:0 0 14px">학교명 클릭 → 과목 선택</p>
     ${schoolRows}
   </section>`:''}
 
