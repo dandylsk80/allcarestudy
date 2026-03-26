@@ -4781,10 +4781,17 @@ function makeContactPage(type) {
 
   const body = `
 <div style="background:#F0F4FF;min-height:100vh;padding-bottom:80px">
-<div style="max-width:1100px;margin:0 auto;padding:clamp(90px,12vw,140px) clamp(16px,4vw,48px) 0;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+<style>
+@media(max-width:768px){
+  .contact-grid{grid-template-columns:1fr!important;gap:24px!important;padding-top:80px!important}
+  .contact-form-box{padding:20px!important}
+  .contact-left h1{font-size:26px!important}
+}
+</style>
+<div class="contact-grid" style="max-width:1100px;margin:0 auto;padding:clamp(90px,12vw,140px) clamp(16px,4vw,48px) 0;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
 
   <!-- 왼쪽: 안내 -->
-  <div>
+  <div class="contact-left">
     <div style="display:inline-flex;align-items:center;gap:6px;background:white;border:1.5px solid #DBEAFE;border-radius:999px;padding:5px 14px;font-size:12px;font-weight:700;color:#1D4ED8;margin-bottom:20px">
       문의하기
     </div>
@@ -4832,7 +4839,7 @@ function makeContactPage(type) {
   </div>
 
   <!-- 오른쪽: 폼 -->
-  <div style="background:white;border-radius:20px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,.08)">
+  <div class="contact-form-box" style="background:white;border-radius:20px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,.08)">
 
     <!-- 성공 메시지 (숨김) -->
     <div id="modal-success" style="display:none;text-align:center;padding:40px 0">
