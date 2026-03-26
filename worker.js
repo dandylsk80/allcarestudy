@@ -3137,7 +3137,7 @@ function makeArticlePage(rk, ak, gk, sk) {
 
 function makeAcademyIntroPage() {
   const introStyle = ``;
-  const introScript = `function switchTab(idx){
+  const introScript = `function switchMgTab(idx){
   document.querySelectorAll('.mtab').forEach((t,i)=>t.classList.toggle('active',i===idx));
   document.querySelectorAll('.manage-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
 }
@@ -3381,9 +3381,9 @@ function mslideMove(sid, dir) {
       <h2 class="sec-title" style="text-align:center">성과를 만드는<br><em>올케어스터디의 체계적 관리</em></h2>
     </div>
     <div class="manage-tabs">
-      <button class="mtab active" onclick="switchTab(0)">📋 플랜관리</button>
-      <button class="mtab" onclick="switchTab(1)">✏️ 학습관리</button>
-      <button class="mtab" onclick="switchTab(2)">💬 생활관리</button>
+      <button class="mtab active" onclick="switchMgTab(0)">📋 플랜관리</button>
+      <button class="mtab" onclick="switchMgTab(1)">✏️ 학습관리</button>
+      <button class="mtab" onclick="switchMgTab(2)">💬 생활관리</button>
     </div>
     <div class="manage-panel active" id="tab-0">
       <div>
