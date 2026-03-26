@@ -4701,7 +4701,7 @@ function makeAcademyPage() {
         </div>
         <div style="display:flex;gap:8px;margin-top:14px">
           <a href="/academy/center/\${makeCenterSlug(c.n||'')}" style="flex:1;display:block;text-align:center;background:#EFF6FF;color:#1D4ED8;padding:11px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid #DBEAFE">📋 상세보기</a>
-          <button onclick="openContactModal(\`\${c.s||''}\`,\`\${c.d||''}\`,cname)" style="flex:1;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:inherit">✉️ 상담</button>
+          <button onclick="openContactModal(c.s||'',c.d||'',cname)" style="flex:1;text-align:center;background:#1D4ED8;color:white;padding:11px;border-radius:10px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:inherit">✉️ 상담</button>
         </div>
       </div>\`;
     }).join('') : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#9CA3AF">해당 지역 센터가 없습니다</div>';
