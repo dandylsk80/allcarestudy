@@ -5009,7 +5009,13 @@ function makeContactPage(type) {
   var t = params.get('type') || 'tutoring';
   var center = params.get('center') || '';
   var school = params.get('school') || '';
-  if(center && document.getElementById('m-center')) document.getElementById('m-center').value = center;
+  var subject = params.get('subject') || '';
+  var centerEl = document.getElementById('m-center');
+  if(center && centerEl) centerEl.value = center;
+  if(!center && school && centerEl) {
+    var subjectLabel = {math:'수학',english:'영어',korean:'국어',science:'과학',social:'사회',coding:'코딩',essay:'논술'};
+    centerEl.value = school + (subject ? ' ' + (subjectLabel[subject]||subject) + '학원' : '');
+  }
   cfSwitchType(t);
 })();
 
