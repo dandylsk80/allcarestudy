@@ -5690,7 +5690,7 @@ export default {
       if (GRADE_COMPAT[p]) return GRADE_COMPAT[p];
       return p;
     });
-    const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'public,max-age=3600' };
+    const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0' };
 
     // ── 문의 API ──────────────────────────────────────
     if (path === '/api/contact' && request.method === 'POST') {
