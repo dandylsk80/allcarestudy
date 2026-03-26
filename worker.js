@@ -1303,6 +1303,12 @@ const HEADER = `<header>
     <a class="mob-subj-btn" href="/subject/essay"><span>📝</span><span>논술</span></a>
     <a class="mob-subj-btn" href="/subject/gsd"><span>📋</span><span>검정고시</span></a>
   </div>
+  <div class="mob-nav-section">회화 수업</div>
+  <div class="mob-subj-grid">
+    <a class="mob-subj-btn" href="/conversation/english"><span>📚</span><span>영어회화</span></a>
+    <a class="mob-subj-btn" href="/conversation/chinese"><span>🇨🇳</span><span>중국어회화</span></a>
+    <a class="mob-subj-btn" href="/conversation/japanese"><span>🇯🇵</span><span>일본어회화</span></a>
+  </div>
   <div class="mob-nav-section">지역별 과외</div>
   <div class="mob-sido-grid">
     <a class="mob-sido-btn" href="/seoul">서울</a><a class="mob-sido-btn" href="/gyeonggi">경기</a>
