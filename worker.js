@@ -4783,20 +4783,44 @@ function makeContactPage(type) {
   const bc = [{name:'홈',url:'/'},{name:'문의하기',url:'/contact'}];
 
   const body = `
-<div style="background:#F0F4FF;min-height:100vh;padding-bottom:80px;overflow-x:hidden">
+<div style="background:#F0F4FF;min-height:100vh;padding-bottom:80px;overflow-x:hidden;width:100%;box-sizing:border-box">
 <style>
+*{box-sizing:border-box}
 @media(max-width:768px){
-  .contact-wrap{overflow-x:hidden!important}
-  .contact-grid{grid-template-columns:1fr!important;gap:20px!important;padding:80px 16px 0!important;max-width:100%!important;display:flex!important;flex-direction:column!important}
-  .contact-form-box{padding:18px!important;border-radius:14px!important;order:-1!important}
-  .contact-left h1{font-size:22px!important;margin-bottom:8px!important}
-  .contact-left p{font-size:13px!important;margin-bottom:16px!important}
-  .contact-cards{display:none!important}
-  .contact-step-box{display:none!important}
+  .contact-wrap{overflow-x:hidden!important;width:100%!important}
+  .contact-grid{
+    display:block!important;
+    padding:72px 14px 0!important;
+    max-width:100vw!important;
+    width:100%!important;
+    overflow-x:hidden!important;
+  }
+  .contact-left{display:none!important}
+  .contact-form-box{
+    padding:16px!important;
+    border-radius:14px!important;
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+  .contact-form-box input,
+  .contact-form-box select,
+  .contact-form-box textarea{
+    width:100%!important;
+    max-width:100%!important;
+    font-size:16px!important;
+  }
+  .contact-form-box button[type=submit],.submit-btn{
+    width:100%!important;
+    font-size:16px!important;
+  }
+  #m-addr-row{flex-direction:column!important;gap:6px!important}
+  #m-addr-row input{width:100%!important}
+  #m-addr-row button{width:100%!important}
 }
 </style>
-<div class="contact-wrap" style="overflow-x:hidden">
-<div class="contact-grid" style="max-width:1100px;margin:0 auto;padding:clamp(80px,10vw,140px) clamp(16px,4vw,48px) 0;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;box-sizing:border-box">
+<div class="contact-wrap" style="overflow-x:hidden;width:100%">
+<div class="contact-grid" style="max-width:1100px;margin:0 auto;padding:clamp(80px,10vw,140px) clamp(16px,4vw,48px) 0;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;width:100%;box-sizing:border-box">
 
   <!-- 왼쪽: 안내 -->
   <div class="contact-left">
@@ -4902,7 +4926,7 @@ function makeContactPage(type) {
       <!-- 주소 -->
       <div style="margin-bottom:16px">
         <label class="u6">거주 주소</label>
-        <div style="display:flex;gap:8px">
+        <div id="m-addr-row" style="display:flex;gap:8px">
           <input id="m-addr" type="text" placeholder="예: 서울 강남구 대치동"
             style="flex:1;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s"
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
