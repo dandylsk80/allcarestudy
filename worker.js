@@ -4839,7 +4839,7 @@ function makeContactPage(type) {
           <div style="font-size:16px;font-weight:900;color:#0F2044">010-6834-8080</div>
         </div>
       </div>
-      <div class="u17">
+      <div class="u17" id="card-center-visit" style="display:${isAcademy?'flex':'none'}">
         <div style="width:42px;height:42px;background:#ECFDF5;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📍</div>
         <div>
           <div class="u16">센터 방문 상담</div>
@@ -5019,6 +5019,7 @@ function cfSwitchType(type) {
   var tabT = document.getElementById('tab-tutoring');
   var fA = document.getElementById('academy-fields');
   var fT = document.getElementById('tutoring-fields');
+  var cardCenter = document.getElementById('card-center-visit');
   if(!tabA) return;
 
   tabA.style.background = isA ? '#0F2044' : 'transparent';
@@ -5028,6 +5029,7 @@ function cfSwitchType(type) {
 
   if(fA) fA.style.display = isA ? 'block' : 'none';
   if(fT) fT.style.display = !isA ? 'block' : 'none';
+  if(cardCenter) cardCenter.style.display = isA ? 'flex' : 'none';
 }
 
 function searchContactAddress(){
