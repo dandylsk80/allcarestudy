@@ -4933,6 +4933,9 @@ function makeContactPage(type) {
           <button onclick="searchContactAddress()"
             style="padding:11px 16px;background:#EFF6FF;border:1.5px solid #DBEAFE;border-radius:10px;font-size:13px;font-weight:700;color:#1D4ED8;cursor:pointer;white-space:nowrap;font-family:inherit">검색</button>
         </div>
+        <input id="m-addr-detail" type="text" placeholder="상세주소 (예: 101동 1001호)"
+          style="width:100%;box-sizing:border-box;margin-top:8px;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s"
+          onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
       </div>
 
       <!-- 학원 상담 전용 -->
@@ -4965,33 +4968,6 @@ function makeContactPage(type) {
             <option value="">선택해주세요</option>
             <option>수학</option><option>영어</option><option>국어</option>
             <option>과학</option><option>사회</option><option>코딩</option><option>논술</option>
-          </select>
-        </div>
-        <div style="margin-bottom:16px">
-          <label class="u6">수업 방식</label>
-          <select id="m-method"
-            class="u10"
-            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-            <option value="">선택해주세요</option>
-            <option>대면 (오프라인)</option><option>온라인</option><option>상관없음</option>
-          </select>
-        </div>
-        <div style="margin-bottom:16px">
-          <label class="u6">선생님 성별 선호</label>
-          <select id="m-gender"
-            class="u10"
-            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-            <option value="">선택해주세요</option>
-            <option>상관없음</option><option>남자 선생님</option><option>여자 선생님</option>
-          </select>
-        </div>
-        <div style="margin-bottom:16px">
-          <label class="u6">주당 희망 수업 횟수</label>
-          <select id="m-freq"
-            class="u10"
-            onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
-            <option value="">선택해주세요</option>
-            <option>주 1회</option><option>주 2회</option><option>주 3회</option><option>주 4회 이상</option>
           </select>
         </div>
       </div>
