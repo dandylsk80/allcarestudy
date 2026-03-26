@@ -4787,12 +4787,12 @@ function makeContactPage(type) {
 <style>
 @media(max-width:768px){
   .contact-wrap{overflow-x:hidden!important}
-  .contact-grid{grid-template-columns:1fr!important;gap:20px!important;padding:80px 16px 0!important;max-width:100%!important}
-  .contact-form-box{padding:18px!important;border-radius:14px!important}
-  .contact-left h1{font-size:24px!important}
-  .contact-left p{font-size:13px!important}
-  .contact-cards{gap:8px!important}
-  .contact-step-box{padding:16px!important}
+  .contact-grid{grid-template-columns:1fr!important;gap:20px!important;padding:80px 16px 0!important;max-width:100%!important;display:flex!important;flex-direction:column!important}
+  .contact-form-box{padding:18px!important;border-radius:14px!important;order:-1!important}
+  .contact-left h1{font-size:22px!important;margin-bottom:8px!important}
+  .contact-left p{font-size:13px!important;margin-bottom:16px!important}
+  .contact-cards{display:none!important}
+  .contact-step-box{display:none!important}
 }
 </style>
 <div class="contact-wrap" style="overflow-x:hidden">
@@ -4807,7 +4807,7 @@ function makeContactPage(type) {
     <p style="font-size:15px;color:#6B7280;line-height:1.9;margin:0 0 32px">올케어스터디 전문 상담사가<br>빠른 시일 내에 연락드리겠습니다.</p>
 
     <!-- 연락처 카드들 -->
-    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px">
+    <div class="contact-cards" style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px">
       <div class="u17">
         <div style="width:42px;height:42px;background:#EFF6FF;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📞</div>
         <div>
@@ -4833,7 +4833,7 @@ function makeContactPage(type) {
     </div>
 
     <!-- 상담 진행 순서 -->
-    <div style="background:white;border-radius:16px;padding:22px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+    <div class="contact-step-box" style="background:white;border-radius:16px;padding:22px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
       <div style="font-size:14px;font-weight:900;color:#0F2044;margin-bottom:16px">상담 진행 순서</div>
       ${[['1','온라인 접수','양식 작성 후 제출하시면 즉시 접수됩니다'],['2','담당자 배정','교육컨설턴트가 배정됩니다'],['3','1:1 맞춤 상담','학생 상황에 맞는 학습 방향을 안내드립니다'],['4','교사 배정','적합한 선생님을 매칭하여 수업을 연결해드립니다']].map(([n,t,d])=>`
       <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #F1F5F9">
