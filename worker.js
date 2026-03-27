@@ -588,7 +588,7 @@ footer{background:var(--navy);padding:28px 48px;margin-top:60px}
 .dong-card-arrow{display:flex;align-items:center;gap:4px;margin-top:12px;font-size:12px;font-weight:700;color:var(--blue)}
 @media(max-width:768px){.dong-grid{grid-template-columns:1fr 1fr}.dong-card-img{height:130px}}
 @media(max-width:480px){.dong-grid{grid-template-columns:1fr}}
-@media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}.u33{grid-template-columns:1fr 1fr!important}.u34{grid-template-columns:1fr!important}}
+@media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}}
 header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}
 .hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}
 .logo{display:flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none}
@@ -661,9 +661,6 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border
 .cf-input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit}
 .cf-label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}
 @media(max-width:768px){div[style*='grid-template-columns:1fr 300px']{grid-template-columns:1fr!important}}
-@media(max-width:768px){div[style*='grid-template-columns:1fr 280px']{grid-template-columns:1fr!important}}
-@media(max-width:768px){div[style*='position:sticky;top:100px']{position:static!important}}
-@media(max-width:480px){div[style*='grid-template-columns:repeat(auto-fit,minmax(56px,1fr))']{grid-template-columns:repeat(3,1fr)!important}}
 #card-grid{display:grid}
 @media(max-width:767px){#card-grid{grid-template-columns:1fr!important;gap:10px!important}}
 @media(min-width:768px) and (max-width:1023px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}
@@ -1614,29 +1611,13 @@ const CATEGORY_TEMPLATES = {
       '{dong} 영어과외는 {schools} 내신 영어 기출을 완벽 분석해 변형 문제와 서술형까지 완벽 대비합니다.',
       '{dong} 영어과외는 내신 영어와 수능 영어를 동시에 잡는 통합 커리큘럼으로 운영합니다.',
       '{gu} 최고 학군인 {dong}의 영어과외는 {schools} 내신 1등급을 목표로 합니다.'],
-    korean: [
-      '{dong} 국어과외는 {schools} 내신 국어 기출을 분석해 문학·비문학·서술형을 집중 대비합니다.',
-      '{dong} 국어과외는 문학 작품 해석력과 비문학 독해력을 동시에 키우는 1:1 맞춤 수업을 제공합니다.',
-      '{dong} 국어과외는 교과서 지문 완전 분석부터 수능 국어 실전 대비까지 체계적으로 진행합니다.'],
-    science: [
-      '{dong} 과학과외는 {schools} 내신 과학 기출을 바탕으로 물리·화학·생물·지구과학을 1:1로 집중 관리합니다.',
-      '{dong} 과학과외는 실험·탐구 문제와 서술형 대비를 강화해 {schools} 내신 고득점을 목표로 합니다.'],
-    social: [
-      '{dong} 사회과외는 {schools} 내신 역사·지리·일반사회를 기출 분석 중심으로 집중 관리합니다.',
-      '{dong} 사회과외는 흐름도·연표 작성 등 핵심 개념 정리와 서술형 대비를 함께 진행합니다.'],
-    coding: [
-      '{dong} 코딩과외는 블록코딩부터 파이썬까지 수준별 1:1 맞춤 수업으로 논리적 사고력을 키워드립니다.',
-      '{dong} 코딩과외는 {schools} 정보 내신 대비와 함께 AI·알고리즘 심화 학습을 병행합니다.'],
-    essay: [
-      '{dong} 논술과외는 {schools} 수행평가 논술부터 대학별 논술 유형까지 단계적으로 준비합니다.',
-      '{dong} 논술과외는 주장과 근거를 논리적으로 구성하는 글쓰기 능력을 1:1로 집중 훈련합니다.'],
     reviews: [
       '{dong} 수학 과외 시작하고 {schools} 첫 중간고사에서 1등급 받았어요.',
-      '{dong} 국어 과외 받고 처음으로 내신 국어 1등급 받았어요.',
+      '{dong} 학원만 다녔는데 수학이 제자리였어요.',
       '{dong} 영어 과외 받고 처음으로 내신 1등급 받았어요.',
       '{dong} 수학 과외 2달 만에 등급이 두 단계 올랐어요.',
-      '{dong} 과학 과외 시작하고 {schools} 내신에서 성적이 올랐어요.',
-      '{dong} 국어 선생님이 {schools} 출제 경향을 너무 잘 아세요.'],
+      '{dong}에서 영어 선생님 찾고 있었는데 하루 만에 완벽한 매칭이 됐어요.',
+      '{dong} 수학 선생님이 {schools} 출제 경향을 너무 잘 아세요.'],
   },
   // B: 신도시
   B: {
@@ -1648,27 +1629,12 @@ const CATEGORY_TEMPLATES = {
       '{dong} 영어과외는 신도시 {gu}의 {schools} 내신 영어를 집중 관리합니다.',
       '{dong} 영어과외는 초등 영어 기초부터 {schools} 중학·고등 내신까지 단계별 체계적 지도를 제공합니다.',
       '{dong}은 젊은 고학력 가정이 많아 영어 교육 수준이 높습니다.'],
-    korean: [
-      '{dong} 국어과외는 신도시 {gu}의 {schools} 내신 국어를 기출 분석 중심으로 집중 관리합니다.',
-      '{dong} 국어과외는 독해력·문학 감상·서술형 쓰기를 1:1로 체계적으로 지도합니다.'],
-    science: [
-      '{dong} 과학과외는 {schools} 내신 과학을 1:1 방문 과외로 집중 대비합니다.',
-      '{dong} 과학과외는 신도시 {gu} 특성에 맞춰 빠른 선생님 매칭으로 내신 과학을 관리합니다.'],
-    social: [
-      '{dong} 사회과외는 {schools} 내신 역사·사회를 체계적으로 정리하고 서술형 답안 쓰기를 훈련합니다.',
-      '{dong} 사회과외는 신도시 {gu}의 {schools} 출제 경향을 반영한 맞춤 수업을 제공합니다.'],
-    coding: [
-      '{dong} 코딩과외는 신도시 특성에 맞춰 AI·파이썬 중심의 1:1 코딩 수업을 제공합니다.',
-      '{dong} 코딩과외는 초등 블록코딩부터 중고등 정보 내신·파이썬 심화까지 수준별로 지도합니다.'],
-    essay: [
-      '{dong} 논술과외는 {schools} 수행평가와 대학 논술을 단계별로 준비합니다.',
-      '{dong} 논술과외는 독서 기반 글쓰기부터 논리적 주장·근거 쓰기까지 체계적으로 훈련합니다.'],
     reviews: [
       '{dong} 이사 오자마자 수학 선생님을 연결해주셨어요.',
       '{dong} 신도시라 좋은 선생님 찾기 어려울 것 같았는데 당일 매칭이 됐어요.',
       '{dong} 영어 과외 시작하고 {schools} 첫 내신에서 2등급 받았어요.',
-      '{dong} 국어 과외 받고 서술형 점수가 확실히 올랐어요.',
-      '{dong}에서 과학 선생님 찾았는데 너무 빠르게 연결해주셔서 놀랐어요.',
+      '{dong} 초등 수학 과외 받고 있는데 아이가 수학을 좋아하게 됐어요.',
+      '{dong}에서 영어 선생님 찾았는데 너무 빠르게 연결해주셔서 놀랐어요.',
       '{dong} 수학 과외 시작하고 {schools} 중간고사에서 처음으로 1등급 받았어요.'],
   },
   // C: 산업단지
@@ -1681,27 +1647,12 @@ const CATEGORY_TEMPLATES = {
       '{dong} 영어과외는 산업단지 인근 글로벌 기업 종사자 가정을 위한 영어 과외를 제공합니다.',
       '{dong} 영어과외는 맞벌이 가정 비율이 높은 지역 특성에 맞춰 방문 과외로 {schools} 내신 영어를 집중 관리합니다.',
       '{dong}은 IT·제조업 종사자 가정이 많아 영어 교육 수요가 높습니다.'],
-    korean: [
-      '{dong} 국어과외는 맞벌이 가정이 많은 지역 특성에 맞춰 방문 과외로 {schools} 내신 국어를 집중 관리합니다.',
-      '{dong} 국어과외는 문학·비문학·서술형을 체계적으로 다루며 학생 수준에 맞는 맞춤 지도를 제공합니다.'],
-    science: [
-      '{dong} 과학과외는 이공계 종사자 가정이 많은 {dong} 특성에 맞춰 심화 과학 수업도 가능합니다.',
-      '{dong} 과학과외는 {schools} 내신 물리·화학·생물·지구과학을 1:1로 집중 관리합니다.'],
-    social: [
-      '{dong} 사회과외는 {schools} 내신 역사·사회를 1:1 방문 과외로 체계적으로 대비합니다.',
-      '{dong} 사회과외는 맞벌이 가정 비율이 높은 지역 특성에 맞춰 유연한 일정으로 운영합니다.'],
-    coding: [
-      '{dong} 코딩과외는 IT·이공계 종사자 가정이 많은 지역 특성에 맞춰 파이썬·알고리즘 심화 수업도 가능합니다.',
-      '{dong} 코딩과외는 정보 내신 대비부터 AI 기초 코딩까지 수준별로 지도합니다.'],
-    essay: [
-      '{dong} 논술과외는 맞벌이 가정이 많은 지역 특성에 맞춰 방문 과외로 논술 쓰기 능력을 집중 훈련합니다.',
-      '{dong} 논술과외는 {schools} 수행평가 논술과 대학 논술을 단계별로 준비합니다.'],
     reviews: [
-      '{dong} IT 직장 다니다 보니 아이 국어를 못 봐줬는데 선생님이 꼼꼼하게 봐주셔서 감사합니다.',
+      '{dong} IT 직장 다니다 보니 아이 수학을 못 봐줬는데 선생님이 꼼꼼하게 봐주셔서 정말 감사합니다.',
       '{dong} 수학 과외 받고 있어요.',
       '{dong} 맞벌이라 시간이 없는데 선생님이 맞춰주시니 너무 편해요.',
       '{dong} 영어 과외 받고 처음으로 내신 2등급 받았어요. — {dong} 학부모',
-      '{dong} 과학 선생님이 연구원 출신이시라 설명이 정말 논리적이에요. — {dong} 학부모'],
+      '{dong} 수학 선생님이 연구원 출신이시라 설명이 정말 논리적이에요. — {dong} 학부모'],
   },
   // D: 군인가족
   D: {
@@ -1711,25 +1662,10 @@ const CATEGORY_TEMPLATES = {
     english: [
       '{dong} 영어과외는 군인 가족 특성에 맞춰 이사 직후 빠른 선생님 매칭으로 {schools} 내신 ...',
       '{dong}은 군인 자녀 비율이 높아 전학 후 빠른 적응이 중요합니다.'],
-    korean: [
-      '{dong} 국어과외는 군인 가족 이동에 맞춰 빠른 매칭으로 전학 후에도 {schools} 국어 내신을 안정적으로 관리합니다.',
-      '{dong} 국어과외는 이사 직후에도 바로 이어갈 수 있는 1:1 방문 과외를 제공합니다.'],
-    science: [
-      '{dong} 과학과외는 군인 가족의 잦은 이동에 맞춰 빠른 매칭과 유연한 수업으로 {schools} 내신을 관리합니다.',
-      '{dong} 과학과외는 전학 직후에도 학교 진도에 맞춰 빠르게 적응할 수 있도록 지도합니다.'],
-    social: [
-      '{dong} 사회과외는 전학 후 새 학교 역사·사회 내신에 빠르게 적응할 수 있도록 집중 지도합니다.',
-      '{dong} 사회과외는 군인 가족 특성에 맞춰 유연한 일정과 빠른 매칭을 지원합니다.'],
-    coding: [
-      '{dong} 코딩과외는 군인 가족 이동에도 온라인·방문 병행으로 끊임없이 학습을 이어갈 수 있습니다.',
-      '{dong} 코딩과외는 전학 후에도 바로 연결되는 빠른 매칭 시스템을 자랑합니다.'],
-    essay: [
-      '{dong} 논술과외는 잦은 전학에도 논술 쓰기 능력을 꾸준히 유지·향상할 수 있도록 1:1로 관리합니다.',
-      '{dong} 논술과외는 군인 가족 특성에 맞춰 빠른 매칭과 유연한 일정으로 운영합니다.'],
     reviews: [
       '{dong} 전임 후 바로 수학 선생님을 연결해주셨어요.',
-      '자주 이사 다니는 군인 가족인데 {dong}에서도 빠르게 국어 선생님을 찾을 수 있었어요.',
-      '{dong} 영어 과외 받고 이사 와서도 성적이 유지됐어요. 정말 감사합니다. — {dong} 학부모'],
+      '자주 이사 다니는 군인 가족인데 {dong}에서도 빠르게 영어 선생님을 찾을 수 있었어요.',
+      '{dong} 수학 과외 받고 이사 와서도 성적이 유지됐어요. 정말 감사합니다. — {dong} 학부모'],
   },
   // E: 대학가
   E: {
@@ -1741,27 +1677,11 @@ const CATEGORY_TEMPLATES = {
       '{dong} 영어과외는 인근 대학 출신 선생님 매칭이 가능합니다.',
       '{dong} 영어과외는 대학가 특성상 어학 특화 선생님 매칭이 수월합니다.',
       '{dong}은 어학·인문 계열 강세 지역으로 영어 교육 수준이 높습니다.'],
-    korean: [
-      '{dong} 국어과외는 인근 대학 국어국문학과·사범대 출신 선생님 매칭이 가능합니다.',
-      '{dong} 국어과외는 문학 작품 심층 분석부터 수능 국어 실전 대비까지 수준 높은 수업을 제공합니다.',
-      '{dong}은 인문·국어 계열 강세 대학가로 국어 과외 선생님 공급이 풍부합니다.'],
-    science: [
-      '{dong} 과학과외는 인근 대학 이공계 재학생·졸업생 선생님 매칭으로 수준 높은 과학 수업이 가능합니다.',
-      '{dong} 과학과외는 대학가 특성상 물리·화학·생물·지구과학 전공 선생님 매칭이 수월합니다.'],
-    social: [
-      '{dong} 사회과외는 인근 대학 역사·사회 계열 전공 선생님 매칭이 가능합니다.',
-      '{dong} 사회과외는 {schools} 내신 역사·사회를 깊이 있는 개념 정리와 서술형 대비로 집중 관리합니다.'],
-    coding: [
-      '{dong} 코딩과외는 인근 대학 컴퓨터공학과 재학생·졸업생 선생님 매칭이 가능합니다.',
-      '{dong} 코딩과외는 대학가 특성상 AI·알고리즘 심화 수업도 가능한 수준 높은 선생님을 연결해드립니다.'],
-    essay: [
-      '{dong} 논술과외는 대학가 인근 특성상 대학별 논술 유형에 정통한 선생님 매칭이 가능합니다.',
-      '{dong} 논술과외는 인문·사회 계열 강세 지역 특성을 살려 논리적 글쓰기 능력을 집중 훈련합니다.'],
     reviews: [
-      '{dong}에서 국어 선생님 찾았는데 인근 대학 국어국문학과 출신이시라 설명이 너무 명쾌해요.',
+      '{dong}에서 수학 선생님 찾았는데 인근 대학 출신 선생님을 매칭해주셔서 설명이 정말 명쾌해요.',
       '{dong} 수학 과외 받고 처음으로 수학 1등급 받았어요.',
       '{dong} 영어 과외 받고 {schools} 내신 1등급 받았습니다.',
-      '{dong} 과학 선생님이 이공계 대학원생이신데 정말 체계적으로 가르쳐주세요. — {dong} 학부모',
+      '{dong} 수학 선생님이 의대 출신이신데 정말 체계적으로 가르쳐주세요. — {dong} 학부모',
       '{dong} 영어 선생님이 영어영문학과 출신이시라 설명이 너무 좋아요. — {dong} 학부모',
       '{dong} 과외 받고 성적이 꾸준히 올라 SKY 목표가 현실이 됐어요. — {dong} 학부모'],
   },
@@ -1773,25 +1693,10 @@ const CATEGORY_TEMPLATES = {
     english: [
       '{dong} 영어과외는 방문 과외로 {schools} 내신 영어를 집에서 편하게 준비합니다.',
       '{dong}은 읍면 지역이지만 올케어스터디의 방문 과외로 도시와 같은 수준의 영어 교육을 받을 수 있습니다.'],
-    korean: [
-      '{dong} 국어과외는 학원이 부족한 지역 특성에 맞춰 방문 과외로 {schools} 내신 국어를 집중 관리합니다.',
-      '{dong}은 읍면 지역이지만 1:1 방문 국어 과외로 도시와 같은 수준의 국어 교육을 받을 수 있습니다.'],
-    science: [
-      '{dong} 과학과외는 읍면 지역 특성상 방문 과외로 {schools} 내신 과학을 집에서 집중 관리합니다.',
-      '{dong} 과학과외는 학원 접근이 어려운 환경에서도 1:1 맞춤 과학 수업을 제공합니다.'],
-    social: [
-      '{dong} 사회과외는 읍면 지역 특성에 맞춰 방문 과외로 역사·사회 내신을 체계적으로 준비합니다.',
-      '{dong} 사회과외는 학원이 없는 환경에서도 1:1로 {schools} 사회 내신을 꼼꼼히 관리합니다.'],
-    coding: [
-      '{dong} 코딩과외는 읍면 지역 학생을 위한 온라인·방문 병행 코딩 수업을 제공합니다.',
-      '{dong} 코딩과외는 학원 접근이 어려운 지역에서도 파이썬·블록코딩을 체계적으로 배울 수 있습니다.'],
-    essay: [
-      '{dong} 논술과외는 읍면 지역 학생을 위한 방문 논술 과외로 글쓰기 능력을 체계적으로 키워드립니다.',
-      '{dong} 논술과외는 학원이 부족한 환경에서도 1:1 맞춤 지도로 논술 실력을 향상시킵니다.'],
     reviews: [
-      '{dong}은 학원이 없어 걱정이었는데 방문 국어 과외로 완벽히 해결됐어요.',
+      '{dong}은 학원이 없어 걱정이었는데 방문 수학 과외로 완벽히 해결됐어요.',
       '{dong} 영어 과외 받고 처음으로 내신 2등급 받았어요.',
-      '{dong}에서 과학 선생님 찾기 어려울 것 같았는데 바로 연결해주셔서 감사해요. — {dong} 학부모'],
+      '{dong}에서 수학 선생님 찾기 어려울 것 같았는데 바로 연결해주셔서 감사해요. — {dong} 학부모'],
   },
   // G: 도서
   G: {
@@ -1800,23 +1705,8 @@ const CATEGORY_TEMPLATES = {
       '{dong}은 도서 지역 특성상 온라인 수학과외로 {schools} 내신을 효율적으로 관리합니다.'],
     english: [
       '{dong} 영어과외는 온라인으로 {schools} 내신 영어를 집중 관리합니다.'],
-    korean: [
-      '{dong} 국어과외는 온라인 방식으로 {schools} 내신 국어를 효율적으로 관리합니다.',
-      '{dong}은 도서 지역이지만 온라인 국어 과외로 도시와 같은 수준의 국어 수업을 받을 수 있습니다.'],
-    science: [
-      '{dong} 과학과외는 온라인으로 {schools} 내신 과학을 집중 대비합니다.',
-      '{dong}은 도서 지역이지만 온라인 과학 과외로 물리·화학·생물·지구과학을 체계적으로 학습합니다.'],
-    social: [
-      '{dong} 사회과외는 온라인으로 {schools} 내신 역사·사회를 효율적으로 관리합니다.',
-      '{dong}은 도서 지역이지만 온라인 사회 과외로 내신 서술형까지 꼼꼼히 대비합니다.'],
-    coding: [
-      '{dong} 코딩과외는 온라인으로 파이썬·블록코딩을 체계적으로 배울 수 있습니다.',
-      '{dong}은 도서 지역이지만 온라인 코딩 과외로 정보 내신과 코딩 실력을 동시에 키울 수 있습니다.'],
-    essay: [
-      '{dong} 논술과외는 온라인으로 논리적 글쓰기 능력을 체계적으로 훈련합니다.',
-      '{dong}은 도서 지역이지만 온라인 논술 과외로 수행평가와 대학 논술을 단계별로 준비합니다.'],
     reviews: [
-      '{dong} 섬에서도 온라인 국어 과외로 성적을 올릴 수 있었어요.',
+      '{dong} 섬에서도 온라인 수학 과외로 성적을 올릴 수 있었어요.',
       '{dong} 온라인 영어 과외 받고 {schools} 내신 영어가 안정됐어요. — {dong} 학부모'],
   },
   // H: 일반도심
@@ -1829,32 +1719,12 @@ const CATEGORY_TEMPLATES = {
       '{dong} 영어과외는 {schools} 내신 영어 기출을 완벽 분석해 시험에 최적화된 1:1 맞춤 수업을 제공합니다.',
       '{dong} 영어과외는 {schools} 학교 스타일에 맞는 내신 영어 지도와 함께 수능 영어 독해 훈련을 병행합니다.',
       '{dong}에서 영어 과외를 시작하면 {schools} 내신 영어와 수능 영어를 동시에 준비할 수 있습니다.'],
-    korean: [
-      '{dong} 국어과외는 {schools} 내신 국어 기출을 분석해 문학·비문학·서술형을 1:1로 집중 대비합니다.',
-      '{dong} 국어과외는 {schools} 교과서 지문 완전 분석부터 수능 국어 실전 대비까지 체계적으로 진행합니다.',
-      '{dong}에서 국어 과외를 시작하면 {schools} 내신 국어 관리와 수능 국어 대비를 동시에 진행합니다.'],
-    science: [
-      '{dong} 과학과외는 {schools} 내신 과학 기출을 바탕으로 물리·화학·생물·지구과학을 1:1로 집중 관리합니다.',
-      '{dong} 과학과외는 {schools} 서술형·실험 문제 대비를 강화한 맞춤 수업으로 내신 고득점을 목표로 합니다.',
-      '{dong}에서 과학 과외를 시작하면 {schools} 내신 과학 관리와 수능 과학탐구 대비를 동시에 진행합니다.'],
-    social: [
-      '{dong} 사회과외는 {schools} 내신 역사·지리·일반사회를 기출 분석 중심으로 집중 관리합니다.',
-      '{dong} 사회과외는 흐름도·연표 작성 등 핵심 개념 정리와 {schools} 서술형 대비를 함께 진행합니다.',
-      '{dong}에서 사회 과외를 시작하면 {schools} 내신 사회 관리와 수능 사회탐구 대비를 동시에 진행합니다.'],
-    coding: [
-      '{dong} 코딩과외는 블록코딩부터 파이썬·알고리즘까지 수준별 1:1 맞춤 수업으로 논리적 사고력을 키워드립니다.',
-      '{dong} 코딩과외는 {schools} 정보 내신 대비와 함께 AI·알고리즘 심화 학습을 병행합니다.',
-      '{dong}에서 코딩 과외를 시작하면 정보 내신 관리와 코딩 역량 강화를 동시에 진행합니다.'],
-    essay: [
-      '{dong} 논술과외는 {schools} 수행평가 논술부터 대학별 논술 유형까지 단계적으로 준비합니다.',
-      '{dong} 논술과외는 주장·근거 구성, 논리적 단락 쓰기를 1:1로 집중 훈련합니다.',
-      '{dong}에서 논술 과외를 시작하면 학교 수행평가와 대학 입시 논술을 동시에 준비합니다.'],
     reviews: [
       '{dong} 수학 과외 시작하고 {schools} 중간고사에서 등급이 올랐어요.',
-      '{dong} 국어 과외 받고 처음으로 내신 국어 2등급 받았어요.',
       '{dong} 영어 과외 받고 처음으로 내신 영어 2등급 받았어요.',
-      '{dong} 과학 선생님이 아이 수준에 맞게 가르쳐주시니 스트레스 없이 잘 따라가요. — {dong} 학부모',
-      '{dong} 사회 과외 시작하고 수능 사회탐구 점수가 확실히 올랐어요. — {dong} 학부모',
+      '{dong} 수학 선생님이 아이 수준에 맞게 가르쳐주시니 스트레스 없이 잘 따라가요. — {dong} 학부모',
+      '{dong} 영어 과외 시작하고 수능 영어 독해 속도가 확실히 빨라졌어요. — {dong} 학부모',
+      '{dong} 수학 과외 받고 있어요.',
       '{dong} 영어 선생님이 학교 지문 분석을 정말 꼼꼼하게 해주세요.'],
   },
 };
@@ -2083,8 +1953,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
 
   const cat = area.cat || 'H';
   const tmpl = CATEGORY_TEMPLATES[cat] || CATEGORY_TEMPLATES['H'];
-  const SUBJECT_KEY_MAP = {'수학':'math','영어':'english','국어':'korean','과학':'science','사회':'social','코딩':'coding','논술':'essay'};
-  const subjectKey = SUBJECT_KEY_MAP[subject] || 'math';
+  const subjectKey = subject === '수학' ? 'math' : subject === '영어' ? 'english' : 'math';
   const tmplTexts = tmpl[subjectKey] || tmpl.math;
   const reviews = tmpl.reviews;
 
@@ -2534,7 +2403,7 @@ function makeSubjectPage(subjectEn) {
     ${grCards}
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid ${color};padding-bottom:8px;margin-top:32px">🗓️ 수업 진행 방식</h2>
     <div style="background:white;border:1px solid #E5E7EB;border-radius:14px;padding:22px;margin-bottom:20px">
-      ${[`무료 상담 & 수준 진단|현재 ${ko} 실력과 목표를 파악하고 맞춤 선생님을 연결합니다.`,`무료 체험 수업|첫 수업은 무료입니다. 선생님과 학생의 케미를 직접 확인하세요.`,`맞춤 커리큘럼 설계|${ko} 내신·수능 목표에 최적화된 커리큘럼을 설계합니다.`,`정규 수업 & 주간 보고서|주 2~3회 방문 수업 후 매주 학습 보고서를 학부모님께 제공합니다.`].map((s,i)=>{const[t,d]=s.split('|');return`<div style="display:flex;gap:12px;align-items:flex-start;${i<3?'padding-bottom:12px':''}"><div style="min-width:28px;height:28px;background:${color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:12px;flex-shrink:0">${i+1}</div><div><div class="u30">${t}</div><div style="font-size:12px;color:#6B7280;line-height:1.6">${d}</div></div></div>`;}).join('')}
+      ${['무료 상담 & 수준 진단|현재 ${ko} 실력과 목표를 파악하고 맞춤 선생님을 연결합니다.','무료 체험 수업|첫 수업은 무료입니다. 선생님과 학생의 케미를 직접 확인하세요.','맞춤 커리큘럼 설계|${ko} 내신·수능 목표에 최적화된 커리큘럼을 설계합니다.','정규 수업 & 주간 보고서|주 2~3회 방문 수업 후 매주 학습 보고서를 학부모님께 제공합니다.'].map((s,i)=>{const[t,d]=s.split('|');return`<div style="display:flex;gap:12px;align-items:flex-start;${i<3?'padding-bottom:12px':''}"><div style="min-width:28px;height:28px;background:${color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:12px;flex-shrink:0">${i+1}</div><div><div class="u30">${t}</div><div style="font-size:12px;color:#6B7280;line-height:1.6">${d}</div></div></div>`;}).join('')}
     </div>
     <h2 style="color:#0F2044;font-size:19px;border-bottom:3px solid #F59E0B;padding-bottom:8px;margin-top:32px">💡 ${ko} 공부 핵심 꿀팁</h2>
     <div style="background:#FFFBEB;border-radius:14px;padding:18px;border-left:5px solid #F59E0B;margin-bottom:20px"><p class="u20">${tip}</p></div>
@@ -4183,7 +4052,7 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
   };
   const cd=contentMap[subjectEn]||contentMap.math;
 
-  const d28Cards=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:8px;margin:16px 0">
+  const d28Cards=`<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0">
     ${['D-28','D-21','D-14','D-7','D-1'].map((d,i)=>{
       const cols=['#EFF6FF','#ECFDF5','#FFFBEB','#FEF2F2','#F5F3FF'];
       const tcols=['#1D4ED8','#16A34A','#D97706','#DC2626','#7C3AED'];
@@ -4882,12 +4751,13 @@ function makeAcademyPage() {
     var detail=document.getElementById('m-addr-detail').value.trim();
     var message=document.getElementById('m-message').value.trim();
     var agree=document.getElementById('m-agree').checked;
+    var type=new URLSearchParams(window.location.search).get('type')||'tutoring';
     if (!name)    { showMErr('이름을 입력해주세요.'); return; }
     if (!grade)   { showMErr('학년/나이를 선택해주세요.'); return; }
     if (!phone)   { showMErr('연락처를 입력해주세요.'); return; }
     if (!road)    { showMErr('거주 주소를 입력해주세요.'); return; }
     if (!agree)   { showMErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
-    fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:road+(detail?' '+detail:''),message})})
+    fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:road+(detail?' '+detail:''),message,type})})
     .then(r=>r.json()).then(data=>{
       if(data.ok){document.getElementById('modal-form').style.display='none';document.getElementById('modal-success').style.display='block';}
       else showMErr('전송 중 오류가 발생했습니다.');
@@ -5328,8 +5198,7 @@ function makeHomePage(){
     <button class="hdot" onclick="gs(1)"></button>
     <button class="hdot" onclick="gs(2)"></button>
   </div>
-  <button onclick="gs((window._hsCur+2)%3)" style="position:absolute;left:24px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.5)'">&#8249;</button>
-  <button onclick="gs((window._hsCur+1)%3)" style="position:absolute;right:24px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.5)'">&#8250;</button>
+  <button onclick="gs((cur+1)%3)" style="position:absolute;right:24px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.5)'">&#8250;</button>
 </section>
 
 <!-- STRENGTH -->
@@ -5610,9 +5479,9 @@ function switchTab(menu,tab){
   }
   const hsEl=document.getElementById('hs');
   if(hsEl){
-    window._hsCur=0;
-    window.gs=function(n){window._hsCur=n;hsEl.style.transform='translateX(-'+(n*100)+'%)';document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===n));};
-    setInterval(()=>window.gs((window._hsCur+1)%3),4500);
+    let cur=0;
+    window.gs=function(n){cur=n;hsEl.style.transform='translateX(-'+(n*100)+'%)';document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===n));};
+    setInterval(()=>window.gs((cur+1)%3),4500);
   }
   try{
     const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.15});
@@ -5877,7 +5746,7 @@ export default {
         }
 
         // Google Apps Script로 전송 (시트 기록 + 네이버 메일 발송)
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbxWr1XcAQVsxPKgH9FbUaUcKAYCNzDoA-ngykhJ2ae4sCk562rT7bBe2sO7ym5-KdI2/exec';
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbz3FYy6m02GJZHmVFuinxZov4W_QYGmXzftq_Q43Z-KwXklWPvu1Y23dUcHdsa2itKG/exec';
         const gasRes = await fetch(GAS_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
