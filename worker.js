@@ -5750,7 +5750,7 @@ export default {
         const gasRes = await fetch(GAS_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, grade, phone, address, message })
+          body: JSON.stringify({ name, grade, phone, address, message, type: body.type || 'tutoring' })
         });
         const gasData = await gasRes.json();
         if (gasData.ok) {
