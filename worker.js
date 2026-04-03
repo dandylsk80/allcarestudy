@@ -4751,12 +4751,12 @@ function makeAcademyPage() {
     var detail=document.getElementById('m-addr-detail').value.trim();
     var message=document.getElementById('m-message').value.trim();
     var agree=document.getElementById('m-agree').checked;
-    var type=new URLSearchParams(window.location.search).get('type')||'tutoring';
     if (!name)    { showMErr('이름을 입력해주세요.'); return; }
     if (!grade)   { showMErr('학년/나이를 선택해주세요.'); return; }
     if (!phone)   { showMErr('연락처를 입력해주세요.'); return; }
     if (!road)    { showMErr('거주 주소를 입력해주세요.'); return; }
     if (!agree)   { showMErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
+    var type=new URLSearchParams(window.location.search).get('type')||'tutoring';
     fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:road+(detail?' '+detail:''),message,type})})
     .then(r=>r.json()).then(data=>{
       if(data.ok){document.getElementById('modal-form').style.display='none';document.getElementById('modal-success').style.display='block';}
@@ -5074,12 +5074,32 @@ function submitContact(){
   btn.textContent = '접수 중...';
   btn.style.opacity = '0.7';
 
-  setTimeout(function(){
-    var form = document.getElementById('modal-form');
-    var success = document.getElementById('modal-success');
-    if(form) form.style.display = 'none';
-    if(success) success.style.display = 'block';
-  }, 800);
+  var type = new URLSearchParams(window.location.search).get('type') || 'tutoring';
+  var addrEl = document.getElementById('m-addr');
+  var addrDetailEl = document.getElementById('m-addr-detail');
+  var address = (addrEl ? addrEl.value.trim() : '') + (addrDetailEl && addrDetailEl.value.trim() ? ' ' + addrDetailEl.value.trim() : '');
+  var msgEl = document.getElementById('m-msg');
+  var message = msgEl ? msgEl.value.trim() : '';
+
+  fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address,message,type})})
+  .then(r=>r.json()).then(function(data){
+    if(data.ok){
+      var form = document.getElementById('modal-form');
+      var success = document.getElementById('modal-success');
+      if(form) form.style.display = 'none';
+      if(success) success.style.display = 'block';
+    } else {
+      btn.disabled = false;
+      btn.textContent = '문의 제출하기';
+      btn.style.opacity = '1';
+      alert('전송 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
+  }).catch(function(){
+    btn.disabled = false;
+    btn.textContent = '문의 제출하기';
+    btn.style.opacity = '1';
+    alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+  });
 }
 </script>
 </div>
@@ -5733,24 +5753,33 @@ export default {
     const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0' };
 
     // ── 문의 API ──────────────────────────────────────
+    const corsHeaders = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    };
+    if (path === '/api/contact' && request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
     if (path === '/api/contact' && request.method === 'POST') {
-      const corsHeaders = {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      };
       try {
         const body = await request.json();
         const { name, grade, phone, address, message } = body;
-        if (!name || !grade || !phone || !address) {
+        if (!name || !grade || !phone) {
           return new Response(JSON.stringify({ ok: false, error: '필수 항목 누락' }), { headers: corsHeaders });
         }
-
-        // Google Apps Script로 전송 (시트 기록 + 네이버 메일 발송)
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbz3FYy6m02GJZHmVFuinxZov4W_QYGmXzftq_Q43Z-KwXklWPvu1Y23dUcHdsa2itKG/exec';
-        const gasRes = await fetch(GAS_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, grade, phone, address, message, type: body.type || 'tutoring' }),
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbzpqkKUW6IpwNFRFJRn_t_1AU1wMeUBnYqwAXnCK16yPDo5kPrJbEZiGRJkjDr-Stce/exec';
+        const params = new URLSearchParams({
+          name: name || '',
+          grade: grade || '',
+          phone: phone || '',
+          address: address || '',
+          message: message || '',
+          type: body.type || 'tutoring'
+        });
+        const gasRes = await fetch(GAS_URL + '?' + params.toString(), {
+          method: 'GET',
           redirect: 'follow'
         });
         const gasText = await gasRes.text();
