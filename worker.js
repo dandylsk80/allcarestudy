@@ -5741,7 +5741,7 @@ export default {
       try {
         const body = await request.json();
         const { name, grade, phone, address, message } = body;
-        if (!name || !grade || !phone || !address || !message) {
+        if (!name || !grade || !phone || !address) {
           return new Response(JSON.stringify({ ok: false, error: '필수 항목 누락' }), { headers: corsHeaders });
         }
 
@@ -5750,9 +5750,12 @@ export default {
         const gasRes = await fetch(GAS_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, grade, phone, address, message, type: body.type || 'tutoring' })
+          body: JSON.stringify({ name, grade, phone, address, message, type: body.type || 'tutoring' }),
+          redirect: 'follow'
         });
-        const gasData = await gasRes.json();
+        const gasText = await gasRes.text();
+        let gasData;
+        try { gasData = JSON.parse(gasText); } catch(e) { gasData = { ok: false, error: gasText }; }
         if (gasData.ok) {
           return new Response(JSON.stringify({ ok: true }), { headers: corsHeaders });
         } else {
