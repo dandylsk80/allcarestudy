@@ -1550,7 +1550,76 @@ function today(){
   return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
 }
 
-function wrap(title, desc, canonical, body, breadcrumbs){
+
+// ── FAQ 스키마 데이터 생성 헬퍼 ─────────────────────────────
+function makeFaqList(type, params) {
+  const {dong, gu, sido, subject, grade, schools, name} = params || {};
+  if (type === 'dong_subject') {
+    return [
+      {q:`${dong} ${grade} ${subject}과외 비용은 얼마인가요?`, a:`${dong} ${grade} ${subject}과외 비용은 선생님 경력과 수업 횟수에 따라 다릅니다. 무료 상담 후 최적의 선생님을 연결해드립니다. 010-6834-8080으로 문의해주세요.`},
+      {q:`${dong} ${subject}과외 선생님은 어떻게 검증되나요?`, a:`올케어스터디는 학력·경력·수업시연 3단계 검증을 통과한 선생님만 배정합니다. ${schools||gu} 내신 기출을 잘 아는 선생님을 우선 매칭합니다.`},
+      {q:`${dong} ${grade} ${subject} 첫 수업은 어떻게 진행되나요?`, a:`첫 수업은 무료 수준 진단으로 진행됩니다. 현재 성적과 취약 단원을 파악한 뒤 맞춤 커리큘럼을 설계합니다.`},
+      {q:`${dong} ${subject}과외와 학원의 차이는 무엇인가요?`, a:`1:1 방문 과외는 학생 수준에 맞춰 완전히 개인화된 수업을 제공합니다. 학원에서 놓친 부분을 집중 보완할 수 있습니다.`},
+      {q:`${dong} ${subject}과외 선생님 교체가 가능한가요?`, a:`네, 언제든 부담 없이 교체 가능합니다. 학생과 선생님의 케미가 맞지 않으면 무료로 재매칭해드립니다.`},
+    ];
+  }
+  if (type === 'article') {
+    return [
+      {q:`${gu} ${grade} ${subject}과외 비용은 얼마인가요?`, a:`${gu} ${grade} ${subject}과외 비용은 선생님 경력과 수업 횟수에 따라 다릅니다. 무료 상담 후 최적 선생님을 연결해드립니다.`},
+      {q:`${gu} ${subject}과외 선생님 검증은 어떻게 하나요?`, a:`학력·경력·수업시연 3단계 검증 완료 선생님만 배정합니다. ${schools} 내신 기출 분석에 특화된 선생님을 우선 추천합니다.`},
+      {q:`${gu} ${grade} ${subject} 첫 수업은 어떻게 진행되나요?`, a:`첫 수업은 무료 수준 진단으로 진행됩니다. 현재 성적과 취약 단원 파악 후 맞춤 커리큘럼을 설계합니다.`},
+      {q:`${gu} ${subject}과외 선생님 교체가 가능한가요?`, a:`네, 언제든 무료로 교체 가능합니다. 학생과 맞지 않으면 즉시 재매칭해드립니다.`},
+    ];
+  }
+  if (type === 'center') {
+    return [
+      {q:`${name} 첫 수업은 어떻게 진행되나요?`, a:`첫 수업은 무료 수준 진단으로 진행됩니다. 현재 성적과 취약 단원을 파악한 뒤 맞춤 커리큘럼을 설계합니다.`},
+      {q:`${name} 수업 비용은 얼마인가요?`, a:`수업 과목과 횟수에 따라 다릅니다. 무료 상담 후 안내해드립니다. 010-6834-8080으로 문의주세요.`},
+      {q:`${name} 코치 교체가 가능한가요?`, a:`네, 언제든 부담 없이 교체 가능합니다. 학생과 맞지 않으면 무료로 재배정해드립니다.`},
+      {q:`${name} 수업은 몇 회 진행되나요?`, a:`주 2~3회 방문 수업이 기본이며 학생 일정에 맞게 조율 가능합니다. 매 수업 후 학습 보고서를 학부모님께 제공합니다.`},
+    ];
+  }
+  if (type === 'subject') {
+    return [
+      {q:`${subject} 과외 비용은 얼마인가요?`, a:`${subject} 과외 비용은 선생님 경력과 수업 횟수에 따라 다릅니다. 무료 상담 후 최적 선생님을 연결해드립니다. 010-6834-8080`},
+      {q:`${subject} 과외 선생님은 어떻게 검증되나요?`, a:`학력·경력·수업시연 3단계 검증을 통과한 선생님만 배정합니다.`},
+      {q:`${subject} 첫 수업은 어떻게 진행되나요?`, a:`첫 수업은 무료 수준 진단으로 진행됩니다. 현재 성적과 취약 단원을 파악한 뒤 맞춤 커리큘럼을 설계합니다.`},
+      {q:`${subject} 과외와 학원의 차이는 무엇인가요?`, a:`1:1 방문 과외는 학생 수준에 맞춰 완전히 개인화된 수업을 제공합니다. 학원에서 놓친 부분을 집중 보완할 수 있습니다.`},
+    ];
+  }
+  if (type === 'sido') {
+    return [
+      {q:`${sido} 과외 비용은 얼마인가요?`, a:`${sido} 과외 비용은 지역과 선생님 경력에 따라 다릅니다. 무료 상담 후 최적 선생님을 연결해드립니다. 010-6834-8080`},
+      {q:`${sido} 과외 선생님은 어떻게 검증되나요?`, a:`학력·경력·수업시연 3단계 검증을 통과한 선생님만 배정합니다.`},
+      {q:`${sido} 방문 과외가 가능한가요?`, a:`네, ${sido} 전 지역 방문 과외가 가능합니다. 온라인 과외도 지원합니다.`},
+    ];
+  }
+  if (type === 'area') {
+    return [
+      {q:`${gu} 과외 비용은 얼마인가요?`, a:`${gu} 과외 비용은 과목과 선생님 경력에 따라 다릅니다. 무료 상담 후 안내해드립니다. 010-6834-8080`},
+      {q:`${gu} 과외 선생님 검증은 어떻게 하나요?`, a:`학력·경력·수업시연 3단계 검증 완료 선생님만 배정합니다. ${schools||gu} 내신 기출에 특화된 선생님을 우선 추천합니다.`},
+      {q:`${gu} 첫 수업은 어떻게 진행되나요?`, a:`첫 수업은 무료 수준 진단으로 진행됩니다. 현재 성적과 취약 단원 파악 후 맞춤 커리큘럼을 설계합니다.`},
+    ];
+  }
+  if (type === 'dong_main') {
+    return [
+      {q:`${dong} 과외 비용은 얼마인가요?`, a:`${dong} 과외 비용은 과목과 선생님 경력에 따라 다릅니다. 무료 상담 후 안내해드립니다. 010-6834-8080`},
+      {q:`${dong} 방문 과외가 가능한가요?`, a:`네, ${dong} 전 지역 방문 과외가 가능합니다. 검증된 선생님을 빠르게 매칭해드립니다.`},
+      {q:`${dong} 과외 선생님은 어떻게 검증되나요?`, a:`학력·경력·수업시연 3단계 검증을 통과한 선생님만 배정합니다.`},
+    ];
+  }
+  if (type === 'school_subject') {
+    return [
+      {q:`${name} ${subject}과외 첫 수업은 어떻게 진행되나요?`, a:`첫 수업은 무료 수준 진단으로 진행됩니다. ${name} 내신 기출을 분석하고 맞춤 커리큘럼을 설계합니다.`},
+      {q:`${name} ${subject} 내신 몇 등급까지 올릴 수 있나요?`, a:`보통 2~3개월 집중 코칭 후 1~2등급 향상 사례가 많습니다. 시험 전 단기 집중 코스도 운영합니다.`},
+      {q:`${name} ${subject}과외 비용은 얼마인가요?`, a:`선생님 경력과 수업 횟수에 따라 다릅니다. 무료 상담 후 안내해드립니다. 010-6834-8080`},
+      {q:`${name} 다른 과목도 함께 수강할 수 있나요?`, a:`수학+영어, 국어+영어 등 2~3과목 동시 코칭도 가능합니다. 학생 시간표에 맞게 조율해드립니다.`},
+    ];
+  }
+  return [];
+}
+
+function wrap(title, desc, canonical, body, breadcrumbs, faqList){
   // canonical: 영문 URL 그대로 사용 (/seoul/gangnam/high/math)
   const canonicalUrl = `https://allcarestudy.com${canonical}`;
   // description: 150자 이내로 트림 (네이버 권장)
@@ -1562,6 +1631,13 @@ function wrap(title, desc, canonical, body, breadcrumbs){
   if(breadcrumbs && breadcrumbs.length) {
     const items = breadcrumbs.map((b,i) => `{"@type":"ListItem","position":${i+1},"name":"${b.name}","item":"https://allcarestudy.com${b.url}"}`).join(',');
     bcSchema = `<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[${items}]}</script>`;
+  }
+
+  // FAQ Schema 생성
+  let faqSchema = '';
+  if(faqList && faqList.length) {
+    const faqItems = faqList.map(f => `{"@type":"Question","name":${JSON.stringify(f.q)},"acceptedAnswer":{"@type":"Answer","text":${JSON.stringify(f.a)}}}`).join(',');
+    faqSchema = `<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[${faqItems}]}</script>`;
   }
 
   return `<!DOCTYPE html><html lang="ko"><head>
@@ -1585,7 +1661,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 <meta property="og:image:height" content="630">
 <meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${isoDate}","dateModified":"${isoDate}","inLanguage":"ko-KR"}</script>
-${bcSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
+${bcSchema}${faqSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
 </head><body>${HEADER}${body}${FOOTER}</body></html>`;
@@ -1921,7 +1997,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   </div>
 </div>`;
 
-  return wrap(title, desc, canonical, body, bc);
+  return wrap(title, desc, canonical, body, bc, makeFaqList('dong_main',{dong:dong,gu:gu}));
 }
 
 // ── REGIONS 기반 동 페이지 생성 (DONG_DB 불필요) ──────────────────────────
@@ -2169,7 +2245,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   <div class="related-grid">${relDongs}</div>
 </div>`;
 
-  return wrap(title, desc, canonical, body, bc);
+  return wrap(title, desc, canonical, body, bc, makeFaqList('dong_subject',{dong,gu,subject,grade,schools}));
 }
 
 
@@ -2415,7 +2491,7 @@ function makeSubjectPage(subjectEn) {
   </div>
   <div class="cta-box"><h3>${ko} 과외 무료 상담</h3><p>검증된 ${ko} 전문 선생님을 빠르게 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
 </div>`;
-  return wrap(title, desc, canonical, body, bc);
+  return wrap(title, desc, canonical, body, bc, makeFaqList('subject',{subject:ko}));
 }
 function makeGradePage(gradeType, gradeNum) {
   const CFG={
@@ -2550,7 +2626,7 @@ function makeSchoolIndexPage() {
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin:20px 0">${sidoList}</div>
   </div>
 </div>`;
-  return wrap(title, desc, '/school', body, [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'}]);
+  return wrap(title, desc, '/school', body, [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'}], makeFaqList('sido',{sido:'전국'}));
 }
 
 function makeSchoolSidoPage(sidoEn) {
@@ -2584,7 +2660,7 @@ function makeSchoolSidoPage(sidoEn) {
     </div>
   </div>
 </div>`;
-  return wrap(title, desc, `/school/${sidoEn}`, body, [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:sidoKr,url:`/school/${sidoEn}`}]);
+  return wrap(title, desc, `/school/${sidoEn}`, body, [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:sidoKr,url:`/school/${sidoEn}`}], makeFaqList('sido',{sido:sidoKr}));
 }
 
 function makeSchoolGugunPage(sidoEn, gugunRoman) {
@@ -2638,7 +2714,7 @@ function makeSchoolGugunPage(sidoEn, gugunRoman) {
     </div>
   </div>
 </div>`;
-  return wrap(title, desc, `/school/${sidoEn}/${gugunRoman}`, body, [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:sidoKr,url:`/school/${sidoEn}`},{name:gugunKr,url:`/school/${sidoEn}/${gugunRoman}`}]);
+  return wrap(title, desc, `/school/${sidoEn}/${gugunRoman}`, body, [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:sidoKr,url:`/school/${sidoEn}`},{name:gugunKr,url:`/school/${sidoEn}/${gugunRoman}`}], makeFaqList('area',{gu:gugunKr,schools:''}));
 }
 
 function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
@@ -2923,7 +2999,7 @@ function makeSidoPage(rk) {
   </div>
 </div>`;
   const bcSido = [{name:'홈',url:'/'},{name:r.label,url:`/${SIDO_EN[rk]||rk}`}];
-  return wrap(title, desc, `/${SIDO_EN[rk]||rk}`, body, bcSido);
+  return wrap(title, desc, `/${SIDO_EN[rk]||rk}`, body, bcSido, makeFaqList('sido',{sido:region.label}));
 }
 
 // ── 구/군 페이지 ──────────────────────────────────────────
@@ -3057,7 +3133,7 @@ function makeAreaPage(rk, ak) {
     {name:region.label,url:`/${SIDO_EN[rk]||rk}`},
     {name:ak,url:`/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`}
   ];
-  return wrap(title, desc, `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`, body, bcArea);
+  return wrap(title, desc, `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`, body, bcArea, makeFaqList('area',{gu:ak,schools:area.schools}));
 }
 
 // ── 기존 구/학년/과목 페이지 (강남구 외) ─────────────────────
@@ -3128,7 +3204,7 @@ function makeArticlePage(rk, ak, gk, sk) {
   <div class="related-title">🔗 ${region.label} 다른 지역 ${sk}과외</div>
   <div class="related-grid">${relLinks}</div>
 </div>`;
-  return wrap(title, desc, `/${sidoEn}/${distEn}/${gradeEn}/${subjEn}`, body, breadcrumbs);
+  return wrap(title, desc, `/${sidoEn}/${distEn}/${gradeEn}/${subjEn}`, body, breadcrumbs, makeFaqList('article',{gu:ak,subject:sk,grade:gk,schools:area.schools}));
 }
 
 // ── 홈페이지 ──────────────────────────────────────────────
@@ -3820,7 +3896,7 @@ function makeCenterPage(slug) {
   </div>
 </div>`;
 
-  return wrap(metaTitle, metaDesc, canonical, body, bc);
+  return wrap(metaTitle, metaDesc, canonical, body, bc, makeFaqList('center',{name:fullName}));
 }
 
 
@@ -4194,7 +4270,7 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
   </div>
 </div>`;
 
-  return wrap(title, desc, canonical, body, bc);
+  return wrap(title, desc, canonical, body, bc, makeFaqList('school_subject',{name:foundSchool,subject:subjKo.replace('학원','')}));
 }
 
 
