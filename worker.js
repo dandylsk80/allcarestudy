@@ -4597,6 +4597,336 @@ function makeConversationPage(lang) {
 }
 
 
+
+function makeSubjectSubPage(subjectEn, slug) {
+  const SUBJ = {
+    math:{ko:'수학',em:'📐',color:'#1D4ED8',bg:'#EFF6FF'},
+    english:{ko:'영어',em:'📖',color:'#10B981',bg:'#ECFDF5'},
+    korean:{ko:'국어',em:'✍️',color:'#F59E0B',bg:'#FFFBEB'},
+    science:{ko:'과학',em:'🔬',color:'#8B5CF6',bg:'#F5F3FF'},
+    social:{ko:'사회',em:'🌏',color:'#EF4444',bg:'#FEF2F2'},
+    coding:{ko:'코딩',em:'💻',color:'#06B6D4',bg:'#ECFEFF'},
+    essay:{ko:'논술',em:'📝',color:'#D97706',bg:'#FFFBEB'},
+    gsd:{ko:'검정고시',em:'📋',color:'#64748B',bg:'#F8FAFC'},
+  };
+  const sj = SUBJ[subjectEn]; if(!sj) return null;
+
+  const TOPICS = {
+    math:[
+      {s:'elem-basics',t:'초등 수학 기초 다지기',d:'초등학교 수학의 기본 개념과 연산 능력을 탄탄하게 다지는 수업'},
+      {s:'mid-function',t:'중학 수학 함수 완벽 정리',d:'일차함수, 이차함수 등 중학 함수의 개념과 그래프를 완벽히 이해하는 수업'},
+      {s:'high-math1',t:'고등 수학1 다항식·방정식·부등식',d:'고등 수학1의 핵심 단원인 다항식, 방정식, 부등식을 체계적으로 학습'},
+      {s:'calculus',t:'미적분 기초부터 심화까지',d:'미분과 적분의 개념부터 실전 문제 풀이까지 단계별로 완성'},
+      {s:'probability',t:'확률과 통계 마스터',d:'확률과 통계의 핵심 개념을 이해하고 수능·내신 고득점을 목표로 하는 수업'},
+      {s:'geometry',t:'기하와 벡터 정복',d:'공간 도형, 벡터의 연산과 활용을 체계적으로 학습하는 심화 수업'},
+      {s:'suneung-killer',t:'수능 수학 킬러문항 대비',d:'수능 수학에서 변별력을 좌우하는 고난도 킬러문항을 집중 공략'},
+      {s:'descriptive',t:'수학 서술형 답안 작성법',d:'서술형 시험에서 만점을 받기 위한 풀이 과정 작성 요령과 논리적 표현법'},
+      {s:'supo-escape',t:'수포자 탈출 프로젝트',d:'수학을 포기한 학생이 기초부터 다시 시작하는 맞춤 회복 프로그램'},
+      {s:'grade1',t:'수학 내신 1등급 전략',d:'학교 시험에서 수학 내신 1등급을 달성하기 위한 체계적 학습 전략'},
+      {s:'gifted',t:'초등 사고력 수학·영재 수학',d:'창의적 문제 해결 능력을 키우는 사고력 수학과 영재교육원 대비'},
+      {s:'olympiad',t:'수학 올림피아드 대비',d:'한국수학올림피아드(KMO) 등 경시대회를 목표로 하는 심화 수업'},
+      {s:'mid-shape',t:'중학 도형 완벽 정리',d:'삼각형, 사각형, 원 등 중학 도형의 성질과 증명을 완벽히 정리'},
+      {s:'sequence',t:'고등 수열 완벽 정리',d:'등차수열, 등비수열, 점화식 등 수열의 모든 유형을 체계적으로 학습'},
+      {s:'trigonometry',t:'삼각함수 마스터',d:'삼각함수의 그래프, 공식, 활용까지 완벽히 이해하는 수업'},
+      {s:'past-exam',t:'수능 기출 분석 수업',d:'최근 수능 기출문제를 유형별로 분석하고 출제 경향을 파악하는 수업'},
+      {s:'fraction',t:'초등 분수·소수 정복',d:'많은 학생이 어려워하는 분수와 소수의 개념을 확실히 잡아주는 수업'},
+      {s:'mid-linear',t:'중학 일차함수·이차함수',d:'함수의 기초 개념부터 그래프 해석까지 단계별로 학습'},
+      {s:'concept-total',t:'수학 개념 총정리',d:'학년별 수학 개념을 처음부터 끝까지 체계적으로 정리하는 수업'},
+      {s:'math-essay',t:'수리논술 대비',d:'대학 수리논술 시험에 필요한 논리적 풀이와 서술 능력을 키우는 수업'},
+      {s:'competition',t:'경시대회 수학',d:'각종 수학 경시대회를 목표로 하는 고난도 문제 풀이 훈련'},
+      {s:'elem-calc',t:'초등 연산 속도 올리기',d:'사칙연산의 정확도와 속도를 동시에 높이는 체계적 연산 훈련'},
+      {s:'mid-advance',t:'중학 수학 선행 학습',d:'다음 학년 수학을 미리 학습해 학교 수업에서 자신감을 키우는 선행 수업'},
+      {s:'high-advance',t:'고등 수학 선행 학습',d:'고등학교 수학을 미리 접하고 대비하는 체계적 선행 프로그램'},
+      {s:'sat-math',t:'SAT Math 대비',d:'미국 대학 진학에 필요한 SAT Math 섹션을 체계적으로 준비'},
+      {s:'habit',t:'수학 학습 습관 만들기',d:'매일 꾸준히 수학 공부하는 습관을 만드는 학습 관리 수업'},
+      {s:'elem-writing',t:'초등 서술형 수학',d:'서술형 시험이 늘어나는 초등 수학에서 풀이 과정을 정확히 쓰는 연습'},
+      {s:'mid-naesin',t:'중등 내신 수학',d:'중학교 시험에 맞춘 내신 대비 수학 수업'},
+      {s:'mock-exam',t:'고등 모의고사 수학',d:'모의고사 유형을 분석하고 시간 관리 전략을 훈련하는 실전 수업'},
+      {s:'track-guide',t:'문과·이과 수학 선택 가이드',d:'문과와 이과 수학의 차이를 이해하고 자신에게 맞는 과정을 선택하는 상담 수업'},
+    ],
+    english:[
+      {s:'elem-basics',t:'초등 영어 기초 다지기',d:'알파벳, 파닉스부터 기초 문장까지 초등 영어의 기본을 잡는 수업'},
+      {s:'mid-grammar',t:'중학 영어 문법 완벽 정리',d:'중학교 필수 영문법을 체계적으로 정리하고 내신에 대비하는 수업'},
+      {s:'high-reading',t:'고등 영어 독해 전략',d:'고등학교 수준의 영어 지문을 빠르고 정확하게 읽는 독해 전략 수업'},
+      {s:'suneung-1',t:'수능 영어 1등급 전략',d:'수능 영어 절대평가 90점 이상을 안정적으로 달성하기 위한 체계적 전략'},
+      {s:'grade1',t:'영어 내신 1등급 만들기',d:'학교 시험에서 영어 내신 1등급을 달성하기 위한 맞춤 학습 전략'},
+      {s:'descriptive',t:'영어 서술형 답안 작성',d:'서술형 시험에서 만점을 받기 위한 영작문 기술과 답안 구성법'},
+      {s:'phonics',t:'파닉스 기초',d:'영어 소리 규칙을 체계적으로 배우는 읽기의 첫걸음'},
+      {s:'listening',t:'영어 듣기 만점 전략',d:'수능과 내신 듣기 시험에서 만점을 달성하기 위한 집중 훈련'},
+      {s:'writing',t:'영작문 기초부터 심화',d:'기본 문장 쓰기부터 에세이 작성까지 영어 글쓰기 전 과정'},
+      {s:'toeic-toefl',t:'토익·토플 기초 대비',d:'대학생·취업 준비생을 위한 토익·토플 기초 수업'},
+      {s:'mid-advance',t:'중학 영어 선행 학습',d:'다음 학년 영어를 미리 학습하는 선행 수업'},
+      {s:'high-advance',t:'고등 영어 선행 학습',d:'고등학교 영어를 미리 대비하는 체계적 선행 프로그램'},
+      {s:'blank-type',t:'수능 영어 빈칸추론 공략',d:'수능 영어의 핵심 고난도 유형인 빈칸추론을 집중 공략'},
+      {s:'order-insert',t:'수능 영어 순서·삽입 공략',d:'순서배열과 문장삽입 문제의 풀이 전략을 체계적으로 훈련'},
+      {s:'vocabulary',t:'영어 어휘력 늘리기',d:'수능·내신에 필요한 필수 어휘를 효율적으로 학습하는 수업'},
+      {s:'grammar-total',t:'영문법 총정리',d:'초등부터 고등까지 영어 문법을 한 번에 정리하는 종합 수업'},
+      {s:'reading-skill',t:'독해 지문 분석법',d:'영어 독해 지문을 구조적으로 분석하고 핵심을 빠르게 파악하는 기술'},
+      {s:'elem-reading',t:'초등 리딩 수업',d:'초등학생 수준에 맞는 영어 원서 읽기와 독해력 향상 수업'},
+      {s:'mid-naesin',t:'중등 내신 영어',d:'중학교 시험에 맞춘 내신 대비 영어 수업'},
+      {s:'mock-strategy',t:'모의고사 영어 풀이 전략',d:'모의고사 유형별 풀이 전략과 시간 관리법을 훈련'},
+      {s:'speaking',t:'영어 발표·스피킹',d:'학교 수행평가와 일상 소통을 위한 영어 말하기 수업'},
+      {s:'essay-writing',t:'영어 에세이 작성',d:'논리적인 영어 에세이를 작성하는 방법을 체계적으로 학습'},
+      {s:'competition',t:'경시대회 영어',d:'영어 경시대회를 목표로 하는 고급 영어 훈련'},
+      {s:'sat-eng',t:'SAT English 대비',d:'미국 대학 진학에 필요한 SAT 영어 섹션 준비'},
+      {s:'suneung-listen',t:'수능 영어 듣기 실전',d:'수능 영어 듣기 17문항 만점을 위한 실전 훈련'},
+      {s:'mid-reading',t:'중학 독해 기초',d:'중학생 수준에 맞는 영어 독해 기초 훈련'},
+      {s:'high-grammar',t:'고등 어법 정리',d:'수능과 내신에 출제되는 고등 영어 어법을 완벽 정리'},
+      {s:'performance',t:'수행평가 대비 영어',d:'학교 영어 수행평가를 완벽히 준비하는 맞춤 수업'},
+      {s:'textbook',t:'영어 교과서 분석',d:'학교 교과서 본문을 정밀 분석하고 내신에 대비하는 수업'},
+      {s:'vacation',t:'방학 집중 영어',d:'방학 기간을 활용해 영어 실력을 집중적으로 끌어올리는 프로그램'},
+    ],
+    korean:[
+      {s:'elem-reading',t:'초등 국어 독해력 키우기',d:'글을 정확히 읽고 이해하는 독해력의 기초를 다지는 수업'},
+      {s:'mid-literature',t:'중학 국어 문학 이해',d:'중학교 필수 문학 작품을 읽고 분석하는 능력을 키우는 수업'},
+      {s:'high-nonlit',t:'고등 국어 비문학 독해',d:'수능과 내신의 핵심인 비문학 독해 능력을 집중 향상'},
+      {s:'suneung-1',t:'수능 국어 1등급 전략',d:'수능 국어에서 안정적으로 1등급을 달성하기 위한 체계적 전략'},
+      {s:'grade1',t:'국어 내신 1등급 만들기',d:'학교 시험에서 국어 내신 1등급을 달성하는 맞춤 전략'},
+      {s:'speech-writing',t:'화법과 작문 완벽 정리',d:'화법과 작문 선택과목의 핵심 개념과 문제 풀이법'},
+      {s:'lang-media',t:'언어와 매체 마스터',d:'언어와 매체 선택과목을 완벽히 이해하고 내신·수능에 대비'},
+      {s:'modern-poem',t:'현대시 감상과 분석',d:'현대시의 표현 기법, 주제, 정서를 정확히 파악하는 방법'},
+      {s:'modern-novel',t:'현대소설 독해법',d:'현대소설의 서사 구조, 인물, 갈등을 분석하는 독해 기술'},
+      {s:'classic',t:'고전문학 완벽 정리',d:'고전시가와 고전소설을 현대어로 이해하고 분석하는 수업'},
+      {s:'descriptive',t:'국어 서술형 답안 작성',d:'서술형 국어 시험에서 만점을 받기 위한 답안 작성 요령'},
+      {s:'past-exam',t:'수능 국어 기출 분석',d:'최근 수능 국어 기출문제를 유형별로 분석하고 출제 경향 파악'},
+      {s:'nonlit-skill',t:'비문학 독해 스킬',d:'비문학 지문을 빠르고 정확하게 읽는 구조적 독해법'},
+      {s:'grammar',t:'문법(언어) 총정리',d:'국어 문법의 음운, 형태, 통사, 의미 영역을 체계적으로 정리'},
+      {s:'reading-essay',t:'독서 논술 기초',d:'책을 읽고 자신의 생각을 논리적으로 표현하는 독서 논술 수업'},
+      {s:'elem-writing',t:'초등 글쓰기 수업',d:'초등학생의 글쓰기 능력을 체계적으로 키우는 작문 수업'},
+      {s:'mid-naesin',t:'중등 내신 국어',d:'중학교 시험에 맞춘 내신 대비 국어 수업'},
+      {s:'high-naesin',t:'고등 내신 국어',d:'고등학교 시험에 맞춘 내신 대비 국어 수업'},
+      {s:'suneung-lit',t:'수능 국어 문학 공략',d:'수능 국어 문학 영역의 고득점 전략과 작품 분석법'},
+      {s:'vocabulary',t:'국어 어휘력 늘리기',d:'국어 실력의 기초인 어휘력을 체계적으로 확장하는 수업'},
+      {s:'mid-advance',t:'중학 국어 선행',d:'다음 학년 국어를 미리 학습하는 선행 수업'},
+      {s:'high-advance',t:'고등 국어 선행',d:'고등학교 국어를 미리 대비하는 선행 프로그램'},
+      {s:'mock-strategy',t:'모의고사 국어 풀이 전략',d:'모의고사 유형별 풀이 전략과 시간 관리법'},
+      {s:'performance',t:'수행평가 대비 국어',d:'학교 국어 수행평가를 완벽히 준비하는 수업'},
+      {s:'textbook',t:'국어 교과서 분석',d:'학교 교과서 본문을 정밀 분석하는 내신 대비 수업'},
+      {s:'history-link',t:'한국사 독해 연계',d:'국어 독해력을 활용한 한국사 학습 연계 수업'},
+      {s:'essay-writing',t:'논술 글쓰기',d:'논리적이고 설득력 있는 글을 쓰는 논술 기초 수업'},
+      {s:'reading-habit',t:'초등 독서 습관 만들기',d:'매일 책 읽는 습관을 만들고 독해력을 키우는 수업'},
+      {s:'concept-total',t:'국어 필수 개념 정리',d:'국어의 핵심 개념을 처음부터 끝까지 체계적으로 정리'},
+      {s:'vacation',t:'방학 집중 국어',d:'방학을 활용해 국어 실력을 집중적으로 끌어올리는 프로그램'},
+    ],
+    science:[
+      {s:'elem-explore',t:'초등 과학 탐구력 키우기',d:'실험과 관찰을 통해 과학적 사고력을 키우는 초등 과학 수업'},
+      {s:'mid-basics',t:'중학 과학 기초 다지기',d:'중학교 과학의 기본 개념을 탄탄하게 다지는 수업'},
+      {s:'physics1',t:'물리학1 기초부터 심화',d:'역학, 열역학, 파동 등 물리학1의 핵심 개념을 체계적으로 학습'},
+      {s:'chemistry1',t:'화학1 기초부터 심화',d:'원자 구조, 화학 결합, 반응식 등 화학1 핵심 개념 정리'},
+      {s:'biology1',t:'생명과학1 완벽 정리',d:'세포, 유전, 진화 등 생명과학1의 핵심 단원을 완벽 정리'},
+      {s:'earth1',t:'지구과학1 완벽 정리',d:'대기, 해양, 천체 등 지구과학1의 핵심 개념을 체계적으로 학습'},
+      {s:'physics2',t:'물리학2 심화',d:'전자기, 양자역학 기초 등 물리학2 심화 내용 학습'},
+      {s:'chemistry2',t:'화학2 심화',d:'반응 속도, 화학 평형, 전기 화학 등 화학2 심화'},
+      {s:'biology2',t:'생명과학2 심화',d:'세포 호흡, 광합성, 유전공학 등 생명과학2 심화'},
+      {s:'earth2',t:'지구과학2 심화',d:'판 구조론, 대기 순환, 별의 진화 등 지구과학2 심화'},
+      {s:'grade1',t:'과학 내신 1등급 전략',d:'학교 과학 시험에서 1등급을 달성하기 위한 체계적 전략'},
+      {s:'suneung-killer',t:'수능 과학탐구 킬러문항',d:'수능 과학탐구에서 변별력을 결정하는 고난도 문항 공략'},
+      {s:'descriptive',t:'과학 서술형 답안 작성',d:'서술형 과학 시험에서 만점을 받기 위한 답안 작성 요령'},
+      {s:'lab-report',t:'과학 실험 보고서 작성',d:'실험 보고서의 구조와 작성법을 체계적으로 배우는 수업'},
+      {s:'mid-advance',t:'중학 과학 선행 학습',d:'다음 학년 과학을 미리 학습하는 선행 수업'},
+      {s:'high-advance',t:'고등 과학 선행 학습',d:'고등학교 과학을 미리 대비하는 선행 프로그램'},
+      {s:'integrated',t:'통합과학 완벽 정리',d:'고1 통합과학의 핵심 개념을 한 번에 정리하는 수업'},
+      {s:'lab-perform',t:'과학탐구실험 수행평가',d:'과학탐구실험 수행평가를 완벽히 준비하는 수업'},
+      {s:'elem-lab',t:'초등 실험 과학',d:'재미있는 실험으로 과학적 호기심을 키우는 초등 과학 수업'},
+      {s:'olympiad',t:'과학 올림피아드 대비',d:'한국과학올림피아드 등 과학 경시대회를 목표로 하는 수업'},
+      {s:'mid-naesin',t:'중등 내신 과학',d:'중학교 시험에 맞춘 내신 대비 과학 수업'},
+      {s:'high-naesin',t:'고등 내신 과학',d:'고등학교 시험에 맞춘 내신 대비 과학 수업'},
+      {s:'mock-analysis',t:'모의고사 과학 분석',d:'모의고사 과학 문제를 유형별로 분석하는 실전 수업'},
+      {s:'mechanics',t:'물리 역학 집중',d:'뉴턴 역학, 운동량, 에너지 등 역학의 핵심을 집중 학습'},
+      {s:'reaction',t:'화학 반응식 마스터',d:'화학 반응식의 완성과 양적 관계를 완벽히 이해하는 수업'},
+      {s:'genetics',t:'생명과학 유전 정복',d:'멘델 유전, 사람 유전, 유전자 발현 등 유전 단원 집중 공략'},
+      {s:'astronomy',t:'지구과학 천체 정리',d:'별의 물리량, HR도, 은하 등 천체 단원을 완벽 정리'},
+      {s:'concept-total',t:'과학 개념 총정리',d:'학년별 과학 개념을 처음부터 끝까지 정리하는 종합 수업'},
+      {s:'ap-science',t:'AP Science 대비',d:'AP Physics, AP Chemistry, AP Biology 등 AP 과학 과목 준비'},
+      {s:'med-prep',t:'의대·약대 과학 대비',d:'의대·약대 진학에 필요한 과학 심화 학습과 면접 대비'},
+    ],
+    social:[
+      {s:'elem-basics',t:'초등 사회 기초 다지기',d:'초등학교 사회 교과의 기본 개념과 탐구 능력을 키우는 수업'},
+      {s:'mid-basics',t:'중학 사회 기초 정리',d:'중학교 사회의 핵심 개념을 체계적으로 정리하는 수업'},
+      {s:'korean-history',t:'한국사 완벽 정리',d:'선사시대부터 현대까지 한국사의 흐름을 체계적으로 학습'},
+      {s:'world-history',t:'세계사 완벽 정리',d:'고대 문명부터 현대 세계까지 세계사의 핵심을 정리'},
+      {s:'korean-geo',t:'한국지리 마스터',d:'한국의 자연환경, 인문환경, 지역 특성을 체계적으로 학습'},
+      {s:'world-geo',t:'세계지리 마스터',d:'세계 각 지역의 자연환경과 인문환경을 이해하는 수업'},
+      {s:'life-ethics',t:'생활과 윤리 정리',d:'현대 사회의 윤리적 쟁점을 체계적으로 학습하는 수업'},
+      {s:'ethics-thought',t:'윤리와 사상 정리',d:'동서양 윤리 사상의 핵심 개념을 정리하는 수업'},
+      {s:'politics-law',t:'정치와 법 완벽 정리',d:'정치 과정, 헌법, 법률의 핵심 개념을 체계적으로 학습'},
+      {s:'economics',t:'경제 기초부터 심화',d:'경제 원리, 시장, 금융 등 경제의 핵심 개념을 단계별로 학습'},
+      {s:'society-culture',t:'사회문화 완벽 정리',d:'사회 구조, 문화, 불평등 등 사회문화의 핵심을 완벽 정리'},
+      {s:'grade1',t:'사회 내신 1등급 전략',d:'학교 사회 시험에서 1등급을 달성하기 위한 체계적 전략'},
+      {s:'suneung-high',t:'수능 사회탐구 고득점',d:'수능 사회탐구에서 고득점을 달성하기 위한 전략 수업'},
+      {s:'descriptive',t:'사회 서술형 답안 작성',d:'서술형 사회 시험에서 만점을 받기 위한 답안 작성법'},
+      {s:'history-perfect',t:'한국사 수능 만점 전략',d:'수능 한국사 필수 과목에서 만점을 달성하기 위한 집중 수업'},
+      {s:'mid-history',t:'중학 역사 기초',d:'중학교 역사(한국사+세계사)의 기초를 다지는 수업'},
+      {s:'mid-naesin',t:'중등 내신 사회',d:'중학교 시험에 맞춘 내신 대비 사회 수업'},
+      {s:'high-naesin',t:'고등 내신 사회',d:'고등학교 시험에 맞춘 내신 대비 사회 수업'},
+      {s:'integrated',t:'통합사회 완벽 정리',d:'고1 통합사회의 핵심 개념을 한 번에 정리하는 수업'},
+      {s:'performance',t:'사회 수행평가 대비',d:'사회 수행평가를 완벽히 준비하는 맞춤 수업'},
+      {s:'current-events',t:'시사 상식 수업',d:'최신 시사 이슈를 활용한 사회 배경지식 확장 수업'},
+      {s:'mid-advance',t:'중학 사회 선행',d:'다음 학년 사회를 미리 학습하는 선행 수업'},
+      {s:'high-advance',t:'고등 사회 선행',d:'고등학교 사회를 미리 대비하는 선행 프로그램'},
+      {s:'mock-analysis',t:'모의고사 사회 분석',d:'모의고사 사회 문제를 유형별로 분석하는 수업'},
+      {s:'east-asia',t:'동아시아사 정리',d:'동아시아 각국의 역사를 비교하며 정리하는 수업'},
+      {s:'law-deep',t:'법과 정치 심화',d:'법률과 정치 과정의 심화 내용을 학습하는 수업'},
+      {s:'econ-graph',t:'경제 그래프 분석',d:'수요·공급 곡선 등 경제 그래프를 정확히 분석하는 수업'},
+      {s:'concept-total',t:'사회 개념 총정리',d:'학년별 사회 개념을 처음부터 끝까지 정리하는 종합 수업'},
+      {s:'essay-bg',t:'논술 사회 배경지식',d:'논술에 필요한 사회 분야 배경지식을 확장하는 수업'},
+      {s:'vacation',t:'방학 집중 사회',d:'방학을 활용해 사회 실력을 집중적으로 끌어올리는 프로그램'},
+    ],
+    coding:[
+      {s:'start',t:'코딩 처음 시작하기',d:'코딩의 기본 개념과 프로그래밍적 사고를 배우는 입문 수업'},
+      {s:'scratch',t:'스크래치 기초',d:'블록 코딩으로 프로그래밍의 기본 원리를 쉽게 배우는 수업'},
+      {s:'python-basic',t:'파이썬 기초',d:'프로그래밍 입문에 가장 적합한 파이썬 기초 문법 학습'},
+      {s:'python-mid',t:'파이썬 중급·심화',d:'파이썬 심화 문법과 실전 프로젝트를 진행하는 수업'},
+      {s:'java',t:'자바 기초',d:'객체지향 프로그래밍의 기초를 자바로 학습하는 수업'},
+      {s:'c-lang',t:'C언어 기초',d:'프로그래밍의 근본 언어인 C를 기초부터 학습'},
+      {s:'web-html',t:'웹개발 HTML·CSS',d:'웹사이트를 만드는 기초 기술 HTML과 CSS를 학습'},
+      {s:'javascript',t:'자바스크립트 기초',d:'웹의 핵심 언어 자바스크립트를 기초부터 배우는 수업'},
+      {s:'olympiad',t:'정보올림피아드 대비',d:'한국정보올림피아드(KOI) 등 대회를 목표로 하는 알고리즘 훈련'},
+      {s:'cos-cert',t:'코딩 자격증(COS) 대비',d:'COS, PCCE 등 코딩 자격증 취득을 위한 체계적 준비'},
+      {s:'elem-coding',t:'초등 코딩 수업',d:'초등학생 눈높이에 맞춘 재미있는 코딩 수업'},
+      {s:'mid-info',t:'중등 정보 교과 내신',d:'중학교 정보 교과의 내신 시험을 대비하는 수업'},
+      {s:'high-info',t:'고등 정보 교과 내신',d:'고등학교 정보 교과의 내신 시험을 대비하는 수업'},
+      {s:'app-dev',t:'앱 개발 기초',d:'모바일 앱을 만들어보는 앱 개발 입문 수업'},
+      {s:'game-dev',t:'게임 개발 기초',d:'간단한 게임을 직접 만들어보는 게임 개발 입문 수업'},
+      {s:'ai-basic',t:'인공지능(AI) 기초',d:'인공지능의 개념과 활용법을 배우는 AI 입문 수업'},
+      {s:'data-analysis',t:'데이터 분석 기초',d:'파이썬으로 데이터를 분석하고 시각화하는 방법을 학습'},
+      {s:'algorithm',t:'알고리즘 기초',d:'정렬, 탐색, 재귀 등 기본 알고리즘을 학습하는 수업'},
+      {s:'thinking',t:'코딩 사고력 수업',d:'문제 해결 능력과 논리적 사고력을 키우는 컴퓨팅 사고 수업'},
+      {s:'robot',t:'로봇 코딩',d:'로봇을 프로그래밍하며 코딩의 원리를 배우는 수업'},
+      {s:'arduino',t:'아두이노·라즈베리파이',d:'하드웨어와 소프트웨어를 연결하는 IoT 프로젝트 수업'},
+      {s:'sw-special',t:'SW특기자 전형 대비',d:'대학 SW특기자 전형을 위한 포트폴리오와 면접 준비'},
+      {s:'univ-task',t:'대학 프로그래밍 과제',d:'대학교 프로그래밍 수업 과제를 도와주는 보충 수업'},
+      {s:'coding-test',t:'코딩 테스트 대비',d:'기업 코딩 테스트를 준비하는 알고리즘 문제 풀이 훈련'},
+      {s:'react',t:'리액트·프론트엔드',d:'React를 활용한 프론트엔드 웹 개발을 배우는 수업'},
+      {s:'database',t:'데이터베이스 기초',d:'SQL과 데이터베이스의 기본 개념을 학습하는 수업'},
+      {s:'linux',t:'리눅스·서버 기초',d:'리눅스 운영체제와 서버의 기초를 배우는 수업'},
+      {s:'portfolio',t:'코딩 포트폴리오 제작',d:'입시·취업에 활용할 코딩 포트폴리오를 제작하는 수업'},
+      {s:'excel-vba',t:'엑셀·VBA 자동화',d:'엑셀 함수와 VBA로 업무를 자동화하는 실전 수업'},
+      {s:'gifted',t:'코딩 영재원 대비',d:'코딩 영재교육원 선발 시험을 대비하는 수업'},
+    ],
+    essay:[
+      {s:'basics',t:'논술 기초 글쓰기',d:'논술의 기본 구조와 논리적 글쓰기 방법을 배우는 입문 수업'},
+      {s:'univ-types',t:'대학별 논술 유형 분석',d:'주요 대학의 논술 출제 유형과 경향을 분석하는 수업'},
+      {s:'humanities',t:'인문논술 기초',d:'인문계열 대학 논술의 기초를 다지는 수업'},
+      {s:'math-essay',t:'수리논술 기초',d:'수학적 사고를 논리적으로 서술하는 수리논술 기초 수업'},
+      {s:'science-essay',t:'과학논술 기초',d:'과학적 사고를 논리적으로 표현하는 과학논술 기초 수업'},
+      {s:'snu',t:'서울대 논술 대비',d:'서울대 논술 시험의 특성을 분석하고 대비하는 전문 수업'},
+      {s:'yonsei',t:'연세대 논술 대비',d:'연세대 논술 시험의 특성을 분석하고 대비하는 전문 수업'},
+      {s:'korea-u',t:'고려대 논술 대비',d:'고려대 논술 시험의 특성을 분석하고 대비하는 전문 수업'},
+      {s:'med-essay',t:'의대 논술 대비',d:'의과대학 논술 시험과 면접을 종합적으로 대비하는 수업'},
+      {s:'edu-essay',t:'교대 논술 대비',d:'교육대학 논술 시험과 면접을 종합적으로 대비하는 수업'},
+      {s:'current',t:'시사논술',d:'최신 시사 이슈를 주제로 논리적 글쓰기를 훈련하는 수업'},
+      {s:'book-debate',t:'독서토론 논술',d:'책을 읽고 토론하며 논술 능력을 키우는 수업'},
+      {s:'elem-essay',t:'초등 논술 기초',d:'초등학생의 논리적 사고와 글쓰기 기초를 다지는 수업'},
+      {s:'mid-essay',t:'중등 논술 기초',d:'중학생의 논술 능력과 비판적 사고를 키우는 수업'},
+      {s:'self-intro',t:'자기소개서 작성법',d:'대학 입시 자기소개서를 효과적으로 작성하는 방법'},
+      {s:'interview',t:'면접 대비 논술',d:'대학 면접에서 논리적으로 답변하는 능력을 키우는 수업'},
+      {s:'critical',t:'비판적 사고 훈련',d:'다양한 관점에서 사고하고 분석하는 비판적 사고력 수업'},
+      {s:'correction',t:'논술 첨삭 수업',d:'학생이 작성한 논술 답안을 전문 코치가 상세히 첨삭'},
+      {s:'logical',t:'논리적 글쓰기',d:'주장-근거-결론의 논리 구조를 체계적으로 훈련하는 수업'},
+      {s:'human-deep',t:'인문계 논술 심화',d:'인문계열 논술의 고급 분석과 서술 능력을 키우는 심화 수업'},
+      {s:'science-deep',t:'이공계 논술 심화',d:'이공계열 논술의 수리·과학 문제 풀이를 심화 훈련'},
+      {s:'oral-exam',t:'구술 면접 대비',d:'구술 면접에서 논리적으로 답변하는 능력을 키우는 수업'},
+      {s:'nat-interview',t:'자연계 면접 대비',d:'자연계 대학 면접에서 과학적 사고를 보여주는 답변 훈련'},
+      {s:'mock-essay',t:'논술 모의고사',d:'실전과 동일한 환경에서 논술 모의고사를 보고 첨삭받는 수업'},
+      {s:'topic-practice',t:'주제별 논술 연습',d:'다양한 주제에 대해 논술 글쓰기를 반복 연습하는 수업'},
+      {s:'integrated-essay',t:'통합교과 논술',d:'여러 교과의 지식을 통합해 논술하는 능력을 키우는 수업'},
+      {s:'newspaper',t:'신문 활용 논술',d:'신문 기사를 활용해 시사 논술 능력을 키우는 수업'},
+      {s:'desc-training',t:'서술형 답안 훈련',d:'학교 시험 서술형 답안을 논리적으로 작성하는 훈련'},
+      {s:'susi',t:'수시 논술 전략',d:'수시 전형 논술 시험의 특성과 대비 전략'},
+      {s:'jeongsi',t:'정시 논술 전략',d:'정시 전형 논술 시험의 특성과 대비 전략'},
+    ],
+    gsd:[
+      {s:'korean',t:'검정고시 국어 기초',d:'검정고시 국어 과목의 핵심 개념과 기출 유형을 정리하는 수업'},
+      {s:'english',t:'검정고시 영어 기초',d:'검정고시 영어 과목의 핵심 문법과 어휘를 정리하는 수업'},
+      {s:'math',t:'검정고시 수학 기초',d:'검정고시 수학 과목의 핵심 공식과 풀이법을 정리하는 수업'},
+      {s:'social',t:'검정고시 사회 기초',d:'검정고시 사회 과목의 핵심 개념을 효율적으로 암기하는 수업'},
+      {s:'science',t:'검정고시 과학 기초',d:'검정고시 과학 과목의 핵심 원리를 쉽게 이해하는 수업'},
+      {s:'history',t:'검정고시 한국사 필수',d:'검정고시 필수 과목인 한국사의 핵심을 빠르게 정리'},
+      {s:'middle-level',t:'중졸 검정고시 대비',d:'중학교 졸업 학력 인정 검정고시를 종합적으로 대비'},
+      {s:'high-level',t:'고졸 검정고시 대비',d:'고등학교 졸업 학력 인정 검정고시를 종합적으로 대비'},
+      {s:'3month',t:'검정고시 3개월 완성',d:'3개월 집중 학습으로 검정고시 합격을 목표로 하는 프로그램'},
+      {s:'self-study',t:'검정고시 독학 가이드',d:'혼자 공부할 때 필요한 과목별 학습 순서와 교재 추천'},
+      {s:'past-exam',t:'검정고시 기출 분석',d:'최근 검정고시 기출문제를 분석하고 출제 패턴을 파악'},
+      {s:'math-strategy',t:'검정고시 수학 공략법',d:'검정고시 수학에서 고득점을 받기 위한 핵심 공략법'},
+      {s:'eng-strategy',t:'검정고시 영어 공략법',d:'검정고시 영어에서 고득점을 받기 위한 핵심 공략법'},
+      {s:'ethics',t:'검정고시 도덕 정리',d:'검정고시 도덕 과목의 핵심 개념을 빠르게 정리'},
+      {s:'tech-home',t:'검정고시 기술가정',d:'검정고시 기술가정 과목의 핵심을 효율적으로 학습'},
+      {s:'pass-strategy',t:'검정고시 합격 전략',d:'검정고시 합격을 위한 과목별 학습 전략과 시간 관리'},
+      {s:'univ-after',t:'검정고시 후 대학 진학',d:'검정고시 합격 후 대학 진학을 준비하는 방법과 전략'},
+      {s:'suneung-after',t:'검정고시 후 수능 준비',d:'검정고시 합격 후 수능 시험을 준비하는 체계적 계획'},
+      {s:'sci-memo',t:'검정고시 과학 암기법',d:'검정고시 과학의 핵심 내용을 효율적으로 암기하는 방법'},
+      {s:'soc-memo',t:'검정고시 사회 암기법',d:'검정고시 사회의 핵심 내용을 효율적으로 암기하는 방법'},
+      {s:'worker',t:'직장인 검정고시',d:'직장 생활과 병행하며 검정고시를 준비하는 맞춤 수업'},
+      {s:'schedule',t:'검정고시 시험 일정 안내',d:'검정고시 시험 일정과 접수 방법, 준비물을 안내하는 가이드'},
+      {s:'elem-level',t:'초졸 검정고시 대비',d:'초등학교 졸업 학력 인정 검정고시를 대비하는 수업'},
+      {s:'mock',t:'검정고시 모의고사',d:'실전과 동일한 환경에서 모의고사를 보고 오답을 분석'},
+      {s:'summary',t:'검정고시 핵심 요약',d:'검정고시 전 과목의 핵심 내용을 요약 정리하는 수업'},
+      {s:'math-formula',t:'검정고시 수학 공식 정리',d:'검정고시 수학 시험에 나오는 필수 공식을 정리'},
+      {s:'eng-vocab',t:'검정고시 영어 어휘 정리',d:'검정고시 영어 시험에 자주 나오는 필수 어휘 정리'},
+      {s:'kor-reading',t:'검정고시 국어 독해 전략',d:'검정고시 국어 독해 문제를 빠르고 정확하게 푸는 전략'},
+      {s:'one-on-one',t:'검정고시 1:1 맞춤 과외',d:'학생의 수준과 약점에 맞춘 1:1 검정고시 맞춤 수업'},
+      {s:'online-guide',t:'검정고시 온라인 수업 가이드',d:'온라인으로 검정고시를 효과적으로 준비하는 방법'},
+    ],
+  };
+
+  const topics = TOPICS[subjectEn]; if(!topics) return null;
+  const pg = topics.find(x=>x.s===slug); if(!pg) return null;
+  const color = sj.color;
+  const canonical = '/subject/'+subjectEn+'/'+slug;
+  const fullTitle = pg.t + ' | ' + sj.ko + ' 과외';
+  const desc = pg.t + ' - 올케어스터디 1:1 ' + sj.ko + ' 과외. ' + pg.d + '. 무료 상담 010-6834-8080';
+  const bc = [{name:'홈',url:'/'},{name:sj.ko+' 과외',url:'/subject/'+subjectEn},{name:pg.t,url:canonical}];
+
+  // 템플릿 기반 본문 자동 생성
+  const p1 = sj.ko + ' 과외에서 "' + pg.t + '"은 많은 학생과 학부모가 관심을 가지는 핵심 수업입니다. ' + pg.d + '. 올케어스터디에서는 학력·경력·수업시연 3단계 검증을 통과한 전문 코치가 학생의 현재 수준을 정확히 진단하고, 약점을 집중 보강하는 1:1 맞춤 커리큘럼을 설계합니다. 혼자 공부할 때 놓치기 쉬운 개념의 빈틈을 찾아내고, 학생의 학습 속도에 맞춰 진도를 조절하기 때문에 그룹 수업이나 독학보다 훨씬 효율적입니다.';
+  const p2 = '"' + pg.t + '" 수업에서는 핵심 개념 이해→문제 적용→실전 연습의 3단계로 학습합니다. ' + sj.ko + '은 개념을 정확히 이해하는 것이 가장 중요하며, 이해 없이 문제만 풀면 응용 문제에서 막히게 됩니다. 1:1 수업에서는 학생이 개념을 진짜 이해했는지 대화를 통해 확인하고, 이해가 부족한 부분을 다양한 방법으로 설명합니다. 개념이 확실히 잡히면 기본 문제부터 심화 문제까지 단계적으로 풀어봅니다.';
+  const p3 = '수업은 주 2~3회(1회 50분) 1:1 화상으로 진행됩니다. 매 수업 전 지난 시간 복습 퀴즈로 시작하고, 새로운 내용을 학습한 후, 숙제를 통해 복습합니다. 매주 학습 보고서를 제공해 학부모님이 학습 현황을 한눈에 확인할 수 있으며, 시험 기간에는 집중 대비 수업으로 전환합니다. 학생의 학교 교과서와 시험 유형에 맞춘 맞춤 대비가 가능합니다.';
+  const p4 = '올케어스터디의 ' + sj.ko + ' 과외는 단순히 문제 풀이만 하는 수업이 아닙니다. 학생이 스스로 생각하고 문제를 해결하는 능력을 키우는 것이 목표입니다. 첫 수업은 무료이며, 상담을 통해 현재 수준을 진단하고 맞춤 커리큘럼을 설계합니다. ' + sj.ko + '에 자신감이 없는 학생도 3개월이면 눈에 띄는 변화를 경험할 수 있습니다.';
+
+  const otherTopics = topics.filter(x=>x.s!==slug).slice(0,6);
+
+  const body = `<div class="wrap">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/subject/${subjectEn}">${sj.em} ${sj.ko} 과외</a> &rsaquo; <span>${pg.t}</span></div>
+  <div style="background:${sj.bg};border-left:5px solid ${color};border-radius:0 16px 16px 0;padding:24px;margin-bottom:24px">
+    <div style="font-size:28px;margin-bottom:8px">${sj.em}</div>
+    <h1 style="font-size:clamp(20px,5vw,26px);font-weight:900;color:#0F2044;margin:0 0 8px">${pg.t}</h1>
+    <p style="font-size:14px;color:#6B7280;margin:0">${pg.d}</p>
+  </div>
+  <section class="u9"><h2 class="u30" style="border-left:5px solid ${color};padding-left:14px">${pg.t}</h2><p class="u25">${p1}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${color}">핵심 학습 내용</h2><p class="u25">${p2}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${color}">수업 방식 & 커리큘럼</h2><p class="u25">${p3}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${color}">올케어스터디 ${sj.ko} 과외</h2><p class="u25">${p4}</p></section>
+  <section class="u9">
+    <h2 class="u30">🎯 올케어스터디 과외의 차별점</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${[['3단계 검증 코치','학력·경력·수업시연을 모두 통과한 전문 코치만 매칭합니다. 학생의 학년·수준·목표에 맞는 최적의 코치가 1:1로 지도합니다.'],['맞춤 커리큘럼','학생의 학교 교과서, 시험 유형, 현재 수준에 맞춰 개인별 커리큘럼을 설계합니다. 중간에 방향 조정도 자유롭습니다.'],['주간 학습 보고서','매주 학습 진도와 성과를 정리한 보고서를 학부모님께 제공합니다. 코치 피드백과 다음 주 계획이 포함됩니다.'],['무료 체험 수업','첫 수업은 무료입니다. 코치와의 케미를 직접 확인하고 결정하세요.']].map(([t,d])=>'<div style="background:#FAFAFA;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:6px">'+t+'</div><div style="font-size:13px;color:#6B7280;line-height:1.7">'+d+'</div></div>').join('')}
+    </div>
+  </section>
+  <section class="u9">
+    <h2 class="u30">📈 기대할 수 있는 학습 효과</h2>
+    <p class="u25">1:1 과외는 그룹 수업이나 독학보다 학습 효율이 3~5배 높습니다. 학생이 모르는 부분을 즉시 질문하고 해결할 수 있어 개념의 빈틈이 생기지 않으며, 코치가 학생의 풀이 과정을 실시간으로 확인해 잘못된 습관을 즉시 교정합니다. 주 2~3회 꾸준한 수업으로 1개월이면 기초가 잡히고, 3개월이면 내신 성적에서 눈에 띄는 변화를 경험합니다.</p>
+  </section>
+  <section class="u9">
+    <h2 class="u30">❓ 자주 묻는 질문</h2>
+    <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. ${sj.ko} 기초가 약한데 수강 가능한가요?</div><div style="font-size:14px;color:#374151;line-height:1.85">A. 네. 기초부터 시작하는 맞춤 과정이 있습니다. 현재 수준을 정확히 진단하고 부족한 부분부터 체계적으로 보강합니다.</div></div>
+    <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. 수업은 어떻게 진행되나요?</div><div style="font-size:14px;color:#374151;line-height:1.85">A. 1:1 화상 수업(50분)으로 진행됩니다. 주 2~3회가 효과적이며, 시험 기간에는 집중 대비 수업으로 전환합니다.</div></div>
+    <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. 선생님은 어떤 분인가요?</div><div style="font-size:14px;color:#374151;line-height:1.85">A. 3단계 검증(학력·경력·수업시연)을 통과한 전문 코치만 매칭됩니다. 학생의 학년과 수준에 맞는 최적의 코치를 연결합니다.</div></div>
+    <div><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. 첫 수업은 무료인가요?</div><div style="font-size:14px;color:#374151;line-height:1.85">A. 네. 첫 체험 수업은 무료이며, 수준 진단과 맞춤 커리큘럼을 설계해드립니다.</div></div>
+  </section>
+  <section class="u9">
+    <h2 class="u30">📋 수업 진행 과정</h2>
+    ${['무료 상담 & 수준 진단|현재 '+sj.ko+' 실력과 목표를 파악하고 맞춤 코치를 연결합니다','무료 체험 수업|첫 수업은 무료입니다. 코치와의 케미를 직접 확인하세요','맞춤 커리큘럼 설계|학생의 학교·수준·시험 유형에 최적화된 학습 계획을 설계합니다','정규 수업 & 주간 보고서|주 2~3회 수업 후 매주 학부모님께 학습 보고서를 제공합니다'].map((s,i)=>{const[t,d]=s.split('|');return'<div style="display:flex;gap:12px;align-items:flex-start;'+(i<3?'padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid #F1F5F9':'')+'"><div style="min-width:28px;height:28px;background:'+color+';border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:12px;flex-shrink:0">'+(i+1)+'</div><div><div style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</div><div style="font-size:13px;color:#6B7280;line-height:1.6;margin-top:2px">'+d+'</div></div></div>';}).join('')}
+  </section>
+  <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 ${sj.ko} 수업</h2>
+    ${otherTopics.map(v=>'<a href="/subject/'+subjectEn+'/'+v.s+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\''+color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.t+'</div></a>').join('')}
+  </section>
+  <div class="cta-box"><h3>${sj.ko} 과외 무료 상담</h3><p>1:1 맞춤 ${sj.ko} 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${pg.t}</span><span class="keyword-tag">${sj.ko} 과외</span><span class="keyword-tag">${sj.ko} 1:1</span><span class="keyword-tag">${sj.ko} 온라인 과외</span></div></div>
+</div>`;
+  return wrap(fullTitle + ' - 올케어스터디', desc, canonical, body, bc);
+}
+
 function makeJpSubPage(slug) {
   const P = {
     'anime':{t:'일본 애니메이션을 자막없이 보자',em:'🎬',img:'photo-1578632767115-351597cf2477',kw:['애니메이션 일본어','자막없이 애니보기','애니 쉐도잉'],
@@ -6118,7 +6448,7 @@ export default {
     }
 
     // 학년별 과외 정보 페이지
-    if(path.startsWith('/subject/')){const subEn=path.slice(9).split('/')[0];if(subEn){const p=makeSubjectPage(subEn);if(p)return new Response(p,{headers:h});}}
+    if(path.startsWith('/subject/')){const subParts=path.slice(9).split('/');const subEn=subParts[0];const subSlug=subParts[1];if(subEn&&subSlug){const sp=makeSubjectSubPage(subEn,subSlug);if(sp)return new Response(sp,{headers:h});}if(subEn){const p=makeSubjectPage(subEn);if(p)return new Response(p,{headers:h});}}
     if (path.startsWith('/grade/')) {
       const parts = path.slice(7).split('/').filter(Boolean);
       // /grade/{type}/{num} → 예: /grade/elementary/1
