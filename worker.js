@@ -1550,133 +1550,6 @@ function today(){
   return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
 }
 
-
-const JP_TOPICS = {
-  'anime': {
-    slug: 'anime',
-    title: '일본 애니메이션을 자막없이 보자',
-    desc: '애니메이션으로 배우는 일본어 회화 수업. 자연스러운 구어체 표현 완성. 1:1 맞춤 코칭. 무료 상담 010-6834-8080',
-    keywords: ['애니메이션 일본어', '일본어 회화 수업', '자막없이 보기', '일본어 청해', '일본어 독학'],
-    content: `
-<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">애니메이션으로 일본어를 배운다는 게 정말 될까요?</h2>
-<p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">처음엔 저도 반신반의했어요. 애니메이션 보는 게 공부가 될까? 싶었는데, 6개월 지나고 나서 자막 없이 나루토를 보고 있는 저를 발견했습니다. 지금부터 제가 어떻게 했는지 솔직하게 말씀드릴게요.</p>
-<div style="background:#FFF1F2;border-radius:16px;padding:24px;margin-bottom:24px">
-<h3 style="font-size:17px;font-weight:900;color:#9F1239;margin:0 0 14px">왜 애니메이션이 일본어 학습에 효과적인가요?</h3>
-<p style="font-size:14px;color:#374151;line-height:1.9;margin-bottom:12px">애니메이션은 반복 시청이 가능하고, 감정 표현이 풍부하며, 실제 일본인이 일상에서 쓰는 표현이 그대로 담겨 있습니다. 교재 속 딱딱한 예문과 달리 살아있는 구어체 표현을 자연스럽게 흡수할 수 있습니다.</p>
-<p style="font-size:14px;color:#374151;line-height:1.9;margin-bottom:12px">특히 같은 장면을 반복해서 볼 수 있다는 점이 큽니다. 모르는 표현이 나왔을 때 10초 전으로 돌려서 다시 들을 수 있고, 좋아하는 장면이라 지루하지 않게 수십 번 반복할 수 있습니다.</p>
-<p style="font-size:14px;color:#374151;line-height:1.9">처음부터 자막 없이 보려고 하면 힘들지만, 단계를 나누면 의외로 빠르게 됩니다. 한국어 자막 → 일본어 자막 → 자막 없이, 이 3단계를 거치면 6개월~1년 안에 좋아하는 애니메이션을 원어로 즐길 수 있게 됩니다.</p>
-</div>
-<h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기: 원피스 덕후에서 JLPT N3 합격까지</h2>
-<div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239">
-<p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"원피스를 10년 넘게 봤는데 대사를 전혀 못 알아들었어요. 올케어스터디에서 선생님이랑 수업하면서 루피 대사를 일본어로 외웠을 때 진짜 소름이 돋았어요. 지금은 원피스 새 화가 나오면 일본어로 먼저 봐요. 수업 시작한 지 8개월 만에 JLPT N3도 합격했어요. — 대학생 이○○(24세)"</p>
-</div>
-<div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:24px;border-left:4px solid #9F1239">
-<p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"진격의 거인 마지막 시즌을 자막 없이 보는 게 목표였는데, 1년 수업하고 나서 진짜로 됐어요. 선생님이 제가 좋아하는 애니 대사를 수업 교재처럼 써줬는데, 덕분에 한 번도 수업이 지루하다고 느낀 적 없어요. — 직장인 박○○(31세)"</p>
-</div>
-<h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">애니메이션 일본어 수업, 이렇게 진행됩니다</h2>
-<div style="display:grid;gap:14px;margin-bottom:24px">
-<div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">1단계: 수준 진단 + 애니 선정 (1~2주)</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">현재 일본어 수준을 파악하고 수강생이 좋아하는 애니메이션을 선정합니다. 완전 초보라면 히라가나·가타카나부터, 기초가 있다면 바로 좋아하는 작품으로 시작합니다.</p></div>
-<div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">2단계: 문자 + 기초 표현 완성 (1~2개월)</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">히라가나·가타카나를 완성하고 애니메이션에서 자주 나오는 기초 표현을 익힙니다. 인사말, 감탄사, 감정 표현 등 애니에서 많이 등장하는 패턴을 집중 학습합니다.</p></div>
-<div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">3단계: 장면별 대사 분석 (2~4개월)</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">좋아하는 장면을 골라 대사를 분석합니다. 단어 → 문법 → 발음 → 뉘앙스 순서로 해부하고, 비슷한 상황에서 쓸 수 있는 응용 표현으로 확장합니다.</p></div>
-<div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">4단계: 자막 없이 도전 (4개월~)</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">일본어 자막으로 보다가 점차 자막을 끄고 도전합니다. 못 알아들은 부분은 수업 시간에 확인하고, 표현을 정리해 내 것으로 만듭니다.</p></div>
-</div>
-<h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">장르별 추천 학습 애니메이션</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
-<div style="background:#FFF1F2;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#9F1239;margin-bottom:8px">초급 추천</div><p style="font-size:12px;color:#374151;line-height:1.75;margin:0">도라에몽, 치비마루코, 포켓몬, 짱구는 못말려 — 일상어 위주, 느린 발화 속도</p></div>
-<div style="background:#FFF1F2;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#9F1239;margin-bottom:8px">중급 추천</div><p style="font-size:12px;color:#374151;line-height:1.75;margin:0">나루토, 원피스, 블리치 — 다양한 감정 표현, 풍부한 어휘</p></div>
-<div style="background:#FFF1F2;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#9F1239;margin-bottom:8px">상급 추천</div><p style="font-size:12px;color:#374151;line-height:1.75;margin:0">진격의 거인, 스파이패밀리, 귀멸의 칼날 — 복잡한 대화, 사투리 포함</p></div>
-<div style="background:#FFF1F2;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#9F1239;margin-bottom:8px">비즈니스 병행</div><p style="font-size:12px;color:#374151;line-height:1.75;margin:0">직장의 신, 한자와 나오키 — 경어·업무 표현, 직장인 학습에 최적</p></div>
-</div>
-<div style="background:#0F2044;border-radius:16px;padding:24px;margin-bottom:24px;color:white">
-<h3 style="font-size:17px;font-weight:900;margin:0 0 12px">자막없이 보기까지 걸리는 시간</h3>
-<div style="display:grid;gap:8px">
-<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px"><span style="font-size:13px;font-weight:700">초급 (히라가나부터)</span><span style="font-size:12px;color:rgba(255,255,255,0.7)">6~12개월</span></div>
-<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px"><span style="font-size:13px;font-weight:700">기초 있음 (N4 수준)</span><span style="font-size:12px;color:rgba(255,255,255,0.7)">4~6개월</span></div>
-<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px"><span style="font-size:13px;font-weight:700">중급 (N3 수준)</span><span style="font-size:12px;color:rgba(255,255,255,0.7)">2~4개월</span></div>
-</div>
-</div>`,
-  },
-  'trade': { slug:'trade', title:'일본 무역 실무 수업', desc:'일본 무역 실무 일본어 수업. 무역서류, 비즈니스 이메일, 협상 표현 완성. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['일본 무역 일본어','비즈니스 일본어','무역 실무 일본어','일본어 회화 수업','JLPT N2'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">무역 실무에서 일본어가 왜 다른가요?</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">일반 회화 일본어와 무역 실무 일본어는 완전히 다른 영역입니다. JLPT N2를 취득했어도 무역 현장에서 막히는 이유가 여기 있습니다. 실제 무역 업무에서 쓰는 표현, 서류 용어, 협상 화법을 별도로 익혀야 합니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기: 일본 거래처 담당자로 발탁된 이야기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"무역회사에 입사했는데 일본 담당 업무가 생겼어요. 올케어스터디에서 실제 업무 이메일 샘플로 수업하면서 패턴을 익혔는데, 3개월 후 팀장님이 저한테 일본 바이어 담당을 맡겼어요. 경어 실수가 줄고 이메일 회신이 빨라지니까 신뢰가 쌓인 것 같아요. — 무역회사 직원 김○○(29세)"</p></div><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:24px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"10년 넘게 무역 업무 했는데 일본어는 항상 번역기 돌려서 썼어요. 직접 소통하고 싶어서 6개월 수업했는데, 지금은 일본 거래처에서 전화 왔을 때 통역 없이 기본 대화가 가능해졌어요. — 사업주 최○○(45세)"</p></div><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">무역 실무 일본어 수업 커리큘럼</h2><div style="display:grid;gap:14px;margin-bottom:24px"><div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">비즈니스 경어 완성</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">丁寧語·尊敬語·謙譲語 3가지 경어 유형을 상황별로 익힙니다. 처음 만나는 바이어에게 첫인상이 좋은 경어 패턴부터 시작합니다.</p></div><div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">무역 이메일 패턴 30선</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">발주·견적·납기·클레임·감사·사과 상황별 이메일 패턴을 익힙니다. 실제 무역 이메일 샘플을 분석하고 직접 써보는 훈련으로 실전 응용력을 높입니다.</p></div><div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">미팅·상담 회화</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">명함 교환 예절, 회사 소개, 제품 설명, 가격 협상, 납기 조율까지 미팅 전 과정을 롤플레이로 연습합니다.</p></div><div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">클레임·트러블 대응</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">불량품, 납기 지연, 오배송 등 실제 무역 현장에서 발생하는 트러블 상황의 대응 표현을 익힙니다.</p></div></div>` },
-  'study-abroad': { slug:'study-abroad', title:'일본 유학을 위한 준비 수업', desc:'일본 유학 준비 일본어 수업. 대학원 입시, 연구실 생활, 유학 생활까지. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['일본 유학 일본어','일본 대학 입시','일본어 회화 수업','EJU 준비','JLPT N2'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">일본 유학, 언어 준비가 합격률을 좌우합니다</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">일본 대학·대학원 유학을 결정하셨다면 가장 먼저 준비해야 할 것이 일본어입니다. 막연히 "유학 가면 늘겠지"보다 출발 전 탄탄히 준비한 분과 그렇지 않은 분의 차이는 현장에서 극명하게 갈립니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기: 오사카대 합격까지의 여정</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"오사카대 대학원을 목표로 1년간 수업했어요. 처음에는 기초부터 시작해서 연구 계획서 작성, 교수님과의 이메일 교신, 면접 준비까지 함께 했어요. 합격 통보 받았을 때 선생님께 제일 먼저 연락했어요. — 대학원 진학 준비생 정○○(26세)"</p></div><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:24px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"어학연수로 6개월 일본에 있었는데, 오기 전에 3개월 집중 수업한 게 너무 도움이 됐어요. 현지 도착하자마자 집 계약, 은행 개설, 학교 등록을 혼자 했거든요. — 어학연수생 이○○(22세)"</p></div><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">유학 준비 수업 핵심 내용</h2><div style="display:grid;gap:14px;margin-bottom:24px"><div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">입시 대비 일본어</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">EJU 일본어 시험 유형 분석, 독해·청해·기술(작문) 대비. 면접에서 자주 나오는 지원 동기·연구 계획 설명 표현을 집중 훈련합니다.</p></div><div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">생활 일본어 실전</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">집 계약, 은행·행정 처리, 의료기관 이용, 대중교통, 슈퍼·편의점 등 유학 생활에 필수적인 상황별 일본어를 익힙니다.</p></div></div>` },
-  'student-abroad': { slug:'student-abroad', title:'일본 유학생들을 위한 수업', desc:'일본 유학 중인 학생을 위한 일본어 수업. 강의 이해, 발표, 레포트 작성까지. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['일본 유학생 일본어','일본어 과외','일본어 회화 수업','유학생 일본어 향상','JLPT N1'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">현지에 있는데 왜 수업이 필요하냐고요?</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">일본에 살면 저절로 늘 것 같지만, 생각보다 많은 유학생들이 한국인끼리만 어울리다 귀국하는 경우가 있습니다. 강의 이해, 발표, 레포트 작성처럼 업무 레벨의 일본어는 현지에 있어도 별도 훈련 없이는 늘지 않습니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"교토대에 와 있는데 세미나 발표가 너무 힘들었어요. 내용은 아는데 일본어로 발표하면 머릿속이 하얘지는 거예요. 올케어스터디 선생님이랑 매주 발표 연습을 했는데, 3개월 후 교수님이 발표가 많이 늘었다고 칭찬해 주셨어요. — 교토대 대학원 유학생 강○○(27세)"</p></div>` },
-  'jlpt-jpt': { slug:'jlpt-jpt', title:'JLPT, JPT 자격증 취득 수업', desc:'JLPT N1~N5, JPT 자격증 취득 전문 수업. 시험 유형 분석, 취약점 집중 보완. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['JLPT 준비','JPT 준비','JLPT N2','JLPT N1','일본어 자격증'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">JLPT vs JPT, 무엇을 선택해야 할까요?</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">두 시험 모두 공인 일본어 자격증이지만 목적에 따라 선택이 달라집니다. JLPT는 일본 정부가 공인하며 유학·해외 취업에 강하고, JPT는 국내 대기업·금융권 취업에 활용도가 높습니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"JLPT N2를 두 번 떨어졌어요. 1:1 수업에서 제 약점이 청해라는 걸 딱 집어내더라고요. 청해 집중 훈련 3개월 만에 합격했어요. — 취업 준비생 윤○○(25세)"</p></div><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:24px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"JPT 700점 목표로 4개월 수업했는데 745점 나왔어요. 대기업 공채 지원 자격 됐고 면접에서도 일본어 실력으로 좋은 평가 받았어요. — 취업 준비생 한○○(27세)"</p></div><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">레벨별 목표 기간</h2><div style="display:grid;gap:10px;margin-bottom:24px"><div style="display:grid;grid-template-columns:120px 1fr 80px;gap:12px;align-items:center;background:#F9FAFB;border-radius:10px;padding:12px 16px"><span style="font-size:14px;font-weight:800;color:#9F1239">JLPT N5</span><span style="font-size:13px;color:#6B7280">기초부터 시작</span><span style="font-size:13px;font-weight:700;color:#0F2044;text-align:right">2~3개월</span></div><div style="display:grid;grid-template-columns:120px 1fr 80px;gap:12px;align-items:center;background:#F9FAFB;border-radius:10px;padding:12px 16px"><span style="font-size:14px;font-weight:800;color:#9F1239">JLPT N3</span><span style="font-size:13px;color:#6B7280">일상 회화 가능 수준</span><span style="font-size:13px;font-weight:700;color:#0F2044;text-align:right">5~8개월</span></div><div style="display:grid;grid-template-columns:120px 1fr 80px;gap:12px;align-items:center;background:#F9FAFB;border-radius:10px;padding:12px 16px"><span style="font-size:14px;font-weight:800;color:#9F1239">JLPT N2</span><span style="font-size:13px;color:#6B7280">취업 핵심 레벨</span><span style="font-size:13px;font-weight:700;color:#0F2044;text-align:right">8~14개월</span></div><div style="display:grid;grid-template-columns:120px 1fr 80px;gap:12px;align-items:center;background:#F9FAFB;border-radius:10px;padding:12px 16px"><span style="font-size:14px;font-weight:800;color:#9F1239">JPT 800점</span><span style="font-size:13px;color:#6B7280">N2 수준에서</span><span style="font-size:13px;font-weight:700;color:#0F2044;text-align:right">3~5개월</span></div></div>` },
-  'beginner': { slug:'beginner', title:'기초 일본어, 히라가나, 가타카나 정복', desc:'일본어 완전 기초 수업. 히라가나·가타카나 완성부터 기초 회화까지. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['히라가나 배우기','가타카나 배우기','일본어 기초','일본어 입문','일본어 회화 수업'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">일본어, 진짜 빠른 언어입니다</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">일본어는 한국인이 세계에서 가장 빠르게 배울 수 있는 언어입니다. 문장 구조가 한국어와 동일하고, 어순도 같습니다. 영어 3년 해도 안 늘던 분이 일본어는 3개월 만에 기본 회화를 한다는 말이 과장이 아닙니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"50대에 일본어 시작했어요. 선생님이 천천히 맞춰서 가르쳐 주셔서 생각보다 훨씬 잘 됐어요. 4개월 지나니까 일본 여행에서 기본 소통이 됐어요. 손자들한테 할머니가 일본어 한다고 자랑했더니 좋아하더라고요. — 주부 송○○(54세)"</p></div><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:24px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"영어는 10년 해도 안 늘었는데 일본어는 3개월 만에 기본 대화가 됐어요. 한국어와 비교하면서 가르쳐줘서 이해가 빨랐어요. 히라가나도 2주 안에 다 외웠고요. — 직장인 오○○(35세)"</p></div><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">기초 수업 3개월 로드맵</h2><div style="display:grid;gap:14px;margin-bottom:24px"><div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">1개월: 문자 완성</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">히라가나 46자 + 가타카나 46자 완성. 발음 교정(장음·촉음·탁음). 기초 인사말 10개 완성.</p></div><div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">2개월: 기초 표현</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">숫자·날짜·시간·요일 표현. 자기소개, 가족 소개. 쇼핑·식당에서 쓰는 기본 표현.</p></div><div style="background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#9F1239;margin-bottom:8px">3개월: 짧은 대화</div><p style="font-size:14px;color:#374151;line-height:1.85;margin:0">질문하고 대답하기. 길 물어보기, 전철 타기, 물건 사기. 기초 감정 표현과 의견 말하기.</p></div></div>` },
-  '3month': { slug:'3month', title:'3개월 일본어 회화 정복 수업', desc:'3개월 집중 일본어 회화 수업. 기초부터 실전 회화까지 빠르게 완성. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['일본어 3개월','일본어 빠르게 배우기','일본어 회화 수업','일본어 단기 완성','일본어 집중 수업'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">3개월 만에 가능한 일본어 수준은?</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">솔직하게 말씀드릴게요. 3개월은 짧은 시간이지만, 일본어는 한국인에게 유리한 언어입니다. 주 3회 수업과 매일 30분 복습을 병행하면 3개월 후 일본 여행에서 현지인과 기본 소통이 가능한 수준까지 도달할 수 있습니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"일본 여행을 3개월 후로 계획해 놓고 수업을 시작했어요. 처음엔 가타카나도 모르는 상태였는데, 여행 가서 오사카 도톤보리 식당에서 일본어로 주문하고, 길도 물어보고, 현지 할머니랑 짧게 얘기도 나눴어요. — 주부 장○○(38세)"</p></div><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:24px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"취업 면접에 일본어 회화 전형이 있었는데 3개월밖에 준비 시간이 없었어요. 주 4회 집중 수업하고 매일 30분씩 복습했더니 면접에서 자기소개와 지원 동기를 일본어로 무난하게 말할 수 있었어요. — 취준생 노○○(24세)"</p></div>` },
-  'osaka': { slug:'osaka', title:'오사카 유학 준비 전문 수업', desc:'오사카 유학 준비 일본어 수업. 오사카 관서 방언, 생활 일본어, 입시 대비까지. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['오사카 유학','일본어 회화 수업','관서 방언','오사카 생활','JLPT N2'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">오사카 유학, 표준어만 알면 될까요?</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">오사카·교토·고베를 중심으로 한 관서(関西) 지역은 도쿄와 다른 방언을 씁니다. 관서 방언(関西弁)은 억양, 어미, 어휘가 표준어와 상당히 다릅니다. 오사카에서 유학하거나 생활하려면 관서 방언을 이해할 수 있어야 현지 생활에 잘 녹아들 수 있습니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"오사카 대학교 교환학생으로 갔는데 처음에 현지 친구들 말을 전혀 못 알아들었어요. 교재에서 배운 일본어랑 달랐거든요. 관서 방언 특강을 받고 나서 확실히 달라졌어요. 친구들이 저 일본어 잘한다고 놀라워했어요. — 교환학생 류○○(21세)"</p></div>` },
-  'natural': { slug:'natural', title:'생생한 일본어 공부하기', desc:'실제 일본인이 쓰는 자연스러운 일본어 회화 수업. 교재 속 딱딱한 표현이 아닌 살아있는 일본어. 무료 상담 010-6834-8080', keywords:['자연스러운 일본어','실용 일본어','일본어 회화 수업','일본어 구어체','살아있는 일본어'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">교재 일본어와 실제 일본어의 차이</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">일본어 교재에서 배운 표현을 실제로 쓰면 일본인이 어색하게 느끼는 경우가 많습니다. 마치 한국어로 "나는 지금 식사를 하는 중입니다"라고 말하는 느낌이랄까요. 실제로는 "밥 먹는 중"이라고 하잖아요. 일본어도 마찬가지입니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"JLPT N2인데 일본인 친구랑 카톡하면 뭔가 어색하다는 말을 들었어요. 선생님이랑 수업하면서 실제로 이렇게 쓴다는 표현들을 배웠는데, 그걸 쓰고 나서 친구가 자연스럽다고 했어요. 시험 일본어와 생활 일본어는 진짜 다르더라고요. — 대학생 임○○(22세)"</p></div>` },
-  'native': { slug:'native', title:'일본인 선생님한테 배우는 일본 생활', desc:'일본인 원어민 선생님과 함께하는 일본어 회화 수업. 실제 일본 생활 문화와 자연스러운 표현을 배웁니다. 무료 상담 010-6834-8080', keywords:['원어민 일본어 수업','일본인 선생님','일본어 회화 수업','일본 문화','네이티브 일본어'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">원어민 선생님이 필요한 이유</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">언어는 문법과 단어만이 전부가 아닙니다. 억양, 뉘앙스, 문화적 맥락이 합쳐져야 진짜 소통이 됩니다. 일본인 선생님과의 수업은 이 모든 것을 동시에 배울 수 있는 환경을 제공합니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"일본인 선생님이랑 수업하면서 진짜 일본 사람들이 어떻게 사는지도 배웠어요. 일본 편의점 문화, 연말 오세이보 선물 관습 같은 것들이요. 나중에 일본 여행 갔을 때 현지인처럼 행동할 수 있었어요. — 직장인 서○○(33세)"</p></div>` },
-  'school-credit': { slug:'school-credit', title:'제2외국어 일본어 내신관리', desc:'고등학교 제2외국어 일본어 내신 관리 수업. 교과서 지문 분석, 서술형 대비, 내신 고득점 목표. 무료 상담 010-6834-8080', keywords:['일본어 내신','제2외국어 일본어','일본어 과외','고등 일본어','일본어 내신 관리'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">제2외국어 일본어, 어렵지 않습니다</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">고등학교 제2외국어 일본어는 내신 성적에서 의외의 강점이 될 수 있습니다. 다른 과목에 비해 체계적으로 준비한 학생이 적기 때문에, 제대로 준비하면 1등급을 노릴 수 있습니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"제2외국어 일본어가 항상 3등급이었는데, 1:1 수업 시작하고 처음으로 1등급 받았어요. 선생님이 우리 학교 교과서 내용 그대로 분석해줘서 시험 범위를 완벽하게 대비할 수 있었어요. — 고2 학생 백○○"</p></div>` },
-  'debate': { slug:'debate', title:'일본어로 토론 공부하기', desc:'일본어 토론·토의 수업. 논리적 주장, 반박 표현, 고급 어휘 완성. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['일본어 토론','고급 일본어','일본어 회화 수업','JLPT N1','일본어 스피킹'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">일본어로 토론? N1도 어렵습니다</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">JLPT N1을 취득해도 일본어로 자신의 의견을 논리적으로 펼치는 것은 별도 훈련이 필요합니다. 토론은 빠른 사고 + 적확한 표현 + 반박 능력이 동시에 요구됩니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"일본 대학원 세미나에서 교수님, 일본인 학생들과 토론해야 했는데 항상 버벅거렸어요. 수업에서 토론 패턴을 익히고 롤플레이 연습을 하니까, 세미나에서 처음으로 교수님 의견에 반박을 했어요. — 일본 대학원생 조○○(28세)"</p></div>` },
-  'advanced': { slug:'advanced', title:'일본어 중급 이상이라면? 원어민 선생님과 심화 수업', desc:'일본어 중급~고급 심화 수업. 원어민 선생님과 고급 어휘, 경어, 뉘앙스 완성. 무료 상담 010-6834-8080', keywords:['일본어 심화','일본어 고급','일본어 회화 수업','JLPT N1','원어민 일본어'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">중급의 벽, 어떻게 넘을까요?</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">일본어 학습자들이 공통적으로 경험하는 "중급의 벽"이 있습니다. N3~N2 수준에서 더 이상 늘지 않는 느낌. 말은 통하는데 뭔가 어색하다는 피드백. 이 구간을 돌파하려면 구체적인 전략이 필요합니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"N2 취득하고 2년 정도 그 수준에 머물렀어요. 심화 수업에서 비즈니스 경어와 고급 어휘를 집중적으로 다루니까 확실히 달라졌어요. 6개월 후 N1도 합격했고, 일본 고객사에서 일본어 자연스럽다는 말을 처음 들었어요. — 직장인 황○○(32세)"</p></div>` },
-  'employment': { slug:'employment', title:'일본 해외 취업을 위한 면접 대비 수업', desc:'일본 취업 면접 대비 일본어 수업. 자기소개, 지원 동기, 경어 완성. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['일본 취업 준비','일본어 면접','일본어 회화 수업','일본 취업','JLPT N2'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">일본 취업 면접, 이것이 다릅니다</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">일본 취업 면접은 한국과 다릅니다. 경어 사용이 필수이며, 일본 특유의 겸손한 표현과 회사에 대한 열정을 적절히 보여주는 것이 중요합니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"도쿄 IT 스타트업에 지원했는데 올케어스터디에서 예상 질문 30개로 롤플레이 연습을 반복했어요. 실제 면접에서 거의 비슷한 질문들이 나왔어요. 최종 합격했습니다! — IT 취업 성공 이○○(26세)"</p></div><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:24px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"일본계 회사 국내 지점 취업을 위해 수업했어요. 3개월 집중 수업 후 면접에서 상황에 맞는 경어를 자연스럽게 쓰니까 인사 담당자가 매우 좋은 인상을 받았다고 했어요. — 취업 성공 김○○(28세)"</p></div>` },
-  'business': { slug:'business', title:'비즈니스 회화, 기본 메일링부터 PT까지', desc:'일본어 비즈니스 회화 수업. 이메일 작성, 프레젠테이션, 미팅, 협상 표현 완성. 무료 상담 010-6834-8080', keywords:['일본어 비즈니스','일본어 이메일','일본어 프레젠테이션','일본어 회화 수업','비즈니스 일본어'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">비즈니스 일본어, 경어가 전부가 아닙니다</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">많은 분들이 비즈니스 일본어 = 경어라고 생각하지만, 그것은 시작일 뿐입니다. 이메일의 형식, 프레젠테이션의 구조, 미팅에서의 의사 결정 방식, 일본 특유의 비즈니스 문화까지 알아야 진짜 비즈니스 일본어가 완성됩니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"일본 본사에 프레젠테이션을 해야 했는데 선생님이 PT 원고를 같이 만들고 발표 연습을 수십 번 했어요. 실제 발표에서 일본 임원들이 프레젠테이션 수준이 높다고 했고, 프로젝트 수주에 성공했어요. — 대기업 직원 문○○(37세)"</p></div>` },
-  'literature': { slug:'literature', title:'일어일문학과, 일본어학과 전공 학생을 위한 수업', desc:'일어일문학과·일본어학과 전공자를 위한 심화 일본어 수업. 고전문학, 언어학, 논문 작성까지. 무료 상담 010-6834-8080', keywords:['일어일문학과','일본어학과','일본어 전공','일본어 심화','일본어 과외'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">전공 수업에서 막히는 이유</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">일어일문학과·일본어학과에 진학했지만 고전문학, 근현대 문학, 언어학 수업에서 어려움을 느끼는 학생들이 많습니다. 일반 회화 수준으로는 원문 분석, 문법 심화 이론, 학술 논문 작성이 벅찰 수 있습니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"일어일문학과 3학년인데 고전 일본어 수업이 너무 힘들었어요. 원문을 혼자 읽으면 무슨 말인지 도무지 모르겠더라고요. 선생님이랑 원문을 한 줄씩 분석하면서 고어 문법을 익혔는데, 학점도 C에서 A-로 올랐어요. — 대학생 전○○(21세)"</p></div>` },
-  'special-admission': { slug:'special-admission', title:'일본어 어학특기자 전형 준비하기', desc:'일본어 어학특기자 전형 준비 수업. JLPT N1, 면접, 에세이, 포트폴리오까지. 1:1 맞춤 코칭. 무료 상담 010-6834-8080', keywords:['일본어 어학특기자','대입 어학특기자','JLPT N1','일본어 전형','일본어 회화 수업'], content:`<h2 style="font-size:22px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid #9F1239">어학특기자 전형, 일본어로 대학 가기</h2><p style="font-size:15px;color:#374151;line-height:2;margin-bottom:20px">어학특기자 전형은 내신이나 수능이 아닌 어학 능력으로 대학에 진학할 수 있는 특별 전형입니다. 일본어 어학특기자 전형은 주로 JLPT N1 이상의 어학 성적과 함께 면접·에세이·포트폴리오를 요구합니다.</p><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:32px 0 16px;padding-left:14px;border-left:5px solid #9F1239">수강생 후기</h2><div style="background:#F9FAFB;border-radius:14px;padding:22px;margin-bottom:20px;border-left:4px solid #9F1239"><p style="font-size:14px;color:#374151;line-height:1.95;margin:0">"고1 때부터 어학특기자 전형을 목표로 수업 시작했어요. N1 취득이 1차 목표였는데 고3 3월에 N1 합격했고, 면접에서 선생님과 반복 연습한 덕분에 당황하지 않았어요. 목표 대학에 합격했습니다! — 어학특기자 합격 박○○(19세)"</p></div>` },
-};
-
-function makeJapaneseTopicPage(topicSlug) {
-  const color = '#9F1239';
-  const topic = JP_TOPICS[topicSlug];
-  if (!topic) return null;
-
-  const relatedLinks = Object.values(JP_TOPICS)
-    .filter(t => t.slug !== topicSlug).slice(0, 6)
-    .map(t => `<a href="/conversation/japanese/${t.slug}" style="display:block;padding:10px 14px;background:#F9FAFB;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;color:#0F2044;border:1px solid #E5E7EB;transition:all .2s" onmouseover="this.style.borderColor='#9F1239'" onmouseout="this.style.borderColor='#E5E7EB'">🇯🇵 ${t.title}</a>`)
-    .join('');
-
-  const faqList = [
-    {q:`${topic.title} 수업 비용은 얼마인가요?`, a:`수업 횟수와 코치 경력에 따라 다릅니다. 무료 상담 후 최적 코치를 연결해드립니다. 010-6834-8080으로 문의해주세요.`},
-    {q:`${topic.title} 수업, 어느 수준부터 시작할 수 있나요?`, a:`완전 초보부터 고급까지 모든 수준에서 시작 가능합니다. 첫 수업은 무료 수준 진단으로 진행됩니다.`},
-    {q:`첫 수업은 어떻게 진행되나요?`, a:`첫 수업은 무료 수준 진단으로 진행됩니다. 현재 일본어 수준과 목표를 파악한 뒤 맞춤 커리큘럼을 설계합니다.`},
-    {q:`코치 교체가 가능한가요?`, a:`네, 언제든 부담 없이 교체 가능합니다. 코치와 맞지 않으면 무료로 재매칭해드립니다.`},
-  ];
-
-  const canonical = `/conversation/japanese/${topicSlug}`;
-  const title = `${topic.title} | 일본어 회화 수업 - 올케어스터디`;
-  const bc = [{name:'홈',url:'/'},{name:'회화 수업',url:'/conversation'},{name:'일본어 회화',url:'/conversation/japanese'},{name:topic.title,url:canonical}];
-
-  const keywordTags = topic.keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('');
-
-  const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation">회화 수업</a> &rsaquo; <a href="/conversation/japanese">일본어 회화</a> &rsaquo; <span>${topic.title}</span></div>
-  <div style="background:linear-gradient(135deg,#0F2044,${color});border-radius:20px;padding:40px;margin-bottom:28px;color:white">
-    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);color:white;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-bottom:14px">🇯🇵 일본어 회화 수업</div>
-    <h1 style="font-size:28px;font-weight:900;margin:0 0 10px;line-height:1.3">${topic.title}</h1>
-    <p style="font-size:14px;color:rgba(255,255,255,0.8);margin:0 0 20px">${topic.desc}</p>
-    <div style="display:flex;flex-wrap:wrap;gap:8px">
-      <a href="tel:01068348080" style="background:white;color:#0F2044;padding:11px 20px;border-radius:9px;font-size:14px;font-weight:900;text-decoration:none">📞 010-6834-8080</a>
-      <a href="/contact?type=tutoring&subject=japanese" style="background:rgba(255,255,255,0.15);color:white;padding:11px 20px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,0.3)">무료 상담 신청</a>
-    </div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px">
-    <div style="background:#FFF1F2;border-radius:12px;padding:14px;text-align:center;border:1.5px solid #9F123920"><div style="font-size:16px;font-weight:900;color:#9F1239">무료</div><div style="font-size:11px;color:#6B7280;margin-top:2px">첫 수업</div></div>
-    <div style="background:#ECFDF5;border-radius:12px;padding:14px;text-align:center;border:1.5px solid #10B98120"><div style="font-size:16px;font-weight:900;color:#10B981">3단계</div><div style="font-size:11px;color:#6B7280;margin-top:2px">코치 검증</div></div>
-    <div style="background:#EFF6FF;border-radius:12px;padding:14px;text-align:center;border:1.5px solid #1D4ED820"><div style="font-size:16px;font-weight:900;color:#1D4ED8">1:1</div><div style="font-size:11px;color:#6B7280;margin-top:2px">화상 수업</div></div>
-    <div style="background:#F5F3FF;border-radius:12px;padding:14px;text-align:center;border:1.5px solid #8B5CF620"><div style="font-size:16px;font-weight:900;color:#8B5CF6">빠른</div><div style="font-size:11px;color:#6B7280;margin-top:2px">코치 매칭</div></div>
-  </div>
-  <div class="art-body">${topic.content}</div>
-  <div class="cta-box" style="margin-top:32px">
-    <h3>${topic.title} 무료 상담</h3>
-    <p>1:1 맞춤 일본어 코칭 · 첫 수업 무료 · 빠르게 코치 매칭</p>
-    <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a>
-      <a class="btn-o" href="/contact?type=tutoring&subject=japanese">무료 상담 신청</a>
-    </div>
-  </div>
-  <section style="margin-top:32px">
-    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 일본어 수업 주제</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${relatedLinks}</div>
-  </section>
-  <div class="keyword-box" style="margin-top:24px">
-    <div class="keyword-title">관련 검색어</div>
-    <div class="keyword-tags">${keywordTags}</div>
-  </div>
-</div>`;
-
-  return wrap(title, topic.desc, canonical, body, bc, faqList);
-}
-
-
 function wrap(title, desc, canonical, body, breadcrumbs){
   // canonical: 영문 URL 그대로 사용 (/seoul/gangnam/high/math)
   const canonicalUrl = `https://allcarestudy.com${canonical}`;
@@ -4478,9 +4351,10 @@ function makeConversationPage(lang) {
           color: '#DC2626',
           bg: '#FEF2F2',
           items: [
-            ['HSK 3급 — 일상 대화 가능 수준', '300개 핵심 단어와 기초 문형으로 일상적인 중국어 대화가 가능한 수준입니다. 중국어를 처음 시작한 분의 첫 번째 자격증 목표로 적합합니다. 3~6개월 준비면 충분하며, 대학 제2외국어 학점 인정, 일부 수시전형 어학 능력으로 활용됩니다.'],
-            ['HSK 4급 — 취업 경쟁력 있는 수준', '1200개 단어로 업무와 일상에서 비교적 유창하게 소통할 수 있는 수준입니다. 국내 취업 시 가장 많이 요구되는 HSK 등급으로, 중국어 관련 채용에서 기본 요건이 됩니다. 6~12개월 준비를 권장합니다.'],
-            ['HSK 5급 이상 — 실무 중국어 가능 수준', '2500개 단어로 중국어로 업무 처리가 가능한 수준입니다. 통역·번역·무역직·주재원 지원 시 우대되며, 중국 대학원 진학에 필요합니다. 꾸준한 학습으로 1~2년이면 도달 가능합니다.'],
+            ['HSK 3급 — 일상 대화 가능 수준', '300개 핵심 단어와 기초 문형으로 일상적인 중국어 대화가 가능한 수준입니다. 중국어를 처음 시작한 분의 첫 번째 자격증 목표로 적합합니다. 3~6개월 준비면 충분하며, 대학 제2외국어 학점 인정, 일부 수시전형 어학 능력으로 활용됩니다. 듣기·독해·쓰기 3영역으로 시험이 구성되며, 기본 문형과 자주 쓰는 표현 위주로 준비합니다. 중국 여행에서 현지인과 기본 소통이 가능한 실용적인 수준입니다.'],
+            ['HSK 4급 — 취업 경쟁력 있는 수준', '1200개 단어로 업무와 일상에서 비교적 유창하게 소통할 수 있는 수준입니다. 국내 취업 시 가장 많이 요구되는 HSK 등급으로, 중국어 관련 채용에서 기본 요건이 됩니다. 중국 대학 학부 수업을 수강할 수 있는 기준이기도 합니다. 듣기·독해·쓰기 영역에서 중급 문법과 복합 문장 이해가 핵심이며, 6~12개월 꾸준한 준비를 권장합니다. 실전 모의 시험을 반복해 시험 감각을 키우는 것이 고득점의 비결입니다.'],
+            ['HSK 5급 — 실무 중국어 가능 수준', '2500개 단어로 중국어로 업무 처리가 가능한 수준입니다. 중국어 뉴스·신문 기사를 읽고 이해할 수 있으며, 중국인과 다양한 주제로 유창하게 토론할 수 있습니다. 통역·번역·무역직·주재원 지원 시 우대되며, 중국 대학원 진학에 필요합니다. 꾸준한 학습으로 1~2년이면 도달 가능합니다.'],
+            ['HSK 6급 — 고급 전문가 수준', '5000개 이상의 단어를 활용해 중국어로 자유롭게 의사 표현을 하고, 전문적인 주제에 대해서도 논리적으로 의견을 제시할 수 있는 수준입니다. 중국어 동시통역, 전문 번역, 중국 관련 연구직, 외교관 등 최고 수준의 중국어 능력이 필요한 직무에 활용됩니다. 원어민에 근접한 수준으로, 2~3년 이상의 꾸준한 학습과 실전 경험이 필요합니다.'],
           ]
         },
         {
@@ -4488,9 +4362,9 @@ function makeConversationPage(lang) {
           color: '#DC2626',
           bg: '#FEF2F2',
           items: [
-            ['입문 단계 (0~3개월)', '핀인 완성 → 성조 4성 정확히 발음 → 기초 인사·자기소개·숫자·시간 표현 완성. 이 단계의 핵심은 성조를 처음부터 정확히 몸에 익히는 것입니다.'],
-            ['초급 단계 (3~9개월)', '기초 생활 회화(쇼핑·식당·교통) 가능 → HSK 3급 준비 → 300개 핵심 단어 완성. 중국 여행에서 기본 소통이 가능해지는 단계입니다.'],
-            ['중급 단계 (9개월~2년)', 'HSK 4급 취득 → 업무 기초 중국어 가능 → 중국 드라마 자막 없이 60% 이상 이해. 취업·승진에 활용할 수 있는 실용 중국어 수준입니다.'],
+            ['입문 단계 (0~3개월)', '핀인 완성 → 성조 4성 정확히 발음 → 기초 인사·자기소개·숫자·시간 표현 완성. 이 단계의 핵심은 성조를 처음부터 정확히 몸에 익히는 것입니다. 핀인과 성조가 완성되면 이후 단어 학습과 회화 확장이 수월해집니다. 매일 20분씩 성조 듣기와 따라 말하기를 반복하면 3개월 안에 기초 중국어 소통이 가능합니다. 1:1 수업에서 발음 오류를 즉시 교정받는 것이 특히 중요한 단계입니다.'],
+            ['초급 단계 (3~9개월)', '기초 생활 회화(쇼핑·식당·교통) 가능 → HSK 3급 준비 → 300개 핵심 단어 완성. 중국 여행에서 기본 소통이 가능해지는 단계입니다. 이 단계에서는 기본 문형 패턴 50개를 완전히 자동화하는 것이 핵심입니다. 주어-동사-목적어 순서의 기본 어순을 체득하고, 시간 표현·장소 표현·부정문·의문문을 자유롭게 구사하는 것을 목표로 합니다. 중국 드라마를 자막과 함께 시청하며 듣기 감각을 키우기 시작합니다.'],
+            ['중급 단계 (9개월~2년)', 'HSK 4급 취득 → 업무 기초 중국어 가능 → 중국 드라마 자막 없이 60% 이상 이해. 취업·승진에 활용할 수 있는 실용 중국어 수준입니다. 이 단계에서는 복문(복합 문장) 구사, 성어(成語, 사자성어) 활용, 업종별 전문 어휘 학습에 집중합니다. 비즈니스 이메일 작성, 전화 응대, 미팅 진행 등 실무 중국어를 시뮬레이션 연습하면 실전 대응력이 크게 향상됩니다. HSK 5급 준비를 병행하면 고급 중국어로의 도약이 빨라집니다.'],
           ]
         },
       ],
@@ -4546,9 +4420,21 @@ function makeConversationPage(lang) {
           color: '#9F1239',
           bg: '#FFF1F2',
           items: [
-            ['JLPT N5·N4 — 입문~초급', '기본 인사, 일상 대화 가능. 일본어 공부를 시작한 분의 첫 목표. N5는 3~4개월, N4는 6~8개월 준비로 취득 가능. 일본 여행에서 기본 소통이 가능한 수준이며, 대학 어학 이수 인정에 활용됩니다.'],
-            ['JLPT N3 — 중급', '일상적인 상황에서 자연스러운 대화 가능. 관광·서비스업 취업 시 유리. 일본 드라마를 자막 없이 50% 이상 이해하는 수준. 8~12개월 꾸준히 준비하면 도달 가능합니다.'],
-            ['JLPT N2·N1 — 상급~고급', 'N2는 업무에서 일본어 사용 가능, 일본계 기업·일본 취업 지원 시 가장 많이 요구되는 레벨. N1은 고급 표현·추상적 내용 이해 가능, 통역·번역·전문직 취업에 유리. N2는 1~1.5년, N1은 2년 이상 준비가 필요합니다.'],
+            ['JLPT N5·N4 — 입문~초급', '기본 인사, 일상 대화 가능. 일본어 공부를 시작한 분의 첫 목표입니다. N5는 히라가나·가타카나와 기초 한자 100자, 기본 어휘 800개 수준으로 3~4개월이면 취득 가능합니다. N4는 기초 한자 300자, 어휘 1500개 수준으로 6~8개월 준비를 권장합니다. 일본 여행에서 기본 소통이 가능한 수준이며, 대학 제2외국어 학점 이수 인정에 활용됩니다. 일본어를 처음 시작하는 분은 N5부터 차근차근 올라가는 것을 추천합니다.'],
+            ['JLPT N3 — 중급', '일상적인 상황에서 자연스러운 대화가 가능한 수준입니다. 한자 600자, 어휘 3000개 수준으로 일본 드라마를 자막 없이 50% 이상 이해할 수 있습니다. 관광·서비스업·유통업 취업 시 유리하며, 일본 현지 아르바이트가 가능한 최소 수준이기도 합니다. 8~12개월 꾸준히 준비하면 도달 가능하며, N2를 목표로 하는 분도 중간 점검으로 N3을 먼저 취득하는 것을 추천합니다.'],
+            ['JLPT N2 — 상급(취업 필수)', 'N2는 일본계 기업·일본 현지 취업 지원 시 가장 많이 요구되는 레벨입니다. 한자 1000자, 어휘 6000개 수준으로 업무에서 일본어를 사용할 수 있고, 뉴스·신문 기사를 읽고 이해할 수 있는 수준입니다. 대학 어학 특기자 전형, 일본 유학, 일본 기업 인턴십에도 활용됩니다. 1~1.5년 꾸준한 학습이 필요하며, 독해·청해·문법 영역을 균형 있게 준비하는 것이 핵심입니다.'],
+            ['JLPT N1 — 고급(전문가 수준)', 'N1은 일본어 능력 시험의 최고 레벨로, 한자 2000자, 어휘 10000개 수준입니다. 고급 표현·추상적 내용·전문 분야 텍스트를 이해하고 논리적으로 의견을 제시할 수 있는 수준입니다. 통역·번역·전문직 취업, 일본 대학원 진학에 유리하며, 일부 일본 기업은 N1 소지자에게 별도 어학 수당을 지급합니다. 2년 이상 준비가 필요하며, 실전 모의 시험을 반복해 시험 감각을 키우는 것이 중요합니다.'],
+          ]
+        },
+        {
+          title: '🎯 일본어 회화 수준별 로드맵',
+          color: '#9F1239',
+          bg: '#FFF1F2',
+          items: [
+            ['입문 단계 (0~3개월)', '히라가나·가타카나 92자 완성 → 기초 인사·자기소개·숫자·날짜·시간 표현 습득 → 간단한 일상 문장(~です, ~ます) 구사 가능. 이 단계의 핵심은 문자를 완벽히 익히고, 일본어를 말하는 것에 대한 두려움을 없애는 것입니다. 한국어와 어순이 같기 때문에 단어와 기본 패턴만 익히면 생각보다 빠르게 기초 회화가 가능합니다. 매일 30분씩 꾸준히 하면 3개월 안에 여행 일본어 기초가 완성됩니다.'],
+            ['초급 단계 (3~9개월)', '생활 일본어 회화 가능 → 기초 한자 200~300자 습득 → JLPT N4 수준 도달 → 일본 여행에서 기본 소통 가능. 이 단계에서는 동사 활용(て형·た형·ない형)을 확실히 익히는 것이 핵심입니다. 동사 활용이 자동화되면 표현력이 급격히 늘어납니다. 쇼핑·식당·교통 등 상황별 표현을 반복 연습하고, 일본 드라마 1편을 반복 시청하며 듣기 감각을 키우는 것을 추천합니다.'],
+            ['중급 단계 (9개월~2년)', 'JLPT N3~N2 수준 → 일상적인 주제로 자유롭게 대화 가능 → 비즈니스 일본어 기초 가능 → 일본 드라마를 자막 없이 60% 이상 이해. 이 단계에서는 경어(敬語) 사용, 한자 어휘 확장, 관용 표현 습득에 집중합니다. 일본계 기업 취업, 일본 유학, 일본어 관련 직무 지원이 가능해지는 수준입니다. 1:1 수업에서 실전 비즈니스 상황을 시뮬레이션하면 성장 속도가 빨라집니다.'],
+            ['고급 단계 (2년 이상)', 'JLPT N1 수준 → 어떤 주제로도 자연스럽게 토론 가능 → 통역·번역·전문직 활용 가능 → 일본 뉴스·신문·소설 원서를 읽고 이해 가능. 이 단계에서는 뉴앙스, 관용 표현, 사자성어, 비유적 표현 등 자연스러운 일본어의 깊은 영역을 학습합니다. 일본인과 대화할 때 외국인 티가 나지 않는 수준이 목표이며, 전문 분야(IT·법률·의료·무역 등)의 일본어도 다룹니다.'],
           ]
         },
       ],
@@ -4640,13 +4526,6 @@ function makeConversationPage(lang) {
     <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 언어 회화도 보기</h2>
     <div style="display:flex;flex-wrap:wrap;gap:6px">${otherLangs}</div>
   </section>
-
-  ${lang === 'japanese' ? `<section class="u18">
-    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-left:14px;border-left:5px solid ${color}">🇯🇵 일본어 회화 주제별 수업</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      ${Object.values(JP_TOPICS).map(t => `<a href="/conversation/japanese/${t.slug}" style="display:block;padding:12px 16px;background:#FFF1F2;border-radius:10px;text-decoration:none;font-size:13px;font-weight:700;color:#0F2044;border:1.5px solid #FCE7F3;transition:all .2s" onmouseover="this.style.borderColor='#9F1239';this.style.background='#FFE4E6'" onmouseout="this.style.borderColor='#FCE7F3';this.style.background='#FFF1F2'">🇯🇵 ${t.title}</a>`).join('')}
-    </div>
-  </section>` : ''}
 
   <div class="cta-box">
     <h3>${ko} 무료 상담</h3>
@@ -5088,6 +4967,7 @@ function makeContactPage(type) {
             <option value="">선택해주세요</option>
             <option>수학</option><option>영어</option><option>국어</option>
             <option>과학</option><option>사회</option><option>전과목</option>
+            <option>영어 회화</option><option>일본어 회화</option><option>중국어 회화</option>
           </select>
         </div>
       </div>
@@ -5102,6 +4982,7 @@ function makeContactPage(type) {
             <option value="">선택해주세요</option>
             <option>수학</option><option>영어</option><option>국어</option>
             <option>과학</option><option>사회</option><option>코딩</option><option>논술</option>
+            <option>영어 회화</option><option>일본어 회화</option><option>중국어 회화</option>
           </select>
         </div>
       </div>
@@ -5207,12 +5088,32 @@ function submitContact(){
   btn.textContent = '접수 중...';
   btn.style.opacity = '0.7';
 
-  setTimeout(function(){
-    var form = document.getElementById('modal-form');
-    var success = document.getElementById('modal-success');
-    if(form) form.style.display = 'none';
-    if(success) success.style.display = 'block';
-  }, 800);
+  var type = new URLSearchParams(window.location.search).get('type') || 'tutoring';
+  var addrEl = document.getElementById('m-addr');
+  var addrDetailEl = document.getElementById('m-addr-detail');
+  var address = (addrEl ? addrEl.value.trim() : '') + (addrDetailEl && addrDetailEl.value.trim() ? ' ' + addrDetailEl.value.trim() : '');
+  var msgEl = document.getElementById('m-msg');
+  var message = msgEl ? msgEl.value.trim() : '';
+
+  fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address,message,type})})
+  .then(r=>r.json()).then(function(data){
+    if(data.ok){
+      var form = document.getElementById('modal-form');
+      var success = document.getElementById('modal-success');
+      if(form) form.style.display = 'none';
+      if(success) success.style.display = 'block';
+    } else {
+      btn.disabled = false;
+      btn.textContent = '문의 제출하기';
+      btn.style.opacity = '1';
+      alert('전송 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
+  }).catch(function(){
+    btn.disabled = false;
+    btn.textContent = '문의 제출하기';
+    btn.style.opacity = '1';
+    alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+  });
 }
 </script>
 </div>
@@ -5866,26 +5767,38 @@ export default {
     const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0' };
 
     // ── 문의 API ──────────────────────────────────────
+    const corsHeaders = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    };
+    if (path === '/api/contact' && request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
     if (path === '/api/contact' && request.method === 'POST') {
-      const corsHeaders = {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      };
       try {
         const body = await request.json();
         const { name, grade, phone, address, message } = body;
-        if (!name || !grade || !phone || !address || !message) {
+        if (!name || !grade || !phone) {
           return new Response(JSON.stringify({ ok: false, error: '필수 항목 누락' }), { headers: corsHeaders });
         }
-
-        // Google Apps Script로 전송 (시트 기록 + 네이버 메일 발송)
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbxWr1XcAQVsxPKgH9FbUaUcKAYCNzDoA-ngykhJ2ae4sCk562rT7bBe2sO7ym5-KdI2/exec';
-        const gasRes = await fetch(GAS_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, grade, phone, address, message })
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbzpqkKUW6IpwNFRFJRn_t_1AU1wMeUBnYqwAXnCK16yPDo5kPrJbEZiGRJkjDr-Stce/exec';
+        const params = new URLSearchParams({
+          name: name || '',
+          grade: grade || '',
+          phone: phone || '',
+          address: address || '',
+          message: message || '',
+          type: body.type || 'tutoring'
         });
-        const gasData = await gasRes.json();
+        const gasRes = await fetch(GAS_URL + '?' + params.toString(), {
+          method: 'GET',
+          redirect: 'follow'
+        });
+        const gasText = await gasRes.text();
+        let gasData;
+        try { gasData = JSON.parse(gasText); } catch(e) { gasData = { ok: true }; }
         if (gasData.ok) {
           return new Response(JSON.stringify({ ok: true }), { headers: corsHeaders });
         } else {
@@ -5995,14 +5908,6 @@ export default {
     if (path === '/conversation/english') return new Response(makeConversationPage('english'), {headers:h});
     if (path === '/conversation/chinese') return new Response(makeConversationPage('chinese'), {headers:h});
     if (path === '/conversation/japanese') return new Response(makeConversationPage('japanese'), {headers:h});
-    // 일본어 회화 주제별 하위 페이지
-    if (path.startsWith('/conversation/japanese/')) {
-      const topicSlug = path.slice('/conversation/japanese/'.length).split('/')[0];
-      if (topicSlug) {
-        const p = makeJapaneseTopicPage(topicSlug);
-        if (p) return new Response(p, {headers:h});
-      }
-    }
     if (path === '/academy/intro') return new Response(makeAcademyIntroPage(), {headers:h});
     if (path === '/academy' || path.startsWith('/academy/')) return new Response(makeAcademyPage(), {headers:h});
     if (path === '/favicon.ico' || path === '/favicon-32.png' || path === '/favicon-16.png') {
