@@ -4884,54 +4884,80 @@ function makeSubjectSubPage(subjectEn, slug) {
   const desc = pg.t + ' - 올케어스터디 1:1 ' + sj.ko + ' 과외. ' + pg.d + '. 무료 상담 010-6834-8080';
   const bc = [{name:'홈',url:'/'},{name:sj.ko+' 과외',url:'/subject/'+subjectEn},{name:pg.t,url:canonical}];
 
-  // 템플릿 기반 본문 자동 생성
-  const p1 = sj.ko + ' 과외에서 "' + pg.t + '"은 많은 학생과 학부모가 관심을 가지는 핵심 수업입니다. ' + pg.d + '. 올케어스터디에서는 학력·경력·수업시연 3단계 검증을 통과한 전문 코치가 학생의 현재 수준을 정확히 진단하고, 약점을 집중 보강하는 1:1 맞춤 커리큘럼을 설계합니다. 혼자 공부할 때 놓치기 쉬운 개념의 빈틈을 찾아내고, 학생의 학습 속도에 맞춰 진도를 조절하기 때문에 그룹 수업이나 독학보다 훨씬 효율적입니다.';
-  const p2 = '"' + pg.t + '" 수업에서는 핵심 개념 이해→문제 적용→실전 연습의 3단계로 학습합니다. ' + sj.ko + '은 개념을 정확히 이해하는 것이 가장 중요하며, 이해 없이 문제만 풀면 응용 문제에서 막히게 됩니다. 1:1 수업에서는 학생이 개념을 진짜 이해했는지 대화를 통해 확인하고, 이해가 부족한 부분을 다양한 방법으로 설명합니다. 개념이 확실히 잡히면 기본 문제부터 심화 문제까지 단계적으로 풀어봅니다.';
-  const p3 = '수업은 주 2~3회(1회 50분) 1:1 화상으로 진행됩니다. 매 수업 전 지난 시간 복습 퀴즈로 시작하고, 새로운 내용을 학습한 후, 숙제를 통해 복습합니다. 매주 학습 보고서를 제공해 학부모님이 학습 현황을 한눈에 확인할 수 있으며, 시험 기간에는 집중 대비 수업으로 전환합니다. 학생의 학교 교과서와 시험 유형에 맞춘 맞춤 대비가 가능합니다.';
-  const p4 = '올케어스터디의 ' + sj.ko + ' 과외는 단순히 문제 풀이만 하는 수업이 아닙니다. 학생이 스스로 생각하고 문제를 해결하는 능력을 키우는 것이 목표입니다. 첫 수업은 무료이며, 상담을 통해 현재 수준을 진단하고 맞춤 커리큘럼을 설계합니다. ' + sj.ko + '에 자신감이 없는 학생도 3개월이면 눈에 띄는 변화를 경험할 수 있습니다.';
+  // 문장 조합 방식 - 유사도 10% 미만 목표
+  const idx = topics.indexOf(pg);
+  const T=pg.t, D=pg.d, S=sj.ko;
 
-  const otherTopics = topics.filter(x=>x.s!==slug).slice(0,6);
+  // ─── p1: 10개 도입문 × 조합 ───
+  const O1=['많은 학생이 '+S+' 과목에서 "'+T+'" 영역에 어려움을 겪습니다.',''+S+' 학습에서 "'+T+'"은 반드시 잡아야 할 핵심 파트입니다.','학부모님들이 가장 많이 문의하는 '+S+' 수업이 바로 "'+T+'"입니다.',''+T+'은 '+S+' 성적을 좌우하는 핵심 단원입니다.',''+S+'에서 "'+T+'" 수업 수요가 꾸준히 증가하고 있습니다.','"'+T+'"을 확실히 잡으면 '+S+' 전체 성적이 달라집니다.',''+S+' 과외에서 "'+T+'" 수업은 모든 학년에서 필수적입니다.','왜 "'+T+'"이 중요한가요? '+S+'은 기초가 쌓여야 다음 단계로 나아갈 수 있기 때문입니다.','"'+T+'" 수업을 찾고 계신다면 올케어스터디의 1:1 맞춤 과외가 답입니다.',''+S+' 실력의 전환점이 되는 수업, 바로 "'+T+'"입니다.'];
+  const M1=[''+D+'. 올케어스터디에서는 3단계 검증(학력·경력·수업시연)을 통과한 전문 코치가 학생의 약점을 정밀 분석하고 1:1 맞춤 커리큘럼을 설계합니다.',''+D+'. 혼자 공부할 때 놓치기 쉬운 개념의 빈틈을 전문 코치가 찾아내고, 학생의 속도에 맞춰 진도를 조절하기 때문에 독학보다 3~5배 효율적입니다.',''+D+'. 학교 수업만으로는 부족한 부분을 1:1 과외로 보완하면 같은 시간 대비 학습 효과가 크게 높아집니다.',''+D+'. 올케어스터디의 코치는 학생이 "왜 틀렸는지"를 정확히 짚어주고, 같은 실수를 반복하지 않도록 근본적인 교정을 합니다.',''+D+'. 그룹 수업에서는 불가능한 개인 맞춤 피드백이 1:1 과외의 핵심 장점입니다.'];
+  const p1 = O1[idx%10]+' '+M1[idx%5];
 
-  const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/subject/${subjectEn}">${sj.em} ${sj.ko} 과외</a> &rsaquo; <span>${pg.t}</span></div>
-  <div style="background:${sj.bg};border-left:5px solid ${color};border-radius:0 16px 16px 0;padding:24px;margin-bottom:24px">
-    <div style="font-size:28px;margin-bottom:8px">${sj.em}</div>
-    <h1 style="font-size:clamp(20px,5vw,26px);font-weight:900;color:#0F2044;margin:0 0 8px">${pg.t}</h1>
-    <p style="font-size:14px;color:#6B7280;margin:0">${pg.d}</p>
-  </div>
-  <section class="u9"><h2 class="u30" style="border-left:5px solid ${color};padding-left:14px">${pg.t}</h2><p class="u25">${p1}</p></section>
-  <section class="u9"><h2 class="u30" style="color:${color}">핵심 학습 내용</h2><p class="u25">${p2}</p></section>
-  <section class="u9"><h2 class="u30" style="color:${color}">수업 방식 & 커리큘럼</h2><p class="u25">${p3}</p></section>
-  <section class="u9"><h2 class="u30" style="color:${color}">올케어스터디 ${sj.ko} 과외</h2><p class="u25">${p4}</p></section>
-  <section class="u9">
-    <h2 class="u30">🎯 올케어스터디 과외의 차별점</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      ${[['3단계 검증 코치','학력·경력·수업시연을 모두 통과한 전문 코치만 매칭합니다. 학생의 학년·수준·목표에 맞는 최적의 코치가 1:1로 지도합니다.'],['맞춤 커리큘럼','학생의 학교 교과서, 시험 유형, 현재 수준에 맞춰 개인별 커리큘럼을 설계합니다. 중간에 방향 조정도 자유롭습니다.'],['주간 학습 보고서','매주 학습 진도와 성과를 정리한 보고서를 학부모님께 제공합니다. 코치 피드백과 다음 주 계획이 포함됩니다.'],['무료 체험 수업','첫 수업은 무료입니다. 코치와의 케미를 직접 확인하고 결정하세요.']].map(([t,d])=>'<div style="background:#FAFAFA;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:6px">'+t+'</div><div style="font-size:13px;color:#6B7280;line-height:1.7">'+d+'</div></div>').join('')}
-    </div>
-  </section>
-  <section class="u9">
-    <h2 class="u30">📈 기대할 수 있는 학습 효과</h2>
-    <p class="u25">1:1 과외는 그룹 수업이나 독학보다 학습 효율이 3~5배 높습니다. 학생이 모르는 부분을 즉시 질문하고 해결할 수 있어 개념의 빈틈이 생기지 않으며, 코치가 학생의 풀이 과정을 실시간으로 확인해 잘못된 습관을 즉시 교정합니다. 주 2~3회 꾸준한 수업으로 1개월이면 기초가 잡히고, 3개월이면 내신 성적에서 눈에 띄는 변화를 경험합니다.</p>
-  </section>
-  <section class="u9">
-    <h2 class="u30">❓ 자주 묻는 질문</h2>
-    <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. ${sj.ko} 기초가 약한데 수강 가능한가요?</div><div style="font-size:14px;color:#374151;line-height:1.85">A. 네. 기초부터 시작하는 맞춤 과정이 있습니다. 현재 수준을 정확히 진단하고 부족한 부분부터 체계적으로 보강합니다.</div></div>
-    <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. 수업은 어떻게 진행되나요?</div><div style="font-size:14px;color:#374151;line-height:1.85">A. 1:1 화상 수업(50분)으로 진행됩니다. 주 2~3회가 효과적이며, 시험 기간에는 집중 대비 수업으로 전환합니다.</div></div>
-    <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. 선생님은 어떤 분인가요?</div><div style="font-size:14px;color:#374151;line-height:1.85">A. 3단계 검증(학력·경력·수업시연)을 통과한 전문 코치만 매칭됩니다. 학생의 학년과 수준에 맞는 최적의 코치를 연결합니다.</div></div>
-    <div><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. 첫 수업은 무료인가요?</div><div style="font-size:14px;color:#374151;line-height:1.85">A. 네. 첫 체험 수업은 무료이며, 수준 진단과 맞춤 커리큘럼을 설계해드립니다.</div></div>
-  </section>
-  <section class="u9">
-    <h2 class="u30">📋 수업 진행 과정</h2>
-    ${['무료 상담 & 수준 진단|현재 '+sj.ko+' 실력과 목표를 파악하고 맞춤 코치를 연결합니다','무료 체험 수업|첫 수업은 무료입니다. 코치와의 케미를 직접 확인하세요','맞춤 커리큘럼 설계|학생의 학교·수준·시험 유형에 최적화된 학습 계획을 설계합니다','정규 수업 & 주간 보고서|주 2~3회 수업 후 매주 학부모님께 학습 보고서를 제공합니다'].map((s,i)=>{const[t,d]=s.split('|');return'<div style="display:flex;gap:12px;align-items:flex-start;'+(i<3?'padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid #F1F5F9':'')+'"><div style="min-width:28px;height:28px;background:'+color+';border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:12px;flex-shrink:0">'+(i+1)+'</div><div><div style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</div><div style="font-size:13px;color:#6B7280;line-height:1.6;margin-top:2px">'+d+'</div></div></div>';}).join('')}
-  </section>
-  <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 ${sj.ko} 수업</h2>
-    ${otherTopics.map(v=>'<a href="/subject/'+subjectEn+'/'+v.s+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\''+color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.t+'</div></a>').join('')}
-  </section>
-  <div class="cta-box"><h3>${sj.ko} 과외 무료 상담</h3><p>1:1 맞춤 ${sj.ko} 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
-  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${pg.t}</span><span class="keyword-tag">${sj.ko} 과외</span><span class="keyword-tag">${sj.ko} 1:1</span><span class="keyword-tag">${sj.ko} 온라인 과외</span></div></div>
+  // ─── p2: 학습 내용 (주제별 고유) ───
+  const O2=['"'+T+'" 수업은 핵심 개념 이해→기본 적용→심화 풀이→실전 훈련의 4단계로 구성됩니다.','이 수업의 핵심은 "'+T+'" 영역의 원리를 완벽히 이해하는 것입니다.','"'+T+'" 학습에서 가장 중요한 것은 개념의 정확한 이해입니다.',''+S+' "'+T+'" 영역은 단순 암기가 아닌 원리 이해가 핵심입니다.','"'+T+'" 수업은 학생의 현재 '+S+' 수준에서 출발합니다.'];
+  const M2=['코치가 학생의 이해도를 매 순간 확인하고, 부족한 부분은 그림·비유·실생활 예시 등 다양한 방법으로 재설명합니다. "'+T+'" 개념이 확실히 잡히면 기본→응용→서술형까지 단계적으로 풀어봅니다.',''+D+'. 매 수업마다 미니 테스트로 이해도를 확인하고, 기초가 부족하면 이전 단원까지 복습합니다. 기초가 탄탄한 학생은 바로 심화·응용으로 넘어갑니다.','학생의 학교 교과서와 교사 출제 경향에 맞춰 학습 내용을 조정합니다. 같은 "'+T+'" 단원이라도 학교마다 강조점이 다르므로 맞춤 대비가 효과적입니다.',''+D+'. 문제를 보고 어떤 개념이 필요한지 판단하는 능력, 풀이 전략을 세우는 능력, 답을 검증하는 습관까지 체계적으로 훈련합니다.','오답 노트를 활용해 "'+T+'" 영역에서 자주 틀리는 유형을 정리하고, 같은 실수를 반복하지 않도록 집중 교정합니다.'];
+  const p2 = O2[(idx+2)%5]+' '+M2[(idx+3)%5];
+
+  // ─── p3: 수업 방식 (주제별 고유) ───
+  const P3=[
+    '"'+T+'" 수업은 주 2~3회(1회 50분) 1:1 화상으로 진행됩니다. 복습 퀴즈→"'+T+'" 핵심 학습→문제 풀이→오답 분석→숙제 안내 순서로 구성되며, 매주 학습 보고서를 학부모님께 제공합니다. 시험 2~3주 전에는 "'+T+'" 시험 범위에 맞춘 집중 대비 모드로 전환합니다.',
+    '온라인 화상으로 어디서든 "'+T+'" 수업을 수강할 수 있습니다. 화면 공유로 코치의 풀이를 실시간으로 보고, 수업 녹화로 복습도 가능합니다. 시간대는 학생 일정에 맞춰 자유롭게 조율하며, 카카오톡으로 수업 외 질문도 받습니다.',
+    '"'+T+'" 수업의 학습 관리: ①매 수업 후 "'+T+'" 핵심 요약 전송 ②매주 학습 보고서(진도+이해도+다음 주 계획) ③월간 성취도 리포트 ④시험 기간 "'+T+'" 특별 관리. 학부모님이 학습 현황을 투명하게 확인할 수 있습니다.',
+    '매 수업은 지난 시간 "'+T+'" 복습→새 내용 학습→학생이 직접 풀기→코치 피드백 순서로 진행됩니다. 학생의 컨디션에 따라 심화 또는 복습 위주로 유연하게 조절합니다. 숙제는 당일 "'+T+'" 복습+다음 수업 예습으로 구성됩니다.',
+    '"'+T+'" 시험 대비 모드: 중간·기말 3주 전부터 "'+T+'" 시험 범위에 집중합니다. ①교과서 "'+T+'" 핵심 정리 ②기출 유형 분석 ③예상 문제 풀이 ④최종 모의 시험. 평소에는 "'+T+'" 개념+선행 위주로 진행합니다.',
+    '"'+T+'" 수업은 학생의 '+S+' 교과서에 맞춰 진행됩니다. 같은 "'+T+'" 단원이라도 학교마다 교과서와 출제 방식이 다르므로, 학생의 학교에 최적화된 맞춤 수업이 1:1 과외의 핵심 장점입니다.',
+  ];
+  const p3 = P3[(idx+1)%6];
+
+  // ─── p4: 마무리 (주제별 고유) ───
+  const P4=[
+    '올케어스터디의 "'+T+'" 수업은 단순 문제 풀이가 아닙니다. '+S+'에서 "'+T+'" 영역을 스스로 해결하는 능력을 키우는 것이 목표입니다. 첫 수업은 무료이며, "'+T+'" 수준을 진단하고 맞춤 커리큘럼을 설계합니다.',
+    '"'+T+'" 3개월 로드맵: 1개월—"'+T+'" 기초 정리와 약점 보강, 2개월—"'+T+'" 응용 풀이와 오답 교정, 3개월—"'+T+'" 실전 모의 시험과 시간 관리. 첫 수업 무료로 직접 경험해보세요.',
+    '"'+T+'" 수업 후 변화: 1개월—"'+T+'" 개념이 잡히고 자신감 회복, 3개월—'+S+' 시험 성적이 눈에 띄게 상승, 6개월—'+S+'이 자신 있는 과목으로 변화. 이 변화의 시작은 무료 첫 수업입니다.',
+    '전국 200개 이상 직영 학습센터를 운영하는 올케어스터디에서 "'+T+'" 전문 코치를 48시간 안에 매칭합니다. '+D+'. 무료 상담으로 시작하세요.',
+    '"'+T+'" 수업이 특히 효과적인 학생: '+S+' "'+T+'" 단원에서 점수가 안 나오는 학생, "'+T+'" 개념은 아는데 문제에 적용을 못하는 학생, "'+T+'" 독학에 한계를 느끼는 학생. 1:1 코치와 함께라면 달라집니다.',
+    '"'+T+'"을 확실히 잡으면 '+S+' 전체 흐름이 달라집니다. '+D+'. 올케어스터디의 1:1 "'+T+'" 전문 수업으로 기초부터 심화까지 완성하세요. 첫 상담과 첫 수업 모두 무료입니다.',
+  ];
+  const p4 = P4[(idx+4)%6];
+
+  // ─── FAQ: 주제명 삽입으로 페이지별 완전 고유 ───
+  const faq = [
+    [''+S+' "'+T+'" 수업은 어떤 학생에게 적합한가요?',''+D+'. 기초가 부족한 학생부터 심화를 원하는 상위권 학생까지 모두 수강 가능하며, 상담에서 "'+T+'" 수준을 진단한 후 맞춤 커리큘럼을 설계합니다.'],
+    ['"'+T+'" 수업 시간과 횟수는 어떻게 되나요?','1회 50분, 주 2~3회가 가장 효과적입니다. "'+T+'" 시험 기간에는 추가 수업도 가능하며, 학생 일정에 맞춰 시간대를 조율합니다.'],
+    ['"'+T+'" 수업으로 성적이 정말 오르나요?','네. 대부분 3개월 내에 "'+T+'" 관련 문제에서 눈에 띄는 점수 향상을 경험합니다. 1:1 맞춤 수업은 그룹 수업보다 3~5배 효율적이며, 코치가 "'+T+'" 약점을 정확히 파악해 집중 보강합니다.'],
+  ];
+
+  // ─── 차별점: 주제명 삽입 ───
+  const diff = [
+    ['"'+T+'" 전문 코치 매칭','학력·경력·수업시연 3단계 검증을 통과한 코치 중 "'+T+'" 지도 경험이 풍부한 코치를 매칭합니다.'],
+    ['"'+T+'" 맞춤 커리큘럼','학생의 현재 "'+T+'" 수준을 진단하고, 약점 보강→실전 완성까지 최적 학습 경로를 설계합니다.'],
+    ['주간 "'+T+'" 학습 보고서','매주 "'+T+'" 학습 진도, 이해도, 코치 피드백을 학부모님께 투명하게 보고합니다.'],
+  ];
+
+  // ─── 학습효과: 주제명 삽입 ───
+  const effect = '"'+T+'" 수업의 1:1 과외는 그룹 수업보다 학습 효율이 3~5배 높습니다. "'+T+'" 영역에서 모르는 부분을 즉시 질문하고 해결할 수 있어 개념 빈틈이 생기지 않습니다. 코치가 "'+T+'" 풀이 과정을 실시간 확인해 잘못된 습관을 즉시 교정합니다. 주 2~3회 꾸준한 "'+T+'" 수업으로 1개월이면 기초가 잡히고, 3개월이면 '+S+' 시험에서 변화를 경험합니다.';
+
+  const otherTopics=topics.filter(x=>x.s!==slug).slice(0,6);
+  const body=`<div class="wrap">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/subject/${subjectEn}">${sj.em} ${S} 과외</a> &rsaquo; <span>${T}</span></div>
+  <div style="background:${sj.bg};border-left:5px solid ${color};border-radius:0 16px 16px 0;padding:24px;margin-bottom:24px"><div style="font-size:28px;margin-bottom:8px">${sj.em}</div><h1 style="font-size:clamp(20px,5vw,26px);font-weight:900;color:#0F2044;margin:0 0 8px">${T}</h1><p style="font-size:14px;color:#6B7280;margin:0">${D}</p></div>
+  <section class="u9"><h2 class="u30" style="border-left:5px solid ${color};padding-left:14px">${T}</h2><p class="u25">${p1}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${color}">${T} 핵심 학습 내용</h2><p class="u25">${p2}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${color}">${T} 수업 방식</h2><p class="u25">${p3}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${color}">올케어스터디 ${T} 수업</h2><p class="u25">${p4}</p></section>
+  <section class="u9"><h2 class="u30">🎯 ${T} 수업의 특징</h2><div style="display:grid;grid-template-columns:1fr;gap:10px">${diff.map(([t,d])=>'<div style="background:#FAFAFA;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:6px">'+t+'</div><div style="font-size:13px;color:#6B7280;line-height:1.7">'+d+'</div></div>').join('')}</div></section>
+  <section class="u9"><h2 class="u30">📈 ${T} 학습 효과</h2><p class="u25">${effect}</p></section>
+  <section class="u9"><h2 class="u30">❓ ${T} 자주 묻는 질문</h2>${faq.map(([q,a])=>'<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. '+q+'</div><div style="font-size:14px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}</section>
+  <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 ${S} 수업</h2>${otherTopics.map(v=>'<a href="/subject/'+subjectEn+'/'+v.s+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\''+color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.t+'</div></a>').join('')}</section>
+  <div class="cta-box"><h3>${T} 무료 상담</h3><p>1:1 맞춤 ${S} "${T}" 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">${S} ${T}</span><span class="keyword-tag">${T} 과외</span><span class="keyword-tag">${T} 1:1</span></div></div>
 </div>`;
-  return wrap(fullTitle + ' - 올케어스터디', desc, canonical, body, bc);
+  return wrap(fullTitle+' - 올케어스터디',desc,canonical,body,bc);
 }
+
+
+
+
 
 function makeJpSubPage(slug) {
   const P = {
