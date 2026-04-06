@@ -1584,6 +1584,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd">
+<meta name="google-site-verification" content="st8_MGU2mfnaomGNCLUGBmiQsZD50WNTWEUxzfmJ47E">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${isoDate}","dateModified":"${isoDate}","inLanguage":"ko-KR"}</script>
 ${bcSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
