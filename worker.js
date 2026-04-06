@@ -6437,6 +6437,7 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
     const path = decodeURIComponent(url.pathname);
+    if (path === '/82576028bc8743f5869b54199452e4b4.txt') return new Response('82576028bc8743f5869b54199452e4b4', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     const rawParts = path.split('/').filter(Boolean);
 
     // ── 구버전 URL 호환 처리 ──────────────────────────────────
@@ -6692,8 +6693,7 @@ export default {
           </svg>`;
       return new Response(svgLogo, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
     }
-    if (path === '/82576028bc8743f5869b54199452e4b4.txt') return new Response('82576028bc8743f5869b54199452e4b4', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
-    if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 
     // 홈
     if (parts.length === 0) return new Response(makeHomePage(), { headers: h });
