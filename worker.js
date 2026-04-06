@@ -6459,6 +6459,59 @@ export default {
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type'
     };
+    // IndexNow - 네이버+Bing에 URL 색인 요청
+    if (path === '/api/indexnow') {
+      const INDEXNOW_KEY = '82576028bc8743f5869b54199452e4b4';
+      const allUrls = [
+        '/','/academy/intro','/academy/all','/contact',
+        '/conversation/english','/conversation/chinese','/conversation/japanese',
+      ];
+      // 영어 회화 하위
+      ['trade-english','debate','toeic-opic','intl-school','special-school','sat','ap','travel','kids-phonics','suneung-listening','suneung-reading','us-drama','make-friends','real-american','essay','literature','junior-toefl','overseas-job','daily-10min','study-abroad','pop-songs','us-news','animation','school-exam','grammar','civil-service','ielts','duolingo-test','teps','group-class','g-telp','flight-crew','translation','working-holiday','aussie-accent','british-accent'].forEach(s=>allUrls.push('/conversation/english/'+s));
+      // 중국어 회화 하위
+      ['intl-school','school-exam','hsk','trade','sourcing','drama','study-abroad','for-students','pronunciation','major','specialty-prep','travel','daily-10min','phone-10min','korean-teacher','kids','hskk','tsc','special-school','3month','bct','flight-crew','translation','culture','hanzi','vocabulary','language-specialty'].forEach(s=>allUrls.push('/conversation/chinese/'+s));
+      // 일본어 회화 하위
+      ['anime','trade','study-abroad-prep','for-students','jlpt-jpt','hiragana-katakana','3month-conversation','osaka-study','real-japanese','native-life','school-exam','debate','advanced-native','job-interview','business-mail-pt','major-students','language-specialty'].forEach(s=>allUrls.push('/conversation/japanese/'+s));
+      // 과목 메인
+      ['math','english','korean','science','social','coding','essay','gsd'].forEach(s=>allUrls.push('/subject/'+s));
+      // 과목 하위 (주요 10개씩만 - IndexNow는 최근 변경 URL만 보내는 것이 권장)
+      const subjSlugs={math:['elem-basics','mid-function','high-math1','calculus','suneung-killer','grade1','supo-escape','concept-total','mid-naesin','mock-exam'],english:['elem-basics','mid-grammar','high-reading','suneung-1','grade1','listening','vocabulary','mid-naesin','mock-strategy','vacation'],korean:['elem-reading','high-nonlit','suneung-1','grade1','modern-poem','grammar','mid-naesin','high-naesin','suneung-lit','vacation'],science:['physics1','chemistry1','biology1','earth1','grade1','integrated','mid-naesin','high-naesin','mechanics','genetics'],social:['korean-history','world-history','korean-geo','economics','grade1','integrated','mid-naesin','high-naesin','history-perfect','vacation'],coding:['start','scratch','python-basic','python-mid','javascript','ai-basic','algorithm','coding-test','elem-coding','portfolio'],essay:['basics','humanities','snu','yonsei','med-essay','self-intro','interview','critical','susi','jeongsi'],gsd:['korean','english','math','high-level','3month','pass-strategy','past-exam','summary','one-on-one','online-guide']};
+      for(const[subj,slugs] of Object.entries(subjSlugs)){slugs.forEach(s=>allUrls.push('/subject/'+subj+'/'+s));}
+
+      const fullUrls = allUrls.map(u=>'https://allcarestudy.com'+u);
+
+      // 네이버 IndexNow 제출
+      const naverRes = await fetch('https://searchadvisor.naver.com/indexnow', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json; charset=utf-8'},
+        body: JSON.stringify({
+          host: 'allcarestudy.com',
+          key: INDEXNOW_KEY,
+          keyLocation: 'https://allcarestudy.com/' + INDEXNOW_KEY + '.txt',
+          urlList: fullUrls
+        })
+      });
+
+      // Bing IndexNow 제출 (네이버와 공유되지만 직접도 보냄)
+      const bingRes = await fetch('https://api.indexnow.org/indexnow', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json; charset=utf-8'},
+        body: JSON.stringify({
+          host: 'allcarestudy.com',
+          key: INDEXNOW_KEY,
+          keyLocation: 'https://allcarestudy.com/' + INDEXNOW_KEY + '.txt',
+          urlList: fullUrls
+        })
+      });
+
+      return new Response(JSON.stringify({
+        ok: true,
+        urlCount: fullUrls.length,
+        naver: naverRes.status,
+        bing: bingRes.status
+      }), { headers: {'Content-Type':'application/json'} });
+    }
+
     if (path === '/api/contact' && request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
@@ -6639,6 +6692,7 @@ export default {
           </svg>`;
       return new Response(svgLogo, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
     }
+    if (path === '/82576028bc8743f5869b54199452e4b4.txt') return new Response('82576028bc8743f5869b54199452e4b4', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 
     // 홈
