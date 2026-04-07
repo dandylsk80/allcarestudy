@@ -6585,6 +6585,9 @@ function serveSitemapByKey(key) {
     for(const[subj,slugs] of Object.entries(SUBJ_SLUGS)){slugs.forEach(s=>parts.push(u('/subject/'+subj+'/'+s)));}
     // 학년 페이지
     ['elementary','middle','high'].forEach(g=>parts.push(u('/grade/'+g)));
+    // 엔지니어랩
+    parts.push(u('/engineer-lab'));
+    ['electrical-engineer','exam-schedule','technician','industrial-engineer','exam-schedule-2026','engineer-schedule','written-exam','practical-exam','technician-written','technician-practical','difficulty','construction','industrial-practical','certification','online-lecture','fire-engineer','fire-electrical','fire-practical','fire-electrical-eng','fire-mechanical','fire-academy','engineerlab','lecture-recommend','past-exam-book','public-corp','kepco-interview','electrical-academy','govt-funded','korail-interview','old-certification','fire-eligibility','fire-electrical-practical','fire-past-exam','govt-academy','industrial-written'].forEach(s=>parts.push(u('/engineer-lab/'+s)));
   } else {
     // key 파싱: sido 영문키 (예: seoul, gyeonggi-1, gyeonggi-2)
     const baseKey = key.replace(/-[12]$/, '');
@@ -6763,6 +6766,9 @@ export default {
       // 과목 하위 (주요 10개씩만 - IndexNow는 최근 변경 URL만 보내는 것이 권장)
       const subjSlugs={math:['elem-basics','mid-function','high-math1','calculus','suneung-killer','grade1','supo-escape','concept-total','mid-naesin','mock-exam'],english:['elem-basics','mid-grammar','high-reading','suneung-1','grade1','listening','vocabulary','mid-naesin','mock-strategy','vacation'],korean:['elem-reading','high-nonlit','suneung-1','grade1','modern-poem','grammar','mid-naesin','high-naesin','suneung-lit','vacation'],science:['physics1','chemistry1','biology1','earth1','grade1','integrated','mid-naesin','high-naesin','mechanics','genetics'],social:['korean-history','world-history','korean-geo','economics','grade1','integrated','mid-naesin','high-naesin','history-perfect','vacation'],coding:['start','scratch','python-basic','python-mid','javascript','ai-basic','algorithm','coding-test','elem-coding','portfolio'],essay:['basics','humanities','snu','yonsei','med-essay','self-intro','interview','critical','susi','jeongsi'],gsd:['korean','english','math','high-level','3month','pass-strategy','past-exam','summary','one-on-one','online-guide']};
       for(const[subj,slugs] of Object.entries(subjSlugs)){slugs.forEach(s=>allUrls.push('/subject/'+subj+'/'+s));}
+      // 엔지니어랩
+      allUrls.push('/engineer-lab');
+      ['electrical-engineer','exam-schedule','technician','fire-engineer','fire-electrical','fire-practical','engineerlab','lecture-recommend','public-corp','kepco-interview','electrical-academy','govt-funded'].forEach(s=>allUrls.push('/engineer-lab/'+s));
 
       const fullUrls = allUrls.map(u=>'https://allcarestudy.com'+u);
 
