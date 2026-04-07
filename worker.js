@@ -4629,17 +4629,31 @@ function makeEngineerLabPage() {
   <div class="bc"><a href="/">홈</a> &rsaquo; <span>엔지니어랩</span></div>
 
   <!-- 히어로 배너 -->
-  <div style="background:linear-gradient(135deg,#0F2044 0%,#1E3A5F 50%,#0F2044 100%);border-radius:24px;padding:48px 36px;margin-bottom:32px;text-align:center;position:relative;overflow:hidden">
-    <div style="position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2220%22 cy=%2230%22 r=%2240%22 fill=%22rgba(59,130,246,0.08)%22/><circle cx=%2280%22 cy=%2270%22 r=%2250%22 fill=%22rgba(59,130,246,0.06)%22/></svg>');background-size:cover"></div>
-    <div style="position:relative;z-index:1">
-      <div style="font-size:42px;margin-bottom:12px">⚡</div>
-      <h1 style="font-size:clamp(24px,5vw,32px);font-weight:900;color:white;margin:0 0 12px;line-height:1.3">전기 자격증 합격의 새로운 기준<br><span style="color:#60A5FA">엔지니어랩</span></h1>
-      <p style="font-size:15px;color:rgba(255,255,255,0.7);margin:0 0 24px;line-height:1.6">전기기사 · 전기공사기사 · 전기기능사 · 소방설비기사<br>인강 & 직영학원 · 교재몰</p>
-      <a href="https://www.engineerlab.co.kr/ee/promotion/2025/partner/index.php?partnerID=e5036" target="_blank" rel="noopener" style="display:inline-block;padding:14px 36px;background:#3B82F6;color:white;border-radius:12px;font-size:15px;font-weight:800;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#2563EB'" onmouseout="this.style.background='#3B82F6'">엔지니어랩 바로가기 →</a>
+  </div>
+  <div style="background:linear-gradient(160deg,#0A0A14 0%,#1A1A2E 40%,#16213E 100%);padding:48px 24px 56px;margin:-32px -20px 32px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;right:0;width:60%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(255,255,255,0.03) 0%,transparent 70%)"></div>
+    <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;gap:36px;position:relative;z-index:1;flex-wrap:wrap">
+      <div style="flex:1;min-width:280px">
+        <p style="font-size:15px;color:rgba(255,255,255,0.6);margin:0 0 16px">기술자격증 전문! <b style="color:rgba(255,255,255,0.9)">엔지니어랩</b>에서 준비한—</p>
+        <h1 style="font-size:clamp(36px,8vw,48px);font-weight:900;line-height:1.15;margin:0 0 20px"><span style="color:white">파트너스</span><br><span style="background:linear-gradient(90deg,#FF6B95,#FFB88C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">특별할인</span><br><span style="background:linear-gradient(90deg,#FFB88C,#FF6B95);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">혜택</span></h1>
+        <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0">전기기사 · 전기공사기사 · 전기기능사 · 소방설비기사</p>
+      </div>
+      <div style="flex-shrink:0;position:relative;width:280px">
+        <div style="position:absolute;top:50%;left:-30px;transform:translateY(-50%);z-index:3;background:#0F0F1A;color:white;width:80px;height:80px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;line-height:1.3;box-shadow:0 4px 20px rgba(0,0,0,0.4)"><span style="font-size:12px">파트너스</span><span style="font-size:11px;color:#FF6B95">스페셜혜택</span></div>
+        <div style="background:linear-gradient(135deg,#C9A0DC 0%,#E8A0C0 100%);border-radius:16px;padding:16px;transform:rotate(3deg);box-shadow:0 12px 40px rgba(0,0,0,0.3)">
+          <div style="background:linear-gradient(135deg,#FFB88C 0%,#FF6B95 50%,#E84393 100%);border-radius:12px;padding:24px 20px;transform:rotate(-2deg);position:relative;overflow:hidden">
+            <div style="position:absolute;top:-15px;right:-15px;width:80px;height:80px;background:rgba(255,255,255,0.1);border-radius:50%"></div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:12px">⚡ 엔지니어랩</div>
+            <div style="font-size:22px;font-weight:300;color:white;letter-spacing:4px;margin-bottom:6px">COUPON</div>
+            <div style="font-size:14px;font-weight:800;color:white">인강 ㅣ 학원 특별할인</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="wrap" style="max-width:900px">
 
-  <!-- 쿠폰 코드 -->
+    <!-- 쿠폰 코드 -->
   <section style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:2px solid #F59E0B;border-radius:20px;padding:32px;margin-bottom:28px;text-align:center">
     <div style="font-size:28px;margin-bottom:8px">🎫</div>
     <h2 style="font-size:20px;font-weight:900;color:#92400E;margin:0 0 8px">올케어스터디 전용 6만원 할인 쿠폰</h2>
