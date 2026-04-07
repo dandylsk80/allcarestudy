@@ -1275,6 +1275,10 @@ const HEADER = `<header>
         <div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div>
       </div>
       <div class="gi">
+        <button class="gb">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a></div>
+      </div>
+      <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
       </div>
     </nav>
@@ -1308,6 +1312,10 @@ const HEADER = `<header>
     <a class="mob-subj-btn" href="/conversation/english"><span>📚</span><span>영어회화</span></a>
     <a class="mob-subj-btn" href="/conversation/chinese"><span>🇨🇳</span><span>중국어회화</span></a>
     <a class="mob-subj-btn" href="/conversation/japanese"><span>🇯🇵</span><span>일본어회화</span></a>
+  </div>
+  <div class="mob-nav-section">기타교육</div>
+  <div class="mob-subj-grid">
+    <a class="mob-subj-btn" href="/engineer-lab"><span>🔧</span><span>엔지니어랩</span></a>
   </div>
   <div class="mob-nav-section">학원 & 기타</div>
   <div class="mob-subj-grid">
@@ -1446,6 +1454,10 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
         <div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div>
       </div>
       <div class="gi">
+        <button class="gb" style="color:rgba(255,255,255,0.85)">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a></div>
+      </div>
+      <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a>
       </div>
     </nav>
@@ -1487,6 +1499,7 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px">
   try {
     var path = window.location.pathname;
     var isAcademy = path.indexOf('/academy') === 0;
+    if(path === '/engineer-lab'){ var fb = document.getElementById('float-btns'); if(fb) fb.style.display='none'; }
     var btn = document.getElementById('float-contact-btn');
     if(btn){
       if(isAcademy){
@@ -4605,6 +4618,278 @@ function makeConversationPage(lang) {
 
 
 
+
+function makeEngineerLabPage() {
+  const canonical = '/engineer-lab';
+  const title = '엔지니어랩 - 전기기사 자격증 합격의 새로운 기준 | 올케어스터디';
+  const desc = '전기기사·전기공사기사·전기기능사·소방설비기사 자격증 인강. 합격률 92%, NPS 97%. 올케어스터디 전용 6만원 할인 쿠폰으로 시작하세요.';
+  const bc = [{name:'홈',url:'/'},{name:'기타교육',url:'/engineer-lab'},{name:'엔지니어랩',url:canonical}];
+
+  const body = `<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <span>엔지니어랩</span></div>
+
+  <!-- 히어로 배너 -->
+  <div style="background:linear-gradient(135deg,#0F2044 0%,#1E3A5F 50%,#0F2044 100%);border-radius:24px;padding:48px 36px;margin-bottom:32px;text-align:center;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2220%22 cy=%2230%22 r=%2240%22 fill=%22rgba(59,130,246,0.08)%22/><circle cx=%2280%22 cy=%2270%22 r=%2250%22 fill=%22rgba(59,130,246,0.06)%22/></svg>');background-size:cover"></div>
+    <div style="position:relative;z-index:1">
+      <div style="font-size:42px;margin-bottom:12px">⚡</div>
+      <h1 style="font-size:clamp(24px,5vw,32px);font-weight:900;color:white;margin:0 0 12px;line-height:1.3">전기 자격증 합격의 새로운 기준<br><span style="color:#60A5FA">엔지니어랩</span></h1>
+      <p style="font-size:15px;color:rgba(255,255,255,0.7);margin:0 0 24px;line-height:1.6">전기기사 · 전기공사기사 · 전기기능사 · 소방설비기사<br>인강 & 직영학원 · 교재몰</p>
+      <a href="https://www.engineerlab.co.kr/ee/promotion/2025/partner/index.php?partnerID=e5036" target="_blank" rel="noopener" style="display:inline-block;padding:14px 36px;background:#3B82F6;color:white;border-radius:12px;font-size:15px;font-weight:800;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#2563EB'" onmouseout="this.style.background='#3B82F6'">엔지니어랩 바로가기 →</a>
+    </div>
+  </div>
+
+  <!-- 쿠폰 코드 -->
+  <section style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:2px solid #F59E0B;border-radius:20px;padding:32px;margin-bottom:28px;text-align:center">
+    <div style="font-size:28px;margin-bottom:8px">🎫</div>
+    <h2 style="font-size:20px;font-weight:900;color:#92400E;margin:0 0 8px">올케어스터디 전용 6만원 할인 쿠폰</h2>
+    <p style="font-size:14px;color:#92400E;margin:0 0 20px">아래 링크로 가입하면 4만원 + 2만원 = 총 6만원 할인!</p>
+    <div style="background:white;border:2px dashed #F59E0B;border-radius:12px;padding:20px;display:inline-block;min-width:280px">
+      <div style="font-size:12px;color:#6B7280;margin-bottom:6px">할인 쿠폰</div><div style="display:flex;justify-content:center;gap:8px;margin-bottom:8px"><span style="background:#DC2626;color:white;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:800">4만원</span><span style="font-size:16px;color:#92400E;font-weight:900">+</span><span style="background:#DC2626;color:white;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:800">2만원</span></div>
+      <div id="coupon-code" style="font-size:28px;font-weight:900;color:#0F2044;letter-spacing:3px;font-family:monospace">e5036</div>
+      <button onclick="window.open('https://www.engineerlab.co.kr/ee/promotion/2025/partner/index.php?partnerID=e5036','_blank')" style="margin-top:12px;padding:10px 24px;background:#0F2044;color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">🔗 할인 페이지 바로가기</button>
+    </div>
+    <p style="font-size:12px;color:#92400E;margin:16px 0 0;opacity:0.7">* 엔지니어랩 회원가입 후 결제 시 쿠폰 코드를 입력해주세요</p>
+  </section>
+
+  <!-- 합격 실적 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 20px;text-align:center">📊 엔지니어랩 합격 실적</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px">
+      <div style="background:#EFF6FF;border-radius:14px;padding:20px 16px;text-align:center">
+        <div style="font-size:11px;color:#6B7280;margin-bottom:4px">지인추천의향 NPS</div>
+        <div style="font-size:28px;font-weight:900;color:#1D4ED8">97%</div>
+      </div>
+      <div style="background:#ECFDF5;border-radius:14px;padding:20px 16px;text-align:center">
+        <div style="font-size:11px;color:#6B7280;margin-bottom:4px">합격수기</div>
+        <div style="font-size:28px;font-weight:900;color:#059669">1위</div>
+      </div>
+      <div style="background:#FEF2F2;border-radius:14px;padding:20px 16px;text-align:center">
+        <div style="font-size:11px;color:#6B7280;margin-bottom:4px">전기기사 합격률</div>
+        <div style="font-size:28px;font-weight:900;color:#DC2626">92%</div>
+      </div>
+      <div style="background:#F5F3FF;border-radius:14px;padding:20px 16px;text-align:center">
+        <div style="font-size:11px;color:#6B7280;margin-bottom:4px">공기업 취업률</div>
+        <div style="font-size:28px;font-weight:900;color:#7C3AED">75%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 교육 과정 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
+    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 6px">🎬 강의 미리보기</h2>
+    <p style="font-size:13px;color:#9CA3AF;margin:0 0 18px">엔지니어랩의 실제 강의 화면을 확인하세요</p>
+    <div style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px" onscroll="this.style.scrollbarWidth='none'" class="rv-track">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a7.png" alt="이종오 교수 소방 단기합격 메이커" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a2.png" alt="2026 엔지니어랩 합격 라인업" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a3.png" alt="소방설비기사 실기 강의" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a4.png" alt="연결송수관설비 실기 강의" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a5.png" alt="이산화탄소 소화약제 필기 강의" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a6.png" alt="화학적 변화 필기 강의" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b1.png" alt="전기기사 강의 1" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b2.png" alt="전기기사 강의 2" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b3.png" alt="전기기사 강의 3" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b4.png" alt="전기기사 강의 4" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b5.png" alt="전기기사 강의 5" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b6.png" alt="전기기사 강의 6" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b7.png" alt="전기기사 강의 7" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+      <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b8.png" alt="전기기사 강의 8" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
+    </div>
+  </section>
+  <section class="u9">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 20px">⚡ 교육 과정</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${[
+        ['전기(산업)기사','필기+실기 종합반, 단과반, 기출 특강. 최다 합격자 배출 대표 과정','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=EE'],
+        ['전기공사(산업)기사','시공·설계 실무 중심 강의. 필기+실기 올인원 패키지','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=EW'],
+        ['전기기능사','기초부터 실기까지 단계별 학습. 비전공자도 합격 가능','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=CE'],
+        ['소방설비기사','전기·기계 분야. 소방 자격증 취득의 최단 경로','https://www.engineerlab.co.kr/ee/promotion/firefighting/index.php'],
+        ['전기 실무 과정','현장 실무 능력 강화. 실제 업무에 바로 적용 가능','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=EO'],
+        ['공기업 취업','한전·발전사 등 공기업 채용 대비 전문 과정','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=PC'],
+      ].map(([t,d,u])=>'<a href="'+u+'" target="_blank" rel="noopener" style="display:block;background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\'#3B82F6\';this.style.background=\'#EFF6FF\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'#F8FAFC\'"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:4px">⚡ '+t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.5">'+d+'</div></a>').join('')}
+    </div>
+  </section>
+
+  <!-- 학원 & 국비 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">🏫 직영학원 & 국비지원</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <a href="https://www.engineerlab.co.kr/acad/index.php" target="_blank" rel="noopener" style="display:block;background:#F0FDF4;border:1.5px solid #BBF7D0;border-radius:12px;padding:20px;text-decoration:none;text-align:center">
+        <div style="font-size:24px;margin-bottom:6px">🏢</div>
+        <div style="font-size:15px;font-weight:800;color:#0F2044">종로학원 (일반)</div>
+        <div style="font-size:12px;color:#059669;margin-top:4px">오프라인 수업</div>
+      </a>
+      <a href="https://www.engineerlab.co.kr/acad/lecture/grant.php" target="_blank" rel="noopener" style="display:block;background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:12px;padding:20px;text-decoration:none;text-align:center">
+        <div style="font-size:24px;margin-bottom:6px">💰</div>
+        <div style="font-size:15px;font-weight:800;color:#0F2044">종로학원 (국비지원)</div>
+        <div style="font-size:12px;color:#1D4ED8;margin-top:4px">국비 무료 과정</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 왜 엔지니어랩? -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">🏆 왜 엔지니어랩인가?</h2>
+    <div style="display:grid;gap:12px">
+      ${[
+        ['업계 최고 합격률 92%','2023년 3회 전기기사 실기 기준, 학원 수강생 최종합격률. 체계적인 커리큘럼과 실전 중심 강의로 높은 합격률을 자랑합니다.'],
+        ['생생한 합격수기 1위','자사 및 타사 합격수기 작성건수 비교 기준 업계 1위. 실제 합격자들의 리얼 후기가 가장 많은 곳입니다.'],
+        ['교재-시험 체감적중률 99%','엔지니어랩 브랜드 만족도 조사 결과. 시험에 나올 내용을 교재에서 미리 학습할 수 있어 수험생 만족도가 높습니다.'],
+        ['인강 + 학원 + 교재 올인원','온라인 인강, 종로 직영학원, 자체 개발 교재까지 한 곳에서 해결. 국비지원 과정도 운영합니다.'],
+      ].map(([t,d])=>'<div style="background:#F8FAFC;border-radius:12px;padding:18px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:6px">✅ '+t+'</div><div style="font-size:13px;color:#6B7280;line-height:1.7">'+d+'</div></div>').join('')}
+    </div>
+  </section>
+
+  <!-- 이런 분께 추천 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">🎯 이런 분께 추천합니다</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      ${['전기기사 자격증을 준비하는 분','전기공사기사 시험을 앞둔 분','전기기능사 취득이 필요한 분','소방설비기사를 준비하는 분','공기업(한전·발전사) 취업을 목표로 하는 분','비전공자지만 전기 자격증에 도전하는 분','독학에 한계를 느끼는 수험생','국비지원으로 무료 수강을 원하는 분'].map(t=>'<span style="background:#EFF6FF;color:#1D4ED8;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:700">✓ '+t+'</span>').join('')}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">❓ 자주 묻는 질문</h2>
+    <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9">
+      <div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. 엔지니어랩 쿠폰은 어떻게 사용하나요?</div>
+      <div style="font-size:14px;color:#374151;line-height:1.85">A. 엔지니어랩 회원가입 후 인강 결제 시 쿠폰 코드 입력란에 위의 코드를 입력하시면 할인이 적용됩니다.</div>
+    </div>
+    <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9">
+      <div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. 비전공자도 전기기사 자격증을 딸 수 있나요?</div>
+      <div style="font-size:14px;color:#374151;line-height:1.85">A. 네. 관련 학과 졸업자가 아니더라도 실무 경력이나 학점은행제 등을 통해 응시 자격을 갖출 수 있습니다. 엔지니어랩에서 응시 자격 관련 상담도 제공합니다.</div>
+    </div>
+    <div>
+      <div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. 국비지원 과정은 정말 무료인가요?</div>
+      <div style="font-size:14px;color:#374151;line-height:1.85">A. 네. 고용노동부 국민내일배움카드를 발급받으면 종로 직영학원의 전기기사 과정을 국비로 수강할 수 있습니다. 자세한 내용은 엔지니어랩 홈페이지를 확인하세요.</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div style="background:linear-gradient(135deg,#0F2044,#1E3A5F);border-radius:20px;padding:36px;text-align:center;margin-bottom:24px">
+    <h3 style="font-size:20px;font-weight:900;color:white;margin:0 0 8px">전기 자격증, 엔지니어랩과 함께 시작하세요</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.65);margin:0 0 20px">올케어스터디 전용 6만원 할인 쿠폰으로 시작하세요</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+      <a href="https://www.engineerlab.co.kr/ee/promotion/2025/partner/index.php?partnerID=e5036" target="_blank" rel="noopener" style="padding:14px 28px;background:#3B82F6;color:white;border-radius:12px;font-size:15px;font-weight:800;text-decoration:none">엔지니어랩 바로가기</a>
+      <a href="/contact" style="padding:14px 28px;background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3);border-radius:12px;font-size:15px;font-weight:800;text-decoration:none">상담 문의하기</a>
+    </div>
+  </div>
+
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
+    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 18px">📚 자격증별 상세 가이드</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">
+      ${[['electrical-engineer','전기기사'],['exam-schedule','기사 시험일정'],['technician','전기기능사'],['industrial-engineer','전기산업기사'],['written-exam','전기기사필기'],['practical-exam','전기기사실기'],['difficulty','전기기사난이도'],['construction','전기공사기사'],['certification','전기기사자격증'],['online-lecture','전기기사인강'],['technician-written','전기기능사필기'],['technician-practical','전기기능사실기'],['fire-engineer','소방설비기사'],['fire-electrical','소방설비기사전기'],['fire-practical','소방설비기사실기'],['fire-mechanical','소방설비기사기계'],['fire-academy','소방설비기사학원'],['engineerlab','엔지니어랩'],['lecture-recommend','전기기사인강추천'],['past-exam-book','기출문제집'],['public-corp','공기업채용'],['kepco-interview','한전면접'],['electrical-academy','전기학원'],['govt-funded','국비자격증'],['korail-interview','코레일면접'],['old-certification','노후자격증'],['fire-eligibility','소방 응시자격'],['govt-academy','국비학원'],['exam-schedule-2026','2026 시험일정'],['engineer-schedule','전기기사시험일정'],['industrial-practical','전기산업기사실기'],['industrial-written','전기산업기사필기'],['fire-electrical-eng','소방전기기사'],['fire-electrical-practical','소방전기실기'],['fire-past-exam','소방 기출문제']].map(([s,t])=>'<a href="/engineer-lab/'+s+'" style="display:block;padding:10px 14px;background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:10px;text-decoration:none;font-size:13px;font-weight:700;color:#0F2044;transition:all .2s" onmouseover="this.style.borderColor=\'#3B82F6\';this.style.background=\'#EFF6FF\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'#F8FAFC\'">⚡ '+t+'</a>').join('')}
+    </div>
+  </section>
+  <div class="keyword-box"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">전기기사</span><span class="keyword-tag">기사 시험일정</span><span class="keyword-tag">전기기능사</span><span class="keyword-tag">전기산업기사</span><span class="keyword-tag">2026 기사시험일정</span><span class="keyword-tag">전기기사시험일정</span><span class="keyword-tag">전기기사필기</span><span class="keyword-tag">전기기사실기</span><span class="keyword-tag">전기기능사필기</span><span class="keyword-tag">전기기능사실기</span><span class="keyword-tag">전기기사난이도</span><span class="keyword-tag">전기공사기사</span><span class="keyword-tag">전기산업기사실기</span><span class="keyword-tag">전기기사자격증</span><span class="keyword-tag">전기기사인강</span><span class="keyword-tag">소방설비기사</span><span class="keyword-tag">소방설비기사전기</span><span class="keyword-tag">소방설비기사실기</span><span class="keyword-tag">소방전기기사</span><span class="keyword-tag">소방설비기사기계</span><span class="keyword-tag">소방설비기사학원</span><span class="keyword-tag">소방기사전기</span><span class="keyword-tag">엔지니어랩</span><span class="keyword-tag">엔랩</span><span class="keyword-tag">전기기사인강추천</span><span class="keyword-tag">전기기사기출문제집</span><span class="keyword-tag">공기업채용</span><span class="keyword-tag">공기업취업</span><span class="keyword-tag">공기업면접</span><span class="keyword-tag">한전면접</span><span class="keyword-tag">전기학원</span><span class="keyword-tag">전기기사학원</span><span class="keyword-tag">국비자격증</span><span class="keyword-tag">국비지원자격증</span><span class="keyword-tag">내일배움카드자격증</span></div></div>
+</div>`;
+  return wrap(title, desc, canonical, body, bc);
+}
+
+
+function makeEngineerLabSubPage(slug) {
+  const P = {
+    'electrical-engineer':{t:'전기기사',d:'전기기사 자격증 시험 대비 인강. 필기+실기 종합반, 기출 특강, 합격률 92%',kw:['전기기사','전기기사 시험','전기기사 합격']},
+    'exam-schedule':{t:'기사 시험일정',d:'2026년 전기기사·전기산업기사·전기기능사 시험일정 총정리',kw:['기사 시험일정','2026 기사시험일정','시험 접수']},
+    'technician':{t:'전기기능사',d:'전기기능사 자격증 필기+실기 대비. 비전공자도 합격 가능한 체계적 커리큘럼',kw:['전기기능사','전기기능사 시험','기능사']},
+    'industrial-engineer':{t:'전기산업기사',d:'전기산업기사 필기·실기 종합 대비. 산업기사에서 기사로 이어지는 학습 로드맵',kw:['전기산업기사','산업기사','산업기사시험일정']},
+    'exam-schedule-2026':{t:'2026 기사시험일정',d:'2026년도 전기기사 1회·2회·3회 필기 및 실기 시험일정과 접수 방법 안내',kw:['2026 기사시험일정','시험일정','접수일정']},
+    'engineer-schedule':{t:'전기기사시험일정',d:'전기기사 시험일정, 접수기간, 합격자 발표일 등 수험생 필수 정보 총정리',kw:['전기기사시험일정','전기기사 접수','합격자 발표']},
+    'written-exam':{t:'전기기사필기',d:'전기기사 필기시험 과목별 핵심 이론과 기출문제 분석. 합격 컷과 공부법 안내',kw:['전기기사필기','필기시험','필기 합격']},
+    'practical-exam':{t:'전기기사실기',d:'전기기사 실기시험 작업형·필답형 대비. 실기 합격률을 높이는 실전 훈련',kw:['전기기사실기','실기시험','실기 합격']},
+    'technician-written':{t:'전기기능사필기',d:'전기기능사 필기시험 핵심 이론 정리와 기출 반복 학습으로 단기 합격',kw:['전기기능사필기','기능사 필기','필기 대비']},
+    'technician-practical':{t:'전기기능사실기',d:'전기기능사 실기시험 배선 작업 실전 연습. 작업형 시험 완벽 대비',kw:['전기기능사실기','기능사 실기','실기 대비']},
+    'difficulty':{t:'전기기사난이도',d:'전기기사 시험 난이도 분석. 과목별 체감 난이도와 합격률 추이, 효율적 공부 전략',kw:['전기기사난이도','시험 난이도','합격률']},
+    'construction':{t:'전기공사기사',d:'전기공사기사·전기공사산업기사 시험 대비. 시공·설계 실무 중심 강의',kw:['전기공사기사','전기공사산업기사','공사기사']},
+    'industrial-practical':{t:'전기산업기사실기',d:'전기산업기사 실기시험 필답형·작업형 대비. 핵심 공식과 실전 문제 훈련',kw:['전기산업기사실기','산업기사 실기','실기 대비']},
+    'certification':{t:'전기기사자격증',d:'전기기사 자격증 취득 가이드. 응시자격, 시험과목, 합격기준, 취업 전망까지',kw:['전기기사자격증','자격증 취득','응시자격']},
+    'online-lecture':{t:'전기기사인강',d:'전기기사 인강 추천. 필기+실기 종합반, 단과반, 기출 특강 비교 분석',kw:['전기기사인강','인강 추천','온라인 강의']},
+    'fire-engineer':{t:'소방설비기사',d:'소방설비기사(전기·기계) 자격증 시험 대비. 필기+실기 체계적 학습',kw:['소방설비기사','소방 자격증','소방설비']},
+    'fire-electrical':{t:'소방설비기사전기',d:'소방설비기사 전기분야 필기·실기 대비. 전기 전공자에게 유리한 자격증',kw:['소방설비기사전기','전기분야','소방전기']},
+    'fire-practical':{t:'소방설비기사실기',d:'소방설비기사 실기시험 대비. 설계도면 해석과 시공 실무 중심 학습',kw:['소방설비기사실기','소방 실기','실기 대비']},
+    'fire-electrical-eng':{t:'소방전기기사',d:'소방전기기사 시험 대비. 소방설비기사 전기분야의 핵심 이론과 실기 훈련',kw:['소방전기기사','소방전기','전기기사']},
+    'fire-mechanical':{t:'소방설비기사기계',d:'소방설비기사 기계분야 시험 대비. 기계 전공자를 위한 맞춤 커리큘럼',kw:['소방설비기사기계','기계분야','소방기계']},
+    'fire-academy':{t:'소방설비기사학원',d:'소방설비기사 전문 학원·인강 비교. 합격률 높은 강의와 학원 추천',kw:['소방설비기사학원','소방 학원','소방 인강']},
+    'engineerlab':{t:'엔지니어랩',d:'엔지니어랩 전기기사·소방설비기사 인강. NPS 97%, 합격률 92%의 비결',kw:['엔지니어랩','엔랩','engineerlab']},
+    'lecture-recommend':{t:'전기기사인강추천',d:'2026년 전기기사 인강 추천 순위. 가성비·합격률·강사진 비교 분석',kw:['전기기사인강추천','인강 추천','인강 비교']},
+    'past-exam-book':{t:'전기기사기출문제집',d:'전기기사 기출문제집 추천. 최근 10년 기출 분석과 효율적 풀이 전략',kw:['전기기사기출문제집','기출문제','기출 분석']},
+    'public-corp':{t:'공기업채용',d:'한전·발전사·코레일 등 공기업 채용 대비. 전기 자격증으로 취업 경쟁력 높이기',kw:['공기업채용','공기업취업','공기업면접']},
+    'kepco-interview':{t:'한전면접',d:'한국전력공사(한전) 면접 대비. 전기 전공 면접 질문과 합격 전략',kw:['한전면접','한전 취업','한전 채용']},
+    'electrical-academy':{t:'전기학원',d:'전기기사 학원 추천. 종로 직영학원, 국비지원 과정, 오프라인 수업 안내',kw:['전기학원','전기기사학원','학원 추천']},
+    'govt-funded':{t:'국비자격증',d:'국비지원으로 무료 취득 가능한 전기 자격증. 내일배움카드 활용법 안내',kw:['국비자격증','국비지원자격증','내일배움카드자격증']},
+    'korail-interview':{t:'코레일면접',d:'코레일(한국철도공사) 면접 대비. 전기직 면접 기출 질문과 합격 노하우',kw:['코레일면접','코레일 취업','철도공사']},
+    'old-certification':{t:'노후자격증',d:'노후 대비 자격증으로 전기기사가 주목받는 이유. 은퇴 후 제2의 커리어',kw:['노후자격증','은퇴 후 자격증','제2의 직업']},
+    'fire-eligibility':{t:'소방설비기사응시자격',d:'소방설비기사 응시자격 총정리. 관련 학과, 경력, 학점은행제 활용법',kw:['소방설비기사응시자격','응시자격','자격요건']},
+    'fire-electrical-practical':{t:'소방설비기사전기실기',d:'소방설비기사 전기분야 실기시험 대비. 설계도면·시공 실무 집중 훈련',kw:['소방설비기사전기실기','전기 실기','소방 실기']},
+    'fire-past-exam':{t:'소방설비기사전기실기기출문제',d:'소방설비기사 전기실기 기출문제 분석. 최근 출제 경향과 핵심 풀이법',kw:['소방설비기사전기실기기출문제','기출문제','출제경향']},
+    'govt-academy':{t:'국비학원',d:'국비지원 전기기사 학원 안내. 내일배움카드로 무료 수강하는 방법',kw:['국비학원','국비지원','내일배움카드']},
+    'industrial-written':{t:'전기산업기사필기',d:'전기산업기사 필기시험 과목별 핵심 정리. 단기 합격을 위한 효율적 공부법',kw:['전기산업기사필기','산업기사 필기','필기 대비']},
+  };
+  const pg=P[slug];if(!pg)return null;
+  const T=pg.t,D=pg.d;
+  const canonical='/engineer-lab/'+slug;
+  const desc=T+' - '+D+' | 엔지니어랩 x 올케어스터디. 전용 6만원 할인 쿠폰 e5036';
+  const bc=[{name:'홈',url:'/'},{name:'엔지니어랩',url:'/engineer-lab'},{name:T,url:canonical}];
+  const idx=Object.keys(P).indexOf(slug);
+
+  const O1=['전기·소방 자격증 시험에서 "'+T+'"은 수험생들이 가장 많이 검색하는 핵심 키워드입니다. "'+T+'" 시험은 매년 3회 시행되며, 수만 명의 수험생이 도전하는 국가기술자격증입니다. 합격률은 회차마다 다르지만 평균적으로 필기 40~50%, 실기 50~60% 수준이므로 체계적인 준비가 반드시 필요합니다.','"'+T+'" 관련 정보를 찾고 계신가요? 엔지니어랩에서 가장 효율적인 학습 방법을 제공합니다. "'+T+'" 시험은 단순히 이론을 암기하는 것만으로는 합격이 어렵고, 출제 경향을 파악하고 실전 문제 풀이 능력을 갖춰야 합격할 수 있습니다. 많은 합격자들이 엔지니어랩의 체계적인 커리큘럼을 합격의 핵심 비결로 꼽고 있습니다.','매년 수만 명이 도전하는 "'+T+'". 합격의 열쇠는 체계적인 준비에 있습니다. 독학으로 준비할 경우 방대한 범위를 어디서부터 시작해야 할지 막막할 수 있지만, 엔지니어랩의 강의를 따라가면 핵심을 빠르게 파악하고 효율적으로 학습할 수 있습니다. 특히 기출문제 적중률이 높아 시험장에서 자신감을 가질 수 있습니다.','"'+T+'" 시험을 준비한다면 합격률 92%의 엔지니어랩이 정답입니다. 2023년 3회 실기 시험 기준 학원 수강생 최종합격률이 92%에 달하며, 이는 업계 최고 수준입니다. 교재와 시험의 체감적중률 99%는 엔지니어랩의 강사진이 얼마나 정확하게 출제 경향을 분석하고 있는지를 보여줍니다.','"'+T+'"은 취업과 커리어에 직결되는 중요한 자격입니다. 전기 분야 취업, 공기업 채용, 프리랜서 전기 감리, 노후 대비까지 다양한 목적으로 "'+T+'"을 준비하는 분들이 늘어나고 있습니다. 자격증 취득 후에는 연봉 상승, 승진, 이직 등에서 확실한 경쟁력을 갖추게 됩니다.','"'+T+'" 합격을 위해 가장 중요한 것은 검증된 강의와 체계적인 커리큘럼입니다. 인터넷에 무료 자료가 많지만, 체계 없이 공부하면 오히려 시간을 낭비하게 됩니다. 엔지니어랩은 합격에 필요한 핵심만 선별해 최단 기간에 합격할 수 있는 로드맵을 제공합니다.','많은 수험생이 "'+T+'" 준비에서 시행착오를 겪습니다. 엔지니어랩은 수천 명의 합격 데이터를 분석해 가장 효율적인 학습 경로를 설계했습니다. 어떤 과목부터 시작해야 하는지, 어떤 유형에 집중해야 하는지, 실기는 어떻게 대비해야 하는지 모든 것을 안내합니다.','"'+T+'"을 검색하셨다면 지금이 시작할 최적의 타이밍입니다. 시험은 1년에 3회 치러지며, 지금 시작하면 다음 시험에 충분히 합격할 수 있습니다. 엔지니어랩의 합격 보장 커리큘럼으로 한 번에 합격하세요.'];
+  const M1=[''+D+'. 엔지니어랩은 NPS 지인추천의향 97%, 합격수기 업계 1위, 교재-시험 체감적중률 99%를 자랑하는 전기·소방 자격증 전문 교육 플랫폼입니다. 온라인 인강, 종로 직영학원, 자체 개발 교재를 통해 수험생에게 최적의 학습 환경을 제공합니다.',''+D+'. 온라인 인강부터 종로 직영학원, 국비지원 과정까지 학습자의 상황에 맞는 다양한 학습 방법을 제공합니다. 직장인은 인강으로, 시간이 있는 분은 학원으로, 경제적 부담이 있는 분은 국비지원으로 선택할 수 있습니다.',''+D+'. 비전공자도 학점은행제를 통해 응시자격을 갖출 수 있으며, 엔지니어랩의 체계적인 커리큘럼으로 합격까지 안내합니다. 기초가 부족해도 입문 과정부터 차근차근 학습하면 충분히 합격할 수 있습니다.',''+D+'. 올케어스터디 전용 쿠폰 코드 e5036을 사용하면 4만원+2만원 총 6만원 할인 혜택을 받을 수 있습니다. 합격이 목표라면 검증된 엔지니어랩과 함께 시작하세요.'];
+  const p1=O1[idx%8]+' '+M1[idx%4];
+
+  const P2=['"'+T+'" 학습에서 핵심은 기출문제 분석입니다. 최근 10년간 출제 경향을 파악하면 반복되는 유형이 보이고, 이 유형을 집중 공략하면 합격 확률이 크게 높아집니다. 엔지니어랩의 강사진은 매 시험마다 기출을 분석해 적중률 높은 강의를 제공합니다. 특히 자주 출제되는 핵심 공식과 개념을 정리한 요약 자료는 시험 직전 마무리에 매우 효과적입니다. 기출 분석 없이 교과서만 읽는 것은 비효율적인 학습 방법입니다.','"'+T+'" 시험은 이론 암기만으로는 합격이 어렵습니다. 개념을 이해하고 문제에 적용하는 훈련이 필수이며, 특히 계산 문제는 공식을 외우는 것이 아니라 풀이 과정을 체득해야 합니다. 엔지니어랩의 단계별 학습법이 이 과정을 체계적으로 안내합니다. 이론→예제→기출→모의고사 순서로 학습하면 자연스럽게 문제 풀이 능력이 향상됩니다.','"'+T+'" 준비의 효율을 높이려면 과목별 전략이 필요합니다. 취약 과목은 기본 이론부터, 강점 과목은 기출 위주로 학습하는 선택과 집중이 합격의 지름길입니다. 엔지니어랩은 수강생별 약점을 진단하고 맞춤 학습 계획을 설계합니다. 또한 과목 간 연계 학습을 통해 하나의 개념이 여러 과목에서 어떻게 출제되는지 통합적으로 이해할 수 있습니다.','엔지니어랩의 "'+T+'" 강의는 필기와 실기를 연계한 통합 학습 시스템을 제공합니다. 필기에서 배운 이론이 실기에서 어떻게 적용되는지를 연결해 학습하면 두 시험을 효율적으로 준비할 수 있습니다. 실기 시험은 필답형과 작업형으로 구성되며, 엔지니어랩은 두 유형 모두에 대한 실전 대비 강의를 제공합니다.','최근 "'+T+'" 시험의 출제 경향은 실무 적용 능력을 묻는 방향으로 변화하고 있습니다. 단순 암기형 문제가 줄고 응용력을 요구하는 문제가 늘어나면서, 개념의 본질을 이해하는 학습이 더욱 중요해지고 있습니다. 엔지니어랩의 강사진은 이런 출제 트렌드를 반영해 매년 강의 내용을 업데이트합니다.'];
+  const p2=P2[idx%5];
+
+  const P3=['엔지니어랩의 "'+T+'" 학습 시스템: ①기본 이론 강의로 핵심 개념 정립 ②과목별 기출문제 반복 풀이 ③오답 노트 작성과 약점 보강 ④실전 모의고사로 시간 관리 훈련. 이 4단계를 반복하면 합격에 필요한 실력이 쌓입니다. 엔지니어랩의 강의는 1.5배속·2배속 재생을 지원해 시간이 부족한 직장인도 효율적으로 학습할 수 있으며, 모바일 앱으로 출퇴근 시간에도 수강 가능합니다.','온라인 인강으로 "'+T+'"을 준비하면 시간과 장소에 구애받지 않고 학습할 수 있습니다. 출퇴근 시간, 점심시간 등 자투리 시간을 활용할 수 있으며, 이해가 안 되는 부분은 반복 재생으로 완벽히 익힐 수 있습니다. 엔지니어랩 앱으로 모바일 학습도 지원하며, 강의 노트와 핵심 요약 PDF도 함께 제공되어 복습 효율을 높입니다.','종로 직영학원에서 "'+T+'"을 오프라인으로 준비할 수도 있습니다. 현장 강의의 집중력과 즉석 질의응답의 장점을 원하는 수험생에게 추천합니다. 국비지원 과정은 내일배움카드로 무료 수강이 가능하며, 취업 연계 프로그램도 운영하고 있어 자격증 취득 후 바로 취업으로 이어질 수 있습니다.','"'+T+'" 합격 로드맵: 시험 3~4개월 전—기본 이론 완성과 기초 문제 풀이, 2개월 전—기출문제 유형별 반복 훈련, 1개월 전—모의고사 실전 연습과 약점 집중 보강, 시험 직전—핵심 요약 정리와 오답 재확인. 엔지니어랩의 커리큘럼은 이 일정에 맞춰 설계되어 있어 계획대로만 따라가면 합격할 수 있습니다.','"'+T+'" 독학이 어렵다면 엔지니어랩의 강의를 활용하세요. 독학 대비 학습 시간을 40% 이상 절약할 수 있으며, 합격에 필요한 핵심만 골라 배울 수 있습니다. 교재-시험 체감적중률 99%가 이를 증명합니다. 또한 수강생 전용 질문 게시판에서 강사에게 직접 질문하고 답변을 받을 수 있어 독학의 답답함을 해소할 수 있습니다.','직장인을 위한 "'+T+'" 학습법: 평일 1시간+주말 3시간 학습 패턴으로 3~6개월 안에 합격이 가능합니다. 엔지니어랩 인강은 배속 재생을 지원하고, 챕터별로 세분화되어 있어 원하는 부분만 골라서 학습할 수 있습니다. 출퇴근 지하철에서 30분씩만 투자해도 이론 강의를 충분히 소화할 수 있습니다.'];
+  const p3=P3[idx%6];
+
+  const P4=['올케어스터디에서 엔지니어랩 "'+T+'" 강의를 수강하면 전용 6만원 할인 쿠폰(4만원+2만원)을 받을 수 있습니다. 쿠폰 코드 e5036으로 지금 바로 시작하세요. 합격률 92%의 엔지니어랩과 함께라면 "'+T+'" 합격이 가까워집니다. 첫 강의 무료 체험도 가능하니 부담 없이 경험해보세요.','"'+T+'" 합격은 시작이 반입니다. 엔지니어랩의 무료 체험 강의로 먼저 경험해보고, 올케어스터디 전용 쿠폰 e5036으로 6만원 할인 혜택까지 받으세요. 전기·소방 자격증의 새로운 기준, 엔지니어랩입니다. 수천 명의 합격자가 선택한 이유를 직접 확인해보세요.','전기 자격증은 평생 유효한 국가 자격증입니다. "'+T+'" 합격 후에는 전기 분야 취업, 공기업 채용, 프리랜서 전기 감리, 건설회사 취업 등 다양한 커리어 기회가 열립니다. 특히 전기 분야는 인력 부족으로 취업 전망이 밝아 자격증의 가치가 계속 높아지고 있습니다. 엔지니어랩과 함께 인생을 바꿀 첫 걸음을 내딛으세요. 올케어스터디 쿠폰 e5036으로 6만원 할인!','"'+T+'"을 준비하는 모든 수험생을 응원합니다. 엔지니어랩은 합격까지 끝까지 함께하며, 올케어스터디 전용 할인 쿠폰 e5036으로 경제적 부담까지 줄여드립니다. 합격 후에는 합격수기를 작성하면 추가 혜택도 제공됩니다. 지금 시작하세요!'];
+  const p4=P4[idx%4];
+
+  const faq=[
+    ['"'+T+'" 시험 준비에 얼마나 걸리나요?','기초 수준에 따라 다르지만, 전공자는 2~3개월, 비전공자는 4~6개월이 일반적입니다. 엔지니어랩의 체계적 커리큘럼을 따라가면 독학보다 학습 시간을 40% 이상 절약할 수 있습니다. 시험은 1년에 3회 치러지므로 지금 시작하면 다음 시험에 충분히 도전할 수 있습니다. 엔지니어랩은 수험생의 수준에 맞춰 입문·기본·심화·실전 단계별 강의를 제공합니다.'],
+    ['비전공자도 "'+T+'" 응시가 가능한가요?','네, 가능합니다. 학점은행제를 통해 관련 학점을 이수하거나, 해당 분야 실무경력이 있으면 응시자격을 갖출 수 있습니다. 엔지니어랩에서는 응시자격 관련 무료 상담을 제공하며, 학점은행제 연계 프로그램도 안내하고 있습니다. 비전공자 출신 합격자도 매년 수백 명에 달하므로 도전해볼 만한 가치가 충분합니다.'],
+    ['올케어스터디 할인 쿠폰은 어떻게 사용하나요?','엔지니어랩 홈페이지에서 회원가입 후 인강을 결제할 때 쿠폰 코드 e5036을 입력하면 4만원+2만원 총 6만원 할인이 자동 적용됩니다. 올케어스터디 전용 혜택이므로 반드시 쿠폰 코드를 입력해주세요. 종합반, 단과반, 기출 특강 등 모든 인강 상품에 적용 가능합니다.'],
+    ['"'+T+'" 자격증 취득 후 진로는 어떻게 되나요?','전기 자격증은 취업 시장에서 매우 높은 가치를 가집니다. 한전·발전사·코레일 등 공기업 채용에서 가산점을 받을 수 있고, 전기 설계·시공·감리 회사, 건설사, 플랜트 업체 등 다양한 민간 기업에서도 전기 자격증 보유자를 우대합니다. 프리랜서 전기 감리로 높은 수입을 올리는 분도 많습니다.'],
+  ];
+
+  // 소방 관련 페이지에 강의 이미지 삽입
+  const FIRE_SLUGS = ['fire-engineer','fire-electrical','fire-practical','fire-electrical-eng','fire-mechanical','fire-academy','fire-eligibility','fire-electrical-practical','fire-past-exam'];
+  const isFirePage = FIRE_SLUGS.includes(slug);
+  const imgIdx = idx % 7 + 1;
+  const lectureImg = isFirePage ? '<div style="margin-bottom:24px"><img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a'+imgIdx+'.png" alt="'+T+' 강의 미리보기" loading="lazy" style="width:100%;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,0.1)"></div>' : '';
+  // 전기 관련 페이지에 b1~b8 이미지
+  const ELEC_SLUGS = ['electrical-engineer','written-exam','practical-exam','certification','online-lecture','construction','engineerlab','lecture-recommend','exam-schedule','industrial-engineer','technician','difficulty','industrial-practical','past-exam-book','electrical-academy','public-corp'];
+  const isElecPage = ELEC_SLUGS.includes(slug);
+  const elecImg = isElecPage ? '<div style="margin-bottom:24px"><img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b'+(idx%8+1)+'.png" alt="'+T+' 강의 미리보기" loading="lazy" style="width:100%;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,0.1)"></div>' : '';
+  const pageImg = lectureImg || elecImg;
+
+  const otherSlugs=Object.entries(P).filter(([k])=>k!==slug).slice(0,6);
+  const body=`<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/engineer-lab">엔지니어랩</a> &rsaquo; <span>${T}</span></div>
+  <div style="background:linear-gradient(135deg,#0F2044,#1E3A5F);border-radius:20px;padding:32px;margin-bottom:28px">
+    <div style="font-size:32px;margin-bottom:8px">⚡</div>
+    <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:white;margin:0 0 8px">${T}</h1>
+    <p style="font-size:14px;color:rgba(255,255,255,0.7);margin:0">${D}</p>
+  </div>
+  ${pageImg}<section class="u9"><h2 class="u30" style="border-left:5px solid #3B82F6;padding-left:14px">${T}</h2><p class="u25">${p1}</p></section>
+  <section class="u9"><h2 class="u30" style="color:#3B82F6">${T} 학습 전략</h2><p class="u25">${p2}</p></section>
+  <section class="u9"><h2 class="u30" style="color:#3B82F6">${T} 준비 방법</h2><p class="u25">${p3}</p></section>
+  <section class="u9"><h2 class="u30" style="color:#3B82F6">엔지니어랩으로 ${T} 시작하기</h2><p class="u25">${p4}</p></section>
+  <section style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:2px solid #F59E0B;border-radius:16px;padding:24px;margin-bottom:24px;text-align:center">
+    <div style="font-size:20px;margin-bottom:6px">🎫</div>
+    <div style="font-size:16px;font-weight:900;color:#92400E;margin-bottom:8px">올케어스터디 전용 6만원 할인</div>
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:10px"><span style="background:#DC2626;color:white;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:800">4만원</span><span style="font-size:16px;color:#92400E;font-weight:900">+</span><span style="background:#DC2626;color:white;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:800">2만원</span></div>
+    <a href="https://www.engineerlab.co.kr/ee/promotion/2025/partner/index.php?partnerID=e5036" target="_blank" rel="noopener" style="display:inline-block;padding:12px 28px;background:#0F2044;color:white;border-radius:10px;font-size:14px;font-weight:800;text-decoration:none">🔗 할인 페이지 바로가기</a>
+  </section>
+  <section class="u9"><h2 class="u30">❓ ${T} 자주 묻는 질문</h2>${faq.map(([q,a])=>'<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. '+q+'</div><div style="font-size:14px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}</section>
+  <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 자격증 정보</h2>${otherSlugs.map(([k,v])=>'<a href="/engineer-lab/'+k+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\'#3B82F6\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">⚡ '+v.t+'</div></a>').join('')}</section>
+  <div class="cta-box"><h3>${T} 합격, 엔지니어랩과 함께</h3><p>올케어스터디 전용 6만원 할인 쿠폰으로 시작하세요</p><div class="cta-btns"><a class="btn-p" href="https://www.engineerlab.co.kr/ee/promotion/2025/partner/index.php?partnerID=e5036" target="_blank">🔗 엔지니어랩 바로가기</a><a class="btn-o" href="/engineer-lab">엔지니어랩 메인</a></div></div>
+  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags">${pg.kw.map(k=>'<span class="keyword-tag">'+k+'</span>').join('')}<span class="keyword-tag">엔지니어랩</span><span class="keyword-tag">전기기사 인강</span></div></div>
+</div>`;
+  return wrap(T+' | 엔지니어랩 - 올케어스터디',desc,canonical,body,bc);
+}
+
 function makeSubjectSubPage(subjectEn, slug) {
   const SUBJ = {
     math:{ko:'수학',em:'📐',color:'#1D4ED8',bg:'#EFF6FF'},
@@ -6598,6 +6883,8 @@ export default {
         }
       }
     }
+    if (path.startsWith('/engineer-lab/')) { const slug = path.split('/')[2]; if (slug) { const p = makeEngineerLabSubPage(slug); if (p) return new Response(p, {headers:h}); } }
+    if (path === '/engineer-lab') return new Response(makeEngineerLabPage(), { headers: h });
     if (path === '/sitemap.xml') return serveSitemapIndex();
     // 시도별 sitemap: /sitemap-seoul.xml, /sitemap-static.xml 등
     const sitemapMatch = path.match(/^\/sitemap-([a-z0-9_-]+)\.xml$/);
