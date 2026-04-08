@@ -1276,7 +1276,7 @@ const HEADER = `<header>
       </div>
       <div class="gi">
         <button class="gb">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a></div>
+        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/video-lesson">🎥 화상수업</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
@@ -1316,6 +1316,7 @@ const HEADER = `<header>
   <div class="mob-nav-section">기타교육</div>
   <div class="mob-subj-grid">
     <a class="mob-subj-btn" href="/engineer-lab"><span>🔧</span><span>엔지니어랩</span></a>
+    <a class="mob-subj-btn" href="/video-lesson"><span>🎥</span><span>화상수업</span></a>
   </div>
   <div class="mob-nav-section">학원 & 기타</div>
   <div class="mob-subj-grid">
@@ -1455,7 +1456,7 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
       </div>
       <div class="gi">
         <button class="gb" style="color:rgba(255,255,255,0.85)">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a></div>
+        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/video-lesson">🎥 화상수업</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a>
@@ -4804,6 +4805,192 @@ function makeEngineerLabPage() {
 }
 
 
+
+function makeVideoLessonPage() {
+  const title='화상수업 - 1:1 맞춤 온라인 과외 | 올케어스터디';
+  const desc='화상수업·온라인수업·비대면수업 전문. 전국 어디서나 1:1 맞춤 화상 과외. 초등·중등·고등·성인 전 학년 대응.';
+  const canonical='/video-lesson';
+  const bc=[{name:'홈',url:'/'},{name:'화상수업',url:canonical}];
+  const VT=Object.entries(VID_TOPICS);
+  const body=`<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <span>화상수업</span></div>
+  <div style="background:linear-gradient(135deg,#0F2044,#1E3A5F);border-radius:24px;padding:48px 36px;margin-bottom:32px;text-align:center;position:relative;overflow:hidden">
+    <div style="font-size:42px;margin-bottom:12px">🎥</div>
+    <h1 style="font-size:clamp(24px,5vw,32px);font-weight:900;color:white;margin:0 0 12px">1:1 맞춤 <span style="color:#60A5FA">화상수업</span></h1>
+    <p style="font-size:15px;color:rgba(255,255,255,0.7);margin:0 0 24px">전국 어디서나 · 전 과목 · 전 학년<br>올케어스터디 화상수업으로 성적을 바꾸세요</p>
+    <a href="/contact?type=tutoring" style="display:inline-block;padding:14px 36px;background:#3B82F6;color:white;border-radius:12px;font-size:15px;font-weight:800;text-decoration:none">무료 상담 신청 →</a>
+  </div>
+  <section class="u9"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">🎯 화상수업이란?</h2><p class="u25">화상수업은 인터넷을 통해 실시간으로 진행되는 온라인 수업입니다. 줌(Zoom), 구글미트 등 화상회의 플랫폼을 활용하여 선생님과 학생이 화면을 공유하며 1:1 맞춤 수업을 받을 수 있습니다. 올케어스터디의 화상수업은 방문 과외와 동일한 품질의 수업을 집에서 편하게 받을 수 있어 시간과 비용을 절약하면서도 높은 학습 효과를 얻을 수 있습니다. 전국 200개 이상 직영 학습센터의 검증된 코치진이 화상으로도 동일한 커리큘럼을 제공합니다.</p></section>
+  <section class="u9"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">✅ 화상수업 장점</h2>
+    <div style="display:grid;gap:10px">
+      <div style="background:#EFF6FF;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:4px">🏠 장소 제약 없음</div><div style="font-size:13px;color:#6B7280">전국 어디서나 집에서 편하게 수업. 이동 시간 제로</div></div>
+      <div style="background:#ECFDF5;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:4px">👤 1:1 맞춤 수업</div><div style="font-size:13px;color:#6B7280">학생의 수준과 약점에 맞춘 개인별 커리큘럼</div></div>
+      <div style="background:#FEF3C7;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:4px">📹 수업 녹화</div><div style="font-size:13px;color:#6B7280">수업 녹화로 복습 가능. 놓친 부분 다시 확인</div></div>
+      <div style="background:#F5F3FF;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:4px">💰 합리적 비용</div><div style="font-size:13px;color:#6B7280">방문 과외 대비 교통비·시간 절약. 동일한 수업 품질</div></div>
+    </div>
+  </section>
+  <section class="u9"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">📚 화상수업 가이드</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">
+      ${VT.slice(0,100).map(([k,v])=>'<a href="/video-lesson/'+k+'" style="display:block;padding:10px 14px;background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:10px;text-decoration:none;font-size:13px;font-weight:700;color:#0F2044;transition:all .2s" onmouseover="this.style.borderColor=\'#3B82F6\';this.style.background=\'#EFF6FF\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'#F8FAFC\'">🎥 '+v.t+'</a>').join('')}
+    </div>
+  </section>
+  <div class="cta-box"><h3>화상수업 무료 상담</h3><p>1:1 맞춤 화상 과외 · 전 과목 · 전 학년</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+</div>`;
+  return wrap(title,desc,canonical,body,bc);
+}
+
+const VID_TOPICS={
+'video-lesson':{t:'화상수업',d:'실시간 화상수업으로 전국 어디서나 1:1 맞춤 과외. 방문 과외와 동일한 품질, 시간·비용 절약',cat:'일반'},
+'online-class':{t:'온라인수업',d:'인터넷만 있으면 어디서나 참여 가능한 온라인 수업. 실시간 쌍방향 소통으로 높은 학습 효과',cat:'일반'},
+'non-face':{t:'비대면수업',d:'비대면으로 안전하게 진행되는 1:1 맞춤 수업. 대면 수업과 동일한 커리큘럼 제공',cat:'일반'},
+'realtime':{t:'실시간수업',d:'실시간으로 선생님과 소통하는 라이브 수업. 즉석 질문과 피드백으로 효율적 학습',cat:'일반'},
+'live-class':{t:'라이브수업',d:'라이브 화상 수업으로 현장감 있는 학습 경험. 녹화 수업과 차별화된 실시간 소통',cat:'일반'},
+'remote':{t:'원격수업',d:'원격으로 진행되는 체계적인 1:1 과외. 거리에 구애받지 않는 맞춤형 교육',cat:'일반'},
+'internet-class':{t:'인터넷수업',d:'인터넷 기반 실시간 화상 수업. PC·태블릿·스마트폰 어디서든 접속 가능',cat:'일반'},
+'zoom-class':{t:'줌수업',d:'줌(Zoom) 플랫폼을 활용한 화상수업. 화면공유·화이트보드·녹화 기능 활용',cat:'일반'},
+'video-lecture':{t:'화상강의',d:'전문 강사의 화상 강의로 깊이 있는 학습. 1:1 맞춤부터 소그룹까지',cat:'일반'},
+'online-lecture':{t:'온라인강의',d:'온라인 실시간 강의로 시공간 제약 없는 학습. 녹화 복습까지 가능',cat:'일반'},
+'recommend':{t:'화상수업 추천',d:'검증된 화상수업 추천. 3단계 코치 검증, 맞춤 매칭, 학습 관리 시스템',cat:'추천'},
+'best-place':{t:'화상수업 잘하는 곳',d:'화상수업 잘하는 곳을 찾고 계신가요? 올케어스터디는 전국 200개 센터 기반 검증된 코치진 보유',cat:'추천'},
+'effect':{t:'화상수업 효과',d:'화상수업의 실제 학습 효과 분석. 1:1 맞춤으로 그룹 수업 대비 3~5배 효율',cat:'추천'},
+'review':{t:'화상수업 후기',d:'올케어스터디 화상수업 수강생 후기. 성적 향상 사례와 학부모 만족도',cat:'추천'},
+'pros-cons':{t:'화상수업 장단점',d:'화상수업의 장점과 단점 솔직 분석. 어떤 학생에게 적합한지 안내',cat:'추천'},
+'cost':{t:'화상수업 비용',d:'화상수업 비용 안내. 과목별·학년별 합리적인 수업료와 무료 체험 안내',cat:'추천'},
+'price':{t:'화상수업 가격',d:'화상수업 가격 비교. 방문 과외 대비 교통비·시간 절약으로 가성비 높은 수업',cat:'추천'},
+'preparation':{t:'화상수업 준비물',d:'화상수업에 필요한 준비물 총정리. 기기·인터넷·학습 환경 세팅 가이드',cat:'추천'},
+'focus-tips':{t:'화상수업 집중력 높이는 법',d:'화상수업에서 집중력을 높이는 10가지 방법. 학습 환경 조성부터 수업 참여 전략까지',cat:'추천'},
+'how-to':{t:'화상수업 듣는 방법',d:'화상수업 처음이신가요? 접속 방법부터 효과적인 수강법까지 단계별 안내',cat:'추천'},
+'elem':{t:'초등 화상수업',d:'초등학생 맞춤 화상수업. 재미있는 수업 방식으로 학습 습관 형성',cat:'학년'},
+'mid':{t:'중등 화상수업',d:'중학생 내신·선행 화상수업. 과목별 전문 코치의 1:1 맞춤 지도',cat:'학년'},
+'high':{t:'고등 화상수업',d:'고등학생 내신·수능 화상수업. 입시 전문 코치의 전략적 학습 관리',cat:'학년'},
+'kids':{t:'유아 화상수업',d:'유아 대상 화상수업. 놀이 기반 학습으로 즐겁게 기초 다지기',cat:'학년'},
+'adult':{t:'성인 화상수업',d:'성인 학습자를 위한 화상수업. 자격증·어학·취미 등 목적별 맞춤 수업',cat:'학년'},
+'worker':{t:'직장인 화상수업',d:'직장인 맞춤 화상수업. 퇴근 후·주말 유연한 시간대 수업 가능',cat:'학년'},
+'one-on-one':{t:'1대1 화상수업',d:'1대1 화상수업으로 학생 맞춤 학습. 질문 즉시 해결, 약점 집중 보강',cat:'형태'},
+'small-group':{t:'소그룹 화상수업',d:'2~4명 소그룹 화상수업. 적정 인원으로 소통과 경쟁 동시에',cat:'형태'},
+'group':{t:'그룹 화상수업',d:'5명 이상 그룹 화상수업. 합리적 비용으로 함께 성장하는 학습',cat:'형태'},
+'custom':{t:'맞춤형 화상수업',d:'학생의 수준·목표·일정에 맞춘 완전 맞춤형 화상수업 설계',cat:'형태'},
+'eng-video':{t:'영어 화상수업',d:'영어 화상수업으로 문법·독해·회화·내신까지. 원어민·한국인 코치 선택 가능',cat:'과목'},
+'math-video':{t:'수학 화상수업',d:'수학 화상수업으로 개념 이해부터 문제 풀이까지. 화면공유로 풀이 과정 실시간 확인',cat:'과목'},
+'kor-video':{t:'국어 화상수업',d:'국어 화상수업으로 독해력·문학·비문학·논술까지. 수능·내신 전문 코치',cat:'과목'},
+'sci-video':{t:'과학 화상수업',d:'과학 화상수업으로 물리·화학·생물·지구과학. 개념 시각화로 이해도 향상',cat:'과목'},
+'soc-video':{t:'사회 화상수업',d:'사회 화상수업으로 한국사·세계사·지리·법정치·경제. 암기가 아닌 이해 중심 학습',cat:'과목'},
+'coding-video':{t:'코딩 화상수업',d:'코딩 화상수업으로 스크래치·파이썬·자바 등. 화면공유로 실습 지도에 최적화',cat:'과목'},
+'essay-video':{t:'논술 화상수업',d:'논술 화상수업으로 대입 논술·구술 면접 대비. 실시간 첨삭과 피드백',cat:'과목'},
+'reading-video':{t:'독서 화상수업',d:'독서 화상수업으로 독서 습관 형성과 독해력 향상. 토론 수업 병행',cat:'과목'},
+'convo-video':{t:'회화 화상수업',d:'영어·중국어·일본어 회화 화상수업. 실시간 대화로 말하기 능력 향상',cat:'과목'},
+'jp-video':{t:'일본어 화상수업',d:'일본어 화상수업으로 기초 회화부터 JLPT 대비까지. 원어민급 코치 매칭',cat:'과목'},
+'cn-video':{t:'중국어 화상수업',d:'중국어 화상수업으로 발음·회화·HSK 대비. 실시간 교정으로 빠른 실력 향상',cat:'과목'},
+'toeic-video':{t:'토익 화상수업',d:'토익 화상수업으로 LC·RC 집중 훈련. 목표 점수 맞춤 커리큘럼',cat:'과목'},
+'opic-video':{t:'오픽 화상수업',d:'OPIc 화상수업으로 스피킹 집중 훈련. 실전 모의 인터뷰로 등급 향상',cat:'과목'},
+'ielts-video':{t:'IELTS 화상수업',d:'IELTS 화상수업으로 4개 영역 균형 학습. 스피킹·라이팅 실시간 피드백',cat:'과목'},
+'grammar-video':{t:'문법 화상수업',d:'영어 문법 화상수업으로 기초부터 고급까지. 체계적 문법 완성',cat:'과목'},
+'pronun-video':{t:'발음 화상수업',d:'발음 교정 화상수업으로 정확한 발음 습득. 실시간 음성 피드백',cat:'과목'},
+'speaking-video':{t:'스피킹 화상수업',d:'스피킹 화상수업으로 영어 말하기 자신감 향상. 실전 대화 훈련',cat:'과목'},
+'naesin-video':{t:'내신 화상수업',d:'중간·기말 내신 대비 화상수업. 학교별 출제 경향 분석 맞춤 수업',cat:'시험'},
+'ipsi-video':{t:'입시 화상수업',d:'대입 수시·정시 대비 화상수업. 입시 전문 코치의 전략적 학습 설계',cat:'시험'},
+'exam-prep':{t:'시험대비 화상수업',d:'시험대비 집중 화상수업. 시험 2~3주 전 핵심 정리와 실전 훈련',cat:'시험'},
+'platform':{t:'화상수업 플랫폼',d:'화상수업에 최적화된 플랫폼 비교. 줌·구글미트·MS Teams 장단점 분석',cat:'플랫폼'},
+'program':{t:'화상수업 프로그램',d:'화상수업 프로그램 추천. 무료·유료 프로그램별 기능 비교',cat:'플랫폼'},
+'app':{t:'화상수업 앱',d:'모바일 화상수업 앱 추천. 스마트폰·태블릿으로 어디서나 수강',cat:'플랫폼'},
+'site':{t:'화상수업 사이트',d:'화상수업 사이트 추천. 과목별·학년별 최적의 화상수업 사이트 비교',cat:'플랫폼'},
+'system':{t:'화상수업 시스템',d:'화상수업 시스템 구축 가이드. 안정적인 수업을 위한 기술 환경 안내',cat:'플랫폼'},
+'online-platform':{t:'온라인 클래스 플랫폼',d:'온라인 클래스 운영에 최적화된 플랫폼. 출석·과제·피드백 통합 관리',cat:'플랫폼'},
+'non-face-platform':{t:'비대면 강의 플랫폼',d:'비대면 강의에 적합한 플랫폼 비교. 교육 목적에 맞는 최적의 선택',cat:'플랫폼'},
+'conference':{t:'화상회의 수업',d:'화상회의 도구를 활용한 수업 운영법. 효과적인 수업 진행 팁',cat:'플랫폼'},
+'edu-conference':{t:'교육용 화상회의',d:'교육 목적에 특화된 화상회의 솔루션. 화이트보드·퀴즈·출석 기능',cat:'플랫폼'},
+'live-platform':{t:'실시간 강의 플랫폼',d:'실시간 강의에 최적화된 플랫폼. 지연 없는 안정적인 수업 환경',cat:'플랫폼'},
+'zoom-video':{t:'줌 화상수업',d:'줌(Zoom)으로 화상수업 하는 방법. 설치부터 수업 참여까지 완벽 가이드',cat:'도구'},
+'googlemeet':{t:'구글미트 화상수업',d:'구글미트로 화상수업 하는 방법. 무료로 사용 가능한 구글 기반 화상 수업',cat:'도구'},
+'teams':{t:'Microsoft Teams 수업',d:'MS Teams로 화상수업 하는 방법. 과제 제출·채팅·파일 공유 통합 관리',cat:'도구'},
+'skype':{t:'스카이프 화상수업',d:'스카이프로 화상수업 하는 방법. 1:1 수업에 적합한 간편한 화상 통화',cat:'도구'},
+'webex':{t:'웹엑스 수업',d:'웹엑스(Webex)로 화상수업 하는 방법. 안정적인 기업용 화상회의 플랫폼',cat:'도구'},
+'manage-class':{t:'온라인 클래스 운영',d:'온라인 클래스 효과적으로 운영하는 방법. 학생 관리부터 수업 품질까지',cat:'운영'},
+'make-link':{t:'수업 링크 만들기',d:'화상수업 링크 생성 방법. 줌·구글미트·Teams 플랫폼별 가이드',cat:'운영'},
+'how-to-join':{t:'화상수업 입장 방법',d:'화상수업 입장 방법 총정리. 초보자도 쉽게 따라하는 단계별 안내',cat:'운영'},
+'screen-share':{t:'화면공유 수업',d:'화면공유를 활용한 효과적인 수업법. 교재·문제·풀이 실시간 공유',cat:'운영'},
+'record-class':{t:'녹화수업 만들기',d:'화상수업 녹화 방법과 활용법. 복습 자료로 학습 효과 극대화',cat:'운영'},
+'make-video':{t:'화상수업 만드는 방법',d:'화상수업 시작 가이드. 플랫폼 선택부터 첫 수업 진행까지',cat:'운영'},
+'how-to-run':{t:'화상수업 진행 방법',d:'화상수업 효과적으로 진행하는 방법. 수업 구성·시간 관리·학생 참여 유도',cat:'운영'},
+'knowhow':{t:'화상수업 운영 노하우',d:'경험 많은 코치들의 화상수업 운영 노하우. 수업 품질을 높이는 실전 팁',cat:'운영'},
+'lesson-plan':{t:'화상수업 교안',d:'화상수업 교안 작성법. 온라인 환경에 최적화된 수업 자료 제작',cat:'운영'},
+'materials':{t:'화상수업 자료 만들기',d:'화상수업 자료 제작 가이드. 화면공유에 적합한 학습 자료 만들기',cat:'운영'},
+'curriculum':{t:'화상수업 커리큘럼',d:'과목별·학년별 화상수업 커리큘럼. 체계적인 학습 계획 설계',cat:'운영'},
+'student-manage':{t:'화상수업 학생관리',d:'화상수업 학생 관리 방법. 출석·진도·성취도 체계적 관리 시스템',cat:'운영'},
+'attendance':{t:'화상수업 출석관리',d:'화상수업 출석 관리 방법. 자동 출석 체크와 학습 이력 관리',cat:'운영'},
+'assignment':{t:'화상수업 과제관리',d:'화상수업 과제 관리 시스템. 온라인으로 과제 제출·확인·피드백',cat:'운영'},
+'feedback':{t:'화상수업 피드백 방법',d:'효과적인 화상수업 피드백 방법. 실시간 피드백으로 학습 효과 극대화',cat:'운영'},
+'academy-video':{t:'학원 화상수업',d:'학원에서 제공하는 화상수업. 오프라인 학원의 커리큘럼을 온라인으로',cat:'유형'},
+'tutor-video':{t:'과외 화상수업',d:'1:1 과외 화상수업. 방문 과외의 장점을 온라인으로 그대로 구현',cat:'유형'},
+'instead-visit':{t:'방문수업 대신 화상수업',d:'방문수업 대신 화상수업을 선택하는 이유. 동일한 효과, 더 많은 장점',cat:'유형'},
+'online-tutor':{t:'온라인 과외',d:'온라인 과외로 전국 최고의 선생님과 수업. 지역 제한 없는 코치 매칭',cat:'유형'},
+'non-face-tutor':{t:'비대면 과외',d:'비대면 과외로 안전하고 편리한 학습. 대면 과외와 동일한 커리큘럼',cat:'유형'},
+'solo-teacher':{t:'1인 강사 화상수업',d:'1인 강사를 위한 화상수업 운영 가이드. 효율적인 수업 시스템 구축법',cat:'사업'},
+'startup':{t:'화상수업 창업',d:'화상수업 창업 가이드. 초기 투자 비용부터 수강생 모집까지',cat:'사업'},
+'monetize':{t:'화상수업 수익화',d:'화상수업으로 수익 창출하는 방법. 가격 책정부터 마케팅까지',cat:'사업'},
+'make-lecture':{t:'온라인 강의 제작',d:'온라인 강의 제작 가이드. 촬영·편집·업로드 전 과정 안내',cat:'사업'},
+'edu-business':{t:'온라인 교육 사업',d:'온라인 교육 사업 시작 가이드. 시장 분석부터 사업 모델까지',cat:'사업'},
+'camera':{t:'화상수업 카메라 추천',d:'화상수업에 최적화된 웹캠 추천. 가성비부터 고화질까지 비교',cat:'장비'},
+'mic':{t:'화상수업 마이크 추천',d:'화상수업 마이크 추천. 음질 좋은 마이크로 선명한 수업 진행',cat:'장비'},
+'headset':{t:'화상수업 헤드셋 추천',d:'화상수업 헤드셋 추천. 편안한 착용감과 선명한 음질의 제품 비교',cat:'장비'},
+'laptop':{t:'화상수업 노트북 추천',d:'화상수업에 적합한 노트북 추천. 성능·화면·카메라 기준 비교',cat:'장비'},
+'tablet':{t:'화상수업 태블릿 추천',d:'화상수업 태블릿 추천. 필기·화면공유에 최적화된 기기 비교',cat:'장비'},
+'internet':{t:'화상수업 인터넷 환경',d:'화상수업에 필요한 인터넷 환경. 최소 속도·안정성·유선 vs 와이파이',cat:'장비'},
+'background':{t:'화상수업 배경 정리',d:'화상수업 배경 정리 팁. 깔끔한 학습 환경으로 집중력 향상',cat:'장비'},
+'lighting':{t:'화상수업 조명 추천',d:'화상수업 조명 추천. 밝고 자연스러운 화면을 위한 조명 세팅',cat:'장비'},
+'noise':{t:'화상수업 소음 줄이는 법',d:'화상수업 중 소음 줄이는 방법. 노이즈 캔슬링·방음 환경 조성 팁',cat:'장비'},
+'setup':{t:'화상수업 세팅 방법',d:'화상수업 최적 세팅 방법. 기기·인터넷·조명·배경 원스톱 가이드',cat:'장비'},
+};
+
+function makeVideoLessonSubPage(slug) {
+  const pg=VID_TOPICS[slug];if(!pg)return null;
+  const T=pg.t,D=pg.d,CAT=pg.cat;
+  const canonical='/video-lesson/'+slug;
+  const desc=T+' - '+D+' | 올케어스터디 1:1 맞춤 화상 과외';
+  const bc=[{name:'홈',url:'/'},{name:'화상수업',url:'/video-lesson'},{name:T,url:canonical}];
+  const keys=Object.keys(VID_TOPICS);
+  const idx=keys.indexOf(slug);
+
+  const O1=['올케어스터디의 "'+T+'"은 전국 어디서나 최고의 선생님과 1:1 맞춤 수업을 받을 수 있는 서비스입니다. 인터넷만 있으면 집에서 편하게 수업에 참여할 수 있으며, 방문 과외와 동일한 품질의 교육을 제공합니다. 전국 200개 이상 직영 학습센터에서 검증한 코치진이 화상으로도 체계적인 수업을 진행합니다.','"'+T+'"을 찾고 계신가요? 올케어스터디는 3단계 검증(학력·경력·수업시연)을 통과한 전문 코치가 학생의 수준과 목표에 맞춘 1:1 화상수업을 제공합니다. 이동 시간 없이 원하는 시간에 수업을 받을 수 있어 바쁜 학생·직장인에게 최적의 학습 방법입니다.','"'+T+'"은 현대 교육의 새로운 패러다임입니다. 코로나 이후 급격히 발전한 화상수업 기술 덕분에 대면 수업과 거의 동일한 학습 효과를 얻을 수 있게 되었습니다. 올케어스터디의 화상수업은 화면공유, 실시간 필기, 녹화 복습까지 지원하여 오히려 대면보다 효율적인 학습이 가능합니다.','많은 학부모님이 "'+T+'"에 대해 관심을 갖고 계십니다. 올케어스터디의 화상수업은 학생의 약점을 정밀 분석하고, 맞춤 커리큘럼을 설계하며, 매주 학습 보고서를 학부모님께 제공합니다. 수업 녹화로 복습도 가능하여 학습 효과가 극대화됩니다.','"'+T+'" 수요가 꾸준히 증가하고 있습니다. 지역에 좋은 선생님이 없어도 화상수업으로 전국 최고의 코치와 매칭될 수 있기 때문입니다. 올케어스터디는 48시간 내 최적의 코치를 매칭하며, 수업 만족도가 낮으면 무료로 코치를 교체해드립니다.','"'+T+'"의 가장 큰 장점은 시간과 비용의 절약입니다. 이동 시간이 없어 같은 시간에 더 많은 학습이 가능하고, 교통비가 들지 않아 합리적인 가격에 고품질 수업을 받을 수 있습니다. 올케어스터디의 화상수업은 첫 수업 무료 체험을 제공합니다.'];
+  const M1=[''+D+'. 올케어스터디의 화상수업은 줌(Zoom), 구글미트 등 안정적인 플랫폼을 사용하며, 수업 중 화면공유로 교재·문제·풀이를 실시간 확인할 수 있습니다. 수업 후에는 녹화 영상으로 복습이 가능하여 학습 효율이 극대화됩니다.',''+D+'. 화상수업이 처음이어도 걱정하지 마세요. 올케어스터디 코치가 첫 수업에서 접속 방법부터 화면 조작까지 친절하게 안내합니다. 기기는 PC, 노트북, 태블릿, 스마트폰 어디서든 접속 가능합니다.',''+D+'. 올케어스터디 화상수업의 강점은 학습 관리 시스템입니다. 매 수업 후 학습 보고서 전송, 주간 진도 확인, 월간 성취도 리포트를 학부모님께 투명하게 제공합니다. 수업 외 시간에도 카카오톡으로 질문이 가능합니다.',''+D+'. 첫 수업은 무료이며, 학생의 현재 수준을 진단하고 맞춤 커리큘럼을 설계합니다. 전국 200개 직영 학습센터 기반 올케어스터디에서 검증된 화상수업을 경험하세요.'];
+  const p1=O1[idx%6]+' '+M1[idx%4];
+
+  const P2=['"'+T+'" 수업에서 가장 중요한 것은 학생과 코치 간의 소통입니다. 올케어스터디의 화상수업은 1:1로 진행되므로 학생이 이해하지 못한 부분을 즉시 질문하고 해결할 수 있습니다. 그룹 수업에서는 불가능한 맞춤 피드백이 화상 과외의 핵심 장점입니다. 코치는 학생의 표정과 반응을 실시간으로 관찰하며, 이해도가 부족한 부분은 다양한 방법으로 재설명합니다. 화면공유를 통해 교재, 문제, 풀이 과정을 함께 보며 수업하기 때문에 대면 수업과 동일한 학습 효과를 얻을 수 있습니다.','"'+T+'" 학습의 효과를 높이려면 체계적인 커리큘럼이 필수입니다. 올케어스터디는 학생의 현재 수준을 정밀 진단한 후, 약점 보강→기본 완성→심화 학습→실전 훈련의 4단계 커리큘럼을 설계합니다. 매 수업마다 미니 테스트로 이해도를 확인하고, 숙제와 복습 자료를 제공하여 수업 외 시간에도 학습이 이어지도록 합니다. 시험 기간에는 시험 범위에 맞춘 집중 대비 모드로 전환합니다.','"'+T+'"을 처음 시작하는 분들이 가장 걱정하는 것은 집중력입니다. 하지만 1:1 화상수업은 학생이 수업의 유일한 주인공이기 때문에 오히려 그룹 수업보다 집중도가 높습니다. 올케어스터디 코치는 학생의 컨디션에 따라 수업 방식을 유연하게 조절하며, 퀴즈·게임 등 다양한 참여형 활동으로 흥미를 유지합니다. 50분 수업 중 학생이 직접 문제를 풀고 설명하는 시간을 충분히 배정하여 능동적 학습을 유도합니다.','올케어스터디 "'+T+'"의 또 다른 장점은 전국 최고의 코치를 매칭받을 수 있다는 것입니다. 지역 과외는 주변에 있는 선생님 중에서만 선택해야 하지만, 화상수업은 전국 어디에 있는 코치든 매칭이 가능합니다. 서울 명문대 출신 코치, 특목고 입시 전문 코치, 수능 만점 코치 등 학생의 목표에 가장 적합한 코치를 48시간 내에 매칭합니다.','최근 "'+T+'" 기술이 크게 발전하면서 학습 효과도 대폭 향상되었습니다. 실시간 화이트보드, 화면 공유, 원격 필기, AI 기반 학습 분석 등 다양한 도구를 활용하여 대면 수업 이상의 학습 경험을 제공합니다. 올케어스터디는 이러한 최신 기술을 적극 도입하여 학생들에게 최고의 화상수업 환경을 제공하고 있습니다.'];
+  const p2=P2[idx%5];
+
+  const P3=['올케어스터디 "'+T+'" 수업 진행 방식: ①첫 수업 무료 진단 테스트로 현재 수준 파악 ②맞춤 커리큘럼 설계 및 코치 매칭 ③주 2~3회(1회 50분) 정기 화상수업 진행 ④매 수업 후 학습 보고서와 숙제 제공 ⑤시험 기간 집중 대비 모드 전환. 수업은 줌(Zoom)으로 진행되며, 녹화 영상은 복습용으로 제공됩니다.','"'+T+'" 시간표는 학생의 일정에 맞춰 자유롭게 조율할 수 있습니다. 평일 오후, 저녁, 주말 등 원하는 시간대를 선택할 수 있으며, 긴급한 일정 변경도 24시간 전 연락 시 무료로 조정됩니다. 직장인은 퇴근 후 저녁 8시~10시, 학생은 학교 수업 후 시간대가 인기가 많습니다.','"'+T+'"의 학습 관리 시스템: ①매 수업 후 핵심 요약 + 숙제 전송 ②매주 학습 보고서(진도·이해도·다음 주 계획) ③월간 성취도 리포트 ④시험 전 특별 관리. 학부모님이 학습 현황을 투명하게 확인할 수 있으며, 코치와 직접 소통도 가능합니다.','"'+T+'"을 최대한 활용하는 팁: 조용한 학습 공간 확보, 이어폰 또는 헤드셋 사용, 수업 전 교재·노트 준비, 카메라 켜기(집중력 향상), 수업 녹화로 복습하기. 이 5가지만 지키면 화상수업의 효과가 대면 수업을 뛰어넘을 수 있습니다. 올케어스터디 코치가 첫 수업에서 세팅을 도와드립니다.','올케어스터디 "'+T+'"은 첫 수업 무료 체험을 제공합니다. 무료 체험에서는 학생의 현재 수준 진단, 학습 스타일 파악, 맞춤 커리큘럼 제안까지 진행됩니다. 수업이 마음에 들면 정규 수업을 시작하고, 아니면 부담 없이 종료할 수 있습니다. 코치가 마음에 들지 않으면 무료로 교체도 가능합니다.'];
+  const p3=P3[idx%5];
+
+  const P4=['올케어스터디의 "'+T+'"으로 학습의 새로운 경험을 시작하세요. 전국 200개 직영 센터의 검증된 코치진, 체계적인 학습 관리 시스템, 합리적인 수업료까지. 첫 수업은 무료이니 부담 없이 경험해보세요. 전화 상담: 010-6834-8080','"'+T+'" 3개월 변화: 1개월—학습 습관 형성과 기초 완성, 2개월—응용력 향상과 성적 변화 시작, 3개월—자신감 회복과 목표 달성. 이 변화의 시작은 무료 첫 수업입니다. 올케어스터디와 함께 성적을 바꾸세요.','지역에 좋은 선생님이 없어도, 시간이 부족해도, "'+T+'"이면 문제없습니다. 전국 어디서나 최고의 코치와 1:1 맞춤 수업을 받을 수 있습니다. 올케어스터디의 화상수업은 이미 수천 명의 학생이 경험하고 만족한 서비스입니다. 지금 무료 상담을 신청하세요.','"'+T+'"을 고민하고 계신다면 지금이 시작할 때입니다. 올케어스터디는 48시간 내 최적의 코치를 매칭하고, 첫 수업 무료 체험을 제공합니다. 만족하지 못하면 코치 무료 교체까지. 위험 부담 제로로 시작하세요.'];
+  const p4=P4[idx%4];
+
+  const faq=[
+    ['"'+T+'" 수업은 어떤 기기로 들을 수 있나요?','PC, 노트북, 태블릿, 스마트폰 모두 가능합니다. 화면이 큰 기기일수록 수업 집중도가 높아지므로 노트북이나 태블릿을 권장합니다. 인터넷 속도는 10Mbps 이상이면 충분합니다.'],
+    ['"'+T+'" 수업료는 얼마인가요?','과목, 학년, 주당 수업 횟수에 따라 달라집니다. 무료 상담에서 학생의 상황에 맞는 맞춤 견적을 안내해드립니다. 첫 수업은 무료로 체험할 수 있습니다.'],
+    ['코치가 마음에 안 들면 교체할 수 있나요?','네, 무료로 코치 교체가 가능합니다. 올케어스터디는 학생과 코치의 궁합을 중요하게 생각하며, 만족할 때까지 매칭을 도와드립니다.'],
+    ['"'+T+'"으로 정말 성적이 오르나요?','네. 1:1 맞춤 수업은 그룹 수업보다 3~5배 효율적입니다. 대부분 3개월 내에 눈에 띄는 성적 향상을 경험하며, 코치가 학생의 약점을 정확히 파악해 집중 보강합니다.'],
+  ];
+
+  const otherSlugs=Object.entries(VID_TOPICS).filter(([k])=>k!==slug).sort(()=>Math.random()-0.5).slice(0,6);
+  const body=`<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/video-lesson">화상수업</a> &rsaquo; <span>${T}</span></div>
+  <div style="background:linear-gradient(135deg,#0F2044,#1E3A5F);border-radius:20px;padding:32px;margin-bottom:28px">
+    <div style="font-size:32px;margin-bottom:8px">🎥</div>
+    <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:white;margin:0 0 8px">${T}</h1>
+    <p style="font-size:14px;color:rgba(255,255,255,0.7);margin:0">${D}</p>
+  </div>
+  <section class="u9"><h2 class="u30" style="border-left:5px solid #3B82F6;padding-left:14px">${T}</h2><p class="u25">${p1}</p></section>
+  <section class="u9"><h2 class="u30" style="color:#3B82F6">${T} 상세 안내</h2><p class="u25">${p2}</p></section>
+  <section class="u9"><h2 class="u30" style="color:#3B82F6">${T} 수업 방식</h2><p class="u25">${p3}</p></section>
+  <section class="u9"><h2 class="u30" style="color:#3B82F6">올케어스터디 ${T}</h2><p class="u25">${p4}</p></section>
+  <section class="u9"><h2 class="u30">❓ ${T} 자주 묻는 질문</h2>${faq.map(([q,a])=>'<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. '+q+'</div><div style="font-size:14px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}</section>
+  <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 화상수업 가이드</h2>${otherSlugs.map(([k,v])=>'<a href="/video-lesson/'+k+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\'#3B82F6\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">🎥 '+v.t+'</div></a>').join('')}</section>
+  <div class="cta-box"><h3>${T} 무료 상담</h3><p>1:1 맞춤 화상 과외 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">화상수업</span><span class="keyword-tag">온라인 과외</span><span class="keyword-tag">1:1 화상수업</span><span class="keyword-tag">올케어스터디</span></div></div>
+</div>`;
+  return wrap(T+' | 올케어스터디 화상수업',desc,canonical,body,bc);
+}
+
 function makeEngineerLabSubPage(slug) {
   const P = {
     'electrical-engineer':{t:'전기기사',d:'전기기사 자격증 시험 대비 인강. 필기+실기 종합반, 기출 특강, 합격률 92%',kw:['전기기사','전기기사 시험','전기기사 합격']},
@@ -6603,6 +6790,9 @@ function serveSitemapByKey(key) {
     for(const[subj,slugs] of Object.entries(SUBJ_SLUGS)){slugs.forEach(s=>parts.push(u('/subject/'+subj+'/'+s)));}
     // 학년 페이지
     ['elementary','middle','high'].forEach(g=>parts.push(u('/grade/'+g)));
+    // 화상수업
+    parts.push(u('/video-lesson'));
+    Object.keys(VID_TOPICS).forEach(s=>parts.push(u('/video-lesson/'+s)));
     // 엔지니어랩
     parts.push(u('/engineer-lab'));
     ['electrical-engineer','exam-schedule','technician','industrial-engineer','exam-schedule-2026','engineer-schedule','written-exam','practical-exam','technician-written','technician-practical','difficulty','construction','industrial-practical','certification','online-lecture','fire-engineer','fire-electrical','fire-practical','fire-electrical-eng','fire-mechanical','fire-academy','engineerlab','lecture-recommend','past-exam-book','public-corp','kepco-interview','electrical-academy','govt-funded','korail-interview','old-certification','fire-eligibility','fire-electrical-practical','fire-past-exam','govt-academy','industrial-written'].forEach(s=>parts.push(u('/engineer-lab/'+s)));
@@ -6784,6 +6974,9 @@ export default {
       // 과목 하위 (주요 10개씩만 - IndexNow는 최근 변경 URL만 보내는 것이 권장)
       const subjSlugs={math:['elem-basics','mid-function','high-math1','calculus','suneung-killer','grade1','supo-escape','concept-total','mid-naesin','mock-exam'],english:['elem-basics','mid-grammar','high-reading','suneung-1','grade1','listening','vocabulary','mid-naesin','mock-strategy','vacation'],korean:['elem-reading','high-nonlit','suneung-1','grade1','modern-poem','grammar','mid-naesin','high-naesin','suneung-lit','vacation'],science:['physics1','chemistry1','biology1','earth1','grade1','integrated','mid-naesin','high-naesin','mechanics','genetics'],social:['korean-history','world-history','korean-geo','economics','grade1','integrated','mid-naesin','high-naesin','history-perfect','vacation'],coding:['start','scratch','python-basic','python-mid','javascript','ai-basic','algorithm','coding-test','elem-coding','portfolio'],essay:['basics','humanities','snu','yonsei','med-essay','self-intro','interview','critical','susi','jeongsi'],gsd:['korean','english','math','high-level','3month','pass-strategy','past-exam','summary','one-on-one','online-guide']};
       for(const[subj,slugs] of Object.entries(subjSlugs)){slugs.forEach(s=>allUrls.push('/subject/'+subj+'/'+s));}
+      // 화상수업
+      allUrls.push('/video-lesson');
+      ['video-lesson','online-class','non-face','realtime','zoom-class','recommend','best-place','effect','elem','mid','high','one-on-one','eng-video','math-video','kor-video','coding-video','platform','zoom-video','googlemeet','camera','setup'].forEach(s=>allUrls.push('/video-lesson/'+s));
       // 엔지니어랩
       allUrls.push('/engineer-lab');
       ['electrical-engineer','exam-schedule','technician','fire-engineer','fire-electrical','fire-practical','engineerlab','lecture-recommend','public-corp','kepco-interview','electrical-academy','govt-funded'].forEach(s=>allUrls.push('/engineer-lab/'+s));
@@ -6908,6 +7101,8 @@ export default {
       }
     }
     if (path.startsWith('/engineer-lab/')) { const slug = path.split('/')[2]; if (slug) { const p = makeEngineerLabSubPage(slug); if (p) return new Response(p, {headers:h}); } }
+    if (path === '/video-lesson') return new Response(makeVideoLessonPage(), { headers: h });
+    if (path.startsWith('/video-lesson/')) { const slug = path.split('/')[2]; if (slug) { const p = makeVideoLessonSubPage(slug); if (p) return new Response(p, {headers:h}); } }
     if (path === '/engineer-lab') return new Response(makeEngineerLabPage(), { headers: h });
     if (path === '/sitemap.xml') return serveSitemapIndex();
     // 시도별 sitemap: /sitemap-seoul.xml, /sitemap-static.xml 등
