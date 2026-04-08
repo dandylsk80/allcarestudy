@@ -4690,11 +4690,10 @@ function makeEngineerLabPage() {
   </section>
 
   <!-- 교육 과정 -->
-  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
-    <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px">
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:28px;margin-bottom:24px;position:relative">
     <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 6px">🎬 강의 미리보기</h2>
     <p style="font-size:13px;color:#9CA3AF;margin:0 0 18px">엔지니어랩의 실제 강의 화면을 확인하세요</p>
-    <div style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px" onscroll="this.style.scrollbarWidth='none'" class="rv-track">
+    <div id="mainGallery" style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px;scrollbar-width:none"><style>#mainGallery::-webkit-scrollbar{display:none}</style>
       <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a7.png" alt="이종오 교수 소방 단기합격 메이커" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
       <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a2.png" alt="2026 엔지니어랩 합격 라인업" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
       <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/a3.png" alt="소방설비기사 실기 강의" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
@@ -4710,6 +4709,9 @@ function makeEngineerLabPage() {
       <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b7.png" alt="전기기사 강의 7" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
       <img src="https://raw.githubusercontent.com/dandylsk80/allcarestudy/main/images/b8.png" alt="전기기사 강의 8" loading="lazy" style="min-width:320px;max-width:320px;height:180px;object-fit:cover;border-radius:12px;scroll-snap-align:start;flex-shrink:0">
     </div>
+    <button data-slider="mainGallery" data-dir="-1" style="position:absolute;left:12px;top:55%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:none;background:rgba(0,0,0,0.5);color:white;font-size:18px;cursor:pointer;z-index:2">&#8249;</button>
+    <button data-slider="mainGallery" data-dir="1" style="position:absolute;right:12px;top:55%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:none;background:rgba(0,0,0,0.5);color:white;font-size:18px;cursor:pointer;z-index:2">&#8250;</button>
+    <script>!function(){var s=document.getElementById("mainGallery");if(!s)return;document.querySelectorAll("[data-slider=mainGallery]").forEach(function(b){b.onclick=function(){var d=parseInt(b.getAttribute("data-dir"));s.scrollBy({left:d*340,behavior:"smooth"})}});setInterval(function(){s.scrollLeft+s.offsetWidth>=s.scrollWidth-10?s.scrollTo({left:0,behavior:"smooth"}):s.scrollBy({left:340,behavior:"smooth"})},4000)}()</script>
   </section>
   <section class="u9">
     <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 20px">⚡ 교육 과정</h2>
