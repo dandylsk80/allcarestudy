@@ -4718,13 +4718,13 @@ function makeEngineerLabPage() {
     <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 20px">⚡ 교육 과정</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       ${[
-        ['전기(산업)기사','필기+실기 종합반, 단과반, 기출 특강. 최다 합격자 배출 대표 과정','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=EE'],
-        ['전기공사(산업)기사','시공·설계 실무 중심 강의. 필기+실기 올인원 패키지','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=EW'],
-        ['전기기능사','기초부터 실기까지 단계별 학습. 비전공자도 합격 가능','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=CE'],
-        ['소방설비기사','전기·기계 분야. 소방 자격증 취득의 최단 경로','https://www.engineerlab.co.kr/ee/promotion/firefighting/index.php'],
-        ['전기 실무 과정','현장 실무 능력 강화. 실제 업무에 바로 적용 가능','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=EO'],
-        ['공기업 취업','한전·발전사 등 공기업 채용 대비 전문 과정','https://www.engineerlab.co.kr/ee/online/online_lecture.php?item_id=PC'],
-      ].map(([t,d,u])=>'<a href="'+u+'" target="_blank" rel="noopener" style="display:block;background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\'#3B82F6\';this.style.background=\'#EFF6FF\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'#F8FAFC\'"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:4px">⚡ '+t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.5">'+d+'</div></a>').join('')}
+        ['전기(산업)기사','필기+실기 종합반, 단과반, 기출 특강. 최다 합격자 배출 대표 과정'],
+        ['전기공사(산업)기사','시공·설계 실무 중심 강의. 필기+실기 올인원 패키지'],
+        ['전기기능사','기초부터 실기까지 단계별 학습. 비전공자도 합격 가능'],
+        ['소방설비기사','전기·기계 분야. 소방 자격증 취득의 최단 경로'],
+        ['전기 실무 과정','현장 실무 능력 강화. 실제 업무에 바로 적용 가능'],
+        ['공기업 취업','한전·발전사 등 공기업 채용 대비 전문 과정'],
+      ].map(([t,d])=>'<div style="background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:18px"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:4px">⚡ '+t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.5">'+d+'</div></div>').join('')}
     </div>
   </section>
 
