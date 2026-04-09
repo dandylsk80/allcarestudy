@@ -1276,7 +1276,7 @@ const HEADER = `<header>
       </div>
       <div class="gi">
         <button class="gb">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/video-lesson">🎥 화상수업</a></div>
+        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/video-lesson">🎥 화상수업</a><a href="/study-guide">📖 학습정보</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
@@ -1317,6 +1317,7 @@ const HEADER = `<header>
   <div class="mob-subj-grid">
     <a class="mob-subj-btn" href="/engineer-lab"><span>🔧</span><span>엔지니어랩</span></a>
     <a class="mob-subj-btn" href="/video-lesson"><span>🎥</span><span>화상수업</span></a>
+    <a class="mob-subj-btn" href="/study-guide"><span>📖</span><span>학습정보</span></a>
   </div>
   <div class="mob-nav-section">학원 & 기타</div>
   <div class="mob-subj-grid">
@@ -1456,7 +1457,7 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
       </div>
       <div class="gi">
         <button class="gb" style="color:rgba(255,255,255,0.85)">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/video-lesson">🎥 화상수업</a></div>
+        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/video-lesson">🎥 화상수업</a><a href="/study-guide">📖 학습정보</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a>
@@ -4806,6 +4807,217 @@ function makeEngineerLabPage() {
 
 
 
+
+const STUDY_TOPICS={
+'exam-prep-guide':{t:'시험기간 준비 가이드',d:'시험기간에 효율적으로 준비하는 방법. 과목별 우선순위 설정부터 컨디션 관리까지 완벽 가이드'},
+'naesin-strategy':{t:'내신 대비 전략 정리',d:'내신 시험에서 좋은 성적을 받기 위한 전략. 교과서 분석, 기출 활용, 서술형 대비법'},
+'suneung-total':{t:'수능 준비 방법 총정리',d:'수능을 체계적으로 준비하는 방법. 과목별 공부법, 시간표 작성, 실전 대비 전략'},
+'go3-study':{t:'고3 공부 전략 가이드',d:'고3 학생을 위한 공부 전략. 내신과 수능을 동시에 준비하는 효율적인 학습법'},
+'grade-up-tips':{t:'성적 올리기 대비 팁',d:'성적을 올리기 위한 실전 팁 모음. 공부 방법 개선부터 시험 전략까지'},
+'study-routine':{t:'공부 루틴 정리 가이드',d:'효과적인 공부 루틴을 만드는 방법. 시간대별 학습 계획과 루틴 정착 전략'},
+'self-study':{t:'자기주도학습 전략 추천',d:'스스로 공부하는 힘을 키우는 자기주도학습 전략. 계획 수립부터 실천까지'},
+'naesin-checklist':{t:'내신 시험 준비 체크리스트',d:'내신 시험 전 반드시 확인해야 할 체크리스트. 빠뜨리기 쉬운 준비 항목 총정리'},
+'suneung-eng':{t:'수능 영어 대비 방법',d:'수능 영어 고득점을 위한 대비 방법. 독해 전략, 듣기 훈련, 어휘 암기법'},
+'wrong-note':{t:'오답노트 작성 전략 정리',d:'효과적인 오답노트 작성법. 단순 베끼기가 아닌 실전에서 활용하는 오답 정리 전략'},
+'study-plan':{t:'공부 계획 세우는 방법 가이드',d:'실천 가능한 공부 계획을 세우는 방법. 목표 설정, 시간 배분, 계획 수정 노하우'},
+'exam-routine':{t:'시험기간 공부 루틴 정리',d:'시험기간에 최적화된 공부 루틴. 하루 시간표부터 과목 순서까지 체계적 정리'},
+'naesin-grade-up':{t:'내신 성적 올리는 전략 가이드',d:'내신 성적을 확실하게 올리는 전략. 학교별 출제 경향 분석과 맞춤 대비법'},
+'suneung-kor':{t:'수능 국어 공부 방법 정리',d:'수능 국어 고득점을 위한 공부 방법. 문학, 비문학, 화법과 작문 영역별 전략'},
+'high-habit':{t:'고등학생 공부 습관 만들기 가이드',d:'고등학생이 꼭 갖춰야 할 공부 습관. 습관 형성의 과학적 원리와 실천법'},
+'mid-exam':{t:'중학생 시험 대비 준비 방법',d:'중학생 시험 대비 완벽 가이드. 과목별 공부법과 시험 전략'},
+'suneung-math':{t:'수능 수학 대비 전략 정리',d:'수능 수학 고득점을 위한 대비 전략. 개념 학습부터 킬러 문항 대비까지'},
+'night-before':{t:'시험 전날 준비 체크리스트',d:'시험 전날 반드시 해야 할 것과 하지 말아야 할 것. 컨디션 관리와 마무리 정리'},
+'focus-method':{t:'공부 집중력 높이는 방법 가이드',d:'공부할 때 집중력을 높이는 실전 방법. 환경 조성, 시간 관리, 멘탈 관리'},
+'naesin-order':{t:'내신 공부 순서 정리',d:'내신 시험 대비 과목 공부 순서. 효율적인 학습 순서와 시간 배분 전략'},
+'grade-total':{t:'성적 향상 공부 전략 총정리',d:'성적을 향상시키기 위한 공부 전략 총정리. 공부법, 시간 관리, 멘탈 관리까지'},
+'go1-naesin':{t:'고1 내신 준비 가이드',d:'고1 첫 내신 시험 준비 가이드. 중학교와 다른 고등학교 시험 대비법'},
+'go2-strategy':{t:'고2 공부 전략 정리',d:'고2 학생을 위한 공부 전략. 내신과 수능 기초를 동시에 잡는 방법'},
+'go3-suneung':{t:'고3 수능 준비 방법',d:'고3 수능 준비 완벽 가이드. 월별 학습 계획과 실전 대비 전략'},
+'exam-well':{t:'시험 잘 보는 방법 가이드',d:'시험장에서 실력을 100% 발휘하는 방법. 시험 당일 전략과 실수 줄이기'},
+'memory-subject':{t:'내신 암기과목 대비 전략',d:'암기 과목을 효율적으로 공부하는 방법. 과학적 암기법과 반복 학습 전략'},
+'suneung-tamgu':{t:'수능 탐구 공부법 정리',d:'수능 탐구 과목 공부법. 과목 선택부터 고득점 전략까지 총정리'},
+'slump':{t:'공부 슬럼프 극복 방법 가이드',d:'공부 슬럼프를 극복하는 실전 방법. 원인 분석부터 동기부여까지'},
+'time-manage':{t:'시험기간 시간 관리 전략',d:'시험기간에 시간을 효율적으로 관리하는 전략. 과목별 시간 배분과 우선순위'},
+'naesin-routine':{t:'내신 시험 대비 공부 루틴',d:'내신 시험 3주 전부터 시작하는 체계적인 공부 루틴. 주차별 학습 계획'},
+'suneung-100':{t:'수능 100일 준비 전략',d:'수능 100일 전부터 시작하는 마무리 전략. 과목별 집중 포인트와 실전 훈련'},
+'high-grade-up':{t:'고등학생 성적 올리기 방법',d:'고등학생 성적을 올리는 현실적인 방법. 공부법 개선과 학습 전략 총정리'},
+'mid-plan':{t:'중학생 공부 계획 정리',d:'중학생을 위한 공부 계획 세우기. 학년별 학습 목표와 실천 가능한 계획표'},
+'naesin-kor':{t:'내신 국어 공부 전략 가이드',d:'내신 국어 시험 대비 전략. 교과서 분석, 문학 감상, 비문학 독해 방법'},
+'naesin-math':{t:'내신 수학 준비 방법 정리',d:'내신 수학 시험 준비 방법. 개념 정리, 유형 분석, 고난도 문제 대비'},
+'naesin-eng':{t:'내신 영어 대비 전략 팁',d:'내신 영어 시험 대비 전략과 팁. 교과서 본문 분석, 문법, 독해 훈련'},
+'cram':{t:'시험기간 벼락치기 방법 정리',d:'시험 직전 벼락치기를 효과적으로 하는 방법. 제한된 시간 내 최대 효과 전략'},
+'habit-make':{t:'공부 습관 만드는 방법 가이드',d:'꾸준한 공부 습관을 만드는 과학적 방법. 21일 습관 형성 프로그램'},
+'rapid-grade':{t:'성적 급상승 공부법 총정리',d:'단기간에 성적을 급상승시키는 공부법. 실제 성적 향상 사례와 전략'},
+'self-routine':{t:'자기주도학습 루틴 정리',d:'자기주도학습을 위한 일일·주간 루틴. 혼자서도 체계적으로 공부하는 방법'},
+'suneung-eng2':{t:'수능 영어 공부 전략 가이드',d:'수능 영어 영역별 공부 전략. 독해 유형 분석, 빈칸 추론, 순서 배열'},
+'suneung-kor2':{t:'수능 국어 대비 준비 방법',d:'수능 국어 대비 준비 방법. 현대시, 고전문학, 비문학 독해 전략'},
+'suneung-math2':{t:'수능 수학 공부 루틴 정리',d:'수능 수학 공부 루틴. 매일 풀어야 할 문제 수와 유형별 학습 계획'},
+'wrong-note-use':{t:'내신 대비 오답노트 활용법',d:'오답노트를 내신 대비에 효과적으로 활용하는 방법. 작성법과 복습 전략'},
+'exam-order':{t:'시험 준비 순서 정리 가이드',d:'시험 준비를 어떤 순서로 해야 하는지 정리. 과목별 우선순위와 시간표'},
+'top-student':{t:'공부 잘하는 학생들의 루틴 정리',d:'공부 잘하는 학생들의 공통 루틴. 상위권 학생들의 실제 공부 습관'},
+'go3-naesin':{t:'고3 내신 대비 전략 가이드',d:'고3 내신 시험 대비 전략. 수능과 내신을 동시에 잡는 학습 방법'},
+'go1-plan':{t:'고1 공부 계획 세우기 방법',d:'고1 첫 학기 공부 계획 세우기. 고등학교 적응과 성적 관리 동시에'},
+'go2-naesin':{t:'고2 내신 시험 준비 전략',d:'고2 내신 시험 준비 전략. 문이과 선택 후 과목별 대비법'},
+'mid-naesin':{t:'중학생 내신 대비 공부법 정리',d:'중학생 내신 시험 대비 공부법. 서술형 대비와 암기 과목 학습 전략'},
+'exam-mistake':{t:'시험기간 실수 줄이는 방법',d:'시험에서 실수를 줄이는 실전 방법. 자주 하는 실수 유형과 예방법'},
+'night-checklist':{t:'내신 시험 전날 준비 체크리스트',d:'내신 시험 전날 확인할 체크리스트. 준비물, 컨디션 관리, 마지막 복습'},
+'suneung-real':{t:'수능 실전 대비 전략 정리',d:'수능 실전 대비 전략. 모의고사 활용법, 시간 배분, 마킹 전략'},
+'wrong-grade':{t:'성적 올리는 오답노트 작성법',d:'성적 향상에 직접적으로 도움되는 오답노트 작성법. 분석 중심 정리법'},
+'time-method':{t:'공부 시간 관리 방법 가이드',d:'공부 시간을 효율적으로 관리하는 방법. 포모도로, 시간 블록, 우선순위 기법'},
+'mental':{t:'시험기간 멘탈 관리 전략',d:'시험기간 불안과 스트레스를 관리하는 방법. 멘탈 관리로 실력 100% 발휘'},
+'naesin-level':{t:'내신 등급 올리는 공부법 정리',d:'내신 등급을 한 단계 올리는 공부법. 등급별 맞춤 전략과 실천 방법'},
+'suneung-order':{t:'수능 공부 순서 가이드',d:'수능 과목별 공부 순서. 어떤 과목부터 시작해야 효율적인지 안내'},
+'high-self':{t:'고등학생 자기주도학습 전략',d:'고등학생을 위한 자기주도학습 전략. 스스로 계획하고 실천하는 학습법'},
+'exam-timetable':{t:'시험기간 공부 계획표 작성법',d:'시험기간 공부 계획표를 효과적으로 작성하는 방법. 실전 템플릿 제공'},
+'motivation':{t:'공부 의지 높이는 방법 정리',d:'공부 의지와 동기를 높이는 실전 방법. 목표 설정과 보상 시스템 활용'},
+'exam-focus':{t:'시험기간 집중력 유지 전략',d:'시험기간에 집중력을 유지하는 전략. 환경 조성부터 휴식 관리까지'},
+'naesin-note':{t:'내신 대비 필기 정리 방법',d:'내신 시험 대비 필기 정리 방법. 수업 필기를 시험 대비 자료로 활용하는 법'},
+'eng-vocab':{t:'수능 영어 단어 암기 전략',d:'수능 영어 어휘를 효율적으로 암기하는 전략. 반복 학습과 연상 암기법'},
+'go3-routine':{t:'고3 공부 루틴 만들기 가이드',d:'고3 학생을 위한 하루 공부 루틴. 수능 당일까지의 일일 학습 계획'},
+'grade-routine':{t:'성적 향상 루틴 정리',d:'성적 향상을 위한 일일·주간·월간 루틴. 꾸준한 학습으로 성적 변화 만들기'},
+'naesin-sci':{t:'내신 과학 공부 전략 가이드',d:'내신 과학 시험 대비 전략. 실험, 개념, 계산 문제 유형별 공부법'},
+'naesin-soc':{t:'내신 사회 공부 방법 정리',d:'내신 사회 시험 공부 방법. 한국사, 세계사, 지리, 법정치 과목별 전략'},
+'memory-total':{t:'시험 대비 암기법 총정리',d:'시험 대비 효과적인 암기법 총정리. 과학적 반복 학습과 기억술 활용'},
+'efficiency':{t:'공부 효율 높이는 방법 가이드',d:'같은 시간에 더 많이 학습하는 공부 효율 향상법. 집중 학습과 분산 학습'},
+'suneung-table':{t:'수능 대비 시간표 짜는 방법',d:'수능 대비 시간표를 효과적으로 짜는 방법. 과목별 비중과 시간 배분'},
+'naesin-prep-order':{t:'내신 시험 준비 순서 정리',d:'내신 시험 준비를 순서대로 정리. 3주 전부터 시험 당일까지 단계별 안내'},
+'high-routine':{t:'고등학생 시험기간 루틴 추천',d:'고등학생을 위한 시험기간 루틴 추천. 하루 시간표와 과목 배분'},
+'mid-habit':{t:'중학생 공부 습관 만들기 전략',d:'중학생이 꼭 갖춰야 할 공부 습관. 자기주도학습의 기초를 다지는 방법'},
+'plan-total':{t:'공부 계획표 짜는 방법 총정리',d:'실천 가능한 공부 계획표 짜는 방법. 목표 설정부터 일일 계획까지'},
+'past-exam':{t:'수능 기출문제 활용 전략',d:'수능 기출문제를 효과적으로 활용하는 전략. 연도별, 유형별 분석 방법'},
+'descriptive':{t:'내신 서술형 대비 방법 정리',d:'내신 서술형 문제 대비 방법. 출제 패턴 분석과 답안 작성 전략'},
+'study-place':{t:'시험기간 공부 장소 활용 팁',d:'시험기간 효과적인 공부 장소 활용법. 집, 도서관, 카페별 장단점'},
+'real-strategy':{t:'성적 올리기 현실 공부 전략',d:'현실적으로 성적을 올리는 공부 전략. 이상적 조언이 아닌 실천 가능한 방법'},
+'wrong-method':{t:'오답노트 정리 방법 가이드',d:'효과적인 오답노트 정리 방법. 과목별 오답노트 작성 포맷과 활용법'},
+'naesin-plan':{t:'내신 대비 공부 계획 세우기',d:'내신 시험 3주 전 공부 계획 세우기. 과목별 시간 배분과 우선순위'},
+'suneung-eng1':{t:'수능 영어 1등급 전략 정리',d:'수능 영어 1등급을 달성하기 위한 전략. 오답률 높은 유형별 공략법'},
+'go3-checklist':{t:'고3 시험기간 준비 체크리스트',d:'고3 시험기간 준비 체크리스트. 내신과 수능 동시 대비 필수 항목'},
+'routine-total':{t:'공부 루틴 만드는 방법 총정리',d:'나만의 공부 루틴을 만드는 방법 총정리. 루틴 설계부터 정착까지'},
+'day-plan':{t:'시험 대비 하루 공부 계획법',d:'시험기간 하루 공부 계획을 세우는 방법. 시간대별 과목 배치와 휴식'},
+'naesin-recommend':{t:'내신 공부법 추천 가이드',d:'내신 시험 대비 추천 공부법 모음. 상위권·중위권·하위권별 맞춤 전략'},
+'suneung-checklist':{t:'수능 준비 체크리스트 정리',d:'수능 준비 체크리스트. 과목별 준비 상태 점검과 보완 포인트'},
+'high-manage':{t:'고등학생 성적 관리 전략',d:'고등학생 성적을 체계적으로 관리하는 전략. 학기별 목표와 관리 방법'},
+'mid-exam2':{t:'중학생 시험 공부 방법 정리',d:'중학생 시험 공부 방법 총정리. 과목별 핵심 포인트와 시간 관리'},
+'naesin-review':{t:'내신 대비 복습 전략 가이드',d:'내신 시험 대비 효과적인 복습 전략. 에빙하우스 망각곡선을 활용한 복습법'},
+'suneung-final':{t:'수능 대비 마무리 공부법',d:'수능 직전 마무리 공부법. 과목별 최종 점검과 실전 감각 유지 방법'},
+'exam-motive':{t:'시험기간 공부 자극 유지 방법',d:'시험기간에 공부 의지와 자극을 유지하는 방법. 번아웃 예방과 동기부여'},
+'real-guide':{t:'공부 잘하는 법 현실 가이드',d:'공부 잘하는 법 현실적인 가이드. 상위권 학생들의 실제 경험담과 전략'},
+'naesin-manage':{t:'내신 성적 관리 방법 총정리',d:'내신 성적을 체계적으로 관리하는 방법. 학기별 목표 설정과 추적'},
+'suneung-habit':{t:'수능 공부 습관 만들기 전략',d:'수능 고득점을 위한 공부 습관. 매일 실천해야 할 학습 루틴'},
+'go1-routine':{t:'고1 시험 대비 공부 루틴',d:'고1 학생을 위한 시험 대비 공부 루틴. 첫 고등학교 시험 완벽 대비'},
+'go2-grade':{t:'고2 성적 올리는 전략 정리',d:'고2 성적을 올리는 실전 전략. 내신 등급 향상과 수능 기초 다지기'},
+'go3-routine2':{t:'고3 수능 루틴 준비 방법',d:'고3 수능 D-day 루틴. 수능까지 남은 기간별 최적 학습 루틴'},
+'self-practice':{t:'자기주도학습 실천 방법 가이드',d:'자기주도학습을 실천하는 구체적인 방법. 계획, 실행, 점검의 3단계'},
+'exam-total':{t:'시험기간 공부 전략 총정리',d:'시험기간 공부 전략 총정리. 시험 3주 전부터 당일까지 완벽 가이드'},
+};
+
+function makeStudyGuidePage() {
+  const title='학습정보 - 공부법·시험 대비·성적 향상 가이드 | 올케어스터디';
+  const desc='시험 대비, 내신 공부법, 수능 전략, 성적 향상 팁 등 학습 정보 총정리. 올케어스터디가 제공하는 학습 가이드.';
+  const canonical='/study-guide';
+  const bc=[{name:'홈',url:'/'},{name:'학습정보',url:canonical}];
+  const ST=Object.entries(STUDY_TOPICS);
+  // 카테고리 색상
+  const colors=['#3B82F6','#059669','#DC2626','#7C3AED','#F59E0B','#EC4899','#0891B2','#6366F1'];
+  // SVG 썸네일 아이콘
+  const icons=['📚','📝','📖','🎯','💡','⏰','📊','✅','🧠','📋'];
+  const body=`<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <span>학습정보</span></div>
+  <div style="background:linear-gradient(135deg,#0F2044,#1E3A5F);border-radius:24px;padding:48px 36px;margin-bottom:32px;text-align:center">
+    <div style="font-size:42px;margin-bottom:12px">📖</div>
+    <h1 style="font-size:clamp(24px,5vw,32px);font-weight:900;color:white;margin:0 0 12px">학습정보 가이드</h1>
+    <p style="font-size:15px;color:rgba(255,255,255,0.7);margin:0">시험 대비 · 공부법 · 성적 향상 · 수능 전략<br>올케어스터디가 제공하는 학습 가이드</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:32px">
+    ${ST.map(([k,v],i)=>{const color=colors[i%8];const icon=icons[i%10];return '<a href="/study-guide/'+k+'" style="display:block;background:white;border:1.5px solid #E5E7EB;border-radius:16px;overflow:hidden;text-decoration:none;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,0.04)" onmouseover="this.style.borderColor=\''+color+'\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.transform=\'none\'"><div style="background:linear-gradient(135deg,'+color+'22,'+color+'11);padding:24px;text-align:center;font-size:32px">'+icon+'</div><div style="padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:6px;line-height:1.4">'+v.t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">'+v.d+'</div></div></a>';}).join('')}
+  </div>
+  <div class="cta-box"><h3>1:1 맞춤 학습 상담</h3><p>올케어스터디 전문 코치가 맞춤 학습 전략을 설계합니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+</div>`;
+  return wrap(title,desc,canonical,body,bc);
+}
+
+function makeStudyGuideSubPage(slug) {
+  const pg=STUDY_TOPICS[slug];if(!pg)return null;
+  const T=pg.t,D=pg.d;
+  const canonical='/study-guide/'+slug;
+  const desc=T+' - '+D+' | 올케어스터디 학습정보';
+  const bc=[{name:'홈',url:'/'},{name:'학습정보',url:'/study-guide'},{name:T,url:canonical}];
+  const keys=Object.keys(STUDY_TOPICS);
+  const idx=keys.indexOf(slug);
+  // 썸네일 SVG 배경
+  const colors=['#3B82F6','#059669','#DC2626','#7C3AED','#F59E0B','#EC4899','#0891B2','#6366F1','#14B8A6','#F97316'];
+  const icons=['📚','📝','📖','🎯','💡','⏰','📊','✅','🧠','📋'];
+  const bgColor=colors[idx%10];
+  const icon=icons[idx%10];
+
+  // ─── p1: 13개 A × 7개 B × 11개 C × 7개 D (모든 문장에 T+D 삽입) ───
+  const A=['"'+T+'" 방법을 찾고 계신가요? '+D+'에 대해 올케어스터디가 체계적으로 안내합니다.','학생과 학부모님을 위한 "'+T+'" 완벽 가이드입니다. '+D+'.','성적 향상의 핵심은 올바른 전략에 있습니다. "'+T+'" 방법을 소개합니다.','많은 학생이 "'+T+'"에서 시행착오를 겪습니다. '+D+'를 위한 효율적인 방법을 안내합니다.','공부에도 전략이 필요합니다. "'+T+'"을 통해 학습 효율을 극대화하세요.','상위권 학생들의 비결은 "'+T+'"에 있습니다. '+D+'.','시험에서 좋은 결과를 만드는 "'+T+'" 노하우를 공유합니다.','효율적인 학습의 시작은 "'+T+'"입니다. '+D+'.','올케어스터디가 추천하는 "'+T+'" 방법입니다. '+D+'.','지금 시작해도 늦지 않습니다. "'+T+'"으로 성적 변화를 만드세요.','검증된 "'+T+'" 전략으로 학습 효과를 높이세요.','학습 전문가가 알려주는 "'+T+'" 핵심 포인트입니다.','목표 성적 달성을 위한 "'+T+'" 실전 가이드입니다.'];
+  const B=['올케어스터디는 전국 200개 이상 직영 학습센터를 운영하며 수만 명의 학생 데이터를 분석해 가장 효과적인 "'+T+'" 방법을 정리했습니다.','많은 학생이 열심히 공부하지만 성적이 오르지 않는 이유는 잘못된 공부법 때문입니다. "'+T+'"의 핵심은 올바른 방향 설정에 있습니다.','성적 향상은 공부 시간이 아니라 공부 방법에 달려 있습니다. "'+T+'"을 통해 같은 시간 대비 최대의 효과를 얻을 수 있습니다.','상위 1% 학생들의 공통점은 자기만의 학습 전략이 있다는 것입니다. "'+T+'"으로 나만의 전략을 만들어보세요.','학습 심리학 연구에 따르면 체계적인 계획과 반복이 성적 향상의 핵심입니다. "'+T+'"은 이 원리를 실전에 적용하는 방법입니다.','교육 전문가들이 공통적으로 강조하는 것은 꾸준한 실천입니다. "'+T+'"의 내용을 매일 조금씩 실천하면 반드시 결과가 나타납니다.','올케어스터디의 1:1 맞춤 코칭과 함께 "'+T+'"을 실천하면 독학보다 3~5배 빠른 성적 향상을 경험할 수 있습니다.'];
+  const CC=['"'+T+'"에서 가장 중요한 것은 자신의 현재 수준을 정확히 파악하는 것입니다. 약점을 모르면 공부 방향을 잡을 수 없습니다.','계획 없는 공부는 방향 없는 항해와 같습니다. "'+T+'"을 시작하기 전에 반드시 구체적인 목표와 계획을 세우세요.','꾸준함이 재능을 이깁니다. "'+T+'"의 내용을 하루 30분이라도 매일 실천하면 한 달 후 눈에 띄는 변화가 나타납니다.','공부에서 가장 큰 적은 불안감입니다. "'+T+'"의 전략을 믿고 꾸준히 실천하면 자연스럽게 자신감이 생깁니다.','혼자 공부하기 어렵다면 올케어스터디의 전문 코치와 함께하세요. "'+T+'" 전략을 1:1 맞춤으로 적용받을 수 있습니다.','실천 없는 계획은 의미가 없습니다. 이 글을 읽은 후 "'+T+'"의 내용 중 하나라도 오늘부터 바로 시작해보세요.','에빙하우스의 망각곡선에 따르면 학습 후 24시간 내 복습하면 기억 유지율이 80%까지 올라갑니다. "'+T+'"에서 복습의 중요성을 기억하세요.','메타인지 능력을 키우는 것이 "'+T+'"의 궁극적 목표입니다. 내가 무엇을 알고 모르는지 파악하는 능력이 성적을 좌우합니다.','시험은 준비한 만큼 결과가 나옵니다. "'+T+'"의 내용을 체계적으로 실천하면 반드시 목표 성적에 도달할 수 있습니다.','올케어스터디는 "'+T+'" 전략을 실제 수업에 적용하여 수강생의 성적 향상을 돕고 있습니다. 무료 상담으로 시작하세요.','학습에는 왕도가 없지만 효율적인 방법은 있습니다. "'+T+'"이 바로 그 방법입니다.'];
+  const DD=['이 글이 "'+T+'"에 도움이 되셨다면 올케어스터디의 무료 학습 상담도 경험해보세요.','올케어스터디의 전문 코치와 함께 "'+T+'" 전략을 실천하면 더 빠른 성적 향상을 경험할 수 있습니다.','무료 상담 전화 010-6834-8080으로 "'+T+'" 맞춤 학습 계획을 받아보세요.','"'+T+'"의 시작은 올케어스터디 무료 체험 수업입니다. 첫 수업에서 학습 진단을 받아보세요.','더 자세한 "'+T+'" 전략이 궁금하시면 올케어스터디 무료 상담을 신청하세요.','올케어스터디는 "'+T+'" 전략을 학생 개인에 맞게 커스터마이징하여 제공합니다. 무료 체험으로 시작하세요.','"'+T+'"을 혼자 실천하기 어렵다면 올케어스터디의 1:1 코칭이 답입니다.'];
+  const p1=A[idx%13]+' '+B[(idx*3+1)%7]+' '+CC[(idx*7+2)%11]+' '+DD[(idx*11+3)%7];
+
+  // p2: 10가지
+  const P2=['"'+T+'"의 첫 번째 핵심은 목표 설정입니다. 막연히 "성적을 올리겠다"가 아니라 "수학 80점 → 90점", "영어 3등급 → 2등급"처럼 구체적인 숫자로 목표를 잡아야 합니다. 목표가 구체적일수록 어떤 공부를 해야 하는지 명확해지고, 달성 여부도 쉽게 확인할 수 있습니다. 올케어스터디의 전문 코치와 함께라면 "'+T+'" 목표 달성이 더욱 수월해집니다. 코치가 학생의 목표를 함께 관리하고 매주 진행 상황을 점검합니다.',
+  '"'+T+'"에서 간과하기 쉬운 것이 복습입니다. 새로운 내용을 배우는 것도 중요하지만, 배운 내용을 반복 복습하는 것이 장기 기억으로 전환하는 핵심입니다. 에빙하우스의 망각곡선에 따르면 학습 후 1일, 3일, 7일, 30일 간격으로 복습하면 기억 유지율이 90% 이상으로 올라갑니다. "'+T+'" 복습 전략을 올케어스터디 코치와 함께 실천하면 독학보다 훨씬 효율적으로 기억을 강화할 수 있습니다.',
+  '"'+T+'"의 핵심 전략 중 하나는 약점 분석입니다. 시험에서 틀린 문제를 단순히 다시 풀어보는 것이 아니라, 왜 틀렸는지 원인을 분석하는 것이 중요합니다. 개념 부족인지, 계산 실수인지, 시간 부족인지에 따라 대응 전략이 완전히 달라집니다. 올케어스터디 코치는 "'+T+'" 과정에서 학생의 약점을 정확히 진단하고 맞춤 보강 계획을 세워줍니다.',
+  '"'+T+'"을 실천할 때 가장 중요한 것은 꾸준함입니다. 하루 10시간 공부하고 3일 쉬는 것보다 매일 3시간씩 꾸준히 하는 것이 성적 향상에 훨씬 효과적입니다. 습관이 되면 의지력 소모 없이 자연스럽게 공부할 수 있게 됩니다. "'+T+'" 습관을 정착시키는 데 올케어스터디의 주간 학습 보고서가 큰 도움이 됩니다. 학부모님도 학습 현황을 투명하게 확인할 수 있습니다.',
+  '"'+T+'" 전략에서 시간 관리는 필수입니다. 포모도로 기법(25분 집중 + 5분 휴식)은 집중력을 유지하는 데 매우 효과적입니다. 또한 어려운 과목을 먼저 공부하고 쉬운 과목을 나중에 하는 것이 전체 학습 효율을 높입니다. 올케어스터디의 화상수업은 "'+T+'" 시간 관리를 자연스럽게 훈련시킵니다. 정해진 수업 시간에 집중하는 습관이 자기 학습에도 적용됩니다.',
+  '"'+T+'"에서 환경 조성도 중요한 요소입니다. 조용한 공간, 정리된 책상, 적절한 조명은 집중력을 높이는 기본 조건입니다. 스마트폰은 시야에서 치우고, 필요한 학습 도구만 책상 위에 두세요. "'+T+'"에서 환경이 중요한 것처럼 올케어스터디 화상수업도 최적의 학습 환경을 제공합니다. 1:1 공간에서 집중력 높은 수업이 가능합니다.',
+  '"'+T+'" 실천에서 자주 발생하는 실수는 완벽주의입니다. 처음부터 완벽한 계획을 세우려 하면 오히려 시작하지 못합니다. 70% 정도의 계획으로 시작하고, 실천하면서 수정해나가는 것이 훨씬 효과적입니다. 올케어스터디 코치는 "'+T+'" 과정에서 학생이 완벽주의에 빠지지 않도록 현실적인 목표와 실천 가능한 계획을 함께 설계합니다.',
+  '"'+T+'"의 또 다른 핵심은 능동적 학습입니다. 단순히 눈으로 읽고 넘기는 것이 아니라, 스스로 문제를 풀고, 핵심을 요약하고, 남에게 설명해보는 것이 기억 유지에 3배 이상 효과적입니다. "'+T+'" 능동적 학습을 올케어스터디 수업에서 직접 체험할 수 있습니다. 코치가 학생에게 직접 문제를 풀고 설명하게 하여 깊은 이해를 유도합니다.',
+  '"'+T+'" 전략 중 많은 학생이 놓치는 것이 수면 관리입니다. 수면 중에 기억이 정리되고 장기 기억으로 전환됩니다. 시험 기간에 밤을 새우는 것은 오히려 역효과입니다. 최소 6시간 수면을 권장합니다. 올케어스터디는 "'+T+'" 과정에서 학생의 컨디션 관리까지 챙깁니다. 시험 기간 수면과 휴식 패턴에 대한 조언도 함께 제공합니다.',
+  '"'+T+'"을 더 효과적으로 실천하려면 학습 기록을 남기세요. 매일 무엇을 공부했는지, 어떤 부분이 어려웠는지 기록하면 자신의 학습 패턴을 파악할 수 있고, 약점 보강에도 도움이 됩니다. "'+T+'" 학습 기록을 올케어스터디의 학습 보고서 시스템이 대신해줍니다. 매 수업 후 자동으로 학습 기록이 정리되어 학부모님께 전달됩니다.'];
+    const p2=P2[(idx*3+2)%10];
+
+  const P3=['올케어스터디에서 추천하는 "'+T+'" 실천법: ①현재 수준 파악—최근 시험지나 모의고사로 과목별 강점과 약점을 분석합니다. ②구체적 목표 설정—"수학 80점→90점"처럼 숫자로 목표를 잡습니다. ③주간 학습 계획 수립—과목별 공부 시간을 배분하고 우선순위를 정합니다. ④매일 실천 + 학습 기록—하루 공부 내용과 어려웠던 점을 기록합니다. ⑤주 1회 점검 및 계획 수정—진도와 이해도를 확인하고 다음 주 계획을 조정합니다. 이 5단계를 반복하면 "'+T+'"의 효과를 반드시 체감할 수 있습니다.',
+  '"'+T+'"을 혼자 실천하기 어렵다면 올케어스터디의 1:1 코칭을 추천합니다. 전문 코치가 학생의 현재 수준을 진단하고, "'+T+'" 전략을 개인에 맞게 설계합니다. 매주 학습 보고서로 진행 상황을 확인하고, 시험 기간에는 집중 대비 모드로 전환합니다.',
+  '"'+T+'" 성공 사례: 올케어스터디 수강생 중 3개월 만에 내신 2등급 향상, 수능 모의고사 20점 상승 등 다양한 성공 사례가 있습니다. 핵심은 올바른 전략 + 꾸준한 실천 + 전문가의 관리입니다.',
+  '"'+T+'"의 효과를 극대화하려면 공부 환경을 최적화하세요. 조용한 장소 확보, 스마트폰 격리, 필요한 교재만 책상 위에 준비. 올케어스터디의 화상수업은 이런 집중 환경을 집에서도 만들어줍니다.',
+  '"'+T+'"은 시작이 가장 중요합니다. 이 글을 읽은 후 바로 실천할 수 있는 것 하나를 정하세요. 오늘 오답노트 1페이지, 내일 계획표 작성 등 작은 것부터 시작하면 자연스럽게 습관이 됩니다.'];
+  const p3=P3[(idx*7+3)%5];
+
+  const P4=['올케어스터디는 "'+T+'" 전략을 실제 1:1 수업에 적용하여 학생의 성적 향상을 돕고 있습니다. 전국 200개 직영 센터의 검증된 코치가 학생 맞춤 학습 계획을 설계합니다. "'+T+'" 전략을 혼자 실천하기 어렵다면 전문 코치의 도움을 받아보세요. 첫 수업은 무료이며, 학생의 현재 수준 진단과 맞춤 커리큘럼 설계까지 제공됩니다. 상담 전화: 010-6834-8080',
+  '"'+T+'" 실천으로 3개월 후 달라진 성적을 경험하세요. 1개월—학습 습관 정착과 기초 개념 완성, 2개월—약점 보강과 응용력 향상, 3개월—목표 성적 달성과 자신감 회복. 올케어스터디의 1:1 코칭이 "'+T+'" 여정을 함께합니다. 수천 명의 학생이 이 과정을 통해 성적 향상을 경험했습니다.',
+  '혼자 공부하기 막막하다면 올케어스터디의 전문 코치에게 "'+T+'" 맞춤 상담을 받아보세요. 학생의 현재 수준을 진단하고 최적의 학습 전략을 무료로 설계해드립니다. "'+T+'" 전략과 1:1 맞춤 코칭이 만나면 혼자 공부할 때보다 3~5배 빠른 성적 향상을 경험할 수 있습니다. 지금 시작하세요.',
+  '"'+T+'"은 학생의 미래를 바꿀 수 있는 첫 걸음입니다. 올케어스터디는 모든 학생이 자신의 잠재력을 발휘할 수 있도록 체계적인 학습 지원을 제공합니다. "'+T+'" 전략의 실천을 올케어스터디 전문 코치가 옆에서 도와드립니다. 무료 체험 수업으로 직접 경험해보세요. 전화: 010-6834-8080'];
+    const p4=P4[(idx*11+1)%4];
+
+  const P5=['"'+T+'"을 실천하기 전에 다음 항목을 점검해보세요. 첫째, 나의 현재 성적과 목표 성적을 구체적으로 적어보았는가? 둘째, 과목별 강점과 약점을 파악했는가? 셋째, 매일 실천 가능한 학습 시간을 확보했는가? 넷째, 오답노트를 작성하고 활용하고 있는가? 다섯째, 규칙적인 수면과 휴식을 취하고 있는가? 이 5가지를 모두 체크할 수 있다면 "'+T+'" 성공의 기반이 갖춰진 것입니다. 하나라도 빠져있다면 그것부터 보완하세요.',
+  '"'+T+'" 실천 전 자가진단: ①최근 시험에서 가장 많이 틀린 유형은? ②공부할 때 가장 집중이 안 되는 시간대는? ③하루 평균 실제 공부 시간은? ④가장 자신 없는 과목과 단원은? ⑤시험 기간에 가장 스트레스 받는 것은? 이 5가지 질문에 대한 답을 적어보세요. "'+T+'" 전략을 자신에게 맞게 커스터마이징하는 데 큰 도움이 됩니다. 올케어스터디 무료 상담에서 이 진단 결과를 바탕으로 맞춤 학습 계획을 받을 수 있습니다.',
+  '"'+T+'" 성공의 핵심 체크리스트: ✅ 구체적인 숫자 목표 설정 완료 ✅ 주간 학습 계획표 작성 완료 ✅ 매일 오답노트 정리 실천 중 ✅ 수업 복습을 24시간 내에 완료 ✅ 시험 3주 전부터 기출문제 풀이 시작 ✅ 수면 6시간 이상 확보 ✅ 스마트폰 학습 시간 중 격리. 이 체크리스트를 매주 확인하면서 "'+T+'" 전략을 꾸준히 실천하세요. 올케어스터디 코치가 이 체크리스트를 함께 관리해드립니다.',
+  '"'+T+'" 주차별 실천 계획: 1주차—현재 수준 파악과 목표 설정, 취약 단원 리스트업. 2주차—취약 단원 기본 개념 재학습, 관련 기출문제 풀이 시작. 3주차—전체 범위 기출문제 풀이, 오답 분석과 보충 학습. 4주차—실전 모의고사, 시간 관리 훈련, 최종 점검. 이 4주 사이클을 반복하면 "'+T+'"의 효과를 확실히 체감할 수 있습니다. 올케어스터디 코치와 함께하면 이 계획의 실행력이 더욱 높아집니다.',
+  '"'+T+'" 과목별 우선순위 가이드: 가장 약한 과목부터 시작하되, 하루에 한 과목만 공부하지 마세요. 2~3과목을 번갈아 공부하는 것이 뇌의 피로를 줄이고 집중력을 유지하는 데 효과적입니다. 오전에는 수학·과학 같은 사고력 과목, 오후에는 국어·영어 같은 언어 과목, 저녁에는 암기 과목을 배치하면 최적의 학습 효율을 얻을 수 있습니다. "'+T+'"에서 과목 배치는 성적에 직접적인 영향을 미칩니다.'];
+  const p5=P5[(idx*13+4)%5];
+
+  const faq=[
+    ['"'+T+'" 전략을 혼자서도 실천할 수 있나요?','네, 이 글의 내용을 따라하면 혼자서도 충분히 실천 가능합니다. 다만 전문 코치의 도움을 받으면 더 빠르고 효과적으로 "'+T+'"을 실천할 수 있습니다. 올케어스터디 코치는 학생의 현재 수준을 진단하고 맞춤 전략을 설계해드립니다. 무료 상담으로 시작하세요.'],
+    ['"'+T+'"으로 성적이 정말 오르나요?','네. 올바른 방법으로 꾸준히 실천하면 반드시 성적이 향상됩니다. 올케어스터디 수강생의 대부분이 "'+T+'" 전략 실천 3개월 내에 눈에 띄는 성적 변화를 경험합니다. 핵심은 올바른 방향 + 꾸준한 실천입니다.'],
+    ['올케어스터디의 1:1 코칭은 어떻게 진행되나요?','전문 코치가 학생의 현재 수준을 진단하고 "'+T+'" 전략을 맞춤 설계합니다. 주 2~3회 화상수업으로 진행되며, 매 수업 후 학습 보고서를 학부모님께 제공합니다. 시험 기간에는 집중 대비 모드로 전환합니다. 첫 수업은 무료입니다.'],
+    ['"'+T+'" 시작 전에 준비할 것이 있나요?','특별한 준비물은 없습니다. 다만 자신의 현재 성적과 목표 성적을 정리해두면 "'+T+'" 전략을 더 효과적으로 실천할 수 있습니다. 최근 시험지와 오답 목록을 준비하면 올케어스터디 코치가 정확한 약점 분석을 해드립니다.'],
+  ];
+
+  const otherSlugs=Object.entries(STUDY_TOPICS).filter(([k])=>k!==slug).sort(()=>(idx*7+parseInt(slug.charCodeAt(0)))%3-1).slice(0,6);
+  const body=`<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/study-guide">학습정보</a> &rsaquo; <span>${T}</span></div>
+  <div style="background:linear-gradient(135deg,${bgColor}22,${bgColor}11);border-radius:20px;padding:32px;margin-bottom:28px;text-align:center">
+    <div style="font-size:48px;margin-bottom:12px">${icon}</div>
+    <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:#0F2044;margin:0 0 8px">${T}</h1>
+    <p style="font-size:14px;color:#6B7280;margin:0">${D}</p>
+  </div>
+  <section class="u9"><h2 class="u30" style="border-left:5px solid ${bgColor};padding-left:14px">${T}</h2><p class="u25">${p1}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${bgColor}">${T} 핵심 전략</h2><p class="u25">${p2}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${bgColor}">${T} 실천 방법</h2><p class="u25">${p3}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${bgColor}">올케어스터디와 함께하는 ${T}</h2><p class="u25">${p4}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${bgColor}">📋 ${T} 실전 체크리스트</h2><p class="u25">${p5}</p></section>
+  <section class="u9"><h2 class="u30">❓ ${T} 자주 묻는 질문</h2>${faq.map(([q,a])=>'<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. '+q+'</div><div style="font-size:14px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}</section>
+  <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 학습 가이드</h2>${otherSlugs.map(([k,v])=>'<a href="/study-guide/'+k+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\''+bgColor+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">📖 '+v.t+'</div></a>').join('')}</section>
+  <div class="cta-box"><h3>${T}, 전문 코치와 함께</h3><p>올케어스터디 1:1 맞춤 코칭으로 성적 향상을 경험하세요</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">공부법</span><span class="keyword-tag">시험 대비</span><span class="keyword-tag">성적 향상</span><span class="keyword-tag">올케어스터디</span></div></div>
+</div>`;
+  return wrap(T+' | 올케어스터디 학습정보',desc,canonical,body,bc);
+}
+
 function makeVideoLessonPage() {
   const title='화상수업 - 1:1 맞춤 온라인 과외 | 올케어스터디';
   const desc='화상수업·온라인수업·비대면수업 전문. 전국 어디서나 1:1 맞춤 화상 과외. 초등·중등·고등·성인 전 학년 대응.';
@@ -6829,6 +7041,9 @@ function serveSitemapByKey(key) {
     for(const[subj,slugs] of Object.entries(SUBJ_SLUGS)){slugs.forEach(s=>parts.push(u('/subject/'+subj+'/'+s)));}
     // 학년 페이지
     ['elementary','middle','high'].forEach(g=>parts.push(u('/grade/'+g)));
+    // 학습정보
+    parts.push(u('/study-guide'));
+    Object.keys(STUDY_TOPICS).forEach(s=>parts.push(u('/study-guide/'+s)));
     // 화상수업
     parts.push(u('/video-lesson'));
     Object.keys(VID_TOPICS).forEach(s=>parts.push(u('/video-lesson/'+s)));
@@ -7013,6 +7228,9 @@ export default {
       // 과목 하위 (주요 10개씩만 - IndexNow는 최근 변경 URL만 보내는 것이 권장)
       const subjSlugs={math:['elem-basics','mid-function','high-math1','calculus','suneung-killer','grade1','supo-escape','concept-total','mid-naesin','mock-exam'],english:['elem-basics','mid-grammar','high-reading','suneung-1','grade1','listening','vocabulary','mid-naesin','mock-strategy','vacation'],korean:['elem-reading','high-nonlit','suneung-1','grade1','modern-poem','grammar','mid-naesin','high-naesin','suneung-lit','vacation'],science:['physics1','chemistry1','biology1','earth1','grade1','integrated','mid-naesin','high-naesin','mechanics','genetics'],social:['korean-history','world-history','korean-geo','economics','grade1','integrated','mid-naesin','high-naesin','history-perfect','vacation'],coding:['start','scratch','python-basic','python-mid','javascript','ai-basic','algorithm','coding-test','elem-coding','portfolio'],essay:['basics','humanities','snu','yonsei','med-essay','self-intro','interview','critical','susi','jeongsi'],gsd:['korean','english','math','high-level','3month','pass-strategy','past-exam','summary','one-on-one','online-guide']};
       for(const[subj,slugs] of Object.entries(subjSlugs)){slugs.forEach(s=>allUrls.push('/subject/'+subj+'/'+s));}
+      // 학습정보
+      allUrls.push('/study-guide');
+      ['exam-prep-guide','naesin-strategy','suneung-total','go3-study','grade-up-tips','study-routine','self-study','suneung-eng','wrong-note','study-plan','naesin-grade-up','suneung-math','focus-method','go1-naesin','go2-strategy','mid-exam','suneung-kor','mental'].forEach(s=>allUrls.push('/study-guide/'+s));
       // 화상수업
       allUrls.push('/video-lesson');
       ['video-lesson','online-class','non-face','realtime','zoom-class','recommend','best-place','effect','elem','mid','high','one-on-one','eng-video','math-video','kor-video','coding-video','platform','zoom-video','googlemeet','camera','setup'].forEach(s=>allUrls.push('/video-lesson/'+s));
@@ -7140,6 +7358,8 @@ export default {
       }
     }
     if (path.startsWith('/engineer-lab/')) { const slug = path.split('/')[2]; if (slug) { const p = makeEngineerLabSubPage(slug); if (p) return new Response(p, {headers:h}); } }
+    if (path === '/study-guide') return new Response(makeStudyGuidePage(), { headers: h });
+    if (path.startsWith('/study-guide/')) { const slug = path.split('/')[2]; if (slug) { const p = makeStudyGuideSubPage(slug); if (p) return new Response(p, {headers:h}); } }
     if (path === '/video-lesson') return new Response(makeVideoLessonPage(), { headers: h });
     if (path.startsWith('/video-lesson/')) { const slug = path.split('/')[2]; if (slug) { const p = makeVideoLessonSubPage(slug); if (p) return new Response(p, {headers:h}); } }
     if (path === '/engineer-lab') return new Response(makeEngineerLabPage(), { headers: h });
