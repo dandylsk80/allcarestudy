@@ -5310,7 +5310,7 @@ function makeCnCategoryPage(catKey) {
   const body = `<div class="wrap" style="max-width:900px">
   <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">중국어</a> &rsaquo; <span>${cat.n}</span></div>
   <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
-    <div style="position:relative;height:220px">
+    <div style="position:relative;height:330px">
       <img src="${cat.img}" alt="${cat.n}" style="width:100%;height:100%;object-fit:cover;display:block">
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.05) 100%)"></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 28px">
@@ -5380,7 +5380,7 @@ function makeCnTopicPage(fullSlug) {
   T+' 준비에서 가장 흔한 실수는 문법에만 집중하고 말하기·듣기를 소홀히 하는 것입니다. 외고 시험은 문법뿐 아니라 듣기 평가, 말하기 수행평가, 발표 등 다양한 영역을 평가합니다. 올케어스터디의 '+T+' 수업은 모든 영역을 균형 있게 다룹니다.',
   T+' 수업의 효과는 코치의 전문성에 크게 좌우됩니다. 올케어스터디는 중문과 전공, HSK 6급 이상, 교육 경력 3년 이상의 엄격한 기준으로 '+T+' 코치를 선발합니다. 학생의 학교와 목표에 맞는 최적의 코치를 48시간 내 매칭합니다.',
   T+' 과정에서 자신감을 키우는 것도 중요합니다. 중국어에 자신감이 생기면 수업 참여도가 높아지고 성적도 자연스럽게 오릅니다. 올케어스터디 코치는 '+T+' 수업에서 학생의 작은 발전도 인정하고 격려하여 학습 동기를 유지합니다.'];
-  const P2b=[' 올케어스터디의 '+T+' 수업은 학생의 학교·목표·성향을 모두 반영하여 최적의 학습 환경을 제공합니다. 무료 첫 수업에서 직접 경험해보세요.',' '+T+' 수업을 통해 중국어에 자신감이 생기면 수업 참여도가 높아지고 성적이 자연스럽게 오릅니다. 작은 성공 경험이 학습 동기를 유지하는 핵심입니다.',' '+T+' 과정에서 오답노트 관리가 성적 향상의 핵심입니다. 코치가 학생의 오답 패턴을 분석하여 반복 출제되는 유형을 집중 훈련합니다.',' '+T+' 수업에서 수행평가 대비도 병행합니다. 발표, 작문, 인터뷰 등 수행평가 유형에 맞춘 실전 연습으로 내신 전 영역을 커버합니다.',' 올케어스터디 코치는 '+T+' 과정에서 학생의 학습 습관까지 관리합니다. 매일 10분 중국어 듣기, 주 3회 어휘 테스트 등 습관화 프로그램을 제공합니다.',' '+T+' 수업의 강점은 학교 시험과 직결되는 맞춤형 콘텐츠입니다. 교과서 본문 분석, 기출 유형 정리, 예상문제 제작까지 시험에 최적화된 수업입니다.',' '+T+' 과정에서 문화 이해도 중요합니다. 중국 문화와 시사를 수업에 녹여 흥미를 유지하면서 실용적인 표현도 함께 익힙니다.',' 올케어스터디의 '+T+' 수업은 녹화가 가능하여 복습에 매우 효과적입니다. 수업에서 놓친 발음 교정이나 문법 설명을 반복 시청할 수 있습니다.',' '+T+' 과정에서 코치와의 궁합이 성적에 큰 영향을 미칩니다. 올케어스터디는 학생의 성격과 학습 스타일에 맞는 코치를 매칭하여 수업 만족도를 높입니다.',' '+T+' 수업의 효과를 극대화하려면 예습과 복습이 필수입니다. 코치가 매 수업 전 예습 가이드와 수업 후 복습 과제를 제공하여 학습 연속성을 유지합니다.'];
+  const P2b=[' 올케어스터디의 '+T+' 수업은 학생의 학교·목표·성향을 모두 반영하여 최적의 학습 환경을 제공합니다. 무료 첫 수업에서 직접 경험해보세요. 수업 후 학부모님께 학습 보고서를 전송하여 자녀의 학습 현황을 투명하게 공유합니다. 코치가 학생의 약점을 매주 분석하여 다음 수업에 반영합니다.',' '+T+' 수업을 통해 중국어에 자신감이 생기면 수업 참여도가 높아지고 성적이 자연스럽게 오릅니다. 작은 성공 경험이 학습 동기를 유지하는 핵심입니다. 올케어스터디 코치는 학생의 발전을 매 수업 기록하고 격려하여 꾸준한 성장을 이끌어냅니다.',' '+T+' 과정에서 오답노트 관리가 성적 향상의 핵심입니다. 코치가 학생의 오답 패턴을 분석하여 반복 출제되는 유형을 집중 훈련합니다. 틀린 문제를 단순히 다시 푸는 것이 아니라 왜 틀렸는지 원인을 분석하고 유사 유형을 반복 훈련합니다.',' '+T+' 수업에서 수행평가 대비도 병행합니다. 발표, 작문, 인터뷰 등 수행평가 유형에 맞춘 실전 연습으로 내신 전 영역을 커버합니다. 특히 발표 수행평가는 대본 작성부터 발음·억양 연습, 실전 시뮬레이션까지 단계별로 준비합니다.',' 올케어스터디 코치는 '+T+' 과정에서 학생의 학습 습관까지 관리합니다. 매일 10분 중국어 듣기, 주 3회 어휘 테스트 등 습관화 프로그램을 제공합니다. 습관이 되면 의지력 소모 없이 자연스럽게 중국어 실력이 쌓입니다.',' '+T+' 수업의 강점은 학교 시험과 직결되는 맞춤형 콘텐츠입니다. 교과서 본문 분석, 기출 유형 정리, 예상문제 제작까지 시험에 최적화된 수업입니다. 학교별로 다른 출제 스타일을 코치가 미리 파악하여 핵심만 짚어줍니다.',' '+T+' 과정에서 문화 이해도 중요합니다. 중국 문화와 시사를 수업에 녹여 흥미를 유지하면서 실용적인 표현도 함께 익힙니다. 드라마, 뉴스, 음악 등 다양한 콘텐츠를 활용하여 지루하지 않은 수업을 제공합니다.',' 올케어스터디의 '+T+' 수업은 녹화가 가능하여 복습에 매우 효과적입니다. 수업에서 놓친 발음 교정이나 문법 설명을 반복 시청할 수 있습니다. 시험 직전에 녹화 영상을 다시 보면서 핵심을 빠르게 복습할 수 있습니다.',' '+T+' 과정에서 코치와의 궁합이 성적에 큰 영향을 미칩니다. 올케어스터디는 학생의 성격과 학습 스타일에 맞는 코치를 매칭하여 수업 만족도를 높입니다. 내성적인 학생에게는 차분한 코치를, 활발한 학생에게는 에너지 있는 코치를 배정합니다.',' '+T+' 수업의 효과를 극대화하려면 예습과 복습이 필수입니다. 코치가 매 수업 전 예습 가이드와 수업 후 복습 과제를 제공하여 학습 연속성을 유지합니다. 예습 10분 + 복습 15분이면 수업 효과가 3배 이상 올라갑니다.'];
   const p2 = P2[(idx*3+_p)%10] + P2b[(idx*7+_p*3)%10];
 
   // p3: 5가지
@@ -5389,25 +5389,28 @@ function makeCnTopicPage(fullSlug) {
   T+' 수업을 최대한 활용하는 5가지 팁: ①수업 전 예습 10분으로 핵심 어휘 미리 확인 ②수업 중 카메라 켜고 적극적으로 발화 ③수업 후 24시간 내 복습 ④오답노트 매일 3개씩 정리 ⑤주 1회 코치에게 학습 진도 확인 요청. '+T+'의 효과가 배가됩니다.',
   T+' 수업의 학부모 소통 시스템: 매 수업 후 카카오톡으로 수업 요약과 숙제 안내, 매주 학습 보고서 발송, 월간 상담으로 '+T+' 방향 점검. 학부모님은 자녀의 중국어 학습 현황을 투명하게 확인할 수 있어 안심하고 맡기실 수 있습니다.',
   T+' 첫 수업은 무료 체험으로 진행됩니다. 무료 체험에서는 레벨테스트, 학습 스타일 파악, '+T+' 맞춤 커리큘럼 제안까지 진행됩니다. 수업이 마음에 들면 정규 과정을 시작하고 아니면 부담 없이 종료할 수 있습니다. 코치가 마음에 들지 않으면 무료로 교체도 가능합니다.'];
-  const p3 = P3[(idx*7+_p)%5];
+  const P3b=['올케어스터디의 중국어 코치는 학생의 학교 교과서를 사전에 분석하고 기출문제 패턴을 파악하여 '+T+' 수업에 반영합니다. 시험 2주 전부터는 예상문제와 모의고사를 제공하여 실전 감각을 키웁니다.','학생의 취약 영역을 매 수업 미니 테스트로 확인하고 오답은 다음 수업에서 반복 훈련합니다. '+T+' 과정에서 이런 반복 학습이 장기 기억으로 정착되는 핵심입니다.','화상수업은 녹화가 가능하여 '+T+' 수업 후 복습에 매우 효과적입니다. 코치의 발음 교정이나 문법 설명을 반복 시청하면 수업 효율이 배가됩니다.','성조와 발음은 중국어의 기본입니다. '+T+' 수업에서 코치가 실시간으로 교정하기 때문에 잘못된 발음 습관이 굳어지는 것을 방지합니다.','1:1 수업이므로 학생의 컨디션과 이해도에 따라 '+T+' 수업 속도를 유연하게 조절합니다. 이해가 부족한 부분은 다양한 예시로 반복 설명합니다.'];
+  const p3 = P3[(idx*7+_p)%5] + ' ' + P3b[(idx*11+_p*2)%5];
 
   const P4=['올케어스터디의 '+T+' 수업으로 중국어 실력 변화를 경험하세요. 전국 200개 직영 센터의 검증된 코치진, 체계적인 학습 관리, 합리적인 수업료까지. 첫 수업 무료이니 부담 없이 시작하세요. 상담: 010-6834-8080',
   T+' 실천으로 3개월 후 달라진 성적을 경험하세요. 올케어스터디의 1:1 맞춤 코칭이 '+T+' 여정을 함께합니다. 수천 명의 학생이 성적 향상을 경험한 수업입니다.',
   '혼자 준비하기 막막하다면 올케어스터디 전문 코치에게 '+T+' 맞춤 상담을 받아보세요. 학생의 현재 수준을 진단하고 최적의 학습 전략을 무료로 설계해드립니다.',
   T+'은 학생의 미래를 바꿀 수 있는 첫 걸음입니다. 올케어스터디는 모든 학생이 잠재력을 발휘할 수 있도록 체계적인 학습 지원을 제공합니다. 무료 체험으로 시작하세요.'];
-  const p4 = P4[(idx*11+_p)%4];
+  const P4b=['수업료는 과목·학년·횟수에 따라 달라지며 무료 상담에서 학생 상황에 맞는 견적을 안내합니다. 형제자매 할인, 장기 등록 할인 등 다양한 혜택도 제공됩니다.','올케어스터디는 전국 200개 이상 직영 학습센터를 운영하며 오프라인 방문 상담도 가능합니다. 가까운 센터에서 학생의 현재 수준을 직접 진단받아 보세요.','코치와의 궁합이 중요합니다. '+T+' 수업 후 만족하지 못하면 언제든 무료로 코치를 교체할 수 있으니 부담 없이 시작하세요.','매주 학습 보고서와 월간 성취도 리포트를 학부모님께 제공합니다. 자녀의 '+T+' 학습 현황을 투명하게 확인할 수 있습니다.'];
+  const p4 = P4[(idx*11+_p)%4] + ' ' + P4b[(idx*13+_p*3)%4];
 
   const faq = [
     [T+' 수업은 어떤 방식으로 진행되나요?','방문 과외와 화상수업 중 선택 가능합니다. 주 2~3회(1회 50분) 진행되며, 학생의 학교 교과서와 출제 경향에 맞춘 '+T+' 맞춤 커리큘럼으로 수업합니다. 첫 수업은 무료입니다.'],
-    [T+' 수업료는 얼마인가요?','과목, 학년, 주당 횟수에 따라 달라집니다. '+T+' 무료 상담에서 학생의 상황에 맞는 견적을 안내해드립니다. 전화: 010-6834-8080'],
-    ['코치가 마음에 안 들면 교체할 수 있나요?','네, '+T+' 코치 무료 교체가 가능합니다. 학생과 코치의 궁합을 중요하게 생각하며 만족할 때까지 매칭을 도와드립니다.'],
+    [T+' 수업료는 얼마인가요?','과목, 학년, 주당 횟수에 따라 달라집니다. '+T+' 무료 상담에서 학생의 상황에 맞는 견적을 안내해드립니다. 형제자매 할인, 장기 등록 할인 등 다양한 혜택도 있습니다. 전화: 010-6834-8080'],
+    ['코치가 마음에 안 들면 교체할 수 있나요?','네, '+T+' 코치 무료 교체가 가능합니다. 학생과 코치의 궁합을 중요하게 생각하며, 학생의 성격·목표·학습 스타일에 맞는 최적의 코치를 찾을 때까지 매칭을 도와드립니다.'],
+    [T+' 수업은 몇 개월 들어야 효과가 나나요?','대부분의 학생이 '+T+' 수업 시작 1개월 내 학습 습관 변화, 2개월 내 성적 상승, 3개월 내 목표 달성을 경험합니다. 학생의 현재 수준과 목표에 따라 코치가 맞춤 로드맵을 설계해드립니다.'],
   ];
 
   const sameCategory = Object.entries(CN_TOPICS).filter(([k,v])=>v.c===catKey&&k!==fullSlug).slice(0,6);
   const body = `<div class="wrap" style="max-width:900px">
   <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">중국어</a> &rsaquo; <a href="/conversation/chinese/${catKey}">${cat.n}</a> &rsaquo; <span>${T}</span></div>
   <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
-    <div style="position:relative;height:200px">
+    <div style="position:relative;height:300px">
       <img src="${cat.img}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.05) 100%)"></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:22px 26px">
@@ -5446,6 +5449,28 @@ function makeCnTopicPage(fullSlug) {
   <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
     <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;display:flex;align-items:center;gap:8px">📋 수업 진행 방식</h2>
     <p style="font-size:14px;color:#374151;line-height:1.9">${p3}</p>
+  </section>
+
+  <!-- 3개월 로드맵 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">📈 ${T} 3개월 로드맵</h2>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${[['1개월','기초 진단 & 약점 보강','현재 수준 레벨테스트, 성조·발음 기초 교정, 핵심 문법 패턴 학습, 필수 어휘 300개 암기 시작, 학습 습관 형성','${cat.color}','20'],
+      ['2개월','실력 향상 & 내신 대비','교과서 본문 완벽 분석, 기출 유형 반복 훈련, 서술형 답안 작성 연습, 듣기·말하기 실전 훈련, 수행평가 준비','${cat.color}','60'],
+      ['3개월','목표 달성 & 실전 완성','모의고사 실전 훈련, 시험 시간 관리 연습, 예상문제 풀이, 약점 최종 보강, 자신감 회복과 목표 성적 달성','${cat.color}','100']
+      ].map(([m,t,d,color,pct])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px;border-left:4px solid '+color+'"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span style="background:'+color+';color:white;font-size:12px;font-weight:800;padding:3px 10px;border-radius:12px">'+m+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><span style="font-size:12px;color:'+color+';font-weight:700">'+pct+'%</span></div><div style="font-size:12px;color:#6B7280;line-height:1.7">'+d+'</div><div style="background:#E5E7EB;border-radius:4px;height:6px;margin-top:8px"><div style="background:'+color+';border-radius:4px;height:100%;width:'+pct+'%"></div></div></div>').join('')}
+    </div>
+  </section>
+
+  <!-- 수강 후기 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">💬 수강 후기</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+      ${[['⭐⭐⭐⭐⭐','성적이 진짜 올랐어요','중국어 40점대에서 85점까지 올랐습니다. 코치님이 약점을 정확히 짚어주셔서 효율적으로 공부할 수 있었어요.','고2 학생'],
+      ['⭐⭐⭐⭐⭐','아이가 자신감이 생겼어요','수업 후 학습 보고서를 매주 받으니 안심이 됩니다. 아이도 중국어에 재미를 느끼기 시작했어요.','학부모님'],
+      ['⭐⭐⭐⭐⭐','외고 합격했습니다!','코치님 덕분에 중국어 내신 1등급 유지하면서 외고 면접까지 완벽하게 준비할 수 있었습니다. 감사합니다.','외고 합격생']
+      ].map(([s,t,d,who])=>'<div style="background:#FFFBEB;border-radius:12px;padding:16px;border:1px solid #FDE68A"><div style="font-size:11px;margin-bottom:4px">'+s+'</div><div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:6px">'+t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div><div style="font-size:11px;color:#9CA3AF;margin-top:6px;text-align:right">- '+who+'</div></div>').join('')}
+    </div>
   </section>
 
   <!-- p4: 마무리 (CTA 스타일) -->
