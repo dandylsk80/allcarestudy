@@ -4808,6 +4808,339 @@ function makeEngineerLabPage() {
 
 
 
+
+const CN_CATS={
+school:{n:'외고별 대비',d:'외국어고 중국어과 목표 학생을 위한 맞춤 대비 수업',icon:'🏫',color:'#3B82F6'},
+naesin:{n:'내신 대비',d:'학교 중국어 내신 시험 성적 향상을 위한 전문 수업',icon:'📝',color:'#059669'},
+hsk:{n:'HSK 자격증',d:'HSK 3~6급 자격증 대비와 내신 병행 학습 전략',icon:'🏆',color:'#DC2626'},
+skill:{n:'영역별 학습',d:'발음·문법·독해·작문·듣기·말하기 영역별 전문 수업',icon:'🎯',color:'#7C3AED'},
+select:{n:'수업 선택법',d:'효과적인 중국어과외를 고르는 기준과 체크리스트',icon:'✅',color:'#F59E0B'},
+format:{n:'수업 형태',d:'1대1·소그룹·온라인·방문 등 수업 형태별 장단점 비교',icon:'💻',color:'#EC4899'},
+period:{n:'기간별 과정',d:'4주·8주·12주 단기 집중부터 장기 관리까지 기간별 과정',icon:'📅',color:'#0891B2'},
+level:{n:'수준별 과정',d:'왕초보부터 최상위권까지 수준별 맞춤 커리큘럼',icon:'📊',color:'#6366F1'},
+contest:{n:'대회/활동',d:'스피치 대회·면접·발표 등 중국어 활동 대비 수업',icon:'🎤',color:'#14B8A6'},
+career:{n:'진학/유학',d:'중문과·외대·유학·통번역 등 진로별 중국어 학습 전략',icon:'🎓',color:'#8B5CF6'},
+manage:{n:'학습 관리',d:'피드백·보고서·테스트 등 체계적 학습 관리 시스템',icon:'📋',color:'#F97316'},
+effect:{n:'수업 효과',d:'성적 향상 사례와 수업 만족도 분석',icon:'📈',color:'#EF4444'},
+teacher:{n:'강사 선택',d:'좋은 중국어과외 강사를 선택하는 기준과 방법',icon:'👨‍🏫',color:'#10B981'},
+strategy:{n:'학습 전략',d:'성적 향상을 위한 효율적인 중국어 학습 전략',icon:'💡',color:'#6D28D9'},
+};
+
+const CN_TOPICS={
+'school/daewon-naesin':{t:'대원외고 중국어 내신 잘 받으려면 어떤 과외가 좋을까',c:'school'},
+'school/myeongdeok-class':{t:'명덕외고 중국어과 학생들이 찾는 중국어 수업 추천',c:'school'},
+'school/hanyoung-advanced':{t:'한영외고 중국어 심화 대비 가능한 과외 수업 안내',c:'school'},
+'school/gyeonggi-guide':{t:'경기외고 준비생을 위한 중국어과외 선택 가이드',c:'school'},
+'school/gwacheon-goal':{t:'과천외고 중국어과 목표라면 필요한 중국어 수업은',c:'school'},
+'school/suwon-naesin':{t:'수원외고 중국어 내신 대비 맞춤 과외 방법',c:'school'},
+'school/seongnam-grade':{t:'성남외고 중국어 성적 올리는 수업 커리큘럼 소개',c:'school'},
+'school/anyang-prep':{t:'안양외고 진학 준비생을 위한 중국어과외 추천',c:'school'},
+'school/busan-ipsi':{t:'부산외고 중국어과 입시 대비 수업 알아보기',c:'school'},
+'school/daejeon-advanced':{t:'대전외고 중국어 심화반 대비 과외 프로그램',c:'school'},
+'school/gimhae-prep':{t:'김해외고 중국어과 준비할 때 필요한 수업 정리',c:'school'},
+'school/cheongju-guide':{t:'청주외고 목표 학생을 위한 중국어과외 가이드',c:'school'},
+'school/jeonbuk-naesin':{t:'전북외고 중국어 내신 대비 어떻게 준비할까',c:'school'},
+'school/ulsan-custom':{t:'울산외고 중국어과 준비생 맞춤 수업 추천',c:'school'},
+'school/jeju-gradeup':{t:'제주외고 중국어 성적 향상 위한 과외 전략',c:'school'},
+'school/why-tutor':{t:'외고 중국어과 준비할 때 과외가 필요한 이유',c:'school'},
+'school/special-diff':{t:'특목고 중국어 대비 전문 수업은 어떻게 다를까',c:'school'},
+'school/popular-class':{t:'외고 진학 준비생이 많이 찾는 중국어 수업 특징',c:'school'},
+'school/ipsi-match':{t:'외고 입시 준비에 맞는 중국어 수업 추천',c:'school'},
+'school/curriculum-open':{t:'외고 중국어과 준비 커리큘럼 공개',c:'school'},
+'school/daewon-type':{t:'대원외고 준비생이 많이 듣는 중국어과외 유형',c:'school'},
+'school/myeongdeok-custom':{t:'명덕외고 목표 학생 맞춤 중국어 수업 안내',c:'school'},
+'school/hanyoung-strategy':{t:'한영외고 중국어과 준비 전략과 과외 추천',c:'school'},
+'school/gyeonggi-manage':{t:'경기외고 대비 중국어 성적 관리 방법',c:'school'},
+'school/gwacheon-roadmap':{t:'과천외고 중국어 심화 학습 로드맵',c:'school'},
+'school/suwon-perfect':{t:'수원외고 중국어 내신 만점 대비 과외 팁',c:'school'},
+'school/seongnam-select':{t:'성남외고 준비생 중국어 수업 선택 기준',c:'school'},
+'school/anyang-strategy':{t:'안양외고 진학 위한 중국어 학습 전략',c:'school'},
+'school/busan-knowhow':{t:'부산외고 중국어과 입시 준비 노하우',c:'school'},
+'school/daejeon-reason':{t:'대전외고 중국어과외 추천 이유 정리',c:'school'},
+'school/gimhae-advanced':{t:'김해외고 중국어 심화반 준비 방법',c:'school'},
+'school/cheongju-case':{t:'청주외고 중국어 성적 향상 사례 소개',c:'school'},
+'school/jeonbuk-success':{t:'전북외고 중국어 내신 대비 성공 전략',c:'school'},
+'school/ulsan-select':{t:'울산외고 중국어 준비생 과외 선택법',c:'school'},
+'school/jeju-study':{t:'제주외고 목표 학생 중국어 공부 방법',c:'school'},
+'school/specialized':{t:'외고 준비에 특화된 중국어 수업 찾는 법',c:'school'},
+'school/accepted-style':{t:'외고 중국어과 합격생이 선택한 과외 스타일',c:'school'},
+'school/timing-guide':{t:'외고 입시용 중국어과외 준비 타이밍 정리',c:'school'},
+'school/goal-plan':{t:'외고 중국어과 목표 학생 공부 플랜',c:'school'},
+'school/special-total':{t:'특목고 대비 중국어과외 선택법 총정리',c:'school'},
+'school/after-enter':{t:'외고 입학 후 적응용 중국어 수업',c:'school'},
+'school/after-accept':{t:'합격 후 선행학습 중국어과외 추천',c:'school'},
+'school/pre-study-why':{t:'외고 입학 전 선행학습 필요한 이유',c:'school'},
+'school/pre-level':{t:'외고 중국어 선행반 수준은 어느 정도일까',c:'school'},
+'school/difficulty-compare':{t:'외고별 중국어 난이도 차이 분석',c:'school'},
+'school/school-strategy':{t:'학교별 중국어 대비 전략 어떻게 다를까',c:'school'},
+'school/essential-method':{t:'외고 준비생 필수 중국어 공부법 정리',c:'school'},
+'school/parent-faq':{t:'외고 준비 학부모가 많이 묻는 중국어 질문',c:'school'},
+'school/roadmap-overview':{t:'외고 중국어 준비 로드맵 한눈에 보기',c:'school'},
+'school/high-acceptance':{t:'외고 중국어과 진학률 높은 학습법',c:'school'},
+'school/accepted-recommend':{t:'외고 합격생들이 추천하는 중국어 준비법',c:'school'},
+'school/senior-recommend':{t:'외고 선배 추천 중국어과외 유형',c:'school'},
+'school/long-plan':{t:'외고 준비 장기 플랜 중국어과외',c:'school'},
+'naesin/grade1-prep':{t:'중국어 내신 1등급 만드는 외고 대비 수업 추천',c:'naesin'},
+'naesin/convo-naesin':{t:'중국어 회화까지 잡는 내신 대비 과외 커리큘럼',c:'naesin'},
+'naesin/exam-strong':{t:'시험 대비에 강한 중국어과외 프로그램 추천',c:'naesin'},
+'naesin/school-gradeup':{t:'학교 중국어 성적 올리고 싶다면 필요한 수업은',c:'naesin'},
+'naesin/naesin-perform':{t:'내신과 수행평가 함께 잡는 중국어과외 추천',c:'naesin'},
+'naesin/worry-solution':{t:'중국어 내신이 고민이라면 이런 수업을 선택하세요',c:'naesin'},
+'naesin/pro-diff':{t:'중국어 내신 전문 과외의 차별점 분석',c:'naesin'},
+'naesin/last-minute':{t:'시험 직전 중국어 성적 올리는 과외 전략',c:'naesin'},
+'naesin/perform-prep':{t:'중국어 수행평가 대비 수업 추천',c:'naesin'},
+'naesin/core-points':{t:'외고 중국어과 내신 관리 핵심 포인트',c:'naesin'},
+'naesin/weak-roadmap':{t:'중국어 내신 약한 학생을 위한 과외 로드맵',c:'naesin'},
+'naesin/perfect-score':{t:'외고 중국어 내신 만점 노리는 학습법',c:'naesin'},
+'naesin/perform-strong':{t:'수행평가 강한 중국어과외 프로그램 추천',c:'naesin'},
+'naesin/descriptive':{t:'중국어 서술형 대비 전문 수업 안내',c:'naesin'},
+'naesin/essay-exam':{t:'중국어 논술형 시험 대비 학습법',c:'naesin'},
+'naesin/school-trend':{t:'학교별 출제 경향 반영 중국어 수업',c:'naesin'},
+'naesin/textbook-match':{t:'교과서 맞춤 중국어과외 효과 분석',c:'naesin'},
+'naesin/print-based':{t:'학교 프린트 기반 중국어 내신 과외',c:'naesin'},
+'naesin/sub-textbook':{t:'부교재 활용 중국어 심화 수업 안내',c:'naesin'},
+'naesin/descriptive-strong':{t:'서술형 강화 중국어과외 프로그램',c:'naesin'},
+'naesin/multiple-choice':{t:'객관식 약점 잡는 중국어 학습법',c:'naesin'},
+'naesin/compress-class':{t:'시험 직전 압축 중국어 수업 가능할까',c:'naesin'},
+'naesin/exam-type':{t:'시험 유형별 중국어과외 전략',c:'naesin'},
+'naesin/school-level-prep':{t:'학교 수준별 중국어 대비 방법',c:'naesin'},
+'naesin/exam-strong-select':{t:'학교 시험에 강한 중국어과외 선택법',c:'naesin'},
+'naesin/problem-solve':{t:'중국어 실전 문제풀이 수업 추천',c:'naesin'},
+'naesin/mock-test':{t:'모의고사형 중국어 테스트 과외',c:'naesin'},
+'naesin/predict-provide':{t:'중국어 예상문제 제공 수업 안내',c:'naesin'},
+'naesin/high-accuracy-prep':{t:'적중률 높은 중국어 내신 대비법',c:'naesin'},
+'naesin/past-exam-analysis':{t:'기출 분석 기반 중국어과외 추천',c:'naesin'},
+'naesin/school-predict':{t:'학교별 예상문제 만드는 중국어 수업',c:'naesin'},
+'naesin/trend-analysis':{t:'출제 경향 분석형 중국어 과외',c:'naesin'},
+'naesin/predictable':{t:'내신 예측 가능한 중국어 수업일까',c:'naesin'},
+'naesin/present-exam':{t:'외고 중국어 발표형 시험 대비법',c:'naesin'},
+'naesin/perform-perfect':{t:'수행평가 완벽 대비 중국어 수업',c:'naesin'},
+'naesin/project-prep':{t:'학교 프로젝트형 중국어 과제 대비',c:'naesin'},
+'naesin/team-project':{t:'중국어 팀플 대비 가능한 수업 추천',c:'naesin'},
+'hsk/hsk-combo':{t:'HSK 준비와 병행 가능한 중국어 수업 추천',c:'hsk'},
+'hsk/naesin-hsk':{t:'내신과 HSK를 함께 준비하는 중국어과외 전략',c:'hsk'},
+'hsk/dual-prep':{t:'HSK와 학교 내신 동시에 준비하는 수업 전략',c:'hsk'},
+'hsk/hsk3-combo':{t:'HSK 3급 병행 가능한 중국어과외 커리큘럼',c:'hsk'},
+'hsk/hsk4-strategy':{t:'HSK 4급 준비와 내신 병행 학습 전략',c:'hsk'},
+'hsk/hsk5-goal':{t:'HSK 5급 목표 학생 중국어 수업 추천',c:'hsk'},
+'hsk/hsk6-challenge':{t:'HSK 6급 도전 전 필요한 심화 과정',c:'hsk'},
+'hsk/cert-parallel':{t:'중국어 자격증 대비와 학교 시험 병행법',c:'hsk'},
+'skill/real-convo':{t:'실전 회화까지 가능한 중국어 수업 커리큘럼',c:'skill'},
+'skill/pronun-fix':{t:'중국어 발음 교정 잘되는 수업은 뭐가 다를까',c:'skill'},
+'skill/pronun-to-exam':{t:'중국어 발음부터 시험까지 잡는 과외 추천',c:'skill'},
+'skill/speaking-open':{t:'중국어 말문 트이게 만드는 수업 방식',c:'skill'},
+'skill/exam-convo':{t:'시험 점수와 회화 둘 다 잡는 중국어 수업',c:'skill'},
+'skill/listen-train':{t:'중국어 듣기 평가 잘 보는 훈련 방법',c:'skill'},
+'skill/speak-eval':{t:'중국어 말하기 평가 대비 과외 필요할까',c:'skill'},
+'skill/convo-exam':{t:'중국어 회화도 챙기는 시험 대비 수업',c:'skill'},
+'skill/real-express':{t:'실전 표현까지 배우는 중국어과외 추천',c:'skill'},
+'skill/writing-correct':{t:'중국어 작문 첨삭 가능한 전문 수업 안내',c:'skill'},
+'skill/grammar-fix':{t:'중국어 문법 약점 잡는 과외 커리큘럼',c:'skill'},
+'skill/tone-correct':{t:'중국어 성조 교정 전문 과외 필요성',c:'skill'},
+'skill/pronun-focus':{t:'발음 교정 중심 중국어 수업 추천',c:'skill'},
+'skill/reading-up':{t:'중국어 독해 실력 키우는 과외 전략',c:'skill'},
+'skill/listen-weak':{t:'중국어 듣기 약한 학생을 위한 수업법',c:'skill'},
+'skill/free-talk':{t:'중국어 프리토킹 가능한 과외 추천',c:'skill'},
+'skill/essay-writing':{t:'중국어 에세이 작성 첨삭 과외 안내',c:'skill'},
+'skill/debate-class':{t:'중국어 토론 수업 가능한 전문 과외',c:'skill'},
+'skill/weak-pronun':{t:'발음 약한 학생용 중국어 수업 추천',c:'skill'},
+'skill/weak-grammar':{t:'문법 약한 학생용 중국어과외 안내',c:'skill'},
+'skill/weak-reading':{t:'독해 약한 학생을 위한 맞춤 수업',c:'skill'},
+'skill/weak-writing':{t:'작문 약한 학생용 첨삭 과외 추천',c:'skill'},
+'skill/weak-listen':{t:'듣기 약점 보완 중국어 수업 프로그램',c:'skill'},
+'skill/weak-speak':{t:'말하기 약점 보완 전문 중국어과외',c:'skill'},
+'skill/speak-confidence':{t:'말하기 자신감 키우는 중국어과외',c:'skill'},
+'skill/ai-pronun':{t:'AI 발음 분석 활용 중국어 수업',c:'skill'},
+'skill/voice-feedback':{t:'음성 피드백 가능한 중국어과외 추천',c:'skill'},
+'skill/record-task':{t:'녹음 과제 포함 중국어 발음 수업',c:'skill'},
+'skill/shadowing':{t:'쉐도잉 기반 중국어 회화 훈련',c:'skill'},
+'skill/listen-training':{t:'실전 듣기 훈련 강화 중국어 수업',c:'skill'},
+'skill/news-chinese':{t:'뉴스 활용 중국어 심화 과외',c:'skill'},
+'skill/drama-chinese':{t:'드라마 활용 중국어 회화 수업',c:'skill'},
+'skill/immersion':{t:'콘텐츠 기반 중국어 몰입 학습',c:'skill'},
+'select/find-advanced':{t:'외고 중국어 심화 학습 가능한 과외 찾는 법',c:'select'},
+'select/check-before':{t:'중국어과외 선택 전 꼭 확인해야 할 수업 기준',c:'select'},
+'select/efficient-pick':{t:'효율 좋은 중국어과외 고르는 방법 총정리',c:'select'},
+'select/criteria-native':{t:'원어민보다 중요한 중국어과외 선택 기준은',c:'select'},
+'select/prefer-style':{t:'중국어과 학생들이 선호하는 과외 방식 정리',c:'select'},
+'select/checklist':{t:'중국어과외 효과 높이는 수업 선택 체크리스트',c:'select'},
+'select/caution-points':{t:'외고 중국어 대비 과외 선택 시 주의할 점',c:'select'},
+'select/school-level':{t:'학교별 중국어 난이도에 맞는 과외 선택법',c:'select'},
+'select/five-checks':{t:'중국어과외 시작 전 확인해야 할 5가지',c:'select'},
+'select/good-diff':{t:'좋은 중국어과외는 무엇이 다를까',c:'select'},
+'select/vs-academy':{t:'중국어 학원보다 과외가 효과적인 경우',c:'select'},
+'select/consult-popular':{t:'외고 중국어 준비생 상담 많은 수업 유형',c:'select'},
+'select/really-need':{t:'외고 전문 중국어과외 정말 필요할까',c:'select'},
+'select/top-curriculum':{t:'상담 많은 중국어과외 TOP 커리큘럼',c:'select'},
+'select/ineffective-sign':{t:'효과 없는 중국어 수업의 특징은',c:'select'},
+'select/realistic-criteria':{t:'잘 맞는 중국어과외 찾는 현실적인 기준',c:'select'},
+'select/child-match':{t:'내 아이에게 맞는 중국어 수업 찾는 법',c:'select'},
+'select/weakness-guide':{t:'중국어 약점별 과외 선택 가이드',c:'select'},
+'format/one-on-one-type':{t:'1대1 중국어과외가 필요한 학생 유형 정리',c:'format'},
+'format/one-on-one-why':{t:'1대1 과외가 중국어에 효과적인 이유',c:'format'},
+'format/small-vs-private':{t:'소수정예 중국어 수업 vs 개인과외 비교',c:'format'},
+'format/online-effect':{t:'온라인 중국어과외 효과 있을까',c:'format'},
+'format/video-criteria':{t:'화상 중국어 수업 추천 기준 정리',c:'format'},
+'format/visit-pros-cons':{t:'방문 중국어과외 장단점 분석',c:'format'},
+'format/weekend-reason':{t:'주말 중국어과외 찾는 학생 증가 이유',c:'format'},
+'format/once-a-week':{t:'주1회 중국어과외 충분할까',c:'format'},
+'format/twice-a-week':{t:'주2회 중국어 수업 추천 대상은',c:'format'},
+'format/three-a-week':{t:'주3회 집중 관리형 중국어과외 장점',c:'format'},
+'format/daily-type':{t:'매일 공부형 중국어과외 필요한 학생 특징',c:'format'},
+'period/vacation-timing':{t:'방학 특강 중국어과외 추천 시기',c:'period'},
+'period/short-effect':{t:'단기 완성 중국어 수업 효과 분석',c:'period'},
+'period/long-term':{t:'장기 관리형 중국어과외 장점',c:'period'},
+'period/4week-intensive':{t:'4주 집중 중국어과외 추천 프로그램',c:'period'},
+'period/8week-plan':{t:'8주 완성 중국어 실력 향상 플랜',c:'period'},
+'period/12week-advanced':{t:'12주 중국어 심화 과정 커리큘럼',c:'period'},
+'level/beginner-fast':{t:'중국어 초보가 실력 빠르게 느는 수업 방식',c:'level'},
+'level/advanced-how':{t:'중국어 심화 과정 대비 과외 어떻게 준비할까',c:'level'},
+'level/advanced-core':{t:'외고 중국어 심화반 대비 핵심 학습법',c:'level'},
+'level/deep-feature':{t:'중국어 심화 학습에 강한 수업의 특징',c:'level'},
+'level/top-tier':{t:'중국어 상위권 만드는 맞춤 수업 전략',c:'level'},
+'level/basic-lack':{t:'기초 부족한 학생을 위한 중국어과외 추천',c:'level'},
+'level/absolute-beginner':{t:'중국어 왕초보도 외고 준비 가능할까',c:'level'},
+'level/basic-to-advanced':{t:'기초부터 외고 대비 가능한 중국어과외',c:'level'},
+'level/low-rank-up':{t:'내신 하위권도 점수 올리는 중국어 수업',c:'level'},
+'level/30-to-80':{t:'중국어 30점대에서 80점대 올리는 방법',c:'level'},
+'level/score-reverse':{t:'중국어 점수 역전 가능한 과외 프로그램',c:'level'},
+'level/top-maintain':{t:'상위권 유지용 중국어 심화 수업',c:'level'},
+'level/elite-advanced':{t:'최상위권 학생 위한 중국어 심화과외',c:'level'},
+'level/elite-class':{t:'외고 최상위권 학생들이 듣는 중국어 수업',c:'level'},
+'level/premium-prep':{t:'명문 외고 대비 프리미엄 중국어과외',c:'level'},
+'level/pre-advanced':{t:'중국어 심화 선행 대비 커리큘럼',c:'level'},
+'level/by-level':{t:'중국어 실력별 맞춤 과외 추천',c:'level'},
+'level/level-example':{t:'레벨별 중국어 수업 구성 예시',c:'level'},
+'level/growth-roadmap':{t:'초급부터 심화까지 중국어 성장 로드맵',c:'level'},
+'level/complete-advanced':{t:'중국어 완성형 심화 수업 추천',c:'level'},
+'contest/present-prep':{t:'중국어 발표 준비용 과외 수업 추천',c:'contest'},
+'contest/pt-prep':{t:'중국어 PT 준비를 위한 맞춤 수업',c:'contest'},
+'contest/interview-program':{t:'외고 중국어 면접 대비 프로그램 안내',c:'contest'},
+'contest/self-intro':{t:'중국어 자기소개 준비 과외 수업 추천',c:'contest'},
+'contest/present-power':{t:'중국어 발표력 키우는 과외 프로그램',c:'contest'},
+'contest/speech-contest':{t:'중국어 스피치 대회 준비 과외 전략',c:'contest'},
+'contest/competition':{t:'외고 중국어 경시대회 준비 수업 추천',c:'contest'},
+'contest/present-contest':{t:'중국어 발표 대회 준비 과외',c:'contest'},
+'contest/speaking-contest':{t:'중국어 말하기 대회 준비 수업',c:'contest'},
+'contest/confidence-interview':{t:'중국어 면접 자신감 높이는 과외',c:'contest'},
+'contest/present-anxiety':{t:'중국어 발표 불안 극복하는 수업 추천',c:'contest'},
+'contest/interview-calm':{t:'면접 긴장 줄이는 중국어 코칭',c:'contest'},
+'contest/present-correct':{t:'중국어 발표 첨삭 가능한 과외',c:'contest'},
+'contest/material-correct':{t:'발표자료 첨삭 포함 중국어과외 안내',c:'contest'},
+'contest/presentation':{t:'중국어 프레젠테이션 준비 과외',c:'contest'},
+'career/interview-prep':{t:'중국어 인터뷰 대비 전문 수업 안내',c:'career'},
+'career/business-chinese':{t:'비즈니스 중국어도 함께 배우는 심화 수업',c:'career'},
+'career/study-abroad':{t:'중국 유학 준비생을 위한 중국어과외',c:'career'},
+'career/exchange-student':{t:'교환학생 준비에 필요한 중국어 수업',c:'career'},
+'career/chinese-major':{t:'중문과 진학 목표 학생 학습 전략',c:'career'},
+'career/specialist':{t:'중국어 특기자 준비 과외 추천',c:'career'},
+'career/univ-goal':{t:'목표 대학별 중국어 학습 전략',c:'career'},
+'career/hufs-prep':{t:'외대 진학 목표 중국어과외 준비법',c:'career'},
+'career/major-strategy':{t:'중문과 목표 학생 중국어 심화 전략',c:'career'},
+'career/interpreter':{t:'통번역 준비생 중국어과외 추천',c:'career'},
+'career/intl-dept':{t:'국제학과 준비 중국어 학습법',c:'career'},
+'career/competitiveness':{t:'중국어 경쟁력 높이는 심화 수업',c:'career'},
+'career/spec-cert':{t:'중국어 스펙 만드는 자격증 병행법',c:'career'},
+'career/portfolio-prep':{t:'학생부 관리용 중국어 활동 준비 수업',c:'career'},
+'manage/routine-coaching':{t:'중국어 학습 루틴 잡아주는 코칭형 과외',c:'manage'},
+'manage/grade-manage':{t:'성적 관리까지 해주는 중국어과외 특징',c:'manage'},
+'manage/homework-manage':{t:'중국어 숙제 관리 포함 수업 추천',c:'manage'},
+'manage/review-system':{t:'중국어 복습 시스템 있는 과외가 중요한 이유',c:'manage'},
+'manage/weekly-test':{t:'주간 테스트 제공 중국어과외 장점',c:'manage'},
+'manage/monthly-feedback':{t:'월간 피드백 제공 중국어 수업 추천',c:'manage'},
+'manage/level-test':{t:'레벨테스트 기반 중국어과외 선택법',c:'manage'},
+'manage/custom-curriculum':{t:'학생별 맞춤 커리큘럼 수업이 필요한 이유',c:'manage'},
+'manage/wrong-answer':{t:'오답 관리 포함 중국어과외 추천',c:'manage'},
+'manage/detail-manage':{t:'꼼꼼한 관리형 중국어 수업 장점',c:'manage'},
+'manage/task-feedback':{t:'과제 피드백 좋은 중국어과외 찾는 법',c:'manage'},
+'manage/report-provide':{t:'학습 보고서 제공 중국어과외 추천',c:'manage'},
+'manage/parent-consult':{t:'부모 상담 포함 중국어과외 수업',c:'manage'},
+'manage/goal-achieve':{t:'목표 달성형 중국어과외 프로그램',c:'manage'},
+'manage/growth-track':{t:'성장 추적형 중국어 수업 추천',c:'manage'},
+'manage/diagnosis-design':{t:'실력 진단 기반 중국어과외 설계',c:'manage'},
+'manage/consulting':{t:'맞춤 컨설팅 포함 중국어 수업 안내',c:'manage'},
+'manage/planner-provide':{t:'학습 플래너 제공 중국어과외 추천',c:'manage'},
+'manage/premium-manage':{t:'중국어 프리미엄 관리형 과외 안내',c:'manage'},
+'manage/intensive-coaching':{t:'중국어 집중 코칭 프로그램 추천',c:'manage'},
+'manage/personality-match':{t:'학생별 성향 맞춤 중국어과외 설계',c:'manage'},
+'manage/custom-feedback':{t:'학생 맞춤 피드백 강한 중국어 수업',c:'manage'},
+'manage/every-feedback':{t:'매 수업 피드백 제공 중국어과외',c:'manage'},
+'manage/growth-record':{t:'성장 기록 남겨주는 중국어 수업',c:'manage'},
+'manage/data-manage':{t:'학습 데이터 관리형 중국어과외',c:'manage'},
+'manage/custom-strategy':{t:'맞춤 전략 세워주는 중국어 코칭',c:'manage'},
+'effect/pattern-analysis':{t:'중국어 성적이 오르는 학생들의 수업 패턴 분석',c:'effect'},
+'effect/gradeup-trait':{t:'과외로 중국어 성적 오르는 학생 특징은',c:'effect'},
+'effect/high-satisfy':{t:'중국어 수업 만족도 높은 커리큘럼은 따로 있다',c:'effect'},
+'effect/fast-improve':{t:'실력 향상 빠른 중국어과외의 공통점',c:'effect'},
+'effect/rapid-pattern':{t:'중국어 성적 급상승 학생들의 학습 패턴',c:'effect'},
+'effect/switch-reason':{t:'과외 전환 후 중국어 성적이 오르는 이유',c:'effect'},
+'effect/re-enroll':{t:'중국어과 학생들이 재등록하는 수업 공통점',c:'effect'},
+'effect/good-review':{t:'후기 좋은 중국어과외 공통점 분석',c:'effect'},
+'effect/re-take-rate':{t:'재수강률 높은 중국어 수업 특징',c:'effect'},
+'effect/word-of-mouth':{t:'입소문 나는 중국어과외의 비밀',c:'effect'},
+'effect/student-satisfy':{t:'학생 만족도 높은 중국어 수업 구성',c:'effect'},
+'effect/parent-satisfy':{t:'학부모 만족도 높은 중국어과외 특징',c:'effect'},
+'effect/high-accuracy':{t:'시험 적중률 높은 중국어과외 추천',c:'effect'},
+'effect/success-cases':{t:'성적 상승 사례 많은 중국어 수업',c:'effect'},
+'effect/practical-feature':{t:'실전형 중국어과외 프로그램 특징',c:'effect'},
+'effect/result-focus':{t:'결과 중심 중국어과외 운영 방식',c:'effect'},
+'effect/sure-improve':{t:'중국어 실력 확실히 올리는 수업법',c:'effect'},
+'effect/proven-result':{t:'입시 결과로 증명되는 중국어 수업 특징',c:'effect'},
+'effect/accept-cases':{t:'합격 사례 많은 중국어과외 프로그램',c:'effect'},
+'effect/accept-review':{t:'외고 합격 후기도 좋은 중국어 수업',c:'effect'},
+'effect/accuracy-knowhow':{t:'시험 적중 노하우 있는 중국어과외 추천',c:'effect'},
+'effect/outcome-secret':{t:'성과 중심 중국어과외의 운영 비밀',c:'effect'},
+'effect/grade-confidence':{t:'성적과 자신감 함께 올리는 중국어 수업',c:'effect'},
+'effect/content-satisfy':{t:'학생 만족도 높은 중국어 콘텐츠 수업',c:'effect'},
+'effect/retention-rate':{t:'학습 지속률 높은 중국어과외 특징',c:'effect'},
+'teacher/satisfy-criteria':{t:'중국어 수업 만족도 높이는 강사 선택 기준',c:'teacher'},
+'teacher/pro-check':{t:'중국어 전문 강사 선택 시 확인할 점',c:'teacher'},
+'teacher/abroad-teacher':{t:'유학파 강사 중국어과외 장점은',c:'teacher'},
+'teacher/korean-teacher':{t:'원어민보다 한국인 강사가 좋은 경우',c:'teacher'},
+'teacher/find-specialist':{t:'외고 전문 중국어 강사 찾는 방법',c:'teacher'},
+'teacher/experienced':{t:'경력 많은 중국어과외 강사 특징',c:'teacher'},
+'teacher/expert-recommend':{t:'중국어 교육 전문가가 추천하는 수업법',c:'teacher'},
+'strategy/top-routine':{t:'중국어 잘하는 학생들의 공통된 수업 루틴',c:'strategy'},
+'strategy/dual-design':{t:'내신과 입시를 함께 잡는 중국어 수업 설계법',c:'strategy'},
+'strategy/grade1-method':{t:'중국어 1등급 학생들의 공부 방식 분석',c:'strategy'},
+'strategy/when-start':{t:'중국어 심화 대비는 언제부터 시작해야 할까',c:'strategy'},
+'strategy/habit-program':{t:'중국어 공부 습관 잡아주는 과외 프로그램',c:'strategy'},
+'strategy/increase-volume':{t:'중국어 학습량 늘리는 과외 운영법',c:'strategy'},
+'strategy/motivation':{t:'학습 동기 잡아주는 중국어과외 추천',c:'strategy'},
+'strategy/plateau-break':{t:'성적 정체기 학생에게 필요한 중국어 수업',c:'strategy'},
+'strategy/slump-overcome':{t:'중국어 슬럼프 극복하는 과외 전략',c:'strategy'},
+'strategy/late-start':{t:'외고 준비 늦었다면 중국어 어떻게 시작할까',c:'strategy'},
+'strategy/no-cramming':{t:'벼락치기보다 효과적인 중국어 공부법',c:'strategy'},
+'strategy/long-roadmap':{t:'외고 중국어 장기 로드맵 설계 방법',c:'strategy'},
+'strategy/dual-plan':{t:'내신과 입시 함께 준비하는 학습 플랜',c:'strategy'},
+'strategy/habit-form':{t:'중국어 공부 습관 형성하는 과외 추천',c:'strategy'},
+'strategy/self-directed':{t:'자기주도 학습 잡아주는 중국어 수업',c:'strategy'},
+'strategy/focus-weak':{t:'집중력 약한 학생용 중국어과외 추천',c:'strategy'},
+'strategy/pre-when':{t:'중국어 선행학습 과외 언제 시작할까',c:'strategy'},
+'strategy/exam-anxiety':{t:'시험 불안 있는 학생 위한 중국어 코칭',c:'strategy'},
+'strategy/mental-manage':{t:'멘탈 관리 포함 중국어 학습 프로그램',c:'strategy'},
+'strategy/motivate-type':{t:'동기부여형 중국어과외 추천',c:'strategy'},
+'strategy/habit-correct':{t:'습관 교정형 중국어 수업 장점',c:'strategy'},
+'strategy/target-score':{t:'목표 점수별 중국어 수업 추천',c:'strategy'},
+'strategy/no-improve-fix':{t:'중국어 점수 안 오르는 이유와 해결법',c:'strategy'},
+'strategy/no-result-check':{t:'과외 받아도 성적 안 오르면 체크할 것',c:'strategy'},
+'strategy/before-start':{t:'중국어 공부 시작 전 알아야 할 핵심 정보',c:'strategy'},
+'strategy/note-method':{t:'중국어 상위권 학생들의 노트 정리법',c:'strategy'},
+'strategy/efficiency-up':{t:'중국어 학습 효율 높이는 과외 방식',c:'strategy'},
+'strategy/exam-skill-both':{t:'시험과 실력 둘 다 잡는 중국어 전략',c:'strategy'},
+'strategy/long-memory':{t:'중국어를 오래 기억하는 학습 방식',c:'strategy'},
+'strategy/understand-first':{t:'암기보다 이해 중심 중국어과외 장점',c:'strategy'},
+'strategy/repeat-train':{t:'반복 훈련형 중국어 수업 추천',c:'strategy'},
+'strategy/practical-apply':{t:'실전 적용형 중국어과외 필요성',c:'strategy'},
+'strategy/habit-first':{t:'중국어 학습 습관부터 잡는 과외',c:'strategy'},
+'strategy/master-plan':{t:'중국어 마스터 플랜 과외 프로그램',c:'strategy'},
+'strategy/fun-class':{t:'흥미 유발형 중국어 수업 추천',c:'strategy'},
+'strategy/not-boring':{t:'지루하지 않은 중국어과외 찾는 법',c:'strategy'},
+'strategy/fun-grade':{t:'재미와 성적 모두 잡는 중국어 수업',c:'strategy'},
+'strategy/long-growth':{t:'중국어 장기 성장 가능한 수업 방식',c:'strategy'},
+'strategy/roadmap-provide':{t:'중국어 공부 로드맵 제공 수업 추천',c:'strategy'},
+};
+
 const STUDY_TOPICS={
 'exam-prep-guide':{t:'시험기간 준비 가이드',d:'시험기간에 효율적으로 준비하는 방법. 과목별 우선순위 설정부터 컨디션 관리까지 완벽 가이드'},
 'naesin-strategy':{t:'내신 대비 전략 정리',d:'내신 시험에서 좋은 성적을 받기 위한 전략. 교과서 분석, 기출 활용, 서술형 대비법'},
@@ -4910,6 +5243,101 @@ const STUDY_TOPICS={
 'self-practice':{t:'자기주도학습 실천 방법 가이드',d:'자기주도학습을 실천하는 구체적인 방법. 계획, 실행, 점검의 3단계'},
 'exam-total':{t:'시험기간 공부 전략 총정리',d:'시험기간 공부 전략 총정리. 시험 3주 전부터 당일까지 완벽 가이드'},
 };
+
+
+function makeCnCategoryPage(catKey) {
+  const cat = CN_CATS[catKey]; if (!cat) return null;
+  const topics = Object.entries(CN_TOPICS).filter(([k,v])=>v.c===catKey);
+  const title = cat.n+' - 중국어과외 | 올케어스터디';
+  const desc = cat.d+'. 올케어스터디 1:1 맞춤 중국어 과외.';
+  const canonical = '/conversation/chinese/'+catKey;
+  const bc = [{name:'홈',url:'/'},{name:'중국어',url:'/conversation/chinese'},{name:cat.n,url:canonical}];
+  const body = `<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">중국어</a> &rsaquo; <span>${cat.n}</span></div>
+  <div style="background:linear-gradient(135deg,${cat.color}22,${cat.color}11);border-radius:20px;padding:36px;margin-bottom:28px;text-align:center">
+    <div style="font-size:42px;margin-bottom:8px">${cat.icon}</div>
+    <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:#0F2044;margin:0 0 8px">${cat.n}</h1>
+    <p style="font-size:14px;color:#6B7280;margin:0">${cat.d}</p>
+    <p style="font-size:13px;color:#9CA3AF;margin-top:8px">총 ${topics.length}개 가이드</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:28px">
+    ${topics.map(([k,v])=>'<a href="/conversation/chinese/'+k+'" style="display:block;padding:16px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
+  </div>
+  <div class="cta-box"><h3>중국어 과외 무료 상담</h3><p>1:1 맞춤 중국어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+</div>`;
+  return wrap(title,desc,canonical,body,bc);
+}
+
+function makeCnSubPage(fullSlug) {
+  const pg = CN_TOPICS[fullSlug]; if (!pg) return null;
+  const T = pg.t, catKey = pg.c;
+  const cat = CN_CATS[catKey];
+  const canonical = '/conversation/chinese/'+fullSlug;
+  const desc = T+' | 올케어스터디 1:1 맞춤 중국어 과외. 전국 200개 직영센터 기반 검증 코치.';
+  const bc = [{name:'홈',url:'/'},{name:'중국어',url:'/conversation/chinese'},{name:cat.n,url:'/conversation/chinese/'+catKey},{name:T,url:canonical}];
+  const keys = Object.keys(CN_TOPICS);
+  const idx = keys.indexOf(fullSlug);
+  const _p = fullSlug.charCodeAt(fullSlug.length-1);
+
+  // ─── p1: 13×11×17 조합 (T 전삽입) ───
+  const S1=[T+'에 대해 알아보고 계신가요? 올케어스터디가 체계적으로 안내합니다.',T+'을 제대로 준비하면 성적과 실력 모두 변합니다.','많은 학생이 '+T+'에서 시행착오를 겪습니다. 효율적인 방법을 안내합니다.',T+'의 핵심은 올바른 방향 설정에 있습니다.','상위권 학생들의 '+T+' 노하우는 남다릅니다.',T+'에 실패하는 가장 큰 이유는 잘못된 수업 선택입니다.',T+'을 통해 중국어 실력을 한 단계 올릴 수 있습니다.',T+'은 체계적인 커리큘럼이 핵심입니다.','학부모님이 꼭 알아야 할 '+T+' 포인트입니다.','지금 '+T+'을 검색하셨다면 올케어스터디가 정답입니다.','교육 전문가가 추천하는 '+T+' 방법입니다.',T+'의 핵심 원리를 이해하면 실천이 쉬워집니다.','중국어 성적 향상의 비결은 '+T+'에 있습니다.'];
+  const S2=['올케어스터디는 전국 200개 이상 직영 학습센터를 운영하며 3단계 검증을 통과한 전문 코치가 '+T+' 수업을 담당합니다.','학생의 현재 수준을 정밀 진단한 후 '+T+' 맞춤 커리큘럼을 설계하고 약점 보강부터 심화까지 단계별로 진행합니다.','1:1 맞춤 수업이므로 '+T+' 과정에서 학생이 이해하지 못한 부분을 즉시 질문하고 해결할 수 있습니다.','매 수업 후 학습 보고서를 학부모님께 전송하며 '+T+' 수업 녹화로 복습도 가능합니다.','48시간 내 '+T+' 전문 코치를 매칭하며 만족하지 못하면 무료로 교체합니다.','시험 기간에는 '+T+' 집중 대비 모드로 전환하여 핵심 정리와 기출 분석을 진행합니다.','방문 과외와 화상수업 중 선택 가능하며 '+T+' 수업 시간도 자유롭게 조율됩니다.','코치는 학생의 학교 교과서와 출제 경향을 분석하여 '+T+' 수업에 반영합니다.','수업 외 시간에도 메신저로 '+T+' 관련 질문이 가능하며 숙제와 복습 자료를 매 수업 후 제공합니다.','성조와 발음부터 독해·작문까지 '+T+'에서 중국어 전 영역을 체계적으로 다룹니다.','HSK 자격증과 학교 내신을 동시에 준비하는 '+T+' 병행 커리큘럼도 운영합니다.'];
+  const S3=['첫 수업은 무료이니 '+T+'을 직접 경험해보세요.','무료 상담으로 '+T+' 맞춤 학습 계획을 설계해드립니다.',T+' 무료 체험 후 정규 수업 여부를 부담 없이 결정하세요.','지금 시작하면 3개월 후 '+T+'의 효과를 체감할 수 있습니다.',T+' 상담 전화: 010-6834-8080으로 문의하세요.','올케어스터디의 '+T+' 수업으로 중국어 성적 변화를 경험하세요.',T+'은 학생의 미래를 바꿀 수 있는 선택입니다.','수천 명의 학생이 경험한 '+T+' 수업을 지금 시작하세요.','올케어스터디와 함께 '+T+'을 체계적으로 준비하세요.','외고 합격생들이 선택한 '+T+' 수업, 지금 경험하세요.','전국 어디서나 최고의 코치와 '+T+' 수업을 받을 수 있습니다.','코치 무료 교체 가능, 위험 부담 제로로 '+T+'을 시작하세요.','매주 학습 보고서로 '+T+' 진행 상황을 투명하게 확인합니다.','내 아이에게 딱 맞는 '+T+' 수업을 올케어스터디에서 찾으세요.','학부모 만족도 97%의 '+T+' 수업을 경험해보세요.','시험 적중률 높은 '+T+' 수업으로 내신 걱정을 덜으세요.','올케어스터디 '+T+' 수업은 결과로 증명합니다.'];
+  const p1 = S1[idx%13]+' '+S2[(idx*3+_p)%11]+' '+S3[(idx*7+_p*2)%17];
+
+  // p2: 10가지 (T 전삽입, 카테고리별 내용 차별화)
+  const P2=[T+'에서 가장 중요한 것은 학생의 현재 수준을 정확히 파악하는 것입니다. 올케어스터디 코치는 첫 수업에서 레벨테스트를 통해 성조·발음·문법·독해·작문 5개 영역의 강점과 약점을 진단합니다. 이 진단을 바탕으로 '+T+' 맞춤 커리큘럼을 설계하여 약점은 집중 보강하고 강점은 심화하는 효율적인 학습이 가능합니다.',
+  T+' 수업에서 올케어스터디가 강조하는 것은 성조와 발음의 기초입니다. 중국어는 같은 음절도 성조에 따라 의미가 완전히 달라지므로 초기에 정확한 발음 습관을 잡는 것이 중요합니다. '+T+' 과정에서 코치가 실시간으로 발음을 교정하고 반복 훈련을 통해 자연스러운 중국어를 구사하도록 안내합니다.',
+  T+'의 효과를 극대화하려면 수업 외 시간의 학습도 중요합니다. 올케어스터디는 매 수업 후 핵심 요약과 복습 과제를 제공하며 주간 미니 테스트로 '+T+' 이해도를 점검합니다. 에빙하우스 망각곡선을 적용한 반복 복습 시스템으로 배운 내용이 장기 기억으로 정착됩니다.',
+  '외고 준비생에게 '+T+'이 특히 중요한 이유는 내신과 입시를 동시에 준비해야 하기 때문입니다. 올케어스터디의 '+T+' 수업은 학교 교과서 분석, 기출문제 풀이, 서술형 대비, 수행평가 준비를 하나의 커리큘럼으로 통합하여 시간 효율을 극대화합니다.',
+  T+' 수업의 핵심은 학생이 직접 말하고 쓰는 시간을 충분히 확보하는 것입니다. 올케어스터디 코치는 50분 수업 중 학생의 능동적 참여 시간을 30분 이상 배정합니다. '+T+' 과정에서 학생이 직접 중국어로 표현하고 코치가 즉시 피드백하는 방식이 실력 향상에 가장 효과적입니다.',
+  T+' 과정에서 HSK 자격증 준비를 병행하면 학습 동기도 높아지고 대학 입시에서도 유리합니다. 올케어스터디는 내신 대비 80%+HSK 대비 20%의 비율로 '+T+' 커리큘럼을 구성하여 두 마리 토끼를 잡을 수 있습니다.',
+  '올케어스터디의 '+T+' 수업이 다른 과외와 차별화되는 점은 학습 관리 시스템입니다. 매 수업 후 학습 보고서 전송, 주간 진도 체크, 월간 성취도 리포트, 학부모 상담까지 체계적으로 운영합니다. '+T+' 수업의 투명한 관리가 학부모 만족도를 높입니다.',
+  T+' 준비에서 가장 흔한 실수는 문법에만 집중하고 말하기·듣기를 소홀히 하는 것입니다. 외고 시험은 문법뿐 아니라 듣기 평가, 말하기 수행평가, 발표 등 다양한 영역을 평가합니다. 올케어스터디의 '+T+' 수업은 모든 영역을 균형 있게 다룹니다.',
+  T+' 수업의 효과는 코치의 전문성에 크게 좌우됩니다. 올케어스터디는 중문과 전공, HSK 6급 이상, 교육 경력 3년 이상의 엄격한 기준으로 '+T+' 코치를 선발합니다. 학생의 학교와 목표에 맞는 최적의 코치를 48시간 내 매칭합니다.',
+  T+' 과정에서 자신감을 키우는 것도 중요합니다. 중국어에 자신감이 생기면 수업 참여도가 높아지고 성적도 자연스럽게 오릅니다. 올케어스터디 코치는 '+T+' 수업에서 학생의 작은 발전도 인정하고 격려하여 학습 동기를 유지합니다.'];
+  const P2b=[' 올케어스터디의 '+T+' 수업은 학생의 학교·목표·성향을 모두 반영하여 최적의 학습 환경을 제공합니다. 무료 첫 수업에서 직접 경험해보세요.',' '+T+' 수업을 통해 중국어에 자신감이 생기면 수업 참여도가 높아지고 성적이 자연스럽게 오릅니다. 작은 성공 경험이 학습 동기를 유지하는 핵심입니다.',' '+T+' 과정에서 오답노트 관리가 성적 향상의 핵심입니다. 코치가 학생의 오답 패턴을 분석하여 반복 출제되는 유형을 집중 훈련합니다.',' '+T+' 수업에서 수행평가 대비도 병행합니다. 발표, 작문, 인터뷰 등 수행평가 유형에 맞춘 실전 연습으로 내신 전 영역을 커버합니다.',' 올케어스터디 코치는 '+T+' 과정에서 학생의 학습 습관까지 관리합니다. 매일 10분 중국어 듣기, 주 3회 어휘 테스트 등 습관화 프로그램을 제공합니다.',' '+T+' 수업의 강점은 학교 시험과 직결되는 맞춤형 콘텐츠입니다. 교과서 본문 분석, 기출 유형 정리, 예상문제 제작까지 시험에 최적화된 수업입니다.',' '+T+' 과정에서 문화 이해도 중요합니다. 중국 문화와 시사를 수업에 녹여 흥미를 유지하면서 실용적인 표현도 함께 익힙니다.',' 올케어스터디의 '+T+' 수업은 녹화가 가능하여 복습에 매우 효과적입니다. 수업에서 놓친 발음 교정이나 문법 설명을 반복 시청할 수 있습니다.',' '+T+' 과정에서 코치와의 궁합이 성적에 큰 영향을 미칩니다. 올케어스터디는 학생의 성격과 학습 스타일에 맞는 코치를 매칭하여 수업 만족도를 높입니다.',' '+T+' 수업의 효과를 극대화하려면 예습과 복습이 필수입니다. 코치가 매 수업 전 예습 가이드와 수업 후 복습 과제를 제공하여 학습 연속성을 유지합니다.'];
+  const p2 = P2[(idx*3+_p)%10] + P2b[(idx*7+_p*3)%10];
+
+  // p3: 5가지
+  const P3=['올케어스터디 '+T+' 수업 과정: ①무료 레벨테스트로 현재 수준 진단 ②맞춤 커리큘럼 설계 및 전문 코치 매칭 ③주 2~3회(1회 50분) 정기 수업 진행 ④매 수업 후 학습 보고서와 복습 과제 제공 ⑤시험 기간 집중 대비 모드 전환. '+T+' 수업은 방문 또는 화상으로 선택 가능하며 녹화 영상은 복습용으로 제공됩니다.',
+  T+' 3개월 변화 로드맵: 1개월—현재 수준 진단과 기초 보강, 약점 영역 집중 훈련. 2개월—내신 대비 본격 학습, 기출 유형 분석과 서술형 연습. 3개월—실전 모의고사와 수행평가 대비, 목표 성적 달성. '+T+' 과정을 따라가면 눈에 띄는 성적 변화를 경험합니다.',
+  T+' 수업을 최대한 활용하는 5가지 팁: ①수업 전 예습 10분으로 핵심 어휘 미리 확인 ②수업 중 카메라 켜고 적극적으로 발화 ③수업 후 24시간 내 복습 ④오답노트 매일 3개씩 정리 ⑤주 1회 코치에게 학습 진도 확인 요청. '+T+'의 효과가 배가됩니다.',
+  T+' 수업의 학부모 소통 시스템: 매 수업 후 카카오톡으로 수업 요약과 숙제 안내, 매주 학습 보고서 발송, 월간 상담으로 '+T+' 방향 점검. 학부모님은 자녀의 중국어 학습 현황을 투명하게 확인할 수 있어 안심하고 맡기실 수 있습니다.',
+  T+' 첫 수업은 무료 체험으로 진행됩니다. 무료 체험에서는 레벨테스트, 학습 스타일 파악, '+T+' 맞춤 커리큘럼 제안까지 진행됩니다. 수업이 마음에 들면 정규 과정을 시작하고 아니면 부담 없이 종료할 수 있습니다. 코치가 마음에 들지 않으면 무료로 교체도 가능합니다.'];
+  const p3 = P3[(idx*7+_p)%5];
+
+  const P4=['올케어스터디의 '+T+' 수업으로 중국어 실력 변화를 경험하세요. 전국 200개 직영 센터의 검증된 코치진, 체계적인 학습 관리, 합리적인 수업료까지. 첫 수업 무료이니 부담 없이 시작하세요. 상담: 010-6834-8080',
+  T+' 실천으로 3개월 후 달라진 성적을 경험하세요. 올케어스터디의 1:1 맞춤 코칭이 '+T+' 여정을 함께합니다. 수천 명의 학생이 성적 향상을 경험한 수업입니다.',
+  '혼자 준비하기 막막하다면 올케어스터디 전문 코치에게 '+T+' 맞춤 상담을 받아보세요. 학생의 현재 수준을 진단하고 최적의 학습 전략을 무료로 설계해드립니다.',
+  T+'은 학생의 미래를 바꿀 수 있는 첫 걸음입니다. 올케어스터디는 모든 학생이 잠재력을 발휘할 수 있도록 체계적인 학습 지원을 제공합니다. 무료 체험으로 시작하세요.'];
+  const p4 = P4[(idx*11+_p)%4];
+
+  const faq = [
+    [T+' 수업은 어떤 방식으로 진행되나요?','방문 과외와 화상수업 중 선택 가능합니다. 주 2~3회(1회 50분) 진행되며, 학생의 학교 교과서와 출제 경향에 맞춘 '+T+' 맞춤 커리큘럼으로 수업합니다. 첫 수업은 무료입니다.'],
+    [T+' 수업료는 얼마인가요?','과목, 학년, 주당 횟수에 따라 달라집니다. '+T+' 무료 상담에서 학생의 상황에 맞는 견적을 안내해드립니다. 전화: 010-6834-8080'],
+    ['코치가 마음에 안 들면 교체할 수 있나요?','네, '+T+' 코치 무료 교체가 가능합니다. 학생과 코치의 궁합을 중요하게 생각하며 만족할 때까지 매칭을 도와드립니다.'],
+  ];
+
+  const sameCategory = Object.entries(CN_TOPICS).filter(([k,v])=>v.c===catKey&&k!==fullSlug).slice(0,6);
+  const body = `<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">중국어</a> &rsaquo; <a href="/conversation/chinese/${catKey}">${cat.n}</a> &rsaquo; <span>${T}</span></div>
+  <div style="background:linear-gradient(135deg,${cat.color}22,${cat.color}11);border-radius:20px;padding:32px;margin-bottom:28px">
+    <div style="font-size:32px;margin-bottom:8px">${cat.icon}</div>
+    <h1 style="font-size:clamp(20px,4.5vw,26px);font-weight:900;color:#0F2044;margin:0 0 8px;line-height:1.4">${T}</h1>
+    <p style="font-size:13px;color:#6B7280;margin:0">${cat.n} · 올케어스터디 1:1 중국어 과외</p>
+  </div>
+  <section class="u9"><h2 class="u30" style="border-left:5px solid ${cat.color};padding-left:14px">${T}</h2><p class="u25">${p1}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${cat.color}">핵심 전략</h2><p class="u25">${p2}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${cat.color}">수업 방식</h2><p class="u25">${p3}</p></section>
+  <section class="u9"><h2 class="u30" style="color:${cat.color}">올케어스터디와 함께</h2><p class="u25">${p4}</p></section>
+  <section class="u9"><h2 class="u30">❓ 자주 묻는 질문</h2>${faq.map(([q,a])=>'<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. '+q+'</div><div style="font-size:14px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}</section>
+  <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">${cat.n} 다른 가이드</h2>${sameCategory.map(([k,v])=>'<a href="/conversation/chinese/'+k+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">'+cat.icon+' '+v.t+'</div></a>').join('')}</section>
+  <div class="cta-box"><h3>중국어 과외 무료 상담</h3><p>1:1 맞춤 중국어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">중국어과외</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span></div></div>
+</div>`;
+  return wrap(T+' | 올케어스터디 중국어과외', desc, canonical, body, bc);
+}
 
 function makeStudyGuidePage() {
   const title='학습정보 - 공부법·시험 대비·성적 향상 가이드 | 올케어스터디';
@@ -7039,6 +7467,9 @@ function serveSitemapByKey(key) {
     for(const[subj,slugs] of Object.entries(SUBJ_SLUGS)){slugs.forEach(s=>parts.push(u('/subject/'+subj+'/'+s)));}
     // 학년 페이지
     ['elementary','middle','high'].forEach(g=>parts.push(u('/grade/'+g)));
+    // 중국어 카테고리+하위
+    Object.keys(CN_CATS).forEach(cat=>parts.push(u('/conversation/chinese/'+cat)));
+    Object.keys(CN_TOPICS).forEach(k=>parts.push(u('/conversation/chinese/'+k)));
     // 학습정보
     parts.push(u('/study-guide'));
     Object.keys(STUDY_TOPICS).forEach(s=>parts.push(u('/study-guide/'+s)));
@@ -7226,6 +7657,9 @@ export default {
       // 과목 하위 (주요 10개씩만 - IndexNow는 최근 변경 URL만 보내는 것이 권장)
       const subjSlugs={math:['elem-basics','mid-function','high-math1','calculus','suneung-killer','grade1','supo-escape','concept-total','mid-naesin','mock-exam'],english:['elem-basics','mid-grammar','high-reading','suneung-1','grade1','listening','vocabulary','mid-naesin','mock-strategy','vacation'],korean:['elem-reading','high-nonlit','suneung-1','grade1','modern-poem','grammar','mid-naesin','high-naesin','suneung-lit','vacation'],science:['physics1','chemistry1','biology1','earth1','grade1','integrated','mid-naesin','high-naesin','mechanics','genetics'],social:['korean-history','world-history','korean-geo','economics','grade1','integrated','mid-naesin','high-naesin','history-perfect','vacation'],coding:['start','scratch','python-basic','python-mid','javascript','ai-basic','algorithm','coding-test','elem-coding','portfolio'],essay:['basics','humanities','snu','yonsei','med-essay','self-intro','interview','critical','susi','jeongsi'],gsd:['korean','english','math','high-level','3month','pass-strategy','past-exam','summary','one-on-one','online-guide']};
       for(const[subj,slugs] of Object.entries(subjSlugs)){slugs.forEach(s=>allUrls.push('/subject/'+subj+'/'+s));}
+      // 중국어 카테고리
+      Object.keys(CN_CATS).forEach(cat=>allUrls.push('/conversation/chinese/'+cat));
+      ['school/daewon-naesin','school/busan-ipsi','naesin/grade1-prep','hsk/hsk-combo','skill/pronun-fix','select/check-before','format/one-on-one-why','level/beginner-fast','contest/speech-contest','career/study-abroad','manage/routine-coaching','effect/fast-improve','teacher/pro-check','strategy/top-routine'].forEach(s=>allUrls.push('/conversation/chinese/'+s));
       // 학습정보
       allUrls.push('/study-guide');
       ['exam-prep-guide','naesin-strategy','suneung-total','go3-study','grade-up-tips','study-routine','self-study','suneung-eng','wrong-note','study-plan','naesin-grade-up','suneung-math','focus-method','go1-naesin','go2-strategy','mid-exam','suneung-kor','mental'].forEach(s=>allUrls.push('/study-guide/'+s));
@@ -7356,6 +7790,23 @@ export default {
       }
     }
     if (path.startsWith('/engineer-lab/')) { const slug = path.split('/')[2]; if (slug) { const p = makeEngineerLabSubPage(slug); if (p) return new Response(p, {headers:h}); } }
+    // 중국어 카테고리+하위 페이지
+    if (path.startsWith('/conversation/chinese/')) {
+      const subPath = path.slice('/conversation/chinese/'.length);
+      const parts2 = subPath.split('/').filter(Boolean);
+      if (parts2.length === 2) {
+        // /conversation/chinese/{cat}/{slug}
+        const fullSlug = parts2[0]+'/'+parts2[1];
+        if (CN_TOPICS[fullSlug]) {
+          const p = makeCnSubPage(fullSlug);
+          if (p) return new Response(p, {headers:h});
+        }
+      } else if (parts2.length === 1 && CN_CATS[parts2[0]]) {
+        // /conversation/chinese/{cat}
+        const p = makeCnCategoryPage(parts2[0]);
+        if (p) return new Response(p, {headers:h});
+      }
+    }
     if (path === '/study-guide') return new Response(makeStudyGuidePage(), { headers: h });
     if (path.startsWith('/study-guide/')) { const slug = path.split('/')[2]; if (slug) { const p = makeStudyGuideSubPage(slug); if (p) return new Response(p, {headers:h}); } }
     if (path === '/video-lesson') return new Response(makeVideoLessonPage(), { headers: h });
