@@ -4578,14 +4578,7 @@ function makeConversationPage(lang) {
     </div>
   </section>` : ''}
 
-  ${lang === 'chinese' ? `<section class="u18">
-    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 18px;padding-left:14px;border-left:5px solid #DC2626">🇨🇳 중국어 수업 상세 보기</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
-      ${[
-        ['intl-school','🌏','국제학교 영어로 중국어 배우기'],['school-exam','📚','제2외국어 중국어 내신 관리'],['hsk','📝','HSK 자격증 취득 수업'],['trade','📦','중국 무역 업무 중국어'],['sourcing','🏪','중국 사입 기초 중국어'],['drama','🎬','대만·중국 드라마 자막없이'],['study-abroad','✈️','중국 유학 준비 수업'],['for-students','🎓','중국 유학생 수업'],['pronunciation','🗣️','중국어 발음 완벽 정복'],['major','🎒','중어중문학과 전공 수업'],['specialty-prep','🎯','중국어 전공 준비'],['travel','🧳','중국 여행 기초 회화'],['daily-10min','⏰','매일 10분 화상 중국어'],['phone-10min','📞','매일 10분 전화 중국어'],['korean-teacher','🇰🇷','한국인 선생님 중국어'],['kids','👧','유아·초등 기초 중국어'],['hskk','🎤','HSKK 말하기 정복'],['tsc','📋','TSC 자격증 수업'],['special-school','🏫','외고·특목고 내신 관리'],['3month','🚀','왕초보 3개월 중국어'],['bct','💼','BCT 중국어 코칭'],['flight-crew','✈️','외항사 승무원 면접 중국어'],['translation','📖','중국어 통번역 수업'],['culture','🏮','진짜 중국 문화 배우기'],['hanzi','漢','한자 공부하기'],['vocabulary','📘','중국어 어휘 늘리기'],['language-specialty','🏆','중국어 어학특기자 준비'],
-      ].map(([s,e,t])=>`<a href="/conversation/chinese/${s}" style="display:flex;align-items:center;gap:12px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:14px 16px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#DC2626';this.style.background='#FEF2F2'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='white'"><span style="font-size:22px;flex-shrink:0">${e}</span><span style="font-size:14px;font-weight:700;color:#0F2044">${t}</span></a>`).join('')}
-    </div>
-  </section>` : ''}
+  
 
   ${lang === 'chinese' ? '<section class="u18"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 18px;padding-left:14px;border-left:5px solid #DC2626">📂 중국어 과외 카테고리</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">'+Object.entries(CN_CATS).map(([k,v])=>'<a href="/conversation/chinese/'+k+'" style="display:flex;align-items:center;gap:12px;background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+v.color+'\';this.style.background=\''+v.color+'11\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'white\'"><span style="font-size:26px;flex-shrink:0">'+v.icon+'</span><div><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.n+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+v.d.slice(0,25)+'...</div></div></a>').join('')+'</div></section>' : ''}
 
@@ -4812,20 +4805,52 @@ function makeEngineerLabPage() {
 
 
 const CN_CATS={
-school:{n:'외고별 대비',d:'외국어고 중국어과 목표 학생을 위한 맞춤 대비 수업',icon:'🏫',color:'#3B82F6'},
-naesin:{n:'내신 대비',d:'학교 중국어 내신 시험 성적 향상을 위한 전문 수업',icon:'📝',color:'#059669'},
-hsk:{n:'HSK 자격증',d:'HSK 3~6급 자격증 대비와 내신 병행 학습 전략',icon:'🏆',color:'#DC2626'},
-skill:{n:'영역별 학습',d:'발음·문법·독해·작문·듣기·말하기 영역별 전문 수업',icon:'🎯',color:'#7C3AED'},
-select:{n:'수업 선택법',d:'효과적인 중국어과외를 고르는 기준과 체크리스트',icon:'✅',color:'#F59E0B'},
-format:{n:'수업 형태',d:'1대1·소그룹·온라인·방문 등 수업 형태별 장단점 비교',icon:'💻',color:'#EC4899'},
-period:{n:'기간별 과정',d:'4주·8주·12주 단기 집중부터 장기 관리까지 기간별 과정',icon:'📅',color:'#0891B2'},
-level:{n:'수준별 과정',d:'왕초보부터 최상위권까지 수준별 맞춤 커리큘럼',icon:'📊',color:'#6366F1'},
-contest:{n:'대회/활동',d:'스피치 대회·면접·발표 등 중국어 활동 대비 수업',icon:'🎤',color:'#14B8A6'},
-career:{n:'진학/유학',d:'중문과·외대·유학·통번역 등 진로별 중국어 학습 전략',icon:'🎓',color:'#8B5CF6'},
-manage:{n:'학습 관리',d:'피드백·보고서·테스트 등 체계적 학습 관리 시스템',icon:'📋',color:'#F97316'},
-effect:{n:'수업 효과',d:'성적 향상 사례와 수업 만족도 분석',icon:'📈',color:'#EF4444'},
-teacher:{n:'강사 선택',d:'좋은 중국어과외 강사를 선택하는 기준과 방법',icon:'👨‍🏫',color:'#10B981'},
-strategy:{n:'학습 전략',d:'성적 향상을 위한 효율적인 중국어 학습 전략',icon:'💡',color:'#6D28D9'},
+school:{img:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=75',n:'외고별 대비',d:'외국어고 중국어과 목표 학생을 위한 맞춤 대비 수업',icon:'🏫',color:'#3B82F6',img:'https://images.unsplash.com/photo-1523050854058-8df90110c476?w=600&q=75'},
+naesin:{img:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=75',n:'내신 대비',d:'학교 중국어 내신 시험 성적 향상을 위한 전문 수업',icon:'📝',color:'#059669',img:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=75'},
+hsk:{img:'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=75',n:'HSK 자격증',d:'HSK 3~6급 자격증 대비와 내신 병행 학습 전략',icon:'🏆',color:'#DC2626',img:'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=75'},
+skill:{img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=75',n:'영역별 학습',d:'발음·문법·독해·작문·듣기·말하기 영역별 전문 수업',icon:'🎯',color:'#7C3AED',img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=75'},
+select:{img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=75',n:'수업 선택법',d:'효과적인 중국어과외를 고르는 기준과 체크리스트',icon:'✅',color:'#F59E0B',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=75'},
+format:{img:'https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&q=75',n:'수업 형태',d:'1대1·소그룹·온라인·방문 등 수업 형태별 장단점 비교',icon:'💻',color:'#EC4899',img:'https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=600&q=75'},
+period:{img:'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=75',n:'기간별 과정',d:'4주·8주·12주 단기 집중부터 장기 관리까지 기간별 과정',icon:'📅',color:'#0891B2',img:'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=600&q=75'},
+level:{img:'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=800&q=75',n:'수준별 과정',d:'왕초보부터 최상위권까지 수준별 맞춤 커리큘럼',icon:'📊',color:'#6366F1',img:'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600&q=75'},
+contest:{img:'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=75',n:'대회/활동',d:'스피치 대회·면접·발표 등 중국어 활동 대비 수업',icon:'🎤',color:'#14B8A6',img:'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=75'},
+career:{img:'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=75',n:'진학/유학',d:'중문과·외대·유학·통번역 등 진로별 중국어 학습 전략',icon:'🎓',color:'#8B5CF6',img:'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=75'},
+manage:{img:'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=75',n:'학습 관리',d:'피드백·보고서·테스트 등 체계적 학습 관리 시스템',icon:'📋',color:'#F97316',img:'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&q=75'},
+effect:{img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=75',n:'수업 효과',d:'성적 향상 사례와 수업 만족도 분석',icon:'📈',color:'#EF4444',img:'https://images.unsplash.com/photo-1460518451285-97b6aa326961?w=600&q=75'},
+teacher:{img:'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&q=75',n:'강사 선택',d:'좋은 중국어과외 강사를 선택하는 기준과 방법',icon:'👨‍🏫',color:'#10B981',img:'https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&q=75'},
+strategy:{img:'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=800&q=75',n:'학습 전략',d:'성적 향상을 위한 효율적인 중국어 학습 전략',icon:'💡',color:'#6D28D9',img:'https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?w=600&q=75'},
+};
+
+
+// 기존 중국어 회화 하위 → 카테고리 매핑 (기존 URL 유지)
+const CN_LEGACY={
+'intl-school':{t:'국제학교 영어로 중국어 배우기',c:'school',icon:'🌏'},
+'school-exam':{t:'제2외국어 중국어 내신 관리',c:'naesin',icon:'📚'},
+'hsk':{t:'HSK 자격증 취득 수업',c:'hsk',icon:'📝'},
+'trade':{t:'중국 무역 업무 중국어',c:'career',icon:'📦'},
+'sourcing':{t:'중국 사입 기초 중국어',c:'career',icon:'🏪'},
+'drama':{t:'대만·중국 드라마 자막없이',c:'skill',icon:'🎬'},
+'study-abroad':{t:'중국 유학 준비 수업',c:'career',icon:'✈️'},
+'for-students':{t:'중국 유학생 수업',c:'career',icon:'🎓'},
+'pronunciation':{t:'중국어 발음 완벽 정복',c:'skill',icon:'🗣️'},
+'major':{t:'중어중문학과 전공 수업',c:'career',icon:'🎒'},
+'specialty-prep':{t:'중국어 전공 준비',c:'career',icon:'🎯'},
+'travel':{t:'중국 여행 기초 회화',c:'skill',icon:'🧳'},
+'daily-10min':{t:'매일 10분 화상 중국어',c:'format',icon:'⏰'},
+'phone-10min':{t:'매일 10분 전화 중국어',c:'format',icon:'📞'},
+'korean-teacher':{t:'한국인 선생님 중국어',c:'teacher',icon:'🇰🇷'},
+'kids':{t:'유아·초등 기초 중국어',c:'level',icon:'👧'},
+'hskk':{t:'HSKK 말하기 정복',c:'hsk',icon:'🎤'},
+'tsc':{t:'TSC 자격증 수업',c:'hsk',icon:'📋'},
+'special-school':{t:'외고·특목고 내신 관리',c:'school',icon:'🏫'},
+'3month':{t:'왕초보 3개월 중국어',c:'period',icon:'🚀'},
+'bct':{t:'BCT 중국어 코칭',c:'hsk',icon:'💼'},
+'flight-crew':{t:'외항사 승무원 면접 중국어',c:'career',icon:'✈️'},
+'translation':{t:'중국어 통번역 수업',c:'career',icon:'📖'},
+'culture':{t:'진짜 중국 문화 배우기',c:'skill',icon:'🏮'},
+'hanzi':{t:'한자 공부하기',c:'skill',icon:'漢'},
+'vocabulary':{t:'중국어 어휘 늘리기',c:'skill',icon:'📘'},
+'language-specialty':{t:'중국어 어학특기자 준비',c:'career',icon:'🏆'},
 };
 
 const CN_TOPICS={
@@ -5141,6 +5166,33 @@ const CN_TOPICS={
 'strategy/fun-grade':{t:'재미와 성적 모두 잡는 중국어 수업',c:'strategy'},
 'strategy/long-growth':{t:'중국어 장기 성장 가능한 수업 방식',c:'strategy'},
 'strategy/roadmap-provide':{t:'중국어 공부 로드맵 제공 수업 추천',c:'strategy'},
+'skill/intl-school-cn':{t:'국제학교 영어로 중국어 배우기',c:'skill'},
+'naesin/school-exam-cn':{t:'제2외국어 중국어 내신 관리',c:'naesin'},
+'hsk/hsk-cert':{t:'HSK 자격증 취득 수업',c:'hsk'},
+'career/trade-cn':{t:'중국 무역 업무 중국어',c:'career'},
+'career/sourcing-cn':{t:'중국 사입 기초 중국어',c:'career'},
+'skill/drama-cn':{t:'대만·중국 드라마 자막없이 보기',c:'skill'},
+'career/study-abroad-cn':{t:'중국 유학 준비 수업',c:'career'},
+'career/for-students-cn':{t:'중국 유학생 수업',c:'career'},
+'skill/pronunciation-cn':{t:'중국어 발음 완벽 정복',c:'skill'},
+'career/major-cn':{t:'중어중문학과 전공 수업',c:'career'},
+'career/specialty-prep-cn':{t:'중국어 전공 준비',c:'career'},
+'skill/travel-cn':{t:'중국 여행 기초 회화',c:'skill'},
+'format/daily-10min-cn':{t:'매일 10분 화상 중국어',c:'format'},
+'format/phone-10min-cn':{t:'매일 10분 전화 중국어',c:'format'},
+'teacher/korean-teacher-cn':{t:'한국인 선생님 중국어',c:'teacher'},
+'level/kids-cn':{t:'유아·초등 기초 중국어',c:'level'},
+'hsk/hskk-cert':{t:'HSKK 말하기 정복',c:'hsk'},
+'hsk/tsc-cert':{t:'TSC 자격증 수업',c:'hsk'},
+'school/special-school-cn':{t:'외고·특목고 내신 관리',c:'school'},
+'level/3month-cn':{t:'왕초보 3개월 중국어',c:'level'},
+'hsk/bct-cert':{t:'BCT 중국어 코칭',c:'hsk'},
+'career/flight-crew-cn':{t:'외항사 승무원 면접 중국어',c:'career'},
+'career/translation-cn':{t:'중국어 통번역 수업',c:'career'},
+'skill/culture-cn':{t:'진짜 중국 문화 배우기',c:'skill'},
+'skill/hanzi-cn':{t:'한자 공부하기',c:'skill'},
+'skill/vocabulary-cn':{t:'중국어 어휘 늘리기',c:'skill'},
+'career/language-specialty-cn':{t:'중국어 어학특기자 준비',c:'career'},
 };
 
 const STUDY_TOPICS={
@@ -5250,20 +5302,25 @@ const STUDY_TOPICS={
 function makeCnCategoryPage(catKey) {
   const cat = CN_CATS[catKey]; if (!cat) return null;
   const topics = Object.entries(CN_TOPICS).filter(([k,v])=>v.c===catKey);
+  const legacyItems = Object.entries(CN_LEGACY).filter(([k,v])=>v.c===catKey);
   const title = cat.n+' - 중국어과외 | 올케어스터디';
   const desc = cat.d+'. 올케어스터디 1:1 맞춤 중국어 과외.';
   const canonical = '/conversation/chinese/'+catKey;
   const bc = [{name:'홈',url:'/'},{name:'중국어',url:'/conversation/chinese'},{name:cat.n,url:canonical}];
   const body = `<div class="wrap" style="max-width:900px">
   <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">중국어</a> &rsaquo; <span>${cat.n}</span></div>
-  <div style="background:linear-gradient(135deg,${cat.color}22,${cat.color}11);border-radius:20px;padding:36px;margin-bottom:28px;text-align:center">
+  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px;position:relative">
+    <img src="${cat.img}" alt="${cat.n}" style="width:100%;height:200px;object-fit:cover;display:block">
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,${cat.color}CC,${cat.color}66);display:flex;flex-direction:column;align-items:center;justify-content:center">
     <div style="font-size:42px;margin-bottom:8px">${cat.icon}</div>
-    <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:#0F2044;margin:0 0 8px">${cat.n}</h1>
-    <p style="font-size:14px;color:#6B7280;margin:0">${cat.d}</p>
-    <p style="font-size:13px;color:#9CA3AF;margin-top:8px">총 ${topics.length}개 가이드</p>
+    <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:white;margin:0 0 8px">${cat.n}</h1>
+    <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0">${cat.d}</p>
+    <p style="font-size:13px;color:rgba(255,255,255,0.8);margin-top:8px">총 ${topics.length + legacyItems.length}개 가이드</p>
+    </div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:28px">
     ${topics.map(([k,v])=>'<a href="/conversation/chinese/'+k+'" style="display:block;padding:16px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
+    ${legacyItems.map(([k,v])=>'<a href="/conversation/chinese/'+k+'" style="display:flex;align-items:center;gap:10px;padding:16px;background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#FDE68A\'"><span style="font-size:18px">'+v.icon+'</span><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
   </div>
   <div class="cta-box"><h3>중국어 과외 무료 상담</h3><p>1:1 맞춤 중국어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
 </div>`;
@@ -5347,10 +5404,13 @@ function makeCnTopicPage(fullSlug) {
   const sameCategory = Object.entries(CN_TOPICS).filter(([k,v])=>v.c===catKey&&k!==fullSlug).slice(0,6);
   const body = `<div class="wrap" style="max-width:900px">
   <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">중국어</a> &rsaquo; <a href="/conversation/chinese/${catKey}">${cat.n}</a> &rsaquo; <span>${T}</span></div>
-  <div style="background:linear-gradient(135deg,${cat.color}22,${cat.color}11);border-radius:20px;padding:32px;margin-bottom:28px">
+  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px;position:relative">
+    <img src="${cat.img}" alt="${T}" style="width:100%;height:180px;object-fit:cover;display:block">
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,${cat.color}CC,${cat.color}88);padding:32px;display:flex;flex-direction:column;justify-content:center">
     <div style="font-size:32px;margin-bottom:8px">${cat.icon}</div>
-    <h1 style="font-size:clamp(20px,4.5vw,26px);font-weight:900;color:#0F2044;margin:0 0 8px;line-height:1.4">${T}</h1>
-    <p style="font-size:13px;color:#6B7280;margin:0">${cat.n} · 올케어스터디 1:1 중국어 과외</p>
+    <h1 style="font-size:clamp(20px,4.5vw,26px);font-weight:900;color:white;margin:0 0 8px;line-height:1.4">${T}</h1>
+    <p style="font-size:13px;color:rgba(255,255,255,0.8);margin:0">${cat.n} · 올케어스터디 1:1 중국어 과외</p>
+    </div>
   </div>
   <section class="u9"><h2 class="u30" style="border-left:5px solid ${cat.color};padding-left:14px">${T}</h2><p class="u25">${p1}</p></section>
   <section class="u9"><h2 class="u30" style="color:${cat.color}">핵심 전략</h2><p class="u25">${p2}</p></section>
