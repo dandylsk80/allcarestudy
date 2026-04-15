@@ -4587,6 +4587,8 @@ function makeConversationPage(lang) {
     </div>
   </section>` : ''}
 
+  ${lang === 'chinese' ? '<section class="u18"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 18px;padding-left:14px;border-left:5px solid #DC2626">📂 중국어 과외 카테고리</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">'+Object.entries(CN_CATS).map(([k,v])=>'<a href="/conversation/chinese/'+k+'" style="display:flex;align-items:center;gap:12px;background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+v.color+'\';this.style.background=\''+v.color+'11\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'white\'"><span style="font-size:26px;flex-shrink:0">'+v.icon+'</span><div><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.n+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+v.d.slice(0,25)+'...</div></div></a>').join('')+'</div></section>' : ''}
+
   <!-- 다른 언어 -->
   <section class="u18">
     <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 언어 회화도 보기</h2>
