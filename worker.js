@@ -5268,7 +5268,7 @@ function makeCnCategoryPage(catKey) {
   return wrap(title,desc,canonical,body,bc);
 }
 
-function makeCnSubPage(fullSlug) {
+function makeCnTopicPage(fullSlug) {
   const pg = CN_TOPICS[fullSlug]; if (!pg) return null;
   const T = pg.t, catKey = pg.c;
   const cat = CN_CATS[catKey];
@@ -7821,7 +7821,7 @@ export default {
         // /conversation/chinese/{cat}/{slug}
         const fullSlug = parts2[0]+'/'+parts2[1];
         if (CN_TOPICS[fullSlug]) {
-          const p = makeCnSubPage(fullSlug);
+          const p = makeCnTopicPage(fullSlug);
           if (p) return new Response(p, {headers:h});
         }
       } else if (parts2.length === 1 && CN_CATS[parts2[0]]) {
