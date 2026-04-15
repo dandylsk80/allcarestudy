@@ -5309,13 +5309,15 @@ function makeCnCategoryPage(catKey) {
   const bc = [{name:'홈',url:'/'},{name:'중국어',url:'/conversation/chinese'},{name:cat.n,url:canonical}];
   const body = `<div class="wrap" style="max-width:900px">
   <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">중국어</a> &rsaquo; <span>${cat.n}</span></div>
-  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px;position:relative">
-    <img src="${cat.img}" alt="${cat.n}" style="width:100%;height:200px;object-fit:cover;display:block">
-    <div style="position:absolute;inset:0;background:linear-gradient(135deg,${cat.color}CC,${cat.color}66);display:flex;flex-direction:column;align-items:center;justify-content:center">
-    <div style="font-size:42px;margin-bottom:8px">${cat.icon}</div>
-    <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:white;margin:0 0 8px">${cat.n}</h1>
-    <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0">${cat.d}</p>
-    <p style="font-size:13px;color:rgba(255,255,255,0.8);margin-top:8px">총 ${topics.length + legacyItems.length}개 가이드</p>
+  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
+    <div style="position:relative;height:220px">
+      <img src="${cat.img}" alt="${cat.n}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.05) 100%)"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 28px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:28px">${cat.icon}</span><span style="font-size:12px;background:${cat.color};color:white;padding:3px 10px;border-radius:20px;font-weight:700">${cat.n}</span></div>
+        <h1 style="font-size:clamp(20px,5vw,26px);font-weight:900;color:white;margin:0 0 4px;text-shadow:0 2px 8px rgba(0,0,0,0.3)">${cat.n} · 중국어과외</h1>
+        <p style="font-size:13px;color:rgba(255,255,255,0.85);margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.3)">${cat.d} · 총 ${topics.length + legacyItems.length}개 가이드</p>
+      </div>
     </div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:28px">
@@ -5404,12 +5406,15 @@ function makeCnTopicPage(fullSlug) {
   const sameCategory = Object.entries(CN_TOPICS).filter(([k,v])=>v.c===catKey&&k!==fullSlug).slice(0,6);
   const body = `<div class="wrap" style="max-width:900px">
   <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">중국어</a> &rsaquo; <a href="/conversation/chinese/${catKey}">${cat.n}</a> &rsaquo; <span>${T}</span></div>
-  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px;position:relative">
-    <img src="${cat.img}" alt="${T}" style="width:100%;height:180px;object-fit:cover;display:block">
-    <div style="position:absolute;inset:0;background:linear-gradient(135deg,${cat.color}CC,${cat.color}88);padding:32px;display:flex;flex-direction:column;justify-content:center">
-    <div style="font-size:32px;margin-bottom:8px">${cat.icon}</div>
-    <h1 style="font-size:clamp(20px,4.5vw,26px);font-weight:900;color:white;margin:0 0 8px;line-height:1.4">${T}</h1>
-    <p style="font-size:13px;color:rgba(255,255,255,0.8);margin:0">${cat.n} · 올케어스터디 1:1 중국어 과외</p>
+  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
+    <div style="position:relative;height:200px">
+      <img src="${cat.img}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.05) 100%)"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:22px 26px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:22px">${cat.icon}</span><span style="font-size:11px;background:${cat.color};color:white;padding:2px 8px;border-radius:16px;font-weight:700">${cat.n}</span></div>
+        <h1 style="font-size:clamp(18px,4.5vw,24px);font-weight:900;color:white;margin:0 0 4px;line-height:1.4;text-shadow:0 2px 8px rgba(0,0,0,0.3)">${T}</h1>
+        <p style="font-size:12px;color:rgba(255,255,255,0.8);margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.3)">올케어스터디 1:1 중국어 과외</p>
+      </div>
     </div>
   </div>
   <section class="u9"><h2 class="u30" style="border-left:5px solid ${cat.color};padding-left:14px">${T}</h2><p class="u25">${p1}</p></section>
