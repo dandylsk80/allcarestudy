@@ -8144,10 +8144,7 @@ function serveSitemapByKey(key) {
     // 일본어 카테고리+하위
     Object.keys(JP_CATS).forEach(cat=>parts.push(u('/conversation/japanese/'+cat)));
     Object.keys(JP_TOPICS).forEach(k=>parts.push(u('/conversation/japanese/'+k)));
-    // 일본어 카테고리
-      Object.keys(JP_CATS).forEach(cat=>allUrls.push('/conversation/japanese/'+cat));
-      ['school/daewon-naesin','school/daeil-class','naesin/grade1-prep','jlpt/jlpt-combo','skill/pronun-fix','level/beginner-fast','career/study-abroad','manage/routine-coaching','effect/fast-improve','strategy/top-routine'].forEach(s=>allUrls.push('/conversation/japanese/'+s));
-      // 중국어 카테고리+하위
+    // 중국어 카테고리+하위
     Object.keys(CN_CATS).forEach(cat=>parts.push(u('/conversation/chinese/'+cat)));
     Object.keys(CN_TOPICS).forEach(k=>parts.push(u('/conversation/chinese/'+k)));
     // 학습정보
@@ -8488,13 +8485,7 @@ export default {
         if (p) return new Response(p, {headers:h});
       }
     }
-    // 일본어 카테고리+하위
-    Object.keys(JP_CATS).forEach(cat=>parts.push(u('/conversation/japanese/'+cat)));
-    Object.keys(JP_TOPICS).forEach(k=>parts.push(u('/conversation/japanese/'+k)));
-    // 일본어 카테고리
-      Object.keys(JP_CATS).forEach(cat=>allUrls.push('/conversation/japanese/'+cat));
-      ['school/daewon-naesin','school/daeil-class','naesin/grade1-prep','jlpt/jlpt-combo','skill/pronun-fix','level/beginner-fast','career/study-abroad','manage/routine-coaching','effect/fast-improve','strategy/top-routine'].forEach(s=>allUrls.push('/conversation/japanese/'+s));
-      // 중국어 카테고리+하위 페이지
+    // 중국어 카테고리+하위 페이지
     if (path.startsWith('/conversation/chinese/')) {
       const subPath = path.slice('/conversation/chinese/'.length);
       const parts2 = subPath.split('/').filter(Boolean);
