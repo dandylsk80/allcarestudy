@@ -1276,7 +1276,7 @@ const HEADER = `<header>
       </div>
       <div class="gi">
         <button class="gb">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/video-lesson">🎥 화상수업</a><a href="/study-guide">📖 학습정보</a></div>
+        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/study-guide">📖 학습 가이드</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a>
@@ -1316,8 +1316,8 @@ const HEADER = `<header>
   <div class="mob-nav-section">기타교육</div>
   <div class="mob-subj-grid">
     <a class="mob-subj-btn" href="/engineer-lab"><span>🔧</span><span>엔지니어랩</span></a>
-    <a class="mob-subj-btn" href="/video-lesson"><span>🎥</span><span>화상수업</span></a>
-    <a class="mob-subj-btn" href="/study-guide"><span>📖</span><span>학습정보</span></a>
+    
+    <a class="mob-subj-btn" href="/study-guide"><span>📖</span><span>학습 가이드</span></a>
   </div>
   <div class="mob-nav-section">학원 & 기타</div>
   <div class="mob-subj-grid">
@@ -1457,7 +1457,7 @@ const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;bor
       </div>
       <div class="gi">
         <button class="gb" style="color:rgba(255,255,255,0.85)">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/video-lesson">🎥 화상수업</a><a href="/study-guide">📖 학습정보</a></div>
+        <div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/study-guide">📖 학습 가이드</a></div>
       </div>
       <div class="gi">
         <a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a>
@@ -6547,334 +6547,393 @@ function makeEnTopicPage(fullSlug) {
 
 
 
+
+const GUIDE_CATS={
+exam:{n:'시험 대비',d:'수능·내신·중간고사·기말고사 등 시험 대비 전략과 체크리스트',icon:'📝',color:'#DC2626',img:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80'},
+method:{n:'공부법',d:'효율적인 공부 방법과 학습 전략 총정리',icon:'💡',color:'#6D28D9',img:'https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=800&q=80'},
+routine:{n:'습관·루틴',d:'공부 습관 형성과 학습 루틴 만들기',icon:'⏰',color:'#0891B2',img:'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=80'},
+self:{n:'자기주도학습',d:'스스로 공부하는 방법과 학습 계획 세우기',icon:'🎯',color:'#7C3AED',img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80'},
+subject:{n:'과목별 학습',d:'국어·영어·수학·탐구 과목별 공부 전략',icon:'📚',color:'#059669',img:'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80'},
+grade:{n:'학년별 가이드',d:'중등·고1·고2·고3 학년별 맞춤 공부법',icon:'🎓',color:'#8B5CF6',img:'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80'},
+mental:{n:'멘탈·동기',d:'슬럼프 극복·집중력·공부 동기 관리',icon:'🔥',color:'#EF4444',img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80'},
+video:{n:'화상수업 가이드',d:'화상수업 선택·효과·장단점 분석',icon:'🎥',color:'#3B82F6',img:'https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&q=80'},
+'video-subject':{n:'화상수업 과목',d:'영어·수학 등 과목별 화상수업 추천',icon:'📺',color:'#6366F1',img:'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80'},
+online:{n:'온라인수업 환경',d:'비대면 수업 환경 조성과 효과적 활용',icon:'💻',color:'#EC4899',img:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80'},
+platform:{n:'수업 플랫폼',d:'줌·구글미트·팀즈 등 화상수업 플랫폼 비교',icon:'🖥️',color:'#14B8A6',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80'},
+run:{n:'화상수업 운영',d:'화상수업 진행·학생관리·수업 노하우',icon:'📋',color:'#F97316',img:'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80'},
+equipment:{n:'화상수업 장비',d:'카메라·마이크·노트북·조명 등 장비 추천',icon:'🎙️',color:'#F59E0B',img:'https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&q=80'},
+business:{n:'온라인 교육 사업',d:'화상수업 창업·수익화·온라인 강의 제작',icon:'🚀',color:'#10B981',img:'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=80'},
+};
+
+const GUIDE_TOPICS={
+'exam/exam-prep-guide':{t:'시험기간 준비 가이드',c:'exam'},
+'exam/naesin-strategy':{t:'내신 대비 전략 정리',c:'exam'},
+'exam/suneung-total':{t:'수능 준비 방법 총정리',c:'exam'},
+'grade/go3-study':{t:'고3 공부 전략 가이드',c:'grade'},
+'method/grade-up-tips':{t:'성적 올리기 대비 팁',c:'method'},
+'routine/study-routine':{t:'공부 루틴 정리 가이드',c:'routine'},
+'self/self-study':{t:'자기주도학습 전략 추천',c:'self'},
+'exam/naesin-checklist':{t:'내신 시험 준비 체크리스트',c:'exam'},
+'subject/suneung-eng':{t:'수능 영어 대비 방법',c:'subject'},
+'method/wrong-note':{t:'오답노트 작성 전략 정리',c:'method'},
+'method/study-plan':{t:'공부 계획 세우는 방법 가이드',c:'method'},
+'exam/exam-routine':{t:'시험기간 공부 루틴 정리',c:'exam'},
+'exam/naesin-grade-up':{t:'내신 성적 올리는 전략 가이드',c:'exam'},
+'subject/suneung-kor':{t:'수능 국어 공부 방법 정리',c:'subject'},
+'routine/high-habit':{t:'고등학생 공부 습관 만들기 가이드',c:'routine'},
+'grade/mid-exam':{t:'중학생 시험 대비 준비 방법',c:'grade'},
+'subject/suneung-math':{t:'수능 수학 대비 전략 정리',c:'subject'},
+'exam/night-before':{t:'시험 전날 준비 체크리스트',c:'exam'},
+'mental/focus-method':{t:'공부 집중력 높이는 방법 가이드',c:'mental'},
+'exam/naesin-order':{t:'내신 공부 순서 정리',c:'exam'},
+'method/grade-total':{t:'성적 향상 공부 전략 총정리',c:'method'},
+'grade/go1-naesin':{t:'고1 내신 준비 가이드',c:'grade'},
+'grade/go2-strategy':{t:'고2 공부 전략 정리',c:'grade'},
+'grade/go3-suneung':{t:'고3 수능 준비 방법',c:'grade'},
+'exam/exam-well':{t:'시험 잘 보는 방법 가이드',c:'exam'},
+'subject/memory-subject':{t:'내신 암기과목 대비 전략',c:'subject'},
+'subject/suneung-tamgu':{t:'수능 탐구 공부법 정리',c:'subject'},
+'mental/slump':{t:'공부 슬럼프 극복 방법 가이드',c:'mental'},
+'exam/time-manage':{t:'시험기간 시간 관리 전략',c:'exam'},
+'exam/naesin-routine':{t:'내신 시험 대비 공부 루틴',c:'exam'},
+'exam/suneung-100':{t:'수능 100일 준비 전략',c:'exam'},
+'method/high-grade-up':{t:'고등학생 성적 올리기 방법',c:'method'},
+'grade/mid-plan':{t:'중학생 공부 계획 정리',c:'grade'},
+'subject/naesin-kor':{t:'내신 국어 공부 전략 가이드',c:'subject'},
+'subject/naesin-math':{t:'내신 수학 준비 방법 정리',c:'subject'},
+'subject/naesin-eng':{t:'내신 영어 대비 전략 팁',c:'subject'},
+'exam/cram':{t:'시험기간 벼락치기 방법 정리',c:'exam'},
+'routine/habit-make':{t:'공부 습관 만드는 방법 가이드',c:'routine'},
+'method/rapid-grade':{t:'성적 급상승 공부법 총정리',c:'method'},
+'routine/self-routine':{t:'자기주도학습 루틴 정리',c:'routine'},
+'subject/suneung-eng2':{t:'수능 영어 공부 전략 가이드',c:'subject'},
+'subject/suneung-kor2':{t:'수능 국어 대비 준비 방법',c:'subject'},
+'subject/suneung-math2':{t:'수능 수학 공부 루틴 정리',c:'subject'},
+'exam/wrong-note-use':{t:'내신 대비 오답노트 활용법',c:'exam'},
+'exam/exam-order':{t:'시험 준비 순서 정리 가이드',c:'exam'},
+'routine/top-student':{t:'공부 잘하는 학생들의 루틴 정리',c:'routine'},
+'grade/go3-naesin':{t:'고3 내신 대비 전략 가이드',c:'grade'},
+'grade/go1-plan':{t:'고1 공부 계획 세우기 방법',c:'grade'},
+'grade/go2-naesin':{t:'고2 내신 시험 준비 전략',c:'grade'},
+'grade/mid-naesin':{t:'중학생 내신 대비 공부법 정리',c:'grade'},
+'exam/exam-mistake':{t:'시험기간 실수 줄이는 방법',c:'exam'},
+'exam/night-checklist':{t:'내신 시험 전날 준비 체크리스트',c:'exam'},
+'exam/suneung-real':{t:'수능 실전 대비 전략 정리',c:'exam'},
+'method/wrong-grade':{t:'성적 올리는 오답노트 작성법',c:'method'},
+'method/time-method':{t:'공부 시간 관리 방법 가이드',c:'method'},
+'exam/mental':{t:'시험기간 멘탈 관리 전략',c:'exam'},
+'exam/naesin-level':{t:'내신 등급 올리는 공부법 정리',c:'exam'},
+'exam/suneung-order':{t:'수능 공부 순서 가이드',c:'exam'},
+'self/high-self':{t:'고등학생 자기주도학습 전략',c:'self'},
+'exam/exam-timetable':{t:'시험기간 공부 계획표 작성법',c:'exam'},
+'method/motivation':{t:'공부 의지 높이는 방법 정리',c:'method'},
+'exam/exam-focus':{t:'시험기간 집중력 유지 전략',c:'exam'},
+'exam/naesin-note':{t:'내신 대비 필기 정리 방법',c:'exam'},
+'subject/eng-vocab':{t:'수능 영어 단어 암기 전략',c:'subject'},
+'routine/go3-routine':{t:'고3 공부 루틴 만들기 가이드',c:'routine'},
+'routine/grade-routine':{t:'성적 향상 루틴 정리',c:'routine'},
+'exam/naesin-sci':{t:'내신 과학 공부 전략 가이드',c:'exam'},
+'exam/naesin-soc':{t:'내신 사회 공부 방법 정리',c:'exam'},
+'exam/memory-total':{t:'시험 대비 암기법 총정리',c:'exam'},
+'method/efficiency':{t:'공부 효율 높이는 방법 가이드',c:'method'},
+'exam/suneung-table':{t:'수능 대비 시간표 짜는 방법',c:'exam'},
+'exam/naesin-prep-order':{t:'내신 시험 준비 순서 정리',c:'exam'},
+'grade/high-routine':{t:'고등학생 시험기간 루틴 추천',c:'grade'},
+'routine/mid-habit':{t:'중학생 공부 습관 만들기 전략',c:'routine'},
+'method/plan-total':{t:'공부 계획표 짜는 방법 총정리',c:'method'},
+'exam/past-exam':{t:'수능 기출문제 활용 전략',c:'exam'},
+'exam/descriptive':{t:'내신 서술형 대비 방법 정리',c:'exam'},
+'exam/study-place':{t:'시험기간 공부 장소 활용 팁',c:'exam'},
+'method/real-strategy':{t:'성적 올리기 현실 공부 전략',c:'method'},
+'method/wrong-method':{t:'오답노트 정리 방법 가이드',c:'method'},
+'exam/naesin-plan':{t:'내신 대비 공부 계획 세우기',c:'exam'},
+'subject/suneung-eng1':{t:'수능 영어 1등급 전략 정리',c:'subject'},
+'grade/go3-checklist':{t:'고3 시험기간 준비 체크리스트',c:'grade'},
+'routine/routine-total':{t:'공부 루틴 만드는 방법 총정리',c:'routine'},
+'exam/day-plan':{t:'시험 대비 하루 공부 계획법',c:'exam'},
+'exam/naesin-recommend':{t:'내신 공부법 추천 가이드',c:'exam'},
+'exam/suneung-checklist':{t:'수능 준비 체크리스트 정리',c:'exam'},
+'method/high-manage':{t:'고등학생 성적 관리 전략',c:'method'},
+'grade/mid-exam2':{t:'중학생 시험 공부 방법 정리',c:'grade'},
+'exam/naesin-review':{t:'내신 대비 복습 전략 가이드',c:'exam'},
+'exam/suneung-final':{t:'수능 대비 마무리 공부법',c:'exam'},
+'exam/exam-motive':{t:'시험기간 공부 자극 유지 방법',c:'exam'},
+'method/real-guide':{t:'공부 잘하는 법 현실 가이드',c:'method'},
+'exam/naesin-manage':{t:'내신 성적 관리 방법 총정리',c:'exam'},
+'exam/suneung-habit':{t:'수능 공부 습관 만들기 전략',c:'exam'},
+'grade/go1-routine':{t:'고1 시험 대비 공부 루틴',c:'grade'},
+'grade/go2-grade':{t:'고2 성적 올리는 전략 정리',c:'grade'},
+'grade/go3-routine2':{t:'고3 수능 루틴 준비 방법',c:'grade'},
+'self/self-practice':{t:'자기주도학습 실천 방법 가이드',c:'self'},
+'exam/exam-total':{t:'시험기간 공부 전략 총정리',c:'exam'},
+'video/video-lesson':{t:'화상수업',c:'video'},
+'video/online-class':{t:'온라인수업',c:'video'},
+'video/non-face':{t:'비대면수업',c:'video'},
+'video/realtime':{t:'실시간수업',c:'video'},
+'video/live-class':{t:'라이브수업',c:'video'},
+'video/remote':{t:'원격수업',c:'video'},
+'equipment/internet-class':{t:'인터넷수업',c:'equipment'},
+'platform/zoom-class':{t:'줌수업',c:'platform'},
+'video/video-lecture':{t:'화상강의',c:'video'},
+'video/online-lecture':{t:'온라인강의',c:'video'},
+'video/recommend':{t:'화상수업 추천',c:'video'},
+'video/best-place':{t:'화상수업 잘하는 곳',c:'video'},
+'video/effect':{t:'화상수업 효과',c:'video'},
+'video/review':{t:'화상수업 후기',c:'video'},
+'video/pros-cons':{t:'화상수업 장단점',c:'video'},
+'video/cost':{t:'화상수업 비용',c:'video'},
+'video/price':{t:'화상수업 가격',c:'video'},
+'video/preparation':{t:'화상수업 준비물',c:'video'},
+'video/focus-tips':{t:'화상수업 집중력 높이는 법',c:'video'},
+'video/how-to':{t:'화상수업 듣는 방법',c:'video'},
+'video/elem':{t:'초등 화상수업',c:'video'},
+'video/mid':{t:'중등 화상수업',c:'video'},
+'video/high':{t:'고등 화상수업',c:'video'},
+'video/kids':{t:'유아 화상수업',c:'video'},
+'video/adult':{t:'성인 화상수업',c:'video'},
+'video/worker':{t:'직장인 화상수업',c:'video'},
+'video/one-on-one':{t:'1대1 화상수업',c:'video'},
+'video/small-group':{t:'소그룹 화상수업',c:'video'},
+'video/group':{t:'그룹 화상수업',c:'video'},
+'video/custom':{t:'맞춤형 화상수업',c:'video'},
+'video-subject/eng-video':{t:'영어 화상수업',c:'video-subject'},
+'video-subject/math-video':{t:'수학 화상수업',c:'video-subject'},
+'video-subject/kor-video':{t:'국어 화상수업',c:'video-subject'},
+'video-subject/sci-video':{t:'과학 화상수업',c:'video-subject'},
+'video-subject/soc-video':{t:'사회 화상수업',c:'video-subject'},
+'video-subject/coding-video':{t:'코딩 화상수업',c:'video-subject'},
+'video-subject/essay-video':{t:'논술 화상수업',c:'video-subject'},
+'video-subject/reading-video':{t:'독서 화상수업',c:'video-subject'},
+'video-subject/convo-video':{t:'회화 화상수업',c:'video-subject'},
+'video-subject/jp-video':{t:'일본어 화상수업',c:'video-subject'},
+'video-subject/cn-video':{t:'중국어 화상수업',c:'video-subject'},
+'video-subject/toeic-video':{t:'토익 화상수업',c:'video-subject'},
+'video-subject/opic-video':{t:'오픽 화상수업',c:'video-subject'},
+'video-subject/ielts-video':{t:'IELTS 화상수업',c:'video-subject'},
+'video-subject/grammar-video':{t:'문법 화상수업',c:'video-subject'},
+'video-subject/pronun-video':{t:'발음 화상수업',c:'video-subject'},
+'video-subject/speaking-video':{t:'스피킹 화상수업',c:'video-subject'},
+'video-subject/naesin-video':{t:'내신 화상수업',c:'video-subject'},
+'video-subject/ipsi-video':{t:'입시 화상수업',c:'video-subject'},
+'video-subject/exam-prep':{t:'시험대비 화상수업',c:'video-subject'},
+'platform/platform':{t:'화상수업 플랫폼',c:'platform'},
+'platform/program':{t:'화상수업 프로그램',c:'platform'},
+'platform/app':{t:'화상수업 앱',c:'platform'},
+'platform/site':{t:'화상수업 사이트',c:'platform'},
+'platform/system':{t:'화상수업 시스템',c:'platform'},
+'platform/online-platform':{t:'온라인 클래스 플랫폼',c:'platform'},
+'platform/non-face-platform':{t:'비대면 강의 플랫폼',c:'platform'},
+'platform/conference':{t:'화상회의 수업',c:'platform'},
+'platform/edu-conference':{t:'교육용 화상회의',c:'platform'},
+'platform/live-platform':{t:'실시간 강의 플랫폼',c:'platform'},
+'platform/zoom-video':{t:'줌 화상수업',c:'platform'},
+'platform/googlemeet':{t:'구글미트 화상수업',c:'platform'},
+'platform/teams':{t:'Microsoft Teams 수업',c:'platform'},
+'platform/skype':{t:'스카이프 화상수업',c:'platform'},
+'platform/webex':{t:'웹엑스 수업',c:'platform'},
+'run/manage-class':{t:'온라인 클래스 운영',c:'run'},
+'run/make-link':{t:'수업 링크 만들기',c:'run'},
+'run/how-to-join':{t:'화상수업 입장 방법',c:'run'},
+'run/screen-share':{t:'화면공유 수업',c:'run'},
+'run/record-class':{t:'녹화수업 만들기',c:'run'},
+'run/make-video':{t:'화상수업 만드는 방법',c:'run'},
+'run/how-to-run':{t:'화상수업 진행 방법',c:'run'},
+'run/knowhow':{t:'화상수업 운영 노하우',c:'run'},
+'run/lesson-plan':{t:'화상수업 교안',c:'run'},
+'run/materials':{t:'화상수업 자료 만들기',c:'run'},
+'run/curriculum':{t:'화상수업 커리큘럼',c:'run'},
+'run/student-manage':{t:'화상수업 학생관리',c:'run'},
+'run/attendance':{t:'화상수업 출석관리',c:'run'},
+'run/assignment':{t:'화상수업 과제관리',c:'run'},
+'run/feedback':{t:'화상수업 피드백 방법',c:'run'},
+'online/academy-video':{t:'학원 화상수업',c:'online'},
+'online/tutor-video':{t:'과외 화상수업',c:'online'},
+'online/instead-visit':{t:'방문수업 대신 화상수업',c:'online'},
+'online/online-tutor':{t:'온라인 과외',c:'online'},
+'online/non-face-tutor':{t:'비대면 과외',c:'online'},
+'online/solo-teacher':{t:'1인 강사 화상수업',c:'online'},
+'business/startup':{t:'화상수업 창업',c:'business'},
+'business/monetize':{t:'화상수업 수익화',c:'business'},
+'business/make-lecture':{t:'온라인 강의 제작',c:'business'},
+'business/edu-business':{t:'온라인 교육 사업',c:'business'},
+'equipment/camera':{t:'화상수업 카메라 추천',c:'equipment'},
+'equipment/mic':{t:'화상수업 마이크 추천',c:'equipment'},
+'equipment/headset':{t:'화상수업 헤드셋 추천',c:'equipment'},
+'equipment/laptop':{t:'화상수업 노트북 추천',c:'equipment'},
+'equipment/tablet':{t:'화상수업 태블릿 추천',c:'equipment'},
+'equipment/internet':{t:'화상수업 인터넷 환경',c:'equipment'},
+'equipment/background':{t:'화상수업 배경 정리',c:'equipment'},
+'equipment/lighting':{t:'화상수업 조명 추천',c:'equipment'},
+'equipment/noise':{t:'화상수업 소음 줄이는 법',c:'equipment'},
+'equipment/setup':{t:'화상수업 세팅 방법',c:'equipment'}
+};
+
 function makeStudyGuidePage() {
-  const title='학습정보 - 공부법·시험 대비·성적 향상 가이드 | 올케어스터디';
-  const desc='시험 대비, 내신 공부법, 수능 전략, 성적 향상 팁 등 학습 정보 총정리. 올케어스터디가 제공하는 학습 가이드.';
-  const canonical='/study-guide';
-  const bc=[{name:'홈',url:'/'},{name:'학습정보',url:canonical}];
-  const ST=Object.entries(STUDY_TOPICS);
-  // 카테고리 색상
-  const colors=['#3B82F6','#059669','#DC2626','#7C3AED','#F59E0B','#EC4899','#0891B2','#6366F1'];
-  // SVG 썸네일 아이콘
-  const icons=['📚','📝','📖','🎯','💡','⏰','📊','✅','🧠','📋'];
-  const body=`<div class="wrap" style="max-width:900px">
-  <div class="bc"><a href="/">홈</a> &rsaquo; <span>학습정보</span></div>
-  <div style="background:linear-gradient(135deg,#0F2044,#1E3A5F);border-radius:24px;padding:48px 36px;margin-bottom:32px;text-align:center">
-    <div style="font-size:42px;margin-bottom:12px">📖</div>
-    <h1 style="font-size:clamp(24px,5vw,32px);font-weight:900;color:white;margin:0 0 12px">학습정보 가이드</h1>
-    <p style="font-size:15px;color:rgba(255,255,255,0.7);margin:0">시험 대비 · 공부법 · 성적 향상 · 수능 전략<br>올케어스터디가 제공하는 학습 가이드</p>
+  const title = '학습 가이드 - 수능·내신·화상수업·공부법 | 올케어스터디';
+  const desc = '수능·내신·공부법·화상수업·학습관리까지. 200개 이상 학습 가이드를 카테고리별로 정리.';
+  const canonical = '/study-guide';
+  const bc = [{name:'홈',url:'/'},{name:'학습 가이드',url:canonical}];
+  const body = `<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <span>학습 가이드</span></div>
+  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
+    <div style="position:relative;height:280px">
+      <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80" alt="학습 가이드" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.05) 100%)"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:28px 32px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="font-size:28px">📚</span><span style="font-size:12px;background:#6366F1;color:white;padding:3px 10px;border-radius:20px;font-weight:700">학습 가이드</span></div>
+        <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:white;margin:0 0 6px;text-shadow:0 2px 8px rgba(0,0,0,0.3)">학습 가이드</h1>
+        <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.3)">수능·내신·공부법·화상수업·학습관리 · 총 ${Object.keys(GUIDE_TOPICS).length}개 가이드</p>
+      </div>
+    </div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:32px">
-    ${ST.map(([k,v],i)=>{const color=colors[i%8];const icon=icons[i%10];return '<a href="/study-guide/'+k+'" style="display:block;background:white;border:1.5px solid #E5E7EB;border-radius:16px;overflow:hidden;text-decoration:none;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,0.04)" onmouseover="this.style.borderColor=\''+color+'\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.transform=\'none\'"><div style="background:linear-gradient(135deg,'+color+'22,'+color+'11);padding:24px;text-align:center;font-size:32px">'+icon+'</div><div style="padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:6px;line-height:1.4">'+v.t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">'+v.d+'</div></div></a>';}).join('')}
-  </div>
-  <div class="cta-box"><h3>1:1 맞춤 학습 상담</h3><p>올케어스터디 전문 코치가 맞춤 학습 전략을 설계합니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <section class="u18"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 18px;padding-left:14px;border-left:5px solid #6366F1">📂 학습 가이드 주제별 분류</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">
+      ${Object.entries(GUIDE_CATS).map(([k,v])=>{const cnt=Object.values(GUIDE_TOPICS).filter(t=>t.c===k).length;return '<a href="/study-guide/'+k+'" style="display:flex;align-items:center;gap:12px;background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+v.color+'\';this.style.background=\''+v.color+'11\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'white\'"><span style="font-size:26px;flex-shrink:0">'+v.icon+'</span><div style="flex:1"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.n+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+v.d.slice(0,25)+'...</div></div><span style="background:'+v.color+'15;color:'+v.color+';font-size:12px;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap">'+cnt+'개</span></a>';}).join('')}
+    </div>
+  </section>
+  <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>올케어스터디 전문 코치가 맞춤 학습 전략을 설계합니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
 </div>`;
   return wrap(title,desc,canonical,body,bc);
+}
+
+function makeGuideCategoryPage(catKey) {
+  const cat = GUIDE_CATS[catKey]; if (!cat) return null;
+  const topics = Object.entries(GUIDE_TOPICS).filter(([k,v])=>v.c===catKey);
+  const title = cat.n+' - 학습 가이드 | 올케어스터디';
+  const desc = cat.d+'. 올케어스터디 학습 가이드.';
+  const canonical = '/study-guide/'+catKey;
+  const bc = [{name:'홈',url:'/'},{name:'학습 가이드',url:'/study-guide'},{name:cat.n,url:canonical}];
+  const body = `<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/study-guide">학습 가이드</a> &rsaquo; <span>${cat.n}</span></div>
+  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
+    <div style="position:relative;height:280px">
+      <img src="${cat.img}" alt="${cat.n}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.05) 100%)"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:28px 32px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="font-size:28px">${cat.icon}</span><span style="font-size:12px;background:${cat.color};color:white;padding:3px 10px;border-radius:20px;font-weight:700">${cat.n}</span></div>
+        <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:white;margin:0 0 6px;text-shadow:0 2px 8px rgba(0,0,0,0.3)">${cat.n} · 학습 가이드</h1>
+        <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.3)">${cat.d} · 총 ${topics.length}개 가이드</p>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:28px">
+    ${topics.map(([k,v])=>'<a href="/study-guide/'+k+'" style="display:block;padding:16px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
+  </div>
+  <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>${cat.n} 관련 전문 코치와 무료 상담</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+</div>`;
+  return wrap(title,desc,canonical,body,bc);
+}
+
+function makeGuideTopicPage(fullSlug) {
+  const pg = GUIDE_TOPICS[fullSlug]; if (!pg) return null;
+  const T = pg.t, catKey = pg.c;
+  const cat = GUIDE_CATS[catKey];
+  const canonical = '/study-guide/'+fullSlug;
+  const desc = T+' | 올케어스터디 학습 가이드. 전국 200개 직영센터 기반 검증 코치.';
+  const bc = [{name:'홈',url:'/'},{name:'학습 가이드',url:'/study-guide'},{name:cat.n,url:'/study-guide/'+catKey},{name:T,url:canonical}];
+  const keys = Object.keys(GUIDE_TOPICS);
+  const idx = keys.indexOf(fullSlug);
+  const _p = fullSlug.charCodeAt(fullSlug.length-1);
+  const _q = fullSlug.charCodeAt(0);
+
+  // p1
+  const S1=[T+'에 대해 구체적으로 알아보고 계시다면 올케어스터디가 도움이 됩니다.',T+'을 제대로 준비하면 학업 성적과 실력이 모두 변합니다.','많은 학생이 '+T+'에서 시행착오를 겪는 이유를 분석해보겠습니다.',T+'의 성공 여부는 올바른 학습 방향 설정에서 결정됩니다.','상위권 학생들은 '+T+'에서 남들과 다른 노하우를 가지고 있습니다.',T+'에서 실패하는 가장 큰 원인은 잘못된 학습 방법 선택입니다.',T+'을 통해 학업 실력을 한 단계 올릴 구체적인 방법입니다.',T+'에서 체계적인 커리큘럼이 왜 중요한지 설명합니다.','학부모님이 꼭 알아야 할 '+T+'의 핵심 포인트를 정리했습니다.',T+'을 검색하셨다면 잘 찾아오셨습니다. 정확한 정보를 드립니다.','교육 전문가가 직접 추천하는 '+T+' 실천 방법입니다.',T+'의 기본 원리부터 실전 적용까지 단계별로 안내합니다.','학업 성적 향상의 숨은 비결은 '+T+'에 있다는 것을 아시나요.',T+'을 지금 시작하는 것이 최적의 타이밍인 이유입니다.',T+'이 일반 학습 방법과 차별화되는 핵심 포인트입니다.','수험생에게 '+T+'이 특별히 중요한 이유를 설명합니다.',T+'을 효과적으로 실천하기 위한 구체적 실행법입니다.','수많은 학생이 결과로 증명한 '+T+' 전략을 공개합니다.',T+'으로 내신과 실력을 동시에 잡는 통합 학습법입니다.',T+' 성공 사례 분석을 통해 얻은 교훈을 공유합니다.'];
+  const S2=[T+' 과정에서 학습 계획 수립이 첫 단계입니다. 현재 수준을 정확히 진단하고 목표까지의 로드맵을 설계합니다.',T+'의 핵심은 꾸준한 실천입니다. 하루 1시간씩이라도 꾸준히 실천하면 3개월 후 큰 변화를 체감합니다.',T+'에서 오답노트 관리는 성적 향상의 핵심입니다. 틀린 문제의 원인을 분석하고 유사 유형을 반복 훈련합니다.',T+' 과정에서 복습이 예습보다 중요합니다. 에빙하우스 망각곡선을 적용한 반복 복습이 장기 기억을 만듭니다.',T+'의 효과를 극대화하려면 집중 학습 환경 조성이 필요합니다. 스마트폰 분리, 집중 시간대 확보가 기본입니다.',T+'에서 과목별 전략 차별화가 중요합니다. 국어는 독해, 수학은 개념, 영어는 어휘 중심으로 접근합니다.',T+' 실천을 위해 주간/월간 목표를 설정하세요. 작은 성취가 쌓여 큰 성과를 만듭니다.',T+' 과정에서 멘탈 관리도 성적만큼 중요합니다. 슬럼프를 극복하는 방법과 동기 유지 전략이 필요합니다.',T+'의 성공 여부는 자기주도학습 습관에 달려있습니다. 스스로 공부 계획을 세우고 실천하는 힘을 키워야 합니다.',T+' 과정에서 화상수업이나 1:1 과외의 도움을 받으면 효율이 크게 향상됩니다. 전문가 피드백이 핵심입니다.'];
+  const S3=['올케어스터디는 전국 200개 직영센터를 기반으로 '+T+' 관련 전문 코치를 매칭합니다.','첫 수업이 완전 무료이므로 '+T+' 관련 상담을 부담 없이 받아보실 수 있습니다.',T+' 관련 무료 상담은 010-6834-8080으로 문의하세요.',T+' 코치가 만족스럽지 않으면 무료 교체가 가능합니다.','올케어스터디 코치가 '+T+' 맞춤 학습 계획을 설계해드립니다.','매주 학습 보고서로 '+T+' 진행 상황을 투명하게 확인할 수 있습니다.',T+' 수업은 방문과 화상 중 편한 방식으로 선택 가능합니다.','녹화 영상 제공으로 '+T+' 학습 내용을 반복 시청할 수 있습니다.','수많은 학부모님이 만족한 '+T+' 전문 코칭 프로그램입니다.','상담 신청 후 48시간 이내에 '+T+' 전문 코치 매칭이 완료됩니다.','지금 '+T+'을 시작하시면 다음 시험에서 확실한 변화를 경험하실 수 있습니다.','작은 선택이지만 '+T+'은 학생의 미래를 크게 바꾸는 결정이 될 수 있습니다.','올케어스터디 '+T+' 전문 코치는 3단계 검증을 통과한 전문가입니다.','매월 수천 명의 학생이 선택한 올케어스터디 '+T+' 프로그램입니다.',T+'으로 성적과 자신감을 함께 올리세요.'];
+  const p1 = S1[idx%20]+' '+S2[(idx*3+_p)%10]+' '+S3[(idx*7+_q)%15];
+
+  // 장점 그리드
+  const advs = [['🎓','3단계 검증 코치',T+' 담당 코치는 학력·경력·수업시연 3단계를 통과한 전문가입니다'],['📊','맞춤 커리큘럼',T+' 관련 학생 수준·학교·목표를 반영한 1:1 맞춤 설계입니다'],['📝','매주 학습 보고서',T+' 진도·숙제·피드백을 학부모님께 투명 공유합니다'],['🔄','코치 무료 교체',T+' 코치가 만족스럽지 않으면 무료 교체 가능합니다'],['🎥','수업 녹화 제공',T+' 수업 녹화로 놓친 부분을 반복 시청할 수 있습니다'],['💬','수업 외 질문 가능',T+' 수업 외 시간에도 메신저로 질문이 가능합니다']];
+
+  // 로드맵
+  const roadmap = [['1개월','기초 진단 & 약점 보강',T+' 관련 현재 수준 레벨테스트, 기초 약점 보강, 핵심 개념 학습, 학습 습관 형성','20'],['2개월','실력 향상 & 내신 대비',T+' 교과서 본문 완벽 분석, 기출 유형 반복 훈련, 서술형 답안 연습, 듣기 말하기 실전 훈련, 수행평가 준비','60'],['3개월','목표 달성 & 실전 완성',T+' 모의고사 실전 훈련, 시험 시간 관리 연습, 예상문제 풀이, 약점 최종 보강, 목표 성적 달성','100']];
+
+  // 후기
+  const reviews = [['⭐⭐⭐⭐⭐','성적이 진짜 올랐어요',T+' 수강 후 성적이 크게 올랐습니다. 약점을 정확히 짚어주셨어요.','고2 학생'],['⭐⭐⭐⭐⭐','아이가 자신감이 생겼어요',T+' 수업 후 학습 보고서를 매주 받으니 안심입니다. 아이도 재미를 느끼기 시작했어요.','학부모님'],['⭐⭐⭐⭐⭐','목표 달성했습니다!',T+' 덕분에 원하는 성적을 달성했습니다. 감사합니다.','외고 합격생']];
+
+  // FAQ
+  const faq = [[T+' 수업은 어떤 방식으로 진행되나요?','방문 과외와 화상수업 중 선택 가능합니다. 주 2~3회(1회 50분) 진행되며, 학생의 학교 교과서와 출제 경향에 맞춘 '+T+' 맞춤 커리큘럼으로 수업합니다. 첫 수업은 무료입니다.'],[T+' 수업료는 얼마인가요?','과목, 학년, 주당 횟수에 따라 달라집니다. '+T+' 무료 상담에서 학생의 상황에 맞는 견적을 안내해드립니다. 전화: 010-6834-8080'],['코치가 마음에 안 들면 교체할 수 있나요?','네, '+T+' 코치 무료 교체가 가능합니다. 학생과 코치의 궁합을 중요하게 생각하며 만족할 때까지 매칭을 도와드립니다.'],[T+' 수업은 몇 개월 들어야 효과가 나나요?','대부분의 학생이 '+T+' 수업 시작 1개월 내 학습 습관 변화, 2개월 내 성적 상승, 3개월 내 목표 달성을 경험합니다.']];
+
+  const sameCategory = Object.entries(GUIDE_TOPICS).filter(([k,v])=>v.c===catKey && k!==fullSlug).slice(0,6);
+
+  const body = `<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/study-guide">학습 가이드</a> &rsaquo; <a href="/study-guide/${catKey}">${cat.n}</a> &rsaquo; <span>${T}</span></div>
+  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
+    <div style="position:relative;height:300px">
+      <img src="${cat.img}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.05) 100%)"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 28px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:22px">${cat.icon}</span><span style="font-size:11px;background:${cat.color};color:white;padding:2px 8px;border-radius:16px;font-weight:700">${cat.n}</span></div>
+        <h1 style="font-size:clamp(18px,4.5vw,24px);font-weight:900;color:white;margin:0 0 4px;line-height:1.4;text-shadow:0 2px 8px rgba(0,0,0,0.3)">${T}</h1>
+        <p style="font-size:12px;color:rgba(255,255,255,0.8);margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.3)">올케어스터디 1:1 맞춤 학습 코칭</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px">
+    ${[['200+','직영센터','🏫'],['97%','만족도','⭐'],['48h','코치매칭','⚡'],['무료','첫수업','🎁']].map(([v,l,e])=>'<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 10px;text-align:center"><div style="font-size:20px;margin-bottom:4px">'+e+'</div><div style="font-size:18px;font-weight:900;color:'+cat.color+'">'+v+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+l+'</div></div>').join('')}
+  </div>
+
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:5px;height:22px;background:${cat.color};border-radius:3px"></span>${T}</h2>
+    <p style="font-size:14px;color:#374151;line-height:1.9">${p1}</p>
+  </section>
+
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">✨ 올케어스터디 학습 가이드 장점</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      ${advs.map(([e,t,d])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:20px">'+e+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div></div>').join('')}
+    </div>
+  </section>
+
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">📈 ${T} 3개월 로드맵</h2>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${roadmap.map(([m,t,d,pct])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px;border-left:4px solid '+cat.color+'"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span style="background:'+cat.color+';color:white;font-size:12px;font-weight:800;padding:3px 10px;border-radius:12px">'+m+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><span style="font-size:12px;color:'+cat.color+';font-weight:700">'+pct+'%</span></div><div style="font-size:12px;color:#6B7280;line-height:1.7">'+d+'</div><div style="background:#E5E7EB;border-radius:4px;height:6px;margin-top:8px"><div style="background:'+cat.color+';border-radius:4px;height:100%;width:'+pct+'%"></div></div></div>').join('')}
+    </div>
+  </section>
+
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">💬 수강 후기</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+      ${reviews.map(([s,t,d,who])=>'<div style="background:#FFFBEB;border-radius:12px;padding:16px;border:1px solid #FDE68A"><div style="font-size:11px;margin-bottom:4px">'+s+'</div><div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:6px">'+t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div><div style="font-size:11px;color:#9CA3AF;margin-top:6px;text-align:right">- '+who+'</div></div>').join('')}
+    </div>
+  </section>
+
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">❓ 자주 묻는 질문</h2>
+    ${faq.map(([q,a])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px;margin-bottom:10px"><div style="font-size:14px;font-weight:800;color:'+cat.color+';margin-bottom:8px">Q. '+q+'</div><div style="font-size:13px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}
+  </section>
+
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">📖 ${cat.n} 다른 가이드</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    ${sameCategory.map(([k,v])=>'<a href="/study-guide/'+k+'" style="display:flex;align-items:center;gap:8px;padding:12px;border:1.5px solid #E5E7EB;border-radius:10px;text-decoration:none;transition:all .2s;font-size:13px;font-weight:700;color:#0F2044">'+cat.icon+' '+v.t+'</a>').join('')}
+    </div>
+  </section>
+
+  <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>1:1 맞춤 학습 코칭 · 전문 코치 매칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">학습 가이드</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
+</div>`;
+  return wrap(T+' | 올케어스터디 학습 가이드', desc, canonical, body, bc);
 }
 
 function makeStudyGuideSubPage(slug) {
-  const pg=STUDY_TOPICS[slug];if(!pg)return null;
-  const T=pg.t,D=pg.d;
-  const canonical='/study-guide/'+slug;
-  const desc=T+' - '+D+' | 올케어스터디 학습정보';
-  const bc=[{name:'홈',url:'/'},{name:'학습정보',url:'/study-guide'},{name:T,url:canonical}];
-  const keys=Object.keys(STUDY_TOPICS);
-  const idx=keys.indexOf(slug);
-  // 썸네일 SVG 배경
-  const colors=['#3B82F6','#059669','#DC2626','#7C3AED','#F59E0B','#EC4899','#0891B2','#6366F1','#14B8A6','#F97316'];
-  const icons=['📚','📝','📖','🎯','💡','⏰','📊','✅','🧠','📋'];
-  const bgColor=colors[idx%10];
-  const icon=icons[idx%10];
-
-    // ─── p1: 5문장×소수인덱스 (T+D 비율 극대화) ───
-  const _i=idx, _p=parseInt(slug.charCodeAt(0));
-  const S1=[T+'을 제대로 실천하면 성적은 반드시 변합니다.','학생들이 가장 궁금해하는 '+T+' 핵심 전략입니다.','많은 학생이 '+T+' 방법을 몰라 시행착오를 겪습니다.',T+'의 성패는 첫 일주일에 결정됩니다.','상위권 학생들의 '+T+' 노하우는 남다릅니다.',T+'에 실패하는 가장 큰 이유는 잘못된 우선순위입니다.','시험 성적을 바꾸는 '+T+' 실전 매뉴얼입니다.',T+'은 재능이 아니라 기술입니다.','학부모님이 꼭 알아야 할 '+T+' 포인트입니다.',T+'을 검색하셨다면 지금이 시작할 최적의 타이밍입니다.','교육 전문가가 추천하는 '+T+' 방법입니다.',T+'의 핵심 원리를 이해하면 응용이 쉬워집니다.','중위권에서 상위권으로 도약하는 '+T+' 비법입니다.'];
-  const S2=[D+'. 이 글에서 실전에 바로 적용할 수 있는 '+T+' 방법을 소개합니다.',D+'. '+T+'의 핵심은 올바른 방향 설정에 있습니다.',D+'. 이 가이드를 통해 '+T+' 시간 낭비 없이 준비하세요.',D+'. '+T+' 시작이 반이라는 말처럼 올바른 첫 걸음이 중요합니다.',D+'. '+T+' 비결을 분석하여 누구나 따라할 수 있도록 정리했습니다.',D+'. '+T+'에서 무엇을 먼저 해야 하는지가 핵심입니다.',D+'. '+T+' 실제 성적 향상 사례를 바탕으로 작성했습니다.',D+'. 올바른 '+T+' 기술을 배우면 누구나 성적을 올릴 수 있습니다.',D+'. 자녀의 '+T+'을 올바르게 지원하는 방법도 안내합니다.',D+'. '+T+'을 미루면 미룰수록 따라잡기 어려워집니다.',D+'. 가장 효과적인 '+T+' 방법만 선별했습니다.'];
-  const S3=['에빙하우스 망각곡선에 따르면 '+T+' 과정에서 24시간 내 복습이 기억 유지의 핵심입니다.',T+' 과정에서 메타인지 능력이 성적을 좌우합니다.',T+'에서 포모도로 기법(25분 집중+5분 휴식)으로 효율을 높이세요.',T+' 실천의 핵심은 "수학 85점 달성"처럼 구체적인 숫자 목표입니다.','능동적 학습이 '+T+'의 효과를 3배로 높입니다.',T+' 성공의 열쇠는 약점에 집중하는 것입니다.',T+'에서 최소 6시간 수면은 반드시 지켜야 합니다.',T+' 시작 전 오답노트의 실수 패턴이 방향을 알려줍니다.','규칙적인 학습 리듬이 '+T+'의 기본입니다.',T+' 도중 슬럼프가 오면 공부 방법을 바꿔보세요.','기출문제 분석이 '+T+'의 지름길입니다.',T+'에서 필기는 핵심 키워드를 추출하여 자기 말로 재구성하세요.','컨디션 관리가 '+T+'의 숨은 변수입니다.',T+' 과정에서 완벽주의보다 70% 완성도로 빠르게 전체를 보세요.','학습 환경이 '+T+'의 50%를 결정합니다.',T+' 전략은 매주 한 번 점검하고 수정하세요.','서술형 문제 대비가 '+T+'의 차별점입니다.'];
-  const S4=[T+'에서 가장 위험한 것은 이해 없는 암기입니다. 원리를 먼저 이해해야 '+T+' 지식이 오래 갑니다.','또래 스터디 그룹이 '+T+' 동기부여에 효과적입니다. 서로 가르치는 과정에서 '+T+' 이해도가 깊어집니다.',T+' 마무리 단계에서는 실전 시뮬레이션이 필수입니다. 실제 시험과 동일한 조건에서 '+T+' 전략을 점검하세요.','반복 학습이 '+T+'의 완성입니다. 한 번 공부하고 끝내지 말고 3회 이상 반복해야 '+T+' 내용이 정착됩니다.',T+' 실천 중 자기 보상 시스템을 만드세요. 작은 목표 달성 시 '+T+' 보상을 주면 동기가 유지됩니다.','어려운 과목을 오전에 배치하는 것이 '+T+'의 시간 활용 비법입니다. '+T+' 오후에는 암기 과목을 하세요.',T+' 핵심은 양보다 질입니다. 10시간 대충 공부보다 3시간 집중이 '+T+'에서 더 효과적입니다.'];
-  const p1=S1[_i%13]+' '+S2[(_i*3+1)%11]+' '+S3[(_i*7+_p)%17]+' '+S4[(_i*11+_p*3)%7];
-
-    const P2=['"'+T+'"의 첫 번째 핵심은 목표 설정입니다. 막연히 "성적을 올리겠다"가 아니라 "수학 80점 → 90점", "영어 3등급 → 2등급"처럼 구체적인 숫자로 목표를 잡아야 합니다. 목표가 구체적일수록 어떤 공부를 해야 하는지 명확해지고, 달성 여부도 쉽게 확인할 수 있습니다. 올케어스터디의 전문 코치와 함께라면 "'+T+'" 목표 달성이 더욱 수월해집니다. 코치가 학생의 목표를 함께 관리하고 매주 진행 상황을 점검합니다.',
-  '"'+T+'"에서 간과하기 쉬운 것이 복습입니다. 새로운 내용을 배우는 것도 중요하지만, 배운 내용을 반복 복습하는 것이 장기 기억으로 전환하는 핵심입니다. 에빙하우스의 망각곡선에 따르면 학습 후 1일, 3일, 7일, 30일 간격으로 복습하면 기억 유지율이 90% 이상으로 올라갑니다. "'+T+'" 복습 전략을 올케어스터디 코치와 함께 실천하면 독학보다 훨씬 효율적으로 기억을 강화할 수 있습니다.',
-  '"'+T+'"의 핵심 전략 중 하나는 약점 분석입니다. 시험에서 틀린 문제를 단순히 다시 풀어보는 것이 아니라, 왜 틀렸는지 원인을 분석하는 것이 중요합니다. 개념 부족인지, 계산 실수인지, 시간 부족인지에 따라 대응 전략이 완전히 달라집니다. 올케어스터디 코치는 "'+T+'" 과정에서 학생의 약점을 정확히 진단하고 맞춤 보강 계획을 세워줍니다.',
-  '"'+T+'"을 실천할 때 가장 중요한 것은 꾸준함입니다. 하루 10시간 공부하고 3일 쉬는 것보다 매일 3시간씩 꾸준히 하는 것이 성적 향상에 훨씬 효과적입니다. 습관이 되면 의지력 소모 없이 자연스럽게 공부할 수 있게 됩니다. "'+T+'" 습관을 정착시키는 데 올케어스터디의 주간 학습 보고서가 큰 도움이 됩니다. 학부모님도 학습 현황을 투명하게 확인할 수 있습니다.',
-  '"'+T+'" 전략에서 시간 관리는 필수입니다. 포모도로 기법(25분 집중 + 5분 휴식)은 집중력을 유지하는 데 매우 효과적입니다. 또한 어려운 과목을 먼저 공부하고 쉬운 과목을 나중에 하는 것이 전체 학습 효율을 높입니다. 올케어스터디의 화상수업은 "'+T+'" 시간 관리를 자연스럽게 훈련시킵니다. 정해진 수업 시간에 집중하는 습관이 자기 학습에도 적용됩니다.',
-  '"'+T+'"에서 환경 조성도 중요한 요소입니다. 조용한 공간, 정리된 책상, 적절한 조명은 집중력을 높이는 기본 조건입니다. 스마트폰은 시야에서 치우고, 필요한 학습 도구만 책상 위에 두세요. "'+T+'"에서 환경이 중요한 것처럼 올케어스터디 화상수업도 최적의 학습 환경을 제공합니다. 1:1 공간에서 집중력 높은 수업이 가능합니다.',
-  '"'+T+'" 실천에서 자주 발생하는 실수는 완벽주의입니다. 처음부터 완벽한 계획을 세우려 하면 오히려 시작하지 못합니다. 70% 정도의 계획으로 시작하고, 실천하면서 수정해나가는 것이 훨씬 효과적입니다. 올케어스터디 코치는 "'+T+'" 과정에서 학생이 완벽주의에 빠지지 않도록 현실적인 목표와 실천 가능한 계획을 함께 설계합니다.',
-  '"'+T+'"의 또 다른 핵심은 능동적 학습입니다. 단순히 눈으로 읽고 넘기는 것이 아니라, 스스로 문제를 풀고, 핵심을 요약하고, 남에게 설명해보는 것이 기억 유지에 3배 이상 효과적입니다. "'+T+'" 능동적 학습을 올케어스터디 수업에서 직접 체험할 수 있습니다. 코치가 학생에게 직접 문제를 풀고 설명하게 하여 깊은 이해를 유도합니다.',
-  '"'+T+'" 전략 중 많은 학생이 놓치는 것이 수면 관리입니다. 수면 중에 기억이 정리되고 장기 기억으로 전환됩니다. 시험 기간에 밤을 새우는 것은 오히려 역효과입니다. 최소 6시간 수면을 권장합니다. 올케어스터디는 "'+T+'" 과정에서 학생의 컨디션 관리까지 챙깁니다. 시험 기간 수면과 휴식 패턴에 대한 조언도 함께 제공합니다.',
-  '"'+T+'"을 더 효과적으로 실천하려면 학습 기록을 남기세요. 매일 무엇을 공부했는지, 어떤 부분이 어려웠는지 기록하면 자신의 학습 패턴을 파악할 수 있고, 약점 보강에도 도움이 됩니다. "'+T+'" 학습 기록을 올케어스터디의 학습 보고서 시스템이 대신해줍니다. 매 수업 후 자동으로 학습 기록이 정리되어 학부모님께 전달됩니다.'];
-    const p2=P2[(idx*3+2)%10];
-
-  const P3=['올케어스터디에서 추천하는 "'+T+'" 실천법: ①현재 수준 파악—최근 시험지나 모의고사로 과목별 강점과 약점을 분석합니다. ②구체적 목표 설정—"수학 80점→90점"처럼 숫자로 목표를 잡습니다. ③주간 학습 계획 수립—과목별 공부 시간을 배분하고 우선순위를 정합니다. ④매일 실천 + 학습 기록—하루 공부 내용과 어려웠던 점을 기록합니다. ⑤주 1회 점검 및 계획 수정—진도와 이해도를 확인하고 다음 주 계획을 조정합니다. 이 5단계를 반복하면 "'+T+'"의 효과를 반드시 체감할 수 있습니다.',
-  '"'+T+'"을 혼자 실천하기 어렵다면 올케어스터디의 1:1 코칭을 추천합니다. 전문 코치가 학생의 현재 수준을 진단하고, "'+T+'" 전략을 개인에 맞게 설계합니다. 매주 학습 보고서로 진행 상황을 확인하고, 시험 기간에는 집중 대비 모드로 전환합니다.',
-  '"'+T+'" 성공 사례: 올케어스터디 수강생 중 3개월 만에 내신 2등급 향상, 수능 모의고사 20점 상승 등 다양한 성공 사례가 있습니다. 핵심은 올바른 전략 + 꾸준한 실천 + 전문가의 관리입니다.',
-  '"'+T+'"의 효과를 극대화하려면 공부 환경을 최적화하세요. 조용한 장소 확보, 스마트폰 격리, 필요한 교재만 책상 위에 준비. 올케어스터디의 화상수업은 이런 집중 환경을 집에서도 만들어줍니다.',
-  '"'+T+'"은 시작이 가장 중요합니다. 이 글을 읽은 후 바로 실천할 수 있는 것 하나를 정하세요. 오늘 오답노트 1페이지, 내일 계획표 작성 등 작은 것부터 시작하면 자연스럽게 습관이 됩니다.'];
-  const p3=P3[(idx*7+3)%5];
-
-  const P4=['올케어스터디는 "'+T+'" 전략을 실제 1:1 수업에 적용하여 학생의 성적 향상을 돕고 있습니다. 전국 200개 직영 센터의 검증된 코치가 학생 맞춤 학습 계획을 설계합니다. "'+T+'" 전략을 혼자 실천하기 어렵다면 전문 코치의 도움을 받아보세요. 첫 수업은 무료이며, 학생의 현재 수준 진단과 맞춤 커리큘럼 설계까지 제공됩니다. 상담 전화: 010-6834-8080',
-  '"'+T+'" 실천으로 3개월 후 달라진 성적을 경험하세요. 1개월—학습 습관 정착과 기초 개념 완성, 2개월—약점 보강과 응용력 향상, 3개월—목표 성적 달성과 자신감 회복. 올케어스터디의 1:1 코칭이 "'+T+'" 여정을 함께합니다. 수천 명의 학생이 이 과정을 통해 성적 향상을 경험했습니다.',
-  '혼자 공부하기 막막하다면 올케어스터디의 전문 코치에게 "'+T+'" 맞춤 상담을 받아보세요. 학생의 현재 수준을 진단하고 최적의 학습 전략을 무료로 설계해드립니다. "'+T+'" 전략과 1:1 맞춤 코칭이 만나면 혼자 공부할 때보다 3~5배 빠른 성적 향상을 경험할 수 있습니다. 지금 시작하세요.',
-  '"'+T+'"은 학생의 미래를 바꿀 수 있는 첫 걸음입니다. 올케어스터디는 모든 학생이 자신의 잠재력을 발휘할 수 있도록 체계적인 학습 지원을 제공합니다. "'+T+'" 전략의 실천을 올케어스터디 전문 코치가 옆에서 도와드립니다. 무료 체험 수업으로 직접 경험해보세요. 전화: 010-6834-8080'];
-    const p4=P4[(idx*11+1)%4];
-
-  const P5=['"'+T+'"을 실천하기 전에 다음 항목을 점검해보세요. 첫째, 나의 현재 성적과 목표 성적을 구체적으로 적어보았는가? 둘째, 과목별 강점과 약점을 파악했는가? 셋째, 매일 실천 가능한 학습 시간을 확보했는가? 넷째, 오답노트를 작성하고 활용하고 있는가? 다섯째, 규칙적인 수면과 휴식을 취하고 있는가? 이 5가지를 모두 체크할 수 있다면 "'+T+'" 성공의 기반이 갖춰진 것입니다. 하나라도 빠져있다면 그것부터 보완하세요.',
-  '"'+T+'" 실천 전 자가진단: ①최근 시험에서 가장 많이 틀린 유형은? ②공부할 때 가장 집중이 안 되는 시간대는? ③하루 평균 실제 공부 시간은? ④가장 자신 없는 과목과 단원은? ⑤시험 기간에 가장 스트레스 받는 것은? 이 5가지 질문에 대한 답을 적어보세요. "'+T+'" 전략을 자신에게 맞게 커스터마이징하는 데 큰 도움이 됩니다. 올케어스터디 무료 상담에서 이 진단 결과를 바탕으로 맞춤 학습 계획을 받을 수 있습니다.',
-  '"'+T+'" 성공의 핵심 체크리스트: ✅ 구체적인 숫자 목표 설정 완료 ✅ 주간 학습 계획표 작성 완료 ✅ 매일 오답노트 정리 실천 중 ✅ 수업 복습을 24시간 내에 완료 ✅ 시험 3주 전부터 기출문제 풀이 시작 ✅ 수면 6시간 이상 확보 ✅ 스마트폰 학습 시간 중 격리. 이 체크리스트를 매주 확인하면서 "'+T+'" 전략을 꾸준히 실천하세요. 올케어스터디 코치가 이 체크리스트를 함께 관리해드립니다.',
-  '"'+T+'" 주차별 실천 계획: 1주차—현재 수준 파악과 목표 설정, 취약 단원 리스트업. 2주차—취약 단원 기본 개념 재학습, 관련 기출문제 풀이 시작. 3주차—전체 범위 기출문제 풀이, 오답 분석과 보충 학습. 4주차—실전 모의고사, 시간 관리 훈련, 최종 점검. 이 4주 사이클을 반복하면 "'+T+'"의 효과를 확실히 체감할 수 있습니다. 올케어스터디 코치와 함께하면 이 계획의 실행력이 더욱 높아집니다.',
-  '"'+T+'" 과목별 우선순위 가이드: 가장 약한 과목부터 시작하되, 하루에 한 과목만 공부하지 마세요. 2~3과목을 번갈아 공부하는 것이 뇌의 피로를 줄이고 집중력을 유지하는 데 효과적입니다. 오전에는 수학·과학 같은 사고력 과목, 오후에는 국어·영어 같은 언어 과목, 저녁에는 암기 과목을 배치하면 최적의 학습 효율을 얻을 수 있습니다. "'+T+'"에서 과목 배치는 성적에 직접적인 영향을 미칩니다.'];
-  const p5=P5[(idx*13+4)%5];
-
-  const faq=[
-    ['"'+T+'" 전략을 혼자서도 실천할 수 있나요?','네, 이 글의 내용을 따라하면 혼자서도 충분히 실천 가능합니다. 다만 전문 코치의 도움을 받으면 더 빠르고 효과적으로 "'+T+'"을 실천할 수 있습니다. 올케어스터디 코치는 학생의 현재 수준을 진단하고 맞춤 전략을 설계해드립니다. 무료 상담으로 시작하세요.'],
-    ['"'+T+'"으로 성적이 정말 오르나요?','네. 올바른 방법으로 꾸준히 실천하면 반드시 성적이 향상됩니다. 올케어스터디 수강생의 대부분이 "'+T+'" 전략 실천 3개월 내에 눈에 띄는 성적 변화를 경험합니다. 핵심은 올바른 방향 + 꾸준한 실천입니다.'],
-    ['올케어스터디의 1:1 코칭은 어떻게 진행되나요?','전문 코치가 학생의 현재 수준을 진단하고 "'+T+'" 전략을 맞춤 설계합니다. 주 2~3회 화상수업으로 진행되며, 매 수업 후 학습 보고서를 학부모님께 제공합니다. 시험 기간에는 집중 대비 모드로 전환합니다. 첫 수업은 무료입니다.'],
-    ['"'+T+'" 시작 전에 준비할 것이 있나요?','특별한 준비물은 없습니다. 다만 자신의 현재 성적과 목표 성적을 정리해두면 "'+T+'" 전략을 더 효과적으로 실천할 수 있습니다. 최근 시험지와 오답 목록을 준비하면 올케어스터디 코치가 정확한 약점 분석을 해드립니다.'],
-  ];
-
-  const otherSlugs=Object.entries(STUDY_TOPICS).filter(([k])=>k!==slug).sort(()=>(idx*7+parseInt(slug.charCodeAt(0)))%3-1).slice(0,6);
-  const body=`<div class="wrap" style="max-width:900px">
-  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/study-guide">학습정보</a> &rsaquo; <span>${T}</span></div>
-  <div style="background:linear-gradient(135deg,${bgColor}22,${bgColor}11);border-radius:20px;padding:32px;margin-bottom:28px;text-align:center">
-    <div style="font-size:48px;margin-bottom:12px">${icon}</div>
-    <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:#0F2044;margin:0 0 8px">${T}</h1>
-    <p style="font-size:14px;color:#6B7280;margin:0">${D}</p>
-  </div>
-  <section class="u9"><h2 class="u30" style="border-left:5px solid ${bgColor};padding-left:14px">${T}</h2><p class="u25">${p1}</p></section>
-  <section class="u9"><h2 class="u30" style="color:${bgColor}">${T} 핵심 전략</h2><p class="u25">${p2}</p></section>
-  <section class="u9"><h2 class="u30" style="color:${bgColor}">${T} 실천 방법</h2><p class="u25">${p3}</p></section>
-  <section class="u9"><h2 class="u30" style="color:${bgColor}">올케어스터디와 함께하는 ${T}</h2><p class="u25">${p4}</p></section>
-  <section class="u9"><h2 class="u30" style="color:${bgColor}">📋 ${T} 실전 체크리스트</h2><p class="u25">${p5}</p></section>
-  <section class="u9"><h2 class="u30">❓ ${T} 자주 묻는 질문</h2>${faq.map(([q,a])=>'<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. '+q+'</div><div style="font-size:14px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}</section>
-  <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 학습 가이드</h2>${otherSlugs.map(([k,v])=>'<a href="/study-guide/'+k+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\''+bgColor+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">📖 '+v.t+'</div></a>').join('')}</section>
-  <div class="cta-box"><h3>${T}, 전문 코치와 함께</h3><p>올케어스터디 1:1 맞춤 코칭으로 성적 향상을 경험하세요</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
-  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">공부법</span><span class="keyword-tag">시험 대비</span><span class="keyword-tag">성적 향상</span><span class="keyword-tag">올케어스터디</span></div></div>
-</div>`;
-  return wrap(T+' | 올케어스터디 학습정보',desc,canonical,body,bc);
+  for (const key of Object.keys(GUIDE_TOPICS)) {
+    if (key.endsWith('/'+slug)) return makeGuideTopicPage(key);
+  }
+  return null;
 }
 
-function makeVideoLessonPage() {
-  const title='화상수업 - 1:1 맞춤 온라인 과외 | 올케어스터디';
-  const desc='화상수업·온라인수업·비대면수업 전문. 전국 어디서나 1:1 맞춤 화상 과외. 초등·중등·고등·성인 전 학년 대응.';
-  const canonical='/video-lesson';
-  const bc=[{name:'홈',url:'/'},{name:'화상수업',url:canonical}];
-  const VT=Object.entries(VID_TOPICS);
-  const body=`<div class="wrap" style="max-width:900px">
-  <div class="bc"><a href="/">홈</a> &rsaquo; <span>화상수업</span></div>
-  <div style="background:linear-gradient(135deg,#0F2044,#1E3A5F);border-radius:24px;padding:48px 36px;margin-bottom:32px;text-align:center;position:relative;overflow:hidden">
-    <div style="font-size:42px;margin-bottom:12px">🎥</div>
-    <h1 style="font-size:clamp(24px,5vw,32px);font-weight:900;color:white;margin:0 0 12px">1:1 맞춤 <span style="color:#60A5FA">화상수업</span></h1>
-    <p style="font-size:15px;color:rgba(255,255,255,0.7);margin:0 0 24px">전국 어디서나 · 전 과목 · 전 학년<br>올케어스터디 화상수업으로 성적을 바꾸세요</p>
-    <a href="/contact?type=tutoring" style="display:inline-block;padding:14px 36px;background:#3B82F6;color:white;border-radius:12px;font-size:15px;font-weight:800;text-decoration:none">무료 상담 신청 →</a>
-  </div>
-  <section class="u9"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">🎯 화상수업이란?</h2><p class="u25">화상수업은 인터넷을 통해 실시간으로 진행되는 온라인 수업입니다. 줌(Zoom), 구글미트 등 화상회의 플랫폼을 활용하여 선생님과 학생이 화면을 공유하며 1:1 맞춤 수업을 받을 수 있습니다. 올케어스터디의 화상수업은 방문 과외와 동일한 품질의 수업을 집에서 편하게 받을 수 있어 시간과 비용을 절약하면서도 높은 학습 효과를 얻을 수 있습니다. 전국 200개 이상 직영 학습센터의 검증된 코치진이 화상으로도 동일한 커리큘럼을 제공합니다.</p></section>
-  <section class="u9"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">✅ 화상수업 장점</h2>
-    <div style="display:grid;gap:10px">
-      <div style="background:#EFF6FF;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:4px">🏠 장소 제약 없음</div><div style="font-size:13px;color:#6B7280">전국 어디서나 집에서 편하게 수업. 이동 시간 제로</div></div>
-      <div style="background:#ECFDF5;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:4px">👤 1:1 맞춤 수업</div><div style="font-size:13px;color:#6B7280">학생의 수준과 약점에 맞춘 개인별 커리큘럼</div></div>
-      <div style="background:#FEF3C7;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:4px">📹 수업 녹화</div><div style="font-size:13px;color:#6B7280">수업 녹화로 복습 가능. 놓친 부분 다시 확인</div></div>
-      <div style="background:#F5F3FF;border-radius:12px;padding:16px"><div style="font-size:14px;font-weight:800;color:#0F2044;margin-bottom:4px">💰 합리적 비용</div><div style="font-size:13px;color:#6B7280">방문 과외 대비 교통비·시간 절약. 동일한 수업 품질</div></div>
-    </div>
-  </section>
-  <section class="u9"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 16px">📚 화상수업 가이드</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">
-      ${VT.slice(0,100).map(([k,v])=>'<a href="/video-lesson/'+k+'" style="display:block;padding:10px 14px;background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:10px;text-decoration:none;font-size:13px;font-weight:700;color:#0F2044;transition:all .2s" onmouseover="this.style.borderColor=\'#3B82F6\';this.style.background=\'#EFF6FF\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'#F8FAFC\'">🎥 '+v.t+'</a>').join('')}
-    </div>
-  </section>
-  <div class="cta-box"><h3>화상수업 무료 상담</h3><p>1:1 맞춤 화상 과외 · 전 과목 · 전 학년</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
-</div>`;
-  return wrap(title,desc,canonical,body,bc);
-}
-
-const VID_TOPICS={
-'video-lesson':{t:'화상수업',d:'실시간 화상수업으로 전국 어디서나 1:1 맞춤 과외. 방문 과외와 동일한 품질, 시간·비용 절약',cat:'일반'},
-'online-class':{t:'온라인수업',d:'인터넷만 있으면 어디서나 참여 가능한 온라인 수업. 실시간 쌍방향 소통으로 높은 학습 효과',cat:'일반'},
-'non-face':{t:'비대면수업',d:'비대면으로 안전하게 진행되는 1:1 맞춤 수업. 대면 수업과 동일한 커리큘럼 제공',cat:'일반'},
-'realtime':{t:'실시간수업',d:'실시간으로 선생님과 소통하는 라이브 수업. 즉석 질문과 피드백으로 효율적 학습',cat:'일반'},
-'live-class':{t:'라이브수업',d:'라이브 화상 수업으로 현장감 있는 학습 경험. 녹화 수업과 차별화된 실시간 소통',cat:'일반'},
-'remote':{t:'원격수업',d:'원격으로 진행되는 체계적인 1:1 과외. 거리에 구애받지 않는 맞춤형 교육',cat:'일반'},
-'internet-class':{t:'인터넷수업',d:'인터넷 기반 실시간 화상 수업. PC·태블릿·스마트폰 어디서든 접속 가능',cat:'일반'},
-'zoom-class':{t:'줌수업',d:'줌(Zoom) 플랫폼을 활용한 화상수업. 화면공유·화이트보드·녹화 기능 활용',cat:'일반'},
-'video-lecture':{t:'화상강의',d:'전문 강사의 화상 강의로 깊이 있는 학습. 1:1 맞춤부터 소그룹까지',cat:'일반'},
-'online-lecture':{t:'온라인강의',d:'온라인 실시간 강의로 시공간 제약 없는 학습. 녹화 복습까지 가능',cat:'일반'},
-'recommend':{t:'화상수업 추천',d:'검증된 화상수업 추천. 3단계 코치 검증, 맞춤 매칭, 학습 관리 시스템',cat:'추천'},
-'best-place':{t:'화상수업 잘하는 곳',d:'화상수업 잘하는 곳을 찾고 계신가요? 올케어스터디는 전국 200개 센터 기반 검증된 코치진 보유',cat:'추천'},
-'effect':{t:'화상수업 효과',d:'화상수업의 실제 학습 효과 분석. 1:1 맞춤으로 그룹 수업 대비 3~5배 효율',cat:'추천'},
-'review':{t:'화상수업 후기',d:'올케어스터디 화상수업 수강생 후기. 성적 향상 사례와 학부모 만족도',cat:'추천'},
-'pros-cons':{t:'화상수업 장단점',d:'화상수업의 장점과 단점 솔직 분석. 어떤 학생에게 적합한지 안내',cat:'추천'},
-'cost':{t:'화상수업 비용',d:'화상수업 비용 안내. 과목별·학년별 합리적인 수업료와 무료 체험 안내',cat:'추천'},
-'price':{t:'화상수업 가격',d:'화상수업 가격 비교. 방문 과외 대비 교통비·시간 절약으로 가성비 높은 수업',cat:'추천'},
-'preparation':{t:'화상수업 준비물',d:'화상수업에 필요한 준비물 총정리. 기기·인터넷·학습 환경 세팅 가이드',cat:'추천'},
-'focus-tips':{t:'화상수업 집중력 높이는 법',d:'화상수업에서 집중력을 높이는 10가지 방법. 학습 환경 조성부터 수업 참여 전략까지',cat:'추천'},
-'how-to':{t:'화상수업 듣는 방법',d:'화상수업 처음이신가요? 접속 방법부터 효과적인 수강법까지 단계별 안내',cat:'추천'},
-'elem':{t:'초등 화상수업',d:'초등학생 맞춤 화상수업. 재미있는 수업 방식으로 학습 습관 형성',cat:'학년'},
-'mid':{t:'중등 화상수업',d:'중학생 내신·선행 화상수업. 과목별 전문 코치의 1:1 맞춤 지도',cat:'학년'},
-'high':{t:'고등 화상수업',d:'고등학생 내신·수능 화상수업. 입시 전문 코치의 전략적 학습 관리',cat:'학년'},
-'kids':{t:'유아 화상수업',d:'유아 대상 화상수업. 놀이 기반 학습으로 즐겁게 기초 다지기',cat:'학년'},
-'adult':{t:'성인 화상수업',d:'성인 학습자를 위한 화상수업. 자격증·어학·취미 등 목적별 맞춤 수업',cat:'학년'},
-'worker':{t:'직장인 화상수업',d:'직장인 맞춤 화상수업. 퇴근 후·주말 유연한 시간대 수업 가능',cat:'학년'},
-'one-on-one':{t:'1대1 화상수업',d:'1대1 화상수업으로 학생 맞춤 학습. 질문 즉시 해결, 약점 집중 보강',cat:'형태'},
-'small-group':{t:'소그룹 화상수업',d:'2~4명 소그룹 화상수업. 적정 인원으로 소통과 경쟁 동시에',cat:'형태'},
-'group':{t:'그룹 화상수업',d:'5명 이상 그룹 화상수업. 합리적 비용으로 함께 성장하는 학습',cat:'형태'},
-'custom':{t:'맞춤형 화상수업',d:'학생의 수준·목표·일정에 맞춘 완전 맞춤형 화상수업 설계',cat:'형태'},
-'eng-video':{t:'영어 화상수업',d:'영어 화상수업으로 문법·독해·회화·내신까지. 원어민·한국인 코치 선택 가능',cat:'과목'},
-'math-video':{t:'수학 화상수업',d:'수학 화상수업으로 개념 이해부터 문제 풀이까지. 화면공유로 풀이 과정 실시간 확인',cat:'과목'},
-'kor-video':{t:'국어 화상수업',d:'국어 화상수업으로 독해력·문학·비문학·논술까지. 수능·내신 전문 코치',cat:'과목'},
-'sci-video':{t:'과학 화상수업',d:'과학 화상수업으로 물리·화학·생물·지구과학. 개념 시각화로 이해도 향상',cat:'과목'},
-'soc-video':{t:'사회 화상수업',d:'사회 화상수업으로 한국사·세계사·지리·법정치·경제. 암기가 아닌 이해 중심 학습',cat:'과목'},
-'coding-video':{t:'코딩 화상수업',d:'코딩 화상수업으로 스크래치·파이썬·자바 등. 화면공유로 실습 지도에 최적화',cat:'과목'},
-'essay-video':{t:'논술 화상수업',d:'논술 화상수업으로 대입 논술·구술 면접 대비. 실시간 첨삭과 피드백',cat:'과목'},
-'reading-video':{t:'독서 화상수업',d:'독서 화상수업으로 독서 습관 형성과 독해력 향상. 토론 수업 병행',cat:'과목'},
-'convo-video':{t:'회화 화상수업',d:'영어·중국어·일본어 회화 화상수업. 실시간 대화로 말하기 능력 향상',cat:'과목'},
-'jp-video':{t:'일본어 화상수업',d:'일본어 화상수업으로 기초 회화부터 JLPT 대비까지. 원어민급 코치 매칭',cat:'과목'},
-'cn-video':{t:'중국어 화상수업',d:'중국어 화상수업으로 발음·회화·HSK 대비. 실시간 교정으로 빠른 실력 향상',cat:'과목'},
-'toeic-video':{t:'토익 화상수업',d:'토익 화상수업으로 LC·RC 집중 훈련. 목표 점수 맞춤 커리큘럼',cat:'과목'},
-'opic-video':{t:'오픽 화상수업',d:'OPIc 화상수업으로 스피킹 집중 훈련. 실전 모의 인터뷰로 등급 향상',cat:'과목'},
-'ielts-video':{t:'IELTS 화상수업',d:'IELTS 화상수업으로 4개 영역 균형 학습. 스피킹·라이팅 실시간 피드백',cat:'과목'},
-'grammar-video':{t:'문법 화상수업',d:'영어 문법 화상수업으로 기초부터 고급까지. 체계적 문법 완성',cat:'과목'},
-'pronun-video':{t:'발음 화상수업',d:'발음 교정 화상수업으로 정확한 발음 습득. 실시간 음성 피드백',cat:'과목'},
-'speaking-video':{t:'스피킹 화상수업',d:'스피킹 화상수업으로 영어 말하기 자신감 향상. 실전 대화 훈련',cat:'과목'},
-'naesin-video':{t:'내신 화상수업',d:'중간·기말 내신 대비 화상수업. 학교별 출제 경향 분석 맞춤 수업',cat:'시험'},
-'ipsi-video':{t:'입시 화상수업',d:'대입 수시·정시 대비 화상수업. 입시 전문 코치의 전략적 학습 설계',cat:'시험'},
-'exam-prep':{t:'시험대비 화상수업',d:'시험대비 집중 화상수업. 시험 2~3주 전 핵심 정리와 실전 훈련',cat:'시험'},
-'platform':{t:'화상수업 플랫폼',d:'화상수업에 최적화된 플랫폼 비교. 줌·구글미트·MS Teams 장단점 분석',cat:'플랫폼'},
-'program':{t:'화상수업 프로그램',d:'화상수업 프로그램 추천. 무료·유료 프로그램별 기능 비교',cat:'플랫폼'},
-'app':{t:'화상수업 앱',d:'모바일 화상수업 앱 추천. 스마트폰·태블릿으로 어디서나 수강',cat:'플랫폼'},
-'site':{t:'화상수업 사이트',d:'화상수업 사이트 추천. 과목별·학년별 최적의 화상수업 사이트 비교',cat:'플랫폼'},
-'system':{t:'화상수업 시스템',d:'화상수업 시스템 구축 가이드. 안정적인 수업을 위한 기술 환경 안내',cat:'플랫폼'},
-'online-platform':{t:'온라인 클래스 플랫폼',d:'온라인 클래스 운영에 최적화된 플랫폼. 출석·과제·피드백 통합 관리',cat:'플랫폼'},
-'non-face-platform':{t:'비대면 강의 플랫폼',d:'비대면 강의에 적합한 플랫폼 비교. 교육 목적에 맞는 최적의 선택',cat:'플랫폼'},
-'conference':{t:'화상회의 수업',d:'화상회의 도구를 활용한 수업 운영법. 효과적인 수업 진행 팁',cat:'플랫폼'},
-'edu-conference':{t:'교육용 화상회의',d:'교육 목적에 특화된 화상회의 솔루션. 화이트보드·퀴즈·출석 기능',cat:'플랫폼'},
-'live-platform':{t:'실시간 강의 플랫폼',d:'실시간 강의에 최적화된 플랫폼. 지연 없는 안정적인 수업 환경',cat:'플랫폼'},
-'zoom-video':{t:'줌 화상수업',d:'줌(Zoom)으로 화상수업 하는 방법. 설치부터 수업 참여까지 완벽 가이드',cat:'도구'},
-'googlemeet':{t:'구글미트 화상수업',d:'구글미트로 화상수업 하는 방법. 무료로 사용 가능한 구글 기반 화상 수업',cat:'도구'},
-'teams':{t:'Microsoft Teams 수업',d:'MS Teams로 화상수업 하는 방법. 과제 제출·채팅·파일 공유 통합 관리',cat:'도구'},
-'skype':{t:'스카이프 화상수업',d:'스카이프로 화상수업 하는 방법. 1:1 수업에 적합한 간편한 화상 통화',cat:'도구'},
-'webex':{t:'웹엑스 수업',d:'웹엑스(Webex)로 화상수업 하는 방법. 안정적인 기업용 화상회의 플랫폼',cat:'도구'},
-'manage-class':{t:'온라인 클래스 운영',d:'온라인 클래스 효과적으로 운영하는 방법. 학생 관리부터 수업 품질까지',cat:'운영'},
-'make-link':{t:'수업 링크 만들기',d:'화상수업 링크 생성 방법. 줌·구글미트·Teams 플랫폼별 가이드',cat:'운영'},
-'how-to-join':{t:'화상수업 입장 방법',d:'화상수업 입장 방법 총정리. 초보자도 쉽게 따라하는 단계별 안내',cat:'운영'},
-'screen-share':{t:'화면공유 수업',d:'화면공유를 활용한 효과적인 수업법. 교재·문제·풀이 실시간 공유',cat:'운영'},
-'record-class':{t:'녹화수업 만들기',d:'화상수업 녹화 방법과 활용법. 복습 자료로 학습 효과 극대화',cat:'운영'},
-'make-video':{t:'화상수업 만드는 방법',d:'화상수업 시작 가이드. 플랫폼 선택부터 첫 수업 진행까지',cat:'운영'},
-'how-to-run':{t:'화상수업 진행 방법',d:'화상수업 효과적으로 진행하는 방법. 수업 구성·시간 관리·학생 참여 유도',cat:'운영'},
-'knowhow':{t:'화상수업 운영 노하우',d:'경험 많은 코치들의 화상수업 운영 노하우. 수업 품질을 높이는 실전 팁',cat:'운영'},
-'lesson-plan':{t:'화상수업 교안',d:'화상수업 교안 작성법. 온라인 환경에 최적화된 수업 자료 제작',cat:'운영'},
-'materials':{t:'화상수업 자료 만들기',d:'화상수업 자료 제작 가이드. 화면공유에 적합한 학습 자료 만들기',cat:'운영'},
-'curriculum':{t:'화상수업 커리큘럼',d:'과목별·학년별 화상수업 커리큘럼. 체계적인 학습 계획 설계',cat:'운영'},
-'student-manage':{t:'화상수업 학생관리',d:'화상수업 학생 관리 방법. 출석·진도·성취도 체계적 관리 시스템',cat:'운영'},
-'attendance':{t:'화상수업 출석관리',d:'화상수업 출석 관리 방법. 자동 출석 체크와 학습 이력 관리',cat:'운영'},
-'assignment':{t:'화상수업 과제관리',d:'화상수업 과제 관리 시스템. 온라인으로 과제 제출·확인·피드백',cat:'운영'},
-'feedback':{t:'화상수업 피드백 방법',d:'효과적인 화상수업 피드백 방법. 실시간 피드백으로 학습 효과 극대화',cat:'운영'},
-'academy-video':{t:'학원 화상수업',d:'학원에서 제공하는 화상수업. 오프라인 학원의 커리큘럼을 온라인으로',cat:'유형'},
-'tutor-video':{t:'과외 화상수업',d:'1:1 과외 화상수업. 방문 과외의 장점을 온라인으로 그대로 구현',cat:'유형'},
-'instead-visit':{t:'방문수업 대신 화상수업',d:'방문수업 대신 화상수업을 선택하는 이유. 동일한 효과, 더 많은 장점',cat:'유형'},
-'online-tutor':{t:'온라인 과외',d:'온라인 과외로 전국 최고의 선생님과 수업. 지역 제한 없는 코치 매칭',cat:'유형'},
-'non-face-tutor':{t:'비대면 과외',d:'비대면 과외로 안전하고 편리한 학습. 대면 과외와 동일한 커리큘럼',cat:'유형'},
-'solo-teacher':{t:'1인 강사 화상수업',d:'1인 강사를 위한 화상수업 운영 가이드. 효율적인 수업 시스템 구축법',cat:'사업'},
-'startup':{t:'화상수업 창업',d:'화상수업 창업 가이드. 초기 투자 비용부터 수강생 모집까지',cat:'사업'},
-'monetize':{t:'화상수업 수익화',d:'화상수업으로 수익 창출하는 방법. 가격 책정부터 마케팅까지',cat:'사업'},
-'make-lecture':{t:'온라인 강의 제작',d:'온라인 강의 제작 가이드. 촬영·편집·업로드 전 과정 안내',cat:'사업'},
-'edu-business':{t:'온라인 교육 사업',d:'온라인 교육 사업 시작 가이드. 시장 분석부터 사업 모델까지',cat:'사업'},
-'camera':{t:'화상수업 카메라 추천',d:'화상수업에 최적화된 웹캠 추천. 가성비부터 고화질까지 비교',cat:'장비'},
-'mic':{t:'화상수업 마이크 추천',d:'화상수업 마이크 추천. 음질 좋은 마이크로 선명한 수업 진행',cat:'장비'},
-'headset':{t:'화상수업 헤드셋 추천',d:'화상수업 헤드셋 추천. 편안한 착용감과 선명한 음질의 제품 비교',cat:'장비'},
-'laptop':{t:'화상수업 노트북 추천',d:'화상수업에 적합한 노트북 추천. 성능·화면·카메라 기준 비교',cat:'장비'},
-'tablet':{t:'화상수업 태블릿 추천',d:'화상수업 태블릿 추천. 필기·화면공유에 최적화된 기기 비교',cat:'장비'},
-'internet':{t:'화상수업 인터넷 환경',d:'화상수업에 필요한 인터넷 환경. 최소 속도·안정성·유선 vs 와이파이',cat:'장비'},
-'background':{t:'화상수업 배경 정리',d:'화상수업 배경 정리 팁. 깔끔한 학습 환경으로 집중력 향상',cat:'장비'},
-'lighting':{t:'화상수업 조명 추천',d:'화상수업 조명 추천. 밝고 자연스러운 화면을 위한 조명 세팅',cat:'장비'},
-'noise':{t:'화상수업 소음 줄이는 법',d:'화상수업 중 소음 줄이는 방법. 노이즈 캔슬링·방음 환경 조성 팁',cat:'장비'},
-'setup':{t:'화상수업 세팅 방법',d:'화상수업 최적 세팅 방법. 기기·인터넷·조명·배경 원스톱 가이드',cat:'장비'},
-};
+function makeVideoLessonPage() { return makeStudyGuidePage(); }
 
 function makeVideoLessonSubPage(slug) {
-  const pg=VID_TOPICS[slug];if(!pg)return null;
-  const T=pg.t,D=pg.d,CAT=pg.cat;
-  const canonical='/video-lesson/'+slug;
-  const desc=T+' - '+D+' | 올케어스터디 1:1 맞춤 화상 과외';
-  const bc=[{name:'홈',url:'/'},{name:'화상수업',url:'/video-lesson'},{name:T,url:canonical}];
-  const keys=Object.keys(VID_TOPICS);
-  const idx=keys.indexOf(slug);
-
-    // ─── p1: 4문장×소수인덱스 ───
-  const _i=idx, _p=parseInt(slug.charCodeAt(0));
-  const S1=['지금 '+T+' 정보를 찾고 계신가요?',T+'은 교육의 새로운 패러다임입니다.','효과적인 '+T+' 방법을 찾는 분들을 위한 가이드입니다.',T+' 수요가 매년 증가하는 이유가 있습니다.','학부모님들이 주목하는 '+T+' 트렌드입니다.',T+'을 제대로 활용하면 학습 효율이 크게 달라집니다.','전국 어디서나 최고의 수업을 받는 '+T+' 비결입니다.',T+'이 대면 수업보다 효과적인 경우가 있습니다.','비용은 줄이고 효과는 높이는 '+T+' 가이드입니다.',T+' 시작 전 알아야 할 핵심 정보입니다.','성적 향상을 위한 '+T+' 활용 전략입니다.',T+'의 장점을 극대화하는 방법을 안내합니다.','직장인과 학생 모두를 위한 '+T+' 완벽 가이드입니다.'];
-  const S2=[D+'. '+T+'의 핵심 포인트와 실전 활용법을 안내합니다.',D+'. 대면과 동일한 학습 효과를 온라인으로 얻을 수 있습니다.',D+'. 처음이어도 쉽게 시작할 수 있도록 단계별로 안내합니다.',D+'. 시간과 장소의 제약을 넘어 최고의 교육을 받을 수 있습니다.',D+'. 자녀 교육의 새로운 선택지로 떠오르고 있습니다.',D+'. 핵심은 올바른 '+T+' 방법과 환경을 갖추는 것입니다.',D+'. 지역 격차 없는 교육이 가능해졌습니다.',D+'. 1:1 집중도와 녹화 복습이 그 비결입니다.',D+'. 이동 시간 제로 교통비 제로의 스마트한 학습법입니다.',D+'. 준비부터 실전까지 한 번에 정리했습니다.',D+'. 단순 수강이 아닌 전략적 '+T+' 활용법을 소개합니다.'];
-  const S3=[T+' 수업의 핵심은 쌍방향 소통입니다. 1:1이므로 즉시 질문하고 해결할 수 있습니다.',T+' 효과를 높이는 비결은 맞춤 커리큘럼입니다. 학생의 수준을 진단한 후 단계별로 설계합니다.',T+'에서 집중력 걱정은 불필요합니다. 1:1이라 그룹보다 집중도가 높습니다.',T+'의 최대 장점은 전국 최고 코치와의 매칭입니다. 48시간 내 최적 코치를 매칭합니다.',T+' 수업 후 학습 관리가 성적을 좌우합니다. 매 수업 후 요약과 숙제를 전송합니다.',T+' 시간 유연성이 바쁜 학생에게 큰 장점입니다. 원하는 시간에 예약 가능합니다.',T+' 수업은 녹화가 가능해서 복습에 매우 효과적입니다.',T+' 방문 과외와 동일한 품질을 온라인으로 구현합니다.',T+' 첫 수업은 무료이며 학생의 수준 진단까지 제공됩니다.',T+' 코치가 마음에 안 들면 무료로 교체할 수 있습니다.','시험 기간에 '+T+' 집중 모드로 전환하여 성적 향상을 돕습니다.',T+' 수업 외에도 메신저로 질문이 가능합니다.','3단계 검증을 통과한 전문 코치가 '+T+' 수업을 담당합니다.',T+' 수업은 주 2~3회(1회 50분)가 가장 효과적입니다.','국내외 어디서든 '+T+' 수업을 받을 수 있습니다.','학부모님은 '+T+' 수업 후 매주 학습 보고서를 받습니다.',T+' 수업 중 화면공유로 풀이 과정을 실시간 확인합니다.'];
-  const p1=S1[_i%13]+' '+S2[(_i*3+1)%11]+' '+S3[(_i*7+_p)%17];
-
-    const P2=[
-    '"'+T+'" 수업에서 올케어스터디가 강조하는 것은 학생 중심의 쌍방향 소통입니다. 1:1 화상수업은 학생이 수업의 유일한 주인공이기 때문에 이해하지 못한 부분을 즉시 질문하고 해결할 수 있습니다. 코치는 학생의 표정과 반응을 실시간으로 관찰하며 이해도가 부족한 부분은 그림, 비유, 실생활 예시 등 다양한 방법으로 재설명합니다. 화면공유를 통해 교재와 풀이 과정을 함께 보며 수업하기 때문에 대면 수업과 동일한 학습 효과를 얻을 수 있습니다.',
-    '올케어스터디 "'+T+'" 수업의 핵심은 맞춤 커리큘럼입니다. 첫 수업에서 학생의 현재 수준을 정밀 진단한 후 약점 보강부터 심화 학습까지 단계별로 설계합니다. 매 수업마다 미니 테스트로 이해도를 확인하고, 부족한 부분은 즉시 보충합니다. "'+T+'" 수업 후에는 핵심 요약과 숙제를 전송하여 수업 외 시간에도 학습이 이어지도록 관리합니다.',
-    '"'+T+'"을 처음 경험하는 분들이 걱정하는 것이 집중력입니다. 하지만 올케어스터디의 1:1 "'+T+'"은 학생이 수업의 유일한 참여자이므로 오히려 그룹 수업보다 집중도가 높습니다. 코치는 학생의 컨디션에 따라 수업 방식을 유연하게 조절하며, 퀴즈와 참여형 활동으로 흥미를 유지합니다. 50분 수업 중 학생이 직접 문제를 풀고 설명하는 시간을 충분히 배정합니다.',
-    '올케어스터디 "'+T+'"의 차별점은 전국 최고의 코치 매칭 시스템입니다. 지역 과외는 주변 선생님 중에서만 선택해야 하지만 화상수업은 전국 어디에 있는 코치든 매칭이 가능합니다. 서울 명문대 출신 코치, 특목고 입시 전문 코치 등 학생의 목표에 가장 적합한 코치를 48시간 내에 매칭하며 만족하지 못하면 무료로 교체합니다.',
-    '"'+T+'" 수업의 학습 관리 시스템: 매 수업 후 핵심 요약과 숙제 전송, 매주 학습 보고서(진도·이해도·다음 주 계획), 월간 성취도 리포트, 시험 전 특별 관리. "'+T+'" 수강 학부모님이 학습 현황을 투명하게 확인할 수 있으며 코치와 직접 소통도 가능합니다. 수업 녹화 영상은 복습 자료로 제공됩니다.',
-    '"'+T+'"의 기술적 환경도 중요합니다. 올케어스터디는 줌(Zoom)을 기본 플랫폼으로 사용하며 화면공유, 화이트보드, 원격 필기, 녹화 기능을 적극 활용합니다. "'+T+'" 수강에는 PC나 태블릿과 안정적인 인터넷(10Mbps 이상)만 있으면 충분합니다. 코치가 첫 수업에서 접속 방법과 기기 세팅을 안내합니다.',
-    '"'+T+'" 수업은 학생의 일정에 맞춰 유연하게 운영됩니다. 평일 오후·저녁, 주말 등 원하는 시간대를 선택할 수 있으며 긴급 일정 변경도 24시간 전 연락 시 무료로 조정됩니다. 직장인은 퇴근 후 저녁 8시~10시, 학생은 학교 수업 후 시간대가 인기 있습니다. "'+T+'" 수업은 주 2~3회(1회 50분)가 가장 효과적입니다.',
-    '올케어스터디 "'+T+'"은 방문 과외의 모든 장점을 온라인으로 구현합니다. 1:1 맞춤 수업, 실시간 질의응답, 학습 관리, 학부모 소통까지 동일하면서도 이동 시간이 제로이고 교통비가 들지 않습니다. "'+T+'"은 같은 시간에 더 많은 학습이 가능하여 방문 과외 대비 시간 효율이 30% 이상 높습니다.',
-    '"'+T+'" 수업의 효과를 극대화하려면 학습 환경이 중요합니다. 조용한 공간을 확보하고, 이어폰이나 헤드셋을 사용하며, 카메라를 켜는 것이 좋습니다. "'+T+'" 수업 전에 교재와 노트를 미리 준비하면 수업 효율이 높아집니다. 올케어스터디 코치가 첫 수업에서 최적의 학습 환경 세팅을 안내합니다.',
-    '"'+T+'" 수업은 녹화가 가능해서 복습에 매우 효과적입니다. 수업 중 놓친 부분을 다시 확인하고, 코치의 설명을 반복 시청할 수 있습니다. 이것은 "'+T+'"만의 장점으로, 대면 수업에서는 불가능한 기능입니다. 올케어스터디는 모든 수업의 녹화 영상을 수강생에게 무료로 제공합니다.',
-  ];
-  const p2 = P2[(idx*3+2)%10];
-
-  // p3: 수업 방식 (10가지)
-  const P3=[
-    '올케어스터디 "'+T+'" 수업 과정: ①무료 상담으로 학생 수준 진단과 목표 설정 ②최적의 전문 코치 48시간 내 매칭 ③주 2~3회(1회 50분) 정기 "'+T+'" 수업 진행 ④매 수업 후 학습 보고서와 숙제 제공 ⑤시험 기간 집중 대비 모드 전환. 수업은 줌(Zoom)으로 진행되며 녹화 영상은 복습용으로 제공됩니다.',
-    '"'+T+'" 3개월 변화 로드맵: 1개월—학습 습관 형성과 기초 개념 완성, 2개월—응용력 향상과 문제 풀이 능력 강화, 3개월—실전 모의고사와 시험 대비 완성. "'+T+'" 수업은 학생의 속도에 맞춰 유연하게 조절되며 목표 달성까지 코치가 끝까지 함께합니다.',
-    '"'+T+'" 수업을 최대한 활용하는 5가지 팁: ①조용한 학습 공간 확보 ②이어폰 또는 헤드셋 사용으로 집중력 향상 ③수업 전 교재·노트 미리 준비 ④카메라 켜기로 소통 강화 ⑤수업 녹화로 복습하기. 이 5가지만 지키면 "'+T+'"의 효과가 대면 수업을 뛰어넘습니다.',
-    '"'+T+'" 수업의 학부모 소통 시스템: 매 수업 후 카카오톡으로 수업 요약과 숙제 안내, 매주 학습 보고서 발송, 월간 상담으로 학습 방향 점검. "'+T+'" 수강 학부모님은 자녀의 학습 현황을 투명하게 확인할 수 있어 안심하고 맡기실 수 있습니다.',
-    '"'+T+'" 첫 수업은 무료 체험으로 진행됩니다. 무료 체험에서는 학생의 현재 수준 진단, 학습 스타일 파악, 맞춤 커리큘럼 제안까지 진행됩니다. "'+T+'" 수업이 마음에 들면 정규 수업을 시작하고 아니면 부담 없이 종료할 수 있습니다. 코치가 마음에 들지 않으면 무료로 교체도 가능합니다.',
-    '"'+T+'" 수업은 시험 기간에 더욱 빛을 발합니다. 중간·기말 2~3주 전부터 시험 범위에 맞춘 집중 모드로 전환하여 핵심 개념 정리, 기출 유형 분석, 예상 문제 풀이, 최종 모의 시험을 진행합니다. "'+T+'" 수업의 시험 대비 모드는 단기간 성적 향상에 매우 효과적입니다.',
-    '"'+T+'" 수업은 과목 변경이나 추가가 자유롭습니다. 수학 화상수업을 듣다가 영어를 추가하거나, 시험 기간에만 과학을 보충하는 등 유연한 운영이 가능합니다. "'+T+'" 수업의 코치 변경도 언제든 가능하며 학생에게 가장 맞는 코치를 찾을 때까지 지원합니다.',
-    '직장인·성인을 위한 "'+T+'" 수업은 시간 유연성이 핵심입니다. 퇴근 후 저녁 8시~10시, 주말 오전 등 원하는 시간에 수업이 가능하며 출장이나 야근으로 수업을 못 하는 날은 24시간 전 연락으로 무료 변경됩니다. "'+T+'" 수업은 바쁜 일정 속에서도 꾸준한 학습을 가능하게 합니다.',
-    '"'+T+'" 수업의 기술 지원: 접속 오류, 음성 문제, 화면공유 문제 등이 발생하면 올케어스터디 기술 지원팀이 즉시 도움을 드립니다. "'+T+'" 수업 전 테스트 접속을 통해 기기와 인터넷 환경을 미리 점검하며 안정적인 수업 환경을 보장합니다.',
-    '"'+T+'" 수업은 형제·자매 할인도 제공합니다. 한 가정에서 두 명 이상 수강 시 할인 혜택이 적용되며 형제가 같은 코치에게 연속 수업을 받을 수도 있습니다. "'+T+'" 수업의 자세한 할인 정보는 무료 상담에서 안내해드립니다.',
-  ];
-  const p3 = P3[(idx*7+3)%10];
-
-  // p4: 마무리 CTA (8가지)
-  const P4=[
-    '올케어스터디의 "'+T+'"으로 학습의 새로운 경험을 시작하세요. 전국 200개 직영 센터의 검증된 코치진, 체계적인 학습 관리 시스템, 합리적인 수업료까지. "'+T+'" 첫 수업은 무료이니 부담 없이 경험해보세요. 무료 상담 전화: 010-6834-8080',
-    '"'+T+'" 3개월이면 달라집니다. 1개월—학습 습관 형성과 기초 완성, 2개월—응용력 향상과 성적 변화, 3개월—자신감 회복과 목표 달성. "'+T+'" 변화의 시작은 무료 첫 수업입니다. 올케어스터디와 함께 성적을 바꾸세요.',
-    '지역에 좋은 선생님이 없어도, 시간이 부족해도 "'+T+'"이면 문제없습니다. 전국 어디서나 최고의 코치와 "'+T+'" 수업을 받을 수 있습니다. 이미 수천 명의 학생이 경험하고 만족한 올케어스터디의 "'+T+'"을 지금 시작하세요.',
-    '"'+T+'"을 고민하고 계신다면 지금이 시작할 때입니다. 올케어스터디는 48시간 내 최적의 코치를 매칭하고 첫 수업 무료 체험을 제공합니다. "'+T+'" 수업에 만족하지 못하면 코치 무료 교체까지. 위험 부담 제로로 시작하세요.',
-    '올케어스터디 "'+T+'"은 대한민국 어디서든 동일한 품질의 수업을 보장합니다. 서울이든 제주든, 대도시든 시골이든 인터넷만 있으면 최고의 "'+T+'" 수업을 받을 수 있습니다. 교육의 지역 격차를 해소하는 올케어스터디의 "'+T+'"을 경험하세요.',
-    '"'+T+'" 수업은 학생의 미래를 바꿀 수 있습니다. 성적 향상은 물론 자기주도 학습 능력, 문제 해결 능력, 학습 자신감까지 키울 수 있습니다. "'+T+'"의 첫 걸음을 올케어스터디와 함께 내딛으세요. 무료 상담: 010-6834-8080',
-    '올케어스터디 "'+T+'" 수강생의 평균 성적 향상: 3개월 내 시험 점수 15~25점 상승. "'+T+'"의 1:1 맞춤 수업이 만드는 결과입니다. 첫 수업 무료로 직접 경험해보세요.',
-    '"'+T+'"을 선택한 학부모님들의 공통 후기: 아이가 스스로 공부하기 시작했다, 질문을 두려워하지 않게 되었다, 성적이 눈에 띄게 올랐다. "'+T+'"의 이 변화를 올케어스터디에서 경험하세요. 무료 상담 신청: 010-6834-8080',
-  ];
-  const p4 = P4[(idx*11+1)%8];
-
-  // faq: T 삽입으로 완전 고유
-  const faq=[
-    ['"'+T+'" 수업은 어떤 기기로 들을 수 있나요?','PC, 노트북, 태블릿, 스마트폰 모두 가능합니다. 화면이 큰 기기일수록 "'+T+'" 수업 집중도가 높아지므로 노트북이나 태블릿을 권장합니다. 인터넷 속도는 10Mbps 이상이면 충분하며, 올케어스터디 코치가 첫 수업에서 기기 세팅을 안내합니다.'],
-    ['"'+T+'" 수업료는 얼마인가요?','"'+T+'" 수업료는 과목, 학년, 주당 수업 횟수에 따라 달라집니다. 무료 상담에서 학생의 상황에 맞는 맞춤 견적을 안내해드립니다. "'+T+'" 첫 수업은 무료로 체험할 수 있으니 부담 없이 신청하세요.'],
-    ['"'+T+'" 코치가 마음에 안 들면 교체할 수 있나요?','네, "'+T+'" 코치 무료 교체가 가능합니다. 올케어스터디는 학생과 코치의 궁합을 중요하게 생각하며, "'+T+'" 수업에 만족할 때까지 매칭을 도와드립니다.'],
-    ['"'+T+'"으로 정말 성적이 오르나요?','네. "'+T+'" 1:1 맞춤 수업은 그룹 수업보다 3~5배 효율적입니다. 대부분 "'+T+'" 수강 3개월 내에 눈에 띄는 성적 향상을 경험하며, 코치가 학생의 약점을 정확히 파악해 집중 보강합니다.'],
-  ];
-
-  const otherSlugs=Object.entries(VID_TOPICS).filter(([k])=>k!==slug).sort(()=>Math.random()-0.5).slice(0,6);
-  const body=`<div class="wrap" style="max-width:900px">
-  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/video-lesson">화상수업</a> &rsaquo; <span>${T}</span></div>
-  <div style="background:linear-gradient(135deg,#0F2044,#1E3A5F);border-radius:20px;padding:32px;margin-bottom:28px">
-    <div style="font-size:32px;margin-bottom:8px">🎥</div>
-    <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;color:white;margin:0 0 8px">${T}</h1>
-    <p style="font-size:14px;color:rgba(255,255,255,0.7);margin:0">${D}</p>
-  </div>
-  <section class="u9"><h2 class="u30" style="border-left:5px solid #3B82F6;padding-left:14px">${T}</h2><p class="u25">${p1}</p></section>
-  <section class="u9"><h2 class="u30" style="color:#3B82F6">${T} 상세 안내</h2><p class="u25">${p2}</p></section>
-  <section class="u9"><h2 class="u30" style="color:#3B82F6">${T} 수업 방식</h2><p class="u25">${p3}</p></section>
-  <section class="u9"><h2 class="u30" style="color:#3B82F6">올케어스터디 ${T}</h2><p class="u25">${p4}</p></section>
-  <section class="u9"><h2 class="u30">❓ ${T} 자주 묻는 질문</h2>${faq.map(([q,a])=>'<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. '+q+'</div><div style="font-size:14px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}</section>
-  <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 화상수업 가이드</h2>${otherSlugs.map(([k,v])=>'<a href="/video-lesson/'+k+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\'#3B82F6\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">🎥 '+v.t+'</div></a>').join('')}</section>
-  <div class="cta-box"><h3>${T} 무료 상담</h3><p>1:1 맞춤 화상 과외 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
-  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">화상수업</span><span class="keyword-tag">온라인 과외</span><span class="keyword-tag">1:1 화상수업</span><span class="keyword-tag">올케어스터디</span></div></div>
-</div>`;
-  return wrap(T+' | 올케어스터디 화상수업',desc,canonical,body,bc);
+  for (const key of Object.keys(GUIDE_TOPICS)) {
+    if (key.endsWith('/'+slug)) return makeGuideTopicPage(key);
+  }
+  return null;
 }
+
 
 function makeEngineerLabSubPage(slug) {
   const P = {
@@ -8684,12 +8743,10 @@ function serveSitemapByKey(key) {
     // 중국어 카테고리+하위
     Object.keys(CN_CATS).forEach(cat=>parts.push(u('/conversation/chinese/'+cat)));
     Object.keys(CN_TOPICS).forEach(k=>parts.push(u('/conversation/chinese/'+k)));
-    // 학습정보
+    // 학습 가이드 (통합)
     parts.push(u('/study-guide'));
-    Object.keys(STUDY_TOPICS).forEach(s=>parts.push(u('/study-guide/'+s)));
-    // 화상수업
-    parts.push(u('/video-lesson'));
-    Object.keys(VID_TOPICS).forEach(s=>parts.push(u('/video-lesson/'+s)));
+    Object.keys(GUIDE_CATS).forEach(cat=>parts.push(u('/study-guide/'+cat)));
+    Object.keys(GUIDE_TOPICS).forEach(k=>parts.push(u('/study-guide/'+k)));
     // 엔지니어랩
     parts.push(u('/engineer-lab'));
     ['electrical-engineer','exam-schedule','technician','industrial-engineer','exam-schedule-2026','engineer-schedule','written-exam','practical-exam','technician-written','technician-practical','difficulty','construction','industrial-practical','certification','online-lecture','fire-engineer','fire-electrical','fire-practical','fire-electrical-eng','fire-mechanical','fire-academy','engineerlab','lecture-recommend','past-exam-book','public-corp','kepco-interview','electrical-academy','govt-funded','korail-interview','old-certification','fire-eligibility','fire-electrical-practical','fire-past-exam','govt-academy','industrial-written'].forEach(s=>parts.push(u('/engineer-lab/'+s)));
@@ -8880,8 +8937,9 @@ export default {
       // 중국어 카테고리
       Object.keys(CN_CATS).forEach(cat=>allUrls.push('/conversation/chinese/'+cat));
       ['school/daewon-naesin','school/busan-ipsi','naesin/grade1-prep','hsk/hsk-combo','skill/pronun-fix','select/check-before','format/one-on-one-why','level/beginner-fast','contest/speech-contest','career/study-abroad','manage/routine-coaching','effect/fast-improve','teacher/pro-check','strategy/top-routine'].forEach(s=>allUrls.push('/conversation/chinese/'+s));
-      // 학습정보
+      // 학습 가이드 (통합)
       allUrls.push('/study-guide');
+      Object.keys(GUIDE_CATS).forEach(cat=>allUrls.push('/study-guide/'+cat));
       ['exam-prep-guide','naesin-strategy','suneung-total','go3-study','grade-up-tips','study-routine','self-study','suneung-eng','wrong-note','study-plan','naesin-grade-up','suneung-math','focus-method','go1-naesin','go2-strategy','mid-exam','suneung-kor','mental'].forEach(s=>allUrls.push('/study-guide/'+s));
       // 화상수업
       allUrls.push('/video-lesson');
@@ -9057,10 +9115,35 @@ export default {
         if (p) return new Response(p, {headers:h});
       }
     }
+    // 학습 가이드 (통합)
     if (path === '/study-guide') return new Response(makeStudyGuidePage(), { headers: h });
-    if (path.startsWith('/study-guide/')) { const slug = path.split('/')[2]; if (slug) { const p = makeStudyGuideSubPage(slug); if (p) return new Response(p, {headers:h}); } }
-    if (path === '/video-lesson') return new Response(makeVideoLessonPage(), { headers: h });
-    if (path.startsWith('/video-lesson/')) { const slug = path.split('/')[2]; if (slug) { const p = makeVideoLessonSubPage(slug); if (p) return new Response(p, {headers:h}); } }
+    if (path.startsWith('/study-guide/')) {
+      const subPath = path.slice('/study-guide/'.length);
+      const parts2 = subPath.split('/').filter(Boolean);
+      if (parts2.length === 2) {
+        const fullSlug = parts2[0]+'/'+parts2[1];
+        if (GUIDE_TOPICS[fullSlug]) {
+          const p = makeGuideTopicPage(fullSlug);
+          if (p) return new Response(p, {headers:h});
+        }
+      } else if (parts2.length === 1) {
+        if (GUIDE_CATS[parts2[0]]) {
+          const p = makeGuideCategoryPage(parts2[0]);
+          if (p) return new Response(p, {headers:h});
+        }
+        const p = makeStudyGuideSubPage(parts2[0]);
+        if (p) return new Response(p, {headers:h});
+      }
+    }
+    // 화상수업 → 학습 가이드로 흡수
+    if (path === '/video-lesson') return new Response(makeStudyGuidePage(), { headers: h });
+    if (path.startsWith('/video-lesson/')) {
+      const slug = path.split('/')[2];
+      if (slug) {
+        const p = makeVideoLessonSubPage(slug);
+        if (p) return new Response(p, {headers:h});
+      }
+    }
     if (path === '/engineer-lab') return new Response(makeEngineerLabPage(), { headers: h });
     if (path === '/sitemap.xml') return serveSitemapIndex();
     // 시도별 sitemap: /sitemap-seoul.xml, /sitemap-static.xml 등
