@@ -4546,16 +4546,11 @@ function makeConversationPage(lang) {
   <!-- 일본어 하위 수업 -->
   
 
-  ${lang === 'english' ? `<section class="u18">
-    <h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 18px;padding-left:14px;border-left:5px solid #1D4ED8">🇬🇧 영어 수업 상세 보기</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
-      ${[
-        ['trade-english','📦','무역영어'],['debate','🎤','영어 토론'],['toeic-opic','📝','토익·오픽'],['intl-school','🌏','국제중·국제고 내신'],['special-school','🏫','외고·특목고 내신'],['sat','🎓','SAT 수업'],['ap','📘','AP 수업'],['travel','🧳','여행 회화'],['kids-phonics','🔤','유아·초등 파닉스'],['suneung-listening','👂','수능 듣기'],['suneung-reading','📖','수능 독해'],['us-drama','🎬','미드 자막없이'],['make-friends','🤝','외국인 친구 만들기'],['real-american','🇺🇸','실제 미국인 영어'],['essay','✍️','대학 에세이'],['literature','📚','영미 문학'],['junior-toefl','🧒','주니어 토플'],['overseas-job','💼','해외 취업'],['daily-10min','⏰','매일 10분 영어'],['study-abroad','🎓','유학생 수업'],['pop-songs','🎵','팝송 영어'],['us-news','📺','뉴스 영어'],['animation','🎞️','애니메이션 영어'],['school-exam','📚','중·고등 내신'],['grammar','📐','영어 문법 정리'],['civil-service','🏛️','공무원 영어'],['ielts','🌍','아이엘츠'],['duolingo-test','🦉','듀오링고 테스트'],['teps','📝','텝스'],['group-class','👥','소그룹 수업'],['g-telp','📋','지텔프'],['flight-crew','✈️','승무원 면접'],['translation','📖','통번역 수업'],['working-holiday','🌏','워킹홀리데이'],['aussie-accent','🦘','호주 영어 발음'],['british-accent','🇬🇧','영국 영어 발음'],
-      ].map(([s,e,t])=>`<a href="/conversation/english/${s}" style="display:flex;align-items:center;gap:12px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;padding:14px 16px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#1D4ED8';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='white'"><span style="font-size:22px;flex-shrink:0">${e}</span><span style="font-size:14px;font-weight:700;color:#0F2044">${t}</span></a>`).join('')}
-    </div>
-  </section>` : ''}
+  
 
   
+
+  ${lang === 'english' ? '<section class="u18"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 18px;padding-left:14px;border-left:5px solid #1D4ED8">📂 영어 수업 주제별 가이드</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">'+Object.entries(EN_CATS).map(([k,v])=>{const cnt=Object.values(EN_TOPICS).filter(t=>t.c===k).length+Object.values(EN_LEGACY).filter(t=>t.c===k).length;return '<a href="/conversation/english/'+k+'" style="display:flex;align-items:center;gap:12px;background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+v.color+'\';this.style.background=\''+v.color+'11\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'white\'"><span style="font-size:26px;flex-shrink:0">'+v.icon+'</span><div style="flex:1"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.n+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+v.d.slice(0,25)+'...</div></div><span style="background:'+v.color+'15;color:'+v.color+';font-size:12px;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap">'+cnt+'개</span></a>';}).join('')+'</div></section>' : ''}
 
   ${lang === 'japanese' ? '<section class="u18"><h2 style="font-size:19px;font-weight:900;color:#0F2044;margin:0 0 18px;padding-left:14px;border-left:5px solid #9F1239">📂 일본어 수업 주제별 가이드</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">'+Object.entries(JP_CATS).map(([k,v])=>{const cnt=Object.values(JP_TOPICS).filter(t=>t.c===k).length+Object.values(JP_LEGACY).filter(t=>t.c===k).length;return '<a href="/conversation/japanese/'+k+'" style="display:flex;align-items:center;gap:12px;background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+v.color+'\';this.style.background=\''+v.color+'11\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'white\'"><span style="font-size:26px;flex-shrink:0">'+v.icon+'</span><div style="flex:1"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.n+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+v.d.slice(0,25)+'...</div></div><span style="background:'+v.color+'15;color:'+v.color+';font-size:12px;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap">'+cnt+'개</span></a>';}).join('')+'</div></section>' : ''}
 
@@ -5420,7 +5415,7 @@ function makeCnTopicPage(fullSlug) {
   <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
     <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">✨ 올케어스터디 중국어과외 장점</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      ${[['🎓','3단계 검증 코치','학력·경력·수업시연 통과한 전문 코치만 배정'],['📊','맞춤 커리큘럼','학생 수준·학교·목표에 맞춘 1:1 학습 설계'],['📝','매주 학습 보고서','수업 요약·진도·숙제를 학부모님께 투명 공유'],['🔄','코치 무료 교체','만족할 때까지 코치 변경 가능, 부담 제로'],['🎥','수업 녹화 제공','놓친 부분 반복 시청, 복습 효율 극대화'],['💬','수업 외 질문 가능','메신저로 언제든 코치에게 질문 가능']].map(([e,t,d])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:20px">'+e+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div></div>').join('')}
+      ${[['🎓','3단계 검증 코치',T+' 담당 코치는 학력·경력·수업시연 3단계를 통과한 전문가입니다'],['📊','맞춤 커리큘럼',T+' 수업은 학생 수준·학교·목표를 반영한 1:1 맞춤 설계입니다'],['📝','매주 학습 보고서',T+' 수업 요약·진도·숙제를 학부모님께 투명 공유합니다'],['🔄','코치 무료 교체',T+' 코치가 만족스럽지 않으면 무료 교체 가능합니다'],['🎥','수업 녹화 제공',T+' 수업 녹화로 놓친 부분을 반복 시청할 수 있습니다'],['💬','수업 외 질문 가능',T+' 수업 외 시간에도 메신저로 질문이 가능합니다']].map(([e,t,d])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:20px">'+e+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div></div>').join('')}
     </div>
   </section>
 
@@ -5434,9 +5429,9 @@ function makeCnTopicPage(fullSlug) {
   <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
     <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">📈 ${T} 3개월 로드맵</h2>
     <div style="display:flex;flex-direction:column;gap:12px">
-      ${[['1개월','기초 진단 & 약점 보강','현재 수준 레벨테스트, 성조·발음 기초 교정, 핵심 문법 패턴 학습, 필수 어휘 300개 암기 시작, 학습 습관 형성','${cat.color}','20'],
-      ['2개월','실력 향상 & 내신 대비','교과서 본문 완벽 분석, 기출 유형 반복 훈련, 서술형 답안 작성 연습, 듣기·말하기 실전 훈련, 수행평가 준비','${cat.color}','60'],
-      ['3개월','목표 달성 & 실전 완성','모의고사 실전 훈련, 시험 시간 관리 연습, 예상문제 풀이, 약점 최종 보강, 자신감 회복과 목표 성적 달성','${cat.color}','100']
+      ${[['1개월','기초 진단 & 약점 보강',T+' 레벨테스트로 현재 수준 진단, 기초 발음·문법 교정, 핵심 어휘 300개 암기 시작, 학습 습관 형성','${cat.color}','20'],
+      ['2개월','실력 향상 & 내신 대비',T+' 교과서 본문 완벽 분석, 기출 유형 반복 훈련, 서술형 답안 연습, 듣기 말하기 실전 훈련, 수행평가 준비','${cat.color}','60'],
+      ['3개월','목표 달성 & 실전 완성',T+' 모의고사 실전 훈련, 시험 시간 관리 연습, 예상문제 풀이, 약점 최종 보강, 목표 성적 달성','${cat.color}','100']
       ].map(([m,t,d,color,pct])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px;border-left:4px solid '+color+'"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span style="background:'+color+';color:white;font-size:12px;font-weight:800;padding:3px 10px;border-radius:12px">'+m+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><span style="font-size:12px;color:'+color+';font-weight:700">'+pct+'%</span></div><div style="font-size:12px;color:#6B7280;line-height:1.7">'+d+'</div><div style="background:#E5E7EB;border-radius:4px;height:6px;margin-top:8px"><div style="background:'+color+';border-radius:4px;height:100%;width:'+pct+'%"></div></div></div>').join('')}
     </div>
   </section>
@@ -5445,9 +5440,9 @@ function makeCnTopicPage(fullSlug) {
   <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
     <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">💬 수강 후기</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
-      ${[['⭐⭐⭐⭐⭐','성적이 진짜 올랐어요','중국어 40점대에서 85점까지 올랐습니다. 코치님이 약점을 정확히 짚어주셔서 효율적으로 공부할 수 있었어요.','고2 학생'],
-      ['⭐⭐⭐⭐⭐','아이가 자신감이 생겼어요','수업 후 학습 보고서를 매주 받으니 안심이 됩니다. 아이도 중국어에 재미를 느끼기 시작했어요.','학부모님'],
-      ['⭐⭐⭐⭐⭐','외고 합격했습니다!','코치님 덕분에 중국어 내신 1등급 유지하면서 외고 면접까지 완벽하게 준비할 수 있었습니다. 감사합니다.','외고 합격생']
+      ${[['⭐⭐⭐⭐⭐','성적이 진짜 올랐어요',T+' 수강 후 중국어 40점대에서 85점까지 올랐습니다. 약점을 정확히 짚어주셨어요.','고2 학생'],
+      ['⭐⭐⭐⭐⭐','아이가 자신감이 생겼어요',T+' 수업 후 학습 보고서를 매주 받으니 안심입니다. 아이도 재미를 느끼기 시작했어요.','학부모님'],
+      ['⭐⭐⭐⭐⭐','외고 합격했습니다!',T+' 수업 덕분에 중국어 내신 1등급 유지하면서 외고 면접까지 완벽 준비했습니다.','외고 합격생']
       ].map(([s,t,d,who])=>'<div style="background:#FFFBEB;border-radius:12px;padding:16px;border:1px solid #FDE68A"><div style="font-size:11px;margin-bottom:4px">'+s+'</div><div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:6px">'+t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div><div style="font-size:11px;color:#9CA3AF;margin-top:6px;text-align:right">- '+who+'</div></div>').join('')}
     </div>
   </section>
@@ -5953,7 +5948,7 @@ function makeJpTopicPage(fullSlug) {
   <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
     <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">✨ 올케어스터디 일본어과외 장점</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      ${[['🎓','3단계 검증 코치','학력·경력·수업시연 통과한 전문 코치만 배정'],['📊','맞춤 커리큘럼','학생 수준·학교·목표에 맞춘 1:1 학습 설계'],['📝','매주 학습 보고서','수업 요약·진도·숙제를 학부모님께 투명 공유'],['🔄','코치 무료 교체','만족할 때까지 코치 변경 가능, 부담 제로'],['🎥','수업 녹화 제공','놓친 부분 반복 시청, 복습 효율 극대화'],['💬','수업 외 질문 가능','메신저로 언제든 코치에게 질문 가능']].map(([e,t,d])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:20px">'+e+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div></div>').join('')}
+      ${[['🎓','3단계 검증 코치',T+' 담당 코치는 학력·경력·수업시연 3단계를 통과한 전문가입니다'],['📊','맞춤 커리큘럼',T+' 수업은 학생 수준·학교·목표를 반영한 1:1 맞춤 설계입니다'],['📝','매주 학습 보고서',T+' 수업 요약·진도·숙제를 학부모님께 투명 공유합니다'],['🔄','코치 무료 교체',T+' 코치가 만족스럽지 않으면 무료 교체 가능합니다'],['🎥','수업 녹화 제공',T+' 수업 녹화로 놓친 부분을 반복 시청할 수 있습니다'],['💬','수업 외 질문 가능',T+' 수업 외 시간에도 메신저로 질문이 가능합니다']].map(([e,t,d])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:20px">'+e+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div></div>').join('')}
     </div>
   </section>
 
@@ -5967,9 +5962,9 @@ function makeJpTopicPage(fullSlug) {
   <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
     <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">📈 ${T} 3개월 로드맵</h2>
     <div style="display:flex;flex-direction:column;gap:12px">
-      ${[['1개월','기초 진단 & 약점 보강','현재 수준 레벨테스트, 발음·억양 기초 교정, 핵심 문법 패턴 학습, 필수 어휘 300개 암기 시작, 학습 습관 형성','${cat.color}','20'],
-      ['2개월','실력 향상 & 내신 대비','교과서 본문 완벽 분석, 기출 유형 반복 훈련, 서술형 답안 작성 연습, 듣기·말하기 실전 훈련, 수행평가 준비','${cat.color}','60'],
-      ['3개월','목표 달성 & 실전 완성','모의고사 실전 훈련, 시험 시간 관리 연습, 예상문제 풀이, 약점 최종 보강, 자신감 회복과 목표 성적 달성','${cat.color}','100']
+      ${[['1개월','기초 진단 & 약점 보강',T+' 레벨테스트로 현재 수준 진단, 기초 발음·억양 교정, 핵심 어휘 300개 암기 시작, 학습 습관 형성','${cat.color}','20'],
+      ['2개월','실력 향상 & 내신 대비',T+' 교과서 본문 완벽 분석, 기출 유형 반복 훈련, 서술형 답안 연습, 듣기 말하기 실전 훈련, 수행평가 준비','${cat.color}','60'],
+      ['3개월','목표 달성 & 실전 완성',T+' 모의고사 실전 훈련, 시험 시간 관리 연습, 예상문제 풀이, 약점 최종 보강, 목표 성적 달성','${cat.color}','100']
       ].map(([m,t,d,color,pct])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px;border-left:4px solid '+color+'"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span style="background:'+color+';color:white;font-size:12px;font-weight:800;padding:3px 10px;border-radius:12px">'+m+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><span style="font-size:12px;color:'+color+';font-weight:700">'+pct+'%</span></div><div style="font-size:12px;color:#6B7280;line-height:1.7">'+d+'</div><div style="background:#E5E7EB;border-radius:4px;height:6px;margin-top:8px"><div style="background:'+color+';border-radius:4px;height:100%;width:'+pct+'%"></div></div></div>').join('')}
     </div>
   </section>
@@ -5978,9 +5973,9 @@ function makeJpTopicPage(fullSlug) {
   <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
     <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">💬 수강 후기</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
-      ${[['⭐⭐⭐⭐⭐','성적이 진짜 올랐어요','일본어 40점대에서 85점까지 올랐습니다. 코치님이 약점을 정확히 짚어주셔서 효율적으로 공부할 수 있었어요.','고2 학생'],
-      ['⭐⭐⭐⭐⭐','아이가 자신감이 생겼어요','수업 후 학습 보고서를 매주 받으니 안심이 됩니다. 아이도 일본어에 재미를 느끼기 시작했어요.','학부모님'],
-      ['⭐⭐⭐⭐⭐','외고 합격했습니다!','코치님 덕분에 일본어 내신 1등급 유지하면서 외고 면접까지 완벽하게 준비할 수 있었습니다. 감사합니다.','외고 합격생']
+      ${[['⭐⭐⭐⭐⭐','성적이 진짜 올랐어요',T+' 수강 후 일본어 40점대에서 85점까지 올랐습니다. 약점을 정확히 짚어주셨어요.','고2 학생'],
+      ['⭐⭐⭐⭐⭐','아이가 자신감이 생겼어요',T+' 수업 후 학습 보고서를 매주 받으니 안심입니다. 아이도 재미를 느끼기 시작했어요.','학부모님'],
+      ['⭐⭐⭐⭐⭐','외고 합격했습니다!',T+' 수업 덕분에 일본어 내신 1등급 유지하면서 외고 면접까지 완벽 준비했습니다.','외고 합격생']
       ].map(([s,t,d,who])=>'<div style="background:#FFFBEB;border-radius:12px;padding:16px;border:1px solid #FDE68A"><div style="font-size:11px;margin-bottom:4px">'+s+'</div><div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:6px">'+t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div><div style="font-size:11px;color:#9CA3AF;margin-top:6px;text-align:right">- '+who+'</div></div>').join('')}
     </div>
   </section>
@@ -6011,6 +6006,545 @@ function makeJpTopicPage(fullSlug) {
 </div>`;
   return wrap(T+' | 올케어스터디 일본어과외', desc, canonical, body, bc);
 }
+
+
+
+const EN_CATS={
+school:{n:'외고별 대비',d:'외국어고 영어과 목표 학생을 위한 맞춤 대비 수업',icon:'🏫',color:'#1D4ED8',img:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80'},
+naesin:{n:'내신 대비',d:'학교 영어 내신 시험 성적 향상을 위한 전문 수업',icon:'📝',color:'#2563EB',img:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80'},
+exam:{n:'공인시험 대비',d:'토플·텝스·IELTS 자격증 대비와 내신 병행 학습 전략',icon:'🏆',color:'#DC2626',img:'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80'},
+skill:{n:'영역별 학습',d:'발음·문법·독해·작문·듣기·말하기 영역별 전문 수업',icon:'🎯',color:'#7C3AED',img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80'},
+select:{n:'수업 선택법',d:'효과적인 영어과외를 고르는 기준과 체크리스트',icon:'✅',color:'#F59E0B',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80'},
+format:{n:'수업 형태',d:'1대1·소그룹·온라인·방문 등 수업 형태별 장단점 비교',icon:'💻',color:'#EC4899',img:'https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&q=80'},
+period:{n:'기간별 과정',d:'4주·8주·12주 단기 집중부터 장기 관리까지 기간별 과정',icon:'📅',color:'#0891B2',img:'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=80'},
+level:{n:'수준별 과정',d:'왕초보부터 최상위권까지 수준별 맞춤 커리큘럼',icon:'📊',color:'#6366F1',img:'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80'},
+contest:{n:'대회/활동',d:'스피치 대회·면접·발표 등 영어 활동 대비 수업',icon:'🎤',color:'#14B8A6',img:'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=80'},
+career:{n:'진학/유학',d:'영문과·외대·유학·통번역 등 진로별 영어 학습 전략',icon:'🎓',color:'#8B5CF6',img:'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80'},
+manage:{n:'학습 관리',d:'피드백·보고서·테스트 등 체계적 학습 관리 시스템',icon:'📋',color:'#F97316',img:'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80'},
+effect:{n:'수업 효과',d:'성적 향상 사례와 수업 만족도 분석',icon:'📈',color:'#EF4444',img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80'},
+teacher:{n:'강사 선택',d:'좋은 영어과외 강사를 선택하는 기준과 방법',icon:'👨‍🏫',color:'#10B981',img:'https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&q=80'},
+strategy:{n:'학습 전략',d:'성적 향상을 위한 효율적인 영어 학습 전략',icon:'💡',color:'#6D28D9',img:'https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=800&q=80'},
+};
+
+const EN_LEGACY={
+'business':{t:'비즈니스 영어 수업',c:'career',icon:'💼'},
+'toeic':{t:'토익(TOEIC) 자격증 수업',c:'exam',icon:'📝'},
+'toefl':{t:'토플(TOEFL) 자격증 수업',c:'exam',icon:'📝'},
+'opic':{t:'오픽(OPIC) 말하기 수업',c:'exam',icon:'🎤'},
+'travel':{t:'영어 여행 기초 회화',c:'skill',icon:'🧳'},
+'movie':{t:'영화로 배우는 영어',c:'skill',icon:'🎬'},
+'pronunciation':{t:'영어 발음 완벽 정복',c:'skill',icon:'🗣️'},
+'kids':{t:'유아·초등 기초 영어',c:'level',icon:'👧'},
+'daily':{t:'매일 10분 화상 영어',c:'format',icon:'⏰'},
+'phone':{t:'매일 10분 전화 영어',c:'format',icon:'📞'},
+'study-abroad':{t:'해외 유학 준비 수업',c:'career',icon:'✈️'},
+'translation':{t:'영어 통번역 수업',c:'career',icon:'📖'},
+'teps':{t:'텝스(TEPS) 자격증 수업',c:'exam',icon:'📋'},
+'ielts':{t:'IELTS 자격증 수업',c:'exam',icon:'🎓'},
+'oet':{t:'OET 의료영어 수업',c:'career',icon:'🏥'},
+'interview':{t:'영어 인터뷰 준비 수업',c:'contest',icon:'🎙️'},
+'flight-crew':{t:'외항사 승무원 면접 영어',c:'career',icon:'✈️'},
+'3month':{t:'왕초보 3개월 영어',c:'period',icon:'🚀'},
+'sat':{t:'SAT 영어 수업',c:'exam',icon:'📊'},
+'academic':{t:'학술 영어 수업',c:'career',icon:'🎓'},
+'special-school':{t:'외고·특목고 내신 관리',c:'school',icon:'🏫'},
+};
+
+const EN_TOPICS={
+'school/daewon-naesin':{t:'대원외고 영어 내신 잘 받으려면 어떤 과외가 좋을까',c:'school'},
+'school/myeongdeok-class':{t:'명덕외고 영어과 학생들이 찾는 영어 수업 추천',c:'school'},
+'school/hanyoung-advanced':{t:'한영외고 영어 심화 대비 가능한 과외 수업 안내',c:'school'},
+'school/gyeonggi-guide':{t:'경기외고 준비생을 위한 영어과외 선택 가이드',c:'school'},
+'school/gwacheon-goal':{t:'과천외고 영어과 목표라면 필요한 영어 수업은',c:'school'},
+'school/suwon-naesin':{t:'수원외고 영어 내신 대비 맞춤 과외 방법',c:'school'},
+'school/seongnam-grade':{t:'성남외고 영어 성적 올리는 수업 커리큘럼 소개',c:'school'},
+'school/anyang-prep':{t:'안양외고 진학 준비생을 위한 영어과외 추천',c:'school'},
+'school/busan-ipsi':{t:'부산외고 영어과 입시 대비 수업 알아보기',c:'school'},
+'school/daejeon-advanced':{t:'대전외고 영어 심화반 대비 과외 프로그램',c:'school'},
+'school/gimhae-prep':{t:'김해외고 영어과 준비할 때 필요한 수업 정리',c:'school'},
+'school/cheongju-guide':{t:'청주외고 목표 학생을 위한 영어과외 가이드',c:'school'},
+'school/jeonbuk-naesin':{t:'전북외고 영어 내신 대비 어떻게 준비할까',c:'school'},
+'school/ulsan-custom':{t:'울산외고 영어과 준비생 맞춤 수업 추천',c:'school'},
+'school/jeju-gradeup':{t:'제주외고 영어 성적 향상 위한 과외 전략',c:'school'},
+'school/why-tutor':{t:'외고 영어과 준비할 때 과외가 필요한 이유',c:'school'},
+'naesin/grade1-prep':{t:'영어 내신 1등급 만드는 외고 대비 수업 추천',c:'naesin'},
+'select/find-advanced':{t:'외고 영어 심화 학습 가능한 과외 찾는 법',c:'select'},
+'school/special-diff':{t:'특목고 영어 대비 전문 수업은 어떻게 다를까',c:'school'},
+'select/check-before':{t:'영어과외 선택 전 꼭 확인해야 할 수업 기준',c:'select'},
+'effect/pattern-analysis':{t:'영어 성적이 오르는 학생들의 수업 패턴 분석',c:'effect'},
+'select/efficient-pick':{t:'효율 좋은 영어과외 고르는 방법 총정리',c:'select'},
+'exam/toefl-combo':{t:'토플 준비와 병행 가능한 영어 수업 추천',c:'exam'},
+'naesin/convo-naesin':{t:'영어 회화까지 잡는 내신 대비 과외 커리큘럼',c:'naesin'},
+'select/criteria-native':{t:'원어민보다 중요한 영어과외 선택 기준은',c:'select'},
+'level/beginner-fast':{t:'영어 초보가 실력 빠르게 느는 수업 방식',c:'level'},
+'naesin/exam-strong':{t:'시험 대비에 강한 영어과외 프로그램 추천',c:'naesin'},
+'skill/real-convo':{t:'실전 회화까지 가능한 영어 수업 커리큘럼',c:'skill'},
+'exam/naesin-toefl':{t:'내신과 토플을 함께 준비하는 영어과외 전략',c:'exam'},
+'skill/pronun-fix':{t:'영어 발음 교정 잘되는 수업은 뭐가 다를까',c:'skill'},
+'school/popular-class':{t:'외고 진학 준비생이 많이 찾는 영어 수업 특징',c:'school'},
+'select/prefer-style':{t:'영어과 학생들이 선호하는 과외 방식 정리',c:'select'},
+'naesin/school-gradeup':{t:'학교 영어 성적 올리고 싶다면 필요한 수업은',c:'naesin'},
+'select/checklist':{t:'영어과외 효과 높이는 수업 선택 체크리스트',c:'select'},
+'format/one-on-one-type':{t:'1대1 영어과외가 필요한 학생 유형 정리',c:'format'},
+'school/ipsi-match':{t:'외고 입시 준비에 맞는 영어 수업 추천',c:'school'},
+'level/advanced-how':{t:'영어 심화 과정 대비 과외 어떻게 준비할까',c:'level'},
+'naesin/naesin-perform':{t:'내신과 수행평가 함께 잡는 영어과외 추천',c:'naesin'},
+'school/curriculum-open':{t:'외고 영어과 준비 커리큘럼 공개',c:'school'},
+'strategy/top-routine':{t:'영어 잘하는 학생들의 공통된 수업 루틴',c:'strategy'},
+'school/daewon-type':{t:'대원외고 준비생이 많이 듣는 영어과외 유형',c:'school'},
+'school/myeongdeok-custom':{t:'명덕외고 목표 학생 맞춤 영어 수업 안내',c:'school'},
+'school/hanyoung-strategy':{t:'한영외고 영어과 준비 전략과 과외 추천',c:'school'},
+'school/gyeonggi-manage':{t:'경기외고 대비 영어 성적 관리 방법',c:'school'},
+'school/gwacheon-roadmap':{t:'과천외고 영어 심화 학습 로드맵',c:'school'},
+'school/suwon-perfect':{t:'수원외고 영어 내신 만점 대비 과외 팁',c:'school'},
+'school/seongnam-select':{t:'성남외고 준비생 영어 수업 선택 기준',c:'school'},
+'school/anyang-strategy':{t:'안양외고 진학 위한 영어 학습 전략',c:'school'},
+'school/busan-knowhow':{t:'부산외고 영어과 입시 준비 노하우',c:'school'},
+'school/daejeon-reason':{t:'대전외고 영어과외 추천 이유 정리',c:'school'},
+'school/gimhae-advanced':{t:'김해외고 영어 심화반 준비 방법',c:'school'},
+'school/cheongju-case':{t:'청주외고 영어 성적 향상 사례 소개',c:'school'},
+'school/jeonbuk-success':{t:'전북외고 영어 내신 대비 성공 전략',c:'school'},
+'school/ulsan-select':{t:'울산외고 영어 준비생 과외 선택법',c:'school'},
+'school/jeju-study':{t:'제주외고 목표 학생 영어 공부 방법',c:'school'},
+'naesin/worry-solution':{t:'영어 내신이 고민이라면 이런 수업을 선택하세요',c:'naesin'},
+'effect/gradeup-trait':{t:'과외로 영어 성적 오르는 학생 특징은',c:'effect'},
+'effect/high-satisfy':{t:'영어 수업 만족도 높은 커리큘럼은 따로 있다',c:'effect'},
+'effect/fast-improve':{t:'실력 향상 빠른 영어과외의 공통점',c:'effect'},
+'select/good-diff':{t:'좋은 영어과외는 무엇이 다를까',c:'select'},
+'select/vs-academy':{t:'영어 학원보다 과외가 효과적인 경우',c:'select'},
+'school/specialized':{t:'외고 준비에 특화된 영어 수업 찾는 법',c:'school'},
+'naesin/pro-diff':{t:'영어 내신 전문 과외의 차별점 분석',c:'naesin'},
+'naesin/last-minute':{t:'시험 직전 영어 성적 올리는 과외 전략',c:'naesin'},
+'naesin/perform-prep':{t:'영어 수행평가 대비 수업 추천',c:'naesin'},
+'level/advanced-core':{t:'외고 영어 심화반 대비 핵심 학습법',c:'level'},
+'strategy/grade1-method':{t:'영어 1등급 학생들의 공부 방식 분석',c:'strategy'},
+'select/caution-points':{t:'외고 영어 대비 과외 선택 시 주의할 점',c:'select'},
+'strategy/dual-design':{t:'내신과 입시를 함께 잡는 영어 수업 설계법',c:'strategy'},
+'effect/rapid-pattern':{t:'영어 성적 급상승 학생들의 학습 패턴',c:'effect'},
+'school/accepted-style':{t:'외고 영어과 합격생이 선택한 과외 스타일',c:'school'},
+'exam/dual-prep':{t:'토플과 학교 내신 동시에 준비하는 수업 전략',c:'exam'},
+'skill/pronun-to-exam':{t:'영어 발음부터 시험까지 잡는 과외 추천',c:'skill'},
+'level/deep-feature':{t:'영어 심화 학습에 강한 수업의 특징',c:'level'},
+'effect/switch-reason':{t:'과외 전환 후 영어 성적이 오르는 이유',c:'effect'},
+'effect/re-enroll':{t:'영어과 학생들이 재등록하는 수업 공통점',c:'effect'},
+'select/school-level':{t:'학교별 영어 난이도에 맞는 과외 선택법',c:'select'},
+'naesin/core-points':{t:'외고 영어과 내신 관리 핵심 포인트',c:'naesin'},
+'select/five-checks':{t:'영어과외 시작 전 확인해야 할 5가지',c:'select'},
+'teacher/satisfy-criteria':{t:'영어 수업 만족도 높이는 강사 선택 기준',c:'teacher'},
+'strategy/habit-program':{t:'영어 공부 습관 잡아주는 과외 프로그램',c:'strategy'},
+'skill/speaking-open':{t:'영어 말문 트이게 만드는 수업 방식',c:'skill'},
+'skill/exam-convo':{t:'시험 점수와 회화 둘 다 잡는 영어 수업',c:'skill'},
+'strategy/when-start':{t:'영어 심화 대비는 언제부터 시작해야 할까',c:'strategy'},
+'school/timing-guide':{t:'외고 입시용 영어과외 준비 타이밍 정리',c:'school'},
+'naesin/weak-roadmap':{t:'영어 내신 약한 학생을 위한 과외 로드맵',c:'naesin'},
+'level/top-tier':{t:'영어 상위권 만드는 맞춤 수업 전략',c:'level'},
+'level/basic-lack':{t:'기초 부족한 학생을 위한 영어과외 추천',c:'level'},
+'naesin/perfect-score':{t:'외고 영어 내신 만점 노리는 학습법',c:'naesin'},
+'naesin/perform-strong':{t:'수행평가 강한 영어과외 프로그램 추천',c:'naesin'},
+'naesin/descriptive':{t:'영어 서술형 대비 전문 수업 안내',c:'naesin'},
+'skill/listen-train':{t:'영어 듣기 평가 잘 보는 훈련 방법',c:'skill'},
+'skill/speak-eval':{t:'영어 말하기 평가 대비 과외 필요할까',c:'skill'},
+'contest/present-prep':{t:'영어 발표 준비용 과외 수업 추천',c:'contest'},
+'exam/toefl-curriculum':{t:'토플 병행 가능한 영어과외 커리큘럼',c:'exam'},
+'exam/teps-strategy':{t:'텝스 준비와 내신 병행 학습 전략',c:'exam'},
+'exam/ielts-goal':{t:'IELTS 목표 학생 영어 수업 추천',c:'exam'},
+'contest/interview-pro':{t:'영어 면접 준비생을 위한 전문 과외',c:'contest'},
+'career/exchange-student':{t:'교환학생 준비에 필요한 영어 수업',c:'career'},
+'career/english-major':{t:'영문과 진학 목표 학생 학습 전략',c:'career'},
+'career/specialist':{t:'영어 특기자 준비 과외 추천',c:'career'},
+'contest/interview-program':{t:'외고 영어 면접 대비 프로그램 안내',c:'contest'},
+'contest/self-intro':{t:'영어 자기소개 준비 과외 수업 추천',c:'contest'},
+'manage/routine-coaching':{t:'영어 학습 루틴 잡아주는 코칭형 과외',c:'manage'},
+'manage/grade-manage':{t:'성적 관리까지 해주는 영어과외 특징',c:'manage'},
+'manage/homework-manage':{t:'영어 숙제 관리 포함 수업 추천',c:'manage'},
+'manage/review-system':{t:'영어 복습 시스템 있는 과외가 중요한 이유',c:'manage'},
+'manage/weekly-test':{t:'주간 테스트 제공 영어과외 장점',c:'manage'},
+'manage/monthly-feedback':{t:'월간 피드백 제공 영어 수업 추천',c:'manage'},
+'manage/level-test':{t:'레벨테스트 기반 영어과외 선택법',c:'manage'},
+'manage/custom-curriculum':{t:'학생별 맞춤 커리큘럼 수업이 필요한 이유',c:'manage'},
+'format/one-on-one-why':{t:'1대1 과외가 영어에 효과적인 이유',c:'format'},
+'format/small-vs-private':{t:'소수정예 영어 수업 vs 개인과외 비교',c:'format'},
+'format/online-effect':{t:'온라인 영어과외 효과 있을까',c:'format'},
+'format/video-criteria':{t:'화상 영어 수업 추천 기준 정리',c:'format'},
+'format/visit-pros-cons':{t:'방문 영어과외 장단점 분석',c:'format'},
+'format/weekend-reason':{t:'주말 영어과외 찾는 학생 증가 이유',c:'format'},
+'period/vacation-timing':{t:'방학 특강 영어과외 추천 시기',c:'period'},
+'period/short-effect':{t:'단기 완성 영어 수업 효과 분석',c:'period'},
+'period/long-term':{t:'장기 관리형 영어과외 장점',c:'period'},
+'period/4week-intensive':{t:'4주 집중 영어과외 추천 프로그램',c:'period'},
+'period/8week-plan':{t:'8주 완성 영어 실력 향상 플랜',c:'period'},
+'period/12week-advanced':{t:'12주 영어 심화 과정 커리큘럼',c:'period'},
+'format/once-a-week':{t:'주1회 영어과외 충분할까',c:'format'},
+'format/twice-a-week':{t:'주2회 영어 수업 추천 대상은',c:'format'},
+'format/three-a-week':{t:'주3회 집중 관리형 영어과외 장점',c:'format'},
+'format/daily-type':{t:'매일 공부형 영어과외 필요한 학생 특징',c:'format'},
+'strategy/increase-volume':{t:'영어 학습량 늘리는 과외 운영법',c:'strategy'},
+'strategy/motivation':{t:'학습 동기 잡아주는 영어과외 추천',c:'strategy'},
+'strategy/plateau-break':{t:'성적 정체기 학생에게 필요한 영어 수업',c:'strategy'},
+'strategy/slump-overcome':{t:'영어 슬럼프 극복하는 과외 전략',c:'strategy'},
+'strategy/late-start':{t:'외고 준비 늦었다면 영어 어떻게 시작할까',c:'strategy'},
+'level/absolute-beginner':{t:'영어 왕초보도 외고 준비 가능할까',c:'level'},
+'level/basic-to-advanced':{t:'기초부터 외고 대비 가능한 영어과외',c:'level'},
+'level/low-rank-up':{t:'내신 하위권도 점수 올리는 영어 수업',c:'level'},
+'level/30-to-80':{t:'영어 30점대에서 80점대 올리는 방법',c:'level'},
+'level/score-reverse':{t:'영어 점수 역전 가능한 과외 프로그램',c:'level'},
+'level/top-maintain':{t:'상위권 유지용 영어 심화 수업',c:'level'},
+'level/elite-advanced':{t:'최상위권 학생 위한 영어 심화과외',c:'level'},
+'level/elite-class':{t:'외고 최상위권 학생들이 듣는 영어 수업',c:'level'},
+'level/premium-prep':{t:'명문 외고 대비 프리미엄 영어과외',c:'level'},
+'teacher/pro-check':{t:'영어 전문 강사 선택 시 확인할 점',c:'teacher'},
+'teacher/abroad-teacher':{t:'유학파 강사 영어과외 장점은',c:'teacher'},
+'teacher/native-criteria':{t:'원어민보다 중요한 영어 강사 선택 기준',c:'teacher'},
+'teacher/find-specialist':{t:'외고 전문 영어 강사 찾는 방법',c:'teacher'},
+'teacher/experienced':{t:'경력 많은 영어과외 강사 특징',c:'teacher'},
+'effect/good-review':{t:'후기 좋은 영어과외 공통점 분석',c:'effect'},
+'effect/re-take-rate':{t:'재수강률 높은 영어 수업 특징',c:'effect'},
+'effect/word-of-mouth':{t:'입소문 나는 영어과외의 비밀',c:'effect'},
+'effect/student-satisfy':{t:'학생 만족도 높은 영어 수업 구성',c:'effect'},
+'effect/parent-satisfy':{t:'학부모 만족도 높은 영어과외 특징',c:'effect'},
+'select/consult-popular':{t:'외고 영어 준비생 상담 많은 수업 유형',c:'select'},
+'effect/high-accuracy':{t:'시험 적중률 높은 영어과외 추천',c:'effect'},
+'naesin/school-trend':{t:'학교별 출제 경향 반영 영어 수업',c:'naesin'},
+'naesin/textbook-match':{t:'교과서 맞춤 영어과외 효과 분석',c:'naesin'},
+'naesin/print-based':{t:'학교 프린트 기반 영어 내신 과외',c:'naesin'},
+'naesin/sub-textbook':{t:'부교재 활용 영어 심화 수업 안내',c:'naesin'},
+'naesin/descriptive-strong':{t:'서술형 강화 영어과외 프로그램',c:'naesin'},
+'naesin/multiple-choice':{t:'객관식 약점 잡는 영어 학습법',c:'naesin'},
+'manage/wrong-answer':{t:'오답 관리 포함 영어과외 추천',c:'manage'},
+'naesin/compress-class':{t:'시험 직전 압축 영어 수업 가능할까',c:'naesin'},
+'strategy/no-cramming':{t:'벼락치기보다 효과적인 영어 공부법',c:'strategy'},
+'strategy/long-roadmap':{t:'외고 영어 장기 로드맵 설계 방법',c:'strategy'},
+'strategy/dual-plan':{t:'내신과 입시 함께 준비하는 학습 플랜',c:'strategy'},
+'strategy/habit-form':{t:'영어 공부 습관 형성하는 과외 추천',c:'strategy'},
+'strategy/self-directed':{t:'자기주도 학습 잡아주는 영어 수업',c:'strategy'},
+'strategy/focus-weak':{t:'집중력 약한 학생용 영어과외 추천',c:'strategy'},
+'manage/detail-manage':{t:'꼼꼼한 관리형 영어 수업 장점',c:'manage'},
+'manage/task-feedback':{t:'과제 피드백 좋은 영어과외 찾는 법',c:'manage'},
+'manage/report-provide':{t:'학습 보고서 제공 영어과외 추천',c:'manage'},
+'manage/parent-consult':{t:'부모 상담 포함 영어과외 수업',c:'manage'},
+'career/univ-goal':{t:'목표 대학별 영어 학습 전략',c:'career'},
+'career/hufs-prep':{t:'외대 진학 목표 영어과외 준비법',c:'career'},
+'career/interpreter':{t:'통번역 준비생 영어과외 추천',c:'career'},
+'career/intl-dept':{t:'국제학과 준비 영어 학습법',c:'career'},
+'career/competitiveness':{t:'영어 경쟁력 높이는 심화 수업',c:'career'},
+'career/spec-cert':{t:'영어 스펙 만드는 자격증 병행법',c:'career'},
+'career/portfolio-prep':{t:'학생부 관리용 영어 활동 준비 수업',c:'career'},
+'contest/present-contest':{t:'영어 발표 대회 준비 과외',c:'contest'},
+'contest/speaking-contest':{t:'영어 말하기 대회 준비 수업',c:'contest'},
+'contest/confidence-interview':{t:'영어 면접 자신감 높이는 과외',c:'contest'},
+'school/after-enter':{t:'외고 입학 후 적응용 영어 수업',c:'school'},
+'school/after-accept':{t:'합격 후 선행학습 영어과외 추천',c:'school'},
+'school/pre-study-why':{t:'외고 입학 전 선행학습 필요한 이유',c:'school'},
+'strategy/pre-when':{t:'영어 선행학습 과외 언제 시작할까',c:'strategy'},
+'level/pre-advanced':{t:'영어 심화 선행 대비 커리큘럼',c:'level'},
+'school/pre-level':{t:'외고 영어 선행반 수준은 어느 정도일까',c:'school'},
+'level/by-level':{t:'영어 실력별 맞춤 과외 추천',c:'level'},
+'level/level-example':{t:'레벨별 영어 수업 구성 예시',c:'level'},
+'level/growth-roadmap':{t:'초급부터 심화까지 영어 성장 로드맵',c:'level'},
+'select/weakness-guide':{t:'영어 약점별 과외 선택 가이드',c:'select'},
+'skill/weak-pronun':{t:'발음 약한 학생용 영어 수업 추천',c:'skill'},
+'skill/weak-grammar':{t:'문법 약한 학생용 영어과외 안내',c:'skill'},
+'skill/weak-reading':{t:'독해 약한 학생을 위한 맞춤 수업',c:'skill'},
+'skill/weak-writing':{t:'작문 약한 학생용 첨삭 과외 추천',c:'skill'},
+'skill/weak-listen':{t:'듣기 약점 보완 영어 수업 프로그램',c:'skill'},
+'skill/weak-speak':{t:'말하기 약점 보완 전문 영어과외',c:'skill'},
+'strategy/exam-anxiety':{t:'시험 불안 있는 학생 위한 영어 코칭',c:'strategy'},
+'strategy/mental-manage':{t:'멘탈 관리 포함 영어 학습 프로그램',c:'strategy'},
+'strategy/motivate-type':{t:'동기부여형 영어과외 추천',c:'strategy'},
+'strategy/habit-correct':{t:'습관 교정형 영어 수업 장점',c:'strategy'},
+'manage/goal-achieve':{t:'목표 달성형 영어과외 프로그램',c:'manage'},
+'manage/growth-track':{t:'성장 추적형 영어 수업 추천',c:'manage'},
+'manage/diagnosis-design':{t:'실력 진단 기반 영어과외 설계',c:'manage'},
+'manage/consulting':{t:'맞춤 컨설팅 포함 영어 수업 안내',c:'manage'},
+'manage/planner-provide':{t:'학습 플래너 제공 영어과외 추천',c:'manage'},
+'effect/success-cases':{t:'성적 상승 사례 많은 영어 수업',c:'effect'},
+'effect/practical-feature':{t:'실전형 영어과외 프로그램 특징',c:'effect'},
+'effect/result-focus':{t:'결과 중심 영어과외 운영 방식',c:'effect'},
+'effect/sure-improve':{t:'영어 실력 확실히 올리는 수업법',c:'effect'},
+'strategy/master-plan':{t:'영어 마스터 플랜 과외 프로그램',c:'strategy'},
+'level/complete-advanced':{t:'영어 완성형 심화 수업 추천',c:'level'},
+'manage/premium-manage':{t:'영어 프리미엄 관리형 과외 안내',c:'manage'},
+'manage/intensive-coaching':{t:'영어 집중 코칭 프로그램 추천',c:'manage'},
+'manage/personality-match':{t:'학생별 성향 맞춤 영어과외 설계',c:'manage'},
+'strategy/target-score':{t:'목표 점수별 영어 수업 추천',c:'strategy'},
+'naesin/exam-type':{t:'시험 유형별 영어과외 전략',c:'naesin'},
+'naesin/school-level-prep':{t:'학교 수준별 영어 대비 방법',c:'naesin'},
+'school/difficulty-compare':{t:'외고별 영어 난이도 차이 분석',c:'school'},
+'school/school-strategy':{t:'학교별 영어 대비 전략 어떻게 다를까',c:'school'},
+'school/essential-method':{t:'외고 준비생 필수 영어 공부법 정리',c:'school'},
+'strategy/no-improve-fix':{t:'영어 점수 안 오르는 이유와 해결법',c:'strategy'},
+'strategy/no-result-check':{t:'과외 받아도 성적 안 오르면 체크할 것',c:'strategy'},
+'select/ineffective-sign':{t:'효과 없는 영어 수업의 특징은',c:'select'},
+'select/realistic-criteria':{t:'잘 맞는 영어과외 찾는 현실적인 기준',c:'select'},
+'school/parent-faq':{t:'외고 준비 학부모가 많이 묻는 영어 질문',c:'school'},
+'strategy/before-start':{t:'영어 공부 시작 전 알아야 할 핵심 정보',c:'strategy'},
+'school/roadmap-overview':{t:'외고 영어 준비 로드맵 한눈에 보기',c:'school'},
+'select/child-match':{t:'내 아이에게 맞는 영어 수업 찾는 법',c:'select'},
+'school/high-acceptance':{t:'외고 영어과 진학률 높은 학습법',c:'school'},
+'school/accepted-recommend':{t:'외고 합격생들이 추천하는 영어 준비법',c:'school'},
+'strategy/note-method':{t:'영어 상위권 학생들의 노트 정리법',c:'strategy'},
+'effect/accuracy-knowhow':{t:'시험 적중 노하우 있는 영어과외 추천',c:'effect'},
+'naesin/exam-strong-select':{t:'학교 시험에 강한 영어과외 선택법',c:'naesin'},
+'naesin/problem-solve':{t:'영어 실전 문제풀이 수업 추천',c:'naesin'},
+'naesin/mock-test':{t:'모의고사형 영어 테스트 과외',c:'naesin'},
+'naesin/predict-provide':{t:'영어 예상문제 제공 수업 안내',c:'naesin'},
+'naesin/high-accuracy-prep':{t:'적중률 높은 영어 내신 대비법',c:'naesin'},
+'naesin/past-exam-analysis':{t:'기출 분석 기반 영어과외 추천',c:'naesin'},
+'naesin/school-predict':{t:'학교별 예상문제 만드는 영어 수업',c:'naesin'},
+'naesin/trend-analysis':{t:'출제 경향 분석형 영어 과외',c:'naesin'},
+'naesin/predictable':{t:'내신 예측 가능한 영어 수업일까',c:'naesin'},
+'select/really-need':{t:'외고 전문 영어과외 정말 필요할까',c:'select'},
+'effect/proven-result':{t:'입시 결과로 증명되는 영어 수업 특징',c:'effect'},
+'effect/accept-cases':{t:'합격 사례 많은 영어과외 프로그램',c:'effect'},
+'effect/accept-review':{t:'외고 합격 후기도 좋은 영어 수업',c:'effect'},
+'school/senior-recommend':{t:'외고 선배 추천 영어과외 유형',c:'school'},
+'select/top-curriculum':{t:'상담 많은 영어과외 TOP 커리큘럼',c:'select'},
+'strategy/efficiency-up':{t:'영어 학습 효율 높이는 과외 방식',c:'strategy'},
+'effect/outcome-secret':{t:'성과 중심 영어과외의 운영 비밀',c:'effect'},
+'teacher/expert-recommend':{t:'영어 교육 전문가가 추천하는 수업법',c:'teacher'},
+'strategy/exam-skill-both':{t:'시험과 실력 둘 다 잡는 영어 전략',c:'strategy'},
+'strategy/long-memory':{t:'영어를 오래 기억하는 학습 방식',c:'strategy'},
+'strategy/understand-first':{t:'암기보다 이해 중심 영어과외 장점',c:'strategy'},
+'strategy/repeat-train':{t:'반복 훈련형 영어 수업 추천',c:'strategy'},
+'strategy/practical-apply':{t:'실전 적용형 영어과외 필요성',c:'strategy'},
+'strategy/habit-first':{t:'영어 학습 습관부터 잡는 과외',c:'strategy'},
+'effect/grade-confidence':{t:'성적과 자신감 함께 올리는 영어 수업',c:'effect'},
+'skill/speak-confidence':{t:'말하기 자신감 키우는 영어과외',c:'skill'},
+'contest/present-anxiety':{t:'영어 발표 불안 극복하는 수업 추천',c:'contest'},
+'contest/interview-calm':{t:'면접 긴장 줄이는 영어 코칭',c:'contest'},
+'contest/present-correct':{t:'영어 발표 첨삭 가능한 과외',c:'contest'},
+'naesin/present-exam':{t:'외고 영어 발표형 시험 대비법',c:'naesin'},
+'naesin/perform-perfect':{t:'수행평가 완벽 대비 영어 수업',c:'naesin'},
+'naesin/project-prep':{t:'학교 프로젝트형 영어 과제 대비',c:'naesin'},
+'naesin/team-project':{t:'영어 팀플 대비 가능한 수업 추천',c:'naesin'},
+'contest/material-correct':{t:'발표자료 첨삭 포함 영어과외 안내',c:'contest'},
+'contest/presentation':{t:'영어 프레젠테이션 준비 과외',c:'contest'},
+'manage/custom-feedback':{t:'학생 맞춤 피드백 강한 영어 수업',c:'manage'},
+'manage/every-feedback':{t:'매 수업 피드백 제공 영어과외',c:'manage'},
+'manage/growth-record':{t:'성장 기록 남겨주는 영어 수업',c:'manage'},
+'manage/data-manage':{t:'학습 데이터 관리형 영어과외',c:'manage'},
+'skill/ai-pronun':{t:'AI 발음 분석 활용 영어 수업',c:'skill'},
+'skill/voice-feedback':{t:'음성 피드백 가능한 영어과외 추천',c:'skill'},
+'skill/record-task':{t:'녹음 과제 포함 영어 발음 수업',c:'skill'},
+'skill/shadowing':{t:'쉐도잉 기반 영어 회화 훈련',c:'skill'},
+'skill/listen-training':{t:'실전 듣기 훈련 강화 영어 수업',c:'skill'},
+'skill/news-english':{t:'뉴스 활용 영어 심화 과외',c:'skill'},
+'skill/ted-english':{t:'TED 활용 영어 회화 수업',c:'skill'},
+'skill/immersion':{t:'콘텐츠 기반 영어 몰입 학습',c:'skill'},
+'strategy/fun-class':{t:'흥미 유발형 영어 수업 추천',c:'strategy'},
+'strategy/not-boring':{t:'지루하지 않은 영어과외 찾는 법',c:'strategy'},
+'strategy/fun-grade':{t:'재미와 성적 모두 잡는 영어 수업',c:'strategy'},
+'effect/content-satisfy':{t:'학생 만족도 높은 영어 콘텐츠 수업',c:'effect'},
+'effect/retention-rate':{t:'학습 지속률 높은 영어과외 특징',c:'effect'},
+'strategy/long-growth':{t:'영어 장기 성장 가능한 수업 방식',c:'strategy'},
+'school/long-plan':{t:'외고 준비 장기 플랜 영어과외',c:'school'},
+'strategy/roadmap-provide':{t:'영어 공부 로드맵 제공 수업 추천',c:'strategy'},
+'manage/custom-strategy':{t:'맞춤 전략 세워주는 영어 코칭',c:'manage'},
+};
+
+function makeEnCategoryPage(catKey) {
+  const cat = EN_CATS[catKey]; if (!cat) return null;
+  const topics = Object.entries(EN_TOPICS).filter(([k,v])=>v.c===catKey);
+  const legacyItems = Object.entries(EN_LEGACY).filter(([k,v])=>v.c===catKey);
+  const title = cat.n+' - 영어과외 | 올케어스터디';
+  const desc = cat.d+'. 올케어스터디 1:1 맞춤 영어 과외.';
+  const canonical = '/conversation/english/'+catKey;
+  const bc = [{name:'홈',url:'/'},{name:'중국어',url:'/conversation/chinese'},{name:cat.n,url:canonical}];
+  const body = `<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">영어</a> &rsaquo; <span>${cat.n}</span></div>
+  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
+    <div style="position:relative;height:330px">
+      <img src="${cat.img}" alt="${cat.n}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.05) 100%)"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 28px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:28px">${cat.icon}</span><span style="font-size:12px;background:${cat.color};color:white;padding:3px 10px;border-radius:20px;font-weight:700">${cat.n}</span></div>
+        <h1 style="font-size:clamp(20px,5vw,26px);font-weight:900;color:white;margin:0 0 4px;text-shadow:0 2px 8px rgba(0,0,0,0.3)">${cat.n} · 영어과외</h1>
+        <p style="font-size:13px;color:rgba(255,255,255,0.85);margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.3)">${cat.d} · 총 ${topics.length + legacyItems.length}개 가이드</p>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:28px">
+    ${topics.map(([k,v])=>'<a href="/conversation/english/'+k+'" style="display:block;padding:16px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
+    ${legacyItems.map(([k,v])=>'<a href="/conversation/english/'+k+'" style="display:flex;align-items:center;gap:10px;padding:16px;background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#FDE68A\'"><span style="font-size:18px">'+v.icon+'</span><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
+  </div>
+  <div class="cta-box"><h3>영어 과외 무료 상담</h3><p>1:1 맞춤 영어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+</div>`;
+  return wrap(title,desc,canonical,body,bc);
+}
+
+
+
+function makeEnTopicPage(fullSlug) {
+  const pg = EN_TOPICS[fullSlug]; if (!pg) return null;
+  const T = pg.t, catKey = pg.c;
+  const cat = EN_CATS[catKey];
+  const canonical = '/conversation/english/'+fullSlug;
+  const desc = T+' | 올케어스터디 1:1 맞춤 영어과외. 전국 200개 직영센터 기반 검증 코치.';
+  const bc = [{name:'홈',url:'/'},{name:'중국어',url:'/conversation/chinese'},{name:cat.n,url:'/conversation/english/'+catKey},{name:T,url:canonical}];
+  const keys = Object.keys(EN_TOPICS);
+  const idx = keys.indexOf(fullSlug);
+
+  // ─── p1: 5문장×소수인덱스 (T+CAT 비율 극대화) ───
+  const _p=fullSlug.charCodeAt(fullSlug.length-1);
+  const _q=fullSlug.charCodeAt(0);
+  const CAT=cat.n;
+  // S1: 20개 도입 (T+CAT로 시작, 짧게)
+  const S1=[T+'에 대해 구체적으로 알아보고 계시다면 올케어스터디가 도움이 됩니다.',T+'을 제대로 준비하면 영어 성적과 실력이 모두 변합니다.','많은 학생이 '+T+'에서 시행착오를 겪는 이유를 분석해보겠습니다.',T+'의 성공 여부는 올바른 학습 방향 설정에서 결정됩니다.','상위권 학생들은 '+T+'에서 남들과 다른 노하우를 가지고 있습니다.',T+'에서 실패하는 가장 큰 원인은 잘못된 수업 선택입니다.',T+'을 통해 영어 실력을 한 단계 올릴 구체적인 방법입니다.',T+'에서 체계적인 커리큘럼이 왜 중요한지 설명합니다.','학부모님이 꼭 알아야 할 '+T+'의 핵심 포인트를 정리했습니다.',T+'을 검색하셨다면 잘 찾아오셨습니다. 정확한 정보를 드립니다.','영어 교육 전문가가 직접 추천하는 '+T+' 실천 방법입니다.',T+'의 기본 원리부터 실전 적용까지 단계별로 안내합니다.','영어 성적 향상의 숨은 비결은 '+T+'에 있다는 것을 아시나요.',T+'을 지금 시작하는 것이 최적의 타이밍인 이유입니다.',T+'이 일반 영어 수업과 차별화되는 핵심 포인트입니다.','외고 준비생에게 '+T+'이 특별히 중요한 이유를 설명합니다.',T+'을 효과적으로 실천하기 위한 구체적 실행법입니다.','수많은 학생이 결과로 증명한 '+T+' 전략을 공개합니다.',T+'으로 내신과 실력을 동시에 잡는 통합 학습법입니다.',T+' 성공 사례 분석을 통해 얻은 교훈을 공유합니다.'];
+  // S2: 20개 (T+CAT 기반 구체적 내용, 각각 완전히 다른 주제)
+  const S2=[T+' 수업에서 발음과 억양 교정은 첫 수업부터 시작됩니다. 일본어는 발음과 억양 하나로 의미가 완전히 바뀌기 때문에 '+T+' 과정에서 처음부터 정확히 잡아야 합니다.',
+  T+' 과정의 핵심은 교과서 본문 분석입니다. 학교마다 사용하는 교재가 다르므로 '+T+' 수업은 해당 학교 교재에 맞춰 진행됩니다.',
+  T+' 수업에서 서술형 답안 작성 훈련이 중요합니다. 내신 시험에서 서술형 비중이 높아지고 있어 '+T+' 과정에서 답안 구성력을 집중 훈련합니다.',
+  T+' 과정에서 토플 어휘를 병행하면 시너지가 납니다. 내신 필수 어휘와 토플 빈출 어휘의 겹치는 부분을 '+T+' 수업에서 효율적으로 학습합니다.',
+  T+' 수업의 차별점은 기출문제 분석 기반 예상문제 제공입니다. 학교별 출제 패턴을 파악하여 '+T+' 과정에서 적중률 높은 예상문제를 풀어봅니다.',
+  T+' 과정에서 듣기 훈련은 매 수업 10분씩 진행됩니다. 영어 듣기는 반복 노출이 핵심이므로 '+T+' 수업에서 꾸준히 훈련합니다.',
+  T+' 수업에서 쉐도잉 기법으로 말하기 실력을 키웁니다. 원어민 음성을 따라 읽으며 '+T+' 과정에서 자연스러운 발화 습관을 형성합니다.',
+  T+' 과정의 작문 첨삭은 매 수업 포함됩니다. 틀린 표현을 즉시 교정받아야 '+T+' 수업에서 작문 실력이 빠르게 향상됩니다.',
+  T+' 수업에서 수행평가 준비도 병행합니다. 발표·인터뷰·포트폴리오 등 '+T+' 과정에서 다양한 수행평가 유형을 실전 훈련합니다.',
+  T+' 과정에서 오답노트 관리가 성적 향상의 핵심입니다. 반복 틀리는 유형을 코치가 분석하여 '+T+' 수업에서 집중 보강합니다.',
+  T+' 수업의 주간 테스트로 이해도를 점검합니다. 빈틈이 있으면 즉시 보충하는 '+T+' 과정의 관리 시스템이 성적을 만듭니다.',
+  T+' 과정에서 문법은 패턴 학습으로 효율을 높입니다. 영어 문법 규칙을 '+T+' 수업에서 실전 예문과 함께 반복 훈련합니다.',
+  T+' 수업에서 독해 속도를 높이는 훈련을 합니다. 시험 시간 내 모든 문제를 풀려면 '+T+' 과정에서 속독 연습이 필수입니다.',
+  T+' 과정에서 학습 보고서를 매주 학부모님께 전송합니다. 자녀의 '+T+' 수업 진행 상황을 투명하게 확인할 수 있습니다.',
+  T+' 수업에서 시험 직전 압축 정리를 제공합니다. 핵심 어휘·문법·표현을 '+T+' 과정에서 한 장으로 요약한 시험 대비 자료입니다.',
+  T+' 과정에서 면접·발표 준비도 지원합니다. 외고 면접이나 발표 수행평가를 '+T+' 수업에서 실전처럼 훈련합니다.',
+  T+' 수업에서 콘텐츠 기반 학습으로 흥미를 유지합니다. 미드·TED·뉴스를 활용하여 '+T+' 과정에서 자연스럽게 표현을 익힙니다.',
+  T+' 과정의 코치는 3단계 검증을 통과한 전문가입니다. 학력·경력·수업시연을 모두 통과해야 '+T+' 수업을 담당할 수 있습니다.',
+  T+' 수업에서 학생의 학습 스타일을 파악하여 맞춤 지도합니다. 시각형·청각형·체험형에 따라 '+T+' 과정의 수업 방식이 달라집니다.',
+  T+' 과정의 녹화 영상으로 복습 효과를 높입니다. 수업 중 놓친 설명을 '+T+' 녹화 영상에서 반복 시청할 수 있습니다.'];
+  // S3: 15개 마무리
+  const S3=['올케어스터디의 '+T+' 수업은 첫 수업이 완전 무료이므로 부담 없이 경험할 수 있습니다.','지금 시작하면 '+T+'의 학습 효과를 3개월 이내에 체감할 수 있습니다.','상담을 원하시면 '+T+' 담당자와 010-6834-8080으로 바로 연결됩니다.','올케어스터디 '+T+' 수업은 만족하지 못할 경우 코치 무료 교체가 가능합니다.','전국 200개 이상 직영센터 기반으로 '+T+' 수업이 안정적으로 운영됩니다.','올케어스터디 '+T+' 수업은 매주 학부모님께 상세 학습 보고서를 제공합니다.','더 이상 혼자 고민하지 마시고 '+T+' 수업으로 내신 걱정을 덜으세요.','작은 선택이지만 '+T+'은 학생의 미래를 크게 바꾸는 결정이 될 수 있습니다.','올케어스터디 '+T+' 수업은 학부모 만족도 97% 이상을 꾸준히 기록하고 있습니다.','외고에 합격한 수많은 학생들이 '+T+' 수업을 선택한 이유가 있습니다.','상담 신청 후 48시간 이내에 '+T+' 전문 코치 매칭이 완료됩니다.','성적 향상과 자신감 회복을 동시에 이루는 '+T+' 맞춤 수업입니다.','방문 과외와 화상 수업 중 편한 방식으로 '+T+' 수업을 선택할 수 있습니다.','올케어스터디 '+T+' 수업은 녹화가 제공되어 언제든 복습이 가능합니다.','지금 '+T+'을 시작하시면 다음 시험에서 확실한 변화를 경험하실 수 있습니다.'];
+  const p1=S1[idx%20]+' '+S2[(idx*3+_p)%20]+' '+S3[(idx*7+_q)%15];
+
+    const P2=[T+'에서 가장 중요한 것은 학생의 현재 수준을 정확히 파악하는 것입니다. 올케어스터디 코치는 첫 수업에서 레벨테스트를 통해 발음·억양·문법·독해·작문 5개 영역의 강점과 약점을 진단합니다. 이 진단을 바탕으로 '+T+' 맞춤 커리큘럼을 설계하여 약점은 집중 보강하고 강점은 심화하는 효율적인 학습이 가능합니다.',
+  T+' 수업에서 올케어스터디가 강조하는 것은 발음과 억양의 기초입니다. 중국어는 같은 음절도 성조에 따라 의미가 완전히 달라지므로 초기에 정확한 발음 습관을 잡는 것이 중요합니다. '+T+' 과정에서 코치가 실시간으로 발음을 교정하고 반복 훈련을 통해 자연스러운 영어를 구사하도록 안내합니다.',
+  T+'의 효과를 극대화하려면 수업 외 시간의 학습도 중요합니다. 올케어스터디는 매 수업 후 핵심 요약과 복습 과제를 제공하며 주간 미니 테스트로 '+T+' 이해도를 점검합니다. 에빙하우스 망각곡선을 적용한 반복 복습 시스템으로 배운 내용이 장기 기억으로 정착됩니다.',
+  '외고 준비생에게 '+T+'이 특히 중요한 이유는 내신과 입시를 동시에 준비해야 하기 때문입니다. 올케어스터디의 '+T+' 수업은 학교 교과서 분석, 기출문제 풀이, 서술형 대비, 수행평가 준비를 하나의 커리큘럼으로 통합하여 시간 효율을 극대화합니다.',
+  T+' 수업의 핵심은 학생이 직접 말하고 쓰는 시간을 충분히 확보하는 것입니다. 올케어스터디 코치는 50분 수업 중 학생의 능동적 참여 시간을 30분 이상 배정합니다. '+T+' 과정에서 학생이 직접 중국어로 표현하고 코치가 즉시 피드백하는 방식이 실력 향상에 가장 효과적입니다.',
+  T+' 과정에서 토플 자격증 준비를 병행하면 학습 동기도 높아지고 대학 입시에서도 유리합니다. 올케어스터디는 내신 대비 80%+토플 대비 20%의 비율로 '+T+' 커리큘럼을 구성하여 두 마리 토끼를 잡을 수 있습니다.',
+  '올케어스터디의 '+T+' 수업이 다른 과외와 차별화되는 점은 학습 관리 시스템입니다. 매 수업 후 학습 보고서 전송, 주간 진도 체크, 월간 성취도 리포트, 학부모 상담까지 체계적으로 운영합니다. '+T+' 수업의 투명한 관리가 학부모 만족도를 높입니다.',
+  T+' 준비에서 가장 흔한 실수는 문법에만 집중하고 말하기·듣기를 소홀히 하는 것입니다. 외고 시험은 문법뿐 아니라 듣기 평가, 말하기 수행평가, 발표 등 다양한 영역을 평가합니다. 올케어스터디의 '+T+' 수업은 모든 영역을 균형 있게 다룹니다.',
+  T+' 수업의 효과는 코치의 전문성에 크게 좌우됩니다. 올케어스터디는 중문과 전공, 토플 6급 이상, 교육 경력 3년 이상의 엄격한 기준으로 '+T+' 코치를 선발합니다. 학생의 학교와 목표에 맞는 최적의 코치를 48시간 내 매칭합니다.',
+  T+' 과정에서 자신감을 키우는 것도 중요합니다. 영어에 자신감이 생기면 수업 참여도가 높아지고 성적도 자연스럽게 오릅니다. 올케어스터디 코치는 '+T+' 수업에서 학생의 작은 발전도 인정하고 격려하여 학습 동기를 유지합니다.'];
+  const P2b=[' 올케어스터디의 '+T+' 수업은 학생의 학교·목표·성향을 모두 반영하여 최적의 학습 환경을 제공합니다. 무료 첫 수업에서 직접 경험해보세요. 수업 후 학부모님께 학습 보고서를 전송하여 자녀의 학습 현황을 투명하게 공유합니다. 코치가 학생의 약점을 매주 분석하여 다음 수업에 반영합니다.',' '+T+' 수업을 통해 영어에 자신감이 생기면 수업 참여도가 높아지고 성적이 자연스럽게 오릅니다. 작은 성공 경험이 학습 동기를 유지하는 핵심입니다. 올케어스터디 코치는 학생의 발전을 매 수업 기록하고 격려하여 꾸준한 성장을 이끌어냅니다.',' '+T+' 과정에서 오답노트 관리가 성적 향상의 핵심입니다. 코치가 학생의 오답 패턴을 분석하여 반복 출제되는 유형을 집중 훈련합니다. 틀린 문제를 단순히 다시 푸는 것이 아니라 왜 틀렸는지 원인을 분석하고 유사 유형을 반복 훈련합니다.',' '+T+' 수업에서 수행평가 대비도 병행합니다. 발표, 작문, 인터뷰 등 수행평가 유형에 맞춘 실전 연습으로 내신 전 영역을 커버합니다. 특히 발표 수행평가는 대본 작성부터 발음·억양 연습, 실전 시뮬레이션까지 단계별로 준비합니다.',' 올케어스터디 코치는 '+T+' 과정에서 학생의 학습 습관까지 관리합니다. 매일 10분 영어 듣기, 주 3회 어휘 테스트 등 습관화 프로그램을 제공합니다. 습관이 되면 의지력 소모 없이 자연스럽게 영어 실력이 쌓입니다.',' '+T+' 수업의 강점은 학교 시험과 직결되는 맞춤형 콘텐츠입니다. 교과서 본문 분석, 기출 유형 정리, 예상문제 제작까지 시험에 최적화된 수업입니다. 학교별로 다른 출제 스타일을 코치가 미리 파악하여 핵심만 짚어줍니다.',' '+T+' 과정에서 문화 이해도 중요합니다. 영어권 문화와 시사를 수업에 녹여 흥미를 유지하면서 실용적인 표현도 함께 익힙니다. 드라마, 뉴스, 음악 등 다양한 콘텐츠를 활용하여 지루하지 않은 수업을 제공합니다.',' 올케어스터디의 '+T+' 수업은 녹화가 가능하여 복습에 매우 효과적입니다. 수업에서 놓친 발음 교정이나 문법 설명을 반복 시청할 수 있습니다. 시험 직전에 녹화 영상을 다시 보면서 핵심을 빠르게 복습할 수 있습니다.',' '+T+' 과정에서 코치와의 궁합이 성적에 큰 영향을 미칩니다. 올케어스터디는 학생의 성격과 학습 스타일에 맞는 코치를 매칭하여 수업 만족도를 높입니다. 내성적인 학생에게는 차분한 코치를, 활발한 학생에게는 에너지 있는 코치를 배정합니다.',' '+T+' 수업의 효과를 극대화하려면 예습과 복습이 필수입니다. 코치가 매 수업 전 예습 가이드와 수업 후 복습 과제를 제공하여 학습 연속성을 유지합니다. 예습 10분 + 복습 15분이면 수업 효과가 3배 이상 올라갑니다.'];
+  const p2 = P2[(idx*3+_p)%10] + P2b[(idx*7+_p*3)%10];
+
+  // p3: 5가지
+  const P3=['올케어스터디 '+T+' 수업 과정: ①무료 레벨테스트로 현재 수준 진단 ②맞춤 커리큘럼 설계 및 전문 코치 매칭 ③주 2~3회(1회 50분) 정기 수업 진행 ④매 수업 후 학습 보고서와 복습 과제 제공 ⑤시험 기간 집중 대비 모드 전환. '+T+' 수업은 방문 또는 화상으로 선택 가능하며 녹화 영상은 복습용으로 제공됩니다.',
+  T+' 3개월 변화 로드맵: 1개월—현재 수준 진단과 기초 보강, 약점 영역 집중 훈련. 2개월—내신 대비 본격 학습, 기출 유형 분석과 서술형 연습. 3개월—실전 모의고사와 수행평가 대비, 목표 성적 달성. '+T+' 과정을 따라가면 눈에 띄는 성적 변화를 경험합니다.',
+  T+' 수업을 최대한 활용하는 5가지 팁: ①수업 전 예습 10분으로 핵심 어휘 미리 확인 ②수업 중 카메라 켜고 적극적으로 발화 ③수업 후 24시간 내 복습 ④오답노트 매일 3개씩 정리 ⑤주 1회 코치에게 학습 진도 확인 요청. '+T+'의 효과가 배가됩니다.',
+  T+' 수업의 학부모 소통 시스템: 매 수업 후 카카오톡으로 수업 요약과 숙제 안내, 매주 학습 보고서 발송, 월간 상담으로 '+T+' 방향 점검. 학부모님은 자녀의 영어 학습 현황을 투명하게 확인할 수 있어 안심하고 맡기실 수 있습니다.',
+  T+' 첫 수업은 무료 체험으로 진행됩니다. 무료 체험에서는 레벨테스트, 학습 스타일 파악, '+T+' 맞춤 커리큘럼 제안까지 진행됩니다. 수업이 마음에 들면 정규 과정을 시작하고 아니면 부담 없이 종료할 수 있습니다. 코치가 마음에 들지 않으면 무료로 교체도 가능합니다.'];
+  const P3b=['올케어스터디의 영어 코치는 학생의 학교 교과서를 사전에 분석하고 기출문제 패턴을 파악하여 '+T+' 수업에 반영합니다. 시험 2주 전부터는 예상문제와 모의고사를 제공하여 실전 감각을 키웁니다.','학생의 취약 영역을 매 수업 미니 테스트로 확인하고 오답은 다음 수업에서 반복 훈련합니다. '+T+' 과정에서 이런 반복 학습이 장기 기억으로 정착되는 핵심입니다.','화상수업은 녹화가 가능하여 '+T+' 수업 후 복습에 매우 효과적입니다. 코치의 발음 교정이나 문법 설명을 반복 시청하면 수업 효율이 배가됩니다.','발음과 억양은 영어의 기본입니다. '+T+' 수업에서 코치가 실시간으로 교정하기 때문에 잘못된 발음 습관이 굳어지는 것을 방지합니다.','1:1 수업이므로 학생의 컨디션과 이해도에 따라 '+T+' 수업 속도를 유연하게 조절합니다. 이해가 부족한 부분은 다양한 예시로 반복 설명합니다.'];
+  const p3 = P3[(idx*7+_p)%5] + ' ' + P3b[(idx*11+_p*2)%5];
+
+  const P4=['올케어스터디의 '+T+' 수업으로 영어 실력 변화를 경험하세요. 전국 200개 직영 센터의 검증된 코치진, 체계적인 학습 관리, 합리적인 수업료까지. 첫 수업 무료이니 부담 없이 시작하세요. 상담: 010-6834-8080',
+  T+' 실천으로 3개월 후 달라진 성적을 경험하세요. 올케어스터디의 1:1 맞춤 코칭이 '+T+' 여정을 함께합니다. 수천 명의 학생이 성적 향상을 경험한 수업입니다.',
+  '혼자 준비하기 막막하다면 올케어스터디 전문 코치에게 '+T+' 맞춤 상담을 받아보세요. 학생의 현재 수준을 진단하고 최적의 학습 전략을 무료로 설계해드립니다.',
+  T+'은 학생의 미래를 바꿀 수 있는 첫 걸음입니다. 올케어스터디는 모든 학생이 잠재력을 발휘할 수 있도록 체계적인 학습 지원을 제공합니다. 무료 체험으로 시작하세요.'];
+  const P4b=['수업료는 과목·학년·횟수에 따라 달라지며 무료 상담에서 학생 상황에 맞는 견적을 안내합니다. 형제자매 할인, 장기 등록 할인 등 다양한 혜택도 제공됩니다.','올케어스터디는 전국 200개 이상 직영 학습센터를 운영하며 오프라인 방문 상담도 가능합니다. 가까운 센터에서 학생의 현재 수준을 직접 진단받아 보세요.','코치와의 궁합이 중요합니다. '+T+' 수업 후 만족하지 못하면 언제든 무료로 코치를 교체할 수 있으니 부담 없이 시작하세요.','매주 학습 보고서와 월간 성취도 리포트를 학부모님께 제공합니다. 자녀의 '+T+' 학습 현황을 투명하게 확인할 수 있습니다.'];
+  const p4 = P4[(idx*11+_p)%4] + ' ' + P4b[(idx*13+_p*3)%4];
+
+  const faq = [
+    [T+' 수업은 어떤 방식으로 진행되나요?','방문 과외와 화상수업 중 선택 가능합니다. 주 2~3회(1회 50분) 진행되며, 학생의 학교 교과서와 출제 경향에 맞춘 '+T+' 맞춤 커리큘럼으로 수업합니다. 첫 수업은 무료입니다.'],
+    [T+' 수업료는 얼마인가요?','과목, 학년, 주당 횟수에 따라 달라집니다. '+T+' 무료 상담에서 학생의 상황에 맞는 견적을 안내해드립니다. 형제자매 할인, 장기 등록 할인 등 다양한 혜택도 있습니다. 전화: 010-6834-8080'],
+    ['코치가 마음에 안 들면 교체할 수 있나요?','네, '+T+' 코치 무료 교체가 가능합니다. 학생과 코치의 궁합을 중요하게 생각하며, 학생의 성격·목표·학습 스타일에 맞는 최적의 코치를 찾을 때까지 매칭을 도와드립니다.'],
+    [T+' 수업은 몇 개월 들어야 효과가 나나요?','대부분의 학생이 '+T+' 수업 시작 1개월 내 학습 습관 변화, 2개월 내 성적 상승, 3개월 내 목표 달성을 경험합니다. 학생의 현재 수준과 목표에 따라 코치가 맞춤 로드맵을 설계해드립니다.'],
+  ];
+
+  const sameCategory = Object.entries(EN_TOPICS).filter(([k,v])=>v.c===catKey&&k!==fullSlug).slice(0,6);
+  const body = `<div class="wrap" style="max-width:900px">
+  <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">영어</a> &rsaquo; <a href="/conversation/english/${catKey}">${cat.n}</a> &rsaquo; <span>${T}</span></div>
+  <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
+    <div style="position:relative;height:300px">
+      <img src="${cat.img}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.05) 100%)"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:22px 26px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:22px">${cat.icon}</span><span style="font-size:11px;background:${cat.color};color:white;padding:2px 8px;border-radius:16px;font-weight:700">${cat.n}</span></div>
+        <h1 style="font-size:clamp(18px,4.5vw,24px);font-weight:900;color:white;margin:0 0 4px;line-height:1.4;text-shadow:0 2px 8px rgba(0,0,0,0.3)">${T}</h1>
+        <p style="font-size:12px;color:rgba(255,255,255,0.8);margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.3)">올케어스터디 1:1 영어과외</p>
+      </div>
+    </div>
+  </div>
+  <!-- 핵심 수치 카드 -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px">
+    ${[['화상/전화','수업 방식','💻'],['97%','만족도','⭐'],['30분 내','빠른 연락','⚡'],['무료','첫수업','🎁']].map(([v,l,e])=>'<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 10px;text-align:center"><div style="font-size:20px;margin-bottom:4px">'+e+'</div><div style="font-size:18px;font-weight:900;color:'+cat.color+'">'+v+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+l+'</div></div>').join('')}
+  </div>
+
+  <!-- p1: 메인 콘텐츠 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:5px;height:22px;background:${cat.color};border-radius:3px"></span>${T}</h2>
+    <p style="font-size:14px;color:#374151;line-height:1.9">${p1}</p>
+  </section>
+
+  <!-- p2: 핵심 전략 (강조 박스) -->
+  <section style="background:linear-gradient(135deg,${cat.color}08,${cat.color}15);border:1.5px solid ${cat.color}30;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:${cat.color};margin:0 0 14px;display:flex;align-items:center;gap:8px">🎯 핵심 전략</h2>
+    <p style="font-size:14px;color:#374151;line-height:1.9">${p2}</p>
+  </section>
+
+  <!-- 올케어스터디 장점 그리드 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">✨ 올케어스터디 영어과외 장점</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      ${[['🎓','3단계 검증 코치',T+' 담당 코치는 학력·경력·수업시연 3단계를 통과한 전문가입니다'],['📊','맞춤 커리큘럼',T+' 수업은 학생 수준·학교·목표를 반영한 1:1 맞춤 설계입니다'],['📝','매주 학습 보고서',T+' 수업 요약·진도·숙제를 학부모님께 투명 공유합니다'],['🔄','코치 무료 교체',T+' 코치가 만족스럽지 않으면 무료 교체 가능합니다'],['🎥','수업 녹화 제공',T+' 수업 녹화로 놓친 부분을 반복 시청할 수 있습니다'],['💬','수업 외 질문 가능',T+' 수업 외 시간에도 메신저로 질문이 가능합니다']].map(([e,t,d])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:20px">'+e+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div></div>').join('')}
+    </div>
+  </section>
+
+  <!-- p3: 수업 방식 (스텝형) -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px;display:flex;align-items:center;gap:8px">📋 수업 진행 방식</h2>
+    <p style="font-size:14px;color:#374151;line-height:1.9">${p3}</p>
+  </section>
+
+  <!-- 3개월 로드맵 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">📈 ${T} 3개월 로드맵</h2>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${[['1개월','기초 진단 & 약점 보강',T+' 레벨테스트로 현재 수준 진단, 기초 발음·억양 교정, 핵심 어휘 300개 암기 시작, 학습 습관 형성','${cat.color}','20'],
+      ['2개월','실력 향상 & 내신 대비',T+' 교과서 본문 완벽 분석, 기출 유형 반복 훈련, 서술형 답안 연습, 듣기 말하기 실전 훈련, 수행평가 준비','${cat.color}','60'],
+      ['3개월','목표 달성 & 실전 완성',T+' 모의고사 실전 훈련, 시험 시간 관리 연습, 예상문제 풀이, 약점 최종 보강, 목표 성적 달성','${cat.color}','100']
+      ].map(([m,t,d,color,pct])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px;border-left:4px solid '+color+'"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span style="background:'+color+';color:white;font-size:12px;font-weight:800;padding:3px 10px;border-radius:12px">'+m+'</span><span style="font-size:14px;font-weight:800;color:#0F2044">'+t+'</span></div><span style="font-size:12px;color:'+color+';font-weight:700">'+pct+'%</span></div><div style="font-size:12px;color:#6B7280;line-height:1.7">'+d+'</div><div style="background:#E5E7EB;border-radius:4px;height:6px;margin-top:8px"><div style="background:'+color+';border-radius:4px;height:100%;width:'+pct+'%"></div></div></div>').join('')}
+    </div>
+  </section>
+
+  <!-- 수강 후기 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">💬 수강 후기</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+      ${[['⭐⭐⭐⭐⭐','성적이 진짜 올랐어요',T+' 수강 후 영어 40점대에서 85점까지 올랐습니다. 약점을 정확히 짚어주셨어요.','고2 학생'],
+      ['⭐⭐⭐⭐⭐','아이가 자신감이 생겼어요',T+' 수업 후 학습 보고서를 매주 받으니 안심입니다. 아이도 재미를 느끼기 시작했어요.','학부모님'],
+      ['⭐⭐⭐⭐⭐','외고 합격했습니다!',T+' 수업 덕분에 영어 내신 1등급 유지하면서 외고 면접까지 완벽 준비했습니다.','외고 합격생']
+      ].map(([s,t,d,who])=>'<div style="background:#FFFBEB;border-radius:12px;padding:16px;border:1px solid #FDE68A"><div style="font-size:11px;margin-bottom:4px">'+s+'</div><div style="font-size:13px;font-weight:800;color:#0F2044;margin-bottom:6px">'+t+'</div><div style="font-size:12px;color:#6B7280;line-height:1.6">'+d+'</div><div style="font-size:11px;color:#9CA3AF;margin-top:6px;text-align:right">- '+who+'</div></div>').join('')}
+    </div>
+  </section>
+
+  <!-- p4: 마무리 (CTA 스타일) -->
+  <section style="background:linear-gradient(135deg,#0F2044,#1E3A6E);border-radius:16px;padding:28px;margin-bottom:20px;color:white">
+    <h2 style="font-size:18px;font-weight:900;color:white;margin:0 0 14px">🚀 지금 시작하세요</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.9);line-height:1.9">${p4}</p>
+  </section>
+
+  <!-- FAQ (토글 스타일) -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 16px">❓ 자주 묻는 질문</h2>
+    ${faq.map(([q,a])=>'<div style="background:#F8FAFF;border-radius:12px;padding:16px;margin-bottom:10px"><div style="font-size:14px;font-weight:800;color:'+cat.color+';margin-bottom:8px">Q. '+q+'</div><div style="font-size:13px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}
+  </section>
+
+  <!-- 관련 가이드 -->
+  <section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;margin-bottom:20px">
+    <h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">📖 ${cat.n} 다른 가이드</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    ${sameCategory.map(([k,v])=>'<a href="/conversation/english/'+k+'" style="display:flex;align-items:center;gap:8px;padding:12px;border:1.5px solid #E5E7EB;border-radius:10px;text-decoration:none;transition:all .2s;font-size:13px;font-weight:700;color:#0F2044" onmouseover="this.style.borderColor=\''+cat.color+'\';this.style.background=\''+cat.color+'08\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'white\'">'+cat.icon+' '+v.t+'</a>').join('')}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-box"><h3>📞 영어과외 무료 상담</h3><p>1:1 맞춤 영어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">영어과외</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
+</div>`;
+  return wrap(T+' | 올케어스터디 영어과외', desc, canonical, body, bc);
+}
+
 
 
 function makeStudyGuidePage() {
@@ -8141,6 +8675,9 @@ function serveSitemapByKey(key) {
     for(const[subj,slugs] of Object.entries(SUBJ_SLUGS)){slugs.forEach(s=>parts.push(u('/subject/'+subj+'/'+s)));}
     // 학년 페이지
     ['elementary','middle','high'].forEach(g=>parts.push(u('/grade/'+g)));
+    // 영어 카테고리+하위
+    Object.keys(EN_CATS).forEach(cat=>parts.push(u('/conversation/english/'+cat)));
+    Object.keys(EN_TOPICS).forEach(k=>parts.push(u('/conversation/english/'+k)));
     // 일본어 카테고리+하위
     Object.keys(JP_CATS).forEach(cat=>parts.push(u('/conversation/japanese/'+cat)));
     Object.keys(JP_TOPICS).forEach(k=>parts.push(u('/conversation/japanese/'+k)));
@@ -8334,6 +8871,9 @@ export default {
       // 과목 하위 (주요 10개씩만 - IndexNow는 최근 변경 URL만 보내는 것이 권장)
       const subjSlugs={math:['elem-basics','mid-function','high-math1','calculus','suneung-killer','grade1','supo-escape','concept-total','mid-naesin','mock-exam'],english:['elem-basics','mid-grammar','high-reading','suneung-1','grade1','listening','vocabulary','mid-naesin','mock-strategy','vacation'],korean:['elem-reading','high-nonlit','suneung-1','grade1','modern-poem','grammar','mid-naesin','high-naesin','suneung-lit','vacation'],science:['physics1','chemistry1','biology1','earth1','grade1','integrated','mid-naesin','high-naesin','mechanics','genetics'],social:['korean-history','world-history','korean-geo','economics','grade1','integrated','mid-naesin','high-naesin','history-perfect','vacation'],coding:['start','scratch','python-basic','python-mid','javascript','ai-basic','algorithm','coding-test','elem-coding','portfolio'],essay:['basics','humanities','snu','yonsei','med-essay','self-intro','interview','critical','susi','jeongsi'],gsd:['korean','english','math','high-level','3month','pass-strategy','past-exam','summary','one-on-one','online-guide']};
       for(const[subj,slugs] of Object.entries(subjSlugs)){slugs.forEach(s=>allUrls.push('/subject/'+subj+'/'+s));}
+      // 영어 카테고리
+      Object.keys(EN_CATS).forEach(cat=>allUrls.push('/conversation/english/'+cat));
+      ['school/daewon-naesin','school/myeongdeok-class','naesin/grade1-prep','exam/toefl-combo','skill/pronun-fix','level/beginner-fast','career/exchange-student','manage/routine-coaching','effect/fast-improve','strategy/top-routine'].forEach(s=>allUrls.push('/conversation/english/'+s));
       // 일본어 카테고리
       Object.keys(JP_CATS).forEach(cat=>allUrls.push('/conversation/japanese/'+cat));
       ['school/daewon-naesin','school/daeil-class','naesin/grade1-prep','jlpt/jlpt-combo','skill/pronun-fix','level/beginner-fast','career/study-abroad','manage/routine-coaching','effect/fast-improve','strategy/top-routine'].forEach(s=>allUrls.push('/conversation/japanese/'+s));
@@ -8470,6 +9010,21 @@ export default {
       }
     }
     if (path.startsWith('/engineer-lab/')) { const slug = path.split('/')[2]; if (slug) { const p = makeEngineerLabSubPage(slug); if (p) return new Response(p, {headers:h}); } }
+    // 영어 카테고리+하위 페이지
+    if (path.startsWith('/conversation/english/')) {
+      const subPath = path.slice('/conversation/english/'.length);
+      const parts2 = subPath.split('/').filter(Boolean);
+      if (parts2.length === 2) {
+        const fullSlug = parts2[0]+'/'+parts2[1];
+        if (EN_TOPICS[fullSlug]) {
+          const p = makeEnTopicPage(fullSlug);
+          if (p) return new Response(p, {headers:h});
+        }
+      } else if (parts2.length === 1 && EN_CATS[parts2[0]]) {
+        const p = makeEnCategoryPage(parts2[0]);
+        if (p) return new Response(p, {headers:h});
+      }
+    }
     // 일본어 카테고리+하위 페이지
     if (path.startsWith('/conversation/japanese/')) {
       const subPath = path.slice('/conversation/japanese/'.length);
