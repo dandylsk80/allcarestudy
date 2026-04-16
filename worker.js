@@ -5401,7 +5401,7 @@ function makeCnTopicPage(fullSlug) {
   </div>
   <!-- 핵심 수치 카드 -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px">
-    ${[['200+','직영센터','🏫'],['97%','만족도','⭐'],['48h','코치매칭','⚡'],['무료','첫수업','🎁']].map(([v,l,e])=>'<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 10px;text-align:center"><div style="font-size:20px;margin-bottom:4px">'+e+'</div><div style="font-size:18px;font-weight:900;color:'+cat.color+'">'+v+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+l+'</div></div>').join('')}
+    ${[['화상/전화','수업 방식','💻'],['97%','만족도','⭐'],['30분 내','빠른 연락','⚡'],['무료','첫수업','🎁']].map(([v,l,e])=>'<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 10px;text-align:center"><div style="font-size:20px;margin-bottom:4px">'+e+'</div><div style="font-size:18px;font-weight:900;color:'+cat.color+'">'+v+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+l+'</div></div>').join('')}
   </div>
 
   <!-- p1: 메인 콘텐츠 -->
@@ -5934,7 +5934,7 @@ function makeJpTopicPage(fullSlug) {
   </div>
   <!-- 핵심 수치 카드 -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px">
-    ${[['200+','직영센터','🏫'],['97%','만족도','⭐'],['48h','코치매칭','⚡'],['무료','첫수업','🎁']].map(([v,l,e])=>'<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 10px;text-align:center"><div style="font-size:20px;margin-bottom:4px">'+e+'</div><div style="font-size:18px;font-weight:900;color:'+cat.color+'">'+v+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+l+'</div></div>').join('')}
+    ${[['화상/전화','수업 방식','💻'],['97%','만족도','⭐'],['30분 내','빠른 연락','⚡'],['무료','첫수업','🎁']].map(([v,l,e])=>'<div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 10px;text-align:center"><div style="font-size:20px;margin-bottom:4px">'+e+'</div><div style="font-size:18px;font-weight:900;color:'+cat.color+'">'+v+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+l+'</div></div>').join('')}
   </div>
 
   <!-- p1: 메인 콘텐츠 -->
