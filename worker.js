@@ -65,6 +65,24 @@ const K124=`과외 선생님을 찾는 과정은 간단합니다. 무료 상담 
 const K125=`<div class="wrap"><div class="bc"><a href="/">홈</a> › <a href="/school">학교별 과외</a> › <span>`;
 const K126=`시험에 최적화된 맞춤 커리큘럼을 설계하고, 주 2~3회 방문 수업으로 체계적으로 진행합니다.</p><p><strong>수업 3단계</strong>: 개념 정리 →`;
 const K127=`</p></section><section class="u9"><h2 class="u30" style="color:#3B82F6">`;
+
+const IMG_POOLS = {"math":["1635070041078-e363dbe005cb","1509228468518-180dd4864904","1596495577886-d920f1fb7238","1509228627152-72ae9ae6848d","1580894732444-8ecded7900cd","1517976487492-5750f3195933","1434030216411-0b793f4b4173","1564349683136-77e08dba1ef7","1495364141860-b0d03eccd065","1566837945700-30057527ade0","1543286386-2e659306cd6c","1606326608606-aa0b62935f2b","1518133910546-b6c2fb7d79e3","1601049676869-702ea24cfd58","1627556592933-ffe99c1cd9eb","1569396116180-210c182bedb8","1552242718-c5360894aecd"],"english":["1546410531-bb4caa6b424d","1456513080510-7bf3a84b82f8","1503676260728-1c00da094a0b","1491841550275-ad7854e35ca6","1513475382585-d06e58bcb0e0","1541963463532-d68292c34b19","1588580000645-4562a6d2c839","1519389950473-47ba0277781c","1498243691581-b145c3f54a5a","1571260899304-425eee4c7efc","1497633762265-9d179a990aa6","1524995997946-a1c2e315a42f","1524178232363-1fb2b075b655","1516979187457-637abb4f9353","1584697964358-3e14ca57658b","1533106497176-45ae19e68ba2","1579546929518-9e396f3cc809","1488190211105-8b0e65b80b4e"],"korean":["1512820790803-83ca734da794","1544947950-fa07a98d237f","1481627834876-b7833e8f5570","1519682337058-a94d519337bc","1526243741027-444d633d7365","1491841651911-c44c30c34548","1495465798138-718f86d1a4bc","1506880018603-83d5b814b5a6","1455390582262-044cdead277a","1499951360447-b19be8fe80f5","1517842645767-c639042777db","1471107340929-a87cd0f5b5f3","1513104890138-7c749659a591","1495446815901-a7297e633e8d","1545239351-ef35f43d514b","1543269865-cbf427effbad"],"science":["1532094349884-543559244e6a","1576086213369-97a306d36557","1564325724739-bae0bd08762c","1554475901-4538ddfbccc2","1606761568499-6d2451b23c66","1628595351029-c2bf17511435","1507668077129-56e32842fceb","1530026405186-ed1f139313f8","1628891890467-b79f2c8ba7b5","1581093458791-9d42e3c7a3b7","1614935151651-0bea6508db6b","1579165466991-467135ad3110","1581093588401-fbb62a02f120"],"social":["1457369804613-52c61a468e7d","1524995997946-a1c2e315a42f","1488190211105-8b0e65b80b4e","1519074069390-98277fc02a5d","1590486803833-1c5dc8ddd4c8","1473177027534-53d906e9abcf","1529333166437-7750a6dd5a70","1524069290683-0457abfe42c3","1506905925346-21bda4d32df4","1501785888041-af3ef285b470","1516483638261-f4dbaf036963","1464822759023-fed622ff2c3b","1476900543704-4312b78632f8","1493606278519-11aa9f86e40a","1441974231531-c6227db76b6e","1472214103451-9374bd1c798e"],"coding":["1461749280684-dccba630e2f6","1555066931-4365d14bab8c","1498050108023-c5249f4df085","1515879218367-8466d910aaa4","1484417894907-623942c8ee29","1550439062-609e1531270e","1517694712202-14dd9538aa97","1504639725590-34d0984388bd","1600267185393-e158a98703de","1587620962725-abab7fe55159","1542831371-29b0f74f9713","1573164713714-d95e436ab8d6","1555949963-ff9fe0c870eb","1517511620798-cec17d428bc0"],"essay":["1455390582262-044cdead277a","1471107340929-a87cd0f5b5f3","1434030216411-0b793f4b4173","1507679799987-c73779587ccf","1517842645767-c639042777db","1456324504439-367cee3b3c32","1497633762265-9d179a990aa6","1486312338219-ce68d2c6f44d","1499951360447-b19be8fe80f5","1506880018603-83d5b814b5a6","1491841550275-ad7854e35ca6","1465146344425-f00d5f5c8f07","1513475382585-d06e58bcb0e0","1542831371-29b0f74f9713","1495446815901-a7297e633e8d"],"general":["1580582932707-520aed937b7b","1503676260728-1c00da094a0b","1522202176988-66273c2fd55f","1523240795612-9a054b0db644","1454165804606-c3d57bc86b40","1483691278019-cb7253bee49f","1513258496099-48168024aec0","1544717305-2782549b5136","1552664730-d307ca884978","1588196749597-9ff075ee6b5b","1484480974693-6ca0a78fb36b","1506784983877-45594efa4cbe","1456513080510-7bf3a84b82f8","1475721027785-f74eccf877e2","1522881193457-37ae97c905bf","1499209974431-9dddcece7f88","1577896851231-70ef18881754","1509062522246-3755977927d7"]};
+const SUBJ_POOL_KEY = {
+  '수학':'math','math':'math','영어':'english','english':'english',
+  '국어':'korean','korean':'korean','과학':'science','science':'science',
+  '사회':'social','social':'social','코딩':'coding','coding':'coding',
+  '논술':'essay','essay':'essay','검정고시':'general','gsd':'general'
+};
+function pickImg(subject, seed) {
+  const key = SUBJ_POOL_KEY[subject] || 'general';
+  const pool = IMG_POOLS[key] || IMG_POOLS.general;
+  let h = 0;
+  const s = String(seed || '');
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  const id = pool[h % pool.length];
+  return 'https://images.unsplash.com/photo-' + id + '?w=900&q=80';
+}
+
 const SIDO_MAP = {
   'seoul':'서울','gyeonggi':'경기','incheon':'인천',
   'busan':'부산','daegu':'대구','gwangju':'광주','daejeon':'대전',
@@ -929,7 +947,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   const desc = `${dong}과외 전문. 초등·중등·고등 수학·영어·국어·과학 1:1 방문 과외.${schools}내신 기출 분석. 무료 상담 010-6834-8080`;
   const bc = [{name:'홈',url:'/'},{name:sidoLabel,url:`/${sidoEn}`},{name:gu,url:`/${sidoEn}/${guEn}`},{name:`${dong}과외`,url:canonical}];
 
-  const body = `${K18}${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong}과외</span></div><div class="art-tag">📍${gu}·${dong}</div><h1 class="art-title">${dong}과외 |${gu}${dong}${K112}${today()}${K110}${infoNums[0]}${K24}${infoNums[1]}${K6}${(['https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80','https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=900&q=80','https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80','https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=900&q=80','https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80'])[_dh%5]}" alt="${dong}${K0}${gu}·${dong}</div><div style="font-size:28px;font-weight:900">${dong}과외</div></div></div></div><div class="art-body"><h2>${dong}과외 안내</h2><p>${intro}</p><p>올케어스터디는 <strong>${gu}${dong}</strong> 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 빠르게 매칭해드립니다.</p><p>주요 학교: <strong>${schools}</strong></p>${schoolsHtml}<h2>${dong}과외 특징</h2><p><strong>① 학교 기출 완벽 분석</strong> —${schools}시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다. 단원별 출제 빈도와 유형을 파악해 시험 직전 집중 대비가 가능합니다.</p><p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. 학생과 선생님의 수업 스타일이 맞지 않으면 부담 없이 교체 가능합니다.</p><p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도를 정리해 학부모님께 공유합니다. 투명한 학습 관리로 성적 변화를 직접 확인할 수 있습니다.</p><p><strong>④ 취약점 집중 보완</strong> — 단원별 취약점을 정확히 파악하고 집중 보완합니다. 학원 수업에서 놓친 부분을 1:1로 완전히 채워드립니다.</p><p><strong>⑤ 빠르게 매칭</strong> — 상담 신청 후 빠르게에${dong}지역 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p><h2>${dong}${K4}${dong}학년별 학습 전략</h2><p><strong>초등</strong> — 모든 학습의 기초가 완성되는 시기입니다. 수학·영어·국어 기초 개념을 탄탄히 다지지 않으면 중학교 진학 후 어려움을 겪습니다. 단순 암기가 아닌 원리 이해 중심으로 지도해 자기주도 학습 능력을 키워드립니다.</p><p><strong>중등</strong> — 초등과 고등의 연결 고리입니다.${schools}내신 성적이 고등학교 진학과 대입에 직접 영향을 미치므로 지금부터 체계적인 관리가 필요합니다. 내신 집중 관리와 함께 고등 과정 선행도 병행합니다.</p><p><strong>고등</strong> — 내신 등급이 대입에 결정적인 역할을 합니다.${schools}내신 1등급을 목표로 집중 관리하며, 수능 대비를 동시에 진행합니다. 시험 4주 전부터 집중 대비 모드로 전환합니다.</p><h2>자주 묻는 질문</h2><p><strong>Q.${dong}에서 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다.${schools}기출을 잘 아는 선생님 위주로 추천해드리며, 빠르면 당일 매칭도 가능합니다.</p><p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. 학원 진도에 맞춰 선행·복습을 병행하는 커리큘럼으로 운영합니다.</p><p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력·수업 방식에 따라 다르며, 무료 상담 후 학부모님 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.</p><p><strong>Q. 성적이 많이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드리니 걱정하지 않으셔도 됩니다.</p><p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 단기 집중 과외(시험 대비 4~8주)도 운영합니다.</p><h2>과목별 과외</h2><p>아래에서 과목별 상세 정보를 확인하세요.</p>${gradeBlocks}<h2>${dong}인근 학교별 과외</h2>${(() => {
+  const body = `${K18}${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong}과외</span></div><div class="art-tag">📍${gu}·${dong}</div><h1 class="art-title">${dong}과외 |${gu}${dong}${K112}${today()}${K110}${infoNums[0]}${K24}${infoNums[1]}${K6}${pickImg('general', sidoEn+'/'+guEn+'/'+toRoman(dong))}" alt="${dong}${K0}${gu}·${dong}</div><div style="font-size:28px;font-weight:900">${dong}과외</div></div></div></div><div class="art-body"><h2>${dong}과외 안내</h2><p>${intro}</p><p>올케어스터디는 <strong>${gu}${dong}</strong> 지역 초등·중등·고등 전 학년, 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. 학생의 수준과 목표에 맞는 검증된 선생님을 빠르게 매칭해드립니다.</p><p>주요 학교: <strong>${schools}</strong></p>${schoolsHtml}<h2>${dong}과외 특징</h2><p><strong>① 학교 기출 완벽 분석</strong> —${schools}시험 출제 경향을 철저히 분석해 내신 최적화 수업을 진행합니다. 단원별 출제 빈도와 유형을 파악해 시험 직전 집중 대비가 가능합니다.</p><p><strong>② 검증된 선생님 1:1 매칭</strong> — 학력·경력·수업 시연 3단계 검증을 통과한 선생님만 배정합니다. 학생과 선생님의 수업 스타일이 맞지 않으면 부담 없이 교체 가능합니다.</p><p><strong>③ 주간 학습 보고서 제공</strong> — 매 수업 후 학습 내용·성취도를 정리해 학부모님께 공유합니다. 투명한 학습 관리로 성적 변화를 직접 확인할 수 있습니다.</p><p><strong>④ 취약점 집중 보완</strong> — 단원별 취약점을 정확히 파악하고 집중 보완합니다. 학원 수업에서 놓친 부분을 1:1로 완전히 채워드립니다.</p><p><strong>⑤ 빠르게 매칭</strong> — 상담 신청 후 빠르게에${dong}지역 맞춤 선생님을 연결해드립니다. 빠르면 당일 매칭도 가능합니다.</p><h2>${dong}${K4}${dong}학년별 학습 전략</h2><p><strong>초등</strong> — 모든 학습의 기초가 완성되는 시기입니다. 수학·영어·국어 기초 개념을 탄탄히 다지지 않으면 중학교 진학 후 어려움을 겪습니다. 단순 암기가 아닌 원리 이해 중심으로 지도해 자기주도 학습 능력을 키워드립니다.</p><p><strong>중등</strong> — 초등과 고등의 연결 고리입니다.${schools}내신 성적이 고등학교 진학과 대입에 직접 영향을 미치므로 지금부터 체계적인 관리가 필요합니다. 내신 집중 관리와 함께 고등 과정 선행도 병행합니다.</p><p><strong>고등</strong> — 내신 등급이 대입에 결정적인 역할을 합니다.${schools}내신 1등급을 목표로 집중 관리하며, 수능 대비를 동시에 진행합니다. 시험 4주 전부터 집중 대비 모드로 전환합니다.</p><h2>자주 묻는 질문</h2><p><strong>Q.${dong}에서 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다.${schools}기출을 잘 아는 선생님 위주로 추천해드리며, 빠르면 당일 매칭도 가능합니다.</p><p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. 학원 진도에 맞춰 선행·복습을 병행하는 커리큘럼으로 운영합니다.</p><p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력·수업 방식에 따라 다르며, 무료 상담 후 학부모님 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.</p><p><strong>Q. 성적이 많이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드리니 걱정하지 않으셔도 됩니다.</p><p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 단기 집중 과외(시험 대비 4~8주)도 운영합니다.</p><h2>과목별 과외</h2><p>아래에서 과목별 상세 정보를 확인하세요.</p>${gradeBlocks}<h2>${dong}인근 학교별 과외</h2>${(() => {
       const schoolMap = SCHOOL_MAP[sidoEn]?.[ak];
       if(!schoolMap) return '';
       const GRADE_LABEL = {E:'초등',M:'중등',H:'고등'};
@@ -1091,17 +1109,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   };
   const catDesc = CAT_DESC[cat] || CAT_DESC['H'];
 
-  const SUBJ_IMAGES = {
-    '수학': ['https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=900&q=80','https://images.unsplash.com/photo-1509228468518-180dd4864904?w=900&q=80','https://images.unsplash.com/photo-1596495577886-d920f1fb7238?w=900&q=80'],
-    '영어': ['https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=900&q=80','https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80','https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80'],
-    '국어': ['https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900&q=80','https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=900&q=80','https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80'],
-    '과학': ['https://images.unsplash.com/photo-1532094349884-543559244e6a?w=900&q=80','https://images.unsplash.com/photo-1576086213369-97a306d36557?w=900&q=80','https://images.unsplash.com/photo-1564325724739-bae0bd08762c?w=900&q=80'],
-    '사회': ['https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=900&q=80','https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=900&q=80','https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=900&q=80'],
-    '코딩': ['https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80','https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80','https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80'],
-    '논술': ['https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80','https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=900&q=80','https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80'],
-  };
-  const _imgs = SUBJ_IMAGES[subject] || SUBJ_IMAGES['수학'];
-  const thumbImg = _imgs[_dh2 % _imgs.length];
+  const thumbImg = pickImg(subject, sidoEn+'/'+guEn+'/'+toRoman(dongName)+'/'+gradeEn+'/'+subjectEn);
 
   
   const GRADE3_LIST = [
@@ -1508,13 +1516,7 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
     ? `${gugunKr}은${sidoKr}에서 교육열이 높은 지역으로,${name}학부모님들의 내신 관리 관심이 높습니다.`
     : `${gugunKr}은${sidoKr}지역으로,${name}학생들의 과외 수요가 꾸준합니다.`;
 
-  const thumbImgs = {
-    E:['https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80','https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=900&q=80','https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=900&q=80'],
-    M:['https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80','https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=900&q=80','https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80'],
-    H:['https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80','https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80','https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=900&q=80'],
-  };
-  const imgs = thumbImgs[gradeCode]||thumbImgs.H;
-  const thumbImg = imgs[_h%imgs.length];
+  const thumbImg = pickImg('general', sidoEn+'/'+gugunRoman+'/'+schoolRoman+'/'+gradeCode);
 
   const SUBJECTS_LIST=[{en:'math',ko:'수학',emoji:'📐'},{en:'english',ko:'영어',emoji:'📖'},{en:'korean',ko:'국어',emoji:'✍️'},{en:'science',ko:'과학',emoji:'🔬'},{en:'social',ko:'사회',emoji:'🌏'},{en:'coding',ko:'코딩',emoji:'💻'},{en:'essay',ko:'논술',emoji:'📝'},{en:'gsd',ko:'검정고시',emoji:'📋'}];
   const subjLinks = SUBJECTS_LIST.map(s=>
@@ -1546,17 +1548,7 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
   let _h=0; for(let i=0;i<(name+subject).length;i++) _h=(_h*31+(name+subject).charCodeAt(i))>>>0;
   const nums=[160+(_h%120), 93+(_h%6)];
 
-  const SUBJ_IMGS={
-    '수학':['https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=900&q=80','https://images.unsplash.com/photo-1509228468518-180dd4864904?w=900&q=80','https://images.unsplash.com/photo-1596495577886-d920f1fb7238?w=900&q=80'],
-    '영어':['https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=900&q=80','https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80','https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80'],
-    '국어':['https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900&q=80','https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=900&q=80','https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80'],
-    '과학':['https://images.unsplash.com/photo-1532094349884-543559244e6a?w=900&q=80','https://images.unsplash.com/photo-1576086213369-97a306d36557?w=900&q=80'],
-    '사회':['https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=900&q=80','https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=900&q=80'],
-    '코딩':['https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80','https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80'],
-    '논술':['https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80','https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=900&q=80'],
-  };
-  const imgs=SUBJ_IMGS[subject]||SUBJ_IMGS['수학'];
-  const thumbImg=imgs[_h%imgs.length];
+  const thumbImg = pickImg(subject, sidoEn+'/'+gugunRoman+'/'+schoolRoman+'/'+gradeCode+'/'+subjectEn);
 
   const SUBJS_LIST=[{en:'math',ko:'수학',emoji:'📐'},{en:'english',ko:'영어',emoji:'📖'},{en:'korean',ko:'국어',emoji:'✍️'},{en:'science',ko:'과학',emoji:'🔬'},{en:'social',ko:'사회',emoji:'🌏'},{en:'coding',ko:'코딩',emoji:'💻'},{en:'essay',ko:'논술',emoji:'📝'}];
   const otherSubjs=SUBJS_LIST.filter(s=>s.en!==subjectEn).map(s=>
