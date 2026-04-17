@@ -1283,7 +1283,9 @@ function makeSubjectPage(subjectEn) {
     gsd:     {ko:'검정고시', emoji:'📋', color:'#7C3AED', lc:'#F5F3FF', thumb:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=75'},
   };
   const info = INFO[subjectEn]; if(!info) return null;
-  const {ko, emoji, color, lc:lightColor, thumb} = info;
+  const {ko, emoji, color, lc:lightColor} = info;
+  const thumb = pickImg(subjectEn, 'subject/'+subjectEn);
+
 
   
   const D = {
@@ -2076,7 +2078,9 @@ function makeConversationPage(lang) {
 
   const info = LANG_MAP[lang];
   if (!info) return null;
-  const { ko, sub, emoji, color, bg, lc, thumb, tag } = info;
+  const { ko, sub, emoji, color, bg, lc, tag } = info;
+  const thumb = pickImg('english', 'conv/'+lang);
+
 
   
   const DATA = {
