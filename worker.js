@@ -5646,14 +5646,13 @@ function serveSitemap() {
 function serveSitemapIndex() {
   const today = new Date().toISOString().slice(0,10);
   
-  const LARGE_SIDO = ['seoul','gyeonggi','gyeongbuk','jeonnam','jeonbuk','gyeongnam','gyeonggi']; 
+  const LARGE_SIDO = ['seoul','gyeonggi','gyeongbuk','jeonnam','jeonbuk','gyeongnam','chungnam','gangwon'];
   const sidoList = Object.keys(REGIONS).map(s => SIDO_EN[s]||s);
   const sitemapEntries = [
     `<sitemap><loc>https://allcarestudy.com/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>`,
     ...sidoList.flatMap(se =>
       LARGE_SIDO.includes(se)
-        ? [`<sitemap><loc>https://allcarestudy.com/sitemap-${se}-1.xml</loc><lastmod>${today}</lastmod></sitemap>`,
-           `<sitemap><loc>https://allcarestudy.com/sitemap-${se}-2.xml</loc><lastmod>${today}</lastmod></sitemap>`]
+        ? [1,2,3,4].map(n => `<sitemap><loc>https://allcarestudy.com/sitemap-${se}-${n}.xml</loc><lastmod>${today}</lastmod></sitemap>`)
         : [`<sitemap><loc>https://allcarestudy.com/sitemap-${se}.xml</loc><lastmod>${today}</lastmod></sitemap>`]
     )
   ];
@@ -5711,8 +5710,9 @@ function serveSitemapByKey(key) {
     ['electrical-engineer','exam-schedule','technician','industrial-engineer','exam-schedule-2026','engineer-schedule','written-exam','practical-exam','technician-written','technician-practical','difficulty','construction','industrial-practical','certification','online-lecture','fire-engineer','fire-electrical','fire-practical','fire-electrical-eng','fire-mechanical','fire-academy','engineerlab','lecture-recommend','past-exam-book','public-corp','kepco-interview','electrical-academy','govt-funded','korail-interview','old-certification','fire-eligibility','fire-electrical-practical','fire-past-exam','govt-academy','industrial-written'].forEach(s=>parts.push(u('/engineer-lab/'+s)));
   } else {
     
-    const baseKey = key.replace(/-[12]$/, '');
-    const part = key.endsWith('-1') ? 1 : key.endsWith('-2') ? 2 : 0; 
+    const baseKey = key.replace(/-[1-4]$/, '');
+    const partMatch = key.match(/-([1-4])$/);
+    const part = partMatch ? parseInt(partMatch[1]) : 0;
     
     let targetSido = null;
     for(const [sido] of Object.entries(REGIONS)){
@@ -5726,11 +5726,38 @@ function serveSitemapByKey(key) {
     const subjKeys = Object.keys(SUBJECTS);
     const areaEntries = Object.entries(reg.areas);
     
-    
-    const half = Math.ceil(areaEntries.length / 2);
-    const targetEntries = part === 1 ? areaEntries.slice(0, half)
-                        : part === 2 ? areaEntries.slice(half)
-                        : areaEntries;
+    // URL 가중치 계산 후 균등 분할
+    let targetEntries;
+    if (part === 0) {
+      targetEntries = areaEntries;
+    } else {
+      // 각 구군 예상 URL 수 계산
+      const weights = areaEntries.map(([ak,area]) => {
+        let w = 1 + (area.dongs||[]).length * (1 + GRADES3.length * subjKeys.length);
+        const gs = SCHOOL_MAP[se]?.[ak];
+        if (gs) {
+          for (const names of Object.values(gs)) {
+            if (Array.isArray(names)) w += names.length * (1 + subjKeys.length);
+          }
+        }
+        return w;
+      });
+      const total = weights.reduce((a,b)=>a+b,0);
+      const targetPerPart = total / 4;
+      // part 경계 찾기
+      let acc = 0, startIdx = 0, endIdx = areaEntries.length;
+      const bounds = [0];
+      for (let i = 0; i < areaEntries.length; i++) {
+        acc += weights[i];
+        if (acc >= targetPerPart * bounds.length && bounds.length < 4) {
+          bounds.push(i + 1);
+        }
+      }
+      while (bounds.length < 5) bounds.push(areaEntries.length);
+      startIdx = bounds[part - 1];
+      endIdx = bounds[part];
+      targetEntries = areaEntries.slice(startIdx, endIdx);
+    }
     
     if(part === 0 || part === 1) parts.push(u(`/${se}`));
     for(const [ak,area] of targetEntries){
