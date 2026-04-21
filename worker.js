@@ -4408,7 +4408,7 @@ function makeCnTopicPage(fullSlug) {
   <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">중국어</a> &rsaquo; <a href="/conversation/chinese/${catKey}">${cat.n}</a> &rsaquo; <span>${T}</span></div>
   <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
     <div style="position:relative;height:300px">
-      <img src="${cat.img}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <img src="${pickImg('general', 'cn/'+fullSlug)}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.05) 100%)"></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:22px 26px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:22px">${cat.icon}</span><span style="font-size:11px;background:${cat.color};color:white;padding:2px 8px;border-radius:16px;font-weight:700">${cat.n}</span></div>
@@ -4934,7 +4934,7 @@ function makeJpTopicPage(fullSlug) {
   <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">일본어</a> &rsaquo; <a href="/conversation/japanese/${catKey}">${cat.n}</a> &rsaquo; <span>${T}</span></div>
   <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
     <div style="position:relative;height:300px">
-      <img src="${cat.img}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <img src="${pickImg('general', 'jp/'+fullSlug)}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.05) 100%)"></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:22px 26px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:22px">${cat.icon}</span><span style="font-size:11px;background:${cat.color};color:white;padding:2px 8px;border-radius:16px;font-weight:700">${cat.n}</span></div>
@@ -5465,7 +5465,7 @@ function makeEnTopicPage(fullSlug) {
   <div class="bc"><a href="/">홈</a> &rsaquo; <a href="/conversation/chinese">영어</a> &rsaquo; <a href="/conversation/english/${catKey}">${cat.n}</a> &rsaquo; <span>${T}</span></div>
   <div style="border-radius:20px;overflow:hidden;margin-bottom:28px">
     <div style="position:relative;height:300px">
-      <img src="${cat.img}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <img src="${pickImg('english', 'en/'+fullSlug)}" alt="${T}" style="width:100%;height:100%;object-fit:cover;display:block">
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.05) 100%)"></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:22px 26px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:22px">${cat.icon}</span><span style="font-size:11px;background:${cat.color};color:white;padding:2px 8px;border-radius:16px;font-weight:700">${cat.n}</span></div>
