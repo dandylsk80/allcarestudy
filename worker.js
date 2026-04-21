@@ -1719,7 +1719,7 @@ function makeAcademyIntroPage() {
     '학원소개 | 올케어스터디',
     '올케어스터디 학원 소개. 3단계 검증 코치, AI 학습 시스템, 전국 코칭 센터.',
     '/academy/intro',
-    introBody + '<script>' + introScript + '<\/script>',
+    introBody + '<script>setTimeout(function(){var els=document.querySelectorAll(\'[data-end]\');for(var i=0;i<els.length;i++){(function(el,idx){var end=parseInt(el.getAttribute(\'data-end\'),10);if(!end)return;el.textContent=\'0\';setTimeout(function(){var cur=0;var step=Math.max(1,Math.ceil(end/80));var t=setInterval(function(){cur+=step;if(cur>=end){el.textContent=end;clearInterval(t);}else{el.textContent=cur;}},20);},idx*200);})(els[i],i);}},500);<\/script><script>' + introScript + '<\/script>',
     [{name:'홈',url:'/'},{name:'학원 소개',url:'/academy/intro'}]
   );
 }
