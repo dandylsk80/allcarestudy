@@ -1910,7 +1910,7 @@ function makeSidoPage(rk) {
   }).join('');
   const title = `${r.label} 과외 | ${r.label} 지역별 맞춤 1:1 과외 - 올케어스터디`;
   const desc = `${r.label} 과외 전문. ${r.label} 전 지역 검증된 선생님. 수학, 영어, 국어, 과학 내신·수능 완벽 대비. 무료 상담 010-6834-8080`;
-  const heroImg = rk==='서울' ? 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=900&q=80' : 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80';
+  const heroImg = pickImg('general', 'sido/'+rk);
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <span>${r.label}</span></div>
   <div class="art-tag">${r.emoji} ${r.label}</div>
@@ -1985,7 +1985,7 @@ function makeAreaPage(rk, ak) {
   for(let i=0;i<ak.length;i++) _h = (_h*31+ak.charCodeAt(i))>>>0;
   const infoNums = [120+(_h%231), 91+(_h%9)];
   const distDesc = generateAreaFeature(ak, area.schools || '');
-  const heroImg = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=75';
+  const heroImg = pickImg('general', 'area/'+rk+'/'+ak);
 
   const dongCards = (() => {
     if (distDongData && distDongData.dongs) {
@@ -2006,6 +2006,7 @@ function makeAreaPage(rk, ak) {
     return area.dongs.map(d => {
       const dongEnKey = DONG_EN[d] || d;
       return `<a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${toRoman(d)}" class="dong-card">
+  <img class="dong-card-img" src="${pickImg('general', 'dong/'+rk+'/'+ak+'/'+d)}" alt="${d} 과외" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
   <div class="dong-card-body"><div class="dong-card-tag">${ak} · ${d}</div><div class="dong-card-title">${d} 과외</div><div class="dong-card-arrow">과외 보기 →</div></div>
 </a>`;
     }).join('');
