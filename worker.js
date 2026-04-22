@@ -7588,8 +7588,9 @@ function makeContactPage(type) {
       <div style="margin-bottom:16px">
         <label class="u6">거주 주소</label>
         <div id="m-addr-row" style="display:flex;gap:8px">
-          <input id="m-addr" type="text" placeholder="예: 서울 강남구 대치동"
-            style="flex:1;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s"
+          <input id="m-addr" type="text" readonly placeholder="클릭하여 주소 검색"
+            style="flex:1;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s;cursor:pointer;background:white"
+            onclick="searchContactAddress()"
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
           <button onclick="searchContactAddress()"
             style="padding:11px 16px;background:#EFF6FF;border:1.5px solid #DBEAFE;border-radius:10px;font-size:13px;font-weight:700;color:#1D4ED8;cursor:pointer;white-space:nowrap;font-family:inherit">검색</button>
