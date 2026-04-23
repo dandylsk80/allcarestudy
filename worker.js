@@ -575,8 +575,8 @@ section h2{font-size:24px !important;letter-spacing:-1px !important;line-height:
 /* HERO 높이 축소 */
 .h2-hero .h2-slide{min-height:560px !important}
 .h2-hero .h2-right{padding:24px 20px !important;gap:16px !important}
-.h2-hero .h2-right h1{font-size:26px !important;letter-spacing:-0.5px !important;line-height:1.35 !important;padding:8px 2px !important;overflow:visible !important}
-.h2-hero .h2-right h1 span{display:inline-block !important;padding:4px 2px !important;font-style:normal !important}
+.h2-hero .h2-right h1{font-size:24px !important;line-height:1.3 !important}
+.h2-hero .h2-right h1 span{background:none !important;-webkit-background-clip:unset !important;background-clip:unset !important;-webkit-text-fill-color:#1D4ED8 !important;color:#1D4ED8 !important}
 /* 슬라이드 높이 통일 */
 .h2-hero .h2-right{flex:1 !important;justify-content:center !important;min-height:0}
 .h2-hero .h2-mock{min-height:180px}
@@ -7315,7 +7315,7 @@ function makeAcademyPage() {
         <div style="font-size:14px;color:#6B7280">빠른 시일 내에 연락드리겠습니다.</div>
       </div>
       <div id="modal-form">
-        <label class="cf-label">이름 <span style="color:#EF4444">*</span></label>
+        <label class="cf-label">학생 이름 <span style="color:#EF4444">*</span></label>
         <input id="m-name" type="text" placeholder="홍길동" class="cf-input" style="margin-bottom:16px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         <label class="cf-label">학년 / 나이 <span style="color:#EF4444">*</span></label>
         <select id="m-grade" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;background:white;font-family:inherit;color:#374151;margin-bottom:16px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -7636,7 +7636,7 @@ function makeContactPage(type) {
 
       <!-- 이름 -->
       <div style="margin-bottom:16px">
-        <label class="u6">이름 <span style="color:#EF4444">*</span></label>
+        <label class="u6">학생 이름 <span style="color:#EF4444">*</span></label>
         <input id="m-name" type="text" placeholder="홍길동"
           class="u13"
           onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -7912,9 +7912,9 @@ function makeHomePage(){
             <span style="width:24px;height:1px;background:#1D4ED8"></span>
             FEATURED SLIDE
           </div>
-          <h1 style="font-size:clamp(36px,4.8vw,64px);font-weight:900;color:#0A1628;letter-spacing:-3px;line-height:0.98;margin:0 0 24px">
+          <h1 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
             지역별<br>
-            <span style="background:linear-gradient(90deg,#1D4ED8,#60A5FA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:italic">1:1 맞춤 과외</span><br>
+            <span style="background:linear-gradient(90deg,#1D4ED8,#60A5FA);-webkit-background-clip:text;-webkit-text-fill-color:transparent">1:1 맞춤 과외</span><br>
             찾는 가장 빠른 길
           </h1>
           <p style="font-size:16px;color:#6B7280;line-height:1.8;margin:0 0 36px;max-width:440px">
@@ -8003,9 +8003,9 @@ function makeHomePage(){
             <span style="width:24px;height:1px;background:#15803D"></span>
             FEATURED SLIDE
           </div>
-          <h1 style="font-size:clamp(36px,4.8vw,64px);font-weight:900;color:#0A1628;letter-spacing:-3px;line-height:0.98;margin:0 0 24px">
+          <h1 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
             우리 동네<br>
-            <span style="background:linear-gradient(90deg,#15803D,#34D399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:italic">믿을 수 있는</span><br>
+            <span style="background:linear-gradient(90deg,#15803D,#34D399);-webkit-background-clip:text;-webkit-text-fill-color:transparent">믿을 수 있는</span><br>
             학원 정보만
           </h1>
           <p style="font-size:16px;color:#6B7280;line-height:1.8;margin:0 0 36px;max-width:440px">
@@ -8068,9 +8068,9 @@ function makeHomePage(){
             <span style="width:24px;height:1px;background:#7C3AED"></span>
             FEATURED SLIDE
           </div>
-          <h1 style="font-size:clamp(36px,4.8vw,64px);font-weight:900;color:#0A1628;letter-spacing:-3px;line-height:0.98;margin:0 0 24px">
+          <h1 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
             AI 데이터 기반<br>
-            <span style="background:linear-gradient(90deg,#7C3AED,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:italic">맞춤 성적 향상</span><br>
+            <span style="background:linear-gradient(90deg,#7C3AED,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent">맞춤 성적 향상</span><br>
             전략을 제시합니다
           </h1>
           <p style="font-size:16px;color:#6B7280;line-height:1.8;margin:0 0 36px;max-width:440px">
@@ -8760,7 +8760,6 @@ function switchTab(menu,tab){
     window.gs=function(n){cur=n;window.gs.cur=n;hsEl.style.transform='translateX(-'+(n*100)+'%)';document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===n));};
     window.gs.cur=0;
     window.gsNext=function(){window.gs(((window.gs.cur||0)+1)%3);};
-    setInterval(()=>window.gs((cur+1)%3),4500);
   }
   try{
     const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.15});
