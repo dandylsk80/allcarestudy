@@ -696,7 +696,27 @@ function wrap(title, desc, canonical, body, breadcrumbs){
   const canonicalUrl = `https://allcarestudy.com${canonical}`;
   
   const descShort = desc.length > 150 ? desc.slice(0, 147) + '...' : desc;
-  const isoDate = new Date().toISOString().slice(0,10);
+  
+  // 발행일: canonical 해시 기반 고정 (2025-01-15 ~ 2025-09-30 사이 분산)
+  let pubHash = 0;
+  for (let i = 0; i < canonical.length; i++) pubHash = (pubHash * 31 + canonical.charCodeAt(i)) >>> 0;
+  const pubStart = new Date('2025-01-15').getTime();
+  const pubEnd = new Date('2025-09-30').getTime();
+  const pubDate = new Date(pubStart + (pubHash % (pubEnd - pubStart)));
+  const pubIso = pubDate.toISOString().slice(0,10);
+  const pubFmt = `${pubDate.getFullYear()}.${String(pubDate.getMonth()+1).padStart(2,'0')}.${String(pubDate.getDate()).padStart(2,'0')}`;
+
+  // 수정일: 이번 주 월요일 (매주 자동 갱신)
+  const now = new Date();
+  const dow = now.getDay(); // 0=일, 1=월
+  const offset = dow === 0 ? -6 : 1 - dow;
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + offset);
+  const modIso = monday.toISOString().slice(0,10);
+  const modFmt = `${monday.getFullYear()}.${String(monday.getMonth()+1).padStart(2,'0')}.${String(monday.getDate()).padStart(2,'0')}`;
+
+  // 본문에 날짜 메타 주입 (breadcrumb 다음 or 맨 앞에 삽입)
+  const dateMeta = `<div style="max-width:1200px;margin:0 auto;padding:8px 24px;font-size:12px;color:#9CA3AF;display:flex;gap:16px;flex-wrap:wrap"><span>📅 발행일: ${pubFmt}</span><span>🔄 수정일: ${modFmt}</span></div>`;
+  const bodyWithDate = dateMeta + body;
 
   
   let bcSchema = '';
@@ -724,13 +744,15 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 <meta property="og:image" content="https://allcarestudy.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="article:published_time" content="${pubIso}">
+<meta property="article:modified_time" content="${modIso}">
 <meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd">
 <meta name="google-site-verification" content="st8_MGU2mfnaomGNCLUGBmiQsZD50WNTWEUxzfmJ47E">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${isoDate}","dateModified":"${isoDate}","inLanguage":"ko-KR"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${pubIso}","dateModified":"${modIso}","inLanguage":"ko-KR"}</script>
 ${bcSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
-</head><body>${HEADER}${body}${FOOTER}</body></html>`;
+</head><body>${HEADER}${bodyWithDate}${FOOTER}</body></html>`;
 }
 
 function wrapDark(title,desc,canonical,body){
@@ -898,12 +920,30 @@ function toRoman(text) {
 
 
 function fromRoman(sidoEn, guEn, roman) {
+  // 로마자 정규화: g↔k, b↔p, d↔t 같은 음 변형 허용 + 끝 dong 접미사 유무
+  const normalize = s => s.toLowerCase()
+    .replace(/ae/g,'E').replace(/ai/g,'E')
+    .replace(/oe/g,'O').replace(/oi/g,'O')
+    .replace(/eo/g,'U').replace(/eu/g,'U')
+    .replace(/g/g,'K').replace(/k/g,'K')
+    .replace(/b/g,'P').replace(/p/g,'P')
+    .replace(/d/g,'T').replace(/t/g,'T')
+    .replace(/r/g,'L').replace(/l/g,'L');
+  const stripDong = s => s.replace(/(dong|myeon|ri|eup)$/,'');
+  const target = normalize(roman);
+  const targetNoSuffix = normalize(stripDong(roman));
+  
   for (const [sido, reg] of Object.entries(REGIONS)) {
     if ((SIDO_EN[sido]||sido) !== sidoEn) continue;
     for (const [ak, area] of Object.entries(reg.areas)) {
       if ((DISTRICT_EN[ak]||ak) !== guEn) continue;
       for (const dong of (area.dongs||[])) {
-        if (toRoman(dong) === roman) return dong;
+        const dRoman = toRoman(dong);
+        if (dRoman === roman) return dong;
+        // 정규화 일치 (정확히)
+        if (normalize(dRoman) === target) return dong;
+        // 입력에서 접미사 제거한 것이 DB의 '접미사 뺀 버전'과 일치
+        if (normalize(stripDong(dRoman)) === targetNoSuffix) return dong;
       }
     }
   }
@@ -982,14 +1022,14 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   const schoolsHtml = `<h2>인근 학교</h2>
     <p>${dong} 인근 학교로는 ${schools} 등이 있습니다. 학교별 시험 특성에 맞춘 내신 대비 수업을 제공합니다.</p>`;
 
-  const title = `${dong} 과외 | ${gu} ${dong} 맞춤 1:1 과외 안내 - 올케어스터디`;
-  const desc = `${dong} 과외 전문. 초등·중등·고등 수학·영어·국어·과학 1:1 방문 과외. ${schools} 내신 기출 분석. 무료 상담 010-6834-8080`;
+  const title = `${sidoLabel} ${gu} ${dong} 과외 | ${gu} ${dong} 맞춤 1:1 과외 안내 - 올케어스터디`;
+  const desc = `${sidoLabel} ${gu} ${dong} 과외 전문. 초등·중등·고등 수학·영어·국어·과학 1:1 방문 과외. ${schools} 내신 기출 분석. 무료 상담 010-6834-8080`;
   const bc = [{name:'홈',url:'/'},{name:sidoLabel,url:`/${sidoEn}`},{name:gu,url:`/${sidoEn}/${guEn}`},{name:`${dong} 과외`,url:canonical}];
 
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} 과외</span></div>
-  <div class="art-tag">📍 ${gu} · ${dong}</div>
-  <h1 class="art-title">${dong} 과외 | ${gu} ${dong} 맞춤 1:1 과외 안내</h1>
+  <div class="art-tag">📍 ${sidoLabel} · ${gu} · ${dong}</div>
+  <h1 class="art-title">${sidoLabel} ${gu} ${dong} 과외 | 맞춤 1:1 과외 안내</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
   <div class="info-box">
     <div class="info-item"><div class="info-num">${infoNums[0]}명</div><div class="info-label">등록 선생님</div></div>
@@ -1247,14 +1287,14 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     `${dong} 1:1과외`, `${gu} ${grade} ${subject}`, `${dong} 내신 ${subject}`];
   const keywordTags = keywords.map(k=>`<span class="keyword-tag">${k}</span>`).join('');
 
-  const title = `${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 맞춤 1:1 과외 - 올케어스터디`;
-  const desc = `${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
+  const title = `${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 | 맞춤 1:1 과외 - 올케어스터디`;
+  const desc = `${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
   const bc = [{name:'홈',url:'/'},{name:sidoLabel,url:`/${sidoEn}`},{name:gu,url:`/${sidoEn}/${guEn}`},{name:`${dong} ${subject}과외`,url:canonical}];
 
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} ${grade} ${subject}과외</span></div>
-  <div class="art-tag">${subj.emoji} ${gu} · ${dong} · ${grade} · ${subject}</div>
-  <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 맞춤 1:1 과외</h1>
+  <div class="art-tag">${subj.emoji} ${sidoLabel} · ${gu} · ${dong} · ${grade} · ${subject}</div>
+  <h1 class="art-title">${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 | 맞춤 1:1 과외</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 5분</span></div>
   <div class="info-box">
     <div class="info-item"><div class="info-num">${dInfoNums[0]}명</div><div class="info-label">${subject} 선생님</div></div>
@@ -9478,6 +9518,16 @@ if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser
       {
         const dongName = fromRoman(parts[0], parts[1], dongEn);
         if (dongName) {
+          // canonical 검증: 시도-구군 조합이 정식이 아니면 301
+          const kr5 = toKr(parts[0], parts[1], null, gradeEn, subjectEn);
+          const canonicalSido = SIDO_EN[kr5.sido] || kr5.sido;
+          const canonicalDist = DISTRICT_EN[kr5.district] || kr5.district;
+          const canonicalDong = toRoman(dongName);
+          // 시도/구군/동 중 하나라도 정식 URL과 다르면 301
+          if (parts[0] !== canonicalSido || parts[1] !== canonicalDist || dongEn !== canonicalDong) {
+            const canonical5 = `/${canonicalSido}/${canonicalDist}/${canonicalDong}/${gradeEn}/${subjectEn}`;
+            return new Response(null, { status: 301, headers: { 'Location': canonical5, 'Cache-Control': 'no-cache' } });
+          }
           const page = makeDongPageByName(parts[0], parts[1], dongName, subjectEn, gradeEn);
           if (page) return new Response(page, { headers: h });
         }
@@ -9488,6 +9538,12 @@ if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser
     
     if (parts.length === 4) {
       const kr = toKr(parts[0], parts[1], null, parts[2], parts[3]);
+      // 정식 URL 구성 (canonical)
+      const canonicalPath = enUrl(kr.sido, kr.district, null, kr.grade, kr.subject);
+      // 현재 URL이 canonical과 다르면 301 redirect → 중복 페이지 방지
+      if (canonicalPath !== path) {
+        return new Response(null, { status: 301, headers: { 'Location': canonicalPath, 'Cache-Control': 'no-cache' } });
+      }
       const page = makeArticlePage(kr.sido, kr.district, kr.grade, kr.subject);
       if (page) return new Response(page, { headers: h });
     }
@@ -9497,6 +9553,11 @@ if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser
       
       const dongName3 = fromRoman(parts[0], parts[1], parts[2]);
       if (dongName3) {
+        // 짧은 URL이면 정식 URL로 301
+        const canonicalDong3 = toRoman(dongName3);
+        if (parts[2] !== canonicalDong3) {
+          return new Response(null, { status: 301, headers: { 'Location': `/${parts[0]}/${parts[1]}/${canonicalDong3}`, 'Cache-Control': 'no-cache' } });
+        }
         const page = makeDongMainPage(parts[0], parts[1], dongName3);
         if (page) return new Response(page, { headers: h });
       }
