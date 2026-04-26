@@ -8871,6 +8871,8 @@ function serveSitemapIndex() {
   const LARGE_SIDO = ['seoul','gyeonggi','gyeongbuk','jeonnam','jeonbuk','gyeongnam','chungnam','gangwon'];
   const sidoList = Object.keys(REGIONS).map(s => SIDO_EN[s]||s);
   const sitemapEntries = [
+    
+    `<sitemap><loc>https://allcarestudy.com/sitemap-priority.xml</loc><lastmod>${today}</lastmod></sitemap>`,
     `<sitemap><loc>https://allcarestudy.com/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>`,
     ...sidoList.flatMap(se =>
       LARGE_SIDO.includes(se)
@@ -8881,6 +8883,64 @@ function serveSitemapIndex() {
   const sitemaps = sitemapEntries.join('');
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemaps}</sitemapindex>`,
+    { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' } }
+  );
+}
+
+function servePrioritySitemap() {
+  
+  const today = new Date().toISOString().slice(0,10);
+  const u = (loc, pri) => `<url><loc>https://allcarestudy.com${loc}</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>${pri}</priority></url>`;
+  const urls = [];
+  
+  
+  urls.push(u('/', '1.0'));
+  urls.push(u('/academy/all', '1.0'));
+  urls.push(u('/study-guide', '0.9'));
+  urls.push(u('/conversation/english', '0.9'));
+  urls.push(u('/conversation/chinese', '0.9'));
+  urls.push(u('/conversation/japanese', '0.9'));
+  urls.push(u('/contact', '0.8'));
+  
+  
+  const priority = [
+    ['서울','강남구','대치동'],['서울','강남구','압구정동'],['서울','강남구','역삼동'],['서울','강남구','개포동'],['서울','강남구','청담동'],
+    ['서울','서초구','반포동'],['서울','서초구','잠원동'],['서울','서초구','방배동'],['서울','서초구','서초동'],
+    ['서울','송파구','잠실동'],['서울','송파구','문정동'],['서울','송파구','가락동'],
+    ['서울','양천구','목동'],['서울','노원구','중계동'],['서울','노원구','상계동'],
+    ['경기','성남시',null],['경기','수원시',null],['경기','용인시',null],['경기','고양시',null],['경기','안양시',null],
+    ['대구','수성구',null],['부산','해운대구',null],['부산','동래구',null],
+    ['인천','연수구',null],['대전','유성구',null],['광주','서구',null]
+  ];
+  
+  
+  for (const [sido, gu, dong] of priority) {
+    const sidoEn = SIDO_EN[sido]||sido;
+    const guEn = DISTRICT_EN[gu]||gu;
+    
+    urls.push(u(`/${sidoEn}/${guEn}`, '0.95'));
+    
+    if (dong) {
+      const dongEn = DONG_EN[dong]||toRoman(dong);
+      
+      urls.push(u(`/${sidoEn}/${guEn}/${dongEn}`, '1.0'));
+      
+      for (const subj of ['math','english','korean','science']) {
+        for (const grade of ['high','middle','elementary']) {
+          urls.push(u(`/${sidoEn}/${guEn}/${dongEn}/${grade}/${subj}`, '0.9'));
+        }
+      }
+    }
+    
+    for (const subj of ['math','english','korean','science']) {
+      for (const grade of ['high','middle','elementary']) {
+        urls.push(u(`/${sidoEn}/${guEn}/${grade}/${subj}`, '0.85'));
+      }
+    }
+  }
+  
+  return new Response(
+    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join('')}</urlset>`,
     { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' } }
   );
 }
@@ -9406,6 +9466,7 @@ export default {
     }
     if (path === '/engineer-lab') return new Response(makeEngineerLabPage(), { headers: h });
     if (path === '/sitemap.xml') return serveSitemapIndex();
+    if (path === '/sitemap-priority.xml') return servePrioritySitemap();
     
     const sitemapMatch = path.match(/^\/sitemap-([a-z0-9_-]+)\.xml$/);
     if (sitemapMatch) {
