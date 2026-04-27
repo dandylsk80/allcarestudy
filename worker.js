@@ -716,7 +716,58 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 
   // 본문에 날짜 메타 주입 (breadcrumb 다음 or 맨 앞에 삽입)
   const dateMeta = `<div style="max-width:1200px;margin:0 auto;padding:8px 24px;font-size:12px;color:#9CA3AF;display:flex;gap:16px;flex-wrap:wrap"><span>📅 발행일: ${pubFmt}</span><span>🔄 수정일: ${modFmt}</span></div>`;
-  const bodyWithDate = dateMeta + body;
+  
+  // canonical URL 패턴 분석해서 지역 페이지면 페이지별 고유 SEO 콘텐츠 자동 주입
+  let uniqueContent = '';
+  try {
+    const segs = canonical.split('/').filter(Boolean);
+    // /sido, /sido/gu, /sido/gu/dong, /sido/gu/dong/grade/subject, /sido/gu/grade/subject 패턴
+    if (segs.length >= 1 && segs.length <= 5 && !segs[0].includes('.') && !['academy','school','study-guide','conversation','contact','about','engineer-lab','feed','rss','sitemap','api'].includes(segs[0])) {
+      const sidoEn = segs[0];
+      // SIDO_EN 역매핑
+      let sidoLabel = '';
+      for (const [k,v] of Object.entries(SIDO_EN)) {
+        if (v === sidoEn) { sidoLabel = REGIONS[k]?.label || k; break; }
+      }
+      let guLabel = '', dongLabel = '', gradeLabel = '', subjectLabel = '';
+      if (segs.length >= 2 && sidoLabel) {
+        const guEn = segs[1];
+        for (const [k,v] of Object.entries(DISTRICT_EN)) {
+          if (v === guEn) { guLabel = k; break; }
+        }
+      }
+      // 3-parts: 동
+      if (segs.length === 3 && guLabel) {
+        for (const [k,v] of Object.entries(DONG_EN)) {
+          if (v === segs[2]) { dongLabel = k; break; }
+        }
+      }
+      // 5-parts: 동+학년+과목
+      if (segs.length === 5) {
+        for (const [k,v] of Object.entries(DONG_EN)) {
+          if (v === segs[2]) { dongLabel = k; break; }
+        }
+        const g = segs[3];
+        gradeLabel = g === 'elementary' ? '초등' : g === 'middle' ? '중등' : g === 'high' ? '고등' : '';
+        for (const [k,v] of Object.entries(SUBJECT_EN)) {
+          if (v === segs[4]) { subjectLabel = k; break; }
+        }
+      }
+      // 4-parts: 구+학년+과목
+      if (segs.length === 4) {
+        const g = segs[2];
+        gradeLabel = g === 'elementary' ? '초등' : g === 'middle' ? '중등' : g === 'high' ? '고등' : '';
+        for (const [k,v] of Object.entries(SUBJECT_EN)) {
+          if (v === segs[3]) { subjectLabel = k; break; }
+        }
+      }
+      if (sidoLabel) {
+        uniqueContent = genUniqueContent(canonical, sidoLabel, guLabel, dongLabel, subjectLabel, gradeLabel);
+      }
+    }
+  } catch(e) { uniqueContent = ''; }
+  
+  const bodyWithDate = dateMeta + body + uniqueContent;
 
   
   let bcSchema = '';
@@ -954,6 +1005,77 @@ function hashSelect(str, arr) {
   let h = 0;
   for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
   return arr[h % arr.length];
+}
+
+// 페이지별로 고유하게 생성되는 SEO 콘텐츠 (해시 기반, 같은 페이지는 항상 같은 결과)
+function genUniqueContent(seedKey, sidoLabel, guLabel, dongLabel, subjectLabel, gradeLabel) {
+  // 시드 해시
+  let h = 0;
+  for (let i = 0; i < seedKey.length; i++) h = (h * 31 + seedKey.charCodeAt(i)) >>> 0;
+  const pick = (arr) => arr[h % arr.length];
+  const pick2 = (arr) => arr[(h >>> 3) % arr.length];
+  const pick3 = (arr) => arr[(h >>> 7) % arr.length];
+  const pick4 = (arr) => arr[(h >>> 11) % arr.length];
+
+  // 학습 환경 묘사 (지역 특성)
+  const env = pick([
+    `학습 분위기가 안정적이고 가정 학습 시간이 충분히 확보되는 지역으로 알려져 있습니다`,
+    `통학 동선이 짧아 학원과 자기주도 학습을 병행하기 좋은 환경을 갖추고 있습니다`,
+    `학부모 정보 교류가 활발하고 학습 정보가 빠르게 공유되는 특성이 있습니다`,
+    `학원가 접근성이 좋고 도서관·스터디카페 등 학습 인프라가 잘 갖춰져 있습니다`,
+    `주거 밀집도가 높아 또래 학습 그룹 형성이 쉽고 학습 동기 부여에 유리합니다`,
+    `교육열이 꾸준히 유지되며 다양한 학습 옵션을 비교 선택할 수 있는 지역입니다`,
+    `대단지 아파트 중심으로 학습 커뮤니티가 자연스럽게 형성되어 있습니다`,
+    `학교 정규 수업 후 보충 학습이 활발히 이루어지는 분위기가 정착되어 있습니다`
+  ]);
+
+  // 학습 전략
+  const strategy = pick2([
+    `진도 위주의 일괄 수업보다 학생 개인의 약점을 정확히 짚어내는 1:1 분석형 지도가 효과적입니다`,
+    `숙제 검사와 오답 정리가 매주 체계적으로 이루어지는 관리형 수업이 성적 향상에 직결됩니다`,
+    `시험 2주 전부터 학교별 출제 경향을 반영한 집중 대비가 필수적입니다`,
+    `기본 개념을 반복 점검하면서 응용 문제 해결력을 동시에 키우는 통합형 접근이 유효합니다`,
+    `매 수업마다 그날 배운 내용을 즉시 점검하고 부족한 부분을 보완하는 사이클이 중요합니다`,
+    `예습-수업-복습-과제의 학습 사이클을 흐트러지지 않게 유지하는 것이 핵심입니다`,
+    `성적이 정체된 구간에서는 풀이 과정을 다시 점검하는 진단형 수업이 돌파구가 됩니다`,
+    `학교 시험과 수능 유형을 균형 있게 다루는 커리큘럼이 장기적으로 유리합니다`
+  ]);
+
+  // 학부모 관심사
+  const parent = pick3([
+    `진도 보고와 출결 관리, 약점 분석 리포트가 꾸준히 제공되는 시스템을 선호하는 경향이 강합니다`,
+    `선생님과의 직접 소통, 정기 학부모 상담이 가능한지를 우선 확인하는 분이 많습니다`,
+    `결과 중심보다 과정 중심으로 학습 변화를 보여주는 수업을 신뢰하는 분위기입니다`,
+    `학원-과외-인강을 적절히 조합해 학습 효율을 극대화하려는 전략이 일반적입니다`,
+    `검증된 학력과 풍부한 지도 경력을 갖춘 선생님을 선호하는 경향이 뚜렷합니다`,
+    `첫 수업 무료 체험을 통해 선생님과 학생의 케미스트리를 먼저 확인하는 흐름입니다`,
+    `중장기 로드맵을 함께 짜주는 컨설팅 능력을 갖춘 선생님에 대한 수요가 높습니다`,
+    `자녀의 학습 성향에 맞춤 지도 가능한 선생님을 까다롭게 검증하는 분위기입니다`
+  ]);
+
+  // 추천 포인트
+  const recommend = pick4([
+    `초기 진단을 통해 현재 수준을 정확히 파악한 뒤 단계적으로 끌어올리는 방식이 안전합니다`,
+    `한 달 단위로 성과를 점검하고 필요시 커리큘럼을 조정하는 유연한 운영이 중요합니다`,
+    `방학 집중 학습과 학기 중 꾸준한 관리가 함께 이루어져야 효과가 누적됩니다`,
+    `시험 직전 벼락치기보다 평소 누적 학습이 안정적인 결과로 이어집니다`,
+    `자기주도 학습 습관 형성을 함께 도와주는 선생님과의 매칭이 장기적으로 유리합니다`,
+    `학습량보다 학습 밀도를 높이는 데 중점을 두는 운영이 효과적입니다`,
+    `정기적인 모의고사와 피드백을 통해 실전 감각을 유지하는 것이 좋습니다`,
+    `학생의 학습 페이스를 존중하면서도 적절한 긴장감을 유지하는 균형이 중요합니다`
+  ]);
+
+  const region = `${sidoLabel}${guLabel ? ' ' + guLabel : ''}${dongLabel ? ' ' + dongLabel : ''}`;
+  const subj = subjectLabel || '';
+  const grade = gradeLabel || '';
+  
+  return `<section style="background:#FAFBFF;border:1px solid #E5E7EB;border-radius:14px;padding:28px;margin:32px 0;line-height:1.75;color:#374151;font-size:15px">
+    <h3 style="margin:0 0 16px;font-size:18px;font-weight:700;color:#1F2937">📍 ${region} ${grade} ${subj} 학습 가이드</h3>
+    <p style="margin:0 0 14px"><strong>${region} 지역 특성:</strong> ${env}.</p>
+    <p style="margin:0 0 14px"><strong>${grade} ${subj} 학습 전략:</strong> ${strategy}.</p>
+    <p style="margin:0 0 14px"><strong>학부모 관심 포인트:</strong> ${parent}.</p>
+    <p style="margin:0"><strong>${region}에서 추천하는 방향:</strong> ${recommend}.</p>
+  </section>`;
 }
 
 
