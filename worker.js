@@ -9683,7 +9683,7 @@ export default {
           </svg>`;
       return new Response(svgLogo, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
     }
-if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 
     
     if (parts.length === 0) return new Response(makeHomePage(), { headers: h });
