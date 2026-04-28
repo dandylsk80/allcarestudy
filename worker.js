@@ -8184,12 +8184,13 @@ function makeHomePage(){
             FEATURED SLIDE
           </div>
           <h1 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
+            <span style="display:block;font-size:0.55em;color:#1D4ED8;font-weight:800;letter-spacing:0;margin-bottom:8px">올케어스터디</span>
             지역별<br>
             <span style="background:linear-gradient(90deg,#1D4ED8,#60A5FA);-webkit-background-clip:text;-webkit-text-fill-color:transparent">1:1 맞춤 과외</span><br>
             찾는 가장 빠른 길
           </h1>
           <p style="font-size:16px;color:#6B7280;line-height:1.8;margin:0 0 36px;max-width:440px">
-            우리 아이에게 꼭 맞는 선생님,<br>
+            <strong style="color:#1D4ED8">올케어스터디</strong>는 우리 아이에게 꼭 맞는 선생님을<br>
             지역·과목·학년 3단계 필터로 즉시 매칭합니다.
           </p>
           <div style="display:flex;gap:0;align-items:center">
@@ -9038,7 +9039,7 @@ function switchTab(menu,tab){
   }catch(e){}
 })();
 </script>`;
-  return wrap('올케어스터디 | 전국 1:1 맞춤 과외·학원 정보','전국 초·중·고 1:1 맞춤 과외 플랫폼. 검증된 선생님 빠르게 매칭. 수학·영어·국어·과학 방문과외. 무료상담 010-6834-8080','/',body,[]);
+  return wrap('올케어스터디 - 전국 1:1 맞춤 과외·학원 매칭 플랫폼','올케어스터디는 전국 초·중·고 1:1 맞춤 과외·학원 정보 플랫폼입니다. 검증된 선생님 빠르게 매칭, 수학·영어·국어·과학 방문과외. 무료상담 010-6834-8080','/',body,[]);
 }
 
 
