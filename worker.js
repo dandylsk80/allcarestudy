@@ -622,7 +622,7 @@ function closeMobNav(){document.getElementById('mob-nav').classList.remove('open
 
 const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;border-bottom:1px solid rgba(255,255,255,0.08)!important;box-shadow:none!important"><div class="hw"><a href="/" class="logo"><div class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="logo-name"><span class="logo-main" style="color:white"><em>올케어</em>스터디</span><span class="logo-sub" style="color:rgba(255,255,255,0.45)">ALLCARE STUDY</span></div></a><div class="vpill" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06)"><span class="vl" style="color:rgba(255,255,255,0.5)">누적 방문자</span><span class="vc" style="color:#60A5FA">353,112명</span></div><nav class="gnb"><div class="gi" id="gi-region"><button class="gb" onclick="toggleMega('region')" style="color:rgba(255,255,255,0.85)">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="mega-drop" id="mega-region"><div class="mega-tabs"><button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button><button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button><button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button></div><div class="mega-panel on" id="region-local"><div class="mega-btns"><a class="mega-btn" href="/seoul">🏙 서울</a><a class="mega-btn" href="/gyeonggi">🌿 경기</a><a class="mega-btn" href="/incheon">🌊 인천</a><a class="mega-btn" href="/busan">🐟 부산</a><a class="mega-btn" href="/daegu">🍎 대구</a><a class="mega-btn" href="/daejeon">🌾 대전</a><a class="mega-btn" href="/gwangju">🌸 광주</a><a class="mega-btn" href="/ulsan">⚙️ 울산</a><a class="mega-btn" href="/sejong">🏛 세종</a><a class="mega-btn" href="/gangwon">🏔 강원</a><a class="mega-btn" href="/chungbuk">🌻 충북</a><a class="mega-btn" href="/chungnam">🌊 충남</a><a class="mega-btn" href="/jeonbuk">🌾 전북</a><a class="mega-btn" href="/jeonnam">🍵 전남</a><a class="mega-btn" href="/gyeongbuk">🍎 경북</a><a class="mega-btn" href="/gyeongnam">🌊 경남</a><a class="mega-btn" href="/jeju">🌺 제주</a></div></div><div class="mega-panel" id="region-grade"><div class="mega-rt">🎒 초등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/elementary/1">초등 1학년</a><a class="mega-btn" href="/grade/elementary/2">초등 2학년</a><a class="mega-btn" href="/grade/elementary/3">초등 3학년</a><a class="mega-btn" href="/grade/elementary/4">초등 4학년</a><a class="mega-btn" href="/grade/elementary/5">초등 5학년</a><a class="mega-btn" href="/grade/elementary/6">초등 6학년</a></div><div class="mega-rt">📚 중학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/middle/1">중학교 1학년</a><a class="mega-btn" href="/grade/middle/2">중학교 2학년</a><a class="mega-btn" href="/grade/middle/3">중학교 3학년</a></div><div class="mega-rt">🎓 고등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/high/1">고등 1학년</a><a class="mega-btn" href="/grade/high/2">고등 2학년</a><a class="mega-btn" href="/grade/high/3">고등 3학년</a></div></div><div class="mega-panel" id="region-school"><div class="mega-rt">시도별 학교 과외</div><div class="mega-btns"><a class="mega-btn" href="/school/seoul">서울</a><a class="mega-btn" href="/school/gyeonggi">경기</a><a class="mega-btn" href="/school/incheon">인천</a><a class="mega-btn" href="/school/busan">부산</a><a class="mega-btn" href="/school/daegu">대구</a><a class="mega-btn" href="/school/gwangju">광주</a><a class="mega-btn" href="/school/daejeon">대전</a><a class="mega-btn" href="/school/ulsan">울산</a><a class="mega-btn" href="/school/sejong">세종</a><a class="mega-btn" href="/school/gangwon">강원</a><a class="mega-btn" href="/school/chungbuk">충북</a><a class="mega-btn" href="/school/chungnam">충남</a><a class="mega-btn" href="/school/jeonbuk">전북</a><a class="mega-btn" href="/school/jeonnam">전남</a><a class="mega-btn" href="/school/gyeongbuk">경북</a><a class="mega-btn" href="/school/gyeongnam">경남</a><a class="mega-btn" href="/school/jeju">제주</a></div></div></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/subject/math">📐 수학</a><a href="/subject/english">📖 영어</a><a href="/subject/korean">✍️ 국어</a><a href="/subject/science">🔬 과학</a><a href="/subject/social">🌏 사회</a><a href="/subject/coding">💻 코딩</a><a href="/subject/essay">📝 논술</a><a href="/subject/gsd">📋 검정고시</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/study-guide">📖 학습 가이드</a></div></div><div class="gi"><a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a></div></nav></div></header>`;
 
-const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px"><div style="max-width:1100px;margin:0 auto;padding:0 48px"><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px"><span>⚠️</span><span>안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:24px"><div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:20px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span></div><p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p></div><div style="text-align:right"><div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;flex-wrap:wrap"><div style="font-size:22px;font-weight:900;color:white;white-space:nowrap">010-6834-8080</div><a href="tel:01068348080" style="background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">전화 상담</a></div></div></div><div style="padding:24px 0 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:18px 28px;justify-content:center"><a href="/seoul" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">서울 과외</a><a href="/gyeonggi" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">경기 과외</a><a href="/busan" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">부산 과외</a><a href="/subject/math" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">수학 과외</a><a href="/subject/english" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">영어 과외</a><a href="/academy/all" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">센터 찾기</a><a href="/academy/intro" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">학원 소개</a><a href="/contact" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">문의하기</a></div><div style="padding-top:20px;font-size:11px;color:rgba(255,255,255,0.3)"> © 2026 올케어스터디. All rights reserved. </div></div></footer><div class="floats" id="float-btns"><a class="fbtn fb1" href="tel:01068348080" title="전화상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a><a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring" title="상담하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></a></div> <script>
+const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px"><div style="max-width:1100px;margin:0 auto;padding:0 48px"><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px"><span>⚠️</span><span>안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:24px"><div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:20px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span></div><p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p></div><div style="text-align:right"><div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;flex-wrap:wrap"><div style="font-size:22px;font-weight:900;color:white;white-space:nowrap">010-6834-8080</div><a href="tel:01068348080" style="background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">전화 상담</a></div></div></div><div style="padding:24px 0 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:18px 28px;justify-content:center"><a href="/seoul" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">서울 과외</a><a href="/gyeonggi" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">경기 과외</a><a href="/busan" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">부산 과외</a><a href="/subject/math" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">수학 과외</a><a href="/subject/english" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">영어 과외</a><a href="/academy/all" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">센터 찾기</a><a href="/academy/intro" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">학원 소개</a><a href="/contact" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">문의하기</a><a href="/all-regions" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 지역</a></div><div style="padding-top:20px;font-size:11px;color:rgba(255,255,255,0.3)"> © 2026 올케어스터디. All rights reserved. </div></div></footer><div class="floats" id="float-btns"><a class="fbtn fb1" href="tel:01068348080" title="전화상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a><a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring" title="상담하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></a></div> <script>
 (function(){
   try {
     var path = window.location.pathname;
@@ -2462,6 +2462,102 @@ function makeArticlePage(rk, ak, gk, sk) {
 
 
 
+
+
+function makeAllRegionsPage() {
+  // 모든 시도/구군/동 페이지 링크 모음 (구글봇용 site map)
+  const sections = [];
+  
+  for (const [sidoKr, reg] of Object.entries(REGIONS)) {
+    const sidoEn = SIDO_EN[sidoKr] || sidoKr;
+    const sidoLabel = reg.label || sidoKr;
+    const guList = [];
+    
+    for (const [guKr, area] of Object.entries(reg.areas || {})) {
+      const guEn = DISTRICT_EN[guKr] || guKr;
+      
+      // 구/시 링크
+      const guLinks = [`<a href="/${sidoEn}/${guEn}" style="color:#1D4ED8;font-weight:600">${guKr}</a>`];
+      
+      // 동 링크들
+      const dongLinks = [];
+      for (const dong of (area.dongs || [])) {
+        const dongEn = DONG_EN[dong] || toRoman(dong);
+        dongLinks.push(`<a href="/${sidoEn}/${guEn}/${dongEn}" style="color:#6B7280;font-size:13px">${dong}</a>`);
+      }
+      
+      if (dongLinks.length > 0) {
+        guList.push(`
+          <div style="padding:10px 0;border-bottom:1px solid #F3F4F6">
+            <div style="margin-bottom:6px">${guLinks.join('')}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 12px;padding-left:8px">${dongLinks.join('')}</div>
+          </div>`);
+      } else {
+        guList.push(`<div style="padding:8px 0">${guLinks.join('')}</div>`);
+      }
+    }
+    
+    sections.push(`
+      <section style="margin-bottom:40px;padding:24px;background:white;border-radius:12px;border:1px solid #E5E7EB">
+        <h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-bottom:12px;border-bottom:2px solid #1D4ED8">📍 ${sidoLabel}</h2>
+        <div>${guList.join('')}</div>
+      </section>`);
+  }
+  
+  // 과목별 + 학년별 + 학교별 추가 섹션
+  const SUBJ_KO_MAP = {math:'수학',english:'영어',korean:'국어',science:'과학',social:'사회',coding:'코딩',essay:'논술',gsd:'검정고시'};
+  const subjectLinks = ['math','english','korean','science','social','coding','essay','gsd'].map(s => 
+    `<a href="/subject/${s}" style="color:#1D4ED8;font-weight:600">${SUBJ_KO_MAP[s]}</a>`
+  ).join('');
+  
+  const gradeLinks = [];
+  for (const g of ['elementary','middle','high']) {
+    const max = g === 'elementary' ? 6 : 3;
+    const gKo = g === 'elementary' ? '초등' : g === 'middle' ? '중등' : '고등';
+    for (let i = 1; i <= max; i++) {
+      gradeLinks.push(`<a href="/grade/${g}/${i}" style="color:#1D4ED8;font-weight:600">${gKo} ${i}학년</a>`);
+    }
+  }
+  
+  const schoolLinks = Object.keys(REGIONS).map(s => {
+    const en = SIDO_EN[s]||s;
+    return `<a href="/school/${en}" style="color:#1D4ED8;font-weight:600">${REGIONS[s].label||s} 학교</a>`;
+  }).join('');
+  
+  const body = `
+    <div style="max-width:1100px;margin:0 auto;padding:clamp(90px,15vw,160px) clamp(16px,4vw,48px) 80px">
+      <div style="margin-bottom:8px;font-size:13px;color:#9CA3AF"><a href="/" style="color:#9CA3AF;text-decoration:none">홈</a> › <span>전체 지역</span></div>
+      <h1 style="font-size:32px;font-weight:900;color:#0F2044;margin-bottom:8px">전체 지역 안내</h1>
+      <p style="font-size:15px;color:#6B7280;margin-bottom:32px">올케어스터디에서 제공하는 전국 지역별 과외·학원 페이지를 한곳에서 확인하세요.</p>
+      
+      <section style="margin-bottom:32px;padding:20px 24px;background:#F8FAFF;border-radius:12px;border:1px solid #BFDBFE">
+        <h2 style="font-size:16px;font-weight:800;color:#1D4ED8;margin:0 0 12px">📚 과목별 과외</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px 16px">${subjectLinks}</div>
+      </section>
+      
+      <section style="margin-bottom:32px;padding:20px 24px;background:#F8FAFF;border-radius:12px;border:1px solid #BFDBFE">
+        <h2 style="font-size:16px;font-weight:800;color:#1D4ED8;margin:0 0 12px">🎓 학년별 과외</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px 16px">${gradeLinks.join('')}</div>
+      </section>
+      
+      <section style="margin-bottom:32px;padding:20px 24px;background:#F8FAFF;border-radius:12px;border:1px solid #BFDBFE">
+        <h2 style="font-size:16px;font-weight:800;color:#1D4ED8;margin:0 0 12px">🏫 학교별 과외</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px 16px">${schoolLinks}</div>
+      </section>
+      
+      <h2 style="font-size:24px;font-weight:900;color:#0F2044;margin:48px 0 24px">🗺 전국 지역 목록</h2>
+      ${sections.join('')}
+    </div>`;
+  
+  const bc = [{name:'홈',url:'/'},{name:'전체 지역',url:'/all-regions'}];
+  return wrap(
+    '전체 지역 안내 - 전국 시도·구·동 과외 페이지 목록 | 올케어스터디',
+    '올케어스터디 전국 지역별 과외·학원 페이지를 한곳에서. 시도·구·동 단위로 정리된 전국 지역 안내. 원하는 지역의 과외 정보를 빠르게 찾아보세요.',
+    '/all-regions',
+    body,
+    bc
+  );
+}
 
 
 function makeAcademyIntroPage() {
@@ -9030,6 +9126,7 @@ function servePrioritySitemap() {
   
   
   urls.push(u('/', '1.0'));
+  urls.push(u('/all-regions', '0.95'));
   urls.push(u('/academy/all', '1.0'));
   urls.push(u('/study-guide', '0.9'));
   urls.push(u('/conversation/english', '0.9'));
@@ -9655,6 +9752,7 @@ export default {
     if (path === '/conversation/japanese') return new Response(makeConversationPage('japanese'), {headers:h});
     if (path.startsWith('/conversation/japanese/')) { const slug = path.split('/')[3]; if (slug) { const p = makeJpSubPage(slug); if (p) return new Response(p, {headers:h}); } }
     if (path === '/academy/intro') return new Response(makeAcademyIntroPage(), {headers:h});
+    if (path === '/all-regions') return new Response(makeAllRegionsPage(), {headers:h});
     if (path === '/academy' || path === '/academy/all') return new Response(makeAcademyPage(null), {headers:h});
     if (path.startsWith('/academy/')) {
       const seg = path.split('/')[2];
