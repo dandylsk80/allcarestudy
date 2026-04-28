@@ -7442,8 +7442,12 @@ function makeCnSubPage(slug) {
   return wrap(pg.t+' | 중국어 회화 - 올케어스터디',desc,canonical,body,bc);
 }
 
-function makeAcademyPage() {
+function makeAcademyPage(sidoEn) {
   const SIDO_ORDER = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','강원','제주'];
+  
+  // 시도별 페이지면 title/desc/canonical을 다르게
+  const SIDO_KO_MAP = {seoul:'서울',gyeonggi:'경기',incheon:'인천',daejeon:'대전',sejong:'세종',daegu:'대구',gwangju:'광주',ulsan:'울산',busan:'부산',chungbuk:'충북',chungnam:'충남',gyeongbuk:'경북',gyeongnam:'경남',jeonbuk:'전북',jeonnam:'전남',gangwon:'강원',jeju:'제주'};
+  const sidoKo = sidoEn ? SIDO_KO_MAP[sidoEn] : null;
 
   const body = `
   <div style="max-width:1100px;margin:0 auto;padding:clamp(90px,15vw,160px) clamp(16px,4vw,48px) 80px">
@@ -7674,6 +7678,15 @@ function makeAcademyPage() {
   <\/script>`;
 
   const bcAcademy = [{name:'홈',url:'/'},{name:'센터찾기',url:'/academy/all'}];
+  if (sidoKo) {
+    return wrap(
+      `${sidoKo} 코칭센터 찾기 | 올케어스터디`,
+      `${sidoKo} 지역 올케어스터디 코칭센터 안내. ${sidoKo} 초·중·고 1:1 맞춤 학습코칭 센터를 한눈에 확인하세요.`,
+      `/academy/${sidoEn}`,
+      body,
+      bcAcademy
+    );
+  }
   return wrap('전국 코칭센터 찾기 | 올케어스터디', '전국 올케어스터디 코칭센터를 찾아보세요. 서울·경기·인천 등 전국 초중고 맞춤 1:1 학습코칭 센터.', '/academy/all', body, bcAcademy);
 }
 
@@ -9642,7 +9655,17 @@ export default {
     if (path === '/conversation/japanese') return new Response(makeConversationPage('japanese'), {headers:h});
     if (path.startsWith('/conversation/japanese/')) { const slug = path.split('/')[3]; if (slug) { const p = makeJpSubPage(slug); if (p) return new Response(p, {headers:h}); } }
     if (path === '/academy/intro') return new Response(makeAcademyIntroPage(), {headers:h});
-    if (path === '/academy' || path.startsWith('/academy/')) return new Response(makeAcademyPage(), {headers:h});
+    if (path === '/academy' || path === '/academy/all') return new Response(makeAcademyPage(null), {headers:h});
+    if (path.startsWith('/academy/')) {
+      const seg = path.split('/')[2];
+      // 시도 영문 코드면 시도별 학원 페이지
+      const ACADEMY_SIDO_LIST = ['seoul','gyeonggi','incheon','daejeon','sejong','daegu','gwangju','ulsan','busan','chungbuk','chungnam','gyeongbuk','gyeongnam','jeonbuk','jeonnam','gangwon','jeju'];
+      if (ACADEMY_SIDO_LIST.includes(seg)) {
+        return new Response(makeAcademyPage(seg), {headers:h});
+      }
+      // 그 외는 기존 동작 (학원 이름 등 - 보호 영역)
+      return new Response(makeAcademyPage(), {headers:h});
+    }
     if (path === '/favicon.ico' || path === '/favicon-32.png' || path === '/favicon-16.png') {
       
       const svgFavicon = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
