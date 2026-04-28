@@ -8178,11 +8178,11 @@ function makeHomePage(){
             <span style="width:24px;height:1px;background:#15803D"></span>
             FEATURED SLIDE
           </div>
-          <h1 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
+          <h2 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
             우리 동네<br>
             <span style="background:linear-gradient(90deg,#15803D,#34D399);-webkit-background-clip:text;-webkit-text-fill-color:transparent">믿을 수 있는</span><br>
             학원 정보만
-          </h1>
+          </h2>
           <p style="font-size:16px;color:#6B7280;line-height:1.8;margin:0 0 36px;max-width:440px">
             학원 비교·후기·실시간 정보까지,<br>
             올케어스터디에서 한 번에 확인하세요.
@@ -8243,11 +8243,11 @@ function makeHomePage(){
             <span style="width:24px;height:1px;background:#7C3AED"></span>
             FEATURED SLIDE
           </div>
-          <h1 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
+          <h2 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
             AI 데이터 기반<br>
             <span style="background:linear-gradient(90deg,#7C3AED,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent">맞춤 성적 향상</span><br>
             전략을 제시합니다
-          </h1>
+          </h2>
           <p style="font-size:16px;color:#6B7280;line-height:1.8;margin:0 0 36px;max-width:440px">
             100만 건의 학습 데이터 분석으로<br>
             우리 아이의 약점을 정확히 찾아냅니다.
