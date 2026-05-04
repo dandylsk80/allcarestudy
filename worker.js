@@ -110,6 +110,26 @@ const DISTRICT_MAP = {
 };
 const DISTRICT_EN = Object.fromEntries(Object.entries(DISTRICT_MAP).map(([k,v])=>[v,k]));
 
+// 같은 한글 구군명(예: '북구')이 여러 시도에 존재하므로 시도별로 정확히 매핑
+// 시도(영문) + 구군(한글) → 영문 슬러그
+const DISTRICT_EN_BY_SIDO = {
+  busan:    {'중구':'junggu-busan','서구':'seo-busan','동구':'dong-busan','남구':'nam-busan','북구':'buk-busan','강서구':'gangseo-busan'},
+  daegu:    {'중구':'junggu-daegu','서구':'seo-daegu','동구':'dong-daegu','남구':'nam-daegu','북구':'buk-daegu'},
+  incheon:  {'중구':'junggu-incheon','서구':'seo-incheon','동구':'donggu-incheon'},
+  gwangju:  {'서구':'seo-gwangju','동구':'dong-gwangju','남구':'nam-gwangju','북구':'buk-gwangju'},
+  daejeon:  {'중구':'junggu-daejeon','서구':'seo-daejeon','동구':'dong-daejeon'},
+  ulsan:    {'중구':'junggu-ulsan','동구':'dong-ulsan','남구':'nam-ulsan','북구':'buk-ulsan'},
+  gangwon:  {'고성군':'goseong-gw'},
+  gyeongnam:{'고성군':'goseong-gn'},
+  gyeonggi: {'광주시':'gwangju-gg'},
+};
+// 시도+구군(한글)을 받아 정확한 영문 슬러그를 반환. 시도별 매핑 우선, 없으면 기본 매핑 사용.
+function gugunEn(sidoEn, gugunKr) {
+  const sidoMap = DISTRICT_EN_BY_SIDO[sidoEn];
+  if (sidoMap && sidoMap[gugunKr]) return sidoMap[gugunKr];
+  return DISTRICT_EN[gugunKr] || gugunKr;
+}
+
 
 
 
@@ -152,7 +172,7 @@ function toKr(sido,district,dong,grade,subject){
   };
 }
 function enUrl(sido,district,dong,grade,subject){
-  const s=SIDO_EN[sido]||sido, d=DISTRICT_EN[district]||district,
+  const s=SIDO_EN[sido]||sido, d=gugunEn(s, district)||district,
         dg=dong?(DONG_EN[dong]||dong):null,
         g=GRADE_EN[grade]||grade, sb=SUBJECT_EN[subject]||subject;
   if(dg) return `/${s}/${d}/${dg}/${g}/${sb}`;
@@ -972,30 +992,13 @@ function toRoman(text) {
 
 
 function fromRoman(sidoEn, guEn, roman) {
-  // 로마자 정규화: g↔k, b↔p, d↔t 같은 음 변형 허용 + 끝 dong 접미사 유무
-  const normalize = s => s.toLowerCase()
-    .replace(/ae/g,'E').replace(/ai/g,'E')
-    .replace(/oe/g,'O').replace(/oi/g,'O')
-    .replace(/eo/g,'U').replace(/eu/g,'U')
-    .replace(/g/g,'K').replace(/k/g,'K')
-    .replace(/b/g,'P').replace(/p/g,'P')
-    .replace(/d/g,'T').replace(/t/g,'T')
-    .replace(/r/g,'L').replace(/l/g,'L');
-  const stripDong = s => s.replace(/(dong|myeon|ri|eup)$/,'');
-  const target = normalize(roman);
-  const targetNoSuffix = normalize(stripDong(roman));
-  
+  // 정확한 매칭만 허용 (정규화/접미사 매칭 비활성화 - 짧은 URL → 정식 URL 리디렉션 차단)
   for (const [sido, reg] of Object.entries(REGIONS)) {
     if ((SIDO_EN[sido]||sido) !== sidoEn) continue;
     for (const [ak, area] of Object.entries(reg.areas)) {
       if ((DISTRICT_EN[ak]||ak) !== guEn) continue;
       for (const dong of (area.dongs||[])) {
-        const dRoman = toRoman(dong);
-        if (dRoman === roman) return dong;
-        // 정규화 일치 (정확히)
-        if (normalize(dRoman) === target) return dong;
-        // 입력에서 접미사 제거한 것이 DB의 '접미사 뺀 버전'과 일치
-        if (normalize(stripDong(dRoman)) === targetNoSuffix) return dong;
+        if (toRoman(dong) === roman) return dong;
       }
     }
   }
@@ -1006,6 +1009,38 @@ function hashSelect(str, arr) {
   let h = 0;
   for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
   return arr[h % arr.length];
+}
+
+// 시드 기반 다양화 헬퍼: 같은 페이지는 항상 같은 결과, 페이지마다 다른 결과
+function seedHash(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  return h;
+}
+// 배열에서 N개를 시드 기반으로 선택 (중복 없이, 순서도 시드별로 달라짐)
+function seedPickN(seed, arr, n) {
+  if (!arr || !arr.length) return [];
+  const pool = arr.slice();
+  const result = [];
+  let h = seed;
+  const pickCount = Math.min(n, pool.length);
+  for (let i = 0; i < pickCount; i++) {
+    h = (h * 1103515245 + 12345) >>> 0;
+    const idx = h % pool.length;
+    result.push(pool.splice(idx, 1)[0]);
+  }
+  return result;
+}
+// 배열을 시드 기반으로 셔플
+function seedShuffle(seed, arr) {
+  const a = arr.slice();
+  let h = seed;
+  for (let i = a.length - 1; i > 0; i--) {
+    h = (h * 1103515245 + 12345) >>> 0;
+    const j = h % (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
 // 페이지별로 고유하게 생성되는 SEO 콘텐츠 (해시 기반, 같은 페이지는 항상 같은 결과)
@@ -1403,15 +1438,87 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   // 인근 구군 (같은 시도 안에서 현재 구군 제외 4개)
   const nearbyGuguns = Object.keys(region.areas).filter(a => a !== ak).slice(0, 4);
   const nearbyGugunLinks = nearbyGuguns.map(a =>
-    `<a href="/${sidoEn}/${DISTRICT_EN[a]||a}" class="rel-card"><div class="rc-tag">${region.label} · ${a}</div><div class="rc-title">${a} ${subject}과외 | ${a} 맞춤 과외</div></a>`
+    `<a href="/${sidoEn}/${gugunEn(sidoEn, a)}" class="rel-card"><div class="rc-tag">${region.label} · ${a}</div><div class="rc-title">${a} ${subject}과외 | ${a} 맞춤 과외</div></a>`
   ).join('');
 
   const keywords = [`${dong} ${subject}과외`, `${gu} ${dong} 과외`, `${dong} ${grade} 과외`,
     `${dong} 1:1과외`, `${gu} ${grade} ${subject}`, `${dong} 내신 ${subject}`];
   const keywordTags = keywords.map(k=>`<span class="keyword-tag">${k}</span>`).join('');
 
-  const title = `${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 | 맞춤 1:1 과외 - 올케어스터디`;
-  const desc = `${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
+  // 시드 기반 다양화 (페이지마다 고유)
+  const _dpSeed = seedHash(dong + gu + grade + subject + sidoEn);
+  const _isGsd = subjectEn === 'gsd';
+
+  // Description 패턴 풀 (일반 6개 / gsd 5개)
+  const _descPatternsGen = [
+    `${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`,
+    `${dong} ${grade} ${subject} 1:1 맞춤 과외. ${schools} 내신 시험 출제 경향 분석. ${gu} 검증된 선생님 매칭. 010-6834-8080`,
+    `${gu} ${dong} ${subject}과외 매칭. ${grade} 1:1 방문 수업. ${schools} 학교 기출 완벽 분석. 무료 상담 010-6834-8080`,
+    `${dong} 학생 맞춤 ${subject}과외. ${grade} 1:1 방문 수업. 학교별 시험 대비 + 취약 단원 보완. 010-6834-8080`,
+    `${sidoLabel} ${dong} ${subject} 내신 1:1 과외. 시험 4주 전 집중 대비. 학력·경력 검증된 ${subject} 선생님. 010-6834-8080`,
+    `${gu} ${dong} ${grade} ${subject}과외. 1:1 맞춤 ${subject} 수업. ${schools} 시험 경향 반영. 무료 매칭 010-6834-8080`,
+  ];
+  const _descPatternsGsd = [
+    `${sidoLabel} ${gu} ${dong} ${grade} 검정고시 1:1 과외. 합격 전략 + 기출 분석. 무료 상담 010-6834-8080`,
+    `${dong} 검정고시 1:1 맞춤 과외. ${grade} 단계 검정고시 합격 대비. 과목별 핵심 정리. 010-6834-8080`,
+    `${gu} ${dong} 검정고시 과외 매칭. 단기 합격 전략 + 기출 풀이. 직장인·재수생 가능. 010-6834-8080`,
+    `${dong} 검정고시 합격 과외. 국·영·수·사·과 핵심 요약 + 기출 반복 학습. 무료 매칭 010-6834-8080`,
+    `${sidoLabel} ${dong} 검정고시 1:1 과외. 시간 부족한 분들을 위한 합격 집중 커리큘럼. 010-6834-8080`,
+  ];
+  const _descPatterns = _isGsd ? _descPatternsGsd : _descPatternsGen;
+
+  // FAQ 뱅크 (일반 12개 / gsd 8개) → 시드별로 4개 선택
+  const _faqBankGen = [
+    [`${dong}에서 ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?`, `상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${schools} 기출을 잘 아는 선생님 위주로 추천해드립니다. 빠르면 당일 매칭도 가능합니다.`],
+    [`${grade} ${subject} 성적이 낮아도 괜찮나요?`, `기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드리니 걱정하지 않으셔도 됩니다.`],
+    [`수업료는 어떻게 되나요?`, `선생님 경력·학력·수업 방식에 따라 다르며, 무료 상담 후 학부모님 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.`],
+    [`학원과 과외를 병행해도 되나요?`, `학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. 학원 진도에 맞춰 선행·복습을 병행하는 커리큘럼으로 운영합니다.`],
+    [`몇 개월 정도 수업하면 효과가 나타나나요?`, `학생마다 다르지만 보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 단기 집중 과외(시험 대비 4~8주)도 운영합니다.`],
+    [`${dong} 인근 학교 기출에 익숙한 선생님으로 매칭이 가능한가요?`, `${schools} 등 인근 학교 기출과 출제 경향을 분석한 선생님 위주로 우선 매칭합니다. 인근 학교 수업 경험이 있는 선생님이 매칭의 우선순위입니다.`],
+    [`선생님이 마음에 안 들면 어떻게 하나요?`, `학생과 잘 맞지 않는 경우 언제든 부담 없이 교체 요청 가능합니다. 추가 비용 없이 다른 선생님으로 다시 매칭해드립니다.`],
+    [`방문 수업은 ${dong} 어디서든 가능한가요?`, `${dong}을 비롯한 ${gu} 전 지역 자택 방문이 가능합니다. 카페나 스터디룸 등 학생이 원하는 장소에서도 수업할 수 있습니다.`],
+    [`시험 직전 단기 ${subject} 집중 과외도 가능한가요?`, `중간·기말고사 4주 전부터 진행하는 ${subject} 시험 집중 과외 프로그램을 별도로 운영합니다. 단기간 ${subject} 점수 향상을 목표로 합니다.`],
+    [`수업 횟수와 시간은 어떻게 결정하나요?`, `${grade} 단계 ${subject}는 보통 주 2회가 표준이며, 시험 기간이나 취약 단원 보완이 필요할 때는 주 3회로 늘릴 수 있습니다. 1회 90~120분 수업이 일반적입니다.`],
+    [`온라인 ${subject} 수업도 가능한가요?`, `방문 수업이 기본이지만 학생 일정이나 거리 문제로 온라인 화상 ${subject} 수업도 가능합니다. 동일한 1:1 맞춤 커리큘럼으로 진행합니다.`],
+    [`수능 대비도 함께 진행되나요?`, `${grade} 학생의 경우 내신과 수능을 동시에 대비하는 이중 트랙 방식으로 진행합니다. 학년에 맞춰 비중을 조정합니다.`],
+  ];
+  const _faqBankGsd = [
+    [`${dong} 검정고시 과외는 일반 과외와 어떻게 다른가요?`, `검정고시는 학교 내신 시험과 출제 방식이 완전히 다릅니다. 기출 문제 패턴 분석과 핵심 단원 압축 학습이 핵심이며, 합격선(평균 60점) 달성을 1차 목표로 커리큘럼을 설계합니다.`],
+    [`직장인이나 성인도 ${dong} 검정고시 과외를 받을 수 있나요?`, `직장인·주부·성인 학습자도 많이 수강하고 있습니다. 평일 저녁이나 주말 수업이 가능하며, 학습 공백이 길어도 기초부터 차근차근 진행합니다.`],
+    [`검정고시 합격까지 보통 얼마나 걸리나요?`, `학습 시간과 기초 수준에 따라 다르지만 보통 3~6개월 집중 과외로 합격이 가능합니다. 시험 일정에 맞춘 단기 합격 프로그램(2~3개월)도 운영합니다.`],
+    [`검정고시 ${grade} 과외 수업료는 어떻게 되나요?`, `선생님 경력과 과목 수에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다. 합격 보장 패키지 등 다양한 옵션이 있습니다.`],
+    [`검정고시는 어떤 과목을 ${dong} 과외로 받아야 하나요?`, `필수 과목인 국어·영어·수학·사회·과학 5과목 중 본인이 약한 과목 위주로 받으시면 효과적입니다. 5과목 종합 패키지도 가능합니다.`],
+    [`온라인 검정고시 ${dong} 과외도 가능한가요?`, `방문 수업과 온라인 화상 수업 모두 가능합니다. 직장인의 경우 시간 활용이 자유로운 온라인 수업을 선호하시는 분이 많습니다.`],
+    [`검정고시 합격 후 ${dong}에서 대학 진학도 가능한가요?`, `검정고시 합격 후 정시·수시로 대학 진학이 가능합니다. 합격 후 수능 대비 과외로 자연스럽게 연계되는 커리큘럼도 운영합니다.`],
+    [`검정고시 기출 분석은 어떻게 진행되나요?`, `최근 5년 검정고시 기출을 단원별로 분류하고 출제 빈도가 높은 핵심 단원부터 압축 학습합니다. 합격선 달성에 필요한 최소 학습량으로 효율을 극대화합니다.`],
+  ];
+  const _faqBank = _isGsd ? _faqBankGsd : _faqBankGen;
+  const _selectedFaqs = seedPickN(_dpSeed, _faqBank, 4);
+  const _faqHtml = _selectedFaqs.map(([q, a]) => `<p><strong>Q. ${q}</strong><br>${a}</p>`).join('');
+
+  // 도입부 패턴 (일반 6개 / gsd 5개)
+  const _introPatternsGen = [
+    `${dong}은 ${gu} 지역의 학습 중심 동네 중 하나로, 학부모님들의 ${subject} 학습 관심이 높은 지역입니다.`,
+    `${gu}에 위치한 ${dong}은 ${grade} ${subject} 1:1 과외 수요가 꾸준한 지역입니다. 인근 학교 ${schools} 학생들이 주로 거주합니다.`,
+    `${sidoLabel} ${gu} ${dong}에서 ${grade} ${subject} 과외를 시작하시는 분들은 ${schools} 시험 출제 경향을 잘 아는 선생님 매칭이 가장 중요합니다.`,
+    `${dong} ${grade} ${subject} 1:1 과외는 학교 내신 시험에 직접 연결되는 맞춤 학습으로 효과가 큽니다. ${schools} 인근 학생들에게 특히 적합합니다.`,
+    `${gu} ${dong}에 거주하는 학생들의 ${grade} ${subject} 학습을 위한 1:1 방문 과외 매칭 서비스입니다.`,
+    `${dong}은 ${sidoLabel} ${gu}의 주요 학습 동네로, ${schools} 학생들의 ${subject} 내신 관리가 중요한 지역입니다.`,
+  ];
+  const _introPatternsGsd = [
+    `${dong} 검정고시 1:1 과외는 일반 학교 과외와 다른 별도의 합격 전략이 필요합니다. ${gu} 지역 검정고시 합격생 다수 배출 경험이 있는 선생님과 매칭해드립니다.`,
+    `${gu}에 위치한 ${dong}에서 검정고시를 준비하시는 분들을 위한 1:1 맞춤 과외입니다. 단기 합격에 최적화된 커리큘럼으로 운영합니다.`,
+    `${sidoLabel} ${gu} ${dong}에서 검정고시 합격을 목표로 하시는 분들의 1:1 맞춤 학습을 도와드립니다. 직장인·재수생·학교 부적응 학생 모두 가능합니다.`,
+    `${dong} 검정고시 과외는 시험 합격이 1차 목표이며, 합격 후 대학 진학까지 연계되는 장기 학습 설계가 가능합니다.`,
+    `${gu} ${dong} 검정고시 과외는 기출 분석 기반 핵심 단원 압축 학습으로 단기 합격을 지원합니다. 시험 일정에 맞춘 집중 프로그램도 운영합니다.`,
+  ];
+  const _introPatterns = _isGsd ? _introPatternsGsd : _introPatternsGen;
+  const _introText = _introPatterns[_dpSeed % _introPatterns.length];
+
+  const title = _isGsd
+    ? `${sidoLabel} ${gu} ${dong} 검정고시 과외 | 1:1 맞춤 합격 과외 - 올케어스터디`
+    : `${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 | 맞춤 1:1 과외 - 올케어스터디`;
+  const desc = _descPatterns[_dpSeed % _descPatterns.length];
   const bc = [{name:'홈',url:'/'},{name:sidoLabel,url:`/${sidoEn}`},{name:gu,url:`/${sidoEn}/${guEn}`},{name:`${dong} ${subject}과외`,url:canonical}];
 
   const body = `<div class="wrap">
@@ -1432,6 +1539,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   </div>
   <div class="art-body">
     <h2>${dong} ${grade} ${subject}과외 안내</h2>
+    <p>${_introText}</p>
     <p>${mainText}</p>
     <p>${catDesc}</p>
     <p>${gradeDesc}</p>
@@ -1461,11 +1569,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic;color:var(--text-dark)">"${review2}"</blockquote>
 
     <h2>자주 묻는 질문</h2>
-    <p><strong>Q. ${dong}에서 ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${schools} 기출을 잘 아는 선생님 위주로 추천해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
-    <p><strong>Q. ${grade} ${subject} 성적이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드리니 걱정하지 않으셔도 됩니다.</p>
-    <p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력·수업 방식에 따라 다르며, 무료 상담 후 학부모님 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.</p>
-    <p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. 학원 진도에 맞춰 선행·복습을 병행하는 커리큘럼으로 운영합니다.</p>
-    <p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>학생마다 다르지만 보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 단기 집중 과외(시험 대비 4~8주)도 운영합니다.</p>
+    ${_faqHtml}
 
     <h2>${dong} 다른 과목도 함께</h2>
     <div class="subj-grid">${otherSubjects}</div>
@@ -1887,7 +1991,7 @@ function makeSchoolSidoPage(sidoEn) {
   if (!sidoSchools) return null;
 
   const gugunLinks = Object.keys(sidoSchools).map(gugun => {
-    const gr = DISTRICT_EN[gugun] || toRoman(gugun);
+    const gr = gugunEn(sidoEn, gugun) || toRoman(gugun);
     const schoolCnt = Object.values(sidoSchools[gugun]).reduce((a,v)=>a+(Array.isArray(v)?v.length:0),0);
     return `<a class="subj-link" href="/school/${sidoEn}/${gr}"><span>🏫 ${gugun} (${schoolCnt}개)</span><span>→</span></a>`;
   }).join('');
@@ -2009,8 +2113,47 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
   ).join('');
 
   const canonical = `/school/${sidoEn}/${gugunRoman}/${schoolRoman}`;
+
+  // 시드 기반 다양화
+  const _seed = seedHash(name + gugunRoman + gradeCode);
+  const _descPatterns = [
+    `${name} 과외 전문. ${gradeLabel} 수학·영어·국어·과학 1:1 방문 과외. ${name} 기출 분석. 무료 상담 010-6834-8080`,
+    `${gugunKr} ${name} ${gradeLabel} 1:1 과외 매칭. ${name} 내신 기출 완벽 분석. 검증된 선생님 매칭. 010-6834-8080`,
+    `${name} 학생 맞춤 과외. ${gradeLabel} 전 과목 1:1 방문 수업. 학교 시험 대비 전문. 무료 상담 010-6834-8080`,
+    `${gugunKr} ${name} 내신 1:1 과외. 시험 4주 전 집중 대비. 학력·경력 검증된 선생님. 010-6834-8080`,
+    `${sidoKr} ${gugunKr} ${name} ${gradeLabel} 과외. 시험 출제 경향 분석 + 취약점 보완. 무료 매칭 010-6834-8080`,
+    `${name} ${gradeLabel} 1:1 방문 과외 매칭 서비스. ${name} 기출 분석 기반 맞춤 수업. 상담 010-6834-8080`,
+  ];
+  // FAQ 뱅크 (12개 풀에서 시드별로 4개 선택)
+  const _faqBank = [
+    [`${name} 과외 선생님 찾는 데 얼마나 걸리나요?`, `상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천해드리며, 빠르면 당일 매칭도 가능합니다.`],
+    [`성적이 낮아도 과외를 받을 수 있나요?`, `기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.`],
+    [`수업료는 어떻게 되나요?`, `선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.`],
+    [`학원과 과외를 병행해도 되나요?`, `학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. ${name} 진도에 맞춰 유연하게 운영합니다.`],
+    [`몇 개월 정도 수업하면 효과가 나타나나요?`, `보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 시험 대비 단기 집중 과외(4~8주)도 운영합니다.`],
+    [`${name} 출신 선생님으로 매칭이 가능한가요?`, `${name} 또는 인근 학교 출신 선생님을 우선 추천드립니다. 학교 분위기와 출제 경향을 잘 아는 선생님이 매칭의 우선순위입니다.`],
+    [`선생님이 마음에 안 들면 어떻게 하나요?`, `학생과 잘 맞지 않는 경우 언제든 부담 없이 교체 요청 가능합니다. 추가 비용 없이 다른 선생님으로 다시 매칭해드립니다.`],
+    [`수업은 어디에서 진행하나요?`, `학생 자택 방문 수업이 기본이며, 카페나 스터디룸 등 학생이 원하는 장소에서도 가능합니다. 온라인 화상 수업도 병행 가능합니다.`],
+    [`시험 직전 집중 과외도 가능한가요?`, `${name} 중간·기말고사 4주 전부터 진행하는 시험 집중 과외 프로그램을 별도로 운영합니다. 단기간 내신 점수 향상이 목표입니다.`],
+    [`수업 횟수는 어떻게 결정하나요?`, `학생 수준과 목표에 따라 주 1~3회로 조정합니다. 시험 기간에는 추가 보충 수업도 가능합니다.`],
+    [`형제·자매 동시 수업 할인이 있나요?`, `형제·자매가 함께 수업하시는 경우 별도 할인 혜택이 있습니다. 상담 시 문의해주세요.`],
+    [`수능 대비도 함께 진행되나요?`, `${name} 고등 과외의 경우 내신과 수능을 동시에 대비하는 이중 트랙 방식으로 진행합니다. 학년에 맞춰 비중을 조정합니다.`],
+  ];
+  const _selectedFaqs = seedPickN(_seed, _faqBank, 4);
+  const _faqHtml = _selectedFaqs.map(([q, a]) => `<p><strong>Q. ${q}</strong><br>${a}</p>`).join('');
+
+  // 도입부 패턴 다양화 (5개)
+  const _introPatterns = [
+    `${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 학교별 시험 출제 경향이 뚜렷해 내신 전문 과외의 효과가 큽니다.`,
+    `${gugunKr}에 위치한 ${name}은 ${sidoKr} 지역의 ${gradeLabel}학교로, 1:1 맞춤 과외 수요가 꾸준히 높은 학교입니다.`,
+    `${sidoKr} ${gugunKr} ${name}은 ${gradeLabel} 단계 핵심 학습기에 있는 학생들이 다니는 학교로, 기출 분석 기반 과외가 큰 효과를 발휘합니다.`,
+    `${name}은 ${sidoKr} ${gugunKr}의 대표적인 ${gradeLabel}학교 중 하나로, 학교별 내신 특성에 맞춘 1:1 과외가 효과적입니다.`,
+    `${gugunKr}에 자리한 ${name}은 학교 단위 시험 분석이 중요한 ${gradeLabel}학교입니다. 출제 경향을 아는 선생님과의 1:1 수업이 효과적입니다.`,
+  ];
+  const _introText = _introPatterns[_seed % _introPatterns.length];
+
   const title = `${name} 과외 | ${gugunKr} ${name} 맞춤 1:1 과외 - 올케어스터디`;
-  const desc = `${name} 과외 전문. ${gradeLabel} 수학·영어·국어·과학 1:1 방문 과외. ${name} 기출 분석. 무료 상담 010-6834-8080`;
+  const desc = _descPatterns[_seed % _descPatterns.length];
   const bc = [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:`${name} 과외`,url:canonical}];
 
   const body = `<div class="wrap">
@@ -2031,7 +2174,7 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
   </div>
   <div class="art-body">
     <h2>${name} 과외 안내</h2>
-    <p>${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 학교별 시험 출제 경향이 뚜렷해 내신 전문 과외의 효과가 큽니다.</p>
+    <p>${_introText}</p>
     <p>${regionDesc}</p>
     <p>올케어스터디는 <strong>${name}</strong> 재학생을 위한 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. ${name} 시험 출제 경향을 완벽히 파악한 검증된 선생님을 빠르게 매칭해드립니다.</p>
     <h2>${name} 과외 특징</h2>
@@ -2045,20 +2188,10 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
     <p><strong>수업 3단계</strong>: 개념 정리 → ${name} 기출 유형 풀이 → 오답 분석 및 취약점 보완. 매 수업마다 전 시간 내용을 복습하고 새 내용을 학습하는 방식으로 기억 정착률을 높입니다.</p>
     <h2>${name} ${gradeLabel} 커리큘럼</h2>
     <p>${gradeCode==='E' ? `${name} 초등 커리큘럼은 교과서 기반 기초 완성부터 수행평가 대비까지 체계적으로 진행합니다. 각 단원 완전학습 후 다음 단원으로 넘어가는 방식으로 누적 학습 효과를 높입니다.` : gradeCode==='M' ? `${name} 중등 커리큘럼은 기초 개념 완성 → 기출 유형 분석 → 실전 문제 풀이 → 오답 보완 4단계로 진행합니다. 중간·기말고사 4주 전부터 시험 집중 모드로 전환합니다.` : `${name} 고등 커리큘럼은 내신 기출 분석 → 취약 단원 집중 보완 → 수능 연계 학습 순으로 진행합니다. 내신 1등급과 수능 고득점을 동시에 목표로 합니다.`}</p>
-    <h2>자주 묻는 질문</h2>
-    <p><strong>Q. ${name} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천해드리며, 빠르면 당일 매칭도 가능합니다.</p>
-    <p><strong>Q. 성적이 낮아도 과외를 받을 수 있나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.</p>
-    <p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.</p>
-    <p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. ${name} 진도에 맞춰 유연하게 운영합니다.</p>
-    <p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 시험 대비 단기 집중 과외(4~8주)도 운영합니다.</p>
     <h2>${name} 학년별 학습 전략</h2>
     <p>${gradeCode==='E' ? `초등 시기는 모든 학습의 기초가 완성되는 중요한 시기입니다. ${name} 재학생들의 수학·영어·국어 기초 개념을 탄탄히 다지고 중학교 진학을 준비합니다. 단순 암기가 아닌 원리 이해 중심 학습으로 자기주도 학습 능력을 키워드립니다.` : gradeCode==='M' ? `중학교는 초등과 고등의 연결 고리입니다. ${name} 내신 성적이 고등학교 진학에 직접 영향을 미치므로 지금부터 체계적인 관리가 필요합니다. 내신 집중 관리와 함께 고등 과정 선행도 병행합니다.` : `고등학교는 내신 등급이 대입에 결정적인 역할을 합니다. ${name} 내신 1등급을 목표로 집중 관리하며, 수능 대비를 동시에 진행합니다. 시험 4주 전부터 집중 대비 모드로 전환합니다.`}</p>
     <h2>자주 묻는 질문</h2>
-    <p><strong>Q. ${name} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천해드리며, 빠르면 당일 매칭도 가능합니다.</p>
-    <p><strong>Q. 성적이 낮아도 과외를 받을 수 있나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.</p>
-    <p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.</p>
-    <p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. ${name} 진도에 맞춰 유연하게 운영합니다.</p>
-    <p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 시험 대비 단기 집중 과외(4~8주)도 운영합니다.</p>
+    ${_faqHtml}
     <h2>${name} 과외 선생님 찾는 방법</h2>
     <p>올케어스터디에서 ${name} 과외 선생님을 찾는 과정은 간단합니다. 무료 상담 신청 → 코디네이터 연락 → 선생님 매칭 → 체험 수업 → 정규 수업 시작의 5단계로 진행됩니다.</p>
     <p>상담 시 ${name} 학생의 현재 성적, 희망 과목, 수업 횟수, 선생님 성별 선호 등을 알려주시면 더욱 정확한 매칭이 가능합니다. ${gugunKr} 지역 ${name} 내신을 잘 아는 선생님 위주로 추천해드립니다.</p>
@@ -2124,8 +2257,44 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
   const keywordTags=keywords.map(k=>`<span class="keyword-tag">${k}</span>`).join('');
 
   const canonical=`/school/${sidoEn}/${gugunRoman}/${schoolRoman}/${subjectEn}`;
+
+  // 시드 기반 다양화
+  const _seed = seedHash(name + subjectEn + gradeCode);
+  const _descPatterns = [
+    `${name} ${subject}과외 전문. ${name} 기출 분석. ${gradeLabel} 1:1 방문 과외. 무료 상담 010-6834-8080`,
+    `${gugunKr} ${name} ${gradeLabel} ${subject} 1:1 과외 매칭. ${name} 내신 ${subject} 시험 출제 경향 완벽 분석. 010-6834-8080`,
+    `${name} 학생 맞춤 ${subject}과외. ${gradeLabel} 1:1 방문 수업. 학교 시험 대비 + 취약점 보완. 무료 상담 010-6834-8080`,
+    `${gugunKr} ${name} ${subject} 내신 1:1 과외. 시험 4주 전 집중 대비. 검증된 ${subject} 선생님 매칭. 010-6834-8080`,
+    `${sidoKr} ${gugunKr} ${name} ${gradeLabel} ${subject}과외. 1:1 맞춤 ${subject} 수업. 무료 매칭 010-6834-8080`,
+  ];
+  // FAQ 뱅크 (10개 풀에서 시드별로 4개)
+  const _faqBank = [
+    [`${name} ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?`, `상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천합니다. 빠르면 당일 매칭도 가능합니다.`],
+    [`${gradeLabel} ${subject} 성적이 낮아도 괜찮나요?`, `기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.`],
+    [`수업료는 어떻게 되나요?`, `선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다.`],
+    [`학원과 과외를 병행해도 되나요?`, `학원에서 부족한 ${subject} 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다.`],
+    [`몇 개월 정도 수업하면 효과가 나타나나요?`, `보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다.`],
+    [`${name} ${subject} 출제 경향을 잘 아는 선생님으로 매칭해주시나요?`, `${name} ${subject} 시험 기출과 출제 경향을 분석해본 선생님 위주로 우선 매칭합니다. ${name} 출신 또는 인근 학교 수업 경험이 있는 선생님이 우선순위입니다.`],
+    [`체험 수업이 가능한가요?`, `정규 수업 시작 전 첫 체험 수업이 가능합니다. 학생과 선생님이 잘 맞는지 확인 후 정규 수업을 결정하실 수 있습니다.`],
+    [`${subject} 시험 직전 단기 과외도 운영하나요?`, `${name} 시험 4주 전부터 진행하는 ${subject} 시험 집중 과외 프로그램을 별도로 운영합니다. 단기간 ${subject} 점수 향상이 목표입니다.`],
+    [`온라인 ${subject} 과외도 가능한가요?`, `방문 수업이 기본이지만 학생 일정이나 거리 문제로 온라인 화상 ${subject} 수업도 가능합니다. 동일한 1:1 맞춤 커리큘럼으로 진행합니다.`],
+    [`주 몇 회 ${subject} 수업이 적당한가요?`, `${gradeLabel} 단계 ${subject}는 보통 주 2회가 표준이며, 시험 기간이나 취약 단원 보완이 필요한 경우 주 3회로 늘릴 수 있습니다.`],
+  ];
+  const _selectedFaqs = seedPickN(_seed, _faqBank, 4);
+  const _faqHtml = _selectedFaqs.map(([q, a]) => `<p><strong>Q. ${q}</strong><br>${a}</p>`).join('');
+
+  // 도입부 패턴 다양화 (5개)
+  const _introPatterns = [
+    `${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 올케어스터디는 ${name} 재학생을 위한 ${gradeLabel} ${subject} 전문 1:1 방문 과외를 연결합니다.`,
+    `${gugunKr}에 위치한 ${name}의 ${gradeLabel} ${subject}과외는 학교별 시험 출제 경향에 맞춘 1:1 맞춤 수업으로 진행됩니다.`,
+    `${sidoKr} ${gugunKr} ${name} 재학생을 위한 ${subject}과외 매칭 서비스입니다. ${gradeLabel} ${subject} 1:1 방문 수업으로 내신 성적을 관리합니다.`,
+    `${name} 학생들의 ${subject} 내신 관리를 위한 1:1 과외입니다. ${gugunKr} 지역 ${name} 학교 출제 경향을 잘 아는 선생님이 직접 방문하여 수업합니다.`,
+    `${name}은 ${sidoKr} ${gugunKr}의 ${gradeLabel}학교로, 학교별 ${subject} 시험 특성에 맞춘 1:1 과외가 효과적인 학교입니다.`,
+  ];
+  const _introText = _introPatterns[_seed % _introPatterns.length];
+
   const title=`${name} ${subject}과외 | ${gugunKr} ${name} ${gradeLabel} ${subject} 맞춤 1:1 과외 - 올케어스터디`;
-  const desc=`${name} ${subject}과외 전문. ${name} 기출 분석. ${gradeLabel} 1:1 방문 과외. 무료 상담 010-6834-8080`;
+  const desc=_descPatterns[_seed % _descPatterns.length];
   const bc=[{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:`${name} 과외`,url:`/school/${sidoEn}/${gugunRoman}/${schoolRoman}`},{name:`${subject}과외`,url:canonical}];
 
   const body=`<div class="wrap">
@@ -2146,7 +2315,7 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
   </div>
   <div class="art-body">
     <h2>${name} ${subject}과외 안내</h2>
-    <p>${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 올케어스터디는 ${name} 재학생을 위한 ${gradeLabel} ${subject} 전문 1:1 방문 과외를 연결합니다.</p>
+    <p>${_introText}</p>
     <p>${name} ${subject} 시험 출제 경향을 완벽히 파악한 검증된 선생님을 빠르게 매칭해드립니다. ${name} 내신 성적 향상을 최우선 목표로 맞춤 커리큘럼을 설계합니다.</p>
     <h2>${name} ${subject}과외 선생님 특징</h2>
     <p><strong>① ${name} 기출 완벽 분석</strong> — ${name} ${subject} 시험 출제 경향·유형·빈도를 철저히 분석해 내신 최적화 수업을 진행합니다.</p>
@@ -2162,11 +2331,7 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
     <p>${curriculum}</p>
     <p>학생의 현재 수준 진단 후 개별 맞춤 설계합니다. 시험 4주 전부터 ${name} 기출 집중 풀이 모드로 전환하고, 오답 패턴을 분석해 실수를 최소화합니다.</p>
     <h2>자주 묻는 질문</h2>
-    <p><strong>Q. ${name} ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천합니다. 빠르면 당일 매칭도 가능합니다.</p>
-    <p><strong>Q. ${gradeLabel} ${subject} 성적이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.</p>
-    <p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다.</p>
-    <p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 ${subject} 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다.</p>
-    <p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다.</p>
+    ${_faqHtml}
     <h2>${name} 다른 과목도 함께</h2>
     <div class="subj-grid">${otherSubjs}</div>
     <h2>${name} ${subject} 선생님 찾는 방법</h2>
@@ -2191,7 +2356,7 @@ function makeSidoPage(rk) {
   const r = REGIONS[rk];
   if (!r) return null;
   const distCards = Object.keys(r.areas).map(dist => {
-    const en = DISTRICT_EN[dist]||dist;
+    const en = gugunEn(SIDO_EN[rk]||rk, dist)||dist;
     return `<a href="/${SIDO_EN[rk]||rk}/${en}" style="display:inline-block;padding:10px 18px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:700;color:var(--text-dark);text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dark)'">${dist}</a>`;
   }).join('');
   const title = `${r.label} 과외 | ${r.label} 지역별 맞춤 1:1 과외 - 올케어스터디`;
@@ -2276,7 +2441,7 @@ function makeAreaPage(rk, ak) {
   const dongCards = (() => {
     if (distDongData && distDongData.dongs) {
       return Object.entries(distDongData.dongs).map(([dname, dinfo]) => {
-        const en = DISTRICT_EN[ak]||ak;
+        const en = gugunEn(SIDO_EN[rk]||rk, ak)||ak;
         const url = `/${SIDO_EN[rk]||rk}/${en}/${toRoman(dname)}`;
         return `<a href="${url}" class="dong-card">
   <img class="dong-card-img" src="${dinfo.img}" alt="${dname} 과외" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
@@ -2291,7 +2456,7 @@ function makeAreaPage(rk, ak) {
     }
     return area.dongs.map(d => {
       const dongEnKey = DONG_EN[d] || d;
-      return `<a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${toRoman(d)}" class="dong-card">
+      return `<a href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}/${toRoman(d)}" class="dong-card">
   <img class="dong-card-img" src="${pickImg('general', 'dong/'+rk+'/'+ak+'/'+d)}" alt="${d} 과외" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
   <div class="dong-card-body"><div class="dong-card-tag">${ak} · ${d}</div><div class="dong-card-title">${d} 과외</div><div class="dong-card-arrow">과외 보기 →</div></div>
 </a>`;
@@ -2299,15 +2464,15 @@ function makeAreaPage(rk, ak) {
   })();
 
   const subjLinks = Object.entries(SUBJECTS).map(([s, v]) =>
-    `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}"><span>${v.emoji} ${ak} ${s}과외</span><span>→</span></a>`
+    `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}"><span>${v.emoji} ${ak} ${s}과외</span><span>→</span></a>`
   ).join('');
   const relAreas = Object.keys(region.areas).filter(a => a !== ak).slice(0, 3)
-    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[a]||a}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} 과외 | ${a} 맞춤 과외</div></a>`).join('');
+    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, a)||a}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} 과외 | ${a} 맞춤 과외</div></a>`).join('');
 
   const title = `${ak} 과외 | ${region.label} ${ak} 맞춤 1:1 과외 - 올케어스터디`;
   const desc = `${ak} 과외 전문. ${area.schools} 기출 분석. 수학·영어·국어·과학 초등·중등·고등 1:1 방문 과외. 무료 상담 010-6834-8080`;
   const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/${rk}">${region.label}</a> › <span>${ak}</span></div>
+  <div class="bc"><a href="/">홈</a> › <a href="/${SIDO_EN[rk]||rk}">${region.label}</a> › <span>${ak}</span></div>
   <div class="art-tag">${region.emoji} ${region.label} · ${ak}</div>
   <h1 class="art-title">${ak} 과외 | ${ak} 맞춤 1:1 과외 안내</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
@@ -2347,7 +2512,7 @@ function makeAreaPage(rk, ak) {
       const sidoEn = SIDO_EN[rk]||rk;
       const guMap = SCHOOL_MAP[sidoEn]?.[ak];
       if(!guMap) return '<p>학교 정보를 불러오는 중입니다.</p>';
-      const gugunRoman = DISTRICT_EN[ak]||ak;
+      const gugunRoman = gugunEn(sidoEn, ak)||ak;
       const GRADE_LABEL = {E:'초등',M:'중등',H:'고등'};
       let html = '';
       for(const [grade,names] of Object.entries(guMap)){
@@ -2385,9 +2550,9 @@ function makeAreaPage(rk, ak) {
   const bcArea = [
     {name:'홈',url:'/'},
     {name:region.label,url:`/${SIDO_EN[rk]||rk}`},
-    {name:ak,url:`/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`}
+    {name:ak,url:`/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}`}
   ];
-  return wrap(title, desc, `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`, body, bcArea);
+  return wrap(title, desc, `/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}`, body, bcArea);
 }
 
 
@@ -2400,13 +2565,13 @@ function makeArticlePage(rk, ak, gk, sk) {
   if (!region || !area || !grade || !subj) return null;
 
   const otherSubj = Object.entries(SUBJECTS).filter(([s]) => s !== sk).slice(0, 6)
-    .map(([s, v]) => `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`).join('');
+    .map(([s, v]) => `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`).join('');
   const relLinks = Object.keys(region.areas).filter(a => a !== ak).slice(0, 3)
-    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[a]||a}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[sk]||sk}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} ${gk} ${sk}과외</div></a>`).join('');
+    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, a)||a}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[sk]||sk}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} ${gk} ${sk}과외</div></a>`).join('');
   const yearTags = grade.years.map(y => `<span class="tag">${y}</span>`).join('');
 
   const sidoEn = SIDO_EN[rk]||rk;
-  const distEn = DISTRICT_EN[ak]||ak;
+  const distEn = gugunEn(sidoEn, ak)||ak;
   const gradeEn = GRADE_EN[gk]||gk;
   const subjEn = SUBJECT_EN[sk]||sk;
 
@@ -2475,7 +2640,7 @@ function makeAllRegionsPage() {
     const guList = [];
     
     for (const [guKr, area] of Object.entries(reg.areas || {})) {
-      const guEn = DISTRICT_EN[guKr] || guKr;
+      const guEn = gugunEn(sidoEn, guKr) || guKr;
       
       // 구/시 링크
       const guLinks = [`<a href="/${sidoEn}/${guEn}" style="color:#1D4ED8;font-weight:600">${guKr}</a>`];
@@ -9057,12 +9222,6 @@ function serveSitemap() {
     url('/academy/intro', 'monthly', '0.8'),
     url('/academy/all', 'weekly', '0.7'),
     ...CENTERS.map(c=>url('/academy/center/'+makeCenterSlug(c.n),'monthly','0.6')),
-    
-    ...CENTERS.flatMap(c=>[
-      ...(c.te||'').split(',').filter(s=>s.trim()).map(s=>url('/academy/school/e/'+makeSchoolSlug('E',s.trim()),'monthly','0.6')),
-      ...(c.tm||'').split(',').filter(s=>s.trim()).map(s=>url('/academy/school/m/'+makeSchoolSlug('M',s.trim()),'monthly','0.6')),
-      ...(c.th||'').split(',').filter(s=>s.trim()).map(s=>url('/academy/school/h/'+makeSchoolSlug('H',s.trim()),'monthly','0.6')),
-    ]),
     url('/contact', 'monthly', '0.6')];
 
   
@@ -9081,7 +9240,7 @@ function serveSitemap() {
     const sidoEn = SIDO_EN[sido]||sido;
     urls.push(url(`/${sidoEn}`, 'weekly', '0.7'));
     for (const ak of Object.keys(r.areas)) {
-      const distEn = DISTRICT_EN[ak]||ak;
+      const distEn = gugunEn(sidoEn, ak)||ak;
       urls.push(url(`/${sidoEn}/${distEn}`, 'weekly', '0.7'));
       for (const gk of Object.keys(GRADES)) {
         for (const sk of Object.keys(SUBJECTS)) {
@@ -9150,7 +9309,7 @@ function servePrioritySitemap() {
   
   for (const [sido, gu, dong] of priority) {
     const sidoEn = SIDO_EN[sido]||sido;
-    const guEn = DISTRICT_EN[gu]||gu;
+    const guEn = gugunEn(sidoEn, gu)||gu;
     
     urls.push(u(`/${sidoEn}/${guEn}`, '0.95'));
     
@@ -9272,7 +9431,7 @@ function serveSitemapByKey(key) {
     
     if(part === 0 || part === 1) parts.push(u(`/${se}`));
     for(const [ak,area] of targetEntries){
-      const ge = DISTRICT_EN[ak]||ak;
+      const ge = gugunEn(se, ak)||ak;
       parts.push(u(`/${se}/${ge}`));
       for(const dong of (area.dongs||[])){
         const dr = toRoman(dong);
@@ -9343,9 +9502,10 @@ function serveRSS() {
     ['충남','천안시'],['전북','전주시'],['경북','포항시'],['경남','창원시']];
   for (const [sido, ak] of featured) {
     for (const sk of ['수학','영어']) {
+      const _sidoEn = SIDO_EN[sido]||sido;
       items.push({
         title: `${ak} 고등 ${sk}과외 | ${REGIONS[sido].label} ${ak} 1:1 맞춤 과외`,
-        link: `https://allcarestudy.com/${SIDO_EN[sido]||sido}/${DISTRICT_EN[ak]||ak}/high/${SUBJECT_EN[sk]||sk}`,
+        link: `https://allcarestudy.com/${_sidoEn}/${gugunEn(_sidoEn, ak)||ak}/high/${SUBJECT_EN[sk]||sk}`,
         desc: `${ak} 고등 ${sk}과외 전문. ${REGIONS[sido].areas[ak].schools} 기출 분석. 검증 선생님 1:1 방문 과외. 무료 상담 010-6834-8080`,
       });
     }
@@ -9392,7 +9552,7 @@ function buildAllIndexNowUrls() {
     const se = SIDO_EN[sido]||sido;
     urls.push('/'+se);
     for (const [ak, area] of Object.entries(reg.areas||{})) {
-      const ge = DISTRICT_EN[ak]||ak;
+      const ge = gugunEn(se, ak)||ak;
       urls.push(`/${se}/${ge}`);
       for (const d of (area.dongs||[])) {
         const dr = toRoman(d);
@@ -9823,15 +9983,20 @@ if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser
           // canonical 검증: 시도-구군 조합이 정식이 아니면 301
           const kr5 = toKr(parts[0], parts[1], null, gradeEn, subjectEn);
           const canonicalSido = SIDO_EN[kr5.sido] || kr5.sido;
-          const canonicalDist = DISTRICT_EN[kr5.district] || kr5.district;
+          const canonicalDist = gugunEn(canonicalSido, kr5.district) || kr5.district;
           const canonicalDong = toRoman(dongName);
           // 시도/구군/동/학년 중 하나라도 정식 URL과 다르면 301 (세부 학년 → 메인 학년)
           if (parts[0] !== canonicalSido || parts[1] !== canonicalDist || dongEn !== canonicalDong || rawGrade !== gradeEn) {
             const canonical5 = `/${canonicalSido}/${canonicalDist}/${canonicalDong}/${gradeEn}/${subjectEn}`;
             return new Response(null, { status: 301, headers: { 'Location': canonical5, 'Cache-Control': 'no-cache' } });
           }
-          const page = makeDongPageByName(parts[0], parts[1], dongName, subjectEn, gradeEn);
-          if (page) return new Response(page, { headers: h });
+          try {
+            const page = makeDongPageByName(parts[0], parts[1], dongName, subjectEn, gradeEn);
+            if (page) return new Response(page, { headers: h });
+          } catch (e) {
+            // 페이지 생성 중 예외 발생 시 5xx 대신 404 반환
+            return new Response('Not Found', { status: 404, headers: { 'Content-Type':'text/plain; charset=utf-8' } });
+          }
         }
       }
 
@@ -9846,8 +10011,12 @@ if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser
       if (canonicalPath !== path) {
         return new Response(null, { status: 301, headers: { 'Location': canonicalPath, 'Cache-Control': 'no-cache' } });
       }
-      const page = makeArticlePage(kr.sido, kr.district, kr.grade, kr.subject);
-      if (page) return new Response(page, { headers: h });
+      try {
+        const page = makeArticlePage(kr.sido, kr.district, kr.grade, kr.subject);
+        if (page) return new Response(page, { headers: h });
+      } catch (e) {
+        return new Response('Not Found', { status: 404, headers: { 'Content-Type':'text/plain; charset=utf-8' } });
+      }
     }
 
     
@@ -9860,8 +10029,12 @@ if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser
         if (parts[2] !== canonicalDong3) {
           return new Response(null, { status: 301, headers: { 'Location': `/${parts[0]}/${parts[1]}/${canonicalDong3}`, 'Cache-Control': 'no-cache' } });
         }
-        const page = makeDongMainPage(parts[0], parts[1], dongName3);
-        if (page) return new Response(page, { headers: h });
+        try {
+          const page = makeDongMainPage(parts[0], parts[1], dongName3);
+          if (page) return new Response(page, { headers: h });
+        } catch (e) {
+          return new Response('Not Found', { status: 404, headers: { 'Content-Type':'text/plain; charset=utf-8' } });
+        }
       }
       
       const kr = toKr(parts[0], parts[1], null, parts[2], null);
@@ -9873,14 +10046,14 @@ if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser
           return `<a class="subj-link" href="${url}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`;
         }).join('');
         const body = `<div class="wrap">
-<div class="bc"><a href="/">홈</a> › <a href="/${SIDO_EN[rk]||rk}">${region.label}</a> › <a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}">${ak}</a> › <span>${gk}</span></div>
+<div class="bc"><a href="/">홈</a> › <a href="/${SIDO_EN[rk]||rk}">${region.label}</a> › <a href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}">${ak}</a> › <span>${gk}</span></div>
 <h1 class="art-title">${ak} ${gk} 과외 | 과목 선택</h1>
 <div class="art-body"><h2>과목을 선택하세요</h2><div class="subj-grid">${subjLinks}</div></div>
 <div class="cta-box"><h3>${ak} ${gk} 맞춤 과외</h3><p>무료 상담 신청</p>
 <div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
 </div>`;
-        const canon = `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${GRADE_EN[gk]||gk}`;
-        const bc3 = [{name:'홈',url:'/'},{name:region.label,url:`/${SIDO_EN[rk]||rk}`},{name:ak,url:`/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`},{name:`${gk} 과외`,url:canon}];
+        const canon = `/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}/${GRADE_EN[gk]||gk}`;
+        const bc3 = [{name:'홈',url:'/'},{name:region.label,url:`/${SIDO_EN[rk]||rk}`},{name:ak,url:`/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}`},{name:`${gk} 과외`,url:canon}];
         const title3 = `${ak} ${gk} 과외 | ${region.label} ${ak} ${grade.label} 과외 - 올케어스터디`;
         const desc3 = `${ak} ${gk} 과외 전문. ${area.schools} 기출 분석. 수학·영어·국어·과학 1:1 방문 과외. 무료 상담 010-6834-8080`;
         return new Response(wrap(title3, desc3, canon, body, bc3), { headers: h });
