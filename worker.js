@@ -127,13 +127,14 @@ const GRADE_MAP = {
   
   'elementary':'초등','middle':'중등','high':'고등',
   
-  'elem1':'초1','elem2':'초2','elem3':'초3','elem4':'초4','elem5':'초5','elem6':'초6',
+  // 세부 학년은 메인 학년으로 정규화 (페이지 폭증 방지)
+  'elem1':'초등','elem2':'초등','elem3':'초등','elem4':'초등','elem5':'초등','elem6':'초등',
   
-  'mid1':'중1','mid2':'중2','mid3':'중3',
+  'mid1':'중등','mid2':'중등','mid3':'중등',
   
-  'high1':'고1','high2':'고2','high3':'고3',
+  'high1':'고등','high2':'고등','high3':'고등',
 };
-const GRADE_EN = Object.fromEntries(Object.entries(GRADE_MAP).map(([k,v])=>[v,k]));
+const GRADE_EN = {'초등':'elementary','중등':'middle','고등':'high'};
 
 const SUBJECT_MAP = {
   'math':'수학','english':'영어','korean':'국어','science':'과학',
@@ -9445,13 +9446,9 @@ export default {
 
     
     
-    const GRADE_COMPAT = {'high':'high2','middle':'mid2','elementary':'elem5','고등':'high2','중등':'mid2','초등':'elem5'};
-    
     const parts = rawParts.map((p, i) => {
       
       if (i === 2 && DONG_EN[p]) return DONG_EN[p];
-      
-      if (GRADE_COMPAT[p]) return GRADE_COMPAT[p];
       return p;
     });
     const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0' };
@@ -9828,8 +9825,8 @@ if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser
           const canonicalSido = SIDO_EN[kr5.sido] || kr5.sido;
           const canonicalDist = DISTRICT_EN[kr5.district] || kr5.district;
           const canonicalDong = toRoman(dongName);
-          // 시도/구군/동 중 하나라도 정식 URL과 다르면 301
-          if (parts[0] !== canonicalSido || parts[1] !== canonicalDist || dongEn !== canonicalDong) {
+          // 시도/구군/동/학년 중 하나라도 정식 URL과 다르면 301 (세부 학년 → 메인 학년)
+          if (parts[0] !== canonicalSido || parts[1] !== canonicalDist || dongEn !== canonicalDong || rawGrade !== gradeEn) {
             const canonical5 = `/${canonicalSido}/${canonicalDist}/${canonicalDong}/${gradeEn}/${subjectEn}`;
             return new Response(null, { status: 301, headers: { 'Location': canonical5, 'Cache-Control': 'no-cache' } });
           }
