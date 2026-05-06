@@ -9977,6 +9977,7 @@ export default {
       return new Response(svgLogo, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
     }
 if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    if (path === '/BingSiteAuth.xml') return new Response('<?xml version="1.0"?>\n<users>\n\t<user>76CD7730D8D678F6A94139ED4D8A344D</user>\n</users>', { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 
     
     if (parts.length === 0) return new Response(makeHomePage(), { headers: h });
