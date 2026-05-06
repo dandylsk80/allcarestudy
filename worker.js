@@ -9257,19 +9257,20 @@ function serveSitemap() {
     { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 }
 
-function serveSitemapIndex() {
+function serveSitemapIndex(forNaver) {
   const today = new Date().toISOString().slice(0,10);
   
   const LARGE_SIDO = ['seoul','gyeonggi','gyeongbuk','jeonnam','jeonbuk','gyeongnam','chungnam','gangwon'];
   const sidoList = Object.keys(REGIONS).map(s => SIDO_EN[s]||s);
+  const prefix = forNaver ? 'sitemap-naver' : 'sitemap';
   const sitemapEntries = [
     
     `<sitemap><loc>https://allcarestudy.com/sitemap-priority.xml</loc><lastmod>${today}</lastmod></sitemap>`,
     `<sitemap><loc>https://allcarestudy.com/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>`,
     ...sidoList.flatMap(se =>
       LARGE_SIDO.includes(se)
-        ? [1,2,3,4].map(n => `<sitemap><loc>https://allcarestudy.com/sitemap-${se}-${n}.xml</loc><lastmod>${today}</lastmod></sitemap>`)
-        : [`<sitemap><loc>https://allcarestudy.com/sitemap-${se}.xml</loc><lastmod>${today}</lastmod></sitemap>`]
+        ? [1,2,3,4].map(n => `<sitemap><loc>https://allcarestudy.com/${prefix}-${se}-${n}.xml</loc><lastmod>${today}</lastmod></sitemap>`)
+        : [`<sitemap><loc>https://allcarestudy.com/${prefix}-${se}.xml</loc><lastmod>${today}</lastmod></sitemap>`]
     )
   ];
   const sitemaps = sitemapEntries.join('');
@@ -9338,7 +9339,10 @@ function servePrioritySitemap() {
   );
 }
 
-function serveSitemapByKey(key) {
+function serveSitemapByKey(key, opts) {
+  // opts.includeRegionFiveLevel: true이면 지역 5단계 URL(시도/구군/동/학년/과목) 포함 (Naver용)
+  // 기본값 false: Google용, 양산형 지역 5단계 URL 제외
+  const includeRegionFiveLevel = !!(opts && opts.includeRegionFiveLevel);
   
   const today = new Date().toISOString().slice(0,10);
   const u = (loc) => `<url><loc>https://allcarestudy.com${loc}</loc><lastmod>${today}</lastmod><changefreq>${loc.split('/').filter(Boolean).length<=2?'weekly':'monthly'}</changefreq><priority>${loc.split('/').filter(Boolean).length<=2?'0.8':loc.split('/').filter(Boolean).length===3?'0.8':'0.7'}</priority></url>`;
@@ -9436,9 +9440,11 @@ function serveSitemapByKey(key) {
       for(const dong of (area.dongs||[])){
         const dr = toRoman(dong);
         parts.push(u(`/${se}/${ge}/${dr}`));
-        for(const g of GRADES3){
-          for(const sk of subjKeys){
-            parts.push(u(`/${se}/${ge}/${dr}/${g}/${SUBJECT_EN[sk]||sk}`));
+        if (includeRegionFiveLevel) {
+          for(const g of GRADES3){
+            for(const sk of subjKeys){
+              parts.push(u(`/${se}/${ge}/${dr}/${g}/${SUBJECT_EN[sk]||sk}`));
+            }
           }
         }
       }
@@ -9856,7 +9862,15 @@ export default {
     }
     if (path === '/engineer-lab') return new Response(makeEngineerLabPage(), { headers: h });
     if (path === '/sitemap.xml') return serveSitemapIndex();
+    if (path === '/sitemap-naver.xml') return serveSitemapIndex(true);
     if (path === '/sitemap-priority.xml') return servePrioritySitemap();
+    
+    // Naver용 시도별 사이트맵 (/sitemap-naver-{sido}.xml 또는 /sitemap-naver-{sido}-{1~4}.xml)
+    const naverSidoMatch = path.match(/^\/sitemap-naver-([a-z0-9_-]+)\.xml$/);
+    if (naverSidoMatch) {
+      const result = serveSitemapByKey(naverSidoMatch[1], { includeRegionFiveLevel: true });
+      if (result) return result;
+    }
     
     const sitemapMatch = path.match(/^\/sitemap-([a-z0-9_-]+)\.xml$/);
     if (sitemapMatch) {
