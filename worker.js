@@ -8223,7 +8223,7 @@ function makeContactPage(type) {
 
       <!-- 주소 -->
       <div style="margin-bottom:16px">
-        <label class="u6">거주 주소</label>
+        <label class="u6">거주 주소 <span style="color:#EF4444">*</span></label>
         <div id="m-addr-row" style="display:flex;gap:8px">
           <input id="m-addr" type="text" readonly placeholder="클릭하여 주소 검색"
             style="flex:1;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s;cursor:pointer;background:white"
@@ -8246,7 +8246,7 @@ function makeContactPage(type) {
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         </div>
         <div style="margin-bottom:16px">
-          <label class="u6">원하는 수업 과목</label>
+          <label class="u6">원하는 수업 과목 <span style="color:#EF4444">*</span></label>
           <select id="m-subject-academy"
             class="u22"
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -8261,7 +8261,7 @@ function makeContactPage(type) {
       <!-- 과외 상담 전용 -->
       <div id="tutoring-fields" style="display:${isAcademy?'none':'block'}">
         <div style="margin-bottom:16px">
-          <label class="u6">희망 과목</label>
+          <label class="u6">희망 과목 <span style="color:#EF4444">*</span></label>
           <select id="m-subject-tutoring"
             class="u10"
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -8281,14 +8281,11 @@ function makeContactPage(type) {
           onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
       </div>
 
-      <!-- 개인정보 동의 -->
+      <!-- 개인정보 동의 (자동 동의 안내) -->
       <div style="background:#F9FAFB;border-radius:10px;padding:14px;margin-bottom:20px">
         <div class="u27">개인정보 수집 및 이용 동의</div>
-        <p style="font-size:12px;color:#6B7280;line-height:1.7;margin:0 0 10px">수집 항목: 이름, 연락처, 학년, 주소 / 수집 목적: 상담 및 교사 매칭 / 보유 기간: 상담 완료 후 1년</p>
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#374151;cursor:pointer">
-          <input type="checkbox" id="m-agree" style="width:16px;height:16px;accent-color:#1D4ED8">
-          <span>개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span>
-        </label>
+        <p style="font-size:12px;color:#6B7280;line-height:1.7;margin:0 0 8px">수집 항목: 이름, 연락처, 학년, 주소, 희망 과목 / 수집 목적: 상담 및 교사 매칭 / 보유 기간: 상담 완료 후 1년</p>
+        <p style="font-size:13px;color:#1D4ED8;font-weight:700;margin:0">✓ 문의 제출 시 위 내용에 동의하는 것으로 간주됩니다.</p>
       </div>
 
       <!-- 제출 버튼 -->
@@ -8362,26 +8359,30 @@ function submitContact(){
   var name = document.getElementById('m-name').value.trim();
   var phone = document.getElementById('m-phone').value.trim();
   var grade = document.getElementById('m-grade').value;
-  var agree = document.getElementById('m-agree').checked;
   var btn = document.getElementById('submit-btn');
+
+  var type = new URLSearchParams(window.location.search).get('type') || 'tutoring';
+  var addrEl = document.getElementById('m-addr');
+  var addrDetailEl = document.getElementById('m-addr-detail');
+  var addrMain = addrEl ? addrEl.value.trim() : '';
+  var addrDetail = addrDetailEl ? addrDetailEl.value.trim() : '';
+  var address = addrMain + (addrDetail ? ' ' + addrDetail : '');
+  var subjectEl = type === 'academy' ? document.getElementById('m-subject-academy') : document.getElementById('m-subject-tutoring');
+  var subject = subjectEl ? subjectEl.value : '';
+  var msgEl = document.getElementById('m-msg');
+  var message = msgEl ? msgEl.value.trim() : '';
 
   if(!name){ alert('이름을 입력해주세요.'); return; }
   if(!phone){ alert('연락처를 입력해주세요.'); return; }
   if(!grade){ alert('학년을 선택해주세요.'); return; }
-  if(!agree){ alert('개인정보 수집 및 이용에 동의해주세요.'); return; }
+  if(!addrMain){ alert('거주 주소를 입력해주세요.'); return; }
+  if(!subject){ alert(type === 'academy' ? '원하는 수업 과목을 선택해주세요.' : '희망 과목을 선택해주세요.'); return; }
 
   btn.disabled = true;
   btn.textContent = '접수 중...';
   btn.style.opacity = '0.7';
 
-  var type = new URLSearchParams(window.location.search).get('type') || 'tutoring';
-  var addrEl = document.getElementById('m-addr');
-  var addrDetailEl = document.getElementById('m-addr-detail');
-  var address = (addrEl ? addrEl.value.trim() : '') + (addrDetailEl && addrDetailEl.value.trim() ? ' ' + addrDetailEl.value.trim() : '');
-  var msgEl = document.getElementById('m-msg');
-  var message = msgEl ? msgEl.value.trim() : '';
-
-  fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address,message,type})})
+  fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address,subject,message,type})})
   .then(r=>r.json()).then(function(data){
     if(data.ok){
       var form = document.getElementById('modal-form');
