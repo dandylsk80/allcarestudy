@@ -790,6 +790,124 @@ function wrap(title, desc, canonical, body, breadcrumbs){
   
   const bodyWithDate = dateMeta + body + uniqueContent;
 
+  // === SEO 강화: 페이지별 동적 og:image + FAQPage schema 자동 생성 ===
+  let ogImage = 'https://allcarestudy.com/og-image.png';
+  let ogImageWidth = 1200;
+  let ogImageHeight = 630;
+  let faqSchema = '';
+  try {
+    const _segs = canonical.split('/').filter(Boolean);
+    if (_segs.length >= 1) {
+      // 1) og:image 페이지별 동적 결정
+      if (_segs[0] === 'academy') {
+        ogImage = pickImg('general', 'academy/' + canonical);
+      } else if (_segs[0] === 'school') {
+        ogImage = pickImg('general', 'school/' + canonical);
+      } else if (_segs[0] === 'conversation') {
+        ogImage = pickImg('english', 'conv/' + canonical);
+      } else if (_segs[0] === 'study-guide') {
+        ogImage = pickImg('general', 'guide/' + canonical);
+      } else if (SIDO_MAP[_segs[0]]) {
+        if (_segs.length === 4) {
+          const _subject = SUBJECT_MAP[_segs[3]] || _segs[3];
+          ogImage = pickImg(_subject, canonical);
+        } else if (_segs.length === 5) {
+          const _subject = SUBJECT_MAP[_segs[4]] || _segs[4];
+          ogImage = pickImg(_subject, canonical);
+        } else {
+          ogImage = pickImg('general', canonical);
+        }
+      }
+      // Unsplash CDN은 1200x630 사이즈로 변환
+      if (ogImage.indexOf('images.unsplash.com') >= 0) {
+        ogImage = ogImage.replace('?w=900&q=80', '?w=1200&h=630&fit=crop&q=80');
+      }
+
+      // 2) FAQPage schema: 지역 페이지에만 적용
+      if (SIDO_MAP[_segs[0]]) {
+        const _sido = SIDO_MAP[_segs[0]] || _segs[0];
+        let _gu = '', _dong = '', _grade = '', _subject = '';
+        if (_segs.length === 2) {
+          _gu = DISTRICT_MAP[_segs[1]] || _segs[1];
+        } else if (_segs.length === 3) {
+          _gu = DISTRICT_MAP[_segs[1]] || _segs[1];
+          _dong = _segs[2];
+        } else if (_segs.length === 4) {
+          _gu = DISTRICT_MAP[_segs[1]] || _segs[1];
+          _grade = GRADE_MAP[_segs[2]] || _segs[2];
+          _subject = SUBJECT_MAP[_segs[3]] || _segs[3];
+        } else if (_segs.length === 5) {
+          _gu = DISTRICT_MAP[_segs[1]] || _segs[1];
+          _dong = _segs[2];
+          _grade = GRADE_MAP[_segs[3]] || _segs[3];
+          _subject = SUBJECT_MAP[_segs[4]] || _segs[4];
+        }
+        // 동 이름 영문→한글 변환 (FAQ 자연스러움)
+        if (_dong) {
+          try {
+            const _dongKr = fromRoman(_segs[0], _segs[1], _dong);
+            if (_dongKr) _dong = _dongKr;
+          } catch(e) {}
+        }
+        let _faqs = [];
+        if (_subject && _grade && _dong) {
+          _faqs = [
+            { q: `${_dong} ${_grade} ${_subject}과외 비용은 얼마인가요?`,
+              a: `${_sido} ${_gu} ${_dong} ${_grade} ${_subject}과외 비용은 선생님 경력과 수업 횟수에 따라 다릅니다. 무료 상담을 통해 정확한 견적을 받아보세요.` },
+            { q: `${_dong}에서 ${_grade} ${_subject} 1:1 과외가 가능한가요?`,
+              a: `네, ${_sido} ${_gu} ${_dong} 지역에 검증된 ${_grade} ${_subject} 과외 선생님이 활동 중입니다. 방문 또는 화상 1:1 맞춤 수업이 가능합니다.` },
+            { q: `${_grade} ${_subject} 과외 효과를 얻으려면 얼마나 필요한가요?`,
+              a: `보통 ${_grade} ${_subject}은 주 2회 8~12주 정도 꾸준히 학습하면 성적 향상을 체감할 수 있습니다. 학생 수준 진단 후 맞춤 커리큘럼으로 진행합니다.` },
+            { q: `${_dong} 지역 ${_grade} 학생들의 ${_subject} 학습 팁이 있나요?`,
+              a: `${_dong} ${_grade} 학생들은 학교 내신과 ${_subject} 기본 개념을 함께 점검하는 것이 중요합니다. 무료 상담 시 학교별 특성에 맞춘 학습 전략을 안내드립니다.` }
+          ];
+        } else if (_subject && _grade) {
+          _faqs = [
+            { q: `${_gu} ${_grade} ${_subject}과외 어떻게 신청하나요?`,
+              a: `${_sido} ${_gu} ${_grade} ${_subject}과외 신청은 010-6834-8080 또는 상담 신청 페이지에서 가능합니다. 24시간 내 빠른 연락 드립니다.` },
+            { q: `${_grade} ${_subject}과외 비용이 궁금합니다.`,
+              a: `${_grade} ${_subject}과외 비용은 선생님 경력, 수업 횟수, 지역에 따라 다릅니다. 무료 상담을 통해 학생 맞춤 견적을 받아보세요.` },
+            { q: `검증된 ${_grade} ${_subject} 선생님인가요?`,
+              a: `네, 올케어스터디 ${_gu} ${_grade} ${_subject}과외 선생님은 모두 학력과 경력이 검증된 분들입니다.` },
+            { q: `${_gu} 어느 지역까지 과외가 가능한가요?`,
+              a: `${_sido} ${_gu} 전 지역의 ${_grade} ${_subject}과외가 가능합니다. 자세한 지역 매칭은 상담 시 확인할 수 있습니다.` }
+          ];
+        } else if (_dong) {
+          _faqs = [
+            { q: `${_dong}에서 어떤 과목 과외가 가능한가요?`,
+              a: `${_sido} ${_gu} ${_dong} 지역에서 수학, 영어, 국어, 과학, 사회, 코딩, 논술 모든 과목의 1:1 맞춤 과외가 가능합니다.` },
+            { q: `${_dong} 과외 비용은 어떻게 되나요?`,
+              a: `${_dong} 과외 비용은 과목, 학년, 선생님 경력에 따라 다릅니다. 무료 상담으로 견적을 확인하실 수 있습니다.` },
+            { q: `${_dong}에서 초·중·고 모두 과외가 가능한가요?`,
+              a: `네, ${_dong} 지역에서 초등, 중등, 고등 학생 모두 1:1 맞춤 과외가 가능합니다.` }
+          ];
+        } else if (_gu) {
+          _faqs = [
+            { q: `${_gu} 과외 어떻게 시작하나요?`,
+              a: `${_sido} ${_gu} 과외 신청은 010-6834-8080 또는 무료 상담 신청 페이지에서 가능합니다. 24시간 내 빠른 연락 드립니다.` },
+            { q: `${_gu}에서 1:1 맞춤 과외가 가능한가요?`,
+              a: `네, ${_gu} 전 지역에서 초·중·고 학생 대상 1:1 맞춤 과외가 가능합니다. 방문 또는 화상 수업 모두 가능합니다.` },
+            { q: `${_gu} 어떤 학년·과목 과외가 인기 있나요?`,
+              a: `${_gu} 지역은 초·중·고 수학, 영어, 국어 등 주요 과목 과외 수요가 높습니다. 학년별 맞춤 커리큘럼으로 진행됩니다.` }
+          ];
+        } else {
+          _faqs = [
+            { q: `${_sido}에서 1:1 맞춤 과외가 가능한가요?`,
+              a: `네, ${_sido} 전 지역에서 검증된 선생님과의 1:1 맞춤 과외가 가능합니다. 초·중·고 모든 학년 대상입니다.` },
+            { q: `${_sido} 과외 비용은 어떻게 되나요?`,
+              a: `${_sido} 과외 비용은 학년, 과목, 선생님 경력에 따라 다릅니다. 무료 상담으로 정확한 견적을 안내드립니다.` },
+            { q: `${_sido} 과외 어떻게 신청하나요?`,
+              a: `${_sido} 과외 신청은 010-6834-8080 또는 무료 상담 페이지에서 가능합니다.` }
+          ];
+        }
+        if (_faqs.length > 0) {
+          const _items = _faqs.map(f => `{"@type":"Question","name":"${f.q.replace(/"/g,'\\"')}","acceptedAnswer":{"@type":"Answer","text":"${f.a.replace(/"/g,'\\"')}"}}`).join(',');
+          faqSchema = `<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[${_items}]}</script>`;
+        }
+      }
+    }
+  } catch(e) { /* 기본값 유지 */ }
+
   
   let bcSchema = '';
   if(breadcrumbs && breadcrumbs.length) {
@@ -813,15 +931,17 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 <meta property="og:url" content="${canonicalUrl}">
 <meta property="og:site_name" content="올케어스터디">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://allcarestudy.com/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="${ogImage}">
+<meta property="og:image:width" content="${ogImageWidth}">
+<meta property="og:image:height" content="${ogImageHeight}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${ogImage}">
 <meta property="article:published_time" content="${pubIso}">
 <meta property="article:modified_time" content="${modIso}">
 <meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd">
 <meta name="google-site-verification" content="st8_MGU2mfnaomGNCLUGBmiQsZD50WNTWEUxzfmJ47E">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${pubIso}","dateModified":"${modIso}","inLanguage":"ko-KR"}</script>
-${bcSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","image":["${ogImage}"],"publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${pubIso}","dateModified":"${modIso}","inLanguage":"ko-KR"}</script>
+${bcSchema}${faqSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
 </head><body>${HEADER}${bodyWithDate}${FOOTER}</body></html>`;
