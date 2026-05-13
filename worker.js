@@ -1113,10 +1113,11 @@ function toRoman(text) {
 
 function fromRoman(sidoEn, guEn, roman) {
   // 정확한 매칭만 허용 (정규화/접미사 매칭 비활성화 - 짧은 URL → 정식 URL 리디렉션 차단)
+  // 매칭에 옛 글로벌(DISTRICT_EN)과 새 시도별(gugunEn) 둘 다 허용
   for (const [sido, reg] of Object.entries(REGIONS)) {
     if ((SIDO_EN[sido]||sido) !== sidoEn) continue;
     for (const [ak, area] of Object.entries(reg.areas)) {
-      if ((DISTRICT_EN[ak]||ak) !== guEn) continue;
+      if ((DISTRICT_EN[ak]||ak) !== guEn && gugunEn(sidoEn, ak) !== guEn) continue;
       for (const dong of (area.dongs||[])) {
         if (toRoman(dong) === roman) return dong;
       }
@@ -1242,7 +1243,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   for(const [s,reg] of Object.entries(REGIONS)){
     if((SIDO_EN[s]||s)!==sidoEn) continue;
     for(const [a,ar] of Object.entries(reg.areas)){
-      if((DISTRICT_EN[a]||a)!==guEn) continue;
+      if((DISTRICT_EN[a]||a)!==guEn && gugunEn(sidoEn, a)!==guEn) continue;
       sido=s; ak=a; region=reg; area=ar; break;
     }
     if(sido) break;
@@ -1391,7 +1392,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   for (const [s, reg] of Object.entries(REGIONS)) {
     if ((SIDO_EN[s]||s) === sidoEn) {
       for (const [a, ar] of Object.entries(reg.areas)) {
-        if ((DISTRICT_EN[a]||a) === guEn) {
+        if ((DISTRICT_EN[a]||a) === guEn || gugunEn(sidoEn, a) === guEn) {
           sido = s; ak = a; region = reg; area = ar;
           break;
         }
@@ -1430,7 +1431,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     if (!sidoData) return null;
     
     for (const [gugunK, gradeData] of Object.entries(sidoData)) {
-      if ((DISTRICT_EN[gugunK] || toRoman(gugunK)) === guEn) {
+      if ((DISTRICT_EN[gugunK] || toRoman(gugunK)) === guEn || gugunEn(sidoEn, gugunK) === guEn) {
         const gradeSchools = gradeData[_gradeKey];
         if (Array.isArray(gradeSchools) && gradeSchools.length) {
           
@@ -2147,7 +2148,7 @@ function makeSchoolGugunPage(sidoEn, gugunRoman) {
   
   let gugunKr = null;
   for (const [k] of Object.entries(DISTRICT_EN)) {
-    if ((DISTRICT_EN[k]||toRoman(k)) === gugunRoman) { gugunKr = k; break; }
+    if (gugunEn(sidoEn, k) === gugunRoman || (DISTRICT_EN[k]||toRoman(k)) === gugunRoman) { gugunKr = k; break; }
   }
   if (!gugunKr) {
     for (const g of Object.keys(sidoSchools)) {
