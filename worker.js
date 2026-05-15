@@ -788,7 +788,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
     }
   } catch(e) { uniqueContent = ''; }
   
-  const bodyWithDate = dateMeta + body + uniqueContent;
+  const bodyWithDate = dateMeta + body + (uniqueContent ? `<div style="max-width:900px;margin:0 auto;padding:0 24px 40px">${uniqueContent}</div>` : '');
 
   // === SEO 강화: 페이지별 동적 og:image + FAQPage schema 자동 생성 ===
   let ogImage = 'https://allcarestudy.com/og-image.png';
