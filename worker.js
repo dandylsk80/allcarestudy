@@ -9826,7 +9826,7 @@ export default {
     if (path === '/api/contact' && request.method === 'POST') {
       try {
         const body = await request.json();
-        const { name, grade, phone, address, message } = body;
+        const { name, grade, phone, address, subject, message } = body;
         if (!name || !grade || !phone) {
           return new Response(JSON.stringify({ ok: false, error: '필수 항목 누락' }), { headers: corsHeaders });
         }
@@ -9836,6 +9836,7 @@ export default {
           grade: grade || '',
           phone: phone || '',
           address: address || '',
+          subject: subject || '',
           message: message || '',
           type: body.type || 'tutoring'
         });
