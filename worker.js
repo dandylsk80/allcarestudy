@@ -944,7 +944,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 ${bcSchema}${faqSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
-</head><body>${HEADER}${bodyWithDate}${FOOTER}</body></html>`;
+</head><body>${HEADER}${bodyWithDate}${FOOTER}<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "1cbcc1a46d6c230";if(window.wcs) { wcs_do(); }</script></body></html>`;
 }
 
 function wrapDark(title,desc,canonical,body){
