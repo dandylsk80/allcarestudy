@@ -110,26 +110,6 @@ const DISTRICT_MAP = {
 };
 const DISTRICT_EN = Object.fromEntries(Object.entries(DISTRICT_MAP).map(([k,v])=>[v,k]));
 
-// 같은 한글 구군명(예: '북구')이 여러 시도에 존재하므로 시도별로 정확히 매핑
-// 시도(영문) + 구군(한글) → 영문 슬러그
-const DISTRICT_EN_BY_SIDO = {
-  busan:    {'중구':'junggu-busan','서구':'seo-busan','동구':'dong-busan','남구':'nam-busan','북구':'buk-busan','강서구':'gangseo-busan'},
-  daegu:    {'중구':'junggu-daegu','서구':'seo-daegu','동구':'dong-daegu','남구':'nam-daegu','북구':'buk-daegu'},
-  incheon:  {'중구':'junggu-incheon','서구':'seo-incheon','동구':'donggu-incheon'},
-  gwangju:  {'서구':'seo-gwangju','동구':'dong-gwangju','남구':'nam-gwangju','북구':'buk-gwangju'},
-  daejeon:  {'중구':'junggu-daejeon','서구':'seo-daejeon','동구':'dong-daejeon'},
-  ulsan:    {'중구':'junggu-ulsan','동구':'dong-ulsan','남구':'nam-ulsan','북구':'buk-ulsan'},
-  gangwon:  {'고성군':'goseong-gw'},
-  gyeongnam:{'고성군':'goseong-gn'},
-  gyeonggi: {'광주시':'gwangju-gg'},
-};
-// 시도+구군(한글)을 받아 정확한 영문 슬러그를 반환. 시도별 매핑 우선, 없으면 기본 매핑 사용.
-function gugunEn(sidoEn, gugunKr) {
-  const sidoMap = DISTRICT_EN_BY_SIDO[sidoEn];
-  if (sidoMap && sidoMap[gugunKr]) return sidoMap[gugunKr];
-  return DISTRICT_EN[gugunKr] || gugunKr;
-}
-
 
 
 
@@ -147,14 +127,13 @@ const GRADE_MAP = {
   
   'elementary':'초등','middle':'중등','high':'고등',
   
-  // 세부 학년은 메인 학년으로 정규화 (페이지 폭증 방지)
-  'elem1':'초등','elem2':'초등','elem3':'초등','elem4':'초등','elem5':'초등','elem6':'초등',
+  'elem1':'초1','elem2':'초2','elem3':'초3','elem4':'초4','elem5':'초5','elem6':'초6',
   
-  'mid1':'중등','mid2':'중등','mid3':'중등',
+  'mid1':'중1','mid2':'중2','mid3':'중3',
   
-  'high1':'고등','high2':'고등','high3':'고등',
+  'high1':'고1','high2':'고2','high3':'고3',
 };
-const GRADE_EN = {'초등':'elementary','중등':'middle','고등':'high'};
+const GRADE_EN = Object.fromEntries(Object.entries(GRADE_MAP).map(([k,v])=>[v,k]));
 
 const SUBJECT_MAP = {
   'math':'수학','english':'영어','korean':'국어','science':'과학',
@@ -172,7 +151,7 @@ function toKr(sido,district,dong,grade,subject){
   };
 }
 function enUrl(sido,district,dong,grade,subject){
-  const s=SIDO_EN[sido]||sido, d=gugunEn(s, district)||district,
+  const s=SIDO_EN[sido]||sido, d=DISTRICT_EN[district]||district,
         dg=dong?(DONG_EN[dong]||dong):null,
         g=GRADE_EN[grade]||grade, sb=SUBJECT_EN[subject]||subject;
   if(dg) return `/${s}/${d}/${dg}/${g}/${sb}`;
@@ -554,87 +533,7 @@ const SUBJECTS = {
   '검정고시': { emoji: '📋' },
 };
 
-const CSS = `:root{--navy:#0F2044;--navy-mid:#1E3A6E;--blue:#3B82F6;--blue-pale:#EFF6FF;--blue-border:#BFDBFE;--sky:#60A5FA;--text-dark:#0F2044;--text-mid:#374151;--text-muted:#9CA3AF;--bg:#F8FAFF;--border:#E5E7EB;--shadow:0 4px 24px rgba(0,0,0,0.09);--radius:14px}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}a{text-decoration:none;color:inherit}header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}.wrap{max-width:900px;margin:0 auto;padding:160px 24px 80px}.bc{font-size:12px;color:var(--text-muted);margin-bottom:20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.bc a{color:var(--text-muted)}.bc a:hover{color:var(--blue)}.art-tag{display:inline-block;background:linear-gradient(135deg,#1D4ED8,#3B82F6);color:white;font-size:12px;font-weight:700;padding:4px 12px;border-radius:6px;margin-bottom:14px}.art-title{font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1px;color:var(--navy);line-height:1.25;margin-bottom:16px}.art-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-muted);flex-wrap:wrap;margin-bottom:32px}.art-thumb{width:100%;height:240px;border-radius:var(--radius);margin-bottom:36px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);display:flex;align-items:center;justify-content:center;font-size:72px}.art-body h2{font-size:20px;font-weight:900;color:var(--navy);margin:36px 0 14px;padding-left:14px;border-left:5px solid #3B82F6;padding-bottom:10px;border-bottom:2px solid var(--blue-pale)}.art-body h3{font-size:16px;font-weight:800;color:var(--navy);margin:24px 0 10px}.art-body p{font-size:15px;color:var(--text-mid);line-height:1.85;margin-bottom:14px}.art-body strong{color:#1D4ED8;font-weight:800}.tag-wrap{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:20px 0}.tag-label{font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:12px;letter-spacing:1px}.tags{display:flex;flex-wrap:wrap;gap:8px}.tag{padding:7px 16px;background:var(--blue-pale);border:1px solid var(--blue-border);border-radius:8px;font-size:13px;font-weight:600;color:var(--blue);transition:all .2s;text-decoration:none;display:inline-block}.tag:hover{background:var(--blue);color:white}.subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}.subj-link{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:700;color:var(--text-dark);transition:all .2s;text-decoration:none}.subj-link:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-pale)}.info-box{background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:var(--radius);padding:20px 24px;margin:20px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.info-item{text-align:center}.info-num{font-size:26px;font-weight:900;color:white}.info-label{font-size:11px;color:rgba(255,255,255,0.7);margin-top:4px}.keyword-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:32px 0}.keyword-title{font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:12px}.keyword-tags{display:flex;flex-wrap:wrap;gap:6px}.keyword-tag{padding:5px 12px;background:white;border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text-mid)}.cta-box{background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:20px;padding:36px 40px;text-align:center;margin:48px 0}.cta-box h3{font-size:22px;font-weight:900;color:white;margin-bottom:8px}.cta-box p{font-size:14px;color:rgba(255,255,255,.65);margin-bottom:24px}.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn-p{background:var(--blue);color:white;border:none;padding:14px 28px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}.btn-o{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.3);padding:14px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}.related-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:16px;margin-top:48px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.rel-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:all .2s;display:block}.rel-card:hover{border-color:var(--blue-border);transform:translateY(-2px);box-shadow:var(--shadow)}.rc-tag{font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px}.rc-title{font-size:14px;font-weight:800;color:var(--navy);line-height:1.4}footer{background:var(--navy);padding:28px 48px;margin-top:60px}.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.fl{font-size:14px;font-weight:900;color:white}.fl em{font-style:normal;color:var(--sky)}.fr{font-size:12px;color:rgba(255,255,255,.35)}.floats{position:fixed;right:24px;bottom:60px;display:flex;flex-direction:column;gap:10px;z-index:500}.fbtn{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;border:none;font-size:13px;font-weight:700;box-shadow:0 8px 32px rgba(15,32,68,.25);transition:all .25s;cursor:pointer;text-decoration:none}.fbtn:hover{transform:translateX(-4px)}.fb1{background:var(--blue);color:white}.fb2{background:var(--navy);color:white}.dong-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:24px 0}.dong-card{background:white;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .25s;display:block;text-decoration:none;color:inherit}.dong-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border)}.dong-card-img{width:100%;height:160px;object-fit:cover;display:block;background:linear-gradient(135deg,#EFF6FF,#DBEAFE)}.dong-card-body{padding:16px}.dong-card-tag{font-size:11px;font-weight:700;color:var(--blue);margin-bottom:6px}.dong-card-title{font-size:15px;font-weight:900;color:var(--navy);margin-bottom:8px;line-height:1.35}.dong-card-desc{font-size:13px;color:var(--text-mid);line-height:1.7}.dong-card-arrow{display:flex;align-items:center;gap:4px;margin-top:12px;font-size:12px;font-weight:700;color:var(--blue)}@media(max-width:768px){.dong-grid{grid-template-columns:1fr 1fr}.dong-card-img{height:130px}}@media(max-width:480px){.dong-grid{grid-template-columns:1fr}}@media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}}header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}.hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none}.logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(29,78,216,0.35);flex-shrink:0}.logo-name{display:flex;flex-direction:column;line-height:1.15}.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0A1628}.logo-main em{font-style:normal;color:var(--sky)}.logo-sub{font-size:10px;color:rgba(15,32,68,0.6);font-weight:700;letter-spacing:3px}.vpill{border:1.5px solid rgba(15,32,68,0.2);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(15,32,68,0.04)}.vpill .vl{font-size:10px;color:rgba(15,32,68,0.5);font-weight:600}.vpill .vc{font-size:15px;font-weight:900;color:#1D4ED8;letter-spacing:-0.5px}.gnb{margin-left:auto;display:flex;align-items:center;gap:4px}.gnb-link{padding:8px 18px;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;text-decoration:none;transition:all .18s}.gnb-link:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}.gnb-drop-wrap{position:relative;display:inline-block}.gnb-drop{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:white;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);padding:8px;min-width:130px;z-index:1000}.gnb-drop::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:6px solid white}.gnb-drop-wrap:hover .gnb-drop{display:block}.gnb-drop-item{display:block;padding:9px 16px;font-size:13px;font-weight:700;color:#374151;text-decoration:none;border-radius:8px;white-space:nowrap}.gnb-drop-item:hover{background:#EFF6FF;color:#1D4ED8}@media(max-width:768px){.hw{padding:0 16px;height:72px;gap:10px}.logo-sub{display:none}.logo-main{font-size:15px}.logo-mark{width:32px;height:32px}.vpill{padding:4px 10px}.vpill .vc{font-size:13px}.gnb{display:none}}.gi{position:relative}.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap;cursor:pointer;font-family:inherit}.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}.arr{width:14px;height:14px;transition:transform .2s;color:rgba(15,32,68,0.4)}.gi:hover .arr{transform:rotate(180deg)}.drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:#0F2044;border-radius:12px;border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}.gi:hover .drop{opacity:1;visibility:visible}.drop a{display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);transition:all .15s}.drop a:hover{background:rgba(255,255,255,0.1);color:white}.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:#0F2044;border-radius:16px;border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}.gi:hover .mega-drop,.mega-drop.on{opacity:1;visibility:visible}.mega-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}.mega-tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:all .2s;font-family:inherit}.mega-tab.on{background:#3B82F6;color:white}.mega-tab:hover:not(.on){background:rgba(255,255,255,.08);color:white}.mega-panel{display:none}.mega-panel.on{display:block}.mega-rt{font-size:10px;font-weight:700;color:#60A5FA;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}.mega-btns{display:flex;flex-wrap:wrap;gap:6px}.mega-btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .18s;text-decoration:none}.mega-btn:hover{background:#3B82F6;color:white;border-color:#3B82F6}@media(max-width:640px){.wrap{padding-top:80px!important}h1{font-size:26px!important}.art-body{padding:0 16px}.bc{padding:0 16px;font-size:12px}.cta-box{margin:24px 16px;padding:28px 20px}.cta-btns{flex-direction:column}.cta-btns a{width:100%;text-align:center;box-sizing:border-box}.subj-grid{grid-template-columns:1fr!important}.keyword-tags{gap:6px}table{font-size:12px}table th,table td{padding:8px 10px!important}}#subj-grid{justify-content:center}@media(max-width:500px){#subj-grid{grid-template-columns:repeat(3,1fr)!important}}@media(max-width:768px){.gnb{display:none!important}.mob-menu-btn{display:flex!important}}@media(min-width:769px){.mob-menu-btn{display:none!important}.mob-nav{display:none!important}}.mob-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;align-items:center;justify-content:center}.mob-nav{position:fixed;top:0;right:-100%;width:82%;max-width:320px;height:100dvh;background:#0F2044;z-index:9000;transition:right .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:20px 0 40px}.mob-nav.open{right:0}.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:8999}.mob-overlay.open{display:block}.mob-nav-head{display:flex;align-items:center;justify-content:space-between;padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px}.mob-nav-logo{color:white;font-size:17px;font-weight:900;text-decoration:none}.mob-nav-logo em{color:#60A5FA;font-style:normal}.mob-close{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:22px;padding:4px}.mob-nav-item{display:block;padding:13px 20px;color:rgba(255,255,255,.8);font-size:15px;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06);transition:background .15s}.mob-nav-item:hover,.mob-nav-item.active{background:rgba(255,255,255,.08);color:white}.mob-nav-item.active{color:#60A5FA}.mob-nav-section{padding:14px 20px 6px;font-size:10px;font-weight:800;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase}.mob-subj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 16px 16px;justify-items:center}.mob-subj-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:rgba(255,255,255,.06);border-radius:10px;padding:12px 8px;text-decoration:none;transition:background .15s;width:100%}.mob-subj-btn:hover{background:rgba(255,255,255,.12)}.mob-subj-btn span:first-child{font-size:20px}.mob-subj-btn span:last-child{font-size:11px;font-weight:700;color:rgba(255,255,255,.8)}.mob-sido-grid{display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 16px;justify-content:center}.mob-sido-btn{padding:5px 12px;background:rgba(255,255,255,.06);border-radius:6px;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}.mob-sido-btn:hover{background:#3B82F6;color:white}.mob-contact-btn{margin:12px 16px 0;display:flex;align-items:center;justify-content:center;gap:8px;background:#1D4ED8;color:white;padding:14px;border-radius:12px;font-size:14px;font-weight:900;text-decoration:none}@media(max-width:768px){div[style*='grid-template-columns:1fr 340px']{grid-template-columns:1fr!important}}.cf-input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit}.cf-label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}@media(max-width:768px){div[style*='grid-template-columns:1fr 300px']{grid-template-columns:1fr!important}}#card-grid{display:grid}@media(max-width:767px){#card-grid{grid-template-columns:1fr!important;gap:10px!important}}@media(min-width:768px) and (max-width:1023px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:inherit}header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}.hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}.logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(29,78,216,0.35);flex-shrink:0}.logo-name{display:flex;flex-direction:column;line-height:1.15}.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0A1628}.logo-main em{font-style:normal;color:var(--sky)}.logo-sub{font-size:10px;color:rgba(15,32,68,0.6);font-weight:700;letter-spacing:3px}.vpill{border:1.5px solid rgba(15,32,68,0.2);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(15,32,68,0.04)}.vpill .vl{font-size:10px;color:rgba(15,32,68,0.5);font-weight:600}.vpill .vc{font-size:15px;font-weight:900;color:#1D4ED8;letter-spacing:-0.5px}.gnb{margin-left:auto;display:flex;align-items:center;gap:2px}.gi{position:relative}.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap}.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}.arr{width:14px;height:14px;transition:transform .2s;color:rgba(255,255,255,0.4)}.gi:hover .arr{transform:rotate(180deg);color:var(--sky)}.drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:var(--navy);border-radius:12px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}.gi:hover .drop{opacity:1;visibility:visible}.drop a{display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);transition:all .15s}.drop a:hover{background:rgba(255,255,255,0.1);color:white}.hsearch{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all .2s;flex-shrink:0}.hsearch:hover{border-color:var(--sky);color:var(--sky)}.hero{margin-top:136px;position:relative;overflow:hidden}.hslider{display:flex;transition:transform .65s cubic-bezier(.4,0,.2,1)}.slide{min-width:100%;height:460px;display:flex;align-items:center}.s1{background:linear-gradient(130deg,#0F2044 0%,#1E3A6E 50%,#1D4ED8 100%)}.s2{background:linear-gradient(130deg,#0C4A6E 0%,#0369A1 50%,#0EA5E9 100%)}.s3{background:linear-gradient(130deg,#1E1B4B 0%,#3730A3 50%,#4F46E5 100%)}.sin{max-width:1280px;margin:0 auto;padding:0 80px;width:100%;display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:center}.seb{display:inline-flex;align-items:center;gap:6px;background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.25);border-radius:999px;padding:4px 14px;font-size:12px;font-weight:700;color:var(--sky);margin-bottom:18px}.sdot{width:6px;height:6px;background:var(--sky);border-radius:50%;animation:blink 1.6s infinite}@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}.scap{font-size:14px;color:rgba(255,255,255,.65);margin-bottom:8px}.stitle{font-size:clamp(28px,3.5vw,46px);font-weight:900;line-height:1.15;letter-spacing:-1.5px;color:white;margin-bottom:14px}.stitle .hl{color:var(--sky)}.sdesc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:28px}.sbtns{display:flex;gap:12px}.bph{background:var(--blue);color:white;border:none;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:700;transition:all .2s;box-shadow:0 6px 20px rgba(59,130,246,.4)}.bph:hover{background:#2563EB;transform:translateY(-2px)}.bps{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);padding:13px 24px;border-radius:10px;font-size:14px;font-weight:600;transition:all .2s}.bps:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5)}.svis{display:flex;align-items:center;justify-content:center}.vc-card{background:rgba(255,255,255,.07);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:28px;width:100%}.vch{display:flex;align-items:center;gap:10px;margin-bottom:20px}.vci{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--sky));display:flex;align-items:center;justify-content:center;font-size:22px}.vct{font-size:15px;font-weight:800;color:white}.vcs{font-size:12px;color:rgba(255,255,255,.5)}.vcst{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}.vcsi{background:rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}.vcn{font-size:20px;font-weight:900;color:var(--sky);letter-spacing:-.5px}.vcl{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}.vcb{background:rgba(255,255,255,.06);border-radius:8px;padding:12px 14px}.vcbl{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}.vcbt{height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;margin-bottom:8px}.vcbf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--sky))}.hdots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}.hdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);border:none;cursor:pointer;padding:0;transition:all .3s}.hdot.on{background:var(--sky);width:24px;border-radius:4px}.strength{background:white;padding:80px 0;border-bottom:1px solid var(--border)}.sw{max-width:1280px;margin:0 auto;padding:0 48px}.sh{text-align:center;margin-bottom:52px}.se{display:inline-block;font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--blue);margin-bottom:10px}.st{font-size:clamp(22px,3vw,34px);font-weight:900;letter-spacing:-1px;color:var(--navy);line-height:1.25}.st .hl{color:var(--blue)}.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.sc{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;text-align:center;transition:all .3s;position:relative;overflow:hidden}.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--blue));opacity:0;transition:opacity .3s}.sc:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--blue-border);background:white}.sc:hover::before{opacity:1}.se2{font-size:36px;margin-bottom:12px;display:block}.sn{font-size:36px;font-weight:900;color:var(--navy-light);letter-spacing:-1px;line-height:1;margin-bottom:4px}.sl{font-size:12px;color:var(--text-muted);font-weight:500}.sd{font-size:12px;color:var(--text-mid);margin-top:8px;line-height:1.5}.reviews{padding:80px 0;background:var(--blue-pale)}.rw{overflow:hidden;margin-top:48px}.rt{display:flex;gap:20px;animation:scrollL 30s linear infinite;width:max-content}.rt:hover{animation-play-state:paused}@keyframes scrollL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}.rc{width:280px;flex-shrink:0;background:white;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm);border:1px solid var(--blue-border)}.rb{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;color:white;margin-bottom:12px}.rtitle{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:8px;line-height:1.35}.rtext{font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:14px}.rname{font-size:12px;color:var(--text-muted)}.rstar{color:#FBBF24;font-size:13px;margin-bottom:6px}.special{padding:80px 0;background:white}.spg{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px}.spc{background:var(--bg);border-radius:var(--radius);padding:32px 28px;border:1px solid var(--border);display:flex;gap:20px;align-items:flex-start;transition:all .3s}.spc:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border);background:white}.spi{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}.ic1{background:linear-gradient(135deg,#EFF6FF,#BFDBFE)}.ic2{background:linear-gradient(135deg,#F0FDF4,#BBF7D0)}.ic3{background:linear-gradient(135deg,#F0F9FF,#BAE6FD)}.ic4{background:linear-gradient(135deg,#EEF2FF,#C7D2FE)}.spt h4{font-size:16px;font-weight:800;margin-bottom:6px;color:var(--navy)}.spt p{font-size:13px;color:var(--text-muted);line-height:1.65}.diagnosis{padding:80px 0;background:var(--bg)}.diag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}.diag-card{background:white;border-radius:var(--radius);padding:28px 24px;border:1px solid var(--border);transition:all .3s;cursor:default;position:relative;overflow:hidden}.diag-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s}.diag-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border)}.diag-card:hover::after{opacity:1}.dc1::after{background:linear-gradient(90deg,#16A34A,#4ADE80)}.dc2::after{background:linear-gradient(90deg,#DB2777,#F472B6)}.dc3::after{background:linear-gradient(90deg,#2563EB,#60A5FA)}.dc4::after{background:linear-gradient(90deg,#D97706,#FCD34D)}.dc5::after{background:linear-gradient(90deg,#7C3AED,#A78BFA)}.dc6::after{background:linear-gradient(90deg,#0D9488,#34D399)}.diag-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;margin-bottom:14px}.db1{background:#DCFCE7;color:#16A34A}.db2{background:#FCE7F3;color:#DB2777}.db3{background:#DBEAFE;color:#1D4ED8}.db4{background:#FEF3C7;color:#D97706}.db5{background:#EDE9FE;color:#7C3AED}.db6{background:#CCFBF1;color:#0F766E}.diag-icon{font-size:32px;margin-bottom:12px;display:block}.diag-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:6px}.diag-desc{font-size:12px;color:var(--text-muted);line-height:1.6}.diag-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.diag-tag{font-size:10px;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 8px}footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}.fi{max-width:1280px;margin:0 auto;padding:0 48px}.ft{display:flex;justify-content:space-between;padding-bottom:32px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,.08);gap:48px}.flm{font-size:20px;font-weight:900;color:white}.flm em{font-style:normal;color:var(--sky)}.fdesc{font-size:13px;line-height:1.7;margin-top:8px;max-width:260px}.flinks{display:flex;gap:48px}.fc h5{color:rgba(255,255,255,.8);font-size:13px;font-weight:700;margin-bottom:14px}.fc a{display:block;font-size:12px;color:rgba(255,255,255,.4);margin-bottom:8px;transition:color .2s}.fc a:hover{color:rgba(255,255,255,.8)}.fph{text-align:right}.fph span{font-size:11px;color:rgba(255,255,255,.4);display:block;margin-bottom:4px}.fph strong{font-size:22px;font-weight:900;color:white;letter-spacing:-.5px}.fb2{display:flex;justify-content:space-between;align-items:center;font-size:11px}.fnotice{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 16px;font-size:11px;color:rgba(255,255,255,.35);line-height:1.6;margin-bottom:20px}.floats{position:fixed;right:24px;bottom:40px;display:flex;flex-direction:column;gap:10px;z-index:9999}.fbtn{display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;border:none;font-size:14px;font-weight:700;box-shadow:var(--shadow-lg);transition:all .25s;white-space:nowrap}.fbtn:hover{transform:translateX(-4px) scale(1.03)}.fb1{background:var(--blue);color:white}.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:var(--navy);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}.gi:hover .mega-drop{opacity:1;visibility:visible}.mega-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}.mega-tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:all .2s;font-family:inherit}.mega-tab.on{background:var(--blue);color:white}.mega-tab:hover:not(.on){background:rgba(255,255,255,.08);color:white}.mega-panel{display:none}.mega-panel.on{display:block}.mega-rt{font-size:10px;font-weight:700;color:var(--sky);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}.mega-rt:first-child{margin-top:0}.mega-btns{display:flex;flex-wrap:wrap;gap:6px}.mega-btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .18s;text-decoration:none}.mega-btn:hover{background:var(--blue);color:white;border-color:var(--blue)}.hburg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;flex-shrink:0}.hburg span{display:block;width:22px;height:2px;background:#0F2044;border-radius:2px;transition:all .3s}.hburg.on span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.hburg.on span:nth-child(2){opacity:0}.hburg.on span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}.mob-menu{position:fixed;top:72px;left:0;right:0;bottom:0;background:var(--navy);z-index:299;overflow-y:auto;transform:translateX(100%);transition:transform .3s ease}.mob-menu.on{transform:translateX(0)}.mob-inner{padding:24px 20px}.mob-section{margin-bottom:28px}.mob-title{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--sky);text-transform:uppercase;margin-bottom:12px}.mob-links{display:flex;flex-wrap:wrap;gap:8px}.mob-links a{padding:8px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;font-size:14px;font-weight:600;color:rgba(255,255,255,.8);transition:all .2s}.mob-links a:hover{background:var(--blue);border-color:var(--blue);color:white}.mob-cta{display:flex;flex-direction:column;gap:10px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}.mob-cta button{padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all .2s}.mob-cta button:first-child{background:var(--blue);color:white}.mob-cta button:last-child{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.2)}.fu{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}.fu.vis{opacity:1;transform:translateY(0)}@media(max-width:768px){.hw{padding:0 16px;height:72px;gap:10px}.logo-sub{display:none}.logo-main{font-size:15px}.logo-mark{width:32px;height:32px}.vpill{padding:4px 10px}.vpill .vc{font-size:13px}.vpill .vl{font-size:9px}.gnb{display:none}.hsearch{display:none}.hburg{display:flex;margin-left:auto}.hero{margin-top:72px}.slide{height:auto;min-height:420px;padding:32px 0 24px}.sin{grid-template-columns:1fr;padding:0 20px;gap:24px}.svis{display:none}.stitle{font-size:32px;letter-spacing:-1px}.seb{font-size:11px}.scap{font-size:13px}.sdesc{font-size:13px;margin-bottom:20px}.sbtns{flex-direction:column;gap:8px}.bph,.bps{width:100%;text-align:center;padding:12px 20px}.hdots{bottom:12px}.strength{padding:48px 0}.sw{padding:0 16px}.sh{margin-bottom:32px}.st{font-size:22px}.sg{grid-template-columns:1fr 1fr;gap:12px}.sc{padding:20px 14px}.se2{font-size:28px;margin-bottom:8px}.sn{font-size:26px}.reviews{padding:48px 0}.rc{width:240px;padding:18px}.special{padding:48px 0}.spg{grid-template-columns:1fr;gap:12px}.spc{padding:20px}.diagnosis{padding:48px 0}.diag-grid{grid-template-columns:1fr 1fr;gap:12px}.diag-card{padding:18px 14px}.diag-icon{font-size:24px;margin-bottom:8px}.diag-title{font-size:13px}.diag-desc{font-size:11px}.diag-tags{display:none}footer{padding:32px 0 24px}.fi{padding:0 16px}.ft{flex-direction:column;gap:24px;padding-bottom:24px}.flinks{flex-wrap:wrap;gap:24px}.fph{text-align:left}.fph strong{font-size:18px}.fb2{flex-direction:column;gap:6px;align-items:flex-start}.floats{right:12px;bottom:24px;gap:8px}.fbtn{padding:12px 16px;font-size:13px}.diag-grid{grid-template-columns:repeat(2,1fr);gap:12px}#region-section{padding:40px 20px}#region-section h2{font-size:22px}#region-section>div>div:last-child{grid-template-columns:repeat(2,1fr);gap:8px}#region-section a{padding:10px 12px;font-size:13px}#fpanel-region>div,#fpanel-subject>div,#fpanel-academy>div,#fpanel-conv>div{grid-template-columns:repeat(3,1fr);gap:6px}#fpanel-region a,#fpanel-subject a,#fpanel-academy a,#fpanel-conv a{padding:9px 5px;font-size:11px;gap:3px;white-space:normal;word-break:keep-all}}@media(max-width:400px){.diag-grid{grid-template-columns:1fr}.sg{grid-template-columns:1fr 1fr}.stitle{font-size:28px}}@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Noto Sans KR',sans-serif;color:#1F2937;background:#fff;overflow-x:hidden}.hero{background:var(--navy);min-height:500px;padding:140px 48px 100px;text-align:center;position:relative;overflow:hidden}.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:32px 32px}.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(59,130,246,.25) 0%,transparent 70%);pointer-events:none}.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 18px;font-size:13px;color:rgba(255,255,255,.8);font-weight:600;margin-bottom:24px}.hero-badge b{color:#60A5FA}.hero-title{font-size:52px;font-weight:900;color:white;line-height:1.15;letter-spacing:-1.5px;margin-bottom:20px}.hero-title em{color:#60A5FA;font-style:normal}.hero-desc{font-size:17px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:36px;word-break:keep-all}.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.btn-white{background:white;color:var(--navy);padding:14px 32px;border-radius:12px;font-size:15px;font-weight:800;border:none;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center}.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.25)}.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,.3);color:white;padding:14px 32px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center}.btn-outline:hover{background:rgba(255,255,255,.1)}.breadcrumb{background:white;padding:14px 48px;font-size:13px;color:#9CA3AF;border-bottom:1px solid var(--border)}.breadcrumb a{color:var(--blue)}.stats-wrap{background:white;padding:48px 48px 80px}.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;max-width:900px;margin:0 auto;background:white;box-shadow:0 8px 40px rgba(15,32,68,.08)}.stat{padding:36px 32px;text-align:center;border-right:1px solid var(--border)}.stat:last-child{border-right:none}.stat-num{font-size:42px;font-weight:900;color:var(--navy);line-height:1}.stat-num sup{font-size:20px;vertical-align:super}.stat-label{font-size:13px;color:var(--gray);margin-top:6px;font-weight:500}.tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;letter-spacing:.5px;margin-bottom:14px}.sec-title{font-size:34px;font-weight:900;color:var(--navy);line-height:1.3;margin-bottom:16px;letter-spacing:-.5px}.sec-title em{color:var(--blue);font-style:normal}.sec-desc{font-size:15px;color:var(--gray);line-height:1.9}.sec-desc strong{color:var(--navy)}.method-section{padding:100px 48px 80px;background:white}.method-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}.method-cards{display:flex;flex-direction:column;gap:14px}.method-card{background:var(--light);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:.2s}.method-card:hover{border-color:#93C5FD;background:var(--blue-light)}.mc-icon{width:40px;height:40px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}.mc-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px}.mc-desc{font-size:13px;color:var(--gray);line-height:1.6}.diff-section{background:#EFF6FF;padding:80px 48px}.diff-inner{max-width:1100px;margin:0 auto}.diff-header{text-align:center;margin-bottom:56px}.diff-title{font-size:36px;font-weight:900;color:#0F2044;line-height:1.3}.diff-title em{color:#1D4ED8;font-style:normal}.diff-desc{font-size:16px;color:#374151;margin-top:12px;line-height:1.8}.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.diff-card{background:white;border:1px solid #BFDBFE;border-radius:20px;padding:32px 24px;transition:all .3s;box-shadow:0 2px 0 #BFDBFE,0 8px 32px rgba(29,78,216,.12),0 2px 8px rgba(0,0,0,.06)}.diff-card:hover{background:#F0F7FF;border-color:#60A5FA;transform:translateY(-6px);box-shadow:0 2px 0 #93C5FD,0 20px 56px rgba(29,78,216,.15)}.diff-num{font-size:13px;font-weight:900;color:#60A5FA;margin-bottom:12px;letter-spacing:1px}.diff-card-title{font-size:18px;font-weight:900;color:#0F2044;margin-bottom:10px}.diff-card-desc{font-size:14px;color:#6B7280;line-height:1.75}.goal-section{padding:80px 48px;background:var(--light)}.goal-inner{max-width:1100px;margin:0 auto}.goal-header{text-align:center;margin-bottom:48px}.goal-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:20px;overflow:hidden}.goal-card{background:white;padding:40px 32px;text-align:center;position:relative}.goal-card::before{content:attr(data-num);position:absolute;top:24px;right:24px;font-size:11px;font-weight:900;color:#E5E7EB;letter-spacing:1px}.goal-icon{width:64px;height:64px;border-radius:16px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}.goal-card-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:10px}.goal-card-desc{font-size:14px;color:var(--gray);line-height:1.75}.process-section{padding:80px 48px;background:white}.process-inner{max-width:1000px;margin:0 auto}.process-header{text-align:center;margin-bottom:48px}.process-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}.process-text ul{margin-top:20px;display:flex;flex-direction:column;gap:10px;list-style:none}.process-text li{display:flex;gap:10px;font-size:14px;color:var(--gray);line-height:1.6}.process-text li::before{content:'';width:6px;height:6px;background:var(--blue);border-radius:50%;flex-shrink:0;margin-top:7px}.process-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative}.p-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88px;height:88px;background:white;border-radius:50%;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:var(--navy);text-align:center;line-height:1.3;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:2}.pc{border-radius:16px;padding:28px 22px;color:white}.pc-1{background:#1E3A6E}.pc-2{background:#1E40AF}.pc-3{background:#1D4ED8}.pc-4{background:#2563EB}.pc-en{font-size:15px;font-weight:900;margin-bottom:4px}.pc-en span{opacity:.5}.pc-kr{font-size:13px;font-weight:700;opacity:.85}.manage-section{padding:80px 48px;background:var(--light)}.manage-inner{max-width:1000px;margin:0 auto}.manage-header{text-align:center;margin-bottom:40px}.manage-tabs{display:flex;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:28px;background:white}.mtab{flex:1;padding:16px;text-align:center;font-size:14px;font-weight:700;color:var(--gray);cursor:pointer;border:none;background:white;transition:.2s;border-right:1px solid var(--border)}.mtab:last-child{border-right:none}.mtab.active{background:var(--navy);color:white}.manage-panel{display:none;background:white;border:1.5px solid var(--border);border-radius:16px;padding:40px;gap:48px;align-items:start}.manage-panel.active{display:grid;grid-template-columns:1fr 1fr}.mp-tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;margin-bottom:10px}.mp-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:14px}.mp-desc{font-size:14px;color:var(--gray);line-height:1.9}.mp-desc strong{color:var(--navy)}.mp-visual{background:var(--light);border-radius:14px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:72px;border:1px solid var(--border)}.mp-points{margin-top:20px;display:flex;flex-direction:column;gap:8px}.mp-point{display:flex;gap:10px;font-size:13px;color:var(--gray)}.mp-point::before{content:'✓';color:var(--blue);font-weight:900;flex-shrink:0}.mp-img-grid{position:relative;border-radius:14px;overflow:hidden}.mp-img-grid .mslide{display:none;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px}.mp-img-grid .mslide.active{display:block}.mp-img-dots{display:flex;justify-content:center;gap:6px;margin-top:10px}.mp-img-dots button{width:7px;height:7px;border-radius:50%;border:none;background:var(--border);cursor:pointer;padding:0;transition:.2s}.mp-img-dots button.active{background:var(--navy);width:20px;border-radius:4px}.mp-img-nav{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:2;transition:.2s}.mp-img-nav:hover{background:white;box-shadow:0 4px 12px rgba(0,0,0,.2)}.mp-img-nav.prev{left:8px}.mp-img-nav.next{right:8px}.ai-section{padding:80px 48px;background:#EFF6FF;position:relative;overflow:hidden}.ai-section::before{content:'';position:absolute;right:-20px;bottom:-20px;width:380px;height:480px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3C!-- 안테나 --%3E%3Cline x1='100' y1='10' x2='100' y2='35' stroke='%231D4ED8' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='100' cy='8' r='6' fill='%231D4ED8'/%3E%3C!-- 머리 --%3E%3Crect x='55' y='35' width='90' height='70' rx='18' fill='%231D4ED8'/%3E%3C!-- 눈 --%3E%3Ccircle cx='80' cy='62' r='14' fill='white'/%3E%3Ccircle cx='120' cy='62' r='14' fill='white'/%3E%3Ccircle cx='83' cy='65' r='7' fill='%230F2044'/%3E%3Ccircle cx='123' cy='65' r='7' fill='%230F2044'/%3E%3Ccircle cx='85' cy='63' r='2.5' fill='white'/%3E%3Ccircle cx='125' cy='63' r='2.5' fill='white'/%3E%3C!-- 입 --%3E%3Crect x='78' y='88' width='44' height='8' rx='4' fill='white' opacity='.6'/%3E%3Crect x='85' y='89' width='8' height='6' rx='2' fill='%230F2044' opacity='.4'/%3E%3Crect x='96' y='89' width='8' height='6' rx='2' fill='%230F2044' opacity='.4'/%3E%3Crect x='107' y='89' width='8' height='6' rx='2' fill='%230F2044' opacity='.4'/%3E%3C!-- 목 --%3E%3Crect x='88' y='105' width='24' height='18' rx='4' fill='%231D4ED8'/%3E%3C!-- 몸통 --%3E%3Crect x='40' y='123' width='120' height='95' rx='20' fill='%231D4ED8'/%3E%3C!-- 몸통 패널 --%3E%3Crect x='60' y='138' width='80' height='50' rx='10' fill='white' opacity='.12'/%3E%3Ccircle cx='80' cy='155' r='10' fill='white' opacity='.25'/%3E%3Ccircle cx='80' cy='155' r='5' fill='%2360A5FA'/%3E%3Crect x='95' y='148' width='35' height='5' rx='2.5' fill='white' opacity='.3'/%3E%3Crect x='95' y='158' width='25' height='5' rx='2.5' fill='white' opacity='.2'/%3E%3Crect x='95' y='168' width='30' height='5' rx='2.5' fill='white' opacity='.25'/%3E%3C!-- 왼팔 --%3E%3Crect x='10' y='125' width='28' height='80' rx='14' fill='%231D4ED8'/%3E%3Ccircle cx='24' cy='210' r='14' fill='%231E40AF'/%3E%3C!-- 오른팔 --%3E%3Crect x='162' y='125' width='28' height='80' rx='14' fill='%231D4ED8'/%3E%3Ccircle cx='176' cy='210' r='14' fill='%231E40AF'/%3E%3C!-- 다리 --%3E%3Crect x='65' y='218' width='32' height='55' rx='14' fill='%231D4ED8'/%3E%3Crect x='103' y='218' width='32' height='55' rx='14' fill='%231D4ED8'/%3E%3C!-- 발 --%3E%3Crect x='58' y='260' width='44' height='16' rx='8' fill='%231E40AF'/%3E%3Crect x='98' y='260' width='44' height='16' rx='8' fill='%231E40AF'/%3E%3C/svg%3E") center bottom/contain no-repeat;opacity:0.07;pointer-events:none;z-index:0;line-height:1;pointer-events:none}.ai-stars{display:none}.ai-glow1{position:absolute;top:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(37,99,235,.08) 0%,transparent 70%);pointer-events:none}.ai-glow2{position:absolute;bottom:-100px;right:-100px;width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,.08) 0%,transparent 70%);pointer-events:none}.ai-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}.ai-header{margin-bottom:48px}.ai-title{font-size:40px;font-weight:900;color:#0F2044;letter-spacing:-1px;margin-bottom:10px;text-shadow:0 1px 2px rgba(0,0,0,.1)}.ai-title span{color:#1D4ED8}.ai-sub{font-size:15px;color:#1F2937;line-height:1.8;font-weight:500}.ai-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.ai-card{background:white;border:1px solid #BFDBFE;border-radius:20px;padding:28px 24px;transition:all .3s;box-shadow:0 2px 0 #BFDBFE,0 8px 32px rgba(29,78,216,.12),0 2px 8px rgba(0,0,0,.06);transform:translateY(0)}.ai-card:hover{background:#F0F7FF;border-color:#60A5FA;transform:translateY(-8px);box-shadow:0 2px 0 #93C5FD,0 20px 56px rgba(29,78,216,.18),0 8px 16px rgba(0,0,0,.08)}.ai-card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}.ai-card-icon{width:44px;height:44px;background:linear-gradient(135deg,#DBEAFE,#EDE9FE);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid #BFDBFE;box-shadow:0 4px 12px rgba(37,99,235,.1)}.ai-card-name{font-size:18px;font-weight:900;color:#0F2044;letter-spacing:-.3px}.ai-card-range{font-size:11px;color:#9CA3AF;margin-top:2px}.ai-card-desc{font-size:13px;color:#374151;line-height:1.75;margin-bottom:16px;font-weight:500}.ai-steps{display:flex;gap:6px;flex-wrap:wrap}.ai-step{background:#DBEAFE;border:1px solid #93C5FD;border-radius:999px;padding:4px 12px;font-size:11px;color:#1E40AF;font-weight:800}.review-section{padding:80px 0;background:white}.review-inner{max-width:900px;margin:0 auto;padding:0 48px}.review-header{text-align:center;margin-bottom:40px}.slider-wrap{position:relative;display:flex;align-items:center;gap:0;margin-bottom:24px}.slider-viewport{overflow:hidden;flex:1}.slider-track{display:flex;gap:20px;transition:transform .4s cubic-bezier(.4,0,.2,1);will-change:transform}.review-card{flex:0 0 calc(33.333% - 14px);border:1.5px solid var(--border);border-radius:16px;padding:28px 26px;transition:border-color .2s,box-shadow .2s;background:white}.review-card:hover{border-color:#93C5FD;box-shadow:0 4px 20px rgba(29,78,216,.08)}.review-quotes{font-size:48px;font-weight:900;color:#DBEAFE;line-height:.8;margin-bottom:8px;font-family:Georgia,serif}.review-badges{display:flex;gap:8px;margin-bottom:10px}.rb{padding:3px 12px;border-radius:999px;font-size:12px;font-weight:700}.rb-h{background:#FEE2E2;color:#DC2626}.rb-m{background:#DBEAFE;color:#1D4ED8}.rb-e{background:#FEF3C7;color:#D97706}.rb-s{background:var(--light);color:var(--gray)}.review-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:8px}.review-text{font-size:13px;color:var(--gray);line-height:1.8}.slider-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);background:white;font-size:16px;cursor:pointer;flex-shrink:0;transition:.2s;color:var(--navy);display:flex;align-items:center;justify-content:center;margin:0 12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}.slider-btn:hover{background:var(--navy);color:white;border-color:var(--navy)}.slider-dots{display:flex;justify-content:center;gap:8px}.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;border:none}.sdot.active{background:#1D4ED8;width:24px;border-radius:4px}.cta-section{background:linear-gradient(135deg,var(--navy) 0%,#1D4ED8 100%);padding:80px 48px;text-align:center;position:relative;overflow:hidden}.cta-title{font-size:34px;font-weight:900;color:white;margin-bottom:10px;letter-spacing:-.5px}.cta-sub{font-size:16px;color:rgba(255,255,255,.65);margin-bottom:32px;line-height:1.7}.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}@media(max-width:900px){.hero{padding:100px 24px 80px}.hero-title{font-size:34px}.stats-wrap{padding:0 24px 60px}.stats{grid-template-columns:1fr}.stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}.method-inner,.diff-grid,.ai-cards,.process-layout,.goal-cards{grid-template-columns:1fr}.manage-panel.active{grid-template-columns:1fr}.method-section,.diff-section,.goal-section,.process-section,.manage-section,.ai-section,.review-section,.cta-section{padding:60px 24px}.breadcrumb{padding:14px 24px}}.u1{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s}.u2{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s}.u3{padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit}.u4{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.u5{font-size:14px;color:var(--text-muted);margin-top:12px;line-height:1.7;word-break:keep-all}.u6{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}.u8{width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative}.u9{background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px}.u10{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151}.u11{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.65),transparent);display:flex;align-items:center;padding:32px}.u12{background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:22px;margin-bottom:18px}.u13{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s}.u14{font-size:18px;font-weight:900;color:#0F2044;margin:0 0 12px;padding-bottom:10px;border-bottom:3px solid #EFF6FF}.u15{font-size:16px;font-weight:900;color:#0F2044;margin:0 0 12px}.u16{font-size:12px;font-weight:700;color:#9CA3AF;margin-bottom:2px}.u17{display:flex;align-items:center;gap:14px;background:white;border-radius:14px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.06)}.u18{background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:24px}.u19{font-size:14px;color:#374151;line-height:2;margin:0 0 10px}.u20{font-size:14px;color:#374151;line-height:1.9;margin:0}.u21{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}.u22{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151;transition:border .2s}.u23{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.6),transparent);display:flex;align-items:center;padding:32px}.u24{font-size:16px;font-weight:900;color:#0F2044;margin:0 0 14px}.u25{font-size:15px;color:#374151;line-height:2;margin:0}.u26{font-size:14px;color:#374151;line-height:2;margin:0}.u27{font-size:13px;font-weight:800;color:#0F2044;margin-bottom:8px}.u28{font-size:13px;font-weight:800;color:#0F2044;margin-bottom:6px}.u29{font-size:13px;font-weight:800;color:#0F2044;margin-bottom:5px}.u30{font-size:13px;font-weight:800;color:#0F2044;margin-bottom:2px}.u31{font-size:13px;color:#374151;line-height:1.8;margin:0}.u32{font-size:12px;color:#374151;line-height:1.75;margin:0}.u33{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}.u34{display:grid;grid-template-columns:1fr 1fr;gap:12px}.u35{display:flex;align-items:center;justify-content:space-between;background:#F9FAFB;border:1.5px solid #E5E7EB;border-radius:12px;padding:14px 18px;text-decoration:none;margin-bottom:8px;transition:all .2s}.u36{background:white;color:#0F2044;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none}.u37{background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:18px}
-@media(max-width:768px){
-/* === HERO === */
-.h2-hero{margin-top:72px !important}
-.h2-hero .h2-slide{grid-template-columns:1fr !important;min-height:680px !important;display:flex !important;flex-direction:column !important}
-.h2-hero .h2-slide > div{width:100% !important}
-/* 메인 콘텐츠를 먼저 */
-.h2-hero .h2-slide > div:nth-of-type(2){order:1 !important}
-/* 좌측 다크 사이드바를 아래로 + 얇은 바로 축소 */
-.h2-hero .h2-slide > div:first-of-type{order:2 !important;padding:14px 20px !important;display:flex !important;flex-direction:row !important;justify-content:space-between !important;align-items:center !important;gap:12px !important;min-height:0 !important}
-/* 사이드바 첫 자식 (z-index:1 래퍼) */
-.h2-hero .h2-slide > div:first-of-type > div:nth-of-type(2){margin:0 !important;display:flex !important;align-items:center !important;gap:10px !important;flex:1;min-width:0}
-/* 헤더 "01/03 FEATURED" 라벨만 유지 */
-.h2-hero .h2-slide > div:first-of-type > div:nth-of-type(2) > div:first-child{margin-bottom:0 !important;font-size:10px !important;white-space:nowrap;flex-shrink:0}
-/* 탭 리스트 (3개 div 컨테이너) 숨김 */
-.h2-hero .h2-slide > div:first-of-type > div:nth-of-type(2) > div:last-child{display:none !important}
-/* 사이드바 마지막 통계 (TRUSTED BY / 4,200+) */
-.h2-hero .h2-slide > div:first-of-type > div:last-of-type{border-top:none !important;padding-top:0 !important;flex-shrink:0;text-align:right;min-height:0 !important}
-.h2-hero .h2-slide > div:first-of-type > div:last-of-type > div:first-child{font-size:9px !important;margin-bottom:1px !important}
-.h2-hero .h2-slide > div:first-of-type > div:last-of-type > div:last-child{font-size:14px !important}
-/* 우측 메인 영역 */
-.h2-hero .h2-right{padding:32px 20px !important;display:flex !important;flex-direction:column !important;gap:20px !important;grid-template-columns:1fr !important}
-.h2-hero .h2-right h1{font-size:28px !important;letter-spacing:-1px !important;line-height:1.1 !important}
-.h2-hero .h2-right p{font-size:13px !important;max-width:100% !important}
-/* 200px 워터마크 숫자 숨김 */
-.h2-hero .h2-right > div[style*="font-size:200px"]{display:none !important}
-.h2-hero .h2-mock{width:100% !important;max-width:340px;margin:0 auto}
-/* 한글 줄바꿈 방지 */
-.h2-hero h1,section h2{word-break:keep-all !important}
-section h4{word-break:keep-all !important}
-/* 모바일 섹션 padding 압축 */
-section[style*="padding:120px 0"]{padding:40px 0 !important}
-section[style*="padding:100px 0"]{padding:36px 0 !important}
-section[style*="padding:80px 0"]{padding:32px 0 !important}
-section[style*="padding:64px 0"]{padding:28px 0 !important}
-section > div[style*="max-width:1280px"],section > div[style*="max-width:1200px"],section > div[style*="max-width:1100px"]{padding-left:16px !important;padding-right:16px !important}
-section h2{font-size:24px !important;letter-spacing:-1px !important;line-height:1.25 !important}
-/* 섹션 헤더 간격 축소 */
-.rv-head,.sp-head,.di-head{margin-bottom:24px !important;padding-bottom:16px !important}
-/* HERO 높이 축소 */
-.h2-hero .h2-slide{min-height:560px !important}
-.h2-hero .h2-right{padding:24px 20px !important;gap:16px !important}
-.h2-hero .h2-right h1{font-size:24px !important;line-height:1.3 !important}
-.h2-hero .h2-right h1 span{background:none !important;-webkit-background-clip:unset !important;background-clip:unset !important;-webkit-text-fill-color:#1D4ED8 !important;color:#1D4ED8 !important}
-/* 슬라이드 높이 통일 */
-.h2-hero .h2-right{flex:1 !important;justify-content:center !important;min-height:0}
-.h2-hero .h2-mock{min-height:180px}
-
-/* === STRENGTH === */
-.str-main-grid{grid-template-columns:1fr !important;gap:16px !important}
-.str-main-card{padding:32px 28px !important}
-.str-main-card > div[style*="position:relative;z-index:1"] > div[style*="display:flex;align-items:flex-start"]{flex-direction:row !important;align-items:flex-start !important;gap:8px !important;margin-bottom:20px !important}
-.str-main-card span[style*="font-size:clamp(72px"]{font-size:72px !important;letter-spacing:-4px !important}
-.str-main-card span[style*="margin-top:16px"]{font-size:22px !important;margin-top:10px !important}
-.str-main-grid > div:last-of-type{grid-template-rows:auto !important;gap:12px !important}
-.str-small-card{padding:16px 20px !important}
-
-/* === REVIEWS === */
-.rv-head{grid-template-columns:1fr !important;gap:16px !important}
-.rv-hero-grid{grid-template-columns:1fr !important}
-.rv-stat-bar{grid-template-columns:1fr 1fr !important;gap:12px !important;padding:20px !important}
-.rv-card{padding:24px !important}
-
-/* === SPECIAL === */
-.sp-orbit{display:grid !important;grid-template-columns:1fr !important;gap:12px !important;min-height:auto !important;padding:16px 0 !important}
-.sp-orbit > .sp-card{position:static !important;width:100% !important}
-.sp-hub{position:relative !important;left:auto !important;top:auto !important;transform:none !important;margin:0 auto 12px !important;width:120px !important;height:120px !important}
-.sp-orbit > div[style*="border:1px dashed"]{display:none !important}
-.sp-orbit svg{display:none !important}
-
-/* === DIAGNOSIS === */
-.di-head{grid-template-columns:1fr !important;gap:20px !important;align-items:flex-start !important}
-.di-head h2{font-size:24px !important;letter-spacing:-1px !important}
-.di-list{grid-template-columns:1fr 1fr !important}
-}
-@media(max-width:520px){
-.di-list{grid-template-columns:1fr !important}
-.di-item{padding:24px 20px !important}
-.rv-stat-bar{grid-template-columns:1fr !important}
-}
-`;
+const CSS = `:root{--navy:#0F2044;--navy-mid:#1E3A6E;--blue:#3B82F6;--blue-pale:#EFF6FF;--blue-border:#BFDBFE;--sky:#60A5FA;--text-dark:#0F2044;--text-mid:#374151;--text-muted:#9CA3AF;--bg:#F8FAFF;--border:#E5E7EB;--shadow:0 4px 24px rgba(0,0,0,0.09);--radius:14px}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}a{text-decoration:none;color:inherit}header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}.wrap{max-width:900px;margin:0 auto;padding:160px 24px 80px}.bc{font-size:12px;color:var(--text-muted);margin-bottom:20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.bc a{color:var(--text-muted)}.bc a:hover{color:var(--blue)}.art-tag{display:inline-block;background:linear-gradient(135deg,#1D4ED8,#3B82F6);color:white;font-size:12px;font-weight:700;padding:4px 12px;border-radius:6px;margin-bottom:14px}.art-title{font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1px;color:var(--navy);line-height:1.25;margin-bottom:16px}.art-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-muted);flex-wrap:wrap;margin-bottom:32px}.art-thumb{width:100%;height:240px;border-radius:var(--radius);margin-bottom:36px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);display:flex;align-items:center;justify-content:center;font-size:72px}.art-body h2{font-size:20px;font-weight:900;color:var(--navy);margin:36px 0 14px;padding-left:14px;border-left:5px solid #3B82F6;padding-bottom:10px;border-bottom:2px solid var(--blue-pale)}.art-body h3{font-size:16px;font-weight:800;color:var(--navy);margin:24px 0 10px}.art-body p{font-size:15px;color:var(--text-mid);line-height:1.85;margin-bottom:14px}.art-body strong{color:#1D4ED8;font-weight:800}.tag-wrap{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:20px 0}.tag-label{font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:12px;letter-spacing:1px}.tags{display:flex;flex-wrap:wrap;gap:8px}.tag{padding:7px 16px;background:var(--blue-pale);border:1px solid var(--blue-border);border-radius:8px;font-size:13px;font-weight:600;color:var(--blue);transition:all .2s;text-decoration:none;display:inline-block}.tag:hover{background:var(--blue);color:white}.subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}.subj-link{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:700;color:var(--text-dark);transition:all .2s;text-decoration:none}.subj-link:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-pale)}.info-box{background:linear-gradient(135deg,#0F2044,#1D4ED8);border-radius:var(--radius);padding:20px 24px;margin:20px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.info-item{text-align:center}.info-num{font-size:26px;font-weight:900;color:white}.info-label{font-size:11px;color:rgba(255,255,255,0.7);margin-top:4px}.keyword-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:32px 0}.keyword-title{font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:12px}.keyword-tags{display:flex;flex-wrap:wrap;gap:6px}.keyword-tag{padding:5px 12px;background:white;border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text-mid)}.cta-box{background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:20px;padding:36px 40px;text-align:center;margin:48px 0}.cta-box h3{font-size:22px;font-weight:900;color:white;margin-bottom:8px}.cta-box p{font-size:14px;color:rgba(255,255,255,.65);margin-bottom:24px}.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn-p{background:var(--blue);color:white;border:none;padding:14px 28px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}.btn-o{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.3);padding:14px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}.related-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:16px;margin-top:48px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.rel-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:all .2s;display:block}.rel-card:hover{border-color:var(--blue-border);transform:translateY(-2px);box-shadow:var(--shadow)}.rc-tag{font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px}.rc-title{font-size:14px;font-weight:800;color:var(--navy);line-height:1.4}footer{background:var(--navy);padding:28px 48px;margin-top:60px}.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.fl{font-size:14px;font-weight:900;color:white}.fl em{font-style:normal;color:var(--sky)}.fr{font-size:12px;color:rgba(255,255,255,.35)}.floats{position:fixed;right:24px;bottom:60px;display:flex;flex-direction:column;gap:10px;z-index:500}.fbtn{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;border:none;font-size:13px;font-weight:700;box-shadow:0 8px 32px rgba(15,32,68,.25);transition:all .25s;cursor:pointer;text-decoration:none}.fbtn:hover{transform:translateX(-4px)}.fb1{background:var(--blue);color:white}.fb2{background:var(--navy);color:white}.dong-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:24px 0}.dong-card{background:white;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .25s;display:block;text-decoration:none;color:inherit}.dong-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border)}.dong-card-img{width:100%;height:160px;object-fit:cover;display:block;background:linear-gradient(135deg,#EFF6FF,#DBEAFE)}.dong-card-body{padding:16px}.dong-card-tag{font-size:11px;font-weight:700;color:var(--blue);margin-bottom:6px}.dong-card-title{font-size:15px;font-weight:900;color:var(--navy);margin-bottom:8px;line-height:1.35}.dong-card-desc{font-size:13px;color:var(--text-mid);line-height:1.7}.dong-card-arrow{display:flex;align-items:center;gap:4px;margin-top:12px;font-size:12px;font-weight:700;color:var(--blue)}@media(max-width:768px){.dong-grid{grid-template-columns:1fr 1fr}.dong-card-img{height:130px}}@media(max-width:480px){.dong-grid{grid-template-columns:1fr}}@media(max-width:768px){header{padding:0 16px}.gnav{display:none}.wrap{padding:32px 16px 60px}.subj-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}.info-box{grid-template-columns:1fr 1fr}.cta-box{padding:24px 20px}footer{padding:20px 16px}.floats{right:12px;bottom:20px}.art-thumb{height:160px;font-size:56px}}header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}.hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none}.logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(29,78,216,0.35);flex-shrink:0}.logo-name{display:flex;flex-direction:column;line-height:1.15}.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0A1628}.logo-main em{font-style:normal;color:var(--sky)}.logo-sub{font-size:10px;color:rgba(15,32,68,0.6);font-weight:700;letter-spacing:3px}.vpill{border:1.5px solid rgba(15,32,68,0.2);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(15,32,68,0.04)}.vpill .vl{font-size:10px;color:rgba(15,32,68,0.5);font-weight:600}.vpill .vc{font-size:15px;font-weight:900;color:#1D4ED8;letter-spacing:-0.5px}.gnb{margin-left:auto;display:flex;align-items:center;gap:4px}.gnb-link{padding:8px 18px;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;text-decoration:none;transition:all .18s}.gnb-link:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}.gnb-drop-wrap{position:relative;display:inline-block}.gnb-drop{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:white;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);padding:8px;min-width:130px;z-index:1000}.gnb-drop::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:6px solid white}.gnb-drop-wrap:hover .gnb-drop{display:block}.gnb-drop-item{display:block;padding:9px 16px;font-size:13px;font-weight:700;color:#374151;text-decoration:none;border-radius:8px;white-space:nowrap}.gnb-drop-item:hover{background:#EFF6FF;color:#1D4ED8}@media(max-width:768px){.hw{padding:0 16px;height:72px;gap:10px}.logo-sub{display:none}.logo-main{font-size:15px}.logo-mark{width:32px;height:32px}.vpill{padding:4px 10px}.vpill .vc{font-size:13px}.gnb{display:none}}.gi{position:relative}.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap;cursor:pointer;font-family:inherit}.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}.arr{width:14px;height:14px;transition:transform .2s;color:rgba(15,32,68,0.4)}.gi:hover .arr{transform:rotate(180deg)}.drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:#0F2044;border-radius:12px;border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}.gi:hover .drop{opacity:1;visibility:visible}.drop a{display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);transition:all .15s}.drop a:hover{background:rgba(255,255,255,0.1);color:white}.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:#0F2044;border-radius:16px;border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}.gi:hover .mega-drop,.mega-drop.on{opacity:1;visibility:visible}.mega-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}.mega-tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:all .2s;font-family:inherit}.mega-tab.on{background:#3B82F6;color:white}.mega-tab:hover:not(.on){background:rgba(255,255,255,.08);color:white}.mega-panel{display:none}.mega-panel.on{display:block}.mega-rt{font-size:10px;font-weight:700;color:#60A5FA;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}.mega-btns{display:flex;flex-wrap:wrap;gap:6px}.mega-btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .18s;text-decoration:none}.mega-btn:hover{background:#3B82F6;color:white;border-color:#3B82F6}@media(max-width:640px){.wrap{padding-top:80px!important}h1{font-size:26px!important}.art-body{padding:0 16px}.bc{padding:0 16px;font-size:12px}.cta-box{margin:24px 16px;padding:28px 20px}.cta-btns{flex-direction:column}.cta-btns a{width:100%;text-align:center;box-sizing:border-box}.subj-grid{grid-template-columns:1fr!important}.keyword-tags{gap:6px}table{font-size:12px}table th,table td{padding:8px 10px!important}}#subj-grid{justify-content:center}@media(max-width:500px){#subj-grid{grid-template-columns:repeat(3,1fr)!important}}@media(max-width:768px){.gnb{display:none!important}.mob-menu-btn{display:flex!important}}@media(min-width:769px){.mob-menu-btn{display:none!important}.mob-nav{display:none!important}}.mob-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;align-items:center;justify-content:center}.mob-nav{position:fixed;top:0;right:-100%;width:82%;max-width:320px;height:100dvh;background:#0F2044;z-index:9000;transition:right .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:20px 0 40px}.mob-nav.open{right:0}.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:8999}.mob-overlay.open{display:block}.mob-nav-head{display:flex;align-items:center;justify-content:space-between;padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px}.mob-nav-logo{color:white;font-size:17px;font-weight:900;text-decoration:none}.mob-nav-logo em{color:#60A5FA;font-style:normal}.mob-close{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:22px;padding:4px}.mob-nav-item{display:block;padding:13px 20px;color:rgba(255,255,255,.8);font-size:15px;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06);transition:background .15s}.mob-nav-item:hover,.mob-nav-item.active{background:rgba(255,255,255,.08);color:white}.mob-nav-item.active{color:#60A5FA}.mob-nav-section{padding:14px 20px 6px;font-size:10px;font-weight:800;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase}.mob-subj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 16px 16px;justify-items:center}.mob-subj-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:rgba(255,255,255,.06);border-radius:10px;padding:12px 8px;text-decoration:none;transition:background .15s;width:100%}.mob-subj-btn:hover{background:rgba(255,255,255,.12)}.mob-subj-btn span:first-child{font-size:20px}.mob-subj-btn span:last-child{font-size:11px;font-weight:700;color:rgba(255,255,255,.8)}.mob-sido-grid{display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 16px;justify-content:center}.mob-sido-btn{padding:5px 12px;background:rgba(255,255,255,.06);border-radius:6px;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}.mob-sido-btn:hover{background:#3B82F6;color:white}.mob-contact-btn{margin:12px 16px 0;display:flex;align-items:center;justify-content:center;gap:8px;background:#1D4ED8;color:white;padding:14px;border-radius:12px;font-size:14px;font-weight:900;text-decoration:none}@media(max-width:768px){div[style*='grid-template-columns:1fr 340px']{grid-template-columns:1fr!important}}.cf-input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit}.cf-label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}@media(max-width:768px){div[style*='grid-template-columns:1fr 300px']{grid-template-columns:1fr!important}}#card-grid{display:grid}@media(max-width:767px){#card-grid{grid-template-columns:1fr!important;gap:10px!important}}@media(min-width:768px) and (max-width:1023px){#card-grid{grid-template-columns:repeat(2,1fr)!important}}*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:inherit}header{position:fixed;top:0;left:0;right:0;z-index:300;background:#ffffff;border-bottom:1px solid rgba(15,32,68,0.1);box-shadow:0 2px 16px rgba(15,32,68,0.06)}.hw{max-width:1280px;margin:0 auto;padding:0 48px;height:136px;display:flex;align-items:center;gap:32px}.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}.logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(29,78,216,0.35);flex-shrink:0}.logo-name{display:flex;flex-direction:column;line-height:1.15}.logo-main{font-size:20px;font-weight:900;letter-spacing:2px;color:#0A1628}.logo-main em{font-style:normal;color:var(--sky)}.logo-sub{font-size:10px;color:rgba(15,32,68,0.6);font-weight:700;letter-spacing:3px}.vpill{border:1.5px solid rgba(15,32,68,0.2);border-radius:999px;padding:6px 18px;display:flex;flex-direction:column;align-items:center;line-height:1.3;background:rgba(15,32,68,0.04)}.vpill .vl{font-size:10px;color:rgba(15,32,68,0.5);font-weight:600}.vpill .vc{font-size:15px;font-weight:900;color:#1D4ED8;letter-spacing:-0.5px}.gnb{margin-left:auto;display:flex;align-items:center;gap:2px}.gi{position:relative}.gb{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;background:none;font-size:14px;font-weight:700;color:#0F2044;border-radius:8px;transition:all .18s;white-space:nowrap}.gb:hover{background:rgba(15,32,68,0.08);color:#1D4ED8}.arr{width:14px;height:14px;transition:transform .2s;color:rgba(255,255,255,0.4)}.gi:hover .arr{transform:rotate(180deg);color:var(--sky)}.drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:160px;background:var(--navy);border-radius:12px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:6px;opacity:0;visibility:hidden;transition:all .18s;z-index:400}.gi:hover .drop{opacity:1;visibility:visible}.drop a{display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);transition:all .15s}.drop a:hover{background:rgba(255,255,255,0.1);color:white}.hsearch{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all .2s;flex-shrink:0}.hsearch:hover{border-color:var(--sky);color:var(--sky)}.hero{margin-top:136px;position:relative;overflow:hidden}.hslider{display:flex;transition:transform .65s cubic-bezier(.4,0,.2,1)}.slide{min-width:100%;height:460px;display:flex;align-items:center}.s1{background:linear-gradient(130deg,#0F2044 0%,#1E3A6E 50%,#1D4ED8 100%)}.s2{background:linear-gradient(130deg,#0C4A6E 0%,#0369A1 50%,#0EA5E9 100%)}.s3{background:linear-gradient(130deg,#1E1B4B 0%,#3730A3 50%,#4F46E5 100%)}.sin{max-width:1280px;margin:0 auto;padding:0 80px;width:100%;display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:center}.seb{display:inline-flex;align-items:center;gap:6px;background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.25);border-radius:999px;padding:4px 14px;font-size:12px;font-weight:700;color:var(--sky);margin-bottom:18px}.sdot{width:6px;height:6px;background:var(--sky);border-radius:50%;animation:blink 1.6s infinite}@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}.scap{font-size:14px;color:rgba(255,255,255,.65);margin-bottom:8px}.stitle{font-size:clamp(28px,3.5vw,46px);font-weight:900;line-height:1.15;letter-spacing:-1.5px;color:white;margin-bottom:14px}.stitle .hl{color:var(--sky)}.sdesc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:28px}.sbtns{display:flex;gap:12px}.bph{background:var(--blue);color:white;border:none;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:700;transition:all .2s;box-shadow:0 6px 20px rgba(59,130,246,.4)}.bph:hover{background:#2563EB;transform:translateY(-2px)}.bps{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);padding:13px 24px;border-radius:10px;font-size:14px;font-weight:600;transition:all .2s}.bps:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5)}.svis{display:flex;align-items:center;justify-content:center}.vc-card{background:rgba(255,255,255,.07);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:28px;width:100%}.vch{display:flex;align-items:center;gap:10px;margin-bottom:20px}.vci{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--sky));display:flex;align-items:center;justify-content:center;font-size:22px}.vct{font-size:15px;font-weight:800;color:white}.vcs{font-size:12px;color:rgba(255,255,255,.5)}.vcst{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}.vcsi{background:rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}.vcn{font-size:20px;font-weight:900;color:var(--sky);letter-spacing:-.5px}.vcl{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}.vcb{background:rgba(255,255,255,.06);border-radius:8px;padding:12px 14px}.vcbl{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}.vcbt{height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;margin-bottom:8px}.vcbf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--sky))}.hdots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}.hdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);border:none;cursor:pointer;padding:0;transition:all .3s}.hdot.on{background:var(--sky);width:24px;border-radius:4px}.strength{background:white;padding:80px 0;border-bottom:1px solid var(--border)}.sw{max-width:1280px;margin:0 auto;padding:0 48px}.sh{text-align:center;margin-bottom:52px}.se{display:inline-block;font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--blue);margin-bottom:10px}.st{font-size:clamp(22px,3vw,34px);font-weight:900;letter-spacing:-1px;color:var(--navy);line-height:1.25}.st .hl{color:var(--blue)}.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.sc{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;text-align:center;transition:all .3s;position:relative;overflow:hidden}.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--blue));opacity:0;transition:opacity .3s}.sc:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--blue-border);background:white}.sc:hover::before{opacity:1}.se2{font-size:36px;margin-bottom:12px;display:block}.sn{font-size:36px;font-weight:900;color:var(--navy-light);letter-spacing:-1px;line-height:1;margin-bottom:4px}.sl{font-size:12px;color:var(--text-muted);font-weight:500}.sd{font-size:12px;color:var(--text-mid);margin-top:8px;line-height:1.5}.reviews{padding:80px 0;background:var(--blue-pale)}.rw{overflow:hidden;margin-top:48px}.rt{display:flex;gap:20px;animation:scrollL 30s linear infinite;width:max-content}.rt:hover{animation-play-state:paused}@keyframes scrollL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}.rc{width:280px;flex-shrink:0;background:white;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm);border:1px solid var(--blue-border)}.rb{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;color:white;margin-bottom:12px}.rtitle{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:8px;line-height:1.35}.rtext{font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:14px}.rname{font-size:12px;color:var(--text-muted)}.rstar{color:#FBBF24;font-size:13px;margin-bottom:6px}.special{padding:80px 0;background:white}.spg{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px}.spc{background:var(--bg);border-radius:var(--radius);padding:32px 28px;border:1px solid var(--border);display:flex;gap:20px;align-items:flex-start;transition:all .3s}.spc:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border);background:white}.spi{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}.ic1{background:linear-gradient(135deg,#EFF6FF,#BFDBFE)}.ic2{background:linear-gradient(135deg,#F0FDF4,#BBF7D0)}.ic3{background:linear-gradient(135deg,#F0F9FF,#BAE6FD)}.ic4{background:linear-gradient(135deg,#EEF2FF,#C7D2FE)}.spt h4{font-size:16px;font-weight:800;margin-bottom:6px;color:var(--navy)}.spt p{font-size:13px;color:var(--text-muted);line-height:1.65}.diagnosis{padding:80px 0;background:var(--bg)}.diag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}.diag-card{background:white;border-radius:var(--radius);padding:28px 24px;border:1px solid var(--border);transition:all .3s;cursor:default;position:relative;overflow:hidden}.diag-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s}.diag-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-border)}.diag-card:hover::after{opacity:1}.dc1::after{background:linear-gradient(90deg,#16A34A,#4ADE80)}.dc2::after{background:linear-gradient(90deg,#DB2777,#F472B6)}.dc3::after{background:linear-gradient(90deg,#2563EB,#60A5FA)}.dc4::after{background:linear-gradient(90deg,#D97706,#FCD34D)}.dc5::after{background:linear-gradient(90deg,#7C3AED,#A78BFA)}.dc6::after{background:linear-gradient(90deg,#0D9488,#34D399)}.diag-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;margin-bottom:14px}.db1{background:#DCFCE7;color:#16A34A}.db2{background:#FCE7F3;color:#DB2777}.db3{background:#DBEAFE;color:#1D4ED8}.db4{background:#FEF3C7;color:#D97706}.db5{background:#EDE9FE;color:#7C3AED}.db6{background:#CCFBF1;color:#0F766E}.diag-icon{font-size:32px;margin-bottom:12px;display:block}.diag-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:6px}.diag-desc{font-size:12px;color:var(--text-muted);line-height:1.6}.diag-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.diag-tag{font-size:10px;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 8px}footer{background:var(--navy);padding:48px 0 32px;color:rgba(255,255,255,.45)}.fi{max-width:1280px;margin:0 auto;padding:0 48px}.ft{display:flex;justify-content:space-between;padding-bottom:32px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,.08);gap:48px}.flm{font-size:20px;font-weight:900;color:white}.flm em{font-style:normal;color:var(--sky)}.fdesc{font-size:13px;line-height:1.7;margin-top:8px;max-width:260px}.flinks{display:flex;gap:48px}.fc h5{color:rgba(255,255,255,.8);font-size:13px;font-weight:700;margin-bottom:14px}.fc a{display:block;font-size:12px;color:rgba(255,255,255,.4);margin-bottom:8px;transition:color .2s}.fc a:hover{color:rgba(255,255,255,.8)}.fph{text-align:right}.fph span{font-size:11px;color:rgba(255,255,255,.4);display:block;margin-bottom:4px}.fph strong{font-size:22px;font-weight:900;color:white;letter-spacing:-.5px}.fb2{display:flex;justify-content:space-between;align-items:center;font-size:11px}.fnotice{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 16px;font-size:11px;color:rgba(255,255,255,.35);line-height:1.6;margin-bottom:20px}.floats{position:fixed;right:24px;bottom:40px;display:flex;flex-direction:column;gap:10px;z-index:9999}.fbtn{display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;border:none;font-size:14px;font-weight:700;box-shadow:var(--shadow-lg);transition:all .25s;white-space:nowrap}.fbtn:hover{transform:translateX(-4px) scale(1.03)}.fb1{background:var(--blue);color:white}.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:660px;background:var(--navy);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.12);padding:24px;opacity:0;visibility:hidden;transition:all .2s;z-index:400}.gi:hover .mega-drop{opacity:1;visibility:visible}.mega-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}.mega-tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:all .2s;font-family:inherit}.mega-tab.on{background:var(--blue);color:white}.mega-tab:hover:not(.on){background:rgba(255,255,255,.08);color:white}.mega-panel{display:none}.mega-panel.on{display:block}.mega-rt{font-size:10px;font-weight:700;color:var(--sky);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}.mega-rt:first-child{margin-top:0}.mega-btns{display:flex;flex-wrap:wrap;gap:6px}.mega-btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .18s;text-decoration:none}.mega-btn:hover{background:var(--blue);color:white;border-color:var(--blue)}.hburg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;flex-shrink:0}.hburg span{display:block;width:22px;height:2px;background:#0F2044;border-radius:2px;transition:all .3s}.hburg.on span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.hburg.on span:nth-child(2){opacity:0}.hburg.on span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}.mob-menu{position:fixed;top:72px;left:0;right:0;bottom:0;background:var(--navy);z-index:299;overflow-y:auto;transform:translateX(100%);transition:transform .3s ease}.mob-menu.on{transform:translateX(0)}.mob-inner{padding:24px 20px}.mob-section{margin-bottom:28px}.mob-title{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--sky);text-transform:uppercase;margin-bottom:12px}.mob-links{display:flex;flex-wrap:wrap;gap:8px}.mob-links a{padding:8px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;font-size:14px;font-weight:600;color:rgba(255,255,255,.8);transition:all .2s}.mob-links a:hover{background:var(--blue);border-color:var(--blue);color:white}.mob-cta{display:flex;flex-direction:column;gap:10px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}.mob-cta button{padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all .2s}.mob-cta button:first-child{background:var(--blue);color:white}.mob-cta button:last-child{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.2)}.fu{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}.fu.vis{opacity:1;transform:translateY(0)}@media(max-width:768px){.hw{padding:0 16px;height:72px;gap:10px}.logo-sub{display:none}.logo-main{font-size:15px}.logo-mark{width:32px;height:32px}.vpill{padding:4px 10px}.vpill .vc{font-size:13px}.vpill .vl{font-size:9px}.gnb{display:none}.hsearch{display:none}.hburg{display:flex;margin-left:auto}.hero{margin-top:72px}.slide{height:auto;min-height:420px;padding:32px 0 24px}.sin{grid-template-columns:1fr;padding:0 20px;gap:24px}.svis{display:none}.stitle{font-size:32px;letter-spacing:-1px}.seb{font-size:11px}.scap{font-size:13px}.sdesc{font-size:13px;margin-bottom:20px}.sbtns{flex-direction:column;gap:8px}.bph,.bps{width:100%;text-align:center;padding:12px 20px}.hdots{bottom:12px}.strength{padding:48px 0}.sw{padding:0 16px}.sh{margin-bottom:32px}.st{font-size:22px}.sg{grid-template-columns:1fr 1fr;gap:12px}.sc{padding:20px 14px}.se2{font-size:28px;margin-bottom:8px}.sn{font-size:26px}.reviews{padding:48px 0}.rc{width:240px;padding:18px}.special{padding:48px 0}.spg{grid-template-columns:1fr;gap:12px}.spc{padding:20px}.diagnosis{padding:48px 0}.diag-grid{grid-template-columns:1fr 1fr;gap:12px}.diag-card{padding:18px 14px}.diag-icon{font-size:24px;margin-bottom:8px}.diag-title{font-size:13px}.diag-desc{font-size:11px}.diag-tags{display:none}footer{padding:32px 0 24px}.fi{padding:0 16px}.ft{flex-direction:column;gap:24px;padding-bottom:24px}.flinks{flex-wrap:wrap;gap:24px}.fph{text-align:left}.fph strong{font-size:18px}.fb2{flex-direction:column;gap:6px;align-items:flex-start}.floats{right:12px;bottom:24px;gap:8px}.fbtn{padding:12px 16px;font-size:13px}.diag-grid{grid-template-columns:repeat(2,1fr);gap:12px}#region-section{padding:40px 20px}#region-section h2{font-size:22px}#region-section>div>div:last-child{grid-template-columns:repeat(2,1fr);gap:8px}#region-section a{padding:10px 12px;font-size:13px}#fpanel-region>div,#fpanel-subject>div,#fpanel-academy>div,#fpanel-conv>div{grid-template-columns:repeat(3,1fr);gap:6px}#fpanel-region a,#fpanel-subject a,#fpanel-academy a,#fpanel-conv a{padding:9px 5px;font-size:11px;gap:3px;white-space:normal;word-break:keep-all}}@media(max-width:400px){.diag-grid{grid-template-columns:1fr}.sg{grid-template-columns:1fr 1fr}.stitle{font-size:28px}}@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Noto Sans KR',sans-serif;color:#1F2937;background:#fff;overflow-x:hidden}.hero{background:var(--navy);min-height:500px;padding:140px 48px 100px;text-align:center;position:relative;overflow:hidden}.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:32px 32px}.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(59,130,246,.25) 0%,transparent 70%);pointer-events:none}.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 18px;font-size:13px;color:rgba(255,255,255,.8);font-weight:600;margin-bottom:24px}.hero-badge b{color:#60A5FA}.hero-title{font-size:52px;font-weight:900;color:white;line-height:1.15;letter-spacing:-1.5px;margin-bottom:20px}.hero-title em{color:#60A5FA;font-style:normal}.hero-desc{font-size:17px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:36px;word-break:keep-all}.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.btn-white{background:white;color:var(--navy);padding:14px 32px;border-radius:12px;font-size:15px;font-weight:800;border:none;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center}.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.25)}.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,.3);color:white;padding:14px 32px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center}.btn-outline:hover{background:rgba(255,255,255,.1)}.breadcrumb{background:white;padding:14px 48px;font-size:13px;color:#9CA3AF;border-bottom:1px solid var(--border)}.breadcrumb a{color:var(--blue)}.stats-wrap{background:white;padding:48px 48px 80px}.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;max-width:900px;margin:0 auto;background:white;box-shadow:0 8px 40px rgba(15,32,68,.08)}.stat{padding:36px 32px;text-align:center;border-right:1px solid var(--border)}.stat:last-child{border-right:none}.stat-num{font-size:42px;font-weight:900;color:var(--navy);line-height:1}.stat-num sup{font-size:20px;vertical-align:super}.stat-label{font-size:13px;color:var(--gray);margin-top:6px;font-weight:500}.tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;letter-spacing:.5px;margin-bottom:14px}.sec-title{font-size:34px;font-weight:900;color:var(--navy);line-height:1.3;margin-bottom:16px;letter-spacing:-.5px}.sec-title em{color:var(--blue);font-style:normal}.sec-desc{font-size:15px;color:var(--gray);line-height:1.9}.sec-desc strong{color:var(--navy)}.method-section{padding:100px 48px 80px;background:white}.method-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}.method-cards{display:flex;flex-direction:column;gap:14px}.method-card{background:var(--light);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:.2s}.method-card:hover{border-color:#93C5FD;background:var(--blue-light)}.mc-icon{width:40px;height:40px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}.mc-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px}.mc-desc{font-size:13px;color:var(--gray);line-height:1.6}.diff-section{background:#EFF6FF;padding:80px 48px}.diff-inner{max-width:1100px;margin:0 auto}.diff-header{text-align:center;margin-bottom:56px}.diff-title{font-size:36px;font-weight:900;color:#0F2044;line-height:1.3}.diff-title em{color:#1D4ED8;font-style:normal}.diff-desc{font-size:16px;color:#374151;margin-top:12px;line-height:1.8}.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.diff-card{background:white;border:1px solid #BFDBFE;border-radius:20px;padding:32px 24px;transition:all .3s;box-shadow:0 2px 0 #BFDBFE,0 8px 32px rgba(29,78,216,.12),0 2px 8px rgba(0,0,0,.06)}.diff-card:hover{background:#F0F7FF;border-color:#60A5FA;transform:translateY(-6px);box-shadow:0 2px 0 #93C5FD,0 20px 56px rgba(29,78,216,.15)}.diff-num{font-size:13px;font-weight:900;color:#60A5FA;margin-bottom:12px;letter-spacing:1px}.diff-card-title{font-size:18px;font-weight:900;color:#0F2044;margin-bottom:10px}.diff-card-desc{font-size:14px;color:#6B7280;line-height:1.75}.goal-section{padding:80px 48px;background:var(--light)}.goal-inner{max-width:1100px;margin:0 auto}.goal-header{text-align:center;margin-bottom:48px}.goal-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:20px;overflow:hidden}.goal-card{background:white;padding:40px 32px;text-align:center;position:relative}.goal-card::before{content:attr(data-num);position:absolute;top:24px;right:24px;font-size:11px;font-weight:900;color:#E5E7EB;letter-spacing:1px}.goal-icon{width:64px;height:64px;border-radius:16px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}.goal-card-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:10px}.goal-card-desc{font-size:14px;color:var(--gray);line-height:1.75}.process-section{padding:80px 48px;background:white}.process-inner{max-width:1000px;margin:0 auto}.process-header{text-align:center;margin-bottom:48px}.process-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}.process-text ul{margin-top:20px;display:flex;flex-direction:column;gap:10px;list-style:none}.process-text li{display:flex;gap:10px;font-size:14px;color:var(--gray);line-height:1.6}.process-text li::before{content:'';width:6px;height:6px;background:var(--blue);border-radius:50%;flex-shrink:0;margin-top:7px}.process-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative}.p-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88px;height:88px;background:white;border-radius:50%;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:var(--navy);text-align:center;line-height:1.3;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:2}.pc{border-radius:16px;padding:28px 22px;color:white}.pc-1{background:#1E3A6E}.pc-2{background:#1E40AF}.pc-3{background:#1D4ED8}.pc-4{background:#2563EB}.pc-en{font-size:15px;font-weight:900;margin-bottom:4px}.pc-en span{opacity:.5}.pc-kr{font-size:13px;font-weight:700;opacity:.85}.manage-section{padding:80px 48px;background:var(--light)}.manage-inner{max-width:1000px;margin:0 auto}.manage-header{text-align:center;margin-bottom:40px}.manage-tabs{display:flex;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:28px;background:white}.mtab{flex:1;padding:16px;text-align:center;font-size:14px;font-weight:700;color:var(--gray);cursor:pointer;border:none;background:white;transition:.2s;border-right:1px solid var(--border)}.mtab:last-child{border-right:none}.mtab.active{background:var(--navy);color:white}.manage-panel{display:none;background:white;border:1.5px solid var(--border);border-radius:16px;padding:40px;gap:48px;align-items:start}.manage-panel.active{display:grid;grid-template-columns:1fr 1fr}.mp-tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;margin-bottom:10px}.mp-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:14px}.mp-desc{font-size:14px;color:var(--gray);line-height:1.9}.mp-desc strong{color:var(--navy)}.mp-visual{background:var(--light);border-radius:14px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:72px;border:1px solid var(--border)}.mp-points{margin-top:20px;display:flex;flex-direction:column;gap:8px}.mp-point{display:flex;gap:10px;font-size:13px;color:var(--gray)}.mp-point::before{content:'✓';color:var(--blue);font-weight:900;flex-shrink:0}.mp-img-grid{position:relative;border-radius:14px;overflow:hidden}.mp-img-grid .mslide{display:none;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px}.mp-img-grid .mslide.active{display:block}.mp-img-dots{display:flex;justify-content:center;gap:6px;margin-top:10px}.mp-img-dots button{width:7px;height:7px;border-radius:50%;border:none;background:var(--border);cursor:pointer;padding:0;transition:.2s}.mp-img-dots button.active{background:var(--navy);width:20px;border-radius:4px}.mp-img-nav{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:2;transition:.2s}.mp-img-nav:hover{background:white;box-shadow:0 4px 12px rgba(0,0,0,.2)}.mp-img-nav.prev{left:8px}.mp-img-nav.next{right:8px}.ai-section{padding:80px 48px;background:#EFF6FF;position:relative;overflow:hidden}.ai-section::before{content:'';position:absolute;right:-20px;bottom:-20px;width:380px;height:480px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3C!-- 안테나 --%3E%3Cline x1='100' y1='10' x2='100' y2='35' stroke='%231D4ED8' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='100' cy='8' r='6' fill='%231D4ED8'/%3E%3C!-- 머리 --%3E%3Crect x='55' y='35' width='90' height='70' rx='18' fill='%231D4ED8'/%3E%3C!-- 눈 --%3E%3Ccircle cx='80' cy='62' r='14' fill='white'/%3E%3Ccircle cx='120' cy='62' r='14' fill='white'/%3E%3Ccircle cx='83' cy='65' r='7' fill='%230F2044'/%3E%3Ccircle cx='123' cy='65' r='7' fill='%230F2044'/%3E%3Ccircle cx='85' cy='63' r='2.5' fill='white'/%3E%3Ccircle cx='125' cy='63' r='2.5' fill='white'/%3E%3C!-- 입 --%3E%3Crect x='78' y='88' width='44' height='8' rx='4' fill='white' opacity='.6'/%3E%3Crect x='85' y='89' width='8' height='6' rx='2' fill='%230F2044' opacity='.4'/%3E%3Crect x='96' y='89' width='8' height='6' rx='2' fill='%230F2044' opacity='.4'/%3E%3Crect x='107' y='89' width='8' height='6' rx='2' fill='%230F2044' opacity='.4'/%3E%3C!-- 목 --%3E%3Crect x='88' y='105' width='24' height='18' rx='4' fill='%231D4ED8'/%3E%3C!-- 몸통 --%3E%3Crect x='40' y='123' width='120' height='95' rx='20' fill='%231D4ED8'/%3E%3C!-- 몸통 패널 --%3E%3Crect x='60' y='138' width='80' height='50' rx='10' fill='white' opacity='.12'/%3E%3Ccircle cx='80' cy='155' r='10' fill='white' opacity='.25'/%3E%3Ccircle cx='80' cy='155' r='5' fill='%2360A5FA'/%3E%3Crect x='95' y='148' width='35' height='5' rx='2.5' fill='white' opacity='.3'/%3E%3Crect x='95' y='158' width='25' height='5' rx='2.5' fill='white' opacity='.2'/%3E%3Crect x='95' y='168' width='30' height='5' rx='2.5' fill='white' opacity='.25'/%3E%3C!-- 왼팔 --%3E%3Crect x='10' y='125' width='28' height='80' rx='14' fill='%231D4ED8'/%3E%3Ccircle cx='24' cy='210' r='14' fill='%231E40AF'/%3E%3C!-- 오른팔 --%3E%3Crect x='162' y='125' width='28' height='80' rx='14' fill='%231D4ED8'/%3E%3Ccircle cx='176' cy='210' r='14' fill='%231E40AF'/%3E%3C!-- 다리 --%3E%3Crect x='65' y='218' width='32' height='55' rx='14' fill='%231D4ED8'/%3E%3Crect x='103' y='218' width='32' height='55' rx='14' fill='%231D4ED8'/%3E%3C!-- 발 --%3E%3Crect x='58' y='260' width='44' height='16' rx='8' fill='%231E40AF'/%3E%3Crect x='98' y='260' width='44' height='16' rx='8' fill='%231E40AF'/%3E%3C/svg%3E") center bottom/contain no-repeat;opacity:0.07;pointer-events:none;z-index:0;line-height:1;pointer-events:none}.ai-stars{display:none}.ai-glow1{position:absolute;top:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(37,99,235,.08) 0%,transparent 70%);pointer-events:none}.ai-glow2{position:absolute;bottom:-100px;right:-100px;width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,.08) 0%,transparent 70%);pointer-events:none}.ai-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}.ai-header{margin-bottom:48px}.ai-title{font-size:40px;font-weight:900;color:#0F2044;letter-spacing:-1px;margin-bottom:10px;text-shadow:0 1px 2px rgba(0,0,0,.1)}.ai-title span{color:#1D4ED8}.ai-sub{font-size:15px;color:#1F2937;line-height:1.8;font-weight:500}.ai-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.ai-card{background:white;border:1px solid #BFDBFE;border-radius:20px;padding:28px 24px;transition:all .3s;box-shadow:0 2px 0 #BFDBFE,0 8px 32px rgba(29,78,216,.12),0 2px 8px rgba(0,0,0,.06);transform:translateY(0)}.ai-card:hover{background:#F0F7FF;border-color:#60A5FA;transform:translateY(-8px);box-shadow:0 2px 0 #93C5FD,0 20px 56px rgba(29,78,216,.18),0 8px 16px rgba(0,0,0,.08)}.ai-card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}.ai-card-icon{width:44px;height:44px;background:linear-gradient(135deg,#DBEAFE,#EDE9FE);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid #BFDBFE;box-shadow:0 4px 12px rgba(37,99,235,.1)}.ai-card-name{font-size:18px;font-weight:900;color:#0F2044;letter-spacing:-.3px}.ai-card-range{font-size:11px;color:#9CA3AF;margin-top:2px}.ai-card-desc{font-size:13px;color:#374151;line-height:1.75;margin-bottom:16px;font-weight:500}.ai-steps{display:flex;gap:6px;flex-wrap:wrap}.ai-step{background:#DBEAFE;border:1px solid #93C5FD;border-radius:999px;padding:4px 12px;font-size:11px;color:#1E40AF;font-weight:800}.review-section{padding:80px 0;background:white}.review-inner{max-width:900px;margin:0 auto;padding:0 48px}.review-header{text-align:center;margin-bottom:40px}.slider-wrap{position:relative;display:flex;align-items:center;gap:0;margin-bottom:24px}.slider-viewport{overflow:hidden;flex:1}.slider-track{display:flex;gap:20px;transition:transform .4s cubic-bezier(.4,0,.2,1);will-change:transform}.review-card{flex:0 0 calc(33.333% - 14px);border:1.5px solid var(--border);border-radius:16px;padding:28px 26px;transition:border-color .2s,box-shadow .2s;background:white}.review-card:hover{border-color:#93C5FD;box-shadow:0 4px 20px rgba(29,78,216,.08)}.review-quotes{font-size:48px;font-weight:900;color:#DBEAFE;line-height:.8;margin-bottom:8px;font-family:Georgia,serif}.review-badges{display:flex;gap:8px;margin-bottom:10px}.rb{padding:3px 12px;border-radius:999px;font-size:12px;font-weight:700}.rb-h{background:#FEE2E2;color:#DC2626}.rb-m{background:#DBEAFE;color:#1D4ED8}.rb-e{background:#FEF3C7;color:#D97706}.rb-s{background:var(--light);color:var(--gray)}.review-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:8px}.review-text{font-size:13px;color:var(--gray);line-height:1.8}.slider-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);background:white;font-size:16px;cursor:pointer;flex-shrink:0;transition:.2s;color:var(--navy);display:flex;align-items:center;justify-content:center;margin:0 12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}.slider-btn:hover{background:var(--navy);color:white;border-color:var(--navy)}.slider-dots{display:flex;justify-content:center;gap:8px}.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;border:none}.sdot.active{background:#1D4ED8;width:24px;border-radius:4px}.cta-section{background:linear-gradient(135deg,var(--navy) 0%,#1D4ED8 100%);padding:80px 48px;text-align:center;position:relative;overflow:hidden}.cta-title{font-size:34px;font-weight:900;color:white;margin-bottom:10px;letter-spacing:-.5px}.cta-sub{font-size:16px;color:rgba(255,255,255,.65);margin-bottom:32px;line-height:1.7}.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}@media(max-width:900px){.hero{padding:100px 24px 80px}.hero-title{font-size:34px}.stats-wrap{padding:0 24px 60px}.stats{grid-template-columns:1fr}.stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}.method-inner,.diff-grid,.ai-cards,.process-layout,.goal-cards{grid-template-columns:1fr}.manage-panel.active{grid-template-columns:1fr}.method-section,.diff-section,.goal-section,.process-section,.manage-section,.ai-section,.review-section,.cta-section{padding:60px 24px}.breadcrumb{padding:14px 24px}}.u1{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;white-space:nowrap;transition:all .2s}.u2{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s}.u3{padding:10px 22px;border-radius:999px;border:1.5px solid #E5E7EB;background:white;color:#374151;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit}.u4{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.u5{font-size:14px;color:var(--text-muted);margin-top:12px;line-height:1.7;word-break:keep-all}.u6{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px}.u8{width:100%;height:260px;border-radius:14px;margin-bottom:36px;overflow:hidden;position:relative}.u9{background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:20px}.u10{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151}.u11{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.65),transparent);display:flex;align-items:center;padding:32px}.u12{background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:22px;margin-bottom:18px}.u13{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s}.u14{font-size:18px;font-weight:900;color:#0F2044;margin:0 0 12px;padding-bottom:10px;border-bottom:3px solid #EFF6FF}.u15{font-size:16px;font-weight:900;color:#0F2044;margin:0 0 12px}.u16{font-size:12px;font-weight:700;color:#9CA3AF;margin-bottom:2px}.u17{display:flex;align-items:center;gap:14px;background:white;border-radius:14px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.06)}.u18{background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:24px}.u19{font-size:14px;color:#374151;line-height:2;margin:0 0 10px}.u20{font-size:14px;color:#374151;line-height:1.9;margin:0}.u21{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}.u22{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:white;color:#374151;transition:border .2s}.u23{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,32,68,0.6),transparent);display:flex;align-items:center;padding:32px}.u24{font-size:16px;font-weight:900;color:#0F2044;margin:0 0 14px}.u25{font-size:15px;color:#374151;line-height:2;margin:0}.u26{font-size:14px;color:#374151;line-height:2;margin:0}.u27{font-size:13px;font-weight:800;color:#0F2044;margin-bottom:8px}.u28{font-size:13px;font-weight:800;color:#0F2044;margin-bottom:6px}.u29{font-size:13px;font-weight:800;color:#0F2044;margin-bottom:5px}.u30{font-size:13px;font-weight:800;color:#0F2044;margin-bottom:2px}.u31{font-size:13px;color:#374151;line-height:1.8;margin:0}.u32{font-size:12px;color:#374151;line-height:1.75;margin:0}.u33{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}.u34{display:grid;grid-template-columns:1fr 1fr;gap:12px}.u35{display:flex;align-items:center;justify-content:space-between;background:#F9FAFB;border:1.5px solid #E5E7EB;border-radius:12px;padding:14px 18px;text-decoration:none;margin-bottom:8px;transition:all .2s}.u36{background:white;color:#0F2044;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none}.u37{background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:26px;margin-bottom:18px}`;
 
 const HEADER = `<header><div class="hw"><a href="/" class="logo"><div class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="logo-name"><span class="logo-main"><em>올케어</em>스터디</span><span class="logo-sub">ALLCARE STUDY</span></div></a><div class="vpill"><span class="vl">누적 방문자</span><span class="vc">353,112명</span></div><nav class="gnb"><div class="gi" id="gi-region"><button class="gb" onclick="toggleMega('region')">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="mega-drop" id="mega-region"><div class="mega-tabs"><button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button><button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button><button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button></div><div class="mega-panel on" id="region-local"><div class="mega-btns"><a class="mega-btn" href="/seoul">🏙 서울</a><a class="mega-btn" href="/gyeonggi">🌿 경기</a><a class="mega-btn" href="/incheon">🌊 인천</a><a class="mega-btn" href="/busan">🐟 부산</a><a class="mega-btn" href="/daegu">🍎 대구</a><a class="mega-btn" href="/daejeon">🌾 대전</a><a class="mega-btn" href="/gwangju">🌸 광주</a><a class="mega-btn" href="/ulsan">⚙️ 울산</a><a class="mega-btn" href="/sejong">🏛 세종</a><a class="mega-btn" href="/gangwon">🏔 강원</a><a class="mega-btn" href="/chungbuk">🌻 충북</a><a class="mega-btn" href="/chungnam">🌊 충남</a><a class="mega-btn" href="/jeonbuk">🌾 전북</a><a class="mega-btn" href="/jeonnam">🍵 전남</a><a class="mega-btn" href="/gyeongbuk">🍎 경북</a><a class="mega-btn" href="/gyeongnam">🌊 경남</a><a class="mega-btn" href="/jeju">🌺 제주</a></div></div><div class="mega-panel" id="region-grade"><div class="mega-rt">🎒 초등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/elementary/1">초등 1학년</a><a class="mega-btn" href="/grade/elementary/2">초등 2학년</a><a class="mega-btn" href="/grade/elementary/3">초등 3학년</a><a class="mega-btn" href="/grade/elementary/4">초등 4학년</a><a class="mega-btn" href="/grade/elementary/5">초등 5학년</a><a class="mega-btn" href="/grade/elementary/6">초등 6학년</a></div><div class="mega-rt">📚 중학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/middle/1">중학교 1학년</a><a class="mega-btn" href="/grade/middle/2">중학교 2학년</a><a class="mega-btn" href="/grade/middle/3">중학교 3학년</a></div><div class="mega-rt">🎓 고등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/high/1">고등 1학년</a><a class="mega-btn" href="/grade/high/2">고등 2학년</a><a class="mega-btn" href="/grade/high/3">고등 3학년</a></div></div><div class="mega-panel" id="region-school"><div class="mega-rt">시도별 학교 과외</div><div class="mega-btns"><a class="mega-btn" href="/school/seoul">서울</a><a class="mega-btn" href="/school/gyeonggi">경기</a><a class="mega-btn" href="/school/incheon">인천</a><a class="mega-btn" href="/school/busan">부산</a><a class="mega-btn" href="/school/daegu">대구</a><a class="mega-btn" href="/school/gwangju">광주</a><a class="mega-btn" href="/school/daejeon">대전</a><a class="mega-btn" href="/school/ulsan">울산</a><a class="mega-btn" href="/school/sejong">세종</a><a class="mega-btn" href="/school/gangwon">강원</a><a class="mega-btn" href="/school/chungbuk">충북</a><a class="mega-btn" href="/school/chungnam">충남</a><a class="mega-btn" href="/school/jeonbuk">전북</a><a class="mega-btn" href="/school/jeonnam">전남</a><a class="mega-btn" href="/school/gyeongbuk">경북</a><a class="mega-btn" href="/school/gyeongnam">경남</a><a class="mega-btn" href="/school/jeju">제주</a></div></div></div></div><div class="gi"><button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/subject/math">📐 수학</a><a href="/subject/english">📖 영어</a><a href="/subject/korean">✍️ 국어</a><a href="/subject/science">🔬 과학</a><a href="/subject/social">🌏 사회</a><a href="/subject/coding">💻 코딩</a><a href="/subject/essay">📝 논술</a><a href="/subject/gsd">📋 검정고시</a></div></div><div class="gi"><button class="gb" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div></div><div class="gi"><button class="gb">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div></div><div class="gi"><button class="gb">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/study-guide">📖 학습 가이드</a></div></div><div class="gi"><a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a></div></nav><button class="mob-menu-btn" onclick="openMobNav()" aria-label="메뉴열기" style="margin-left:auto"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F2044" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></header><div class="mob-overlay" id="mob-overlay" onclick="closeMobNav()"></div><nav class="mob-nav" id="mob-nav"><div class="mob-nav-head"><a href="/" class="mob-nav-logo"><em>올케어</em>스터디</a><button class="mob-close" onclick="closeMobNav()">✕</button></div><div class="mob-nav-section">과목별 과외</div><div class="mob-subj-grid"><a class="mob-subj-btn" href="/subject/math"><span>📐</span><span>수학</span></a><a class="mob-subj-btn" href="/subject/english"><span>📖</span><span>영어</span></a><a class="mob-subj-btn" href="/subject/korean"><span>✍️</span><span>국어</span></a><a class="mob-subj-btn" href="/subject/science"><span>🔬</span><span>과학</span></a><a class="mob-subj-btn" href="/subject/social"><span>🌏</span><span>사회</span></a><a class="mob-subj-btn" href="/subject/coding"><span>💻</span><span>코딩</span></a><a class="mob-subj-btn" href="/subject/essay"><span>📝</span><span>논술</span></a><a class="mob-subj-btn" href="/subject/gsd"><span>📋</span><span>검정고시</span></a></div><div class="mob-nav-section">회화 수업</div><div class="mob-subj-grid"><a class="mob-subj-btn" href="/conversation/english"><span>📚</span><span>영어회화</span></a><a class="mob-subj-btn" href="/conversation/chinese"><span>🇨🇳</span><span>중국어회화</span></a><a class="mob-subj-btn" href="/conversation/japanese"><span>🇯🇵</span><span>일본어회화</span></a></div><div class="mob-nav-section">기타교육</div><div class="mob-subj-grid"><a class="mob-subj-btn" href="/engineer-lab"><span>🔧</span><span>엔지니어랩</span></a><a class="mob-subj-btn" href="/study-guide"><span>📖</span><span>학습 가이드</span></a></div><div class="mob-nav-section">학원 & 기타</div><div class="mob-subj-grid"><a class="mob-subj-btn" href="/academy/intro"><span>🏢</span><span>학원소개</span></a><a class="mob-subj-btn" href="/academy/all"><span>🏫</span><span>학원찾기</span></a><a class="mob-subj-btn" href="/school"><span>🏛</span><span>학교별과외</span></a></div><div class="mob-nav-section">지역별 과외</div><div class="mob-sido-grid"><a class="mob-sido-btn" href="/seoul">서울</a><a class="mob-sido-btn" href="/gyeonggi">경기</a><a class="mob-sido-btn" href="/incheon">인천</a><a class="mob-sido-btn" href="/busan">부산</a><a class="mob-sido-btn" href="/daegu">대구</a><a class="mob-sido-btn" href="/daejeon">대전</a><a class="mob-sido-btn" href="/gwangju">광주</a><a class="mob-sido-btn" href="/ulsan">울산</a><a class="mob-sido-btn" href="/sejong">세종</a><a class="mob-sido-btn" href="/gangwon">강원</a><a class="mob-sido-btn" href="/chungbuk">충북</a><a class="mob-sido-btn" href="/chungnam">충남</a><a class="mob-sido-btn" href="/jeonbuk">전북</a><a class="mob-sido-btn" href="/jeonnam">전남</a><a class="mob-sido-btn" href="/gyeongbuk">경북</a><a class="mob-sido-btn" href="/gyeongnam">경남</a><a class="mob-sido-btn" href="/jeju">제주</a></div><div class="mob-nav-section">학년별 과외</div><a class="mob-nav-item" href="/grade/elementary/1">🎒 초등 과외</a><a class="mob-nav-item" href="/grade/middle/1">📚 중등 과외</a><a class="mob-nav-item" href="/grade/high/1">🎓 고등 과외</a><a class="mob-contact-btn" href="/contact?type=tutoring">✉️ 무료 상담하기</a><a class="mob-contact-btn" href="tel:01068348080" style="background:rgba(255,255,255,.1);margin-top:8px">📞 010-6834-8080</a></nav> <script>
 function openMobNav(){document.getElementById('mob-nav').classList.add('open');document.getElementById('mob-overlay').classList.add('open');document.body.style.overflow='hidden';}
@@ -643,7 +542,7 @@ function closeMobNav(){document.getElementById('mob-nav').classList.remove('open
 
 const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;border-bottom:1px solid rgba(255,255,255,0.08)!important;box-shadow:none!important"><div class="hw"><a href="/" class="logo"><div class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="logo-name"><span class="logo-main" style="color:white"><em>올케어</em>스터디</span><span class="logo-sub" style="color:rgba(255,255,255,0.45)">ALLCARE STUDY</span></div></a><div class="vpill" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06)"><span class="vl" style="color:rgba(255,255,255,0.5)">누적 방문자</span><span class="vc" style="color:#60A5FA">353,112명</span></div><nav class="gnb"><div class="gi" id="gi-region"><button class="gb" onclick="toggleMega('region')" style="color:rgba(255,255,255,0.85)">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="mega-drop" id="mega-region"><div class="mega-tabs"><button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button><button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button><button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button></div><div class="mega-panel on" id="region-local"><div class="mega-btns"><a class="mega-btn" href="/seoul">🏙 서울</a><a class="mega-btn" href="/gyeonggi">🌿 경기</a><a class="mega-btn" href="/incheon">🌊 인천</a><a class="mega-btn" href="/busan">🐟 부산</a><a class="mega-btn" href="/daegu">🍎 대구</a><a class="mega-btn" href="/daejeon">🌾 대전</a><a class="mega-btn" href="/gwangju">🌸 광주</a><a class="mega-btn" href="/ulsan">⚙️ 울산</a><a class="mega-btn" href="/sejong">🏛 세종</a><a class="mega-btn" href="/gangwon">🏔 강원</a><a class="mega-btn" href="/chungbuk">🌻 충북</a><a class="mega-btn" href="/chungnam">🌊 충남</a><a class="mega-btn" href="/jeonbuk">🌾 전북</a><a class="mega-btn" href="/jeonnam">🍵 전남</a><a class="mega-btn" href="/gyeongbuk">🍎 경북</a><a class="mega-btn" href="/gyeongnam">🌊 경남</a><a class="mega-btn" href="/jeju">🌺 제주</a></div></div><div class="mega-panel" id="region-grade"><div class="mega-rt">🎒 초등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/elementary/1">초등 1학년</a><a class="mega-btn" href="/grade/elementary/2">초등 2학년</a><a class="mega-btn" href="/grade/elementary/3">초등 3학년</a><a class="mega-btn" href="/grade/elementary/4">초등 4학년</a><a class="mega-btn" href="/grade/elementary/5">초등 5학년</a><a class="mega-btn" href="/grade/elementary/6">초등 6학년</a></div><div class="mega-rt">📚 중학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/middle/1">중학교 1학년</a><a class="mega-btn" href="/grade/middle/2">중학교 2학년</a><a class="mega-btn" href="/grade/middle/3">중학교 3학년</a></div><div class="mega-rt">🎓 고등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/high/1">고등 1학년</a><a class="mega-btn" href="/grade/high/2">고등 2학년</a><a class="mega-btn" href="/grade/high/3">고등 3학년</a></div></div><div class="mega-panel" id="region-school"><div class="mega-rt">시도별 학교 과외</div><div class="mega-btns"><a class="mega-btn" href="/school/seoul">서울</a><a class="mega-btn" href="/school/gyeonggi">경기</a><a class="mega-btn" href="/school/incheon">인천</a><a class="mega-btn" href="/school/busan">부산</a><a class="mega-btn" href="/school/daegu">대구</a><a class="mega-btn" href="/school/gwangju">광주</a><a class="mega-btn" href="/school/daejeon">대전</a><a class="mega-btn" href="/school/ulsan">울산</a><a class="mega-btn" href="/school/sejong">세종</a><a class="mega-btn" href="/school/gangwon">강원</a><a class="mega-btn" href="/school/chungbuk">충북</a><a class="mega-btn" href="/school/chungnam">충남</a><a class="mega-btn" href="/school/jeonbuk">전북</a><a class="mega-btn" href="/school/jeonnam">전남</a><a class="mega-btn" href="/school/gyeongbuk">경북</a><a class="mega-btn" href="/school/gyeongnam">경남</a><a class="mega-btn" href="/school/jeju">제주</a></div></div></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/subject/math">📐 수학</a><a href="/subject/english">📖 영어</a><a href="/subject/korean">✍️ 국어</a><a href="/subject/science">🔬 과학</a><a href="/subject/social">🌏 사회</a><a href="/subject/coding">💻 코딩</a><a href="/subject/essay">📝 논술</a><a href="/subject/gsd">📋 검정고시</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/study-guide">📖 학습 가이드</a></div></div><div class="gi"><a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a></div></nav></div></header>`;
 
-const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px"><div style="max-width:1100px;margin:0 auto;padding:0 48px"><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px"><span>⚠️</span><span>안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:24px"><div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:20px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span></div><p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p></div><div style="text-align:right"><div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;flex-wrap:wrap"><div style="font-size:22px;font-weight:900;color:white;white-space:nowrap">010-6834-8080</div><a href="tel:01068348080" style="background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">전화 상담</a></div></div></div><div style="padding:24px 0 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:18px 28px;justify-content:center"><a href="/seoul" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">서울 과외</a><a href="/gyeonggi" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">경기 과외</a><a href="/busan" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">부산 과외</a><a href="/subject/math" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">수학 과외</a><a href="/subject/english" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">영어 과외</a><a href="/academy/all" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">센터 찾기</a><a href="/academy/intro" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">학원 소개</a><a href="/contact" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">문의하기</a><a href="/all-regions" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 지역</a></div><div style="padding-top:20px;font-size:11px;color:rgba(255,255,255,0.3)"> © 2026 올케어스터디. All rights reserved. </div></div></footer><div class="floats" id="float-btns"><a class="fbtn fb1" href="tel:01068348080" title="전화상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a><a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring" title="상담하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></a></div> <script>
+const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px"><div style="max-width:1100px;margin:0 auto;padding:0 48px"><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px"><span>⚠️</span><span>안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:24px"><div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:20px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span></div><p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p></div><div style="text-align:right"><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px">📞 무료 상담 전화</div><div style="font-size:22px;font-weight:900;color:white;white-space:nowrap">010-6834-8080</div><a href="tel:01068348080" style="display:inline-block;margin-top:10px;background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">전화 상담</a></div></div><div style="padding:24px 0 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:18px 28px;justify-content:center"><a href="/seoul" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">서울 과외</a><a href="/gyeonggi" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">경기 과외</a><a href="/busan" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">부산 과외</a><a href="/subject/math" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">수학 과외</a><a href="/subject/english" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">영어 과외</a><a href="/academy/all" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">센터 찾기</a><a href="/academy/intro" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">학원 소개</a><a href="/contact" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">문의하기</a></div><div style="padding-top:20px;font-size:11px;color:rgba(255,255,255,0.3)"> © 2026 올케어스터디. All rights reserved. </div></div></footer><div class="floats" id="float-btns"><a class="fbtn fb1" href="tel:01068348080" title="전화상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a><a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring" title="상담하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></a></div> <script>
 (function(){
   try {
     var path = window.location.pathname;
@@ -717,196 +616,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
   const canonicalUrl = `https://allcarestudy.com${canonical}`;
   
   const descShort = desc.length > 150 ? desc.slice(0, 147) + '...' : desc;
-  
-  // 발행일: canonical 해시 기반 고정 (2025-01-15 ~ 2025-09-30 사이 분산)
-  let pubHash = 0;
-  for (let i = 0; i < canonical.length; i++) pubHash = (pubHash * 31 + canonical.charCodeAt(i)) >>> 0;
-  const pubStart = new Date('2025-01-15').getTime();
-  const pubEnd = new Date('2025-09-30').getTime();
-  const pubDate = new Date(pubStart + (pubHash % (pubEnd - pubStart)));
-  const pubIso = pubDate.toISOString().slice(0,10);
-  const pubFmt = `${pubDate.getFullYear()}.${String(pubDate.getMonth()+1).padStart(2,'0')}.${String(pubDate.getDate()).padStart(2,'0')}`;
-
-  // 수정일: 이번 주 월요일 (매주 자동 갱신)
-  const now = new Date();
-  const dow = now.getDay(); // 0=일, 1=월
-  const offset = dow === 0 ? -6 : 1 - dow;
-  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + offset);
-  const modIso = monday.toISOString().slice(0,10);
-  const modFmt = `${monday.getFullYear()}.${String(monday.getMonth()+1).padStart(2,'0')}.${String(monday.getDate()).padStart(2,'0')}`;
-
-  // 본문에 날짜 메타 주입 (breadcrumb 다음 or 맨 앞에 삽입)
-  const dateMeta = `<div style="max-width:1200px;margin:0 auto;padding:8px 24px;font-size:12px;color:#9CA3AF;display:flex;gap:16px;flex-wrap:wrap"><span>📅 발행일: ${pubFmt}</span><span>🔄 수정일: ${modFmt}</span></div>`;
-  
-  // canonical URL 패턴 분석해서 지역 페이지면 페이지별 고유 SEO 콘텐츠 자동 주입
-  let uniqueContent = '';
-  try {
-    const segs = canonical.split('/').filter(Boolean);
-    // /sido, /sido/gu, /sido/gu/dong, /sido/gu/dong/grade/subject, /sido/gu/grade/subject 패턴
-    if (segs.length >= 1 && segs.length <= 5 && !segs[0].includes('.') && !['academy','school','study-guide','conversation','contact','about','engineer-lab','feed','rss','sitemap','api'].includes(segs[0])) {
-      const sidoEn = segs[0];
-      // SIDO_EN 역매핑
-      let sidoLabel = '';
-      for (const [k,v] of Object.entries(SIDO_EN)) {
-        if (v === sidoEn) { sidoLabel = REGIONS[k]?.label || k; break; }
-      }
-      let guLabel = '', dongLabel = '', gradeLabel = '', subjectLabel = '';
-      if (segs.length >= 2 && sidoLabel) {
-        const guEn = segs[1];
-        for (const [k,v] of Object.entries(DISTRICT_EN)) {
-          if (v === guEn) { guLabel = k; break; }
-        }
-      }
-      // 3-parts: 동
-      if (segs.length === 3 && guLabel) {
-        for (const [k,v] of Object.entries(DONG_EN)) {
-          if (v === segs[2]) { dongLabel = k; break; }
-        }
-      }
-      // 5-parts: 동+학년+과목
-      if (segs.length === 5) {
-        for (const [k,v] of Object.entries(DONG_EN)) {
-          if (v === segs[2]) { dongLabel = k; break; }
-        }
-        const g = segs[3];
-        gradeLabel = g === 'elementary' ? '초등' : g === 'middle' ? '중등' : g === 'high' ? '고등' : '';
-        for (const [k,v] of Object.entries(SUBJECT_EN)) {
-          if (v === segs[4]) { subjectLabel = k; break; }
-        }
-      }
-      // 4-parts: 구+학년+과목
-      if (segs.length === 4) {
-        const g = segs[2];
-        gradeLabel = g === 'elementary' ? '초등' : g === 'middle' ? '중등' : g === 'high' ? '고등' : '';
-        for (const [k,v] of Object.entries(SUBJECT_EN)) {
-          if (v === segs[3]) { subjectLabel = k; break; }
-        }
-      }
-      if (sidoLabel) {
-        uniqueContent = genUniqueContent(canonical, sidoLabel, guLabel, dongLabel, subjectLabel, gradeLabel);
-      }
-    }
-  } catch(e) { uniqueContent = ''; }
-  
-  const bodyWithDate = dateMeta + body + (uniqueContent ? `<div style="max-width:900px;margin:0 auto;padding:0 24px 40px">${uniqueContent}</div>` : '');
-
-  // === SEO 강화: 페이지별 동적 og:image + FAQPage schema 자동 생성 ===
-  let ogImage = 'https://allcarestudy.com/og-image.png';
-  let ogImageWidth = 1200;
-  let ogImageHeight = 630;
-  let faqSchema = '';
-  try {
-    const _segs = canonical.split('/').filter(Boolean);
-    if (_segs.length >= 1) {
-      // 1) og:image 페이지별 동적 결정
-      if (_segs[0] === 'academy') {
-        ogImage = pickImg('general', 'academy/' + canonical);
-      } else if (_segs[0] === 'school') {
-        ogImage = pickImg('general', 'school/' + canonical);
-      } else if (_segs[0] === 'conversation') {
-        ogImage = pickImg('english', 'conv/' + canonical);
-      } else if (_segs[0] === 'study-guide') {
-        ogImage = pickImg('general', 'guide/' + canonical);
-      } else if (SIDO_MAP[_segs[0]]) {
-        if (_segs.length === 4) {
-          const _subject = SUBJECT_MAP[_segs[3]] || _segs[3];
-          ogImage = pickImg(_subject, canonical);
-        } else if (_segs.length === 5) {
-          const _subject = SUBJECT_MAP[_segs[4]] || _segs[4];
-          ogImage = pickImg(_subject, canonical);
-        } else {
-          ogImage = pickImg('general', canonical);
-        }
-      }
-      // Unsplash CDN은 1200x630 사이즈로 변환
-      if (ogImage.indexOf('images.unsplash.com') >= 0) {
-        ogImage = ogImage.replace('?w=900&q=80', '?w=1200&h=630&fit=crop&q=80');
-      }
-
-      // 2) FAQPage schema: 지역 페이지에만 적용
-      if (SIDO_MAP[_segs[0]]) {
-        const _sido = SIDO_MAP[_segs[0]] || _segs[0];
-        let _gu = '', _dong = '', _grade = '', _subject = '';
-        if (_segs.length === 2) {
-          _gu = DISTRICT_MAP[_segs[1]] || _segs[1];
-        } else if (_segs.length === 3) {
-          _gu = DISTRICT_MAP[_segs[1]] || _segs[1];
-          _dong = _segs[2];
-        } else if (_segs.length === 4) {
-          _gu = DISTRICT_MAP[_segs[1]] || _segs[1];
-          _grade = GRADE_MAP[_segs[2]] || _segs[2];
-          _subject = SUBJECT_MAP[_segs[3]] || _segs[3];
-        } else if (_segs.length === 5) {
-          _gu = DISTRICT_MAP[_segs[1]] || _segs[1];
-          _dong = _segs[2];
-          _grade = GRADE_MAP[_segs[3]] || _segs[3];
-          _subject = SUBJECT_MAP[_segs[4]] || _segs[4];
-        }
-        // 동 이름 영문→한글 변환 (FAQ 자연스러움)
-        if (_dong) {
-          try {
-            const _dongKr = fromRoman(_segs[0], _segs[1], _dong);
-            if (_dongKr) _dong = _dongKr;
-          } catch(e) {}
-        }
-        let _faqs = [];
-        if (_subject && _grade && _dong) {
-          _faqs = [
-            { q: `${_dong} ${_grade} ${_subject}과외 비용은 얼마인가요?`,
-              a: `${_sido} ${_gu} ${_dong} ${_grade} ${_subject}과외 비용은 선생님 경력과 수업 횟수에 따라 다릅니다. 무료 상담을 통해 정확한 견적을 받아보세요.` },
-            { q: `${_dong}에서 ${_grade} ${_subject} 1:1 과외가 가능한가요?`,
-              a: `네, ${_sido} ${_gu} ${_dong} 지역에 검증된 ${_grade} ${_subject} 과외 선생님이 활동 중입니다. 방문 또는 화상 1:1 맞춤 수업이 가능합니다.` },
-            { q: `${_grade} ${_subject} 과외 효과를 얻으려면 얼마나 필요한가요?`,
-              a: `보통 ${_grade} ${_subject}은 주 2회 8~12주 정도 꾸준히 학습하면 성적 향상을 체감할 수 있습니다. 학생 수준 진단 후 맞춤 커리큘럼으로 진행합니다.` },
-            { q: `${_dong} 지역 ${_grade} 학생들의 ${_subject} 학습 팁이 있나요?`,
-              a: `${_dong} ${_grade} 학생들은 학교 내신과 ${_subject} 기본 개념을 함께 점검하는 것이 중요합니다. 무료 상담 시 학교별 특성에 맞춘 학습 전략을 안내드립니다.` }
-          ];
-        } else if (_subject && _grade) {
-          _faqs = [
-            { q: `${_gu} ${_grade} ${_subject}과외 어떻게 신청하나요?`,
-              a: `${_sido} ${_gu} ${_grade} ${_subject}과외 신청은 010-6834-8080 또는 상담 신청 페이지에서 가능합니다. 24시간 내 빠른 연락 드립니다.` },
-            { q: `${_grade} ${_subject}과외 비용이 궁금합니다.`,
-              a: `${_grade} ${_subject}과외 비용은 선생님 경력, 수업 횟수, 지역에 따라 다릅니다. 무료 상담을 통해 학생 맞춤 견적을 받아보세요.` },
-            { q: `검증된 ${_grade} ${_subject} 선생님인가요?`,
-              a: `네, 올케어스터디 ${_gu} ${_grade} ${_subject}과외 선생님은 모두 학력과 경력이 검증된 분들입니다.` },
-            { q: `${_gu} 어느 지역까지 과외가 가능한가요?`,
-              a: `${_sido} ${_gu} 전 지역의 ${_grade} ${_subject}과외가 가능합니다. 자세한 지역 매칭은 상담 시 확인할 수 있습니다.` }
-          ];
-        } else if (_dong) {
-          _faqs = [
-            { q: `${_dong}에서 어떤 과목 과외가 가능한가요?`,
-              a: `${_sido} ${_gu} ${_dong} 지역에서 수학, 영어, 국어, 과학, 사회, 코딩, 논술 모든 과목의 1:1 맞춤 과외가 가능합니다.` },
-            { q: `${_dong} 과외 비용은 어떻게 되나요?`,
-              a: `${_dong} 과외 비용은 과목, 학년, 선생님 경력에 따라 다릅니다. 무료 상담으로 견적을 확인하실 수 있습니다.` },
-            { q: `${_dong}에서 초·중·고 모두 과외가 가능한가요?`,
-              a: `네, ${_dong} 지역에서 초등, 중등, 고등 학생 모두 1:1 맞춤 과외가 가능합니다.` }
-          ];
-        } else if (_gu) {
-          _faqs = [
-            { q: `${_gu} 과외 어떻게 시작하나요?`,
-              a: `${_sido} ${_gu} 과외 신청은 010-6834-8080 또는 무료 상담 신청 페이지에서 가능합니다. 24시간 내 빠른 연락 드립니다.` },
-            { q: `${_gu}에서 1:1 맞춤 과외가 가능한가요?`,
-              a: `네, ${_gu} 전 지역에서 초·중·고 학생 대상 1:1 맞춤 과외가 가능합니다. 방문 또는 화상 수업 모두 가능합니다.` },
-            { q: `${_gu} 어떤 학년·과목 과외가 인기 있나요?`,
-              a: `${_gu} 지역은 초·중·고 수학, 영어, 국어 등 주요 과목 과외 수요가 높습니다. 학년별 맞춤 커리큘럼으로 진행됩니다.` }
-          ];
-        } else {
-          _faqs = [
-            { q: `${_sido}에서 1:1 맞춤 과외가 가능한가요?`,
-              a: `네, ${_sido} 전 지역에서 검증된 선생님과의 1:1 맞춤 과외가 가능합니다. 초·중·고 모든 학년 대상입니다.` },
-            { q: `${_sido} 과외 비용은 어떻게 되나요?`,
-              a: `${_sido} 과외 비용은 학년, 과목, 선생님 경력에 따라 다릅니다. 무료 상담으로 정확한 견적을 안내드립니다.` },
-            { q: `${_sido} 과외 어떻게 신청하나요?`,
-              a: `${_sido} 과외 신청은 010-6834-8080 또는 무료 상담 페이지에서 가능합니다.` }
-          ];
-        }
-        if (_faqs.length > 0) {
-          const _items = _faqs.map(f => `{"@type":"Question","name":"${f.q.replace(/"/g,'\\"')}","acceptedAnswer":{"@type":"Answer","text":"${f.a.replace(/"/g,'\\"')}"}}`).join(',');
-          faqSchema = `<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[${_items}]}</script>`;
-        }
-      }
-    }
-  } catch(e) { /* 기본값 유지 */ }
+  const isoDate = new Date().toISOString().slice(0,10);
 
   
   let bcSchema = '';
@@ -931,20 +641,16 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 <meta property="og:url" content="${canonicalUrl}">
 <meta property="og:site_name" content="올케어스터디">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="${ogImage}">
-<meta property="og:image:width" content="${ogImageWidth}">
-<meta property="og:image:height" content="${ogImageHeight}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="${ogImage}">
-<meta property="article:published_time" content="${pubIso}">
-<meta property="article:modified_time" content="${modIso}">
+<meta property="og:image" content="https://allcarestudy.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd">
 <meta name="google-site-verification" content="st8_MGU2mfnaomGNCLUGBmiQsZD50WNTWEUxzfmJ47E">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","image":["${ogImage}"],"publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${pubIso}","dateModified":"${modIso}","inLanguage":"ko-KR"}</script>
-${bcSchema}${faqSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${isoDate}","dateModified":"${isoDate}","inLanguage":"ko-KR"}</script>
+${bcSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
-</head><body>${HEADER}${bodyWithDate}${FOOTER}<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "1cbcc1a46d6c230";if(window.wcs) { wcs_do(); }</script></body></html>`;
+</head><body>${HEADER}${body}${FOOTER}</body></html>`;
 }
 
 function wrapDark(title,desc,canonical,body){
@@ -1112,12 +818,10 @@ function toRoman(text) {
 
 
 function fromRoman(sidoEn, guEn, roman) {
-  // 정확한 매칭만 허용 (정규화/접미사 매칭 비활성화 - 짧은 URL → 정식 URL 리디렉션 차단)
-  // 매칭에 옛 글로벌(DISTRICT_EN)과 새 시도별(gugunEn) 둘 다 허용
   for (const [sido, reg] of Object.entries(REGIONS)) {
     if ((SIDO_EN[sido]||sido) !== sidoEn) continue;
     for (const [ak, area] of Object.entries(reg.areas)) {
-      if ((DISTRICT_EN[ak]||ak) !== guEn && gugunEn(sidoEn, ak) !== guEn) continue;
+      if ((DISTRICT_EN[ak]||ak) !== guEn) continue;
       for (const dong of (area.dongs||[])) {
         if (toRoman(dong) === roman) return dong;
       }
@@ -1132,109 +836,6 @@ function hashSelect(str, arr) {
   return arr[h % arr.length];
 }
 
-// 시드 기반 다양화 헬퍼: 같은 페이지는 항상 같은 결과, 페이지마다 다른 결과
-function seedHash(str) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
-  return h;
-}
-// 배열에서 N개를 시드 기반으로 선택 (중복 없이, 순서도 시드별로 달라짐)
-function seedPickN(seed, arr, n) {
-  if (!arr || !arr.length) return [];
-  const pool = arr.slice();
-  const result = [];
-  let h = seed;
-  const pickCount = Math.min(n, pool.length);
-  for (let i = 0; i < pickCount; i++) {
-    h = (h * 1103515245 + 12345) >>> 0;
-    const idx = h % pool.length;
-    result.push(pool.splice(idx, 1)[0]);
-  }
-  return result;
-}
-// 배열을 시드 기반으로 셔플
-function seedShuffle(seed, arr) {
-  const a = arr.slice();
-  let h = seed;
-  for (let i = a.length - 1; i > 0; i--) {
-    h = (h * 1103515245 + 12345) >>> 0;
-    const j = h % (i + 1);
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-// 페이지별로 고유하게 생성되는 SEO 콘텐츠 (해시 기반, 같은 페이지는 항상 같은 결과)
-function genUniqueContent(seedKey, sidoLabel, guLabel, dongLabel, subjectLabel, gradeLabel) {
-  // 시드 해시
-  let h = 0;
-  for (let i = 0; i < seedKey.length; i++) h = (h * 31 + seedKey.charCodeAt(i)) >>> 0;
-  const pick = (arr) => arr[h % arr.length];
-  const pick2 = (arr) => arr[(h >>> 3) % arr.length];
-  const pick3 = (arr) => arr[(h >>> 7) % arr.length];
-  const pick4 = (arr) => arr[(h >>> 11) % arr.length];
-
-  // 학습 환경 묘사 (지역 특성)
-  const env = pick([
-    `학습 분위기가 안정적이고 가정 학습 시간이 충분히 확보되는 지역으로 알려져 있습니다`,
-    `통학 동선이 짧아 학원과 자기주도 학습을 병행하기 좋은 환경을 갖추고 있습니다`,
-    `학부모 정보 교류가 활발하고 학습 정보가 빠르게 공유되는 특성이 있습니다`,
-    `학원가 접근성이 좋고 도서관·스터디카페 등 학습 인프라가 잘 갖춰져 있습니다`,
-    `주거 밀집도가 높아 또래 학습 그룹 형성이 쉽고 학습 동기 부여에 유리합니다`,
-    `교육열이 꾸준히 유지되며 다양한 학습 옵션을 비교 선택할 수 있는 지역입니다`,
-    `대단지 아파트 중심으로 학습 커뮤니티가 자연스럽게 형성되어 있습니다`,
-    `학교 정규 수업 후 보충 학습이 활발히 이루어지는 분위기가 정착되어 있습니다`
-  ]);
-
-  // 학습 전략
-  const strategy = pick2([
-    `진도 위주의 일괄 수업보다 학생 개인의 약점을 정확히 짚어내는 1:1 분석형 지도가 효과적입니다`,
-    `숙제 검사와 오답 정리가 매주 체계적으로 이루어지는 관리형 수업이 성적 향상에 직결됩니다`,
-    `시험 2주 전부터 학교별 출제 경향을 반영한 집중 대비가 필수적입니다`,
-    `기본 개념을 반복 점검하면서 응용 문제 해결력을 동시에 키우는 통합형 접근이 유효합니다`,
-    `매 수업마다 그날 배운 내용을 즉시 점검하고 부족한 부분을 보완하는 사이클이 중요합니다`,
-    `예습-수업-복습-과제의 학습 사이클을 흐트러지지 않게 유지하는 것이 핵심입니다`,
-    `성적이 정체된 구간에서는 풀이 과정을 다시 점검하는 진단형 수업이 돌파구가 됩니다`,
-    `학교 시험과 수능 유형을 균형 있게 다루는 커리큘럼이 장기적으로 유리합니다`
-  ]);
-
-  // 학부모 관심사
-  const parent = pick3([
-    `진도 보고와 출결 관리, 약점 분석 리포트가 꾸준히 제공되는 시스템을 선호하는 경향이 강합니다`,
-    `선생님과의 직접 소통, 정기 학부모 상담이 가능한지를 우선 확인하는 분이 많습니다`,
-    `결과 중심보다 과정 중심으로 학습 변화를 보여주는 수업을 신뢰하는 분위기입니다`,
-    `학원-과외-인강을 적절히 조합해 학습 효율을 극대화하려는 전략이 일반적입니다`,
-    `검증된 학력과 풍부한 지도 경력을 갖춘 선생님을 선호하는 경향이 뚜렷합니다`,
-    `첫 수업 무료 체험을 통해 선생님과 학생의 케미스트리를 먼저 확인하는 흐름입니다`,
-    `중장기 로드맵을 함께 짜주는 컨설팅 능력을 갖춘 선생님에 대한 수요가 높습니다`,
-    `자녀의 학습 성향에 맞춤 지도 가능한 선생님을 까다롭게 검증하는 분위기입니다`
-  ]);
-
-  // 추천 포인트
-  const recommend = pick4([
-    `초기 진단을 통해 현재 수준을 정확히 파악한 뒤 단계적으로 끌어올리는 방식이 안전합니다`,
-    `한 달 단위로 성과를 점검하고 필요시 커리큘럼을 조정하는 유연한 운영이 중요합니다`,
-    `방학 집중 학습과 학기 중 꾸준한 관리가 함께 이루어져야 효과가 누적됩니다`,
-    `시험 직전 벼락치기보다 평소 누적 학습이 안정적인 결과로 이어집니다`,
-    `자기주도 학습 습관 형성을 함께 도와주는 선생님과의 매칭이 장기적으로 유리합니다`,
-    `학습량보다 학습 밀도를 높이는 데 중점을 두는 운영이 효과적입니다`,
-    `정기적인 모의고사와 피드백을 통해 실전 감각을 유지하는 것이 좋습니다`,
-    `학생의 학습 페이스를 존중하면서도 적절한 긴장감을 유지하는 균형이 중요합니다`
-  ]);
-
-  const region = `${sidoLabel}${guLabel ? ' ' + guLabel : ''}${dongLabel ? ' ' + dongLabel : ''}`;
-  const subj = subjectLabel || '';
-  const grade = gradeLabel || '';
-  
-  return `<section style="background:#FAFBFF;border:1px solid #E5E7EB;border-radius:14px;padding:28px;margin:32px 0;line-height:1.75;color:#374151;font-size:15px">
-    <h3 style="margin:0 0 16px;font-size:18px;font-weight:700;color:#1F2937">📍 ${region} ${grade} ${subj} 학습 가이드</h3>
-    <p style="margin:0 0 14px"><strong>${region} 지역 특성:</strong> ${env}.</p>
-    <p style="margin:0 0 14px"><strong>${grade} ${subj} 학습 전략:</strong> ${strategy}.</p>
-    <p style="margin:0 0 14px"><strong>학부모 관심 포인트:</strong> ${parent}.</p>
-    <p style="margin:0"><strong>${region}에서 추천하는 방향:</strong> ${recommend}.</p>
-  </section>`;
-}
-
 
 
 
@@ -1243,7 +844,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   for(const [s,reg] of Object.entries(REGIONS)){
     if((SIDO_EN[s]||s)!==sidoEn) continue;
     for(const [a,ar] of Object.entries(reg.areas)){
-      if((DISTRICT_EN[a]||a)!==guEn && gugunEn(sidoEn, a)!==guEn) continue;
+      if((DISTRICT_EN[a]||a)!==guEn) continue;
       sido=s; ak=a; region=reg; area=ar; break;
     }
     if(sido) break;
@@ -1301,14 +902,14 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   const schoolsHtml = `<h2>인근 학교</h2>
     <p>${dong} 인근 학교로는 ${schools} 등이 있습니다. 학교별 시험 특성에 맞춘 내신 대비 수업을 제공합니다.</p>`;
 
-  const title = `${sidoLabel} ${gu} ${dong} 과외 | ${gu} ${dong} 맞춤 1:1 과외 안내 - 올케어스터디`;
-  const desc = `${sidoLabel} ${gu} ${dong} 과외 전문. 초등·중등·고등 수학·영어·국어·과학 1:1 방문 과외. ${schools} 내신 기출 분석. 무료 상담 010-6834-8080`;
+  const title = `${dong} 과외 | ${gu} ${dong} 맞춤 1:1 과외 안내 - 올케어스터디`;
+  const desc = `${dong} 과외 전문. 초등·중등·고등 수학·영어·국어·과학 1:1 방문 과외. ${schools} 내신 기출 분석. 무료 상담 010-6834-8080`;
   const bc = [{name:'홈',url:'/'},{name:sidoLabel,url:`/${sidoEn}`},{name:gu,url:`/${sidoEn}/${guEn}`},{name:`${dong} 과외`,url:canonical}];
 
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} 과외</span></div>
-  <div class="art-tag">📍 ${sidoLabel} · ${gu} · ${dong}</div>
-  <h1 class="art-title">${sidoLabel} ${gu} ${dong} 과외 | 맞춤 1:1 과외 안내</h1>
+  <div class="art-tag">📍 ${gu} · ${dong}</div>
+  <h1 class="art-title">${dong} 과외 | ${gu} ${dong} 맞춤 1:1 과외 안내</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
   <div class="info-box">
     <div class="info-item"><div class="info-num">${infoNums[0]}명</div><div class="info-label">등록 선생님</div></div>
@@ -1392,7 +993,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   for (const [s, reg] of Object.entries(REGIONS)) {
     if ((SIDO_EN[s]||s) === sidoEn) {
       for (const [a, ar] of Object.entries(reg.areas)) {
-        if ((DISTRICT_EN[a]||a) === guEn || gugunEn(sidoEn, a) === guEn) {
+        if ((DISTRICT_EN[a]||a) === guEn) {
           sido = s; ak = a; region = reg; area = ar;
           break;
         }
@@ -1431,7 +1032,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     if (!sidoData) return null;
     
     for (const [gugunK, gradeData] of Object.entries(sidoData)) {
-      if ((DISTRICT_EN[gugunK] || toRoman(gugunK)) === guEn || gugunEn(sidoEn, gugunK) === guEn) {
+      if ((DISTRICT_EN[gugunK] || toRoman(gugunK)) === guEn) {
         const gradeSchools = gradeData[_gradeKey];
         if (Array.isArray(gradeSchools) && gradeSchools.length) {
           
@@ -1559,93 +1160,21 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   // 인근 구군 (같은 시도 안에서 현재 구군 제외 4개)
   const nearbyGuguns = Object.keys(region.areas).filter(a => a !== ak).slice(0, 4);
   const nearbyGugunLinks = nearbyGuguns.map(a =>
-    `<a href="/${sidoEn}/${gugunEn(sidoEn, a)}" class="rel-card"><div class="rc-tag">${region.label} · ${a}</div><div class="rc-title">${a} ${subject}과외 | ${a} 맞춤 과외</div></a>`
+    `<a href="/${sidoEn}/${DISTRICT_EN[a]||a}" class="rel-card"><div class="rc-tag">${region.label} · ${a}</div><div class="rc-title">${a} ${subject}과외 | ${a} 맞춤 과외</div></a>`
   ).join('');
 
   const keywords = [`${dong} ${subject}과외`, `${gu} ${dong} 과외`, `${dong} ${grade} 과외`,
     `${dong} 1:1과외`, `${gu} ${grade} ${subject}`, `${dong} 내신 ${subject}`];
   const keywordTags = keywords.map(k=>`<span class="keyword-tag">${k}</span>`).join('');
 
-  // 시드 기반 다양화 (페이지마다 고유)
-  const _dpSeed = seedHash(dong + gu + grade + subject + sidoEn);
-  const _isGsd = subjectEn === 'gsd';
-
-  // Description 패턴 풀 (일반 6개 / gsd 5개)
-  const _descPatternsGen = [
-    `${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`,
-    `${dong} ${grade} ${subject} 1:1 맞춤 과외. ${schools} 내신 시험 출제 경향 분석. ${gu} 검증된 선생님 매칭. 010-6834-8080`,
-    `${gu} ${dong} ${subject}과외 매칭. ${grade} 1:1 방문 수업. ${schools} 학교 기출 완벽 분석. 무료 상담 010-6834-8080`,
-    `${dong} 학생 맞춤 ${subject}과외. ${grade} 1:1 방문 수업. 학교별 시험 대비 + 취약 단원 보완. 010-6834-8080`,
-    `${sidoLabel} ${dong} ${subject} 내신 1:1 과외. 시험 4주 전 집중 대비. 학력·경력 검증된 ${subject} 선생님. 010-6834-8080`,
-    `${gu} ${dong} ${grade} ${subject}과외. 1:1 맞춤 ${subject} 수업. ${schools} 시험 경향 반영. 무료 매칭 010-6834-8080`,
-  ];
-  const _descPatternsGsd = [
-    `${sidoLabel} ${gu} ${dong} ${grade} 검정고시 1:1 과외. 합격 전략 + 기출 분석. 무료 상담 010-6834-8080`,
-    `${dong} 검정고시 1:1 맞춤 과외. ${grade} 단계 검정고시 합격 대비. 과목별 핵심 정리. 010-6834-8080`,
-    `${gu} ${dong} 검정고시 과외 매칭. 단기 합격 전략 + 기출 풀이. 직장인·재수생 가능. 010-6834-8080`,
-    `${dong} 검정고시 합격 과외. 국·영·수·사·과 핵심 요약 + 기출 반복 학습. 무료 매칭 010-6834-8080`,
-    `${sidoLabel} ${dong} 검정고시 1:1 과외. 시간 부족한 분들을 위한 합격 집중 커리큘럼. 010-6834-8080`,
-  ];
-  const _descPatterns = _isGsd ? _descPatternsGsd : _descPatternsGen;
-
-  // FAQ 뱅크 (일반 12개 / gsd 8개) → 시드별로 4개 선택
-  const _faqBankGen = [
-    [`${dong}에서 ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?`, `상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${schools} 기출을 잘 아는 선생님 위주로 추천해드립니다. 빠르면 당일 매칭도 가능합니다.`],
-    [`${grade} ${subject} 성적이 낮아도 괜찮나요?`, `기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드리니 걱정하지 않으셔도 됩니다.`],
-    [`수업료는 어떻게 되나요?`, `선생님 경력·학력·수업 방식에 따라 다르며, 무료 상담 후 학부모님 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.`],
-    [`학원과 과외를 병행해도 되나요?`, `학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. 학원 진도에 맞춰 선행·복습을 병행하는 커리큘럼으로 운영합니다.`],
-    [`몇 개월 정도 수업하면 효과가 나타나나요?`, `학생마다 다르지만 보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 단기 집중 과외(시험 대비 4~8주)도 운영합니다.`],
-    [`${dong} 인근 학교 기출에 익숙한 선생님으로 매칭이 가능한가요?`, `${schools} 등 인근 학교 기출과 출제 경향을 분석한 선생님 위주로 우선 매칭합니다. 인근 학교 수업 경험이 있는 선생님이 매칭의 우선순위입니다.`],
-    [`선생님이 마음에 안 들면 어떻게 하나요?`, `학생과 잘 맞지 않는 경우 언제든 부담 없이 교체 요청 가능합니다. 추가 비용 없이 다른 선생님으로 다시 매칭해드립니다.`],
-    [`방문 수업은 ${dong} 어디서든 가능한가요?`, `${dong}을 비롯한 ${gu} 전 지역 자택 방문이 가능합니다. 카페나 스터디룸 등 학생이 원하는 장소에서도 수업할 수 있습니다.`],
-    [`시험 직전 단기 ${subject} 집중 과외도 가능한가요?`, `중간·기말고사 4주 전부터 진행하는 ${subject} 시험 집중 과외 프로그램을 별도로 운영합니다. 단기간 ${subject} 점수 향상을 목표로 합니다.`],
-    [`수업 횟수와 시간은 어떻게 결정하나요?`, `${grade} 단계 ${subject}는 보통 주 2회가 표준이며, 시험 기간이나 취약 단원 보완이 필요할 때는 주 3회로 늘릴 수 있습니다. 1회 90~120분 수업이 일반적입니다.`],
-    [`온라인 ${subject} 수업도 가능한가요?`, `방문 수업이 기본이지만 학생 일정이나 거리 문제로 온라인 화상 ${subject} 수업도 가능합니다. 동일한 1:1 맞춤 커리큘럼으로 진행합니다.`],
-    [`수능 대비도 함께 진행되나요?`, `${grade} 학생의 경우 내신과 수능을 동시에 대비하는 이중 트랙 방식으로 진행합니다. 학년에 맞춰 비중을 조정합니다.`],
-  ];
-  const _faqBankGsd = [
-    [`${dong} 검정고시 과외는 일반 과외와 어떻게 다른가요?`, `검정고시는 학교 내신 시험과 출제 방식이 완전히 다릅니다. 기출 문제 패턴 분석과 핵심 단원 압축 학습이 핵심이며, 합격선(평균 60점) 달성을 1차 목표로 커리큘럼을 설계합니다.`],
-    [`직장인이나 성인도 ${dong} 검정고시 과외를 받을 수 있나요?`, `직장인·주부·성인 학습자도 많이 수강하고 있습니다. 평일 저녁이나 주말 수업이 가능하며, 학습 공백이 길어도 기초부터 차근차근 진행합니다.`],
-    [`검정고시 합격까지 보통 얼마나 걸리나요?`, `학습 시간과 기초 수준에 따라 다르지만 보통 3~6개월 집중 과외로 합격이 가능합니다. 시험 일정에 맞춘 단기 합격 프로그램(2~3개월)도 운영합니다.`],
-    [`검정고시 ${grade} 과외 수업료는 어떻게 되나요?`, `선생님 경력과 과목 수에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다. 합격 보장 패키지 등 다양한 옵션이 있습니다.`],
-    [`검정고시는 어떤 과목을 ${dong} 과외로 받아야 하나요?`, `필수 과목인 국어·영어·수학·사회·과학 5과목 중 본인이 약한 과목 위주로 받으시면 효과적입니다. 5과목 종합 패키지도 가능합니다.`],
-    [`온라인 검정고시 ${dong} 과외도 가능한가요?`, `방문 수업과 온라인 화상 수업 모두 가능합니다. 직장인의 경우 시간 활용이 자유로운 온라인 수업을 선호하시는 분이 많습니다.`],
-    [`검정고시 합격 후 ${dong}에서 대학 진학도 가능한가요?`, `검정고시 합격 후 정시·수시로 대학 진학이 가능합니다. 합격 후 수능 대비 과외로 자연스럽게 연계되는 커리큘럼도 운영합니다.`],
-    [`검정고시 기출 분석은 어떻게 진행되나요?`, `최근 5년 검정고시 기출을 단원별로 분류하고 출제 빈도가 높은 핵심 단원부터 압축 학습합니다. 합격선 달성에 필요한 최소 학습량으로 효율을 극대화합니다.`],
-  ];
-  const _faqBank = _isGsd ? _faqBankGsd : _faqBankGen;
-  const _selectedFaqs = seedPickN(_dpSeed, _faqBank, 4);
-  const _faqHtml = _selectedFaqs.map(([q, a]) => `<p><strong>Q. ${q}</strong><br>${a}</p>`).join('');
-
-  // 도입부 패턴 (일반 6개 / gsd 5개)
-  const _introPatternsGen = [
-    `${dong}은 ${gu} 지역의 학습 중심 동네 중 하나로, 학부모님들의 ${subject} 학습 관심이 높은 지역입니다.`,
-    `${gu}에 위치한 ${dong}은 ${grade} ${subject} 1:1 과외 수요가 꾸준한 지역입니다. 인근 학교 ${schools} 학생들이 주로 거주합니다.`,
-    `${sidoLabel} ${gu} ${dong}에서 ${grade} ${subject} 과외를 시작하시는 분들은 ${schools} 시험 출제 경향을 잘 아는 선생님 매칭이 가장 중요합니다.`,
-    `${dong} ${grade} ${subject} 1:1 과외는 학교 내신 시험에 직접 연결되는 맞춤 학습으로 효과가 큽니다. ${schools} 인근 학생들에게 특히 적합합니다.`,
-    `${gu} ${dong}에 거주하는 학생들의 ${grade} ${subject} 학습을 위한 1:1 방문 과외 매칭 서비스입니다.`,
-    `${dong}은 ${sidoLabel} ${gu}의 주요 학습 동네로, ${schools} 학생들의 ${subject} 내신 관리가 중요한 지역입니다.`,
-  ];
-  const _introPatternsGsd = [
-    `${dong} 검정고시 1:1 과외는 일반 학교 과외와 다른 별도의 합격 전략이 필요합니다. ${gu} 지역 검정고시 합격생 다수 배출 경험이 있는 선생님과 매칭해드립니다.`,
-    `${gu}에 위치한 ${dong}에서 검정고시를 준비하시는 분들을 위한 1:1 맞춤 과외입니다. 단기 합격에 최적화된 커리큘럼으로 운영합니다.`,
-    `${sidoLabel} ${gu} ${dong}에서 검정고시 합격을 목표로 하시는 분들의 1:1 맞춤 학습을 도와드립니다. 직장인·재수생·학교 부적응 학생 모두 가능합니다.`,
-    `${dong} 검정고시 과외는 시험 합격이 1차 목표이며, 합격 후 대학 진학까지 연계되는 장기 학습 설계가 가능합니다.`,
-    `${gu} ${dong} 검정고시 과외는 기출 분석 기반 핵심 단원 압축 학습으로 단기 합격을 지원합니다. 시험 일정에 맞춘 집중 프로그램도 운영합니다.`,
-  ];
-  const _introPatterns = _isGsd ? _introPatternsGsd : _introPatternsGen;
-  const _introText = _introPatterns[_dpSeed % _introPatterns.length];
-
-  const title = _isGsd
-    ? `${sidoLabel} ${gu} ${dong} 검정고시 과외 | 1:1 맞춤 합격 과외 - 올케어스터디`
-    : `${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 | 맞춤 1:1 과외 - 올케어스터디`;
-  const desc = _descPatterns[_dpSeed % _descPatterns.length];
+  const title = `${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 맞춤 1:1 과외 - 올케어스터디`;
+  const desc = `${dong} ${grade} ${subject}과외 전문. ${schools} 기출 분석. 1:1 방문 과외. 무료 상담 010-6834-8080`;
   const bc = [{name:'홈',url:'/'},{name:sidoLabel,url:`/${sidoEn}`},{name:gu,url:`/${sidoEn}/${guEn}`},{name:`${dong} ${subject}과외`,url:canonical}];
 
   const body = `<div class="wrap">
   <div class="bc"><a href="/">홈</a> › <a href="/${sidoEn}">${sidoLabel}</a> › <a href="/${sidoEn}/${guEn}">${gu}</a> › <span>${dong} ${grade} ${subject}과외</span></div>
-  <div class="art-tag">${subj.emoji} ${sidoLabel} · ${gu} · ${dong} · ${grade} · ${subject}</div>
-  <h1 class="art-title">${sidoLabel} ${gu} ${dong} ${grade} ${subject}과외 | 맞춤 1:1 과외</h1>
+  <div class="art-tag">${subj.emoji} ${gu} · ${dong} · ${grade} · ${subject}</div>
+  <h1 class="art-title">${dong} ${grade} ${subject}과외 | ${gu} ${dong} ${grade} ${subject} 맞춤 1:1 과외</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span><span>⏱ 5분</span></div>
   <div class="info-box">
     <div class="info-item"><div class="info-num">${dInfoNums[0]}명</div><div class="info-label">${subject} 선생님</div></div>
@@ -1660,7 +1189,6 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   </div>
   <div class="art-body">
     <h2>${dong} ${grade} ${subject}과외 안내</h2>
-    <p>${_introText}</p>
     <p>${mainText}</p>
     <p>${catDesc}</p>
     <p>${gradeDesc}</p>
@@ -1690,7 +1218,11 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     <blockquote style="background:var(--blue-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:8px;margin:16px 0;font-style:italic;color:var(--text-dark)">"${review2}"</blockquote>
 
     <h2>자주 묻는 질문</h2>
-    ${_faqHtml}
+    <p><strong>Q. ${dong}에서 ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${schools} 기출을 잘 아는 선생님 위주로 추천해드립니다. 빠르면 당일 매칭도 가능합니다.</p>
+    <p><strong>Q. ${grade} ${subject} 성적이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드리니 걱정하지 않으셔도 됩니다.</p>
+    <p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력·수업 방식에 따라 다르며, 무료 상담 후 학부모님 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.</p>
+    <p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. 학원 진도에 맞춰 선행·복습을 병행하는 커리큘럼으로 운영합니다.</p>
+    <p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>학생마다 다르지만 보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 단기 집중 과외(시험 대비 4~8주)도 운영합니다.</p>
 
     <h2>${dong} 다른 과목도 함께</h2>
     <div class="subj-grid">${otherSubjects}</div>
@@ -2112,7 +1644,7 @@ function makeSchoolSidoPage(sidoEn) {
   if (!sidoSchools) return null;
 
   const gugunLinks = Object.keys(sidoSchools).map(gugun => {
-    const gr = gugunEn(sidoEn, gugun) || toRoman(gugun);
+    const gr = DISTRICT_EN[gugun] || toRoman(gugun);
     const schoolCnt = Object.values(sidoSchools[gugun]).reduce((a,v)=>a+(Array.isArray(v)?v.length:0),0);
     return `<a class="subj-link" href="/school/${sidoEn}/${gr}"><span>🏫 ${gugun} (${schoolCnt}개)</span><span>→</span></a>`;
   }).join('');
@@ -2148,7 +1680,7 @@ function makeSchoolGugunPage(sidoEn, gugunRoman) {
   
   let gugunKr = null;
   for (const [k] of Object.entries(DISTRICT_EN)) {
-    if (gugunEn(sidoEn, k) === gugunRoman || (DISTRICT_EN[k]||toRoman(k)) === gugunRoman) { gugunKr = k; break; }
+    if ((DISTRICT_EN[k]||toRoman(k)) === gugunRoman) { gugunKr = k; break; }
   }
   if (!gugunKr) {
     for (const g of Object.keys(sidoSchools)) {
@@ -2234,47 +1766,8 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
   ).join('');
 
   const canonical = `/school/${sidoEn}/${gugunRoman}/${schoolRoman}`;
-
-  // 시드 기반 다양화
-  const _seed = seedHash(name + gugunRoman + gradeCode);
-  const _descPatterns = [
-    `${name} 과외 전문. ${gradeLabel} 수학·영어·국어·과학 1:1 방문 과외. ${name} 기출 분석. 무료 상담 010-6834-8080`,
-    `${gugunKr} ${name} ${gradeLabel} 1:1 과외 매칭. ${name} 내신 기출 완벽 분석. 검증된 선생님 매칭. 010-6834-8080`,
-    `${name} 학생 맞춤 과외. ${gradeLabel} 전 과목 1:1 방문 수업. 학교 시험 대비 전문. 무료 상담 010-6834-8080`,
-    `${gugunKr} ${name} 내신 1:1 과외. 시험 4주 전 집중 대비. 학력·경력 검증된 선생님. 010-6834-8080`,
-    `${sidoKr} ${gugunKr} ${name} ${gradeLabel} 과외. 시험 출제 경향 분석 + 취약점 보완. 무료 매칭 010-6834-8080`,
-    `${name} ${gradeLabel} 1:1 방문 과외 매칭 서비스. ${name} 기출 분석 기반 맞춤 수업. 상담 010-6834-8080`,
-  ];
-  // FAQ 뱅크 (12개 풀에서 시드별로 4개 선택)
-  const _faqBank = [
-    [`${name} 과외 선생님 찾는 데 얼마나 걸리나요?`, `상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천해드리며, 빠르면 당일 매칭도 가능합니다.`],
-    [`성적이 낮아도 과외를 받을 수 있나요?`, `기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.`],
-    [`수업료는 어떻게 되나요?`, `선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.`],
-    [`학원과 과외를 병행해도 되나요?`, `학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. ${name} 진도에 맞춰 유연하게 운영합니다.`],
-    [`몇 개월 정도 수업하면 효과가 나타나나요?`, `보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 시험 대비 단기 집중 과외(4~8주)도 운영합니다.`],
-    [`${name} 출신 선생님으로 매칭이 가능한가요?`, `${name} 또는 인근 학교 출신 선생님을 우선 추천드립니다. 학교 분위기와 출제 경향을 잘 아는 선생님이 매칭의 우선순위입니다.`],
-    [`선생님이 마음에 안 들면 어떻게 하나요?`, `학생과 잘 맞지 않는 경우 언제든 부담 없이 교체 요청 가능합니다. 추가 비용 없이 다른 선생님으로 다시 매칭해드립니다.`],
-    [`수업은 어디에서 진행하나요?`, `학생 자택 방문 수업이 기본이며, 카페나 스터디룸 등 학생이 원하는 장소에서도 가능합니다. 온라인 화상 수업도 병행 가능합니다.`],
-    [`시험 직전 집중 과외도 가능한가요?`, `${name} 중간·기말고사 4주 전부터 진행하는 시험 집중 과외 프로그램을 별도로 운영합니다. 단기간 내신 점수 향상이 목표입니다.`],
-    [`수업 횟수는 어떻게 결정하나요?`, `학생 수준과 목표에 따라 주 1~3회로 조정합니다. 시험 기간에는 추가 보충 수업도 가능합니다.`],
-    [`형제·자매 동시 수업 할인이 있나요?`, `형제·자매가 함께 수업하시는 경우 별도 할인 혜택이 있습니다. 상담 시 문의해주세요.`],
-    [`수능 대비도 함께 진행되나요?`, `${name} 고등 과외의 경우 내신과 수능을 동시에 대비하는 이중 트랙 방식으로 진행합니다. 학년에 맞춰 비중을 조정합니다.`],
-  ];
-  const _selectedFaqs = seedPickN(_seed, _faqBank, 4);
-  const _faqHtml = _selectedFaqs.map(([q, a]) => `<p><strong>Q. ${q}</strong><br>${a}</p>`).join('');
-
-  // 도입부 패턴 다양화 (5개)
-  const _introPatterns = [
-    `${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 학교별 시험 출제 경향이 뚜렷해 내신 전문 과외의 효과가 큽니다.`,
-    `${gugunKr}에 위치한 ${name}은 ${sidoKr} 지역의 ${gradeLabel}학교로, 1:1 맞춤 과외 수요가 꾸준히 높은 학교입니다.`,
-    `${sidoKr} ${gugunKr} ${name}은 ${gradeLabel} 단계 핵심 학습기에 있는 학생들이 다니는 학교로, 기출 분석 기반 과외가 큰 효과를 발휘합니다.`,
-    `${name}은 ${sidoKr} ${gugunKr}의 대표적인 ${gradeLabel}학교 중 하나로, 학교별 내신 특성에 맞춘 1:1 과외가 효과적입니다.`,
-    `${gugunKr}에 자리한 ${name}은 학교 단위 시험 분석이 중요한 ${gradeLabel}학교입니다. 출제 경향을 아는 선생님과의 1:1 수업이 효과적입니다.`,
-  ];
-  const _introText = _introPatterns[_seed % _introPatterns.length];
-
   const title = `${name} 과외 | ${gugunKr} ${name} 맞춤 1:1 과외 - 올케어스터디`;
-  const desc = _descPatterns[_seed % _descPatterns.length];
+  const desc = `${name} 과외 전문. ${gradeLabel} 수학·영어·국어·과학 1:1 방문 과외. ${name} 기출 분석. 무료 상담 010-6834-8080`;
   const bc = [{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:`${name} 과외`,url:canonical}];
 
   const body = `<div class="wrap">
@@ -2295,7 +1788,7 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
   </div>
   <div class="art-body">
     <h2>${name} 과외 안내</h2>
-    <p>${_introText}</p>
+    <p>${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 학교별 시험 출제 경향이 뚜렷해 내신 전문 과외의 효과가 큽니다.</p>
     <p>${regionDesc}</p>
     <p>올케어스터디는 <strong>${name}</strong> 재학생을 위한 수학·영어·국어·과학·사회·코딩·논술 전 과목 1:1 방문 과외를 연결합니다. ${name} 시험 출제 경향을 완벽히 파악한 검증된 선생님을 빠르게 매칭해드립니다.</p>
     <h2>${name} 과외 특징</h2>
@@ -2309,10 +1802,20 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
     <p><strong>수업 3단계</strong>: 개념 정리 → ${name} 기출 유형 풀이 → 오답 분석 및 취약점 보완. 매 수업마다 전 시간 내용을 복습하고 새 내용을 학습하는 방식으로 기억 정착률을 높입니다.</p>
     <h2>${name} ${gradeLabel} 커리큘럼</h2>
     <p>${gradeCode==='E' ? `${name} 초등 커리큘럼은 교과서 기반 기초 완성부터 수행평가 대비까지 체계적으로 진행합니다. 각 단원 완전학습 후 다음 단원으로 넘어가는 방식으로 누적 학습 효과를 높입니다.` : gradeCode==='M' ? `${name} 중등 커리큘럼은 기초 개념 완성 → 기출 유형 분석 → 실전 문제 풀이 → 오답 보완 4단계로 진행합니다. 중간·기말고사 4주 전부터 시험 집중 모드로 전환합니다.` : `${name} 고등 커리큘럼은 내신 기출 분석 → 취약 단원 집중 보완 → 수능 연계 학습 순으로 진행합니다. 내신 1등급과 수능 고득점을 동시에 목표로 합니다.`}</p>
+    <h2>자주 묻는 질문</h2>
+    <p><strong>Q. ${name} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천해드리며, 빠르면 당일 매칭도 가능합니다.</p>
+    <p><strong>Q. 성적이 낮아도 과외를 받을 수 있나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.</p>
+    <p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.</p>
+    <p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. ${name} 진도에 맞춰 유연하게 운영합니다.</p>
+    <p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 시험 대비 단기 집중 과외(4~8주)도 운영합니다.</p>
     <h2>${name} 학년별 학습 전략</h2>
     <p>${gradeCode==='E' ? `초등 시기는 모든 학습의 기초가 완성되는 중요한 시기입니다. ${name} 재학생들의 수학·영어·국어 기초 개념을 탄탄히 다지고 중학교 진학을 준비합니다. 단순 암기가 아닌 원리 이해 중심 학습으로 자기주도 학습 능력을 키워드립니다.` : gradeCode==='M' ? `중학교는 초등과 고등의 연결 고리입니다. ${name} 내신 성적이 고등학교 진학에 직접 영향을 미치므로 지금부터 체계적인 관리가 필요합니다. 내신 집중 관리와 함께 고등 과정 선행도 병행합니다.` : `고등학교는 내신 등급이 대입에 결정적인 역할을 합니다. ${name} 내신 1등급을 목표로 집중 관리하며, 수능 대비를 동시에 진행합니다. 시험 4주 전부터 집중 대비 모드로 전환합니다.`}</p>
     <h2>자주 묻는 질문</h2>
-    ${_faqHtml}
+    <p><strong>Q. ${name} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천해드리며, 빠르면 당일 매칭도 가능합니다.</p>
+    <p><strong>Q. 성적이 낮아도 과외를 받을 수 있나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.</p>
+    <p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다. 첫 체험 수업은 무료입니다.</p>
+    <p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다. ${name} 진도에 맞춰 유연하게 운영합니다.</p>
+    <p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 시험 대비 단기 집중 과외(4~8주)도 운영합니다.</p>
     <h2>${name} 과외 선생님 찾는 방법</h2>
     <p>올케어스터디에서 ${name} 과외 선생님을 찾는 과정은 간단합니다. 무료 상담 신청 → 코디네이터 연락 → 선생님 매칭 → 체험 수업 → 정규 수업 시작의 5단계로 진행됩니다.</p>
     <p>상담 시 ${name} 학생의 현재 성적, 희망 과목, 수업 횟수, 선생님 성별 선호 등을 알려주시면 더욱 정확한 매칭이 가능합니다. ${gugunKr} 지역 ${name} 내신을 잘 아는 선생님 위주로 추천해드립니다.</p>
@@ -2378,44 +1881,8 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
   const keywordTags=keywords.map(k=>`<span class="keyword-tag">${k}</span>`).join('');
 
   const canonical=`/school/${sidoEn}/${gugunRoman}/${schoolRoman}/${subjectEn}`;
-
-  // 시드 기반 다양화
-  const _seed = seedHash(name + subjectEn + gradeCode);
-  const _descPatterns = [
-    `${name} ${subject}과외 전문. ${name} 기출 분석. ${gradeLabel} 1:1 방문 과외. 무료 상담 010-6834-8080`,
-    `${gugunKr} ${name} ${gradeLabel} ${subject} 1:1 과외 매칭. ${name} 내신 ${subject} 시험 출제 경향 완벽 분석. 010-6834-8080`,
-    `${name} 학생 맞춤 ${subject}과외. ${gradeLabel} 1:1 방문 수업. 학교 시험 대비 + 취약점 보완. 무료 상담 010-6834-8080`,
-    `${gugunKr} ${name} ${subject} 내신 1:1 과외. 시험 4주 전 집중 대비. 검증된 ${subject} 선생님 매칭. 010-6834-8080`,
-    `${sidoKr} ${gugunKr} ${name} ${gradeLabel} ${subject}과외. 1:1 맞춤 ${subject} 수업. 무료 매칭 010-6834-8080`,
-  ];
-  // FAQ 뱅크 (10개 풀에서 시드별로 4개)
-  const _faqBank = [
-    [`${name} ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?`, `상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천합니다. 빠르면 당일 매칭도 가능합니다.`],
-    [`${gradeLabel} ${subject} 성적이 낮아도 괜찮나요?`, `기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.`],
-    [`수업료는 어떻게 되나요?`, `선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다.`],
-    [`학원과 과외를 병행해도 되나요?`, `학원에서 부족한 ${subject} 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다.`],
-    [`몇 개월 정도 수업하면 효과가 나타나나요?`, `보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다.`],
-    [`${name} ${subject} 출제 경향을 잘 아는 선생님으로 매칭해주시나요?`, `${name} ${subject} 시험 기출과 출제 경향을 분석해본 선생님 위주로 우선 매칭합니다. ${name} 출신 또는 인근 학교 수업 경험이 있는 선생님이 우선순위입니다.`],
-    [`체험 수업이 가능한가요?`, `정규 수업 시작 전 첫 체험 수업이 가능합니다. 학생과 선생님이 잘 맞는지 확인 후 정규 수업을 결정하실 수 있습니다.`],
-    [`${subject} 시험 직전 단기 과외도 운영하나요?`, `${name} 시험 4주 전부터 진행하는 ${subject} 시험 집중 과외 프로그램을 별도로 운영합니다. 단기간 ${subject} 점수 향상이 목표입니다.`],
-    [`온라인 ${subject} 과외도 가능한가요?`, `방문 수업이 기본이지만 학생 일정이나 거리 문제로 온라인 화상 ${subject} 수업도 가능합니다. 동일한 1:1 맞춤 커리큘럼으로 진행합니다.`],
-    [`주 몇 회 ${subject} 수업이 적당한가요?`, `${gradeLabel} 단계 ${subject}는 보통 주 2회가 표준이며, 시험 기간이나 취약 단원 보완이 필요한 경우 주 3회로 늘릴 수 있습니다.`],
-  ];
-  const _selectedFaqs = seedPickN(_seed, _faqBank, 4);
-  const _faqHtml = _selectedFaqs.map(([q, a]) => `<p><strong>Q. ${q}</strong><br>${a}</p>`).join('');
-
-  // 도입부 패턴 다양화 (5개)
-  const _introPatterns = [
-    `${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 올케어스터디는 ${name} 재학생을 위한 ${gradeLabel} ${subject} 전문 1:1 방문 과외를 연결합니다.`,
-    `${gugunKr}에 위치한 ${name}의 ${gradeLabel} ${subject}과외는 학교별 시험 출제 경향에 맞춘 1:1 맞춤 수업으로 진행됩니다.`,
-    `${sidoKr} ${gugunKr} ${name} 재학생을 위한 ${subject}과외 매칭 서비스입니다. ${gradeLabel} ${subject} 1:1 방문 수업으로 내신 성적을 관리합니다.`,
-    `${name} 학생들의 ${subject} 내신 관리를 위한 1:1 과외입니다. ${gugunKr} 지역 ${name} 학교 출제 경향을 잘 아는 선생님이 직접 방문하여 수업합니다.`,
-    `${name}은 ${sidoKr} ${gugunKr}의 ${gradeLabel}학교로, 학교별 ${subject} 시험 특성에 맞춘 1:1 과외가 효과적인 학교입니다.`,
-  ];
-  const _introText = _introPatterns[_seed % _introPatterns.length];
-
   const title=`${name} ${subject}과외 | ${gugunKr} ${name} ${gradeLabel} ${subject} 맞춤 1:1 과외 - 올케어스터디`;
-  const desc=_descPatterns[_seed % _descPatterns.length];
+  const desc=`${name} ${subject}과외 전문. ${name} 기출 분석. ${gradeLabel} 1:1 방문 과외. 무료 상담 010-6834-8080`;
   const bc=[{name:'홈',url:'/'},{name:'학교별 과외',url:'/school'},{name:`${name} 과외`,url:`/school/${sidoEn}/${gugunRoman}/${schoolRoman}`},{name:`${subject}과외`,url:canonical}];
 
   const body=`<div class="wrap">
@@ -2436,7 +1903,7 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
   </div>
   <div class="art-body">
     <h2>${name} ${subject}과외 안내</h2>
-    <p>${_introText}</p>
+    <p>${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 올케어스터디는 ${name} 재학생을 위한 ${gradeLabel} ${subject} 전문 1:1 방문 과외를 연결합니다.</p>
     <p>${name} ${subject} 시험 출제 경향을 완벽히 파악한 검증된 선생님을 빠르게 매칭해드립니다. ${name} 내신 성적 향상을 최우선 목표로 맞춤 커리큘럼을 설계합니다.</p>
     <h2>${name} ${subject}과외 선생님 특징</h2>
     <p><strong>① ${name} 기출 완벽 분석</strong> — ${name} ${subject} 시험 출제 경향·유형·빈도를 철저히 분석해 내신 최적화 수업을 진행합니다.</p>
@@ -2452,7 +1919,11 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
     <p>${curriculum}</p>
     <p>학생의 현재 수준 진단 후 개별 맞춤 설계합니다. 시험 4주 전부터 ${name} 기출 집중 풀이 모드로 전환하고, 오답 패턴을 분석해 실수를 최소화합니다.</p>
     <h2>자주 묻는 질문</h2>
-    ${_faqHtml}
+    <p><strong>Q. ${name} ${subject} 과외 선생님 찾는 데 얼마나 걸리나요?</strong><br>상담 신청 후 24시간 이내 코디네이터가 연락드립니다. ${name} 기출을 잘 아는 선생님 위주로 추천합니다. 빠르면 당일 매칭도 가능합니다.</p>
+    <p><strong>Q. ${gradeLabel} ${subject} 성적이 낮아도 괜찮나요?</strong><br>기초부터 차근차근 다져야 할 학생일수록 1:1 과외가 효과적입니다. 수준에 맞는 선생님을 배정해드립니다.</p>
+    <p><strong>Q. 수업료는 어떻게 되나요?</strong><br>선생님 경력·학력에 따라 다르며, 무료 상담 후 예산에 맞는 선생님을 투명하게 안내해드립니다.</p>
+    <p><strong>Q. 학원과 과외를 병행해도 되나요?</strong><br>학원에서 부족한 ${subject} 부분을 1:1로 집중 보완하는 방식으로 병행하는 학생이 많습니다.</p>
+    <p><strong>Q. 몇 개월 정도 수업하면 효과가 나타나나요?</strong><br>보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다.</p>
     <h2>${name} 다른 과목도 함께</h2>
     <div class="subj-grid">${otherSubjs}</div>
     <h2>${name} ${subject} 선생님 찾는 방법</h2>
@@ -2477,7 +1948,7 @@ function makeSidoPage(rk) {
   const r = REGIONS[rk];
   if (!r) return null;
   const distCards = Object.keys(r.areas).map(dist => {
-    const en = gugunEn(SIDO_EN[rk]||rk, dist)||dist;
+    const en = DISTRICT_EN[dist]||dist;
     return `<a href="/${SIDO_EN[rk]||rk}/${en}" style="display:inline-block;padding:10px 18px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:700;color:var(--text-dark);text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.color='#3B82F6'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dark)'">${dist}</a>`;
   }).join('');
   const title = `${r.label} 과외 | ${r.label} 지역별 맞춤 1:1 과외 - 올케어스터디`;
@@ -2562,7 +2033,7 @@ function makeAreaPage(rk, ak) {
   const dongCards = (() => {
     if (distDongData && distDongData.dongs) {
       return Object.entries(distDongData.dongs).map(([dname, dinfo]) => {
-        const en = gugunEn(SIDO_EN[rk]||rk, ak)||ak;
+        const en = DISTRICT_EN[ak]||ak;
         const url = `/${SIDO_EN[rk]||rk}/${en}/${toRoman(dname)}`;
         return `<a href="${url}" class="dong-card">
   <img class="dong-card-img" src="${dinfo.img}" alt="${dname} 과외" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
@@ -2577,7 +2048,7 @@ function makeAreaPage(rk, ak) {
     }
     return area.dongs.map(d => {
       const dongEnKey = DONG_EN[d] || d;
-      return `<a href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}/${toRoman(d)}" class="dong-card">
+      return `<a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${toRoman(d)}" class="dong-card">
   <img class="dong-card-img" src="${pickImg('general', 'dong/'+rk+'/'+ak+'/'+d)}" alt="${d} 과외" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)';this.remove()">
   <div class="dong-card-body"><div class="dong-card-tag">${ak} · ${d}</div><div class="dong-card-title">${d} 과외</div><div class="dong-card-arrow">과외 보기 →</div></div>
 </a>`;
@@ -2585,15 +2056,15 @@ function makeAreaPage(rk, ak) {
   })();
 
   const subjLinks = Object.entries(SUBJECTS).map(([s, v]) =>
-    `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}"><span>${v.emoji} ${ak} ${s}과외</span><span>→</span></a>`
+    `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}"><span>${v.emoji} ${ak} ${s}과외</span><span>→</span></a>`
   ).join('');
   const relAreas = Object.keys(region.areas).filter(a => a !== ak).slice(0, 3)
-    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, a)||a}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} 과외 | ${a} 맞춤 과외</div></a>`).join('');
+    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[a]||a}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} 과외 | ${a} 맞춤 과외</div></a>`).join('');
 
   const title = `${ak} 과외 | ${region.label} ${ak} 맞춤 1:1 과외 - 올케어스터디`;
   const desc = `${ak} 과외 전문. ${area.schools} 기출 분석. 수학·영어·국어·과학 초등·중등·고등 1:1 방문 과외. 무료 상담 010-6834-8080`;
   const body = `<div class="wrap">
-  <div class="bc"><a href="/">홈</a> › <a href="/${SIDO_EN[rk]||rk}">${region.label}</a> › <span>${ak}</span></div>
+  <div class="bc"><a href="/">홈</a> › <a href="/${rk}">${region.label}</a> › <span>${ak}</span></div>
   <div class="art-tag">${region.emoji} ${region.label} · ${ak}</div>
   <h1 class="art-title">${ak} 과외 | ${ak} 맞춤 1:1 과외 안내</h1>
   <div class="art-meta"><span>✏️ 올케어스터디 편집팀</span><span>📅 ${today()}</span></div>
@@ -2633,7 +2104,7 @@ function makeAreaPage(rk, ak) {
       const sidoEn = SIDO_EN[rk]||rk;
       const guMap = SCHOOL_MAP[sidoEn]?.[ak];
       if(!guMap) return '<p>학교 정보를 불러오는 중입니다.</p>';
-      const gugunRoman = gugunEn(sidoEn, ak)||ak;
+      const gugunRoman = DISTRICT_EN[ak]||ak;
       const GRADE_LABEL = {E:'초등',M:'중등',H:'고등'};
       let html = '';
       for(const [grade,names] of Object.entries(guMap)){
@@ -2671,9 +2142,9 @@ function makeAreaPage(rk, ak) {
   const bcArea = [
     {name:'홈',url:'/'},
     {name:region.label,url:`/${SIDO_EN[rk]||rk}`},
-    {name:ak,url:`/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}`}
+    {name:ak,url:`/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`}
   ];
-  return wrap(title, desc, `/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}`, body, bcArea);
+  return wrap(title, desc, `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`, body, bcArea);
 }
 
 
@@ -2686,13 +2157,13 @@ function makeArticlePage(rk, ak, gk, sk) {
   if (!region || !area || !grade || !subj) return null;
 
   const otherSubj = Object.entries(SUBJECTS).filter(([s]) => s !== sk).slice(0, 6)
-    .map(([s, v]) => `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`).join('');
+    .map(([s, v]) => `<a class="subj-link" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[s]||s}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`).join('');
   const relLinks = Object.keys(region.areas).filter(a => a !== ak).slice(0, 3)
-    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, a)||a}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[sk]||sk}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} ${gk} ${sk}과외</div></a>`).join('');
+    .map(a => `<a class="rel-card" href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[a]||a}/${GRADE_EN[gk]||gk}/${SUBJECT_EN[sk]||sk}"><div class="rc-tag">${region.label}</div><div class="rc-title">${a} ${gk} ${sk}과외</div></a>`).join('');
   const yearTags = grade.years.map(y => `<span class="tag">${y}</span>`).join('');
 
   const sidoEn = SIDO_EN[rk]||rk;
-  const distEn = gugunEn(sidoEn, ak)||ak;
+  const distEn = DISTRICT_EN[ak]||ak;
   const gradeEn = GRADE_EN[gk]||gk;
   const subjEn = SUBJECT_EN[sk]||sk;
 
@@ -2749,102 +2220,6 @@ function makeArticlePage(rk, ak, gk, sk) {
 
 
 
-
-
-function makeAllRegionsPage() {
-  // 모든 시도/구군/동 페이지 링크 모음 (구글봇용 site map)
-  const sections = [];
-  
-  for (const [sidoKr, reg] of Object.entries(REGIONS)) {
-    const sidoEn = SIDO_EN[sidoKr] || sidoKr;
-    const sidoLabel = reg.label || sidoKr;
-    const guList = [];
-    
-    for (const [guKr, area] of Object.entries(reg.areas || {})) {
-      const guEn = gugunEn(sidoEn, guKr) || guKr;
-      
-      // 구/시 링크
-      const guLinks = [`<a href="/${sidoEn}/${guEn}" style="color:#1D4ED8;font-weight:600">${guKr}</a>`];
-      
-      // 동 링크들
-      const dongLinks = [];
-      for (const dong of (area.dongs || [])) {
-        const dongEn = DONG_EN[dong] || toRoman(dong);
-        dongLinks.push(`<a href="/${sidoEn}/${guEn}/${dongEn}" style="color:#6B7280;font-size:13px">${dong}</a>`);
-      }
-      
-      if (dongLinks.length > 0) {
-        guList.push(`
-          <div style="padding:10px 0;border-bottom:1px solid #F3F4F6">
-            <div style="margin-bottom:6px">${guLinks.join('')}</div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px 12px;padding-left:8px">${dongLinks.join('')}</div>
-          </div>`);
-      } else {
-        guList.push(`<div style="padding:8px 0">${guLinks.join('')}</div>`);
-      }
-    }
-    
-    sections.push(`
-      <section style="margin-bottom:40px;padding:24px;background:white;border-radius:12px;border:1px solid #E5E7EB">
-        <h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:0 0 16px;padding-bottom:12px;border-bottom:2px solid #1D4ED8">📍 ${sidoLabel}</h2>
-        <div>${guList.join('')}</div>
-      </section>`);
-  }
-  
-  // 과목별 + 학년별 + 학교별 추가 섹션
-  const SUBJ_KO_MAP = {math:'수학',english:'영어',korean:'국어',science:'과학',social:'사회',coding:'코딩',essay:'논술',gsd:'검정고시'};
-  const subjectLinks = ['math','english','korean','science','social','coding','essay','gsd'].map(s => 
-    `<a href="/subject/${s}" style="color:#1D4ED8;font-weight:600">${SUBJ_KO_MAP[s]}</a>`
-  ).join('');
-  
-  const gradeLinks = [];
-  for (const g of ['elementary','middle','high']) {
-    const max = g === 'elementary' ? 6 : 3;
-    const gKo = g === 'elementary' ? '초등' : g === 'middle' ? '중등' : '고등';
-    for (let i = 1; i <= max; i++) {
-      gradeLinks.push(`<a href="/grade/${g}/${i}" style="color:#1D4ED8;font-weight:600">${gKo} ${i}학년</a>`);
-    }
-  }
-  
-  const schoolLinks = Object.keys(REGIONS).map(s => {
-    const en = SIDO_EN[s]||s;
-    return `<a href="/school/${en}" style="color:#1D4ED8;font-weight:600">${REGIONS[s].label||s} 학교</a>`;
-  }).join('');
-  
-  const body = `
-    <div style="max-width:1100px;margin:0 auto;padding:clamp(90px,15vw,160px) clamp(16px,4vw,48px) 80px">
-      <div style="margin-bottom:8px;font-size:13px;color:#9CA3AF"><a href="/" style="color:#9CA3AF;text-decoration:none">홈</a> › <span>전체 지역</span></div>
-      <h1 style="font-size:32px;font-weight:900;color:#0F2044;margin-bottom:8px">전체 지역 안내</h1>
-      <p style="font-size:15px;color:#6B7280;margin-bottom:32px">올케어스터디에서 제공하는 전국 지역별 과외·학원 페이지를 한곳에서 확인하세요.</p>
-      
-      <section style="margin-bottom:32px;padding:20px 24px;background:#F8FAFF;border-radius:12px;border:1px solid #BFDBFE">
-        <h2 style="font-size:16px;font-weight:800;color:#1D4ED8;margin:0 0 12px">📚 과목별 과외</h2>
-        <div style="display:flex;flex-wrap:wrap;gap:10px 16px">${subjectLinks}</div>
-      </section>
-      
-      <section style="margin-bottom:32px;padding:20px 24px;background:#F8FAFF;border-radius:12px;border:1px solid #BFDBFE">
-        <h2 style="font-size:16px;font-weight:800;color:#1D4ED8;margin:0 0 12px">🎓 학년별 과외</h2>
-        <div style="display:flex;flex-wrap:wrap;gap:10px 16px">${gradeLinks.join('')}</div>
-      </section>
-      
-      <section style="margin-bottom:32px;padding:20px 24px;background:#F8FAFF;border-radius:12px;border:1px solid #BFDBFE">
-        <h2 style="font-size:16px;font-weight:800;color:#1D4ED8;margin:0 0 12px">🏫 학교별 과외</h2>
-        <div style="display:flex;flex-wrap:wrap;gap:10px 16px">${schoolLinks}</div>
-      </section>
-      
-      <h2 style="font-size:24px;font-weight:900;color:#0F2044;margin:48px 0 24px">🗺 전국 지역 목록</h2>
-      ${sections.join('')}
-    </div>`;
-  
-  const bc = [{name:'홈',url:'/'},{name:'전체 지역',url:'/all-regions'}];
-  return wrap(
-    '전체 지역 안내 - 전국 시도·구·동 과외 페이지 목록 | 올케어스터디',
-    '올케어스터디 전국 지역별 과외·학원 페이지를 한곳에서. 시도·구·동 단위로 정리된 전국 지역 안내. 원하는 지역의 과외 정보를 빠르게 찾아보세요.',
-    '/all-regions',
-    body,
-    bc
-  );
-}
 
 
 function makeAcademyIntroPage() {
@@ -7825,12 +7200,8 @@ function makeCnSubPage(slug) {
   return wrap(pg.t+' | 중국어 회화 - 올케어스터디',desc,canonical,body,bc);
 }
 
-function makeAcademyPage(sidoEn) {
+function makeAcademyPage() {
   const SIDO_ORDER = ['서울','경기','인천','대전','세종','대구','광주','울산','부산','충북','충남','경북','경남','전북','강원','제주'];
-  
-  // 시도별 페이지면 title/desc/canonical을 다르게
-  const SIDO_KO_MAP = {seoul:'서울',gyeonggi:'경기',incheon:'인천',daejeon:'대전',sejong:'세종',daegu:'대구',gwangju:'광주',ulsan:'울산',busan:'부산',chungbuk:'충북',chungnam:'충남',gyeongbuk:'경북',gyeongnam:'경남',jeonbuk:'전북',jeonnam:'전남',gangwon:'강원',jeju:'제주'};
-  const sidoKo = sidoEn ? SIDO_KO_MAP[sidoEn] : null;
 
   const body = `
   <div style="max-width:1100px;margin:0 auto;padding:clamp(90px,15vw,160px) clamp(16px,4vw,48px) 80px">
@@ -7864,7 +7235,7 @@ function makeAcademyPage(sidoEn) {
         <div style="font-size:14px;color:#6B7280">빠른 시일 내에 연락드리겠습니다.</div>
       </div>
       <div id="modal-form">
-        <label class="cf-label">학생 이름 <span style="color:#EF4444">*</span></label>
+        <label class="cf-label">이름 <span style="color:#EF4444">*</span></label>
         <input id="m-name" type="text" placeholder="홍길동" class="cf-input" style="margin-bottom:16px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         <label class="cf-label">학년 / 나이 <span style="color:#EF4444">*</span></label>
         <select id="m-grade" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;background:white;font-family:inherit;color:#374151;margin-bottom:16px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -7882,7 +7253,7 @@ function makeAcademyPage(sidoEn) {
           <input id="m-addr-road" type="text" placeholder="도로명 주소 (검색 또는 직접 입력)" style="flex:1;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;font-family:inherit" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
           <button type="button" onclick="searchAddress()" style="padding:11px 14px;background:#1D4ED8;color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">🔍 검색</button>
         </div>
-        <input id="m-addr-detail" type="text" placeholder="상세 주소 (예: 101동 502호)" class="cf-input" style="margin-bottom:16px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
+        <input id="m-addr-detail" type="text" placeholder="상세 주소 (예: 101동 502호) - 필수" class="cf-input" style="margin-bottom:16px" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         <label class="cf-label">문의 내용</label>
         <textarea id="m-message" rows="4" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;outline:none;resize:vertical;margin-bottom:16px;font-family:inherit;line-height:1.6" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
         <div style="background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:12px;padding:14px 16px;margin-bottom:16px">
@@ -8045,6 +7416,7 @@ function makeAcademyPage(sidoEn) {
     if (!grade)   { showMErr('학년/나이를 선택해주세요.'); return; }
     if (!phone)   { showMErr('연락처를 입력해주세요.'); return; }
     if (!road)    { showMErr('거주 주소를 입력해주세요.'); return; }
+    if (!detail)  { showMErr('상세 주소를 입력해주세요.'); return; }
     if (!agree)   { showMErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
     fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:road+(detail?' '+detail:''),message})})
     .then(r=>r.json()).then(data=>{
@@ -8061,15 +7433,6 @@ function makeAcademyPage(sidoEn) {
   <\/script>`;
 
   const bcAcademy = [{name:'홈',url:'/'},{name:'센터찾기',url:'/academy/all'}];
-  if (sidoKo) {
-    return wrap(
-      `${sidoKo} 코칭센터 찾기 | 올케어스터디`,
-      `${sidoKo} 지역 올케어스터디 코칭센터 안내. ${sidoKo} 초·중·고 1:1 맞춤 학습코칭 센터를 한눈에 확인하세요.`,
-      `/academy/${sidoEn}`,
-      body,
-      bcAcademy
-    );
-  }
   return wrap('전국 코칭센터 찾기 | 올케어스터디', '전국 올케어스터디 코칭센터를 찾아보세요. 서울·경기·인천 등 전국 초중고 맞춤 1:1 학습코칭 센터.', '/academy/all', body, bcAcademy);
 }
 
@@ -8194,7 +7557,7 @@ function makeContactPage(type) {
 
       <!-- 이름 -->
       <div style="margin-bottom:16px">
-        <label class="u6">학생 이름 <span style="color:#EF4444">*</span></label>
+        <label class="u6">이름 <span style="color:#EF4444">*</span></label>
         <input id="m-name" type="text" placeholder="홍길동"
           class="u13"
           onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -8224,7 +7587,7 @@ function makeContactPage(type) {
 
       <!-- 주소 -->
       <div style="margin-bottom:16px">
-        <label class="u6">거주 주소 <span style="color:#EF4444">*</span></label>
+        <label class="u6">거주 주소</label>
         <div id="m-addr-row" style="display:flex;gap:8px">
           <input id="m-addr" type="text" readonly placeholder="클릭하여 주소 검색"
             style="flex:1;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s;cursor:pointer;background:white"
@@ -8233,7 +7596,7 @@ function makeContactPage(type) {
           <button onclick="searchContactAddress()"
             style="padding:11px 16px;background:#EFF6FF;border:1.5px solid #DBEAFE;border-radius:10px;font-size:13px;font-weight:700;color:#1D4ED8;cursor:pointer;white-space:nowrap;font-family:inherit">검색</button>
         </div>
-        <input id="m-addr-detail" type="text" placeholder="상세주소 (예: 101동 1001호)"
+        <input id="m-addr-detail" type="text" placeholder="상세주소 (예: 101동 1001호) - 필수"
           style="width:100%;box-sizing:border-box;margin-top:8px;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border .2s"
           onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
       </div>
@@ -8247,7 +7610,7 @@ function makeContactPage(type) {
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         </div>
         <div style="margin-bottom:16px">
-          <label class="u6">원하는 수업 과목 <span style="color:#EF4444">*</span></label>
+          <label class="u6">원하는 수업 과목</label>
           <select id="m-subject-academy"
             class="u22"
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -8262,7 +7625,7 @@ function makeContactPage(type) {
       <!-- 과외 상담 전용 -->
       <div id="tutoring-fields" style="display:${isAcademy?'none':'block'}">
         <div style="margin-bottom:16px">
-          <label class="u6">희망 과목 <span style="color:#EF4444">*</span></label>
+          <label class="u6">희망 과목</label>
           <select id="m-subject-tutoring"
             class="u10"
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -8282,11 +7645,14 @@ function makeContactPage(type) {
           onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'"></textarea>
       </div>
 
-      <!-- 개인정보 동의 (자동 동의 안내) -->
+      <!-- 개인정보 동의 -->
       <div style="background:#F9FAFB;border-radius:10px;padding:14px;margin-bottom:20px">
         <div class="u27">개인정보 수집 및 이용 동의</div>
-        <p style="font-size:12px;color:#6B7280;line-height:1.7;margin:0 0 8px">수집 항목: 이름, 연락처, 학년, 주소, 희망 과목 / 수집 목적: 상담 및 교사 매칭 / 보유 기간: 상담 완료 후 1년</p>
-        <p style="font-size:13px;color:#1D4ED8;font-weight:700;margin:0">✓ 문의 제출 시 위 내용에 동의하는 것으로 간주됩니다.</p>
+        <p style="font-size:12px;color:#6B7280;line-height:1.7;margin:0 0 10px">수집 항목: 이름, 연락처, 학년, 주소 / 수집 목적: 상담 및 교사 매칭 / 보유 기간: 상담 완료 후 1년</p>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#374151;cursor:pointer">
+          <input type="checkbox" id="m-agree" style="width:16px;height:16px;accent-color:#1D4ED8">
+          <span>개인정보 수집 및 이용에 동의합니다 <span style="color:#EF4444">*</span></span>
+        </label>
       </div>
 
       <!-- 제출 버튼 -->
@@ -8360,30 +7726,30 @@ function submitContact(){
   var name = document.getElementById('m-name').value.trim();
   var phone = document.getElementById('m-phone').value.trim();
   var grade = document.getElementById('m-grade').value;
+  var agree = document.getElementById('m-agree').checked;
   var btn = document.getElementById('submit-btn');
-
-  var type = new URLSearchParams(window.location.search).get('type') || 'tutoring';
   var addrEl = document.getElementById('m-addr');
   var addrDetailEl = document.getElementById('m-addr-detail');
-  var addrMain = addrEl ? addrEl.value.trim() : '';
-  var addrDetail = addrDetailEl ? addrDetailEl.value.trim() : '';
-  var address = addrMain + (addrDetail ? ' ' + addrDetail : '');
-  var subjectEl = type === 'academy' ? document.getElementById('m-subject-academy') : document.getElementById('m-subject-tutoring');
-  var subject = subjectEl ? subjectEl.value : '';
-  var msgEl = document.getElementById('m-msg');
-  var message = msgEl ? msgEl.value.trim() : '';
+  var roadAddr = addrEl ? addrEl.value.trim() : '';
+  var detailAddr = addrDetailEl ? addrDetailEl.value.trim() : '';
 
   if(!name){ alert('이름을 입력해주세요.'); return; }
   if(!phone){ alert('연락처를 입력해주세요.'); return; }
   if(!grade){ alert('학년을 선택해주세요.'); return; }
-  if(!addrMain){ alert('거주 주소를 입력해주세요.'); return; }
-  if(!subject){ alert(type === 'academy' ? '원하는 수업 과목을 선택해주세요.' : '희망 과목을 선택해주세요.'); return; }
+  if(!roadAddr){ alert('거주 주소를 입력해주세요.'); return; }
+  if(!detailAddr){ alert('상세 주소를 입력해주세요.'); return; }
+  if(!agree){ alert('개인정보 수집 및 이용에 동의해주세요.'); return; }
 
   btn.disabled = true;
   btn.textContent = '접수 중...';
   btn.style.opacity = '0.7';
 
-  fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address,subject,message,type})})
+  var type = new URLSearchParams(window.location.search).get('type') || 'tutoring';
+  var address = roadAddr + ' ' + detailAddr;
+  var msgEl = document.getElementById('m-msg');
+  var message = msgEl ? msgEl.value.trim() : '';
+
+  fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address,message,type})})
   .then(r=>r.json()).then(function(data){
     if(data.ok){
       var form = document.getElementById('modal-form');
@@ -8428,353 +7794,115 @@ function makeHomePage(){
 </script>
 
 <!-- HERO -->
-<section style="position:relative;margin-top:136px;background:white;overflow:hidden;border-bottom:1px solid #E5E7EB" class="h2-hero">
-
-  <div class="hslider" id="hs" style="display:flex;transition:transform .65s cubic-bezier(.4,0,.2,1)">
-
-    <!-- SLIDE 1: 좌측 세로 탭형 + 우측 큰 매거진 레이아웃 -->
-    <div style="min-width:100%;min-height:560px;display:grid;grid-template-columns:280px 1fr;align-items:stretch" class="h2-slide">
-
-      <!-- 좌측 세로 네비 -->
-      <div style="background:#0A1628;padding:48px 32px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
-        <div style="position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(59,130,246,0.25),transparent 70%);pointer-events:none"></div>
-        <div style="position:relative;z-index:1">
-          <div style="font-size:11px;color:#60A5FA;font-weight:900;letter-spacing:3px;margin-bottom:32px">01 / 03 — FEATURED</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="padding:12px 16px;background:rgba(59,130,246,0.15);border-left:3px solid #60A5FA;border-radius:0 8px 8px 0">
-              <div style="font-size:10px;color:#60A5FA;font-weight:800;letter-spacing:1px;margin-bottom:2px">01</div>
-              <div style="font-size:13px;color:white;font-weight:800">지역별 과외 매칭</div>
-            </div>
-            <div onclick="gs(1)" style="padding:12px 16px;border-left:3px solid transparent;cursor:pointer;border-radius:0 8px 8px 0;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''">
-              <div style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:800;letter-spacing:1px;margin-bottom:2px">02</div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.6);font-weight:700">학원 정보 플랫폼</div>
-            </div>
-            <div onclick="gs(2)" style="padding:12px 16px;border-left:3px solid transparent;cursor:pointer;border-radius:0 8px 8px 0;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''">
-              <div style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:800;letter-spacing:1px;margin-bottom:2px">03</div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.6);font-weight:700">AI 맞춤 진단</div>
-            </div>
+<section class="hero">
+  <div class="hslider" id="hs">
+    <div class="slide s1">
+      <div class="sin">
+        <div>
+          <div class="seb"><div class="sdot"></div> No.1 지역별 과외 플랫폼</div>
+          <p class="scap">우리 아이에게 딱 맞는 선생님을 찾아드립니다</p>
+          <h1 class="stitle">내 지역 최고의<br><span class="hl">1:1 맞춤 과외</span><br>지금 찾아보세요</h1>
+          <p class="sdesc">전국 검증된 선생님 12,400명+<br>지역별·과목별·학년별로 딱 맞는 수업 연결</p>
+          <div class="sbtns">
+            <button class="bph" onclick="document.getElementById('region-section').scrollIntoView({behavior:'smooth'})">지역별 과외 찾기 →</button>
+            <button class="bps" onclick="window.location.href='/contact?type=tutoring'">✉️ 문의하기</button>
           </div>
         </div>
-        <div style="position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px">
-          <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;margin-bottom:6px">TRUSTED BY</div>
-          <div style="font-size:20px;font-weight:900;color:white;letter-spacing:-0.5px">4,200+<span style="font-size:12px;color:#60A5FA;margin-left:6px">등록 선생님</span></div>
-        </div>
-      </div>
-
-      <!-- 우측 메인 비주얼 -->
-      <div style="position:relative;padding:64px 80px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center;background:linear-gradient(135deg,#F8FAFF 0%,#EFF6FF 100%);overflow:hidden" class="h2-right">
-        <!-- 배경 큰 숫자 -->
-        <div style="position:absolute;top:20px;right:40px;font-size:200px;font-weight:900;color:rgba(29,78,216,0.04);letter-spacing:-10px;line-height:0.8;pointer-events:none;user-select:none">01</div>
-
-        <div style="position:relative;z-index:1">
-          <div style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:#1D4ED8;letter-spacing:3px;margin-bottom:20px">
-            <span style="width:24px;height:1px;background:#1D4ED8"></span>
-            FEATURED SLIDE
-          </div>
-          <h1 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
-            <span style="display:block;font-size:0.55em;color:#1D4ED8;font-weight:800;letter-spacing:0;margin-bottom:8px">올케어스터디</span>
-            지역별<br>
-            <span style="background:linear-gradient(90deg,#1D4ED8,#60A5FA);-webkit-background-clip:text;-webkit-text-fill-color:transparent">1:1 맞춤 과외</span><br>
-            찾는 가장 빠른 길
-          </h1>
-          <p style="font-size:16px;color:#6B7280;line-height:1.8;margin:0 0 36px;max-width:440px">
-            <strong style="color:#1D4ED8">올케어스터디</strong>는 우리 아이에게 꼭 맞는 선생님을<br>
-            지역·과목·학년 3단계 필터로 즉시 매칭합니다.
-          </p>
-          <div style="display:flex;gap:0;align-items:center">
-            <button onclick="document.getElementById('region-section').scrollIntoView({behavior:'smooth'})" style="padding:18px 32px;background:#0A1628;color:white;border:none;border-radius:0;font-size:14px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:12px;letter-spacing:0.5px;transition:all .2s" onmouseover="this.style.background='#1D4ED8'" onmouseout="this.style.background='#0A1628'">
-              과외 찾기 시작 <span style="font-size:18px">→</span>
-            </button>
-            <button onclick="window.location.href='/contact?type=tutoring'" style="padding:18px 24px;background:transparent;color:#0A1628;border:none;border-bottom:1px solid #0A1628;font-size:14px;font-weight:700;cursor:pointer;margin-left:16px">
-              1:1 상담 →
-            </button>
-          </div>
-        </div>
-
-        <!-- 우측 목업: 브라우저/폰 프레임 -->
-        <div style="position:relative;z-index:1" class="h2-mock">
-          <!-- 브라우저 프레임 -->
-          <div style="background:#0A1628;border-radius:12px 12px 0 0;padding:10px 16px;display:flex;align-items:center;gap:6px">
-            <span style="width:10px;height:10px;border-radius:50%;background:#EF4444"></span>
-            <span style="width:10px;height:10px;border-radius:50%;background:#FBBF24"></span>
-            <span style="width:10px;height:10px;border-radius:50%;background:#22C55E"></span>
-            <div style="flex:1;margin-left:12px;background:rgba(255,255,255,0.1);border-radius:6px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,0.5);font-family:monospace">allcarestudy.com/seoul/gangnam</div>
-          </div>
-          <div style="background:white;border-radius:0 0 12px 12px;padding:24px;box-shadow:0 24px 60px rgba(15,32,68,0.15);border:1px solid #E5E7EB;border-top:none">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #F0F2F5">
-              <div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">📍</span><span style="font-size:13px;font-weight:900;color:#0A1628">강남구 · 수학 · 고등</span></div>
-              <span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#16A34A;font-weight:800"><span style="width:6px;height:6px;background:#22C55E;border-radius:50%"></span>LIVE</span>
+        <div class="svis">
+          <div class="vc-card">
+            <div class="vch"><div class="vci">📍</div><div><div class="vct">강남구 수학 과외</div><div class="vcs">매칭 완료 · 오늘 기준</div></div></div>
+            <div class="vcst">
+              <div class="vcsi"><div class="vcn">247</div><div class="vcl">등록 선생님</div></div>
+              <div class="vcsi"><div class="vcn">98%</div><div class="vcl">만족도</div></div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#F8FAFF;border-radius:8px">
-                <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1D4ED8,#60A5FA);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900">김</div>
-                <div style="flex:1"><div style="font-size:12px;font-weight:800;color:#0A1628">김민수 선생님 · 서울대</div><div style="font-size:10px;color:#9CA3AF">수학 · 경력 8년 · ★4.9</div></div>
-                <span style="padding:3px 8px;background:#DBEAFE;color:#1D4ED8;border-radius:4px;font-size:10px;font-weight:900">매칭</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#F8FAFF;border-radius:8px">
-                <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A78BFA);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900">이</div>
-                <div style="flex:1"><div style="font-size:12px;font-weight:800;color:#0A1628">이지훈 선생님 · 연세대</div><div style="font-size:10px;color:#9CA3AF">수학 · 경력 6년 · ★4.8</div></div>
-                <span style="padding:3px 8px;background:#DBEAFE;color:#1D4ED8;border-radius:4px;font-size:10px;font-weight:900">매칭</span>
-              </div>
-            </div>
-          </div>
-          <!-- 플로팅 카드 -->
-          <div style="position:absolute;bottom:-24px;right:-24px;background:white;border:1px solid #E5E7EB;border-radius:12px;padding:14px 18px;box-shadow:0 12px 32px rgba(15,32,68,0.12);display:flex;align-items:center;gap:10px" class="h2-floating">
-            <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#22C55E,#4ADE80);display:flex;align-items:center;justify-content:center;color:white;font-size:18px">✓</div>
-            <div>
-              <div style="font-size:10px;color:#6B7280;font-weight:700">오늘 매칭</div>
-              <div style="font-size:18px;font-weight:900;color:#0A1628;letter-spacing:-0.5px">847<span style="font-size:11px;color:#1D4ED8;margin-left:2px">건</span></div>
+            <div class="vcb">
+              <div class="vcbl"><span>이번 달 매칭률</span><span style="color:var(--sky);font-weight:700">94%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:94%"></div></div>
+              <div class="vcbl"><span>학부모 재등록률</span><span style="color:var(--sky);font-weight:700">87%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:87%"></div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 2: 검증된 학원 정보 -->
-    <div style="min-width:100%;min-height:560px;display:grid;grid-template-columns:280px 1fr;align-items:stretch" class="h2-slide">
-      <div style="background:#0A1628;padding:48px 32px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
-        <div style="position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(52,211,153,0.2),transparent 70%);pointer-events:none"></div>
-        <div style="position:relative;z-index:1">
-          <div style="font-size:11px;color:#34D399;font-weight:900;letter-spacing:3px;margin-bottom:32px">02 / 03 — ACADEMY</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div onclick="gs(0)" style="padding:12px 16px;border-left:3px solid transparent;cursor:pointer;border-radius:0 8px 8px 0;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''">
-              <div style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:800;letter-spacing:1px;margin-bottom:2px">01</div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.6);font-weight:700">지역별 과외 매칭</div>
-            </div>
-            <div style="padding:12px 16px;background:rgba(52,211,153,0.12);border-left:3px solid #34D399;border-radius:0 8px 8px 0">
-              <div style="font-size:10px;color:#34D399;font-weight:800;letter-spacing:1px;margin-bottom:2px">02</div>
-              <div style="font-size:13px;color:white;font-weight:800">학원 정보 플랫폼</div>
-            </div>
-            <div onclick="gs(2)" style="padding:12px 16px;border-left:3px solid transparent;cursor:pointer;border-radius:0 8px 8px 0;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''">
-              <div style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:800;letter-spacing:1px;margin-bottom:2px">03</div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.6);font-weight:700">AI 맞춤 진단</div>
-            </div>
+    <div class="slide s2">
+      <div class="sin">
+        <div>
+          <div class="seb"><div class="sdot"></div> 35년 교육 노하우</div>
+          <p class="scap">검증된 학원 정보를 한눈에 확인하세요</p>
+          <h1 class="stitle">우리 동네<br><span class="hl">믿을 수 있는</span><br>학원 정보</h1>
+          <p class="sdesc">학원 비교부터 후기까지<br>올케어스터디에서 모두 확인하세요</p>
+          <div class="sbtns">
+            <a href="/academy/all" style="display:inline-block;text-decoration:none"><button class="bph">학원 찾기 →</button></a>
           </div>
         </div>
-        <div style="position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px">
-          <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;margin-bottom:6px">REGISTERED</div>
-          <div style="font-size:20px;font-weight:900;color:white;letter-spacing:-0.5px">205+<span style="font-size:12px;color:#34D399;margin-left:6px">검증 학원</span></div>
-        </div>
-      </div>
-      <div style="position:relative;padding:64px 80px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center;background:linear-gradient(135deg,#F0FDF4 0%,#DCFCE7 100%);overflow:hidden" class="h2-right">
-        <div style="position:absolute;top:20px;right:40px;font-size:200px;font-weight:900;color:rgba(21,128,61,0.05);letter-spacing:-10px;line-height:0.8;pointer-events:none;user-select:none">02</div>
-        <div style="position:relative;z-index:1">
-          <div style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:#15803D;letter-spacing:3px;margin-bottom:20px">
-            <span style="width:24px;height:1px;background:#15803D"></span>
-            FEATURED SLIDE
-          </div>
-          <h2 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
-            우리 동네<br>
-            <span style="background:linear-gradient(90deg,#15803D,#34D399);-webkit-background-clip:text;-webkit-text-fill-color:transparent">믿을 수 있는</span><br>
-            학원 정보만
-          </h2>
-          <p style="font-size:16px;color:#6B7280;line-height:1.8;margin:0 0 36px;max-width:440px">
-            학원 비교·후기·실시간 정보까지,<br>
-            올케어스터디에서 한 번에 확인하세요.
-          </p>
-          <a href="/academy/all" style="padding:18px 32px;background:#0A1628;color:white;text-decoration:none;border-radius:0;font-size:14px;font-weight:900;display:inline-flex;align-items:center;gap:12px;letter-spacing:0.5px;transition:all .2s" onmouseover="this.style.background='#15803D'" onmouseout="this.style.background='#0A1628'">
-            학원 찾기 시작 <span style="font-size:18px">→</span>
-          </a>
-        </div>
-        <div style="position:relative;z-index:1" class="h2-mock">
-          <div style="background:white;border-radius:20px;padding:24px;box-shadow:0 24px 60px rgba(15,32,68,0.15);border:1px solid #E5E7EB">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-              <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#15803D,#34D399);display:flex;align-items:center;justify-content:center;font-size:20px">🏫</div>
-              <div><div style="font-size:14px;font-weight:900;color:#0A1628">서초구 영어 학원</div><div style="font-size:11px;color:#9CA3AF">실시간 정보 업데이트 중</div></div>
+        <div class="svis">
+          <div class="vc-card">
+            <div class="vch"><div class="vci">🏫</div><div><div class="vct">서초구 영어 학원</div><div class="vcs">실시간 업데이트</div></div></div>
+            <div class="vcst">
+              <div class="vcsi"><div class="vcn">1,240</div><div class="vcl">등록 학원</div></div>
+              <div class="vcsi"><div class="vcn">4.8★</div><div class="vcl">평균 평점</div></div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-              <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:14px"><div style="font-size:10px;color:#6B7280;margin-bottom:4px;font-weight:700">등록 학원</div><div style="font-size:22px;font-weight:900;color:#0A1628;letter-spacing:-0.5px">205<span style="font-size:11px;color:#15803D;margin-left:2px">개</span></div></div>
-              <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:14px"><div style="font-size:10px;color:#6B7280;margin-bottom:4px;font-weight:700">평균 평점</div><div style="font-size:22px;font-weight:900;color:#0A1628;letter-spacing:-0.5px">4.8<span style="font-size:11px;color:#FBBF24;margin-left:2px">★</span></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;font-size:11px;color:#0A1628;font-weight:700;margin-bottom:6px"><span>정보 업데이트율</span><span style="color:#15803D;font-weight:900">96%</span></div>
-              <div style="height:6px;background:#F0F2F5;border-radius:3px;overflow:hidden"><div style="width:96%;height:100%;background:linear-gradient(90deg,#15803D,#34D399);border-radius:3px"></div></div>
+            <div class="vcb">
+              <div class="vcbl"><span>정보 업데이트율</span><span style="color:var(--sky);font-weight:700">96%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:96%"></div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 3: AI 진단 -->
-    <div style="min-width:100%;min-height:560px;display:grid;grid-template-columns:280px 1fr;align-items:stretch" class="h2-slide">
-      <div style="background:#0A1628;padding:48px 32px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
-        <div style="position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(167,139,250,0.2),transparent 70%);pointer-events:none"></div>
-        <div style="position:relative;z-index:1">
-          <div style="font-size:11px;color:#A78BFA;font-weight:900;letter-spacing:3px;margin-bottom:32px">03 / 03 — AI POWERED</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div onclick="gs(0)" style="padding:12px 16px;border-left:3px solid transparent;cursor:pointer;border-radius:0 8px 8px 0;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''">
-              <div style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:800;letter-spacing:1px;margin-bottom:2px">01</div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.6);font-weight:700">지역별 과외 매칭</div>
-            </div>
-            <div onclick="gs(1)" style="padding:12px 16px;border-left:3px solid transparent;cursor:pointer;border-radius:0 8px 8px 0;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''">
-              <div style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:800;letter-spacing:1px;margin-bottom:2px">02</div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.6);font-weight:700">학원 정보 플랫폼</div>
-            </div>
-            <div style="padding:12px 16px;background:rgba(167,139,250,0.15);border-left:3px solid #A78BFA;border-radius:0 8px 8px 0">
-              <div style="font-size:10px;color:#A78BFA;font-weight:800;letter-spacing:1px;margin-bottom:2px">03</div>
-              <div style="font-size:13px;color:white;font-weight:800">AI 맞춤 진단</div>
-            </div>
+    <div class="slide s3">
+      <div class="sin">
+        <div>
+          <div class="seb"><div class="sdot"></div> AI 맞춤 진단</div>
+          <p class="scap">6가지 맞춤 진단으로 약점을 파악하세요</p>
+          <h1 class="stitle">AI 데이터 기반<br><span class="hl">성적 향상</span><br>맞춤 전략</h1>
+          <p class="sdesc">100만 누적 데이터로<br>우리 아이의 약점을 정확히 찾아냅니다</p>
+          <div class="sbtns">
           </div>
         </div>
-        <div style="position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px">
-          <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;margin-bottom:6px">DATA-DRIVEN</div>
-          <div style="font-size:20px;font-weight:900;color:white;letter-spacing:-0.5px">100만+<span style="font-size:12px;color:#A78BFA;margin-left:6px">누적 데이터</span></div>
-        </div>
-      </div>
-      <div style="position:relative;padding:64px 80px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center;background:linear-gradient(135deg,#FAF5FF 0%,#EDE9FE 100%);overflow:hidden" class="h2-right">
-        <div style="position:absolute;top:20px;right:40px;font-size:200px;font-weight:900;color:rgba(124,58,237,0.05);letter-spacing:-10px;line-height:0.8;pointer-events:none;user-select:none">03</div>
-        <div style="position:relative;z-index:1">
-          <div style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:#7C3AED;letter-spacing:3px;margin-bottom:20px">
-            <span style="width:24px;height:1px;background:#7C3AED"></span>
-            FEATURED SLIDE
-          </div>
-          <h2 style="font-size:clamp(28px,4.2vw,56px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.2;margin:0 0 24px;word-break:keep-all">
-            AI 데이터 기반<br>
-            <span style="background:linear-gradient(90deg,#7C3AED,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent">맞춤 성적 향상</span><br>
-            전략을 제시합니다
-          </h2>
-          <p style="font-size:16px;color:#6B7280;line-height:1.8;margin:0 0 36px;max-width:440px">
-            100만 건의 학습 데이터 분석으로<br>
-            우리 아이의 약점을 정확히 찾아냅니다.
-          </p>
-        </div>
-        <div style="position:relative;z-index:1" class="h2-mock">
-          <div style="background:white;border-radius:20px;padding:24px;box-shadow:0 24px 60px rgba(15,32,68,0.15);border:1px solid #E5E7EB">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-              <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7C3AED,#A78BFA);display:flex;align-items:center;justify-content:center;font-size:20px">🎯</div>
-              <div><div style="font-size:14px;font-weight:900;color:#0A1628">AI 학습 진단 결과</div><div style="font-size:11px;color:#9CA3AF">김○○ · 중학교 2학년</div></div>
+        <div class="svis">
+          <div class="vc-card">
+            <div class="vch"><div class="vci">🎯</div><div><div class="vct">AI 학습 진단 결과</div><div class="vcs">김○○ · 중학교 2학년</div></div></div>
+            <div class="vcst">
+              <div class="vcsi"><div class="vcn">상위 8%</div><div class="vcl">수학 성취도</div></div>
+              <div class="vcsi"><div class="vcn">+23점</div><div class="vcl">3개월 향상</div></div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-              <div style="background:#FAF5FF;border:1px solid #E9D5FF;border-radius:10px;padding:14px"><div style="font-size:10px;color:#6B7280;margin-bottom:4px;font-weight:700">수학 성취도</div><div style="font-size:20px;font-weight:900;color:#0A1628;letter-spacing:-0.5px">상위 <span style="color:#7C3AED">8%</span></div></div>
-              <div style="background:#FAF5FF;border:1px solid #E9D5FF;border-radius:10px;padding:14px"><div style="font-size:10px;color:#6B7280;margin-bottom:4px;font-weight:700">3개월 향상</div><div style="font-size:20px;font-weight:900;color:#16A34A;letter-spacing:-0.5px">+23점</div></div>
+            <div class="vcb">
+              <div class="vcbl"><span>수학</span><span style="color:var(--sky);font-weight:700">92%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:92%"></div></div>
+              <div class="vcbl"><span>영어</span><span style="color:var(--sky);font-weight:700">78%</span></div>
+              <div class="vcbt"><div class="vcbf" style="width:78%"></div></div>
             </div>
-            <div style="display:flex;justify-content:space-between;font-size:11px;color:#0A1628;font-weight:700;margin-bottom:6px"><span>수학</span><span style="color:#7C3AED;font-weight:900">92%</span></div>
-            <div style="height:6px;background:#F0F2F5;border-radius:3px;overflow:hidden;margin-bottom:10px"><div style="width:92%;height:100%;background:linear-gradient(90deg,#7C3AED,#A78BFA);border-radius:3px"></div></div>
-            <div style="display:flex;justify-content:space-between;font-size:11px;color:#0A1628;font-weight:700;margin-bottom:6px"><span>영어</span><span style="color:#7C3AED;font-weight:900">78%</span></div>
-            <div style="height:6px;background:#F0F2F5;border-radius:3px;overflow:hidden"><div style="width:78%;height:100%;background:linear-gradient(90deg,#7C3AED,#A78BFA);border-radius:3px"></div></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- 하단 컨트롤 바 -->
-  <div style="position:absolute;bottom:24px;right:24px;display:flex;gap:8px;z-index:10">
-    <button onclick="gs(((window.gs.cur||0)-1+3)%3)" style="background:white;border:1px solid #E5E7EB;color:#0A1628;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.08);transition:all .2s" onmouseover="this.style.background='#0A1628';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='#0A1628'">&#8249;</button>
-    <button onclick="gsNext()" style="background:white;border:1px solid #E5E7EB;color:#0A1628;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.08);transition:all .2s" onmouseover="this.style.background='#0A1628';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='#0A1628'">&#8250;</button>
-  </div>
-
-  <!-- 숨긴 도트들 (스크립트 호환용) -->
-  <div class="hdots" style="display:none">
+  <div class="hdots">
     <button class="hdot on" onclick="gs(0)"></button>
     <button class="hdot" onclick="gs(1)"></button>
     <button class="hdot" onclick="gs(2)"></button>
   </div>
-
-  <style>
-    .h2-floating{animation:h2-float 3s ease-in-out infinite}
-    @keyframes h2-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    @media(max-width:900px){
-      .h2-hero{margin-top:72px!important}
-      .h2-slide{grid-template-columns:1fr!important;min-height:auto!important}
-      .h2-slide > div:first-child{padding:24px!important;flex-direction:row!important;justify-content:space-between!important;align-items:center!important}
-      .h2-slide > div:first-child > div:last-child{display:none!important}
-      .h2-right{padding:40px 24px!important;grid-template-columns:1fr!important;gap:32px!important}
-      .h2-mock{order:-1!important}
-    }
-  </style>
+  <button onclick="gs((cur+1)%3)" style="position:absolute;right:24px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.5)'">&#8250;</button>
 </section>
 
 <!-- STRENGTH -->
-<section style="background:white;padding:120px 0;position:relative;overflow:hidden">
-  <div style="max-width:1200px;margin:0 auto;padding:0 48px;position:relative">
-    <!-- 헤더 영역 -->
-    <div style="text-align:center;margin-bottom:72px">
-      <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:18px">
-        <span style="width:32px;height:1px;background:#1D4ED8"></span>
-        <span style="font-size:12px;font-weight:800;color:#1D4ED8;letter-spacing:4px">OUR STRENGTH</span>
-        <span style="width:32px;height:1px;background:#1D4ED8"></span>
-      </div>
-      <h2 style="font-size:clamp(28px,3.4vw,42px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.25;margin:0">
-        숫자로 말하는 <span style="color:#1D4ED8">올케어스터디의 35년</span>
-      </h2>
-      <p style="font-size:15px;color:#6B7280;margin-top:16px;line-height:1.7">대한민국 학부모가 가장 많이 선택한 학습코칭, 그 결과입니다</p>
+<section class="strength">
+  <div class="sw">
+    <div class="sh fu">
+      <div class="se">OUR STRENGTH</div>
+      <h2 class="st">35년의 교육 노하우,<br><span class="hl">올케어스터디가 다릅니다</span></h2>
     </div>
-
-    <!-- 메인 스탯 - 큰 1개 + 작은 3개 -->
-    <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:24px;margin-bottom:24px" class="str-main-grid">
-      <!-- 메인 카드: 35년 (강조) -->
-      <div class="str-main-card" style="background:linear-gradient(135deg,#0A1628 0%,#1E3A6E 100%);border-radius:24px;padding:48px;color:white;position:relative;overflow:hidden">
-        <div style="position:absolute;top:-40px;right:-40px;width:240px;height:240px;border-radius:50%;background:rgba(96,165,250,0.08)"></div>
-        <div style="position:absolute;bottom:-60px;right:40px;width:160px;height:160px;border-radius:50%;background:rgba(96,165,250,0.06)"></div>
-        <div style="position:relative;z-index:1">
-          <div style="font-size:11px;font-weight:800;letter-spacing:3px;color:#60A5FA;margin-bottom:32px">SINCE 1995 — HERITAGE</div>
-          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:28px">
-            <span style="font-size:clamp(72px,9vw,128px);font-weight:900;letter-spacing:-6px;line-height:0.9;font-variant-numeric:tabular-nums">35</span>
-            <span style="font-size:32px;font-weight:800;margin-top:16px">년</span>
-          </div>
-          <div style="font-size:22px;font-weight:900;letter-spacing:-0.5px;margin-bottom:8px">No.1 청소년 학습코칭</div>
-          <div style="font-size:14px;opacity:0.75;line-height:1.7">업계를 이끌어온 남다른 교육·코칭 노하우.<br>이론이 아닌 검증된 데이터로 설계된 학습법.</div>
-        </div>
-      </div>
-
-      <!-- 오른쪽: 작은 3개 세로 배치 -->
-      <div style="display:grid;grid-template-rows:1fr 1fr 1fr;gap:12px">
-        <div class="str-small-card" style="background:#F8FAFF;border:1.5px solid #DBEAFE;border-radius:18px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;transition:all .25s">
-          <div>
-            <div style="font-size:10px;font-weight:800;color:#1D4ED8;letter-spacing:2.5px;margin-bottom:6px">02 · TEAM</div>
-            <div style="font-size:14px;font-weight:800;color:#0A1628;letter-spacing:-0.2px">전문 학습코치</div>
-            <div style="font-size:12px;color:#9CA3AF;margin-top:2px">검증된 1:1 밀착 관리</div>
-          </div>
-          <div style="text-align:right">
-            <div style="display:flex;align-items:baseline;gap:2px">
-              <span style="font-size:36px;font-weight:900;color:#0A1628;letter-spacing:-2px;line-height:1;font-variant-numeric:tabular-nums">4,000</span>
-              <span style="font-size:14px;font-weight:800;color:#1D4ED8">명</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="str-small-card" style="background:#F8FAFF;border:1.5px solid #DBEAFE;border-radius:18px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;transition:all .25s">
-          <div>
-            <div style="font-size:10px;font-weight:800;color:#1D4ED8;letter-spacing:2.5px;margin-bottom:6px">03 · REACH</div>
-            <div style="font-size:14px;font-weight:800;color:#0A1628;letter-spacing:-0.2px">누적 체험 회원</div>
-            <div style="font-size:12px;color:#9CA3AF;margin-top:2px">월평균 3만명 진행</div>
-          </div>
-          <div style="text-align:right">
-            <div style="display:flex;align-items:baseline;gap:2px">
-              <span style="font-size:36px;font-weight:900;color:#0A1628;letter-spacing:-2px;line-height:1;font-variant-numeric:tabular-nums">100</span>
-              <span style="font-size:14px;font-weight:800;color:#1D4ED8">만명</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="str-small-card" style="background:#F8FAFF;border:1.5px solid #DBEAFE;border-radius:18px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;transition:all .25s">
-          <div>
-            <div style="font-size:10px;font-weight:800;color:#1D4ED8;letter-spacing:2.5px;margin-bottom:6px">04 · RESULT</div>
-            <div style="font-size:14px;font-weight:800;color:#0A1628;letter-spacing:-0.2px">학습 만족도</div>
-            <div style="font-size:12px;color:#9CA3AF;margin-top:2px">학생·학부모 모두 만족</div>
-          </div>
-          <div style="text-align:right">
-            <div style="display:flex;align-items:baseline;gap:2px">
-              <span style="font-size:36px;font-weight:900;color:#0A1628;letter-spacing:-2px;line-height:1;font-variant-numeric:tabular-nums">96.7</span>
-              <span style="font-size:14px;font-weight:800;color:#1D4ED8">%</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="sg">
+      <div class="sc fu"><span class="se2">🏆</span><div class="sn">35년</div><div class="sl">No.1 청소년 학습코칭</div><div class="sd">남다른 교육·코칭 노하우</div></div>
+      <div class="sc fu" style="transition-delay:.1s"><span class="se2">👨‍🏫</span><div class="sn">4,000명</div><div class="sl">최정예 전문 학습코치</div><div class="sd">검증된 1:1 밀착 관리</div></div>
+      <div class="sc fu" style="transition-delay:.2s"><span class="se2">📈</span><div class="sn">100만명</div><div class="sl">누적 체험 회원수</div><div class="sd">월평균 3만명 진행</div></div>
+      <div class="sc fu" style="transition-delay:.3s"><span class="se2">⭐</span><div class="sn">96.7%</div><div class="sl">학습 만족도</div><div class="sd">학생·학부모 모두 만족</div></div>
     </div>
   </div>
-  <style>
-    .str-small-card:hover{background:white;border-color:#60A5FA;transform:translateX(4px);box-shadow:0 8px 24px rgba(29,78,216,0.12)}
-    @media(max-width:900px){
-      section[style*="background:white;padding:120px 0"]{padding:72px 0!important}
-      section[style*="background:white;padding:120px 0"] > div{padding:0 20px!important}
-      .str-main-grid{grid-template-columns:1fr!important;gap:12px!important}
-    }
-    @media(max-width:520px){
-      section[style*="background:white;padding:120px 0"] > div > div:first-child{margin-bottom:40px!important}
-    }
-  </style>
 </section>
 
 <!-- REGION SELECT -->
@@ -8843,7 +7971,7 @@ function makeHomePage(){
       <a href="/academy/jeonbuk" class="u2" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌾전북<span style="font-size:12px;color:#3B82F6;font-weight:700">3곳</span></a>
       <a href="/academy/gyeongbuk" class="u2" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🍎경북<span style="font-size:12px;color:#3B82F6;font-weight:700">5곳</span></a>
       <a href="/academy/gyeongnam" class="u2" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌊경남<span style="font-size:12px;color:#3B82F6;font-weight:700">3곳</span></a>
-      <a href="/academy/jeju" class="u2" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌺제주<span style="font-size:12px;color:#3B82F6;font-weight:700">1곳</span></a>
+      <a href="/academy/jeju" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #E5E7EB;border-radius:12px;font-size:14px;font-weight:700;color:#0F2044;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#3B82F6';this.style.background='#EFF6FF'" onmouseout="this.style.borderColor='#E5E7EB';this.style.background='#F8FAFF'">🌺제주<span style="font-size:12px;color:#3B82F6;font-weight:700">1곳</span></a>
     </div>
     </div>
     <div id="fpanel-conv" style="display:none">
@@ -8874,381 +8002,104 @@ function switchFind(tab){
 </script>
 
 <!-- REVIEWS -->
-<!-- REVIEWS -->
-<section style="background:linear-gradient(180deg,#FFFFFF 0%,#F0F5FF 100%);padding:120px 0;position:relative;overflow:hidden">
-  <!-- 배경 그리드 패턴 -->
-  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(29,78,216,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(29,78,216,0.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none"></div>
 
-  <div style="max-width:1200px;margin:0 auto;padding:0 48px;position:relative;z-index:1">
-    <!-- 헤더 -->
-    <div style="text-align:center;margin-bottom:80px">
-      <div style="display:inline-flex;align-items:center;gap:10px;padding:8px 18px;background:white;border:1.5px solid #1D4ED8;border-radius:999px;font-size:11px;font-weight:900;color:#1D4ED8;letter-spacing:3px;margin-bottom:20px;box-shadow:0 4px 12px rgba(29,78,216,0.12)">
-        <span style="display:inline-block;width:6px;height:6px;background:#EF4444;border-radius:50%;animation:rv-pulse 1.5s infinite"></span>
-        LIVE REVIEWS · 실시간 후기
-      </div>
-      <h2 style="font-size:clamp(30px,4vw,50px);font-weight:900;color:#0A1628;letter-spacing:-2px;line-height:1.1;margin:0">
-        합격은 우연이 아닙니다<br>
-        <span style="background:linear-gradient(90deg,#1D4ED8,#3B82F6,#60A5FA);-webkit-background-clip:text;-webkit-text-fill-color:transparent">데이터가 증명합니다</span>
-      </h2>
-    </div>
-
-    <!-- 대표 후기 + 성적 변화 차트 -->
-    <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:32px;margin-bottom:40px;align-items:stretch" class="rv-hero-grid">
-      <!-- 왼쪽: Big Story 카드 -->
-      <div style="background:white;border-radius:28px;padding:44px;box-shadow:0 20px 60px rgba(29,78,216,0.08);position:relative;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column">
-        <div style="position:absolute;top:24px;right:24px;padding:6px 14px;background:#FEF3C7;color:#B45309;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:1px;display:flex;align-items:center;gap:6px">
-          <span>🏆</span> BEST STORY
-        </div>
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px">
-          <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1D4ED8,#60A5FA);color:white;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900">이</div>
-          <div>
-            <div style="font-size:16px;font-weight:900;color:#0A1628">이*윤 회원</div>
-            <div style="font-size:12px;color:#6B7280">고등학교 2학년 · 6개월 수강</div>
-          </div>
-        </div>
-        <div style="font-size:24px;font-weight:900;color:#0A1628;letter-spacing:-1px;line-height:1.35;margin-bottom:16px">
-          "내신 <span style="color:#EF4444;text-decoration:line-through;opacity:0.5">4등급</span> <span style="color:#9CA3AF">→</span> <span style="color:#1D4ED8">1등급</span>,<br>6개월 만의 변화"
-        </div>
-        <div style="font-size:14px;color:#6B7280;line-height:1.8;margin-bottom:28px">
-          코치 선생님이 제 약점을 정확히 짚어주셔서 단기간에 성적이 확 올랐어요. 문제 풀이법보다 <strong style="color:#1D4ED8">"왜 틀렸는지"</strong>를 알게 해준 게 가장 큰 변화예요.
-        </div>
-        <!-- 성적 변화 바 -->
-        <div style="background:#F8FAFF;border-radius:14px;padding:18px;border:1px dashed #BFDBFE;margin-top:auto">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-            <span style="font-size:11px;font-weight:800;color:#1D4ED8;letter-spacing:1.5px">SCORE PROGRESS</span>
-            <span style="font-size:11px;font-weight:700;color:#EF4444">+3등급 ↑</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <span style="font-size:12px;font-weight:700;color:#9CA3AF;min-width:52px">시작</span>
-            <div style="flex:1;height:8px;background:#E5E7EB;border-radius:4px;overflow:hidden">
-              <div style="width:40%;height:100%;background:linear-gradient(90deg,#FCA5A5,#EF4444);border-radius:4px"></div>
-            </div>
-            <span style="font-size:12px;font-weight:800;color:#EF4444;min-width:40px;text-align:right">4등급</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
-            <span style="font-size:12px;font-weight:700;color:#1D4ED8;min-width:52px">현재</span>
-            <div style="flex:1;height:8px;background:#E5E7EB;border-radius:4px;overflow:hidden">
-              <div style="width:95%;height:100%;background:linear-gradient(90deg,#60A5FA,#1D4ED8);border-radius:4px"></div>
-            </div>
-            <span style="font-size:12px;font-weight:800;color:#1D4ED8;min-width:40px;text-align:right">1등급</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 오른쪽: 실시간 피드 스타일 리뷰 -->
-      <div style="display:flex;flex-direction:column;gap:14px;justify-content:space-between">
-        <div style="font-size:12px;font-weight:800;color:#6B7280;letter-spacing:2px;padding-left:4px">🔥 합격 소식</div>
-        <div class="rv-feed-item" style="background:white;border-radius:16px;padding:18px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(15,32,68,0.06);border-left:4px solid #1D4ED8;transition:all .25s">
-          <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1D4ED8,#60A5FA);color:white;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;flex-shrink:0">김</div>
-          <div style="flex:1;min-width:0">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:11px;font-weight:900;color:#15803D;background:#DCFCE7;padding:2px 8px;border-radius:6px">이화여대 수시합격</span></div>
-            <div style="font-size:13px;color:#374151;line-height:1.5">학생부 관리부터 면접까지 체계적으로 도와주셔서 합격!</div>
-          </div>
-        </div>
-        <div class="rv-feed-item" style="background:white;border-radius:16px;padding:18px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(15,32,68,0.06);border-left:4px solid #7C3AED;transition:all .25s">
-          <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A78BFA);color:white;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;flex-shrink:0">정</div>
-          <div style="flex:1;min-width:0">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:11px;font-weight:900;color:#7C3AED;background:#F3E8FF;padding:2px 8px;border-radius:6px">서울대 합격</span></div>
-            <div style="font-size:13px;color:#374151;line-height:1.5">수능 수학 2등급 → 만점! 취약점을 정확히 잡아주셨어요.</div>
-          </div>
-        </div>
-        <div class="rv-feed-item" style="background:white;border-radius:16px;padding:18px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(15,32,68,0.06);border-left:4px solid #B45309;transition:all .25s">
-          <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#B45309,#FBBF24);color:white;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;flex-shrink:0">전</div>
-          <div style="flex:1;min-width:0">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:11px;font-weight:900;color:#B45309;background:#FEF3C7;padding:2px 8px;border-radius:6px">경희대 합격</span></div>
-            <div style="font-size:13px;color:#374151;line-height:1.5">중2 때부터 꾸준히 관리받은 결과입니다. 추천해요!</div>
-          </div>
-        </div>
-        <div class="rv-feed-item" style="background:white;border-radius:16px;padding:18px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(15,32,68,0.06);border-left:4px solid #0F766E;transition:all .25s">
-          <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#0F766E,#34D399);color:white;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;flex-shrink:0">박</div>
-          <div style="flex:1;min-width:0">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:11px;font-weight:900;color:#0F766E;background:#CCFBF1;padding:2px 8px;border-radius:6px">고려대 합격</span></div>
-            <div style="font-size:13px;color:#374151;line-height:1.5">공부 습관이 완전히 바뀌었어요. 자신감이 생겼습니다.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 하단 통계 바 -->
-    <div style="background:#0A1628;border-radius:20px;padding:28px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;align-items:center" class="rv-stat-bar">
-      <div>
-        <div style="font-size:11px;font-weight:800;color:#60A5FA;letter-spacing:2px;margin-bottom:6px">TOTAL REVIEWS</div>
-        <div style="font-size:28px;font-weight:900;color:white;letter-spacing:-1px">12,480<span style="font-size:15px;font-weight:700;color:#60A5FA;margin-left:4px">건</span></div>
-      </div>
-      <div>
-        <div style="font-size:11px;font-weight:800;color:#60A5FA;letter-spacing:2px;margin-bottom:6px">AVG RATING</div>
-        <div style="font-size:28px;font-weight:900;color:white;letter-spacing:-1px">4.9<span style="font-size:15px;font-weight:700;color:#60A5FA;margin-left:4px">★</span></div>
-      </div>
-      <div>
-        <div style="font-size:11px;font-weight:800;color:#60A5FA;letter-spacing:2px;margin-bottom:6px">RE-ENROLL</div>
-        <div style="font-size:28px;font-weight:900;color:white;letter-spacing:-1px">96.7<span style="font-size:15px;font-weight:700;color:#60A5FA;margin-left:4px">%</span></div>
-      </div>
-      <div>
-        <div style="font-size:11px;font-weight:800;color:#60A5FA;letter-spacing:2px;margin-bottom:6px">THIS MONTH</div>
-        <div style="font-size:28px;font-weight:900;color:white;letter-spacing:-1px">+847<span style="font-size:15px;font-weight:700;color:#34D399;margin-left:4px">↑</span></div>
-      </div>
+<section class="reviews">
+  <div class="sw">
+    <div class="sh fu">
+      <div class="se">REAL REVIEWS</div>
+      <h2 class="st">직접 경험한 학부모·학생의<br><span class="hl">생생한 성적 향상 스토리</span></h2>
     </div>
   </div>
-  <style>
-    @keyframes rv-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
-    .rv-feed-item:hover{transform:translateX(6px);box-shadow:0 8px 24px rgba(29,78,216,0.15)!important}
-    @media(max-width:900px){
-      section[style*="linear-gradient(180deg,#FFFFFF 0%,#F0F5FF 100%)"]{padding:72px 0!important}
-      section[style*="linear-gradient(180deg,#FFFFFF 0%,#F0F5FF 100%)"] > div:last-of-type{padding:0 20px!important}
-      .rv-hero-grid{grid-template-columns:1fr!important}
-      .rv-stat-bar{grid-template-columns:1fr 1fr!important;gap:20px!important;padding:24px!important}
-    }
-    @media(max-width:520px){
-      .rv-stat-bar{grid-template-columns:1fr 1fr!important}
-    }
-  </style>
+  <div class="rw">
+    <div class="rt">
+      <div class="rc"><span class="rb" style="background:#1D4ED8">연세대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">6개월 만에 내신 4등급 → 1등급</div><div class="rtext">코치 선생님이 제 약점을 정확히 짚어주셔서 단기간에 성적이 확 올랐어요.</div><div class="rname">이*윤 회원 (고2)</div></div>
+      <div class="rc"><span class="rb" style="background:#15803D">이화여대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수시 학생부로 이화여대 합격!</div><div class="rtext">학생기록부 관리부터 면접 준비까지 체계적으로 도와주셔서 합격할 수 있었어요.</div><div class="rname">김*연 회원 (고3)</div></div>
+      <div class="rc"><span class="rb" style="background:#7C3AED">서울대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수능 수학 2등급 → 만점!</div><div class="rtext">올케어스터디 덕분에 제 실력이 어느 정도인지 정확히 알고 집중 공략할 수 있었습니다.</div><div class="rname">정*원 회원 (고3)</div></div>
+      <div class="rc"><span class="rb" style="background:#B45309">경희대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">중학생 때부터 시작해서 목표 달성</div><div class="rtext">중2 때부터 꾸준히 관리받았더니 고3이 되니 여유가 생기더라고요. 정말 추천합니다.</div><div class="rname">전*빈 회원 학부모</div></div>
+      <div class="rc"><span class="rb" style="background:#0F766E">고려대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">공부 습관이 완전히 바뀌었어요</div><div class="rtext">스스로 계획 세우고 실천하는 법을 배웠어요. 성적보다 공부 자신감이 생긴 게 더 큰 수확이에요.</div><div class="rname">박*준 회원 (중3)</div></div>
+      <div class="rc"><span class="rb" style="background:#BE185D">한양대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">아이가 먼저 공부하겠다고 해요</div><div class="rtext">예전엔 억지로 책상에 앉혔는데, 지금은 스스로 계획 짜고 공부합니다. 정말 감사해요.</div><div class="rname">최*아 회원 학부모</div></div>
+      <!-- 루프 복제 -->
+      <div class="rc"><span class="rb" style="background:#1D4ED8">연세대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">6개월 만에 내신 4등급 → 1등급</div><div class="rtext">코치 선생님이 제 약점을 정확히 짚어주셔서 단기간에 성적이 확 올랐어요.</div><div class="rname">이*윤 회원 (고2)</div></div>
+      <div class="rc"><span class="rb" style="background:#15803D">이화여대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수시 학생부로 이화여대 합격!</div><div class="rtext">학생기록부 관리부터 면접 준비까지 체계적으로 도와주셔서 합격할 수 있었어요.</div><div class="rname">김*연 회원 (고3)</div></div>
+      <div class="rc"><span class="rb" style="background:#7C3AED">서울대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">수능 수학 2등급 → 만점!</div><div class="rtext">올케어스터디 덕분에 제 실력이 어느 정도인지 정확히 알고 집중 공략할 수 있었습니다.</div><div class="rname">정*원 회원 (고3)</div></div>
+      <div class="rc"><span class="rb" style="background:#B45309">경희대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">중학생 때부터 시작해서 목표 달성</div><div class="rtext">중2 때부터 꾸준히 관리받았더니 고3이 되니 여유가 생기더라고요. 정말 추천합니다.</div><div class="rname">전*빈 회원 학부모</div></div>
+      <div class="rc"><span class="rb" style="background:#0F766E">고려대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">공부 습관이 완전히 바뀌었어요</div><div class="rtext">스스로 계획 세우고 실천하는 법을 배웠어요. 성적보다 공부 자신감이 생긴 게 더 큰 수확이에요.</div><div class="rname">박*준 회원 (중3)</div></div>
+      <div class="rc"><span class="rb" style="background:#BE185D">한양대 합격</span><div class="rstar">★★★★★</div><div class="rtitle">아이가 먼저 공부하겠다고 해요</div><div class="rtext">예전엔 억지로 책상에 앉혔는데, 지금은 스스로 계획 짜고 공부합니다. 정말 감사해요.</div><div class="rname">최*아 회원 학부모</div></div>
+    </div>
+  </div>
 </section>
 
 <!-- SPECIAL -->
-<section style="background:white;padding:64px 0;position:relative;overflow:hidden">
-  <!-- 배경 도트 패턴 -->
-  <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(29,78,216,0.08) 1px,transparent 1px);background-size:24px 24px;pointer-events:none"></div>
-  <!-- 중앙 글로우 -->
-  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,246,0.15) 0%,transparent 60%);pointer-events:none"></div>
-
-  <div style="max-width:1200px;margin:0 auto;padding:0 48px;position:relative;z-index:1">
-    <!-- 헤더 중앙 -->
-    <div style="text-align:center;margin-bottom:40px">
-      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:white;border:1.5px solid #BFDBFE;border-radius:999px;font-size:11px;font-weight:900;color:#1D4ED8;letter-spacing:3px;margin-bottom:18px;box-shadow:0 2px 8px rgba(29,78,216,0.08)">
-        ✦ SPECIAL POINT
-      </div>
-      <h2 style="font-size:clamp(26px,3.4vw,40px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.15;margin:0">
-        성적을 바꾸는 <span style="color:#1D4ED8">4가지 시스템</span>
-      </h2>
+<section class="special">
+  <div class="sw">
+    <div class="sh fu">
+      <div class="se">SPECIAL POINT</div>
+      <h2 class="st">우리 아이 성적,<br><span class="hl">왜 올케어스터디여야 할까요?</span></h2>
+      <p class="u5">단순한 과외 중개가 아닙니다. 학습 진단부터 목표 설계, 실행 관리까지 아이의 성장을 함께 책임집니다.</p>
     </div>
-
-    <!-- 중앙 허브 + 4방향 카드 (오비트 스타일) -->
-    <div style="position:relative;display:flex;justify-content:center;align-items:center;min-height:500px" class="sp-orbit">
-      <!-- 중앙 원 -->
-      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#1D4ED8,#3B82F6);display:flex;align-items:center;justify-content:center;flex-direction:column;box-shadow:0 0 60px rgba(59,130,246,0.35),inset 0 0 40px rgba(255,255,255,0.1);z-index:10" class="sp-hub">
-        <div style="font-size:28px;margin-bottom:4px">🎯</div>
-        <div style="font-size:13px;font-weight:900;color:white;letter-spacing:-0.3px">OUR SYSTEM</div>
-        <div style="font-size:10px;color:rgba(255,255,255,0.8);letter-spacing:1px;margin-top:2px">성적 향상 공식</div>
-      </div>
-
-      <!-- 중앙 회전 링 -->
-      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:240px;height:240px;border:1px dashed rgba(29,78,216,0.25);border-radius:50%;pointer-events:none;animation:sp-rotate 40s linear infinite"></div>
-      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:360px;height:360px;border:1px dashed rgba(29,78,216,0.15);border-radius:50%;pointer-events:none;animation:sp-rotate 60s linear infinite reverse"></div>
-
-      <!-- 4개의 카드를 +자 배치 -->
-      <!-- 상단 좌 -->
-      <div class="sp-card" style="position:absolute;top:0;left:0;width:260px;background:white;border:1.5px solid #E5E7EB;border-radius:18px;padding:20px;transition:all .3s;box-shadow:0 4px 16px rgba(15,32,68,0.06)">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);display:flex;align-items:center;justify-content:center;font-size:18px">🎯</div>
-          <div style="font-size:10px;font-weight:900;color:#1D4ED8;letter-spacing:2px">STEP 01</div>
-        </div>
-        <h4 style="font-size:16px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 6px">학교·교재 맞춤 1:1</h4>
-        <p style="font-size:12px;color:#6B7280;line-height:1.65;margin:0">전국 모든 학교 교과서·부교재 분석, 내 학교 시험 맞춤 수업</p>
-      </div>
-
-      <!-- 상단 우 -->
-      <div class="sp-card" style="position:absolute;top:0;right:0;width:260px;background:white;border:1.5px solid #E5E7EB;border-radius:18px;padding:20px;transition:all .3s;box-shadow:0 4px 16px rgba(15,32,68,0.06)">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#15803D,#34D399);display:flex;align-items:center;justify-content:center;font-size:18px">🔍</div>
-          <div style="font-size:10px;font-weight:900;color:#15803D;letter-spacing:2px">STEP 02</div>
-        </div>
-        <h4 style="font-size:16px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 6px">변형문제 완벽 대응</h4>
-        <p style="font-size:12px;color:#6B7280;line-height:1.65;margin:0">개념→심화→응용 단계별 훈련으로 어떤 유형도 돌파</p>
-      </div>
-
-      <!-- 하단 좌 -->
-      <div class="sp-card" style="position:absolute;bottom:0;left:0;width:260px;background:white;border:1.5px solid #E5E7EB;border-radius:18px;padding:20px;transition:all .3s;box-shadow:0 4px 16px rgba(15,32,68,0.06)">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7C3AED,#A78BFA);display:flex;align-items:center;justify-content:center;font-size:18px">🧠</div>
-          <div style="font-size:10px;font-weight:900;color:#7C3AED;letter-spacing:2px">STEP 03</div>
-        </div>
-        <h4 style="font-size:16px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 6px">AI 취약점 분석</h4>
-        <p style="font-size:12px;color:#6B7280;line-height:1.65;margin:0">100만 건 학습 데이터로 약점을 정밀 추적, 집중 보완</p>
-      </div>
-
-      <!-- 하단 우 -->
-      <div class="sp-card" style="position:absolute;bottom:0;right:0;width:260px;background:white;border:1.5px solid #E5E7EB;border-radius:18px;padding:20px;transition:all .3s;box-shadow:0 4px 16px rgba(15,32,68,0.06)">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#B45309,#FBBF24);display:flex;align-items:center;justify-content:center;font-size:18px">📆</div>
-          <div style="font-size:10px;font-weight:900;color:#B45309;letter-spacing:2px">STEP 04</div>
-        </div>
-        <h4 style="font-size:16px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 6px">시험 역산 플래닝</h4>
-        <p style="font-size:12px;color:#6B7280;line-height:1.65;margin:0">학사·시험 일정 기반 역산 계획, 매주 실천 점검</p>
-      </div>
-
-      <!-- 연결선 (SVG) -->
-      <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1" viewBox="0 0 1100 500" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="sp-line1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1D4ED8" stop-opacity="0.3"/><stop offset="1" stop-color="#1D4ED8" stop-opacity="0"/></linearGradient>
-        </defs>
-        <line x1="230" y1="70" x2="520" y2="230" stroke="url(#sp-line1)" stroke-width="1" stroke-dasharray="4 4"/>
-        <line x1="870" y1="70" x2="580" y2="230" stroke="url(#sp-line1)" stroke-width="1" stroke-dasharray="4 4"/>
-        <line x1="230" y1="430" x2="520" y2="270" stroke="url(#sp-line1)" stroke-width="1" stroke-dasharray="4 4"/>
-        <line x1="870" y1="430" x2="580" y2="270" stroke="url(#sp-line1)" stroke-width="1" stroke-dasharray="4 4"/>
-      </svg>
+    <div class="spg fu">
+      <div class="spc"><div class="spi ic1">🎯</div><div class="spt"><h4>학교·교재 맞춤 1:1 대비</h4><p>전국 모든 학교의 교과서·부교재를 분석해 내 학교 시험에 딱 맞는 맞춤 수업을 제공합니다.</p></div></div>
+      <div class="spc"><div class="spi ic2">🔍</div><div class="spt"><h4>변형문제 완벽 대응 전략</h4><p>기본 개념부터 심화 응용까지 단계별로 훈련해 어떤 문제 유형에도 당황하지 않는 실력을 만듭니다.</p></div></div>
+      <div class="spc"><div class="spi ic3">🧠</div><div class="spt"><h4>AI 기반 학습 취약점 분석</h4><p>100만 건의 누적 학습 데이터로 아이의 취약점을 정밀하게 찾아내고 집중 보완합니다.</p></div></div>
+      <div class="spc"><div class="spi ic4">📆</div><div class="spt"><h4>시험 일정 연동 플래닝</h4><p>학사일정·시험 일정에 맞춰 역산 계획표를 설계하고 매주 실천 여부를 함께 점검합니다.</p></div></div>
     </div>
   </div>
-
-  <style>
-    @keyframes sp-rotate{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-    .sp-card:hover{border-color:#1D4ED8!important;transform:translateY(-4px);box-shadow:0 12px 32px rgba(29,78,216,0.15)!important}
-    .sp-hub{transition:transform .3s}
-    .sp-orbit:hover .sp-hub{transform:translate(-50%,-50%) scale(1.05)}
-    @media(max-width:900px){
-      section[style*="background:white;padding:64px 0"]{padding:48px 0!important}
-      section[style*="background:white;padding:64px 0"] > div:last-of-type{padding:0 20px!important}
-      .sp-orbit{display:grid!important;grid-template-columns:1fr!important;gap:12px;min-height:auto!important;padding:16px 0}
-      .sp-orbit > .sp-card{position:static!important;width:100%!important}
-      .sp-hub{position:relative!important;left:auto!important;top:auto!important;transform:none!important;margin:0 auto 12px!important;width:120px!important;height:120px!important}
-      .sp-orbit > div[style*="border:1px dashed"]{display:none!important}
-      .sp-orbit svg{display:none!important}
-    }
-  </style>
 </section>
 
 <!-- DIAGNOSIS -->
-<section style="background:white;padding:64px 0 24px;position:relative;overflow:hidden">
-  <div style="max-width:1200px;margin:0 auto;padding:0 48px">
-    <!-- 헤더: 왼쪽 제목 + 오른쪽 설명 -->
-    <div style="display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:flex-end;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid #0A1628" class="di-head">
-      <div>
-        <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:5px 14px;background:#FEF2F2;border-radius:999px">
-          <span style="width:6px;height:6px;background:#DC2626;border-radius:50%"></span>
-          <span style="font-size:11px;font-weight:900;color:#DC2626;letter-spacing:2.5px">DIAGNOSIS · 06 PROGRAMS</span>
-        </div>
-        <h2 style="font-size:clamp(28px,3.6vw,44px);font-weight:900;color:#0A1628;letter-spacing:-1.5px;line-height:1.15;margin:0">
-          감이 아닌 <span style="color:#DC2626">데이터</span>로,<br>우리 아이를 <span style="color:#DC2626">정확히</span> 진단합니다
-        </h2>
+<section class="diagnosis">
+  <div class="sw">
+    <div class="sh fu">
+      <div class="se">DIAGNOSIS PROGRAM</div>
+      <h2 class="st">6가지 정밀 진단검사<br><span class="hl">무엇이 있는지 확인해보세요</span></h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-top:12px;line-height:1.7;word-break:keep-all">학습부터 진로, 부모 코칭까지<br>자세한 내용은 상담을 통해 안내드립니다.</p>
+    </div>
+    <div class="diag-grid fu">
+      <div class="diag-card dc1">
+        <span class="diag-badge db1">무료 체험</span>
+        <span class="diag-icon">📊</span>
+        <div class="diag-title">학습진단검사</div>
+        <div class="diag-desc">학습 성격 유형, 동기, 요인을 분석해 공부 방향을 잡아드립니다.</div>
+        <div class="diag-tags"><span class="diag-tag">학습 성격 유형</span><span class="diag-tag">학습 동기 분석</span><span class="diag-tag">학습 요인</span></div>
       </div>
-      <div style="font-size:14px;color:#6B7280;line-height:1.75;max-width:380px">
-        학습·진로·부모 코칭까지 <strong style="color:#0A1628">6가지 과학적 검사</strong>로<br>
-        아이에게 꼭 맞는 맞춤 학습 방향을 찾아드립니다.
+      <div class="diag-card dc2">
+        <span class="diag-badge db2">무료 체험</span>
+        <span class="diag-icon">✅</span>
+        <div class="diag-title">자기주도검사</div>
+        <div class="diag-desc">계획 수립·실천 능력과 자기평가 역량을 객관적으로 측정합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">자기주도성</span><span class="diag-tag">계획 수립</span><span class="diag-tag">자기평가</span></div>
+      </div>
+      <div class="diag-card dc3">
+        <span class="diag-badge db3">회원용</span>
+        <span class="diag-icon">💼</span>
+        <div class="diag-title">진로적성검사</div>
+        <div class="diag-desc">직업 성격 유형과 진로 탐색·준비 수준을 진단합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">직업 성격 유형</span><span class="diag-tag">진로 탐색</span><span class="diag-tag">전공 계열</span></div>
+      </div>
+      <div class="diag-card dc4">
+        <span class="diag-badge db4">회원용</span>
+        <span class="diag-icon">📐</span>
+        <div class="diag-title">학습유형검사</div>
+        <div class="diag-desc">학습 성향, 의지, 스타일, 행동을 파악해 최적 공부법을 안내합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">학습성향</span><span class="diag-tag">학습의지</span><span class="diag-tag">학습스타일</span></div>
+      </div>
+      <div class="diag-card dc5">
+        <span class="diag-badge db5">회원용</span>
+        <span class="diag-icon">🎓</span>
+        <div class="diag-title">입시예측검사</div>
+        <div class="diag-desc">목표 고교·대학 합격 가능성과 수시·정시 전략을 예측합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">고교 합격 진단</span><span class="diag-tag">대학 합격 예측</span><span class="diag-tag">수시·정시</span></div>
+      </div>
+      <div class="diag-card dc6">
+        <span class="diag-badge db6">회원용</span>
+        <span class="diag-icon">👨‍👩‍👧</span>
+        <div class="diag-title">부모코칭검사</div>
+        <div class="diag-desc">자녀와의 의사소통 유형과 양육 스타일을 진단해 관계를 개선합니다.</div>
+        <div class="diag-tags"><span class="diag-tag">양육 스타일</span><span class="diag-tag">의사소통 분석</span><span class="diag-tag">관계 점검</span></div>
       </div>
     </div>
 
-    <!-- 번호 리스트형 -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid #E5E7EB;border-left:1px solid #E5E7EB" class="di-list">
-      <!-- 01 -->
-      <div class="di-item" style="border-right:1px solid #E5E7EB;border-bottom:1px solid #E5E7EB;padding:32px 28px;display:flex;flex-direction:column;gap:16px;transition:all .25s;position:relative;cursor:default;background:white">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div style="font-size:56px;font-weight:900;color:#FCA5A5;letter-spacing:-3px;line-height:0.8;font-variant-numeric:tabular-nums;transition:color .25s" class="di-num">01</div>
-          <span style="padding:3px 10px;background:#DCFCE7;color:#16A34A;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:0.5px">FREE</span>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:800;color:#16A34A;letter-spacing:2px;margin-bottom:6px">LEARNING</div>
-          <h4 style="font-size:18px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 8px">학습진단검사</h4>
-          <p style="font-size:13px;color:#6B7280;line-height:1.7;margin:0">학습 성격 유형, 동기, 요인을 분석해 공부 방향을 잡아드립니다.</p>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:14px;border-top:1px dashed #E5E7EB">
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#학습성격</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#동기분석</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#학습요인</span>
-        </div>
-      </div>
-      <!-- 02 -->
-      <div class="di-item" style="border-right:1px solid #E5E7EB;border-bottom:1px solid #E5E7EB;padding:32px 28px;display:flex;flex-direction:column;gap:16px;transition:all .25s;position:relative;cursor:default;background:white">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div style="font-size:56px;font-weight:900;color:#FCA5A5;letter-spacing:-3px;line-height:0.8;font-variant-numeric:tabular-nums;transition:color .25s" class="di-num">02</div>
-          <span style="padding:3px 10px;background:#DCFCE7;color:#16A34A;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:0.5px">FREE</span>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:800;color:#DB2777;letter-spacing:2px;margin-bottom:6px">SELF-DIRECTED</div>
-          <h4 style="font-size:18px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 8px">자기주도검사</h4>
-          <p style="font-size:13px;color:#6B7280;line-height:1.7;margin:0">계획 수립·실천 능력과 자기평가 역량을 객관적으로 측정합니다.</p>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:14px;border-top:1px dashed #E5E7EB">
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#자기주도성</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#계획수립</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#자기평가</span>
-        </div>
-      </div>
-      <!-- 03 -->
-      <div class="di-item" style="border-right:1px solid #E5E7EB;border-bottom:1px solid #E5E7EB;padding:32px 28px;display:flex;flex-direction:column;gap:16px;transition:all .25s;position:relative;cursor:default;background:white">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div style="font-size:56px;font-weight:900;color:#FCA5A5;letter-spacing:-3px;line-height:0.8;font-variant-numeric:tabular-nums;transition:color .25s" class="di-num">03</div>
-          <span style="padding:3px 10px;background:#DBEAFE;color:#1D4ED8;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:0.5px">MEMBER</span>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:800;color:#1D4ED8;letter-spacing:2px;margin-bottom:6px">CAREER</div>
-          <h4 style="font-size:18px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 8px">진로적성검사</h4>
-          <p style="font-size:13px;color:#6B7280;line-height:1.7;margin:0">직업 성격 유형과 진로 탐색·준비 수준을 진단합니다.</p>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:14px;border-top:1px dashed #E5E7EB">
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#직업성격</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#진로탐색</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#전공계열</span>
-        </div>
-      </div>
-      <!-- 04 -->
-      <div class="di-item" style="border-right:1px solid #E5E7EB;border-bottom:1px solid #E5E7EB;padding:32px 28px;display:flex;flex-direction:column;gap:16px;transition:all .25s;position:relative;cursor:default;background:white">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div style="font-size:56px;font-weight:900;color:#FCA5A5;letter-spacing:-3px;line-height:0.8;font-variant-numeric:tabular-nums;transition:color .25s" class="di-num">04</div>
-          <span style="padding:3px 10px;background:#DBEAFE;color:#1D4ED8;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:0.5px">MEMBER</span>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:800;color:#D97706;letter-spacing:2px;margin-bottom:6px">STYLE</div>
-          <h4 style="font-size:18px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 8px">학습유형검사</h4>
-          <p style="font-size:13px;color:#6B7280;line-height:1.7;margin:0">학습 성향, 의지, 스타일, 행동을 파악해 최적 공부법을 안내합니다.</p>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:14px;border-top:1px dashed #E5E7EB">
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#학습성향</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#학습의지</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#학습스타일</span>
-        </div>
-      </div>
-      <!-- 05 -->
-      <div class="di-item" style="border-right:1px solid #E5E7EB;border-bottom:1px solid #E5E7EB;padding:32px 28px;display:flex;flex-direction:column;gap:16px;transition:all .25s;position:relative;cursor:default;background:white">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div style="font-size:56px;font-weight:900;color:#FCA5A5;letter-spacing:-3px;line-height:0.8;font-variant-numeric:tabular-nums;transition:color .25s" class="di-num">05</div>
-          <span style="padding:3px 10px;background:#DBEAFE;color:#1D4ED8;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:0.5px">MEMBER</span>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:800;color:#7C3AED;letter-spacing:2px;margin-bottom:6px">UNIVERSITY</div>
-          <h4 style="font-size:18px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 8px">입시예측검사</h4>
-          <p style="font-size:13px;color:#6B7280;line-height:1.7;margin:0">목표 고교·대학 합격 가능성과 수시·정시 전략을 예측합니다.</p>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:14px;border-top:1px dashed #E5E7EB">
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#고교진단</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#대학예측</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#수시정시</span>
-        </div>
-      </div>
-      <!-- 06 -->
-      <div class="di-item" style="border-right:1px solid #E5E7EB;border-bottom:1px solid #E5E7EB;padding:32px 28px;display:flex;flex-direction:column;gap:16px;transition:all .25s;position:relative;cursor:default;background:white">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div style="font-size:56px;font-weight:900;color:#FCA5A5;letter-spacing:-3px;line-height:0.8;font-variant-numeric:tabular-nums;transition:color .25s" class="di-num">06</div>
-          <span style="padding:3px 10px;background:#DBEAFE;color:#1D4ED8;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:0.5px">MEMBER</span>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:800;color:#0F766E;letter-spacing:2px;margin-bottom:6px">PARENT</div>
-          <h4 style="font-size:18px;font-weight:900;color:#0A1628;letter-spacing:-0.5px;margin:0 0 8px">부모코칭검사</h4>
-          <p style="font-size:13px;color:#6B7280;line-height:1.7;margin:0">자녀와의 의사소통 유형과 양육 스타일을 진단해 관계를 개선합니다.</p>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:14px;border-top:1px dashed #E5E7EB">
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#양육스타일</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#의사소통</span>
-          <span style="font-size:10px;color:#6B7280;background:#F8FAFF;padding:3px 8px;border-radius:4px">#관계점검</span>
-        </div>
-      </div>
-    </div>
   </div>
-
-  <style>
-    .di-item:hover{background:#FEF2F2!important}
-    .di-item:hover .di-num{color:#DC2626!important}
-    @media(max-width:900px){
-      section[style*="background:white;padding:64px 0"]:has(.di-list){padding:48px 0!important}
-      section[style*="background:white;padding:64px 0"]:has(.di-list) > div{padding:0 20px!important}
-      .di-head{grid-template-columns:1fr!important;gap:20px!important;align-items:flex-start!important}
-      .di-list{grid-template-columns:1fr 1fr!important}
-      .di-cta{flex-direction:column;align-items:stretch!important;text-align:center;gap:14px!important}
-      .di-cta a{text-align:center;justify-content:center}
-    }
-    @media(max-width:520px){
-      .di-list{grid-template-columns:1fr!important}
-      .di-item{padding:24px 20px!important}
-    }
-  </style>
 </section>
 
 <!-- FOOTER -->
@@ -9317,9 +8168,8 @@ function switchTab(menu,tab){
   const hsEl=document.getElementById('hs');
   if(hsEl){
     let cur=0;
-    window.gs=function(n){cur=n;window.gs.cur=n;hsEl.style.transform='translateX(-'+(n*100)+'%)';document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===n));};
-    window.gs.cur=0;
-    window.gsNext=function(){window.gs(((window.gs.cur||0)+1)%3);};
+    window.gs=function(n){cur=n;hsEl.style.transform='translateX(-'+(n*100)+'%)';document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===n));};
+    setInterval(()=>window.gs((cur+1)%3),4500);
   }
   try{
     const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.15});
@@ -9327,7 +8177,7 @@ function switchTab(menu,tab){
   }catch(e){}
 })();
 </script>`;
-  return wrap('올케어스터디 - 전국 1:1 맞춤 과외·학원 매칭 플랫폼','올케어스터디는 전국 초·중·고 1:1 맞춤 과외·학원 정보 플랫폼입니다. 검증된 선생님 빠르게 매칭, 수학·영어·국어·과학 방문과외. 무료상담 010-6834-8080','/',body,[]);
+  return wrap('올케어스터디 | 전국 1:1 맞춤 과외·학원 정보','전국 초·중·고 1:1 맞춤 과외 플랫폼. 검증된 선생님 빠르게 매칭. 수학·영어·국어·과학 방문과외. 무료상담 010-6834-8080','/',body,[]);
 }
 
 
@@ -9344,6 +8194,12 @@ function serveSitemap() {
     url('/academy/intro', 'monthly', '0.8'),
     url('/academy/all', 'weekly', '0.7'),
     ...CENTERS.map(c=>url('/academy/center/'+makeCenterSlug(c.n),'monthly','0.6')),
+    
+    ...CENTERS.flatMap(c=>[
+      ...(c.te||'').split(',').filter(s=>s.trim()).map(s=>url('/academy/school/e/'+makeSchoolSlug('E',s.trim()),'monthly','0.6')),
+      ...(c.tm||'').split(',').filter(s=>s.trim()).map(s=>url('/academy/school/m/'+makeSchoolSlug('M',s.trim()),'monthly','0.6')),
+      ...(c.th||'').split(',').filter(s=>s.trim()).map(s=>url('/academy/school/h/'+makeSchoolSlug('H',s.trim()),'monthly','0.6')),
+    ]),
     url('/contact', 'monthly', '0.6')];
 
   
@@ -9362,7 +8218,7 @@ function serveSitemap() {
     const sidoEn = SIDO_EN[sido]||sido;
     urls.push(url(`/${sidoEn}`, 'weekly', '0.7'));
     for (const ak of Object.keys(r.areas)) {
-      const distEn = gugunEn(sidoEn, ak)||ak;
+      const distEn = DISTRICT_EN[ak]||ak;
       urls.push(url(`/${sidoEn}/${distEn}`, 'weekly', '0.7'));
       for (const gk of Object.keys(GRADES)) {
         for (const sk of Object.keys(SUBJECTS)) {
@@ -9379,20 +8235,17 @@ function serveSitemap() {
     { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 }
 
-function serveSitemapIndex(forNaver) {
+function serveSitemapIndex() {
   const today = new Date().toISOString().slice(0,10);
   
   const LARGE_SIDO = ['seoul','gyeonggi','gyeongbuk','jeonnam','jeonbuk','gyeongnam','chungnam','gangwon'];
   const sidoList = Object.keys(REGIONS).map(s => SIDO_EN[s]||s);
-  const prefix = forNaver ? 'sitemap-naver' : 'sitemap';
   const sitemapEntries = [
-    
-    `<sitemap><loc>https://allcarestudy.com/sitemap-priority.xml</loc><lastmod>${today}</lastmod></sitemap>`,
     `<sitemap><loc>https://allcarestudy.com/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>`,
     ...sidoList.flatMap(se =>
       LARGE_SIDO.includes(se)
-        ? [1,2,3,4].map(n => `<sitemap><loc>https://allcarestudy.com/${prefix}-${se}-${n}.xml</loc><lastmod>${today}</lastmod></sitemap>`)
-        : [`<sitemap><loc>https://allcarestudy.com/${prefix}-${se}.xml</loc><lastmod>${today}</lastmod></sitemap>`]
+        ? [1,2,3,4].map(n => `<sitemap><loc>https://allcarestudy.com/sitemap-${se}-${n}.xml</loc><lastmod>${today}</lastmod></sitemap>`)
+        : [`<sitemap><loc>https://allcarestudy.com/sitemap-${se}.xml</loc><lastmod>${today}</lastmod></sitemap>`]
     )
   ];
   const sitemaps = sitemapEntries.join('');
@@ -9402,69 +8255,7 @@ function serveSitemapIndex(forNaver) {
   );
 }
 
-function servePrioritySitemap() {
-  
-  const today = new Date().toISOString().slice(0,10);
-  const u = (loc, pri) => `<url><loc>https://allcarestudy.com${loc}</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>${pri}</priority></url>`;
-  const urls = [];
-  
-  
-  urls.push(u('/', '1.0'));
-  urls.push(u('/all-regions', '0.95'));
-  urls.push(u('/academy/all', '1.0'));
-  urls.push(u('/study-guide', '0.9'));
-  urls.push(u('/conversation/english', '0.9'));
-  urls.push(u('/conversation/chinese', '0.9'));
-  urls.push(u('/conversation/japanese', '0.9'));
-  urls.push(u('/contact', '0.8'));
-  
-  
-  const priority = [
-    ['서울','강남구','대치동'],['서울','강남구','압구정동'],['서울','강남구','역삼동'],['서울','강남구','개포동'],['서울','강남구','청담동'],
-    ['서울','서초구','반포동'],['서울','서초구','잠원동'],['서울','서초구','방배동'],['서울','서초구','서초동'],
-    ['서울','송파구','잠실동'],['서울','송파구','문정동'],['서울','송파구','가락동'],
-    ['서울','양천구','목동'],['서울','노원구','중계동'],['서울','노원구','상계동'],
-    ['경기','성남시',null],['경기','수원시',null],['경기','용인시',null],['경기','고양시',null],['경기','안양시',null],
-    ['대구','수성구',null],['부산','해운대구',null],['부산','동래구',null],
-    ['인천','연수구',null],['대전','유성구',null],['광주','서구',null]
-  ];
-  
-  
-  for (const [sido, gu, dong] of priority) {
-    const sidoEn = SIDO_EN[sido]||sido;
-    const guEn = gugunEn(sidoEn, gu)||gu;
-    
-    urls.push(u(`/${sidoEn}/${guEn}`, '0.95'));
-    
-    if (dong) {
-      const dongEn = DONG_EN[dong]||toRoman(dong);
-      
-      urls.push(u(`/${sidoEn}/${guEn}/${dongEn}`, '1.0'));
-      
-      for (const subj of ['math','english','korean','science']) {
-        for (const grade of ['high','middle','elementary']) {
-          urls.push(u(`/${sidoEn}/${guEn}/${dongEn}/${grade}/${subj}`, '0.9'));
-        }
-      }
-    }
-    
-    for (const subj of ['math','english','korean','science']) {
-      for (const grade of ['high','middle','elementary']) {
-        urls.push(u(`/${sidoEn}/${guEn}/${grade}/${subj}`, '0.85'));
-      }
-    }
-  }
-  
-  return new Response(
-    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join('')}</urlset>`,
-    { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' } }
-  );
-}
-
-function serveSitemapByKey(key, opts) {
-  // opts.includeRegionFiveLevel: true이면 지역 5단계 URL(시도/구군/동/학년/과목) 포함 (Naver용)
-  // 기본값 false: Google용, 양산형 지역 5단계 URL 제외
-  const includeRegionFiveLevel = !!(opts && opts.includeRegionFiveLevel);
+function serveSitemapByKey(key) {
   
   const today = new Date().toISOString().slice(0,10);
   const u = (loc) => `<url><loc>https://allcarestudy.com${loc}</loc><lastmod>${today}</lastmod><changefreq>${loc.split('/').filter(Boolean).length<=2?'weekly':'monthly'}</changefreq><priority>${loc.split('/').filter(Boolean).length<=2?'0.8':loc.split('/').filter(Boolean).length===3?'0.8':'0.7'}</priority></url>`;
@@ -9557,16 +8348,14 @@ function serveSitemapByKey(key, opts) {
     
     if(part === 0 || part === 1) parts.push(u(`/${se}`));
     for(const [ak,area] of targetEntries){
-      const ge = gugunEn(se, ak)||ak;
+      const ge = DISTRICT_EN[ak]||ak;
       parts.push(u(`/${se}/${ge}`));
       for(const dong of (area.dongs||[])){
         const dr = toRoman(dong);
         parts.push(u(`/${se}/${ge}/${dr}`));
-        if (includeRegionFiveLevel) {
-          for(const g of GRADES3){
-            for(const sk of subjKeys){
-              parts.push(u(`/${se}/${ge}/${dr}/${g}/${SUBJECT_EN[sk]||sk}`));
-            }
+        for(const g of GRADES3){
+          for(const sk of subjKeys){
+            parts.push(u(`/${se}/${ge}/${dr}/${g}/${SUBJECT_EN[sk]||sk}`));
           }
         }
       }
@@ -9630,10 +8419,9 @@ function serveRSS() {
     ['충남','천안시'],['전북','전주시'],['경북','포항시'],['경남','창원시']];
   for (const [sido, ak] of featured) {
     for (const sk of ['수학','영어']) {
-      const _sidoEn = SIDO_EN[sido]||sido;
       items.push({
         title: `${ak} 고등 ${sk}과외 | ${REGIONS[sido].label} ${ak} 1:1 맞춤 과외`,
-        link: `https://allcarestudy.com/${_sidoEn}/${gugunEn(_sidoEn, ak)||ak}/high/${SUBJECT_EN[sk]||sk}`,
+        link: `https://allcarestudy.com/${SIDO_EN[sido]||sido}/${DISTRICT_EN[ak]||ak}/high/${SUBJECT_EN[sk]||sk}`,
         desc: `${ak} 고등 ${sk}과외 전문. ${REGIONS[sido].areas[ak].schools} 기출 분석. 검증 선생님 1:1 방문 과외. 무료 상담 010-6834-8080`,
       });
     }
@@ -9680,7 +8468,7 @@ function buildAllIndexNowUrls() {
     const se = SIDO_EN[sido]||sido;
     urls.push('/'+se);
     for (const [ak, area] of Object.entries(reg.areas||{})) {
-      const ge = gugunEn(se, ak)||ak;
+      const ge = DISTRICT_EN[ak]||ak;
       urls.push(`/${se}/${ge}`);
       for (const d of (area.dongs||[])) {
         const dr = toRoman(d);
@@ -9734,9 +8522,13 @@ export default {
 
     
     
+    const GRADE_COMPAT = {'high':'high2','middle':'mid2','elementary':'elem5','고등':'high2','중등':'mid2','초등':'elem5'};
+    
     const parts = rawParts.map((p, i) => {
       
       if (i === 2 && DONG_EN[p]) return DONG_EN[p];
+      
+      if (GRADE_COMPAT[p]) return GRADE_COMPAT[p];
       return p;
     });
     const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0' };
@@ -9826,7 +8618,7 @@ export default {
     if (path === '/api/contact' && request.method === 'POST') {
       try {
         const body = await request.json();
-        const { name, grade, phone, address, subject, message } = body;
+        const { name, grade, phone, address, message } = body;
         if (!name || !grade || !phone) {
           return new Response(JSON.stringify({ ok: false, error: '필수 항목 누락' }), { headers: corsHeaders });
         }
@@ -9836,7 +8628,6 @@ export default {
           grade: grade || '',
           phone: phone || '',
           address: address || '',
-          subject: subject || '',
           message: message || '',
           type: body.type || 'tutoring'
         });
@@ -9985,15 +8776,6 @@ export default {
     }
     if (path === '/engineer-lab') return new Response(makeEngineerLabPage(), { headers: h });
     if (path === '/sitemap.xml') return serveSitemapIndex();
-    if (path === '/sitemap-naver.xml') return serveSitemapIndex(true);
-    if (path === '/sitemap-priority.xml') return servePrioritySitemap();
-    
-    // Naver용 시도별 사이트맵 (/sitemap-naver-{sido}.xml 또는 /sitemap-naver-{sido}-{1~4}.xml)
-    const naverSidoMatch = path.match(/^\/sitemap-naver-([a-z0-9_-]+)\.xml$/);
-    if (naverSidoMatch) {
-      const result = serveSitemapByKey(naverSidoMatch[1], { includeRegionFiveLevel: true });
-      if (result) return result;
-    }
     
     const sitemapMatch = path.match(/^\/sitemap-([a-z0-9_-]+)\.xml$/);
     if (sitemapMatch) {
@@ -10047,18 +8829,7 @@ export default {
     if (path === '/conversation/japanese') return new Response(makeConversationPage('japanese'), {headers:h});
     if (path.startsWith('/conversation/japanese/')) { const slug = path.split('/')[3]; if (slug) { const p = makeJpSubPage(slug); if (p) return new Response(p, {headers:h}); } }
     if (path === '/academy/intro') return new Response(makeAcademyIntroPage(), {headers:h});
-    if (path === '/all-regions') return new Response(makeAllRegionsPage(), {headers:h});
-    if (path === '/academy' || path === '/academy/all') return new Response(makeAcademyPage(null), {headers:h});
-    if (path.startsWith('/academy/')) {
-      const seg = path.split('/')[2];
-      // 시도 영문 코드면 시도별 학원 페이지
-      const ACADEMY_SIDO_LIST = ['seoul','gyeonggi','incheon','daejeon','sejong','daegu','gwangju','ulsan','busan','chungbuk','chungnam','gyeongbuk','gyeongnam','jeonbuk','jeonnam','gangwon','jeju'];
-      if (ACADEMY_SIDO_LIST.includes(seg)) {
-        return new Response(makeAcademyPage(seg), {headers:h});
-      }
-      // 그 외는 기존 동작 (학원 이름 등 - 보호 영역)
-      return new Response(makeAcademyPage(), {headers:h});
-    }
+    if (path === '/academy' || path.startsWith('/academy/')) return new Response(makeAcademyPage(), {headers:h});
     if (path === '/favicon.ico' || path === '/favicon-32.png' || path === '/favicon-16.png') {
       
       const svgFavicon = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
@@ -10099,8 +8870,7 @@ export default {
           </svg>`;
       return new Response(svgLogo, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
     }
-if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow: /*/*/*/elementary/*\nDisallow: /*/*/*/middle/*\nDisallow: /*/*/*/high/*\n\nUser-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nUser-agent: bingbot\nAllow: /\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
-    if (path === '/BingSiteAuth.xml') return new Response('<?xml version="1.0"?>\n<users>\n\t<user>76CD7730D8D678F6A94139ED4D8A344D</user>\n</users>', { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
+if (path === '/robots.txt') return new Response('User-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 
     
     if (parts.length === 0) return new Response(makeHomePage(), { headers: h });
@@ -10118,23 +8888,8 @@ if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow
       {
         const dongName = fromRoman(parts[0], parts[1], dongEn);
         if (dongName) {
-          // canonical 검증: 시도-구군 조합이 정식이 아니면 301
-          const kr5 = toKr(parts[0], parts[1], null, gradeEn, subjectEn);
-          const canonicalSido = SIDO_EN[kr5.sido] || kr5.sido;
-          const canonicalDist = gugunEn(canonicalSido, kr5.district) || kr5.district;
-          const canonicalDong = toRoman(dongName);
-          // 시도/구군/동/학년 중 하나라도 정식 URL과 다르면 301 (세부 학년 → 메인 학년)
-          if (parts[0] !== canonicalSido || parts[1] !== canonicalDist || dongEn !== canonicalDong || rawGrade !== gradeEn) {
-            const canonical5 = `/${canonicalSido}/${canonicalDist}/${canonicalDong}/${gradeEn}/${subjectEn}`;
-            return new Response(null, { status: 301, headers: { 'Location': canonical5, 'Cache-Control': 'no-cache' } });
-          }
-          try {
-            const page = makeDongPageByName(parts[0], parts[1], dongName, subjectEn, gradeEn);
-            if (page) return new Response(page, { headers: h });
-          } catch (e) {
-            // 페이지 생성 중 예외 발생 시 5xx 대신 404 반환
-            return new Response('Not Found', { status: 404, headers: { 'Content-Type':'text/plain; charset=utf-8' } });
-          }
+          const page = makeDongPageByName(parts[0], parts[1], dongName, subjectEn, gradeEn);
+          if (page) return new Response(page, { headers: h });
         }
       }
 
@@ -10143,18 +8898,8 @@ if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow
     
     if (parts.length === 4) {
       const kr = toKr(parts[0], parts[1], null, parts[2], parts[3]);
-      // 정식 URL 구성 (canonical)
-      const canonicalPath = enUrl(kr.sido, kr.district, null, kr.grade, kr.subject);
-      // 현재 URL이 canonical과 다르면 301 redirect → 중복 페이지 방지
-      if (canonicalPath !== path) {
-        return new Response(null, { status: 301, headers: { 'Location': canonicalPath, 'Cache-Control': 'no-cache' } });
-      }
-      try {
-        const page = makeArticlePage(kr.sido, kr.district, kr.grade, kr.subject);
-        if (page) return new Response(page, { headers: h });
-      } catch (e) {
-        return new Response('Not Found', { status: 404, headers: { 'Content-Type':'text/plain; charset=utf-8' } });
-      }
+      const page = makeArticlePage(kr.sido, kr.district, kr.grade, kr.subject);
+      if (page) return new Response(page, { headers: h });
     }
 
     
@@ -10162,17 +8907,8 @@ if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow
       
       const dongName3 = fromRoman(parts[0], parts[1], parts[2]);
       if (dongName3) {
-        // 짧은 URL이면 정식 URL로 301
-        const canonicalDong3 = toRoman(dongName3);
-        if (parts[2] !== canonicalDong3) {
-          return new Response(null, { status: 301, headers: { 'Location': `/${parts[0]}/${parts[1]}/${canonicalDong3}`, 'Cache-Control': 'no-cache' } });
-        }
-        try {
-          const page = makeDongMainPage(parts[0], parts[1], dongName3);
-          if (page) return new Response(page, { headers: h });
-        } catch (e) {
-          return new Response('Not Found', { status: 404, headers: { 'Content-Type':'text/plain; charset=utf-8' } });
-        }
+        const page = makeDongMainPage(parts[0], parts[1], dongName3);
+        if (page) return new Response(page, { headers: h });
       }
       
       const kr = toKr(parts[0], parts[1], null, parts[2], null);
@@ -10184,14 +8920,14 @@ if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow
           return `<a class="subj-link" href="${url}"><span>${v.emoji} ${ak} ${gk} ${s}과외</span><span>→</span></a>`;
         }).join('');
         const body = `<div class="wrap">
-<div class="bc"><a href="/">홈</a> › <a href="/${SIDO_EN[rk]||rk}">${region.label}</a> › <a href="/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}">${ak}</a> › <span>${gk}</span></div>
+<div class="bc"><a href="/">홈</a> › <a href="/${SIDO_EN[rk]||rk}">${region.label}</a> › <a href="/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}">${ak}</a> › <span>${gk}</span></div>
 <h1 class="art-title">${ak} ${gk} 과외 | 과목 선택</h1>
 <div class="art-body"><h2>과목을 선택하세요</h2><div class="subj-grid">${subjLinks}</div></div>
 <div class="cta-box"><h3>${ak} ${gk} 맞춤 과외</h3><p>무료 상담 신청</p>
 <div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
 </div>`;
-        const canon = `/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}/${GRADE_EN[gk]||gk}`;
-        const bc3 = [{name:'홈',url:'/'},{name:region.label,url:`/${SIDO_EN[rk]||rk}`},{name:ak,url:`/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}`},{name:`${gk} 과외`,url:canon}];
+        const canon = `/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}/${GRADE_EN[gk]||gk}`;
+        const bc3 = [{name:'홈',url:'/'},{name:region.label,url:`/${SIDO_EN[rk]||rk}`},{name:ak,url:`/${SIDO_EN[rk]||rk}/${DISTRICT_EN[ak]||ak}`},{name:`${gk} 과외`,url:canon}];
         const title3 = `${ak} ${gk} 과외 | ${region.label} ${ak} ${grade.label} 과외 - 올케어스터디`;
         const desc3 = `${ak} ${gk} 과외 전문. ${area.schools} 기출 분석. 수학·영어·국어·과학 1:1 방문 과외. 무료 상담 010-6834-8080`;
         return new Response(wrap(title3, desc3, canon, body, bc3), { headers: h });
