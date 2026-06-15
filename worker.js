@@ -7610,7 +7610,7 @@ function makeContactPage(type) {
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
         </div>
         <div style="margin-bottom:16px">
-          <label class="u6">원하는 수업 과목</label>
+          <label class="u6">원하는 수업 과목 <span style="color:#EF4444">*</span></label>
           <select id="m-subject-academy"
             class="u22"
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -7625,7 +7625,7 @@ function makeContactPage(type) {
       <!-- 과외 상담 전용 -->
       <div id="tutoring-fields" style="display:${isAcademy?'none':'block'}">
         <div style="margin-bottom:16px">
-          <label class="u6">희망 과목</label>
+          <label class="u6">희망 과목 <span style="color:#EF4444">*</span></label>
           <select id="m-subject-tutoring"
             class="u10"
             onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'">
@@ -7738,13 +7738,19 @@ function submitContact(){
   if(!grade){ alert('학년을 선택해주세요.'); return; }
   if(!roadAddr){ alert('거주 주소를 입력해주세요.'); return; }
   if(!detailAddr){ alert('상세 주소를 입력해주세요.'); return; }
+  
+  // 희망 과목 필수 (학원/과외 분기)
+  var type = new URLSearchParams(window.location.search).get('type') || 'tutoring';
+  var subjEl = type === 'academy' ? document.getElementById('m-subject-academy') : document.getElementById('m-subject-tutoring');
+  var subject = subjEl ? subjEl.value : '';
+  if(!subject){ alert('희망 과목을 선택해주세요.'); return; }
+  
   if(!agree){ alert('개인정보 수집 및 이용에 동의해주세요.'); return; }
 
   btn.disabled = true;
   btn.textContent = '접수 중...';
   btn.style.opacity = '0.7';
 
-  var type = new URLSearchParams(window.location.search).get('type') || 'tutoring';
   var address = roadAddr + ' ' + detailAddr;
   var msgEl = document.getElementById('m-msg');
   var message = msgEl ? msgEl.value.trim() : '';
