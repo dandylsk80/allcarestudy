@@ -7755,7 +7755,7 @@ function submitContact(){
   var msgEl = document.getElementById('m-msg');
   var message = msgEl ? msgEl.value.trim() : '';
 
-  fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address,message,type})})
+  fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address,message,type,subject})})
   .then(r=>r.json()).then(function(data){
     if(data.ok){
       var form = document.getElementById('modal-form');
@@ -8635,7 +8635,8 @@ export default {
           phone: phone || '',
           address: address || '',
           message: message || '',
-          type: body.type || 'tutoring'
+          type: body.type || 'tutoring',
+          subject: body.subject || ''
         });
         const gasRes = await fetch(GAS_URL + '?' + params.toString(), {
           method: 'GET',
