@@ -2728,9 +2728,15 @@ function makeCenterPage(slug) {
   const expYear=5+(_h%10), satisfaction=93+(_h%6);
   const reviewCnt=120+(_h%180); // 누적 상담 건수
 
-  // 주소에서 동 추출
-  const dongMatch=addr.match(/([가-힣]+(?:동|읍|면|로|길))\b/);
-  const dong=dongMatch?dongMatch[1]:dist;
+  // 주소에서 동 추출 (덕풍동로119 → 덕풍동, 동/읍/면 우선)
+  let dong = dist;
+  const dongM = addr.match(/([가-힣]+(?:동|읍|면))(?:\d|로|길|\s|$)/);
+  if (dongM) {
+    dong = dongM[1];
+  } else {
+    const roadM = addr.match(/([가-힣]+?)(?:로|길)\s*\d/);
+    if (roadM) dong = roadM[1] + '동';
+  }
 
   // 학교 목록 파싱
   const teList=(te||'').split(',').map(x=>x.trim()).filter(Boolean);
@@ -2772,7 +2778,7 @@ function makeCenterPage(slug) {
 
   // 대표 학교 키워드
   const repSchool=tmList[0]||thList[0]||teList[0]||'';
-  const seoTitle=`${dist} ${dong} 수학·영어 학원 | ${fullName}`;
+  const seoTitle=`${dong} 영어학원·수학학원 | ${fullName}`;
 
   // 학습 내용 (SEO 본문)
   const elemSection=teList.length?`
@@ -2789,7 +2795,7 @@ function makeCenterPage(slug) {
 
   const faqHtml=[
     [`${fullName} 위치가 어디인가요?`, dir||addr],
-    [`${dong} 수학·영어 학원 첫 수업은 어떻게 진행되나요?`,'첫 수업은 무료 수준 진단으로 진행됩니다. 현재 성적과 취약 단원을 파악한 뒤 맞춤 커리큘럼을 설계합니다.'],
+    [`${dong} 영어학원·수학학원 첫 수업은 어떻게 진행되나요?`,'첫 수업은 무료 수준 진단으로 진행됩니다. 현재 성적과 취약 단원을 파악한 뒤 맞춤 커리큘럼을 설계합니다.'],
     [`${repSchool||dist} 내신 몇 등급까지 올릴 수 있나요?`,'보통 2~3개월 집중 코칭 후 1~2등급 향상 사례가 많습니다. 시험 전 단기 집중(4~8주) 코스도 운영합니다.'],
     ['학원과 병행해도 되나요?','학원에서 부족한 부분을 1:1 코칭으로 보완하는 방식이 가장 효과적입니다.'],
   ].map(([q,a])=>`<div style="background:#F9FAFB;border-radius:10px;padding:16px;margin-bottom:10px">
@@ -2798,8 +2804,8 @@ function makeCenterPage(slug) {
   </div>`).join('');
 
   const canonical=`/academy/center/${slug}`;
-  const metaTitle=seoTitle;
-  const metaDesc=`${fullName} | ${dong} ${dist} 수학·영어 학원. ${allSchools.slice(0,4).join('·')} 내신 전문. 첫 수업 무료. 무료 상담 010-6834-8080`;
+  const metaTitle=`${dong} 영어학원 수학학원 | ${fullName} - 올케어스터디`;
+  const metaDesc=`${dong} 영어학원·수학학원 ${fullName}. ${dong} 인근 ${allSchools.slice(0,4).join('·')} 내신 전문. 1:1 코칭. 첫 수업 무료. 무료 상담 010-6834-8080`;
   const bc=[{name:'홈',url:'/'},{name:'센터 찾기',url:'/academy/all'},{name:fullName,url:canonical}];
 
   const body=`<div class="wrap">
@@ -2821,21 +2827,12 @@ function makeCenterPage(slug) {
     ${[['운영 경력',expYear+'년+','#1D4ED8','#EFF6FF'],['누적 상담',reviewCnt+'건+','#10B981','#ECFDF5'],['재등록률',satisfaction+'%','#8B5CF6','#F5F3FF']].map(([l,v,c,bg])=>`<div style="background:${bg};border-radius:12px;padding:16px;text-align:center;border:1.5px solid ${c}20"><div style="font-size:20px;font-weight:900;color:${c}">${v}</div><div style="font-size:11px;color:#6B7280;margin-top:3px">${l}</div></div>`).join('')}
   </div>
 
-  <!-- ★ 학교 목록 (핵심: 히어로 바로 아래) -->
-  ${allSchools.length?`<section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:22px 26px;margin-bottom:20px">
-    <h2 style="font-size:17px;font-weight:900;color:#0F2044;margin:0 0 4px">
-      ${fullName} 담당 학교 <span style="font-size:14px;color:#6B7280;font-weight:500">(${allSchools.length}개교)</span>
-    </h2>
-    <p style="font-size:13px;color:#9CA3AF;margin:0 0 14px">학교명 클릭 → 과목별 학원 글 보기</p>
-    ${schoolRows}
-  </section>`:''}
-
   <div style="display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start">
   <div>
 
     <!-- 센터 소개 -->
     <section class="u9">
-      <h2 class="u14">${dong} 수학·영어 학원 <span style="color:#1D4ED8">${fullName}</span> 소개</h2>
+      <h2 class="u14">${dong} 영어학원·수학학원 <span style="color:#1D4ED8">${fullName}</span> 소개</h2>
       <p style="font-size:14px;color:#374151;line-height:2;margin:0 0 12px"><strong style="color:#1D4ED8">${fullName}</strong>은 ${sido} ${dist} ${dong}에 위치한 올케어스터디 공식 코칭센터입니다. ${expYear}년 이상의 운영 경험을 바탕으로 ${dong} 인근 초·중·고 학생들의 <strong>수학·영어·국어 내신 성적 향상</strong>을 전문으로 지도합니다.</p>
       ${elemSection}${middleSection}${highSection}
     </section>
@@ -2861,6 +2858,15 @@ function makeCenterPage(slug) {
       <h2 class="u14">자주 묻는 질문</h2>
       ${faqHtml}
     </section>
+
+    <!-- ★ 학교 목록 (하단으로 이동) -->
+    ${allSchools.length?`<section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:22px 26px;margin-bottom:20px">
+      <h2 style="font-size:17px;font-weight:900;color:#0F2044;margin:0 0 4px">
+        ${fullName} 담당 학교 <span style="font-size:14px;color:#6B7280;font-weight:500">(${allSchools.length}개교)</span>
+      </h2>
+      <p style="font-size:13px;color:#9CA3AF;margin:0 0 14px">학교명 클릭 → 과목별 학원 글 보기</p>
+      ${schoolRows}
+    </section>`:''}
 
   </div>
 
