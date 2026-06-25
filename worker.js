@@ -788,13 +788,12 @@ function wrap(title, desc, canonical, body, breadcrumbs){
     }
   } catch(e) { uniqueContent = ''; }
   
-  const bodyWithDate = dateMeta + body + (uniqueContent ? `<div style="max-width:900px;margin:0 auto;padding:0 24px 40px">${uniqueContent}</div>` : '');
-
   // === SEO 강화: 페이지별 동적 og:image + FAQPage schema 자동 생성 ===
   let ogImage = 'https://allcarestudy.com/og-image.png';
   let ogImageWidth = 1200;
   let ogImageHeight = 630;
   let faqSchema = '';
+  let faqVisible = '';
   try {
     const _segs = canonical.split('/').filter(Boolean);
     if (_segs.length >= 1) {
@@ -903,11 +902,14 @@ function wrap(title, desc, canonical, body, breadcrumbs){
         if (_faqs.length > 0) {
           const _items = _faqs.map(f => `{"@type":"Question","name":"${f.q.replace(/"/g,'\\"')}","acceptedAnswer":{"@type":"Answer","text":"${f.a.replace(/"/g,'\\"')}"}}`).join(',');
           faqSchema = `<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[${_items}]}</script>`;
+          const _faqRows = _faqs.map(f => `<div style="background:white;border:1px solid #E5E7EB;border-radius:12px;padding:18px 20px;margin-bottom:10px"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. ${f.q}</div><div style="font-size:14px;color:#374151;line-height:1.75">A. ${f.a}</div></div>`).join('');
+          faqVisible = `<section style="max-width:900px;margin:0 auto;padding:8px 24px 48px"><h2 style="font-size:20px;font-weight:900;color:#0F2044;margin:0 0 18px;padding-left:12px;border-left:5px solid #3B82F6">자주 묻는 질문</h2>${_faqRows}</section>`;
         }
       }
     }
   } catch(e) { /* 기본값 유지 */ }
 
+  const bodyWithDate = dateMeta + body + (uniqueContent ? `<div style="max-width:900px;margin:0 auto;padding:0 24px 40px">${uniqueContent}</div>` : '') + faqVisible;
   
   let bcSchema = '';
   if(breadcrumbs && breadcrumbs.length) {
