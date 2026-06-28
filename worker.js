@@ -3448,14 +3448,7 @@ function makeCenterPage(slug) {
     ${[['운영 경력',expYear+'년+','#1D4ED8','#EFF6FF'],['누적 상담',reviewCnt+'건+','#10B981','#ECFDF5'],['재등록률',satisfaction+'%','#8B5CF6','#F5F3FF']].map(([l,v,c,bg])=>`<div style="background:${bg};border-radius:12px;padding:16px;text-align:center;border:1.5px solid ${c}20"><div style="font-size:20px;font-weight:900;color:${c}">${v}</div><div style="font-size:11px;color:#6B7280;margin-top:3px">${l}</div></div>`).join('')}
   </div>
 
-  <!-- ★ 학교 목록 (핵심: 히어로 바로 아래) -->
-  ${allSchools.length?`<section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:22px 26px;margin-bottom:20px">
-    <h2 style="font-size:17px;font-weight:900;color:#0F2044;margin:0 0 4px">
-      ${fullName} 담당 학교 <span style="font-size:14px;color:#6B7280;font-weight:500">(${allSchools.length}개교)</span>
-    </h2>
-    <p style="font-size:13px;color:#9CA3AF;margin:0 0 14px">학교명 클릭 → 과목별 학원 글 보기</p>
-    ${schoolRows}
-  </section>`:''}
+  <!-- 학교 목록은 소개 글 다음으로 이동됨 -->
 
   <div style="display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start">
   <div>
@@ -3466,6 +3459,15 @@ function makeCenterPage(slug) {
       <p style="font-size:14px;color:#374151;line-height:2;margin:0 0 12px"><strong style="color:#1D4ED8">${fullName}</strong>은 ${sido} ${dist} ${dong}에 위치한 올케어스터디 공식 코칭센터입니다. ${expYear}년 이상의 운영 경험을 바탕으로 ${dong} 인근 초·중·고 학생들의 <strong>수학·영어·국어 내신 성적 향상</strong>을 전문으로 지도합니다.</p>
       ${elemSection}${middleSection}${highSection}
     </section>
+
+    <!-- ★ 학교 목록 (소개 글 다음) -->
+    ${allSchools.length?`<section style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:22px 26px;margin-bottom:20px">
+    <h2 style="font-size:17px;font-weight:900;color:#0F2044;margin:0 0 4px">
+      ${fullName} 담당 학교 <span style="font-size:14px;color:#6B7280;font-weight:500">(${allSchools.length}개교)</span>
+    </h2>
+    <p style="font-size:13px;color:#9CA3AF;margin:0 0 14px">학교명 클릭 → 과목별 학원 글 보기</p>
+    ${schoolRows}
+  </section>`:''}
 
     <!-- 차별점 -->
     <section class="u9">
