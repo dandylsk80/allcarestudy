@@ -3355,9 +3355,18 @@ function makeCenterPage(slug) {
   const expYear=5+(_h%10), satisfaction=93+(_h%6);
   const reviewCnt=120+(_h%180); // 누적 상담 건수
 
-  // 주소에서 동 추출
-  const dongMatch=addr.match(/([가-힣]+(?:동|읍|면|로|길))\b/);
-  const dong=dongMatch?dongMatch[1]:dist;
+  // 동 추출: ① 학원 이름의 'OO점' → 'OO동'  ② 주소의 '동/읍/면'  ③ 주소의 '로/길'  ④ 구
+  let dong = dist;
+  const branchMatch = fullName.match(/([가-힣]+)점/);
+  const addrDongMatch = addr.match(/([가-힣]+(?:동|읍|면))/);
+  const addrRoadMatch = addr.match(/([가-힣]+(?:로|길))/);
+  if (addrDongMatch) {
+    dong = addrDongMatch[1];
+  } else if (branchMatch) {
+    dong = branchMatch[1] + '동';
+  } else if (addrRoadMatch) {
+    dong = addrRoadMatch[1];
+  }
 
   // 학교 목록 파싱
   const teList=(te||'').split(',').map(x=>x.trim()).filter(Boolean);
