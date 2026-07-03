@@ -8149,7 +8149,9 @@ th{color:#9ca3af;font-weight:600}
 var PW='';
 function doLogin(){PW=document.getElementById('pw').value;load('today',null);}
 function typeLabel(t){return t==='tel'?'전화 클릭':t==='contact'?'상담 클릭':t;}
-function siteLabel(s){return s;}
+var SITE_LIST=[["allcarestudy","1호점 - 올케어스터디"],["studyonlive","2호점 - 스터디온라이브"],["site3","3호점"],["site4","4호점"],["site5","5호점"],["site6","6호점"],["site7","7호점"],["site8","8호점"],["site9","9호점"]];
+var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][0]]=SITE_LIST[_i][1];
+function siteLabel(s){return SITE_NAME[s]||s;}
 function load(range,btn){
   fetch('/api/dashboard',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pw:PW,range:range})})
   .then(function(r){return r.json();}).then(function(d){
@@ -8162,13 +8164,15 @@ function load(range,btn){
     document.getElementById('totClick').textContent=totC;
     document.getElementById('totUniq').textContent=totU;
     var html='';
-    for(var s in bySite){
-      html+='<div class="site"><h3>'+siteLabel(s)+'</h3>';
-      var types=bySite[s];
-      for(var t in types){html+='<div class="row"><span>'+typeLabel(t)+'</span><span class="v">'+types[t].cnt+' <span class="u">(순 '+types[t].uniq+')</span></span></div>';}
+    for(var k=0;k<SITE_LIST.length;k++){
+      var sk=SITE_LIST[k][0];var types=bySite[sk]||{};
+      var tel=types.tel||{cnt:0,uniq:0};var sms=types.sms||{cnt:0,uniq:0};var con=types.contact||{cnt:0,uniq:0};
+      html+='<div class="site"><h3>'+SITE_LIST[k][1]+'</h3>';
+      html+='<div class="row"><span>전화 클릭</span><span class="v">'+tel.cnt+' <span class="u">(순 '+tel.uniq+')</span></span></div>';
+      html+='<div class="row"><span>문자 클릭</span><span class="v">'+sms.cnt+' <span class="u">(순 '+sms.uniq+')</span></span></div>';
+      html+='<div class="row"><span>상담 클릭</span><span class="v">'+con.cnt+' <span class="u">(순 '+con.uniq+')</span></span></div>';
       html+='</div>';
     }
-    if(!html)html='<div class="site"><p style="color:#9ca3af;font-size:13px">아직 데이터가 없습니다</p></div>';
     document.getElementById('sites').innerHTML=html;
     var rec=d.recent||[];var hh='';
     for(var j=0;j<rec.length;j++){var e=rec[j];var tm=(e.ts||'').replace('T',' ').slice(5,16);
