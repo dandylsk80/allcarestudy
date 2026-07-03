@@ -8162,7 +8162,7 @@ th{color:#64748b;font-weight:600}
 var PW='';
 function doLogin(){PW=document.getElementById('pw').value;load('today',null);}
 function typeLabel(t){return t==='tel'?'전화 클릭':t==='contact'?'상담 클릭':t;}
-var SITE_LIST=[["allcarestudy","1호점 - 올케어스터디"],["studyonlive","2호점 - 스터디온라이브"],["site3","3호점"],["site4","4호점"],["site5","5호점"],["site6","6호점"],["site7","7호점"],["site8","8호점"],["site9","9호점"]];
+var SITE_LIST=[["allcarestudy","교육 1호점 - 올케어스터디"],["studyonlive","교육 2호점 - 스터디온라이브"],["semogwa","교육 3호점 - 세상의모든과외"],["site4","학원 1호점"],["site5","학원 2호점"],["site6","학원 3호점"],["site7","벤 1호점"],["site8","벤 2호점"],["site9","벤 3호점"]];
 var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][0]]=SITE_LIST[_i][1];
 function siteLabel(s){return SITE_NAME[s]||s;}
 function load(range,btn){
