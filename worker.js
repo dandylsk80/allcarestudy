@@ -8089,35 +8089,48 @@ function makeAcademyPage(sidoEn) {
 
 function makeDashboardPage() {
   return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>1호점 - 올케어스터디</title>
-<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;background:#0b1020;color:#e5e7eb;padding:16px}
-.login{max-width:340px;margin:80px auto;background:#151b2e;border:1px solid #24304d;border-radius:16px;padding:28px}
-.login h1{font-size:18px;margin-bottom:18px;text-align:center}
-.login input{width:100%;padding:12px;border-radius:10px;border:1px solid #33415f;background:#0b1020;color:#fff;font-size:16px;margin-bottom:12px}
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;background:#f1f5f9;color:#1e293b;padding:16px}
+.login{max-width:340px;margin:80px auto;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.login h1{font-size:18px;margin-bottom:18px;text-align:center;color:#0f172a}
+.login input{width:100%;padding:12px;border-radius:10px;border:1px solid #cbd5e1;background:#f8fafc;color:#0f172a;font-size:16px;margin-bottom:12px}
 .login button{width:100%;padding:12px;border-radius:10px;border:0;background:#2563eb;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
 .wrap{max-width:1100px;margin:0 auto}
 .top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px}
-.top h1{font-size:20px}
-.tabs button{background:#151b2e;border:1px solid #24304d;color:#9ca3af;padding:8px 14px;border-radius:8px;margin-left:6px;cursor:pointer;font-size:13px}
+.top h1{font-size:20px;color:#0f172a}
+.tabs button{background:#fff;border:1px solid #e2e8f0;color:#64748b;padding:8px 14px;border-radius:8px;margin-left:6px;cursor:pointer;font-size:13px}
 .tabs button.on{background:#2563eb;border-color:#2563eb;color:#fff}
 .summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.card{background:#151b2e;border:1px solid #24304d;border-radius:14px;padding:18px}
-.card .label{font-size:12px;color:#9ca3af;margin-bottom:6px}
-.card .num{font-size:30px;font-weight:900}
-.card .sub{font-size:12px;color:#60a5fa;margin-top:4px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card:first-child{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#bfdbfe}
+.card:last-child{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#bbf7d0}
+.card .label{font-size:12px;color:#64748b;margin-bottom:6px}
+.card .num{font-size:30px;font-weight:900;color:#0f172a}
+.card .sub{font-size:12px;color:#2563eb;margin-top:4px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:20px}
-.site{background:#151b2e;border:1px solid #24304d;border-radius:14px;padding:16px}
-.site h3{font-size:15px;margin-bottom:12px}
-.site .row{display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid #24304d;font-size:14px}
+.site{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.05);border-top:4px solid #2563eb}
+.site:nth-child(9n+1){border-top-color:#3b82f6}
+.site:nth-child(9n+2){border-top-color:#10b981}
+.site:nth-child(9n+3){border-top-color:#f59e0b}
+.site:nth-child(9n+4){border-top-color:#8b5cf6}
+.site:nth-child(9n+5){border-top-color:#ec4899}
+.site:nth-child(9n+6){border-top-color:#06b6d4}
+.site:nth-child(9n+7){border-top-color:#ef4444}
+.site:nth-child(9n+8){border-top-color:#84cc16}
+.site:nth-child(9n){border-top-color:#6366f1}
+.site h3{font-size:15px;margin-bottom:12px;color:#0f172a}
+.site .row{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid #f1f5f9;font-size:14px}
 .site .row:first-of-type{border-top:0}
-.site .v{font-weight:800}
-.site .u{font-size:12px;color:#9ca3af}
+.site .v{font-weight:800;color:#0f172a}
+.site .u{font-size:12px;color:#94a3b8}
 table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{text-align:left;padding:8px;border-bottom:1px solid #24304d}
-th{color:#9ca3af;font-weight:600}
-.hist{background:#151b2e;border:1px solid #24304d;border-radius:14px;padding:16px;overflow-x:auto}
+th,td{text-align:left;padding:8px;border-bottom:1px solid #e2e8f0;color:#334155}
+th{color:#64748b;font-weight:600}
+.hist{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;overflow-x:auto;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.hist h3{color:#0f172a}
 .tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700}
-.tag.tel{background:#065f46;color:#a7f3d0}
-.tag.contact{background:#1e3a8a;color:#bfdbfe}
+.tag.tel{background:#d1fae5;color:#065f46}
+.tag.sms{background:#fef3c7;color:#92400e}
+.tag.contact{background:#dbeafe;color:#1e40af}
 </style></head><body>
 <div id="login" class="login">
   <h1>1호점 - 올케어스터디</h1>
