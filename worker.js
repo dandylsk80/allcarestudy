@@ -946,7 +946,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 ${bcSchema}${faqSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
-</head><body>${HEADER}${bodyWithDate}${FOOTER}<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "1cbcc1a46d6c230";if(window.wcs) { wcs_do(); }</script></body></html>`;
+</head><body>${HEADER}${bodyWithDate}${FOOTER}<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "1cbcc1a46d6c230";if(window.wcs) { wcs_do(); }</script><script>(function(){function t(ty){try{fetch("/api/track",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:ty,page:location.pathname,ref:document.referrer})});}catch(e){}}document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var h=a.getAttribute("href")||"";if(h.indexOf("tel:")===0)t("tel");else if(h.indexOf("/contact")===0)t("contact");},true);})();</script></body></html>`;
 }
 
 function wrapDark(title,desc,canonical,body){
@@ -8087,6 +8087,98 @@ function makeAcademyPage(sidoEn) {
 }
 
 
+function makeDashboardPage() {
+  return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>통합 대시보드</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;background:#0b1020;color:#e5e7eb;padding:16px}
+.login{max-width:340px;margin:80px auto;background:#151b2e;border:1px solid #24304d;border-radius:16px;padding:28px}
+.login h1{font-size:18px;margin-bottom:18px;text-align:center}
+.login input{width:100%;padding:12px;border-radius:10px;border:1px solid #33415f;background:#0b1020;color:#fff;font-size:16px;margin-bottom:12px}
+.login button{width:100%;padding:12px;border-radius:10px;border:0;background:#2563eb;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+.wrap{max-width:1100px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.top h1{font-size:20px}
+.tabs button{background:#151b2e;border:1px solid #24304d;color:#9ca3af;padding:8px 14px;border-radius:8px;margin-left:6px;cursor:pointer;font-size:13px}
+.tabs button.on{background:#2563eb;border-color:#2563eb;color:#fff}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.card{background:#151b2e;border:1px solid #24304d;border-radius:14px;padding:18px}
+.card .label{font-size:12px;color:#9ca3af;margin-bottom:6px}
+.card .num{font-size:30px;font-weight:900}
+.card .sub{font-size:12px;color:#60a5fa;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:20px}
+.site{background:#151b2e;border:1px solid #24304d;border-radius:14px;padding:16px}
+.site h3{font-size:15px;margin-bottom:12px}
+.site .row{display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid #24304d;font-size:14px}
+.site .row:first-of-type{border-top:0}
+.site .v{font-weight:800}
+.site .u{font-size:12px;color:#9ca3af}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid #24304d}
+th{color:#9ca3af;font-weight:600}
+.hist{background:#151b2e;border:1px solid #24304d;border-radius:14px;padding:16px;overflow-x:auto}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700}
+.tag.tel{background:#065f46;color:#a7f3d0}
+.tag.contact{background:#1e3a8a;color:#bfdbfe}
+</style></head><body>
+<div id="login" class="login">
+  <h1>통합 대시보드</h1>
+  <input type="password" id="pw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
+  <button onclick="doLogin()">로그인</button>
+  <p id="err" style="color:#f87171;font-size:12px;text-align:center;margin-top:10px;display:none">비밀번호가 틀렸습니다</p>
+</div>
+<div id="dash" class="wrap" style="display:none">
+  <div class="top">
+    <h1>통합 대시보드</h1>
+    <div class="tabs">
+      <button data-r="today" class="on" onclick="load('today',this)">오늘</button>
+      <button data-r="yesterday" onclick="load('yesterday',this)">어제</button>
+      <button data-r="7d" onclick="load('7d',this)">7일</button>
+      <button data-r="30d" onclick="load('30d',this)">30일</button>
+    </div>
+  </div>
+  <div class="summary">
+    <div class="card"><div class="label">전체 클릭</div><div class="num" id="totClick">0</div></div>
+    <div class="card"><div class="label">순 전환 (IP중복제거)</div><div class="num" id="totUniq">0</div></div>
+  </div>
+  <div class="grid" id="sites"></div>
+  <div class="hist">
+    <h3 style="font-size:14px;margin-bottom:12px">최근 전환 이력 (최대 50건)</h3>
+    <table><thead><tr><th>시간</th><th>사이트</th><th>전환</th><th>페이지</th><th>유입</th></tr></thead><tbody id="hist"></tbody></table>
+  </div>
+</div>
+<script>
+var PW='';
+function doLogin(){PW=document.getElementById('pw').value;load('today',null);}
+function typeLabel(t){return t==='tel'?'전화 클릭':t==='contact'?'상담 클릭':t;}
+function siteLabel(s){return s;}
+function load(range,btn){
+  fetch('/api/dashboard',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pw:PW,range:range})})
+  .then(function(r){return r.json();}).then(function(d){
+    if(!d.ok){document.getElementById('err').style.display='block';return;}
+    document.getElementById('login').style.display='none';
+    document.getElementById('dash').style.display='block';
+    if(btn){var bs=document.querySelectorAll('.tabs button');for(var i=0;i<bs.length;i++)bs[i].className='';btn.className='on';}
+    var rows=d.rows||[];var bySite={};var totC=0,totU=0;
+    for(var i=0;i<rows.length;i++){var r=rows[i];if(!bySite[r.site])bySite[r.site]={};bySite[r.site][r.type]={cnt:r.cnt,uniq:r.uniq};totC+=r.cnt;totU+=r.uniq;}
+    document.getElementById('totClick').textContent=totC;
+    document.getElementById('totUniq').textContent=totU;
+    var html='';
+    for(var s in bySite){
+      html+='<div class="site"><h3>'+siteLabel(s)+'</h3>';
+      var types=bySite[s];
+      for(var t in types){html+='<div class="row"><span>'+typeLabel(t)+'</span><span class="v">'+types[t].cnt+' <span class="u">(순 '+types[t].uniq+')</span></span></div>';}
+      html+='</div>';
+    }
+    if(!html)html='<div class="site"><p style="color:#9ca3af;font-size:13px">아직 데이터가 없습니다</p></div>';
+    document.getElementById('sites').innerHTML=html;
+    var rec=d.recent||[];var hh='';
+    for(var j=0;j<rec.length;j++){var e=rec[j];var tm=(e.ts||'').replace('T',' ').slice(5,16);
+      hh+='<tr><td>'+tm+'</td><td>'+siteLabel(e.site)+'</td><td><span class="tag '+e.type+'">'+typeLabel(e.type)+'</span></td><td>'+(e.page||'')+'</td><td>'+(e.ref?(e.ref.indexOf('naver')>=0?'네이버':e.ref.indexOf('google')>=0?'구글':e.ref.indexOf('daum')>=0?'다음':'기타'):'직접')+'</td></tr>';}
+    document.getElementById('hist').innerHTML=hh||'<tr><td colspan="5" style="color:#9ca3af">이력 없음</td></tr>';
+  }).catch(function(){document.getElementById('err').style.display='block';});
+}
+</script></body></html>`;
+}
+
 function makeContactPage(type) {
   const isAcademy = (type||'tutoring') === 'academy';
   const canonical = '/contact';
@@ -9739,9 +9831,27 @@ async function submitIndexNowChunk(urlList) {
 }
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     const path = decodeURIComponent(url.pathname);
+
+    // === 전환 추적 수집 API (상담 코드와 무관, 독립 동작) ===
+    if (path === '/api/track' && request.method === 'POST') {
+      try {
+        const b = await request.json();
+        const ip = request.headers.get('CF-Connecting-IP') || '';
+        const ts = new Date().toISOString();
+        if (env && env.DB && (b.type === 'tel' || b.type === 'contact')) {
+          await env.DB.prepare('INSERT INTO events (site,type,page,ref,ip,ts) VALUES (?,?,?,?,?,?)')
+            .bind('allcarestudy', b.type, (b.page||'').slice(0,300), (b.ref||'').slice(0,120), ip, ts).run();
+        }
+      } catch(e) {}
+      return new Response(JSON.stringify({ok:true}), { headers: { 'Content-Type':'application/json', 'Access-Control-Allow-Origin':'*' } });
+    }
+    if (path === '/api/track' && request.method === 'OPTIONS') {
+      return new Response(null, { headers: { 'Access-Control-Allow-Origin':'*', 'Access-Control-Allow-Methods':'POST,OPTIONS', 'Access-Control-Allow-Headers':'Content-Type' } });
+    }
+
     if (path === '/82576028bc8743f5869b54199452e4b4.txt') return new Response('82576028bc8743f5869b54199452e4b4', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     const rawParts = path.split('/').filter(Boolean);
 
@@ -10112,6 +10222,30 @@ export default {
           </svg>`;
       return new Response(svgLogo, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
     }
+    // === 대시보드 데이터 API (비번 확인 후 D1 집계 반환) ===
+    if (path === '/api/dashboard' && request.method === 'POST') {
+      try {
+        const b = await request.json();
+        if (b.pw !== '808080') return new Response(JSON.stringify({ok:false}), { headers: { 'Content-Type':'application/json' } });
+        const range = b.range || 'today';
+        const now = new Date();
+        let since, upto = '9999-12-31';
+        if (range === 'today') { since = new Date(now); since.setUTCHours(-9,0,0,0); }
+        else if (range === 'yesterday') { since = new Date(now); since.setUTCDate(since.getUTCDate()-1); since.setUTCHours(-9,0,0,0); const e = new Date(since.getTime()+864e5); upto = e.toISOString(); }
+        else if (range === '7d') { since = new Date(now.getTime()-7*864e5); }
+        else { since = new Date(now.getTime()-30*864e5); }
+        const sinceIso = since.toISOString();
+        let rows = { results: [] }, recent = { results: [] };
+        if (env && env.DB) {
+          rows = await env.DB.prepare("SELECT site, type, COUNT(*) as cnt, COUNT(DISTINCT ip) as uniq FROM events WHERE ts >= ? AND ts < ? GROUP BY site, type").bind(sinceIso, upto).all();
+          recent = await env.DB.prepare("SELECT site,type,page,ref,ts FROM events WHERE ts >= ? AND ts < ? ORDER BY ts DESC LIMIT 50").bind(sinceIso, upto).all();
+        }
+        return new Response(JSON.stringify({ok:true, rows: rows.results||[], recent: recent.results||[]}), { headers: { 'Content-Type':'application/json' } });
+      } catch(e) {
+        return new Response(JSON.stringify({ok:false, error:String(e)}), { headers: { 'Content-Type':'application/json' } });
+      }
+    }
+    if (path === '/dashboard') return new Response(makeDashboardPage(), { headers: { 'Content-Type':'text/html; charset=utf-8' } });
 if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow: /*/*/*/elementary/*\nDisallow: /*/*/*/middle/*\nDisallow: /*/*/*/high/*\n\nUser-agent: Yandex\nDisallow: /\n\nUser-agent: YandexBot\nDisallow: /\n\nUser-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nUser-agent: bingbot\nAllow: /\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     if (path === '/BingSiteAuth.xml') return new Response('<?xml version="1.0"?>\n<users>\n\t<user>76CD7730D8D678F6A94139ED4D8A344D</user>\n</users>', { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 
