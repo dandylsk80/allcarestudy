@@ -8088,7 +8088,7 @@ function makeAcademyPage(sidoEn) {
 
 
 function makeDashboardPage() {
-  return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>통합 대시보드</title>
+  return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>1호점 - 올케어스터디</title>
 <style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;background:#0b1020;color:#e5e7eb;padding:16px}
 .login{max-width:340px;margin:80px auto;background:#151b2e;border:1px solid #24304d;border-radius:16px;padding:28px}
 .login h1{font-size:18px;margin-bottom:18px;text-align:center}
@@ -8120,14 +8120,14 @@ th{color:#9ca3af;font-weight:600}
 .tag.contact{background:#1e3a8a;color:#bfdbfe}
 </style></head><body>
 <div id="login" class="login">
-  <h1>통합 대시보드</h1>
+  <h1>1호점 - 올케어스터디</h1>
   <input type="password" id="pw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
   <button onclick="doLogin()">로그인</button>
   <p id="err" style="color:#f87171;font-size:12px;text-align:center;margin-top:10px;display:none">비밀번호가 틀렸습니다</p>
 </div>
 <div id="dash" class="wrap" style="display:none">
   <div class="top">
-    <h1>통합 대시보드</h1>
+    <h1>1호점 - 올케어스터디</h1>
     <div class="tabs">
       <button data-r="today" class="on" onclick="load('today',this)">오늘</button>
       <button data-r="yesterday" onclick="load('yesterday',this)">어제</button>
