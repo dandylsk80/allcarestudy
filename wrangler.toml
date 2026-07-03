@@ -4,3 +4,8 @@ compatibility_date = "2024-01-01"
 
 [vars]
 ENVIRONMENT = "production"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "allcare_stats"
+database_id = "d53a86d3-c541-4a3d-9358-bca98b1f71b4"
