@@ -946,7 +946,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 ${bcSchema}${faqSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
-</head><body>${HEADER}${bodyWithDate}${FOOTER}<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "1cbcc1a46d6c230";if(window.wcs) { wcs_do(); }</script><script>(function(){function t(ty){try{fetch("/api/track",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:ty,page:location.pathname,ref:document.referrer})});}catch(e){}}document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var h=a.getAttribute("href")||"";if(h.indexOf("tel:")===0)t("tel");else if(h.indexOf("/contact")===0)t("contact");},true);})();</script></body></html>`;
+</head><body>${HEADER}${bodyWithDate}${FOOTER}<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "1cbcc1a46d6c230";if(window.wcs) { wcs_do(); }</script><script>(function(){function t(ty){try{fetch("/api/track",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:ty,page:location.pathname,ref:document.referrer})});}catch(e){}}if(location.pathname.indexOf("/dashboard")!==0&&location.pathname.indexOf("/api/")!==0)t("view");document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var h=a.getAttribute("href")||"";if(h.indexOf("tel:")===0)t("tel");else if(h.indexOf("/contact")===0)t("contact");},true);})();</script></body></html>`;
 }
 
 function wrapDark(title,desc,canonical,body){
@@ -8088,7 +8088,7 @@ function makeAcademyPage(sidoEn) {
 
 
 function makeDashboardPage() {
-  return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>1호점 - 올케어스터디</title>
+  return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>통합 대시보드</title>
 <style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;background:#f1f5f9;color:#1e293b;padding:16px}
 .login{max-width:340px;margin:80px auto;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
 .login h1{font-size:18px;margin-bottom:18px;text-align:center;color:#0f172a}
@@ -8099,7 +8099,7 @@ function makeDashboardPage() {
 .top h1{font-size:20px;color:#0f172a}
 .tabs button{background:#fff;border:1px solid #e2e8f0;color:#64748b;padding:8px 14px;border-radius:8px;margin-left:6px;cursor:pointer;font-size:13px}
 .tabs button.on{background:#2563eb;border-color:#2563eb;color:#fff}
-.summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
 .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .card:first-child{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#bfdbfe}
 .card:last-child{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#bbf7d0}
@@ -8107,6 +8107,7 @@ function makeDashboardPage() {
 .card .num{font-size:30px;font-weight:900;color:#0f172a}
 .card .sub{font-size:12px;color:#2563eb;margin-top:4px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:20px}
+.grouphdr{grid-column:1/-1;font-size:16px;font-weight:900;color:#0f172a;margin-top:10px;padding-bottom:4px;border-bottom:2px solid #cbd5e1}
 .site{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.05);border-top:4px solid #2563eb}
 .site:nth-child(9n+1){border-top-color:#3b82f6}
 .site:nth-child(9n+2){border-top-color:#10b981}
@@ -8133,14 +8134,14 @@ th{color:#64748b;font-weight:600}
 .tag.contact{background:#dbeafe;color:#1e40af}
 </style></head><body>
 <div id="login" class="login">
-  <h1>1호점 - 올케어스터디</h1>
+  <h1>통합 대시보드</h1>
   <input type="password" id="pw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
   <button onclick="doLogin()">로그인</button>
   <p id="err" style="color:#f87171;font-size:12px;text-align:center;margin-top:10px;display:none">비밀번호가 틀렸습니다</p>
 </div>
 <div id="dash" class="wrap" style="display:none">
   <div class="top">
-    <h1>1호점 - 올케어스터디</h1>
+    <h1>통합 대시보드</h1>
     <div class="tabs">
       <button data-r="today" class="on" onclick="load('today',this)">오늘</button>
       <button data-r="yesterday" onclick="load('yesterday',this)">어제</button>
@@ -8149,6 +8150,7 @@ th{color:#64748b;font-weight:600}
     </div>
   </div>
   <div class="summary">
+    <div class="card"><div class="label">전체 방문자</div><div class="num" id="totView">0</div></div>
     <div class="card"><div class="label">전체 클릭</div><div class="num" id="totClick">0</div></div>
     <div class="card"><div class="label">순 전환 (IP중복제거)</div><div class="num" id="totUniq">0</div></div>
   </div>
@@ -8162,8 +8164,8 @@ th{color:#64748b;font-weight:600}
 var PW='';
 function doLogin(){PW=document.getElementById('pw').value;load('today',null);}
 function typeLabel(t){return t==='tel'?'전화 클릭':t==='contact'?'상담 클릭':t;}
-var SITE_LIST=[["allcarestudy","교육 1호점<br>올케어스터디"],["studyonlive","교육 2호점<br>스터디온라이브"],["semogwa","교육 3호점<br>세상의모든과외"],["semoacademy","학원 1호점<br>세상의 모든 학원"],["site5","학원 2호점"],["site6","학원 3호점"],["allpaystore","벤 1호점<br>올페이스토어"],["site8","벤 2호점"],["site9","벤 3호점"]];
-var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][0]]=SITE_LIST[_i][1];
+var SITE_LIST=[["edu","allcarestudy","교육 1호점<br>올케어스터디"],["edu","studyonlive","교육 2호점<br>스터디온라이브"],["edu","semogwa","교육 3호점<br>세상의모든과외"],["edu","site_edu4","교육 4호점"],["aca","semoacademy","학원 1호점<br>세상의 모든 학원"],["aca","site_aca2","학원 2호점"],["aca","site_aca3","학원 3호점"],["ben","allpaystore","벤 1호점<br>올페이스토어"],["ben","site_ben2","벤 2호점"],["ben","site_ben3","벤 3호점"],["ben","site_ben4","벤 4호점"],["ben","site_ben5","벤 5호점"]];
+var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][1]]=SITE_LIST[_i][2];
 function siteLabel(s){return SITE_NAME[s]||s;}
 function load(range,btn){
   fetch('/api/dashboard',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pw:PW,range:range})})
@@ -8173,14 +8175,19 @@ function load(range,btn){
     document.getElementById('dash').style.display='block';
     if(btn){var bs=document.querySelectorAll('.tabs button');for(var i=0;i<bs.length;i++)bs[i].className='';btn.className='on';}
     var rows=d.rows||[];var bySite={};var totC=0,totU=0;
-    for(var i=0;i<rows.length;i++){var r=rows[i];if(!bySite[r.site])bySite[r.site]={};bySite[r.site][r.type]={cnt:r.cnt,uniq:r.uniq};totC+=r.cnt;totU+=r.uniq;}
+    for(var i=0;i<rows.length;i++){var r=rows[i];if(!bySite[r.site])bySite[r.site]={};bySite[r.site][r.type]={cnt:r.cnt,uniq:r.uniq};if(r.type!=="view"){totC+=r.cnt;totU+=r.uniq;}}
+    var totV=0;for(var s in bySite){if(bySite[s].view)totV+=bySite[s].view.cnt;}
+    document.getElementById('totView').textContent=totV;
     document.getElementById('totClick').textContent=totC;
     document.getElementById('totUniq').textContent=totU;
     var html='';
+    var GROUP_NAME={edu:"교육",aca:"학원",ben:"벤"};var lastG='';
     for(var k=0;k<SITE_LIST.length;k++){
-      var sk=SITE_LIST[k][0];var types=bySite[sk]||{};
-      var tel=types.tel||{cnt:0,uniq:0};var sms=types.sms||{cnt:0,uniq:0};var con=types.contact||{cnt:0,uniq:0};
-      html+='<div class="site"><h3>'+SITE_LIST[k][1]+'</h3>';
+      var g=SITE_LIST[k][0];var sk=SITE_LIST[k][1];var types=bySite[sk]||{};
+      if(g!==lastG){html+='<div class="grouphdr">'+GROUP_NAME[g]+'</div>';lastG=g;}
+      var tel=types.tel||{cnt:0,uniq:0};var sms=types.sms||{cnt:0,uniq:0};var con=types.contact||{cnt:0,uniq:0};var vw=types.view||{cnt:0,uniq:0};
+      html+='<div class="site"><h3>'+SITE_LIST[k][2]+'</h3>';
+      html+='<div class="row"><span>방문자</span><span class="v">'+vw.cnt+' <span class="u">(순 '+vw.uniq+')</span></span></div>';
       html+='<div class="row"><span>전화 클릭</span><span class="v">'+tel.cnt+' <span class="u">(순 '+tel.uniq+')</span></span></div>';
       html+='<div class="row"><span>문자 클릭</span><span class="v">'+sms.cnt+' <span class="u">(순 '+sms.uniq+')</span></span></div>';
       html+='<div class="row"><span>상담 클릭</span><span class="v">'+con.cnt+' <span class="u">(순 '+con.uniq+')</span></span></div>';
@@ -9858,7 +9865,7 @@ export default {
         const b = await request.json();
         const ip = request.headers.get('CF-Connecting-IP') || '';
         const ts = new Date().toISOString();
-        if (env && env.DB && (b.type === 'tel' || b.type === 'contact')) {
+        if (env && env.DB && (b.type === 'tel' || b.type === 'contact' || b.type === 'view')) {
           await env.DB.prepare('INSERT INTO events (site,type,page,ref,ip,ts) VALUES (?,?,?,?,?,?)')
             .bind('allcarestudy', b.type, (b.page||'').slice(0,300), (b.ref||'').slice(0,120), ip, ts).run();
         }
@@ -10255,7 +10262,7 @@ export default {
         let rows = { results: [] }, recent = { results: [] };
         if (env && env.DB) {
           rows = await env.DB.prepare("SELECT site, type, COUNT(*) as cnt, COUNT(DISTINCT ip) as uniq FROM events WHERE ts >= ? AND ts < ? GROUP BY site, type").bind(sinceIso, upto).all();
-          recent = await env.DB.prepare("SELECT site,type,page,ref,ts FROM events WHERE ts >= ? AND ts < ? ORDER BY ts DESC LIMIT 50").bind(sinceIso, upto).all();
+          recent = await env.DB.prepare("SELECT site,type,page,ref,ts FROM events WHERE ts >= ? AND ts < ? AND type != 'view' ORDER BY ts DESC LIMIT 50").bind(sinceIso, upto).all();
         }
         return new Response(JSON.stringify({ok:true, rows: rows.results||[], recent: recent.results||[]}), { headers: { 'Content-Type':'application/json' } });
       } catch(e) {
