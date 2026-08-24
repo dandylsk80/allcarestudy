@@ -162,6 +162,139 @@ const SUBJECT_MAP = {
 };
 const SUBJECT_EN = Object.fromEntries(Object.entries(SUBJECT_MAP).map(([k,v])=>[v,k]));
 
+/* ── 텔레그램 알림 ─────────────────────────────────────────
+   전화·상담 버튼 클릭 시 즉시 알림. 상담 코드(/api/contact)와 무관하게 동작. */
+const TG_TOKEN = '8101954996:AAGNV225WaNL8Zqh9OxtmP1WNzlbquNaq9s';
+const TG_CHAT  = '8649422714';
+const TG_LABEL = { tel: '전화 버튼 클릭', contact: '상담 버튼 클릭' };
+
+function tgDescribe(path) {
+  const seg = String(path || '').split('?')[0].split('/').filter(Boolean);
+  const o = { kind: '일반 페이지', area: '', extra: '' };
+  if (!seg.length) { o.kind = '메인'; return o; }
+  const p0 = seg[0];
+
+  if (p0 === 'contact') { o.kind = '문의 페이지'; return o; }
+  if (p0 === 'all-regions') { o.kind = '전체 지역'; return o; }
+  if (p0 === 'engineer-lab') { o.kind = '엔지니어랩'; return o; }
+  if (p0 === 'study-guide') { o.kind = '학습 가이드'; return o; }
+
+  if (p0 === 'subject') {
+    o.kind = '과목 페이지';
+    o.extra = SUBJECT_MAP[seg[1]] || seg[1] || '';
+    return o;
+  }
+  if (p0 === 'grade') {
+    o.kind = '학년 페이지';
+    o.extra = (GRADE_MAP[seg[1]] || seg[1] || '') + (seg[2] ? ' ' + seg[2] + '학년' : '');
+    return o;
+  }
+  if (p0 === 'conversation') {
+    o.kind = '회화 페이지';
+    o.extra = ({ english: '영어회화', chinese: '중국어회화', japanese: '일본어회화' })[seg[1]] || seg[1] || '';
+    return o;
+  }
+  if (p0 === 'school') {
+    o.kind = '학교별 페이지';
+    o.area = SIDO_MAP[seg[1]] || seg[1] || '';
+    return o;
+  }
+  if (p0 === 'academy') {
+    if (seg[1] === 'intro') { o.kind = '학원 소개'; return o; }
+    if (seg[1] === 'all') { o.kind = '센터 찾기'; return o; }
+    if (seg[1] === 'center') { o.kind = '센터 상세'; o.extra = decodeURIComponent(seg[2] || ''); return o; }
+    if (seg[1] === 'school') {
+      o.kind = '학교별 센터';
+      const g = ({ e: '초등', m: '중등', h: '고등' })[String(seg[2] || '').toLowerCase()] || '';
+      o.extra = [g, decodeURIComponent(seg[3] || ''), SUBJECT_MAP[seg[4]] || ''].filter(Boolean).join(' ');
+      return o;
+    }
+    o.kind = '학원 페이지'; return o;
+  }
+
+  /* 지역 경로: /{sido}/{district}/{dong}/{grade}/{subject} */
+  const sidoKr = SIDO_MAP[p0];
+  if (!sidoKr) return o;
+  const names = [sidoKr];
+  const rest = seg.slice(1);
+  let i = 0;
+  let distEn = rest[i];
+  if (distEn) {
+    let distKr = DISTRICT_MAP[distEn];
+    if (!distKr) {
+      const m = DISTRICT_EN_BY_SIDO[p0];
+      if (m) for (const [kr, en] of Object.entries(m)) if (en === distEn) { distKr = kr; break; }
+    }
+    if (distKr) { names.push(distKr); i++; }
+  }
+  const nx = rest[i];
+  if (nx && !GRADE_MAP[nx] && !SUBJECT_MAP[nx]) {
+    let dongKr = null;
+    try { dongKr = fromRoman(p0, rest[i - 1], nx); } catch (e) { dongKr = null; }
+    if (dongKr) { names.push(dongKr); i++; }
+  }
+  const tail = [];
+  for (; i < rest.length; i++) {
+    if (GRADE_MAP[rest[i]]) tail.push(GRADE_MAP[rest[i]]);
+    else if (SUBJECT_MAP[rest[i]]) tail.push(SUBJECT_MAP[rest[i]]);
+  }
+  o.area = names.join(' ');
+  o.extra = tail.join(' · ');
+  o.kind = '지역 페이지';
+  return o;
+}
+
+function tgRef(ref) {
+  if (!ref) return '직접 방문 또는 알 수 없음';
+  try {
+    const host = new URL(ref).hostname.replace(/^www\./, '');
+    if (host.indexOf('allcarestudy') === 0 || host === 'allcarestudy.com') return '사이트 내부 이동';
+    if (host.includes('naver')) return '네이버';
+    if (host.includes('google')) return '구글';
+    if (host.includes('daum')) return '다음';
+    if (host.includes('bing')) return 'Bing';
+    if (host.includes('kakao')) return '카카오';
+    if (host.includes('instagram')) return '인스타그램';
+    if (host.includes('facebook')) return '페이스북';
+    if (host.includes('youtube')) return '유튜브';
+    return host;
+  } catch (e) { return '알 수 없음'; }
+}
+
+function tgTime() {
+  const d = new Date(Date.now() + 9 * 3600000);
+  const z = n => String(n).padStart(2, '0');
+  return d.getUTCFullYear() + '-' + z(d.getUTCMonth() + 1) + '-' + z(d.getUTCDate()) +
+    ' ' + z(d.getUTCHours()) + ':' + z(d.getUTCMinutes());
+}
+
+async function tgNotify(type, page, ref, ua) {
+  if (!TG_TOKEN || TG_TOKEN.indexOf('PASTE_') === 0) return;
+  if (!TG_CHAT || TG_CHAT.indexOf('PASTE_') === 0) return;
+  const label = TG_LABEL[type];
+  if (!label) return;
+  const d = tgDescribe(page);
+  let ko;
+  if (d.area) ko = [d.area, d.extra].filter(Boolean).join(' · ');
+  else if (d.extra) ko = d.kind + ' · ' + d.extra;
+  else ko = d.kind;
+  const L = [];
+  L.push((type === 'tel' ? '📞 ' : '📝 ') + label);
+  L.push('');
+  L.push('사이트: 올케어스터디 (allcarestudy.com)');
+  L.push('페이지: https://allcarestudy.com' + page);
+  L.push('한글: ' + ko);
+  L.push('유입: ' + tgRef(ref));
+  L.push('기기: ' + (/Mobile|Android|iPhone|iPad/i.test(ua || '') ? '모바일' : 'PC'));
+  L.push('시각: ' + tgTime() + ' (KST)');
+  try {
+    await fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TG_CHAT, text: L.join('\n'), disable_web_page_preview: true })
+    });
+  } catch (e) { }
+}
+
 function toKr(sido,district,dong,grade,subject){
   return {
     sido: SIDO_MAP[sido]||sido,
@@ -9855,7 +9988,7 @@ async function submitIndexNowChunk(urlList) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = decodeURIComponent(url.pathname);
 
@@ -9870,6 +10003,10 @@ export default {
         if (env && env.DB && !(b.type === 'view' && isBot) && (b.type === 'tel' || b.type === 'contact' || b.type === 'view')) {
           await env.DB.prepare('INSERT INTO events (site,type,page,ref,ip,ts) VALUES (?,?,?,?,?,?)')
             .bind('allcarestudy', b.type, (b.page||'').slice(0,300), (b.ref||'').slice(0,120), ip, ts).run();
+        }
+        if (!isBot && TG_LABEL[b.type]) {
+          const tgp = tgNotify(b.type, (b.page||'/').slice(0,300), b.ref||'', ua);
+          if (ctx && ctx.waitUntil) ctx.waitUntil(tgp); else await tgp;
         }
       } catch(e) {}
       return new Response(JSON.stringify({ok:true}), { headers: { 'Content-Type':'application/json', 'Access-Control-Allow-Origin':'*' } });
