@@ -164,8 +164,6 @@ const SUBJECT_EN = Object.fromEntries(Object.entries(SUBJECT_MAP).map(([k,v])=>[
 
 /* ── 텔레그램 알림 ─────────────────────────────────────────
    전화·상담 버튼 클릭 시 즉시 알림. 상담 코드(/api/contact)와 무관하게 동작. */
-const TG_TOKEN = '8101954996:AAGNV225WaNL8Zqh9OxtmP1WNzlbquNaq9s';
-const TG_CHAT  = '8649422714';
 const TG_LABEL = { tel: '전화 버튼 클릭', contact: '상담 버튼 클릭' };
 
 function tgDescribe(path) {
@@ -268,9 +266,10 @@ function tgTime() {
     ' ' + z(d.getUTCHours()) + ':' + z(d.getUTCMinutes());
 }
 
-async function tgNotify(type, page, ref, ua) {
-  if (!TG_TOKEN || TG_TOKEN.indexOf('PASTE_') === 0) return;
-  if (!TG_CHAT || TG_CHAT.indexOf('PASTE_') === 0) return;
+async function tgNotify(env, type, page, ref, ua) {
+  const TG_TOKEN = env && env.TG_TOKEN;
+  const TG_CHAT = env && env.TG_CHAT;
+  if (!TG_TOKEN || !TG_CHAT) return;
   const label = TG_LABEL[type];
   if (!label) return;
   const d = tgDescribe(page);
@@ -10005,7 +10004,7 @@ export default {
             .bind('allcarestudy', b.type, (b.page||'').slice(0,300), (b.ref||'').slice(0,120), ip, ts).run();
         }
         if (!isBot && TG_LABEL[b.type]) {
-          const tgp = tgNotify(b.type, (b.page||'/').slice(0,300), b.ref||'', ua);
+          const tgp = tgNotify(env, b.type, (b.page||'/').slice(0,300), b.ref||'', ua);
           if (ctx && ctx.waitUntil) ctx.waitUntil(tgp); else await tgp;
         }
       } catch(e) {}
