@@ -236,8 +236,8 @@ function tgDescribe(path) {
     if (GRADE_MAP[rest[i]]) tail.push(GRADE_MAP[rest[i]]);
     else if (SUBJECT_MAP[rest[i]]) tail.push(SUBJECT_MAP[rest[i]]);
   }
-  o.area = names.join(' ');
-  o.extra = tail.join(' · ');
+  o.area = [names.join(' '), tail.join(' '), '과외'].filter(Boolean).join(' ');
+  o.extra = '';
   o.kind = '지역 페이지';
   return o;
 }
@@ -282,7 +282,7 @@ async function tgNotify(env, type, page, ref, ua) {
   L.push('');
   L.push('사이트: 올케어스터디 (allcarestudy.com)');
   L.push('페이지: https://allcarestudy.com' + page);
-  L.push('한글: ' + ko);
+  L.push('검색 키워드: ' + ko);
   L.push('유입: ' + tgRef(ref));
   L.push('기기: ' + (/Mobile|Android|iPhone|iPad/i.test(ua || '') ? '모바일' : 'PC'));
   L.push('시각: ' + tgTime() + ' (KST)');
