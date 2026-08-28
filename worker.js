@@ -8296,7 +8296,7 @@ th{color:#64748b;font-weight:600}
 var PW='';
 function doLogin(){PW=document.getElementById('pw').value;load('today',null);}
 function typeLabel(t){return t==='tel'?'전화 클릭':t==='contact'?'상담 클릭':t;}
-var SITE_LIST=[["edu","allcarestudy","교육 1호점<br>올케어스터디"],["edu","studyonlive","교육 2호점<br>스터디온라이브"],["edu","semogwa","교육 3호점<br>세상의모든과외"],["edu","site_edu4","교육 4호점"],["aca","semoacademy","학원 1호점<br>세상의 모든 학원"],["aca","site_aca2","학원 2호점"],["aca","site_aca3","학원 3호점"],["ben","allpaystore","벤 1호점<br>올페이스토어"],["ben","thecardpos","벤 2호점<br>더카드포스"],["ben","24payshop","벤 3호점<br>24페이샵"],["ben","danmalgi","벤 4호점<br>단말기"],["ben","365posmall","벤 5호점<br>365포스몰"]];
+var SITE_LIST=[["edu","allcarestudy","교육 1호점<br>올케어스터디"],["edu","studyonlive","교육 2호점<br>스터디온라이브"],["edu","semogwa","교육 3호점<br>세상의모든과외"],["edu","myclassup","교육 4호점<br>우리동네 과외"],["edu","king-study","교육 5호점<br>공부끝판왕"],["edu","globaltalkup","교육 6호점<br>글로벌톡업"],["aca","semoacademy","학원 1호점<br>세상의 모든 학원"],["aca","classwawa","학원 2호점<br>우리동네 와와학원"],["ben","allpaystore","벤 1호점<br>올페이스토어"],["ben","thecardpos","벤 2호점<br>더카드포스"],["ben","24payshop","벤 3호점<br>24페이샵"],["ben","danmalgi","벤 4호점<br>단말기"],["ben","365posmall","벤 5호점<br>365포스몰"]];
 var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][1]]=SITE_LIST[_i][2];
 function siteLabel(s){return SITE_NAME[s]||s;}
 function load(range,btn){
