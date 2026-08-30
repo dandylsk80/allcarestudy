@@ -1,3 +1,41 @@
+function reEsc(x){ return x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
+/* 이름 뒤 조사를 받침에 맞게 고른다 (danmalgi 검증본을 13개 공통으로 사용) */
+function josaFor(word,j){
+  const ch=String(word).charCodeAt(String(word).length-1)-0xAC00;
+  const hasJ=(ch>=0&&ch<=11171)?((ch%28)!==0):false;
+  const isRieul=(ch>=0&&ch<=11171)?((ch%28)===8):false;
+  switch(j){
+    case "\uc740": case "\ub294": return hasJ?"\uc740":"\ub294";
+    case "\uc774": case "\uac00": return hasJ?"\uc774":"\uac00";
+    case "\uc744": case "\ub97c": return hasJ?"\uc744":"\ub97c";
+    case "\uc640": case "\uacfc": return hasJ?"\uacfc":"\uc640";
+    case "\uc73c\ub85c": case "\ub85c": return (!hasJ||isRieul)?"\ub85c":"\uc73c\ub85c";
+    case "\uc774\ub098": case "\ub098": return hasJ?"\uc774\ub098":"\ub098";
+    case "\uc774\ub77c": case "\ub77c": return hasJ?"\uc774\ub77c":"\ub77c";
+    case "\uc774\uba70": case "\uba70": return hasJ?"\uc774\uba70":"\uba70";
+    default: return j;
+  }
+}
+/* 주어진 단어들 뒤에 붙은 조사만 골라 교정한다 (동사 어미는 건드리지 않음) */
+function fixJosa(s,names){
+  for(const nm of names){
+    if(!nm) continue;
+    s=s.replace(new RegExp(reEsc(String(nm))+"(\uc73c\ub85c|\uc774\ub098|\uc774\ub77c|\uc774\uba70|[\uc740\ub294\uc774\uac00\uc744\ub97c\uc640\uacfc\ub85c\ub098\ub77c\uba70])(?=[\\s.,!?)\u00b7\u2019\u201d]|$)","g"),
+      function(m,j){ return nm+josaFor(nm,j); });
+  }
+  return s;
+}
+
+/* ===== 한국어 조사 자동 판별 (받침 유무) — 13개 사이트 공통 =====
+   J("강남동","은","는") -> "강남동은"   J("제주시","은","는") -> "제주시는"
+   J(x,"으로","로") 은 ㄹ 받침도 처리한다. 한글이 아니면 받침 없음으로 본다. */
+function hasJong(w){ if(w==null) return false; w=String(w).trim(); if(!w) return false;
+  const c=w.charCodeAt(w.length-1); return (c>=0xAC00&&c<=0xD7A3) ? (c-0xAC00)%28!==0 : false; }
+function J(w,a,b){ w=String(w==null?"":w);
+  const c=w.charCodeAt(w.length-1)-0xAC00, j=(c<0||c>11171)?-1:c%28;
+  if(a==="\uc73c\ub85c"||b==="\ub85c") return w+((j<=0||j===8)?"\ub85c":"\uc73c\ub85c");
+  return w+(j>0?a:b); }
+
 /* ===== 방문 상세 메타: 기기 / 유입경로 / 검색 키워드 ===== */
 function tkDevice(ua){
   ua = ua || "";
@@ -1036,7 +1074,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
             { q: `${_dong}에서 ${_grade} ${_subject} 1:1 과외가 가능한가요?`,
               a: `네, ${_sido} ${_gu} ${_dong} 지역에 검증된 ${_grade} ${_subject} 과외 선생님이 활동 중입니다. 방문 또는 화상 1:1 맞춤 수업이 가능합니다.` },
             { q: `${_grade} ${_subject} 과외 효과를 얻으려면 얼마나 필요한가요?`,
-              a: `보통 ${_grade} ${_subject}은 주 2회 8~12주 정도 꾸준히 학습하면 성적 향상을 체감할 수 있습니다. 학생 수준 진단 후 맞춤 커리큘럼으로 진행합니다.` },
+              a: `보통 ${_grade} ${J(_subject,"은","는")} 주 2회 8~12주 정도 꾸준히 학습하면 성적 향상을 체감할 수 있습니다. 학생 수준 진단 후 맞춤 커리큘럼으로 진행합니다.` },
             { q: `${_dong} 지역 ${_grade} 학생들의 ${_subject} 학습 팁이 있나요?`,
               a: `${_dong} ${_grade} 학생들은 학교 내신과 ${_subject} 기본 개념을 함께 점검하는 것이 중요합니다. 무료 상담 시 학교별 특성에 맞춘 학습 전략을 안내드립니다.` }
           ];
@@ -1445,14 +1483,14 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
   const tmpl = CATEGORY_TEMPLATES[cat]||CATEGORY_TEMPLATES['H'];
 
   const CAT_DESC = {
-    A:`${dong}은 ${gu}에서 교육열이 높은 학군으로 1:1 방문 과외 수요가 매우 높습니다.`,
-    B:`${dong}은 신도시 지역으로 젊은 고학력 가정이 밀집해 있습니다.`,
-    C:`${dong}은 산업단지 인근으로 맞벌이 가정 비율이 높아 방문 과외 선호도가 높습니다.`,
-    D:`${dong}은 군인 가족이 많아 빠른 선생님 매칭이 중요합니다.`,
-    E:`${dong}은 대학가 인근으로 우수한 과외 선생님 공급이 풍부합니다.`,
-    F:`${dong}은 학원 접근성이 낮은 지역 특성상 1:1 방문 과외 선호도가 높습니다. 합리적인 비용으로 검증된 선생님을 연결해드립니다.`,
-    G:`${dong}은 도서 지역으로 온라인 과외와 방문 과외를 모두 지원합니다.`,
-    H:`${dong}은 ${gu} 주거지역으로 ${schools} 학군 내신 관리 과외 수요가 꾸준합니다.`,
+    A:`${J(dong,"은","는")} ${gu}에서 교육열이 높은 학군으로 1:1 방문 과외 수요가 매우 높습니다.`,
+    B:`${J(dong,"은","는")} 신도시 지역으로 젊은 고학력 가정이 밀집해 있습니다.`,
+    C:`${J(dong,"은","는")} 산업단지 인근으로 맞벌이 가정 비율이 높아 방문 과외 선호도가 높습니다.`,
+    D:`${J(dong,"은","는")} 군인 가족이 많아 빠른 선생님 매칭이 중요합니다.`,
+    E:`${J(dong,"은","는")} 대학가 인근으로 우수한 과외 선생님 공급이 풍부합니다.`,
+    F:`${J(dong,"은","는")} 학원 접근성이 낮은 지역 특성상 1:1 방문 과외 선호도가 높습니다. 합리적인 비용으로 검증된 선생님을 연결해드립니다.`,
+    G:`${J(dong,"은","는")} 도서 지역으로 온라인 과외와 방문 과외를 모두 지원합니다.`,
+    H:`${J(dong,"은","는")} ${gu} 주거지역으로 ${schools} 학군 내신 관리 과외 수요가 꾸준합니다.`,
   };
   let _mh = 0;
   for(let j=0;j<dong.length;j++) _mh = (_mh*31+dong.charCodeAt(j))>>>0;
@@ -1697,14 +1735,14 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
   const review2 = hashSelect(dong+'r2', reviews).replace(/{dong}/g,dong).replace(/{schools}/g,schools).replace(/{gu}/g,gu);
 
   const CAT_DESC = {
-    A: `${dong}은 ${gu}에서도 교육열이 높은 학군으로, ${schools} 내신 경쟁이 치열합니다. 1:1 방문 과외 수요가 매우 높습니다.`,
-    B: `${dong}은 신도시 개발로 젊은 고학력 가정이 밀집한 지역입니다. 빠른 선생님 매칭이 가능합니다.`,
-    C: `${dong}은 산업단지 인근으로 맞벌이 가정이 많아 방문 과외 선호도가 높습니다.`,
-    D: `${dong}은 군인 가족이 많아 잦은 이사에도 빠른 매칭이 중요합니다.`,
-    E: `${dong}은 대학가 인근으로 우수한 과외 선생님 공급이 풍부합니다.`,
-    F: `${dong}은 학원 접근성이 낮은 지역 특성상 방문 과외 선호도가 높습니다. 합리적인 비용으로 1:1 지도가 가능합니다.`,
-    G: `${dong}은 도서 지역으로 온라인 과외와 방문 과외를 모두 지원합니다.`,
-    H: `${dong}은 ${gu} 주거지역으로 ${schools} 학군 내신 관리 과외 수요가 꾸준합니다.`,
+    A: `${J(dong,"은","는")} ${gu}에서도 교육열이 높은 학군으로, ${schools} 내신 경쟁이 치열합니다. 1:1 방문 과외 수요가 매우 높습니다.`,
+    B: `${J(dong,"은","는")} 신도시 개발로 젊은 고학력 가정이 밀집한 지역입니다. 빠른 선생님 매칭이 가능합니다.`,
+    C: `${J(dong,"은","는")} 산업단지 인근으로 맞벌이 가정이 많아 방문 과외 선호도가 높습니다.`,
+    D: `${J(dong,"은","는")} 군인 가족이 많아 잦은 이사에도 빠른 매칭이 중요합니다.`,
+    E: `${J(dong,"은","는")} 대학가 인근으로 우수한 과외 선생님 공급이 풍부합니다.`,
+    F: `${J(dong,"은","는")} 학원 접근성이 낮은 지역 특성상 방문 과외 선호도가 높습니다. 합리적인 비용으로 1:1 지도가 가능합니다.`,
+    G: `${J(dong,"은","는")} 도서 지역으로 온라인 과외와 방문 과외를 모두 지원합니다.`,
+    H: `${J(dong,"은","는")} ${gu} 주거지역으로 ${schools} 학군 내신 관리 과외 수요가 꾸준합니다.`,
   };
   const catDesc = CAT_DESC[cat] || CAT_DESC['H'];
 
@@ -1779,9 +1817,9 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     [`몇 개월 정도 수업하면 효과가 나타나나요?`, `학생마다 다르지만 보통 2~3개월 꾸준히 수업하면 내신 성적 변화가 나타납니다. 단기 집중 과외(시험 대비 4~8주)도 운영합니다.`],
     [`${dong} 인근 학교 기출에 익숙한 선생님으로 매칭이 가능한가요?`, `${schools} 등 인근 학교 기출과 출제 경향을 분석한 선생님 위주로 우선 매칭합니다. 인근 학교 수업 경험이 있는 선생님이 매칭의 우선순위입니다.`],
     [`선생님이 마음에 안 들면 어떻게 하나요?`, `학생과 잘 맞지 않는 경우 언제든 부담 없이 교체 요청 가능합니다. 추가 비용 없이 다른 선생님으로 다시 매칭해드립니다.`],
-    [`방문 수업은 ${dong} 어디서든 가능한가요?`, `${dong}을 비롯한 ${gu} 전 지역 자택 방문이 가능합니다. 카페나 스터디룸 등 학생이 원하는 장소에서도 수업할 수 있습니다.`],
+    [`방문 수업은 ${dong} 어디서든 가능한가요?`, `${J(dong,"을","를")} 비롯한 ${gu} 전 지역 자택 방문이 가능합니다. 카페나 스터디룸 등 학생이 원하는 장소에서도 수업할 수 있습니다.`],
     [`시험 직전 단기 ${subject} 집중 과외도 가능한가요?`, `중간·기말고사 4주 전부터 진행하는 ${subject} 시험 집중 과외 프로그램을 별도로 운영합니다. 단기간 ${subject} 점수 향상을 목표로 합니다.`],
-    [`수업 횟수와 시간은 어떻게 결정하나요?`, `${grade} 단계 ${subject}는 보통 주 2회가 표준이며, 시험 기간이나 취약 단원 보완이 필요할 때는 주 3회로 늘릴 수 있습니다. 1회 90~120분 수업이 일반적입니다.`],
+    [`수업 횟수와 시간은 어떻게 결정하나요?`, `${grade} 단계 ${J(subject,"은","는")} 보통 주 2회가 표준이며, 시험 기간이나 취약 단원 보완이 필요할 때는 주 3회로 늘릴 수 있습니다. 1회 90~120분 수업이 일반적입니다.`],
     [`온라인 ${subject} 수업도 가능한가요?`, `방문 수업이 기본이지만 학생 일정이나 거리 문제로 온라인 화상 ${subject} 수업도 가능합니다. 동일한 1:1 맞춤 커리큘럼으로 진행합니다.`],
     [`수능 대비도 함께 진행되나요?`, `${grade} 학생의 경우 내신과 수능을 동시에 대비하는 이중 트랙 방식으로 진행합니다. 학년에 맞춰 비중을 조정합니다.`],
   ];
@@ -1801,12 +1839,12 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
 
   // 도입부 패턴 (일반 6개 / gsd 5개)
   const _introPatternsGen = [
-    `${dong}은 ${gu} 지역의 학습 중심 동네 중 하나로, 학부모님들의 ${subject} 학습 관심이 높은 지역입니다.`,
-    `${gu}에 위치한 ${dong}은 ${grade} ${subject} 1:1 과외 수요가 꾸준한 지역입니다. 인근 학교 ${schools} 학생들이 주로 거주합니다.`,
+    `${J(dong,"은","는")} ${gu} 지역의 학습 중심 동네 중 하나로, 학부모님들의 ${subject} 학습 관심이 높은 지역입니다.`,
+    `${gu}에 위치한 ${J(dong,"은","는")} ${grade} ${subject} 1:1 과외 수요가 꾸준한 지역입니다. 인근 학교 ${schools} 학생들이 주로 거주합니다.`,
     `${sidoLabel} ${gu} ${dong}에서 ${grade} ${subject} 과외를 시작하시는 분들은 ${schools} 시험 출제 경향을 잘 아는 선생님 매칭이 가장 중요합니다.`,
     `${dong} ${grade} ${subject} 1:1 과외는 학교 내신 시험에 직접 연결되는 맞춤 학습으로 효과가 큽니다. ${schools} 인근 학생들에게 특히 적합합니다.`,
     `${gu} ${dong}에 거주하는 학생들의 ${grade} ${subject} 학습을 위한 1:1 방문 과외 매칭 서비스입니다.`,
-    `${dong}은 ${sidoLabel} ${gu}의 주요 학습 동네로, ${schools} 학생들의 ${subject} 내신 관리가 중요한 지역입니다.`,
+    `${J(dong,"은","는")} ${sidoLabel} ${gu}의 주요 학습 동네로, ${schools} 학생들의 ${subject} 내신 관리가 중요한 지역입니다.`,
   ];
   const _introPatternsGsd = [
     `${dong} 검정고시 1:1 과외는 일반 학교 과외와 다른 별도의 합격 전략이 필요합니다. ${gu} 지역 검정고시 합격생 다수 배출 경험이 있는 선생님과 매칭해드립니다.`,
@@ -2172,14 +2210,14 @@ function makeGradePage(gradeType, gradeNum) {
 
   const ov=isE
     ?`초등 ${num}학년은 ${num<=2?'기초 학습 습관을 잡는':num<=4?'본격 교과 학습이 시작되는':'중학교 준비를 시작하는'} 중요한 시기입니다. 이 시기에 형성된 기초 실력이 초·중·고 전체 학업의 토대가 됩니다.`
-    :isM?`중학교 ${num}학년은 ${num===1?'처음으로 내신 성적이 생기는':num===2?'학업 슬럼프가 오기 쉬운':'고등학교 진학을 준비하는'} 시기입니다. 수학은 ${num===1?'방정식·함수':num===2?'이차함수':'이차방정식'}이 핵심입니다.`
+    :isM?`중학교 ${num}학년은 ${num===1?'처음으로 내신 성적이 생기는':num===2?'학업 슬럼프가 오기 쉬운':'고등학교 진학을 준비하는'} 시기입니다. 수학은 ${J(num===1?'방정식·함수':num===2?'이차함수':'이차방정식',"이","가")} 핵심입니다.`
     :`고등학교 ${num}학년은 ${num===1?'내신 등급이 처음 시작되는':num===2?'수능 선택과목을 결정하는':'수능과 입시의 모든 것이 결정되는'} 결정적 시기입니다.`;
 
   const methods=[
     {c:'#3B82F6',t:`수학 ${mt[Math.min(num-1,mt.length-1)]}`,
      d:isE?`${num<=2?'연산 기초와 수 개념 완성이 핵심입니다. 매일 10분 연산 훈련으로 속도와 정확도를 높입니다.':num<=4?'분수·도형 원리 이해가 핵심입니다. 개념 먼저, 연습 문제 반복.':'중학교 연결 개념(비율·비례) 완성이 핵심입니다.'}`
-       :isM?`중${num} 수학은 ${num===1?'방정식':num===2?'연립방정식·함수':'이차방정식'}이 핵심입니다. 개념→기출→오답 순서로 학습합니다.`
-       :`고${num} 수학은 ${num===1?'수학(상)·(하) 개념':num===2?'수Ⅰ·Ⅱ+선택과목':'수능 기출·킬러 문항'}이 핵심입니다.`},
+       :isM?`중${num} 수학은 ${J(num===1?'방정식':num===2?'연립방정식·함수':'이차방정식',"이","가")} 핵심입니다. 개념→기출→오답 순서로 학습합니다.`
+       :`고${num} 수학은 ${J(num===1?'수학(상)·(하) 개념':num===2?'수Ⅰ·Ⅱ+선택과목':'수능 기출·킬러 문항',"이","가")} 핵심입니다.`},
     {c:'#10B981',t:`영어 ${et[Math.min(num-1,et.length-1)]}`,
      d:isE?`${num<=2?'알파벳과 파닉스부터 시작합니다. 매일 기초 단어 5~10개씩.':num<=4?'교과서 지문 5번 읽기 + 핵심 표현 암기.':'중학 영어 미리 준비. 기초 문법과 단어 500개 확보.'}`
        :isM?`교과서 지문 분석이 핵심입니다. ${num>=2?'서술형 비중 높으므로 영작 연습 병행.':''}`
@@ -2389,8 +2427,8 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
   const nums = [160+(_h%120), 93+(_h%6)];
 
   const regionDesc = gugunKr.includes('구')
-    ? `${gugunKr}은 ${sidoKr}에서 교육열이 높은 지역으로, ${name} 학부모님들의 내신 관리 관심이 높습니다.`
-    : `${gugunKr}은 ${sidoKr} 지역으로, ${name} 학생들의 과외 수요가 꾸준합니다.`;
+    ? `${J(gugunKr,"은","는")} ${sidoKr}에서 교육열이 높은 지역으로, ${name} 학부모님들의 내신 관리 관심이 높습니다.`
+    : `${J(gugunKr,"은","는")} ${sidoKr} 지역으로, ${name} 학생들의 과외 수요가 꾸준합니다.`;
 
   const thumbImg = pickImg('general', sidoEn+'/'+gugunRoman+'/'+schoolRoman+'/'+gradeCode);
 
@@ -2447,11 +2485,11 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
 
   // 도입부 패턴 다양화 (5개)
   const _introPatterns = [
-    `${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 학교별 시험 출제 경향이 뚜렷해 내신 전문 과외의 효과가 큽니다.`,
-    `${gugunKr}에 위치한 ${name}은 ${sidoKr} 지역의 ${gradeLabel}학교로, 1:1 맞춤 과외 수요가 꾸준히 높은 학교입니다.`,
-    `${sidoKr} ${gugunKr} ${name}은 ${gradeLabel} 단계 핵심 학습기에 있는 학생들이 다니는 학교로, 기출 분석 기반 과외가 큰 효과를 발휘합니다.`,
-    `${name}은 ${sidoKr} ${gugunKr}의 대표적인 ${gradeLabel}학교 중 하나로, 학교별 내신 특성에 맞춘 1:1 과외가 효과적입니다.`,
-    `${gugunKr}에 자리한 ${name}은 학교 단위 시험 분석이 중요한 ${gradeLabel}학교입니다. 출제 경향을 아는 선생님과의 1:1 수업이 효과적입니다.`,
+    `${J(name,"은","는")} ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 학교별 시험 출제 경향이 뚜렷해 내신 전문 과외의 효과가 큽니다.`,
+    `${gugunKr}에 위치한 ${J(name,"은","는")} ${sidoKr} 지역의 ${gradeLabel}학교로, 1:1 맞춤 과외 수요가 꾸준히 높은 학교입니다.`,
+    `${sidoKr} ${gugunKr} ${J(name,"은","는")} ${gradeLabel} 단계 핵심 학습기에 있는 학생들이 다니는 학교로, 기출 분석 기반 과외가 큰 효과를 발휘합니다.`,
+    `${J(name,"은","는")} ${sidoKr} ${gugunKr}의 대표적인 ${gradeLabel}학교 중 하나로, 학교별 내신 특성에 맞춘 1:1 과외가 효과적입니다.`,
+    `${gugunKr}에 자리한 ${J(name,"은","는")} 학교 단위 시험 분석이 중요한 ${gradeLabel}학교입니다. 출제 경향을 아는 선생님과의 1:1 수업이 효과적입니다.`,
   ];
   const _introText = _introPatterns[_seed % _introPatterns.length];
 
@@ -2581,18 +2619,18 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
     [`체험 수업이 가능한가요?`, `정규 수업 시작 전 첫 체험 수업이 가능합니다. 학생과 선생님이 잘 맞는지 확인 후 정규 수업을 결정하실 수 있습니다.`],
     [`${subject} 시험 직전 단기 과외도 운영하나요?`, `${name} 시험 4주 전부터 진행하는 ${subject} 시험 집중 과외 프로그램을 별도로 운영합니다. 단기간 ${subject} 점수 향상이 목표입니다.`],
     [`온라인 ${subject} 과외도 가능한가요?`, `방문 수업이 기본이지만 학생 일정이나 거리 문제로 온라인 화상 ${subject} 수업도 가능합니다. 동일한 1:1 맞춤 커리큘럼으로 진행합니다.`],
-    [`주 몇 회 ${subject} 수업이 적당한가요?`, `${gradeLabel} 단계 ${subject}는 보통 주 2회가 표준이며, 시험 기간이나 취약 단원 보완이 필요한 경우 주 3회로 늘릴 수 있습니다.`],
+    [`주 몇 회 ${subject} 수업이 적당한가요?`, `${gradeLabel} 단계 ${J(subject,"은","는")} 보통 주 2회가 표준이며, 시험 기간이나 취약 단원 보완이 필요한 경우 주 3회로 늘릴 수 있습니다.`],
   ];
   const _selectedFaqs = seedPickN(_seed, _faqBank, 4);
   const _faqHtml = _selectedFaqs.map(([q, a]) => `<p><strong>Q. ${q}</strong><br>${a}</p>`).join('');
 
   // 도입부 패턴 다양화 (5개)
   const _introPatterns = [
-    `${name}은 ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 올케어스터디는 ${name} 재학생을 위한 ${gradeLabel} ${subject} 전문 1:1 방문 과외를 연결합니다.`,
+    `${J(name,"은","는")} ${sidoKr} ${gugunKr} 소재 ${gradeLabel}학교입니다. 올케어스터디는 ${name} 재학생을 위한 ${gradeLabel} ${subject} 전문 1:1 방문 과외를 연결합니다.`,
     `${gugunKr}에 위치한 ${name}의 ${gradeLabel} ${subject}과외는 학교별 시험 출제 경향에 맞춘 1:1 맞춤 수업으로 진행됩니다.`,
     `${sidoKr} ${gugunKr} ${name} 재학생을 위한 ${subject}과외 매칭 서비스입니다. ${gradeLabel} ${subject} 1:1 방문 수업으로 내신 성적을 관리합니다.`,
     `${name} 학생들의 ${subject} 내신 관리를 위한 1:1 과외입니다. ${gugunKr} 지역 ${name} 학교 출제 경향을 잘 아는 선생님이 직접 방문하여 수업합니다.`,
-    `${name}은 ${sidoKr} ${gugunKr}의 ${gradeLabel}학교로, 학교별 ${subject} 시험 특성에 맞춘 1:1 과외가 효과적인 학교입니다.`,
+    `${J(name,"은","는")} ${sidoKr} ${gugunKr}의 ${gradeLabel}학교로, 학교별 ${subject} 시험 특성에 맞춘 1:1 과외가 효과적인 학교입니다.`,
   ];
   const _introText = _introPatterns[_seed % _introPatterns.length];
 
@@ -3593,7 +3631,7 @@ function makeCenterPage(slug) {
   // 학습 내용 (SEO 본문)
   const elemSection=teList.length?`
     <h3 style="font-size:16px;font-weight:900;color:#0F2044;margin:24px 0 8px;padding-left:10px;border-left:4px solid #FCD34D">초등 코칭 — ${teList.slice(0,2).join('·')}</h3>
-    <p class="u19">초등학교 시기는 <strong style="color:#D97706">수학 기초 연산·분수, 영어 파닉스·단어, 국어 독해력</strong>을 완성해야 할 가장 중요한 시간입니다. ${fullName}은 ${teList.join(', ')} 학생들을 위한 학교 진도 맞춤 1:1 코칭을 제공합니다.</p>`:'';
+    <p class="u19">초등학교 시기는 <strong style="color:#D97706">수학 기초 연산·분수, 영어 파닉스·단어, 국어 독해력</strong>을 완성해야 할 가장 중요한 시간입니다. ${J(fullName,"은","는")} ${teList.join(', ')} 학생들을 위한 학교 진도 맞춤 1:1 코칭을 제공합니다.</p>`:'';
 
   const middleSection=tmList.length?`
     <h3 style="font-size:16px;font-weight:900;color:#0F2044;margin:24px 0 8px;padding-left:10px;border-left:4px solid #34D399">${tmList.slice(0,2).join('·')} 내신 관리</h3>
@@ -10600,7 +10638,7 @@ export default {
       }
     }
     if (path === '/dashboard') return new Response(makeDashboardPage(), { headers: { 'Content-Type':'text/html; charset=utf-8' } });
-if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow: /*/*/*/elementary/*\nDisallow: /*/*/*/middle/*\nDisallow: /*/*/*/high/*\n\nUser-agent: Yandex\nDisallow: /\n\nUser-agent: YandexBot\nDisallow: /\n\nUser-agent: *\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nUser-agent: bingbot\nAllow: /\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow: /*/*/*/elementary/*\nDisallow: /*/*/*/middle/*\nDisallow: /*/*/*/high/*\n\nUser-agent: Yandex\nDisallow: /\n\nUser-agent: YandexBot\nDisallow: /\n\nUser-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Claude-Web\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nUser-agent: bingbot\nAllow: /\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     if (path === '/BingSiteAuth.xml') return new Response('<?xml version="1.0"?>\n<users>\n\t<user>76CD7730D8D678F6A94139ED4D8A344D</user>\n</users>', { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 
     
