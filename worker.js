@@ -8239,7 +8239,7 @@ function makeDashboardPage() {
 .card .num{font-size:30px;font-weight:900;color:#0f172a}
 .card .sub{font-size:12px;color:#2563eb;margin-top:4px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:20px}
-.grouphdr{grid-column:1/-1;font-size:16px;font-weight:900;color:#0f172a;margin-top:10px;padding-bottom:4px;border-bottom:2px solid #cbd5e1}
+.grouphdr{grid-column:1/-1;font-size:16px;font-weight:900;color:#0f172a;margin-top:10px;padding-bottom:4px;border-bottom:2px solid #cbd5e1}.grouphdr .gcnt{font-size:12px;font-weight:700;color:#64748b}
 .site{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.05);border-top:4px solid #2563eb}
 .site:nth-child(9n+1){border-top-color:#3b82f6}
 .site:nth-child(9n+2){border-top-color:#10b981}
@@ -8250,7 +8250,7 @@ function makeDashboardPage() {
 .site:nth-child(9n+7){border-top-color:#ef4444}
 .site:nth-child(9n+8){border-top-color:#84cc16}
 .site:nth-child(9n){border-top-color:#6366f1}
-.site h3{font-size:15px;margin-bottom:12px;color:#0f172a}
+.site h3{font-size:15px;margin-bottom:3px;color:#0f172a}.site .meta{font-size:11px;color:#94a3b8;line-height:1.5}.site .meta:last-of-type{margin-bottom:10px}
 .site .row{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid #f1f5f9;font-size:14px}
 .site .row:first-of-type{border-top:0}
 .site .v{font-weight:800;color:#0f172a}
@@ -8296,7 +8296,7 @@ th{color:#64748b;font-weight:600}
 var PW='';
 function doLogin(){PW=document.getElementById('pw').value;load('today',null);}
 function typeLabel(t){return t==='tel'?'전화 클릭':t==='contact'?'상담 클릭':t;}
-var SITE_LIST=[["edu","allcarestudy","교육 1호점<br>올케어스터디"],["edu","studyonlive","교육 2호점<br>스터디온라이브"],["edu","semogwa","교육 3호점<br>세상의모든과외"],["edu","myclassup","교육 4호점<br>우리동네 과외"],["edu","king-study","교육 5호점<br>공부끝판왕"],["edu","globaltalkup","교육 6호점<br>글로벌톡업"],["aca","semoacademy","학원 1호점<br>세상의 모든 학원"],["aca","classwawa","학원 2호점<br>우리동네 와와학원"],["ben","allpaystore","벤 1호점<br>올페이스토어"],["ben","thecardpos","벤 2호점<br>더카드포스"],["ben","24payshop","벤 3호점<br>24페이샵"],["ben","danmalgi","벤 4호점<br>단말기"],["ben","365posmall","벤 5호점<br>365포스몰"]];
+var SITE_LIST=[["edu","allcarestudy","올케어스터디","allcarestudy.com","2026-03-06"],["edu","studyonlive","스터디온라이브","studyonlive.com","2026-06-03"],["edu","semogwa","세상의모든과외","semogwa.com","2026-06-30"],["edu","myclassup","우리동네과외","myclassup.com","2026-08-04"],["edu","king-study","공부끝판왕","king-study.com","2026-08-18"],["aca","semoacademy","세상의모든학원","semoacademy.com","2026-06-26"],["aca","classwawa","우리동네와와학원","classwawa.com","2026-07-13"],["ben","allpaystore","올페이스토어","allpaystore.com","2026-03-09"],["ben","thecardpos","더카드포스","thecardpos.com","2026-06-07"],["ben","danmalgi","단말기닷컴","danmalgi.com","2026-06-13"],["ben","24payshop","24페이","24payshop.com","2026-06-23"],["ben","365posmall","365포스","365posmall.com","2026-07-03"],["pow","globaltalkup","글로벌톡업","globaltalkup.com","2026-08-25"]];
 var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][1]]=SITE_LIST[_i][2];
 function siteLabel(s){return SITE_NAME[s]||s;}
 function load(range,btn){
@@ -8313,12 +8313,12 @@ function load(range,btn){
     document.getElementById('totClick').textContent=totC;
     document.getElementById('totUniq').textContent=totU;
     var html='';
-    var GROUP_NAME={edu:"교육",aca:"학원",ben:"벤"};var lastG='';
+    var GROUP_NAME={edu:"과외",aca:"학원",ben:"더세이브",pow:"파워"};var lastG='';
     for(var k=0;k<SITE_LIST.length;k++){
       var g=SITE_LIST[k][0];var sk=SITE_LIST[k][1];var types=bySite[sk]||{};
-      if(g!==lastG){html+='<div class="grouphdr">'+GROUP_NAME[g]+'</div>';lastG=g;}
+      if(g!==lastG){var _gc=0;for(var _q=0;_q<SITE_LIST.length;_q++)if(SITE_LIST[_q][0]===g)_gc++;html+='<div class="grouphdr">'+(GROUP_NAME[g]||g)+' <span class="gcnt">'+_gc+'개</span></div>';lastG=g;}
       var tel=types.tel||{cnt:0,uniq:0};var sms=types.sms||{cnt:0,uniq:0};var con=types.contact||{cnt:0,uniq:0};var vw=types.view||{cnt:0,uniq:0};
-      html+='<div class="site"><h3>'+SITE_LIST[k][2]+'</h3>';
+      html+='<div class="site"><h3>'+SITE_LIST[k][2]+'</h3>'+'<div class="meta">'+SITE_LIST[k][3]+'</div>'+'<div class="meta">개설 '+SITE_LIST[k][4]+'</div>';
       html+='<div class="row"><span>방문자</span><span class="v">'+vw.cnt+' <span class="u">(순 '+vw.uniq+')</span></span></div>';
       html+='<div class="row"><span>전화 클릭</span><span class="v">'+tel.cnt+' <span class="u">(순 '+tel.uniq+')</span></span></div>';
       html+='<div class="row"><span>문자 클릭</span><span class="v">'+sms.cnt+' <span class="u">(순 '+sms.uniq+')</span></span></div>';
