@@ -1,3 +1,35 @@
+/* ===== 방문 상세 메타: 기기 / 유입경로 / 검색 키워드 ===== */
+function tkDevice(ua){
+  ua = ua || "";
+  if(/ipad|tablet|playbook|silk|kindle|android(?!.*mobile)/i.test(ua)) return "tablet";
+  if(/mobile|iphone|ipod|android|blackberry|iemobile|opera mini|webos/i.test(ua)) return "mobile";
+  return "pc";
+}
+function tkSource(ref, selfHost){
+  if(!ref) return "direct";
+  var h = "";
+  try{ h = new URL(ref).hostname.toLowerCase(); }catch(e){ return "etc"; }
+  if(!h) return "etc";
+  if(selfHost && (h === selfHost || h === "www." + selfHost)) return "direct"; /* 사이트 내부 이동 */
+  if(h.indexOf("naver") >= 0) return "naver";
+  if(h.indexOf("google") >= 0) return "google";
+  if(h.indexOf("daum") >= 0 || h.indexOf("kakao") >= 0) return "daum";
+  return "etc";
+}
+function tkKeyword(ref){
+  if(!ref) return "";
+  try{
+    var p = new URL(ref).searchParams;
+    var keys = ["query","q","keyword","wd","search_query","text"];
+    for(var i=0;i<keys.length;i++){ var v = p.get(keys[i]); if(v) return v.trim().slice(0,100); }
+  }catch(e){}
+  return "";
+}
+/* INSERT 의 ua/device/source/keyword 4개 값을 순서대로 반환 */
+function tkMeta(ua, ref, selfHost){
+  return [ (ua||"").slice(0,250), tkDevice(ua), tkSource(ref, selfHost), tkKeyword(ref) ];
+}
+
 /* IndexNow 폴백: api.indexnow.org / www.bing.com 은 Cloudflare Workers 의 공용
    아웃바운드 IP 에 429(TooManyRequests)를 반환하는 경우가 많다. IndexNow 는 참여
    엔드포인트 한 곳만 성공하면 나머지 엔진으로 전파되므로 순차 폴백한다. */
@@ -8280,6 +8312,29 @@ th{color:#64748b;font-weight:600}
 .tag.tel{background:#d1fae5;color:#065f46}
 .tag.sms{background:#fef3c7;color:#92400e}
 .tag.contact{background:#dbeafe;color:#1e40af}
+.row.vrow{cursor:pointer;border-radius:6px}
+.row.vrow:hover{background:#f1f5f9}
+.more{font-size:11px;color:#2563eb;font-weight:700;margin-left:4px}
+.modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:50;align-items:flex-start;justify-content:center;padding:20px 10px;overflow:auto}
+.mbox{background:#fff;border-radius:16px;max-width:1020px;width:100%;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.mhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.mhead h3{font-size:16px;color:#0f172a}
+.mhead button{border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;color:#334155}
+.vsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:16px}
+.vcard{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px}
+.vcard h4{font-size:12px;color:#64748b;margin-bottom:8px;font-weight:700}
+.bar{display:flex;justify-content:space-between;font-size:12px;color:#334155;padding:2px 0}
+.bar b{color:#0f172a}
+.barbg{height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:7px}
+.barfg{height:5px;background:#2563eb;border-radius:3px}
+.kwlist{max-height:186px;overflow:auto}
+.tblwrap{overflow-x:auto;border:1px solid #e2e8f0;border-radius:12px}
+.tblwrap table{font-size:12px}
+.tblwrap td{white-space:nowrap;max-width:280px;overflow:hidden;text-overflow:ellipsis}
+.pager{display:flex;gap:6px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.pager button{border:1px solid #cbd5e1;background:#fff;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;color:#334155}
+.pager button.on{background:#2563eb;color:#fff;border-color:#2563eb}
+.muted{color:#94a3b8;font-size:13px;padding:8px 0}
 </style></head><body>
 <div id="login" class="login">
   <h1>통합 대시보드</h1>
@@ -8308,10 +8363,23 @@ th{color:#64748b;font-weight:600}
     <table><thead><tr><th>시간</th><th>사이트</th><th>전환</th><th>페이지</th><th>유입</th></tr></thead><tbody id="hist"></tbody></table>
   </div>
 </div>
+<div id="vmodal" class="modal" onclick="if(event.target===this)closeVisits()">
+  <div class="mbox">
+    <div class="mhead"><h3 id="vtitle">방문 상세</h3><button onclick="closeVisits()">닫기 ✕</button></div>
+    <div id="vsum" class="vsum"></div>
+    <div class="tblwrap">
+      <table><thead><tr><th>시간</th><th>유입경로</th><th>검색키워드</th><th>기기</th><th>본 페이지</th><th>IP</th></tr></thead><tbody id="vbody"></tbody></table>
+    </div>
+    <div class="pager" id="vpager"></div>
+  </div>
+</div>
 <script>
-var PW='';
+var PW='';var CURRANGE='today';
 function doLogin(){PW=document.getElementById('pw').value;load('today',null);}
 function typeLabel(t){return t==='tel'?'전화 클릭':t==='contact'?'상담 클릭':t;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function srcLabel(k){return k==='naver'?'네이버':k==='google'?'구글':k==='daum'?'다음':k==='direct'?'직접':k==='etc'?'기타':'기록 이전';}
+function devLabel(k){return k==='pc'?'PC':k==='mobile'?'모바일':k==='tablet'?'태블릿':'기록 이전';}
 var SITE_LIST=[["edu","allcarestudy","올케어스터디","allcarestudy.com","2026-03-06"],["edu","studyonlive","스터디온라이브","studyonlive.com","2026-06-03"],["edu","semogwa","세상의모든과외","semogwa.com","2026-06-30"],["edu","myclassup","우리동네과외","myclassup.com","2026-08-04"],["edu","king-study","공부끝판왕","king-study.com","2026-08-18"],["aca","semoacademy","세상의모든학원","semoacademy.com","2026-06-26"],["aca","classwawa","우리동네와와학원","classwawa.com","2026-07-13"],["ben","allpaystore","올페이스토어","allpaystore.com","2026-03-09"],["ben","thecardpos","더카드포스","thecardpos.com","2026-06-07"],["ben","danmalgi","단말기닷컴","danmalgi.com","2026-06-13"],["ben","24payshop","24페이","24payshop.com","2026-06-23"],["ben","365posmall","365포스","365posmall.com","2026-07-03"],["pow","globaltalkup","글로벌톡업","globaltalkup.com","2026-08-25"]];
 var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][1]]=SITE_LIST[_i][2];
 function siteLabel(s){return SITE_NAME[s]||s;}
@@ -8319,6 +8387,7 @@ function load(range,btn){
   fetch('/api/dashboard',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pw:PW,range:range})})
   .then(function(r){return r.json();}).then(function(d){
     if(!d.ok){document.getElementById('err').style.display='block';return;}
+    CURRANGE=range;
     document.getElementById('login').style.display='none';
     document.getElementById('dash').style.display='block';
     if(btn){var bs=document.querySelectorAll('.tabs button');for(var i=0;i<bs.length;i++)bs[i].className='';btn.className='on';}
@@ -8335,19 +8404,75 @@ function load(range,btn){
       if(g!==lastG){var _gc=0;for(var _q=0;_q<SITE_LIST.length;_q++)if(SITE_LIST[_q][0]===g)_gc++;html+='<div class="grouphdr">'+(GROUP_NAME[g]||g)+' <span class="gcnt">'+_gc+'개</span></div>';lastG=g;}
       var tel=types.tel||{cnt:0,uniq:0};var sms=types.sms||{cnt:0,uniq:0};var con=types.contact||{cnt:0,uniq:0};var vw=types.view||{cnt:0,uniq:0};
       html+='<div class="site"><h3>'+SITE_LIST[k][2]+'</h3>'+'<div class="meta">'+SITE_LIST[k][3]+'</div>'+'<div class="meta">개설 '+SITE_LIST[k][4]+'</div>';
-      html+='<div class="row"><span>방문자</span><span class="v">'+vw.cnt+' <span class="u">(순 '+vw.uniq+')</span></span></div>';
+      html+='<div class="row vrow" data-vsite="'+sk+'" title="클릭하면 방문 상세를 볼 수 있습니다"><span>방문자<span class="more">상세 ▸</span></span><span class="v">'+vw.cnt+' <span class="u">(순 '+vw.uniq+')</span></span></div>';
       html+='<div class="row"><span>전화 클릭</span><span class="v">'+tel.cnt+' <span class="u">(순 '+tel.uniq+')</span></span></div>';
       html+='<div class="row"><span>문자 클릭</span><span class="v">'+sms.cnt+' <span class="u">(순 '+sms.uniq+')</span></span></div>';
       html+='<div class="row"><span>상담 클릭</span><span class="v">'+con.cnt+' <span class="u">(순 '+con.uniq+')</span></span></div>';
       html+='</div>';
     }
     document.getElementById('sites').innerHTML=html;
+    var vrs=document.querySelectorAll('.vrow');
+    for(var q=0;q<vrs.length;q++) vrs[q].onclick=function(){openVisits(this.getAttribute('data-vsite'));};
     var rec=d.recent||[];var hh='';
     for(var j=0;j<rec.length;j++){var e=rec[j];var tm=(e.ts||'').replace('T',' ').slice(5,16);
-      hh+='<tr><td>'+tm+'</td><td>'+siteLabel(e.site)+'</td><td><span class="tag '+e.type+'">'+typeLabel(e.type)+'</span></td><td>'+(e.page||'')+'</td><td>'+(e.ref?(e.ref.indexOf('naver')>=0?'네이버':e.ref.indexOf('google')>=0?'구글':e.ref.indexOf('daum')>=0?'다음':'기타'):'직접')+'</td></tr>';}
+      hh+='<tr><td>'+tm+'</td><td>'+siteLabel(e.site)+'</td><td><span class="tag '+esc(e.type)+'">'+typeLabel(e.type)+'</span></td><td>'+esc(e.page||'')+'</td><td>'+(e.ref?(e.ref.indexOf('naver')>=0?'네이버':e.ref.indexOf('google')>=0?'구글':e.ref.indexOf('daum')>=0?'다음':'기타'):'직접')+'</td></tr>';}
     document.getElementById('hist').innerHTML=hh||'<tr><td colspan="5" style="color:#9ca3af">이력 없음</td></tr>';
   }).catch(function(){document.getElementById('err').style.display='block';});
 }
+
+/* ===== 방문 상세 ===== */
+var VDATA=null, VPAGE=0; var VPER=25;
+function closeVisits(){document.getElementById('vmodal').style.display='none';VDATA=null;}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVisits();});
+function openVisits(site){
+  var m=document.getElementById('vmodal'); m.style.display='flex';
+  document.getElementById('vtitle').textContent=siteLabel(site)+' · 방문 상세';
+  document.getElementById('vsum').innerHTML='<div class="muted">불러오는 중…</div>';
+  document.getElementById('vbody').innerHTML=''; document.getElementById('vpager').innerHTML='';
+  fetch('/api/dashboard',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pw:PW,range:CURRANGE,op:'visits',site:site})})
+  .then(function(r){return r.json();}).then(function(d){
+    if(!d.ok){document.getElementById('vsum').innerHTML='<div class="muted">불러오지 못했습니다.</div>';return;}
+    VDATA=d; VPAGE=0; renderVisits();
+  }).catch(function(){document.getElementById('vsum').innerHTML='<div class="muted">불러오지 못했습니다.</div>';});
+}
+function ratioCard(title,rows,labelFn){
+  var tot=0,i; for(i=0;i<rows.length;i++)tot+=rows[i].cnt;
+  var h='<div class="vcard"><h4>'+title+'</h4>';
+  if(!tot) h+='<div class="muted">데이터 없음</div>';
+  for(i=0;i<rows.length;i++){
+    var pct=tot?Math.round(rows[i].cnt*1000/tot)/10:0;
+    h+='<div class="bar"><span>'+esc(labelFn(rows[i].k))+'</span><b>'+rows[i].cnt+'회 ('+pct+'%)</b></div>';
+    h+='<div class="barbg"><div class="barfg" style="width:'+pct+'%"></div></div>';
+  }
+  return h+'</div>';
+}
+function renderVisits(){
+  var d=VDATA; if(!d) return;
+  var kh='<div class="vcard"><h4>검색 키워드 TOP 20</h4><div class="kwlist">';
+  if(!d.kw.length) kh+='<div class="muted">검색 키워드 없음<br><span style="font-size:11px">네이버·구글은 보안정책상 검색어를 넘겨주지 않는 경우가 많습니다</span></div>';
+  for(var i=0;i<d.kw.length;i++) kh+='<div class="bar"><span>'+(i+1)+'. '+esc(d.kw[i].k)+'</span><b>'+d.kw[i].cnt+'</b></div>';
+  kh+='</div></div>';
+  document.getElementById('vsum').innerHTML=ratioCard('유입경로 비율',d.src,srcLabel)+ratioCard('기기 비율',d.dev,devLabel)+kh;
+
+  var rows=d.rows, pages=Math.max(1,Math.ceil(rows.length/VPER));
+  if(VPAGE>=pages)VPAGE=pages-1;
+  var st=VPAGE*VPER, part=rows.slice(st,st+VPER), b='';
+  for(var j=0;j<part.length;j++){var r=part[j];
+    var tm=(r.ts||'').replace('T',' ').slice(5,16);
+    b+='<tr><td>'+esc(tm)+'</td><td>'+esc(srcLabel(r.source||'unknown'))+'</td><td>'+esc(r.keyword||'-')+'</td><td>'+esc(devLabel(r.device||'unknown'))+'</td><td title="'+esc(r.page||'')+'">'+esc(r.page||'')+'</td><td>'+esc(r.ip||'')+'</td></tr>';
+  }
+  document.getElementById('vbody').innerHTML=b||'<tr><td colspan="6" class="muted">방문 기록 없음</td></tr>';
+
+  var p='';
+  if(rows.length>VPER){
+    p+='<button onclick="goVisits('+(VPAGE-1)+')"'+(VPAGE===0?' disabled':'')+'>‹ 이전</button>';
+    for(var k=0;k<pages;k++) p+='<button class="'+(k===VPAGE?'on':'')+'" onclick="goVisits('+k+')">'+(k+1)+'</button>';
+    p+='<button onclick="goVisits('+(VPAGE+1)+')"'+(VPAGE===pages-1?' disabled':'')+'>다음 ›</button>';
+  }
+  p+='<div style="width:100%;text-align:center;color:#94a3b8;font-size:12px;margin-top:6px">전체 '+rows.length+'건 중 '+(rows.length?st+1:0)+'~'+Math.min(st+VPER,rows.length)+'건 (최근 200건까지)</div>';
+  document.getElementById('vpager').innerHTML=p;
+}
+function goVisits(n){var pages=Math.ceil(VDATA.rows.length/VPER);if(n<0||n>=pages)return;VPAGE=n;renderVisits();}
 </script></body></html>`;
 }
 
@@ -10016,8 +10141,8 @@ export default {
         const isBot = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|yandex|baidu|duckduckbot|facebookexternalhit|semrush|ahrefs|mj12bot|dotbot|petalbot|bytespider|headlesschrome|python-requests|curl|wget|yeti|daumoa|lighthouse|pagespeed|inspectiontool|googleother|applebot|amazonbot|archiver|scrapy|node-fetch|okhttp|go-http|libwww|httpclient|dataforseo|serpstat|zoominfo|bubing|linkdex/i.test(ua);
         const ts = new Date().toISOString();
         if (env && env.DB && !(b.type === 'view' && isBot) && (b.type === 'tel' || b.type === 'contact' || b.type === 'view')) {
-          await env.DB.prepare('INSERT INTO events (site,type,page,ref,ip,ts) VALUES (?,?,?,?,?,?)')
-            .bind('allcarestudy', b.type, (b.page||'').slice(0,300), (b.ref||'').slice(0,120), ip, ts).run();
+          await env.DB.prepare('INSERT INTO events (site,type,page,ref,ip,ts,ua,device,source,keyword) VALUES (?,?,?,?,?,?,?,?,?,?)')
+            .bind('allcarestudy', b.type, (b.page||'').slice(0,300), (b.ref||'').slice(0,120), ip, ts, ...tkMeta(request.headers.get('User-Agent')||'', b.ref||'', 'allcarestudy.com')).run();
         }
         // 진단용: 어떤 UA가 view 를 발생시키는지 별도 테이블에 기록 (events 집계에는 영향 없음)
         if (env && env.DB && b.type === 'view') {
@@ -10445,6 +10570,15 @@ export default {
             q = await env.DB.prepare("SELECT ref, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY ref ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
           } else if (b.op === 'ips') {
             q = await env.DB.prepare("SELECT ip, COUNT(*) cnt, COUNT(DISTINCT page) pages, MIN(ts) first, MAX(ts) last FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY ip ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
+          } else if (b.op === 'visits') {
+            const W = " FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' ";
+            const rows = await env.DB.prepare("SELECT ts, source, keyword, device, page, ip" + W + "ORDER BY ts DESC LIMIT 200").bind(sinceIso, upto, site).all();
+            const src  = await env.DB.prepare("SELECT COALESCE(NULLIF(source,''),'unknown') k, COUNT(*) cnt" + W + "GROUP BY k ORDER BY cnt DESC").bind(sinceIso, upto, site).all();
+            const dev  = await env.DB.prepare("SELECT COALESCE(NULLIF(device,''),'unknown') k, COUNT(*) cnt" + W + "GROUP BY k ORDER BY cnt DESC").bind(sinceIso, upto, site).all();
+            const kw   = await env.DB.prepare("SELECT keyword k, COUNT(*) cnt" + W + "AND keyword IS NOT NULL AND keyword <> '' GROUP BY k ORDER BY cnt DESC LIMIT 20").bind(sinceIso, upto, site).all();
+            return new Response(JSON.stringify({ok:true, op:'visits', site:site,
+              rows: rows.results||[], src: src.results||[], dev: dev.results||[], kw: kw.results||[]}),
+              { headers: { 'Content-Type':'application/json' } });
           } else if (b.op === 'page') {
             q = await env.DB.prepare("SELECT site, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ? AND page = ? GROUP BY site, type").bind(sinceIso, upto, b.page || '').all();
           } else if (b.op === 'ua') {
