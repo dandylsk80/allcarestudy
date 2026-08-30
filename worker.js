@@ -1,3 +1,19 @@
+/* IndexNow 폴백: api.indexnow.org / www.bing.com 은 Cloudflare Workers 의 공용
+   아웃바운드 IP 에 429(TooManyRequests)를 반환하는 경우가 많다. IndexNow 는 참여
+   엔드포인트 한 곳만 성공하면 나머지 엔진으로 전파되므로 순차 폴백한다. */
+const INDEXNOW_FALLBACK_EPS = ["https://api.indexnow.org/indexnow","https://yandex.com/indexnow","https://search.seznam.cz/indexnow"];
+async function indexnowFetch(opt){
+  let last=null;
+  for(const ep of INDEXNOW_FALLBACK_EPS){
+    try{
+      const r=await fetch(ep,opt);
+      if(r.status>=200&&r.status<300) return r;
+      last=r;
+    }catch(e){}
+  }
+  return last||{status:0};
+}
+
 
 const SCHOOL_DB={};
 
@@ -9981,7 +9997,7 @@ async function submitIndexNowChunk(urlList) {
   const headers = {'Content-Type': 'application/json; charset=utf-8'};
   const [naver, bing] = await Promise.all([
     fetch('https://searchadvisor.naver.com/indexnow', { method: 'POST', headers, body }).then(r=>r.status).catch(()=>0),
-    fetch('https://api.indexnow.org/indexnow', { method: 'POST', headers, body }).then(r=>r.status).catch(()=>0)
+    indexnowFetch({ method: 'POST', headers, body }).then(r=>r.status).catch(()=>0)
   ]);
   return { naver, bing, count: urlList.length };
 }
@@ -10092,7 +10108,7 @@ export default {
       });
 
       
-      const bingRes = await fetch('https://api.indexnow.org/indexnow', {
+      const bingRes = await indexnowFetch({
         method: 'POST',
         headers: {'Content-Type': 'application/json; charset=utf-8'},
         body: JSON.stringify({
