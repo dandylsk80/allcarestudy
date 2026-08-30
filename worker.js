@@ -10419,6 +10419,8 @@ export default {
             q = await env.DB.prepare("SELECT ref, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY ref ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
           } else if (b.op === 'ips') {
             q = await env.DB.prepare("SELECT ip, COUNT(*) cnt, COUNT(DISTINCT page) pages, MIN(ts) first, MAX(ts) last FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY ip ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
+          } else if (b.op === 'page') {
+            q = await env.DB.prepare("SELECT site, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ? AND page = ? GROUP BY site, type").bind(sinceIso, upto, b.page || '').all();
           } else if (b.op === 'ua') {
             q = await env.DB.prepare("SELECT ua, bot, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM ua_probe WHERE ts >= ? AND site = ? GROUP BY ua, bot ORDER BY cnt DESC LIMIT 60").bind(sinceIso, site).all();
           } else {
