@@ -10425,6 +10425,16 @@ export default {
           if (!env || !env.DB) return new Response(JSON.stringify({ok:false, error:'no DB'}), { headers: { 'Content-Type':'application/json' } });
           const site = b.site || 'allcarestudy';
           let q;
+          if (b.op === 'migrate') {
+            // events 테이블에 방문 상세용 컬럼 추가 (이미 있으면 건너뜀 · 기존 행은 NULL 유지)
+            const cols = ['ua TEXT', 'device TEXT', 'source TEXT', 'keyword TEXT'];
+            const done = [];
+            for (const c of cols) {
+              try { await env.DB.prepare('ALTER TABLE events ADD COLUMN ' + c).run(); done.push(c.split(' ')[0] + ': 추가됨'); }
+              catch (e) { done.push(c.split(' ')[0] + ': 건너뜀 (' + String(e).slice(0,80) + ')'); }
+            }
+            return new Response(JSON.stringify({ok:true, done:done}), { headers: { 'Content-Type':'application/json' } });
+          }
           if (b.op === 'init') {
             await env.DB.prepare("CREATE TABLE IF NOT EXISTS ua_probe (ts TEXT, site TEXT, ua TEXT, ip TEXT, page TEXT, bot INTEGER)").run();
             return new Response(JSON.stringify({ok:true, done:'ua_probe ready'}), { headers: { 'Content-Type':'application/json' } });
