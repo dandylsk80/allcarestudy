@@ -10003,6 +10003,12 @@ export default {
           await env.DB.prepare('INSERT INTO events (site,type,page,ref,ip,ts) VALUES (?,?,?,?,?,?)')
             .bind('allcarestudy', b.type, (b.page||'').slice(0,300), (b.ref||'').slice(0,120), ip, ts).run();
         }
+        // 진단용: 어떤 UA가 view 를 발생시키는지 별도 테이블에 기록 (events 집계에는 영향 없음)
+        if (env && env.DB && b.type === 'view') {
+          const probe = env.DB.prepare('INSERT INTO ua_probe (ts,site,ua,ip,page,bot) VALUES (?,?,?,?,?,?)')
+            .bind(ts, 'allcarestudy', ua.slice(0,250), ip, (b.page||'').slice(0,200), isBot ? 1 : 0).run().catch(function(){});
+          if (ctx && ctx.waitUntil) ctx.waitUntil(probe);
+        }
         if (!isBot && TG_LABEL[b.type]) {
           const tgp = tgNotify(env, b.type, (b.page||'/').slice(0,300), b.ref||'', ua);
           if (ctx && ctx.waitUntil) ctx.waitUntil(tgp); else await tgp;
@@ -10397,6 +10403,30 @@ export default {
         else if (range === '7d') { since = new Date(now.getTime()-7*864e5); }
         else { since = new Date(now.getTime()-30*864e5); }
         const sinceIso = since.toISOString();
+
+        // === 진단용 조회 (봇 트래픽 판별) ===
+        if (b.op) {
+          if (!env || !env.DB) return new Response(JSON.stringify({ok:false, error:'no DB'}), { headers: { 'Content-Type':'application/json' } });
+          const site = b.site || 'allcarestudy';
+          let q;
+          if (b.op === 'init') {
+            await env.DB.prepare("CREATE TABLE IF NOT EXISTS ua_probe (ts TEXT, site TEXT, ua TEXT, ip TEXT, page TEXT, bot INTEGER)").run();
+            return new Response(JSON.stringify({ok:true, done:'ua_probe ready'}), { headers: { 'Content-Type':'application/json' } });
+          }
+          if (b.op === 'pages') {
+            q = await env.DB.prepare("SELECT page, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY page ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
+          } else if (b.op === 'refs') {
+            q = await env.DB.prepare("SELECT ref, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY ref ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
+          } else if (b.op === 'ips') {
+            q = await env.DB.prepare("SELECT ip, COUNT(*) cnt, COUNT(DISTINCT page) pages, MIN(ts) first, MAX(ts) last FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY ip ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
+          } else if (b.op === 'ua') {
+            q = await env.DB.prepare("SELECT ua, bot, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM ua_probe WHERE ts >= ? AND site = ? GROUP BY ua, bot ORDER BY cnt DESC LIMIT 60").bind(sinceIso, site).all();
+          } else {
+            return new Response(JSON.stringify({ok:false, error:'unknown op'}), { headers: { 'Content-Type':'application/json' } });
+          }
+          return new Response(JSON.stringify({ok:true, op:b.op, rows:q.results||[]}), { headers: { 'Content-Type':'application/json' } });
+        }
+
         let rows = { results: [] }, recent = { results: [] };
         if (env && env.DB) {
           rows = await env.DB.prepare("SELECT site, type, COUNT(*) as cnt, COUNT(DISTINCT ip) as uniq FROM events WHERE ts >= ? AND ts < ? GROUP BY site, type").bind(sinceIso, upto).all();
