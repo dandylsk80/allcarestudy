@@ -10100,6 +10100,28 @@ function llmsTxt() {
 `;
 }
 
+/* 기존 RSS 를 Atom 으로 변환한다 (피드 항목 로직을 중복 구현하지 않기 위함) */
+function atomFromRss(xml, selfUrl){
+  const one=function(s,t){ const m=s.match(new RegExp("<"+t+"(?:\\s[^>]*)?>([\\s\\S]*?)<\\/"+t+">")); return m?m[1]:""; };
+  const head=xml.split("<item>")[0];
+  const chTitle=one(head,"title"), chLink=one(head,"link"), chDesc=one(head,"description");
+  const items=xml.match(/<item>[\s\S]*?<\/item>/g)||[];
+  const now=new Date().toISOString();
+  let x='<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko">';
+  x+="<title>"+chTitle+"</title>";
+  if(chDesc) x+="<subtitle>"+chDesc+"</subtitle>";
+  x+='<link href="'+chLink+'"/><link rel="self" href="'+selfUrl+'"/>';
+  x+="<id>"+(chLink||selfUrl)+"</id><updated>"+now+"</updated>";
+  for(const it of items){
+    const t=one(it,"title"), l=one(it,"link")||one(it,"guid"), d=one(it,"description"), pd=one(it,"pubDate");
+    let up=now; if(pd){ const dt=new Date(pd); if(!isNaN(dt.getTime())) up=dt.toISOString(); }
+    x+="<entry><title>"+t+"</title>";
+    x+='<link href="'+l+'"/><id>'+l+"</id><updated>"+up+"</updated>";
+    if(d) x+="<summary>"+d+"</summary>";
+    x+="</entry>";
+  }
+  return x+"</feed>";
+}
 function serveRSS() {
   const now = new Date();
   const pubDate = now.toUTCString();
@@ -10513,6 +10535,7 @@ export default {
       }
     }
     if (path === '/engineer-lab') return new Response(makeEngineerLabPage(), { headers: h });
+    if(path==="/og.svg") return new Response(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F2044"/><stop offset="1" stop-color="#3B82F6"/></linearGradient></defs><rect width="1200" height="630" fill="url(#g)"/><rect x="60" y="60" width="1080" height="510" rx="28" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2"/><text x="600" y="300" text-anchor="middle" font-family="Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif" font-size="86" font-weight="800" fill="#ffffff">올케어스터디</text><text x="600" y="378" text-anchor="middle" font-family="Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif" font-size="34" font-weight="500" fill="rgba(255,255,255,.88)">전국 지역별 1:1 과외·학원 정보</text><text x="600" y="530" text-anchor="middle" font-family="Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif" font-size="28" font-weight="600" fill="rgba(255,255,255,.72)">allcarestudy.com</text></svg>`,{headers:{"content-type":"image/svg+xml; charset=UTF-8","cache-control":"public, max-age=86400"}});
     if (path === '/sitemap.xml') return serveSitemapIndex();
     if (path === '/sitemap-naver.xml') return serveSitemapIndex(true);
     if (path === '/sitemap-priority.xml') return servePrioritySitemap();
@@ -10534,6 +10557,7 @@ export default {
       const n = parseInt(path.match(/\d+/)[0]);
       return serveSitemapChunk(n);
     }
+    if(path==="/atom.xml"||path==="/atom") return new Response(atomFromRss(await (serveRSS()).text(), "https://allcarestudy.com/atom.xml"),{headers:{"content-type":"application/atom+xml; charset=UTF-8","cache-control":"public, max-age=3600"}});
     if (path === '/rss.xml' || path === '/feed' || path === '/feed.xml') return serveRSS();
 
     
