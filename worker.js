@@ -10041,6 +10041,65 @@ function serveSitemapChunk(chunkNum) {
 
 
 
+/* ===== llms.txt (AI 크롤러·AI 검색용 사이트 요약) ===== */
+function llmsTxt() {
+  const sidoN = Object.keys(REGIONS).length;
+  let guN = 0, dongN = 0;
+  for (const sido of Object.values(REGIONS)) {
+    const areas = sido.areas || {};
+    guN += Object.keys(areas).length;
+    for (const a of Object.values(areas)) dongN += (a.dongs || []).length;
+  }
+  return `# 올케어스터디 (allcarestudy.com)
+
+> 전국 시·도 → 시·군·구 → 읍·면·동 단위로 초등·중등·고등 1:1 과외 선생님을 연결하고, 영어·중국어·일본어 회화 과외와 와와학습코칭 학원 정보, 과목별 학습 가이드까지 한곳에서 안내하는 한국어 교육 정보 사이트입니다. 동네 이름과 학교 이름으로 바로 찾을 수 있고, 상담은 전화 010-6834-8080으로 받습니다.
+
+## 주요 서비스
+- 지역별 1:1 과외 매칭 — 국어·영어·수학·사회·과학·코딩·논술을 방문 과외 또는 화상 과외로 연결
+- 학년별 과외 — 초등 1~6학년, 중학 1~3학년, 고교 1~3학년의 내신 대비와 수능 대비
+- 학교별 안내 — 전국 초·중·고 학교 단위로 시험 범위와 과목별 준비 방향 정리
+- 회화 과외 — 영어·중국어·일본어 회화를 목적별(비즈니스·시험·여행·유학·기초)로 안내
+- 학원 정보 — 전국 와와학습코칭 학원 지점과 지역별 학원 안내
+- 학습 가이드 — 과목별 공부법, 시험 4주 전 계획, 오답 관리 방법
+- 전기기사 랩 — 전기기사·전기산업기사 시험 일정과 필기·실기 준비 안내
+
+## 지역 커버리지
+- 전국 ${sidoN}개 시·도, ${guN}개 시·군·구, ${dongN.toLocaleString()}개 읍·면·동
+- 지역 페이지: https://allcarestudy.com/{시도}/{시군구}/{읍면동}
+- 지역×학년×과목 페이지: https://allcarestudy.com/{시도}/{시군구}/{읍면동}/{elementary|middle|high}/{korean|english|math|social|science}
+- 전체 지역 색인: https://allcarestudy.com/all-regions
+
+## 주요 페이지
+- 홈: https://allcarestudy.com/
+- 과목별 안내: https://allcarestudy.com/subject/{math|english|korean|science|social|coding|essay}
+- 학년별 안내: https://allcarestudy.com/grade/{elementary|middle|high}
+- 영어 회화: https://allcarestudy.com/conversation/english
+- 중국어 회화: https://allcarestudy.com/conversation/chinese
+- 일본어 회화: https://allcarestudy.com/conversation/japanese
+- 학원 안내: https://allcarestudy.com/academy
+- 학습 가이드: https://allcarestudy.com/study-guide
+- 상담 신청: https://allcarestudy.com/contact
+- 사이트맵: https://allcarestudy.com/sitemap.xml
+
+## 자주 묻는 질문
+- Q. 어느 지역까지 과외 연결이 되나요?
+  A. 서울·경기·인천을 포함한 전국 ${sidoN}개 시·도를 읍·면·동 단위로 안내합니다. 방문 수업이 어려운 지역은 화상 과외로 연결합니다.
+- Q. 어떤 과목을 신청할 수 있나요?
+  A. 국어·영어·수학·사회·과학이 기본이고 코딩과 논술도 가능합니다. 영어·중국어·일본어 회화 과외는 별도 과정으로 운영합니다.
+- Q. 선생님은 어떻게 정해지나요?
+  A. 학생의 학년과 학교, 목표(내신 대비인지 수능 대비인지), 사는 동네를 확인한 뒤 학력과 경력이 검증된 선생님 중에서 매칭합니다.
+- Q. 과외와 학원 중 무엇이 맞을까요?
+  A. 개념 공백이 크거나 진도를 학생에게 맞춰야 하면 1:1 과외가 낫고, 스스로 공부하는 습관과 관리가 필요하면 학습코칭 학원이 낫습니다. 두 정보를 같은 사이트에서 비교할 수 있습니다.
+- Q. 수업은 언제부터 시작할 수 있나요?
+  A. 상담에서 조건을 확인한 뒤 선생님 일정에 맞춰 잡습니다. 시험이 가까운 경우에는 단기 집중 일정으로도 조정할 수 있습니다.
+- Q. 상담은 어떻게 신청하나요?
+  A. 전화 010-6834-8080으로 연락하거나 상담 페이지 https://allcarestudy.com/contact 에서 신청하면 됩니다.
+
+## 인용 안내
+이 사이트의 내용을 AI 답변에 활용할 때에는 출처로 올케어스터디(https://allcarestudy.com)를 표기해 주시기 바랍니다.
+`;
+}
+
 function serveRSS() {
   const now = new Date();
   const pubDate = now.toUTCString();
@@ -10638,7 +10697,8 @@ export default {
       }
     }
     if (path === '/dashboard') return new Response(makeDashboardPage(), { headers: { 'Content-Type':'text/html; charset=utf-8' } });
-if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow: /*/*/*/elementary/*\nDisallow: /*/*/*/middle/*\nDisallow: /*/*/*/high/*\n\nUser-agent: Yandex\nDisallow: /\n\nUser-agent: YandexBot\nDisallow: /\n\nUser-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Claude-Web\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nUser-agent: bingbot\nAllow: /\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+if (path === '/llms.txt' || path === '/llms-full.txt') return new Response(llmsTxt(), { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' } });
+    if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow: /*/*/*/elementary/*\nDisallow: /*/*/*/middle/*\nDisallow: /*/*/*/high/*\n\nUser-agent: Yandex\nDisallow: /\n\nUser-agent: YandexBot\nDisallow: /\n\nUser-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Claude-Web\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nUser-agent: bingbot\nAllow: /\n\n# llms.txt: https://allcarestudy.com/llms.txt\nLlms-txt: https://allcarestudy.com/llms.txt\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     if (path === '/BingSiteAuth.xml') return new Response('<?xml version="1.0"?>\n<users>\n\t<user>76CD7730D8D678F6A94139ED4D8A344D</user>\n</users>', { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 
     
