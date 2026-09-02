@@ -10865,6 +10865,14 @@ export default {
             // +9시간을 더해 KST 기준 날짜로 묶는다 (대시보드의 '오늘' 경계와 맞춘다).
             const DAY = "substr(datetime(replace(replace(ts,'T',' '),'Z',''),'+9 hours'),1,10)";
             q = await env.DB.prepare("SELECT " + DAY + " d, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ? GROUP BY d, type ORDER BY d").bind(sinceIso, upto).all();
+          } else if (b.op === 'direct') {
+            // 유입경로가 direct 인 view 트래픽을 IP·UA·페이지로 쪼개 본다 (봇 판별용)
+            const SRC = b.src || 'direct';
+            const W = " FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' AND COALESCE(source,'') = ? ";
+            const ips = await env.DB.prepare("SELECT ip, COUNT(*) cnt, COUNT(DISTINCT page) pages, COUNT(DISTINCT ua) uas, MAX(ua) ua, MIN(ts) first, MAX(ts) last" + W + "GROUP BY ip ORDER BY cnt DESC LIMIT 60").bind(sinceIso, upto, site, SRC).all();
+            const uas = await env.DB.prepare("SELECT COALESCE(NULLIF(ua,''),'(없음)') ua, COUNT(*) cnt, COUNT(DISTINCT ip) uniq" + W + "GROUP BY ua ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site, SRC).all();
+            const pgs = await env.DB.prepare("SELECT page, COUNT(*) cnt, COUNT(DISTINCT ip) uniq" + W + "GROUP BY page ORDER BY cnt DESC LIMIT 30").bind(sinceIso, upto, site, SRC).all();
+            return new Response(JSON.stringify({ok:true, op:'direct', src:SRC, ips:ips.results||[], uas:uas.results||[], pages:pgs.results||[]}), { headers: { 'Content-Type':'application/json' } });
           } else if (b.op === 'page') {
             q = await env.DB.prepare("SELECT site, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ? AND page = ? GROUP BY site, type").bind(sinceIso, upto, b.page || '').all();
           } else if (b.op === 'ua') {
