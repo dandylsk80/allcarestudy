@@ -10656,7 +10656,10 @@ export default {
     if (path === '/api/dashboard' && request.method === 'POST') {
       try {
         const b = await request.json();
-        if (b.pw !== '808080') return new Response(JSON.stringify({ok:false}), { headers: { 'Content-Type':'application/json' } });
+        // 대시보드 비밀번호는 Cloudflare 시크릿(DASH_PW)에서 읽는다. 소스에 두지 않는다.
+        const DASH_PW = (env && env.DASH_PW) || '';
+        if (!DASH_PW) return new Response(JSON.stringify({ok:false, error:'DASH_PW 시크릿이 등록되어 있지 않습니다'}), { status:503, headers: { 'Content-Type':'application/json' } });
+        if (b.pw !== DASH_PW) return new Response(JSON.stringify({ok:false}), { headers: { 'Content-Type':'application/json' } });
         const range = b.range || 'today';
         const now = new Date();
         let since, upto = '9999-12-31';
