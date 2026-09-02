@@ -10635,7 +10635,9 @@ export default {
       if (i === 2 && DONG_EN[p]) return DONG_EN[p];
       return p;
     });
-    const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0' };
+    /* 예전에는 전 페이지가 no-store 라 재방문에도 매번 새로 받았다. 지역·과목 페이지는
+   내용이 자주 바뀌지 않으므로 10분 캐시로 바꾼다(대시보드는 자체 헤더를 쓴다). */
+      const h = { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'public, max-age=600' };
 
     
     const corsHeaders = {
