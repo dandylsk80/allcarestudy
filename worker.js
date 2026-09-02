@@ -8373,6 +8373,17 @@ th{color:#64748b;font-weight:600}
 .pager button{border:1px solid #cbd5e1;background:#fff;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;color:#334155}
 .pager button.on{background:#2563eb;color:#fff;border-color:#2563eb}
 .muted{color:#94a3b8;font-size:13px;padding:8px 0}
+.chart{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin-bottom:14px}
+.chart h3{font-size:14px;color:#0f172a}
+.chhead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.chlegend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:#64748b;margin-bottom:6px}
+.chlegend .lg{display:inline-flex;align-items:center;gap:5px}
+.chlegend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.chmuted{color:#94a3b8;font-size:12px;padding:28px 0;text-align:center}
+.chnote{font-size:11px;color:#94a3b8;margin-top:8px}
+#trendTabs button{background:#fff;border:1px solid #e2e8f0;color:#64748b;padding:5px 10px;border-radius:7px;margin-left:5px;cursor:pointer;font-size:12px}
+#trendTabs button.on{background:#2563eb;border-color:#2563eb;color:#fff}
+@media(max-width:520px){.chart{padding:12px}.chart h3{font-size:13px}#trendTabs button{padding:5px 8px;font-size:11px;margin-left:4px}}
 </style></head><body>
 <div id="login" class="login">
   <h1>통합 대시보드</h1>
@@ -8394,6 +8405,28 @@ th{color:#64748b;font-weight:600}
     <div class="card"><div class="label">전체 방문자</div><div class="num" id="totView">0</div></div>
     <div class="card"><div class="label">전체 클릭</div><div class="num" id="totClick">0</div></div>
     <div class="card"><div class="label">순 전환 (IP중복제거)</div><div class="num" id="totUniq">0</div></div>
+  </div>
+  <div class="chart">
+    <div class="chhead"><h3>기간별 추이</h3>
+      <div id="trendTabs">
+        <button data-r="7d" onclick="loadTrend('7d',this)">7일</button>
+        <button data-r="30d" class="on" onclick="loadTrend('30d',this)">30일</button>
+        <button data-r="90d" onclick="loadTrend('90d',this)">90일</button>
+      </div>
+    </div>
+    <div class="chlegend" id="trendLegend"></div>
+    <div id="chTrend"></div>
+  </div>
+  <div class="chart">
+    <div class="chhead"><h3>카테고리별 비교</h3></div>
+    <div class="chlegend" id="catsLegend"></div>
+    <div id="chCats"></div>
+    <div class="chnote">상단 기간 탭(오늘 · 어제 · 7일 · 30일) 기준 합계입니다.</div>
+  </div>
+  <div class="chart">
+    <div class="chhead"><h3>사이트별 방문자</h3></div>
+    <div id="chSites"></div>
+    <div class="chnote">막대를 클릭하면 그 사이트의 방문 상세가 열립니다.</div>
   </div>
   <div class="grid" id="sites"></div>
   <div class="hist">
@@ -8451,6 +8484,11 @@ function load(range,btn){
     document.getElementById('sites').innerHTML=html;
     var vrs=document.querySelectorAll('.vrow');
     for(var q=0;q<vrs.length;q++) vrs[q].onclick=function(){openVisits(this.getAttribute('data-vsite'));};
+    LASTROWS=rows;
+    document.getElementById('trendLegend').innerHTML=chLegend();
+    document.getElementById('catsLegend').innerHTML=chLegend();
+    drawCats();drawSites();
+    if(TRENDDATA===null) loadTrend(TRENDRANGE, document.querySelector('#trendTabs button.on'));
     var rec=d.recent||[];var hh='';
     for(var j=0;j<rec.length;j++){var e=rec[j];var tm=(e.ts||'').replace('T',' ').slice(5,16);
       hh+='<tr><td>'+tm+'</td><td>'+siteLabel(e.site)+'</td><td><span class="tag '+esc(e.type)+'">'+typeLabel(e.type)+'</span></td><td>'+esc(e.page||'')+'</td><td>'+(e.ref?(e.ref.indexOf('naver')>=0?'네이버':e.ref.indexOf('google')>=0?'구글':e.ref.indexOf('daum')>=0?'다음':'기타'):'직접')+'</td></tr>';}
@@ -8511,6 +8549,124 @@ function renderVisits(){
   document.getElementById('vpager').innerHTML=p;
 }
 function goVisits(n){var pages=Math.ceil(VDATA.rows.length/VPER);if(n<0||n>=pages)return;VPAGE=n;renderVisits();}
+/* ===== 그래프 (외부 라이브러리 없이 순수 SVG) ===== */
+var CH_KEYS=['view','tel','sms','contact'];
+var CH_COLORS={view:'#2563eb',tel:'#16a34a',sms:'#f59e0b',contact:'#db2777'};
+var CH_NAMES={view:'방문자',tel:'전화',sms:'문자',contact:'상담'};
+var LASTROWS=[];
+var TRENDRANGE='30d';
+var TRENDDATA=null;
+var CHRZ=null;
+function svgEsc(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function chWidth(el){var w=el.clientWidth||(el.parentNode&&el.parentNode.clientWidth)||640;return Math.max(300,Math.round(w));}
+function niceMax(v){if(!(v>0))return 1;var p=Math.pow(10,Math.floor(Math.log(v)/Math.LN10));var n=v/p;var m=n<=1?1:n<=2?2:n<=5?5:10;return m*p;}
+function chLegend(){var h='';for(var i=0;i<CH_KEYS.length;i++){var k=CH_KEYS[i];h+='<span class="lg"><i style="background:'+CH_COLORS[k]+'"></i>'+CH_NAMES[k]+'</span>';}return h;}
+function siteAgg(){var by={},i;for(i=0;i<LASTROWS.length;i++){var r=LASTROWS[i];if(!by[r.site])by[r.site]={};by[r.site][r.type]=r.cnt;}return by;}
+
+/* 1. 기간별 추이 (선그래프) */
+function drawTrend(){
+  var el=document.getElementById('chTrend');if(!el)return;
+  if(!TRENDDATA){el.innerHTML='<div class="chmuted">불러오는 중…</div>';return;}
+  var days=TRENDDATA.days,series=TRENDDATA.series,i,j;
+  if(!days.length){el.innerHTML='<div class="chmuted">해당 기간에 데이터가 없습니다</div>';return;}
+  var W=chWidth(el),H=W<520?220:270,padL=46,padR=14,padT=14,padB=30;
+  var iw=W-padL-padR,ih=H-padT-padB,mx=0;
+  for(i=0;i<series.length;i++)for(j=0;j<series[i].vals.length;j++)if(series[i].vals[j]>mx)mx=series[i].vals[j];
+  mx=niceMax(mx);
+  var n=days.length,step=n>1?iw/(n-1):0;
+  function X(k){return padL+step*k;}
+  function Y(v){return padT+ih-(v/mx)*ih;}
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
+  for(i=0;i<=4;i++){var v=Math.round(mx*i/4),yy=Y(v);
+    s+='<line x1="'+padL+'" y1="'+yy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+yy.toFixed(1)+'" stroke="#e2e8f0"/>';
+    s+='<text x="'+(padL-7)+'" y="'+(yy+4).toFixed(1)+'" text-anchor="end" font-size="10" fill="#94a3b8">'+v+'</text>';}
+  var lstep=Math.max(1,Math.ceil(n/(W<520?4:8)));
+  for(i=0;i<n;i+=lstep) s+='<text x="'+X(i).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle" font-size="10" fill="#94a3b8">'+days[i].slice(5)+'</text>';
+  for(i=0;i<series.length;i++){var sv=series[i],d='';
+    for(j=0;j<sv.vals.length;j++) d+=(j?' L':'M')+X(j).toFixed(1)+' '+Y(sv.vals[j]).toFixed(1);
+    s+='<path d="'+d+'" fill="none" stroke="'+sv.color+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+    if(n<=45) for(j=0;j<sv.vals.length;j++)
+      s+='<circle cx="'+X(j).toFixed(1)+'" cy="'+Y(sv.vals[j]).toFixed(1)+'" r="2.4" fill="'+sv.color+'"><title>'+days[j]+' · '+sv.name+' '+sv.vals[j]+'</title></circle>';}
+  el.innerHTML=s+'</svg>';
+}
+function loadTrend(range,btn){
+  TRENDRANGE=range;
+  if(btn){var bs=document.querySelectorAll('#trendTabs button');for(var q=0;q<bs.length;q++)bs[q].className='';btn.className='on';}
+  var el=document.getElementById('chTrend');if(el)el.innerHTML='<div class="chmuted">불러오는 중…</div>';
+  fetch('/api/dashboard',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pw:PW,range:range,op:'series'})})
+  .then(function(r){return r.json();}).then(function(d){
+    if(!d.ok){TRENDDATA={days:[],series:[]};drawTrend();return;}
+    var rows=d.rows||[],map={},dset={},i;
+    for(i=0;i<rows.length;i++){var r=rows[i];if(!map[r.d])map[r.d]={};map[r.d][r.type]=r.cnt;dset[r.d]=1;}
+    var keys=Object.keys(dset).sort(),full=[];
+    if(keys.length){var cur=new Date(keys[0]+'T00:00:00Z'),end=new Date(keys[keys.length-1]+'T00:00:00Z');
+      while(cur<=end){full.push(cur.toISOString().slice(0,10));cur=new Date(cur.getTime()+86400000);}}
+    var series=[];
+    for(i=0;i<CH_KEYS.length;i++){var k=CH_KEYS[i],vals=[];
+      for(var m=0;m<full.length;m++)vals.push((map[full[m]]&&map[full[m]][k])||0);
+      series.push({name:CH_NAMES[k],color:CH_COLORS[k],vals:vals});}
+    TRENDDATA={days:full,series:series};drawTrend();
+  }).catch(function(){TRENDDATA={days:[],series:[]};drawTrend();});
+}
+
+/* 2. 카테고리별 비교 (막대) */
+function drawCats(){
+  var el=document.getElementById('chCats');if(!el)return;
+  var GN={edu:'과외',aca:'학원',ben:'더세이브',pow:'파워'},order=['edu','aca','ben','pow'];
+  var by=siteAgg(),acc={},i,j;
+  for(i=0;i<SITE_LIST.length;i++){var g=SITE_LIST[i][0],sk=SITE_LIST[i][1];
+    if(!acc[g])acc[g]={view:0,tel:0,sms:0,contact:0};
+    var t=by[sk]||{};
+    for(j=0;j<CH_KEYS.length;j++)acc[g][CH_KEYS[j]]+=(t[CH_KEYS[j]]||0);}
+  var groups=[];
+  for(i=0;i<order.length;i++) if(acc[order[i]]){var a=acc[order[i]];groups.push({name:GN[order[i]],vals:[a.view,a.tel,a.sms,a.contact]});}
+  if(!groups.length){el.innerHTML='<div class="chmuted">데이터가 없습니다</div>';return;}
+  var W=chWidth(el),H=W<520?230:260,padL=46,padR=14,padT=18,padB=34;
+  var iw=W-padL-padR,ih=H-padT-padB,mx=0;
+  for(i=0;i<groups.length;i++)for(j=0;j<4;j++)if(groups[i].vals[j]>mx)mx=groups[i].vals[j];
+  mx=niceMax(mx);
+  var gw=iw/groups.length,bw=Math.min(22,(gw-14)/4);
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
+  for(i=0;i<=4;i++){var v=Math.round(mx*i/4),yy=padT+ih-(v/mx)*ih;
+    s+='<line x1="'+padL+'" y1="'+yy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+yy.toFixed(1)+'" stroke="#e2e8f0"/>';
+    s+='<text x="'+(padL-7)+'" y="'+(yy+4).toFixed(1)+'" text-anchor="end" font-size="10" fill="#94a3b8">'+v+'</text>';}
+  for(i=0;i<groups.length;i++){
+    var gx=padL+gw*i+(gw-bw*4)/2;
+    for(j=0;j<4;j++){
+      var val=groups[i].vals[j],h=mx?(val/mx)*ih:0;
+      if(val>0&&h<2)h=2;
+      var x=gx+bw*j,y=padT+ih-h;
+      s+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+(bw-2).toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2" fill="'+CH_COLORS[CH_KEYS[j]]+'"><title>'+groups[i].name+' · '+CH_NAMES[CH_KEYS[j]]+' '+val+'</title></rect>';
+      if(val>0) s+='<text x="'+(x+(bw-2)/2).toFixed(1)+'" y="'+(y-3).toFixed(1)+'" text-anchor="middle" font-size="9" fill="#64748b">'+val+'</text>';}
+    s+='<text x="'+(padL+gw*i+gw/2).toFixed(1)+'" y="'+(H-11)+'" text-anchor="middle" font-size="11" fill="#334155">'+groups[i].name+'</text>';}
+  el.innerHTML=s+'</svg>';
+}
+
+/* 3. 사이트별 비교 (가로 막대) */
+function drawSites(){
+  var el=document.getElementById('chSites');if(!el)return;
+  var by=siteAgg(),items=[],i;
+  for(i=0;i<SITE_LIST.length;i++){var sk=SITE_LIST[i][1];items.push({key:sk,name:SITE_LIST[i][2],val:((by[sk]||{}).view)||0});}
+  items.sort(function(a,b){return b.val-a.val;});
+  var W=chWidth(el),rowH=W<520?24:28,H=items.length*rowH+8;
+  var labelW=W<520?96:132,padR=46,mx=niceMax(items.length?items[0].val:0);
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
+  for(i=0;i<items.length;i++){
+    var y=i*rowH+4,bw=mx?(W-labelW-padR)*(items[i].val/mx):0;
+    if(items[i].val>0&&bw<2)bw=2;
+    var cy=y+(rowH-4)/2+4;
+    s+='<g data-csite="'+svgEsc(items[i].key)+'" style="cursor:pointer">';
+    s+='<rect x="0" y="'+y+'" width="'+W+'" height="'+(rowH-4)+'" fill="#ffffff" fill-opacity="0"/>';
+    s+='<text x="0" y="'+cy+'" font-size="'+(W<520?10:11)+'" fill="#334155">'+svgEsc(items[i].name)+'</text>';
+    s+='<rect x="'+labelW+'" y="'+(y+3)+'" width="'+bw.toFixed(1)+'" height="'+(rowH-10)+'" rx="3" fill="'+CH_COLORS.view+'"/>';
+    s+='<text x="'+(labelW+bw+6).toFixed(1)+'" y="'+cy+'" font-size="10" fill="#64748b">'+items[i].val+'</text>';
+    s+='<title>'+svgEsc(items[i].name)+' 방문자 '+items[i].val+' · 클릭하면 방문 상세</title></g>';}
+  el.innerHTML=s+'</svg>';
+  var gs=el.querySelectorAll('[data-csite]');
+  for(i=0;i<gs.length;i++) gs[i].onclick=function(){openVisits(this.getAttribute('data-csite'));};
+}
+function drawAllCharts(){drawTrend();drawCats();drawSites();}
+window.addEventListener('resize',function(){clearTimeout(CHRZ);CHRZ=setTimeout(drawAllCharts,180);});
 </script></body></html>`;
 }
 
@@ -10666,6 +10822,7 @@ export default {
         if (range === 'today') { since = new Date(now); since.setUTCHours(-9,0,0,0); }
         else if (range === 'yesterday') { since = new Date(now); since.setUTCDate(since.getUTCDate()-1); since.setUTCHours(-9,0,0,0); const e = new Date(since.getTime()+864e5); upto = e.toISOString(); }
         else if (range === '7d') { since = new Date(now.getTime()-7*864e5); }
+        else if (range === '90d') { since = new Date(now.getTime()-90*864e5); }
         else { since = new Date(now.getTime()-30*864e5); }
         const sinceIso = since.toISOString();
 
@@ -10703,6 +10860,11 @@ export default {
             return new Response(JSON.stringify({ok:true, op:'visits', site:site,
               rows: rows.results||[], src: src.results||[], dev: dev.results||[], kw: kw.results||[]}),
               { headers: { 'Content-Type':'application/json' } });
+          } else if (b.op === 'series') {
+            // ts 는 UTC ISO 문자열이다. SQLite 가 확실히 파싱하도록 'T'/'Z' 를 없앤 뒤
+            // +9시간을 더해 KST 기준 날짜로 묶는다 (대시보드의 '오늘' 경계와 맞춘다).
+            const DAY = "substr(datetime(replace(replace(ts,'T',' '),'Z',''),'+9 hours'),1,10)";
+            q = await env.DB.prepare("SELECT " + DAY + " d, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ? GROUP BY d, type ORDER BY d").bind(sinceIso, upto).all();
           } else if (b.op === 'page') {
             q = await env.DB.prepare("SELECT site, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ? AND page = ? GROUP BY site, type").bind(sinceIso, upto, b.page || '').all();
           } else if (b.op === 'ua') {
