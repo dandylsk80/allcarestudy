@@ -1534,6 +1534,33 @@ function genUniqueContent(seedKey, sidoLabel, guLabel, dongLabel, subjectLabel, 
 
 
 
+/* 주변 지역: 같은 구·군의 다른 동을 먼저 채우고, 모자라면 같은 시·도의 다른 구·군으로 넓힌다 */
+function nearbyDongBlock(sido, ak, dongName) {
+  const reg = REGIONS[sido]; if (!reg) return '';
+  const sidoEn = SIDO_EN[sido] || sido;
+  const chip = 'display:inline-block;padding:8px 14px;margin:0 6px 6px 0;border:1px solid #BFDBFE;border-radius:8px;background:#EFF6FF;color:#1D4ED8;font-size:13px;font-weight:600;text-decoration:none';
+  const out = [], seen = new Set([dongName]);
+  const guEnOf = (a) => gugunEn(sidoEn, a) || DISTRICT_EN[a] || a;
+  for (const d of ((reg.areas[ak] || {}).dongs || [])) {
+    if (out.length >= 12 || seen.has(d)) continue;
+    seen.add(d); out.push({ d: d, a: ak });
+  }
+  if (out.length < 12) {
+    for (const [a, ar] of Object.entries(reg.areas || {})) {
+      if (a === ak) continue;
+      for (const d of (ar.dongs || [])) {
+        if (out.length >= 12 || seen.has(d)) continue;
+        seen.add(d); out.push({ d: d, a: a });
+      }
+      if (out.length >= 12) break;
+    }
+  }
+  if (!out.length) return '';
+  const links = out.map(o => `<a href="/${sidoEn}/${guEnOf(o.a)}/${DONG_EN[o.d] || toRoman(o.d)}" style="${chip}">${o.d}<span style="color:#9CA3AF;font-weight:500;margin-left:4px">${o.a}</span></a>`).join('');
+  return `<section style="margin:32px 0"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin-bottom:6px">주변 지역</h2>
+  <p style="color:#6B7280;font-size:14px;margin-bottom:12px">${reg.label || sido}의 다른 동네 과외 정보도 확인해 보세요.</p>
+  <div>${links}</div></section>`;
+}
 function makeDongMainPage(sidoEn, guEn, dongName) {
   let sido=null, ak=null, region=null, area=null;
   for(const [s,reg] of Object.entries(REGIONS)){
@@ -1668,6 +1695,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
       return html;
     })()}
   </div>
+  ${nearbyDongBlock(sido, ak, dong)}
   <div class="cta-box">
     <h3>${dong} 과외 무료 상담</h3>
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
