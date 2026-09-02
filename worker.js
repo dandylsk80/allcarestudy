@@ -10211,6 +10211,13 @@ function smLastmod(key){
   const periods = Math.floor((Date.now()/SM_DAY - off)/SM_PERIOD);
   return new Date((periods*SM_PERIOD + off)*SM_DAY).toISOString().slice(0,10);
 }
+/* RSS 정렬용 날짜: URL 마다 60일 주기로 밀린다. 매일 다른 1/60 묶음이 최신이 되어
+   "최근 항목 위주"를 유지하면서 피드가 날마다 바뀐다. */
+function rssRankDate(u){
+  const off = smHash(u) % 60;
+  const periods = Math.floor((Date.now()/SM_DAY - off)/60);
+  return new Date((periods*60 + off)*SM_DAY);
+}
 /* <loc> 뒤에 lastmod 가 없으면 채워 넣는다 (loc → lastmod → changefreq → priority 순서 유지) */
 function smAddLastmod(xml){
   return String(xml).replace(/<loc>([^<]+)<\/loc>(?!<lastmod>)/g, function(m, l){
@@ -10478,13 +10485,33 @@ function serveRSS() {
     }
   }
 
-  const itemXml = items.slice(0, 50).map(it => `
+  /* 위 고정 목록에 더해 전국 동네×학년×과목을 후보로 넣고, 매일 도는 갱신일 기준으로
+     최근 항목만 남긴다. 예전에는 강남 5개 동만 고정으로 나갔다. */
+  for (const [sido, reg] of Object.entries(REGIONS)) {
+    const se = SIDO_EN[sido] || sido;
+    for (const [ak, area] of Object.entries(reg.areas || {})) {
+      const ge = gugunEn(se, ak) || ak;
+      for (const dong of (area.dongs || [])) {
+        const de = DONG_EN[dong] || toRoman(dong);
+        for (const sk of ['수학', '영어', '국어']) {
+          items.push({
+            title: `${dong} 고등 ${sk}과외 | ${ak} ${dong} 1:1 맞춤 과외`,
+            link: `https://allcarestudy.com/${se}/${ge}/${de}/high/${SUBJECT_EN[sk] || sk}`,
+            desc: `${ak} ${dong} 고등 ${sk}과외. 내신·수능 대비 검증 선생님 1:1 매칭. 무료 상담 010-6834-8080`,
+          });
+        }
+      }
+    }
+  }
+  const ranked = items.map(it => ({ it: it, m: rssRankDate(it.link) }))
+    .sort((a, b) => b.m - a.m).slice(0, 50);
+  const itemXml = ranked.map(o => `
   <item>
-    <title><![CDATA[${it.title}]]></title>
-    <link>${it.link}</link>
-    <description><![CDATA[${it.desc}]]></description>
-    <pubDate>${pubDate}</pubDate>
-    <guid isPermaLink="true">${it.link}</guid>
+    <title><![CDATA[${o.it.title}]]></title>
+    <link>${o.it.link}</link>
+    <description><![CDATA[${o.it.desc}]]></description>
+    <pubDate>${o.m.toUTCString()}</pubDate>
+    <guid isPermaLink="true">${o.it.link}</guid>
   </item>`).join('');
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
