@@ -350,13 +350,49 @@ function tgDescribe(path) {
     return o;
   }
   if (p0 === 'conversation') {
+    /* /conversation/{lang}/{topic} — 주제까지 읽는다(주제 슬러그는 2단으로 겹치기도 한다) */
     o.kind = '회화 페이지';
-    o.extra = ({ english: '영어회화', chinese: '중국어회화', japanese: '일본어회화' })[seg[1]] || seg[1] || '';
+    const langKr = ({ english: '영어회화', chinese: '중국어회화', japanese: '일본어회화' })[seg[1]] || seg[1] || '';
+    const topicMap = ({ english: EN_TOPICS, chinese: CN_TOPICS, japanese: JP_TOPICS })[seg[1]];
+    let topic = '';
+    if (topicMap && seg[2]) {
+      const two = seg[3] ? seg[2] + '/' + seg[3] : null;
+      const hit = (two && topicMap[two]) || topicMap[seg[2]];
+      if (hit && hit.t) topic = hit.t;
+      else if (seg[1] === 'english' && typeof EN_CATS !== 'undefined' && EN_CATS[seg[2]]) {
+        topic = EN_CATS[seg[2]].n || seg[2];          /* 카테고리는 n, 주제는 t */
+      } else topic = seg.slice(2).join(' ');
+    }
+    o.extra = [langKr, topic].filter(Boolean).join(' · ');
     return o;
   }
   if (p0 === 'school') {
+    /* /school/{sido}/{gugun}/{school}/{subject} — 라우터와 같은 순서(E→M→H)로 학교를 찾아
+       페이지 제목과 같은 이름이 나오게 한다. 예전에는 시도만 읽고 반환해 뒤가 잘렸다. */
     o.kind = '학교별 페이지';
-    o.area = SIDO_MAP[seg[1]] || seg[1] || '';
+    const sidoEn = seg[1];
+    if (!sidoEn) return o;
+    const sidoKr = SIDO_MAP[sidoEn] || sidoEn;
+    if (seg.length === 2) { o.area = sidoKr + ' 학교별 과외'; return o; }
+    /* 구군 슬러그는 makeSchoolGugunPage 와 같은 순서로 푼다.
+       gugunFromRoman 만으로는 'buk-busan' 처럼 시도명이 붙은 슬러그를 못 읽는다. */
+    let gugunKr = null;
+    try {
+      for (const k of Object.keys(DISTRICT_EN)) {
+        if (gugunEn(sidoEn, k) === seg[2] || (DISTRICT_EN[k] || toRoman(k)) === seg[2]) { gugunKr = k; break; }
+      }
+      if (!gugunKr) gugunKr = gugunFromRoman(sidoEn, seg[2]);
+    } catch (e) { gugunKr = null; }
+    gugunKr = gugunKr || seg[2];
+    if (seg.length === 3) { o.area = [sidoKr, gugunKr, '학교별 과외'].join(' '); return o; }
+    let name = '';
+    for (const g of ['E', 'M', 'H']) {
+      let n = null;
+      try { n = schoolFromSlug(sidoEn, gugunKr, seg[3], g); } catch (e) { n = null; }
+      if (n) { name = n; break; }
+    }
+    const subject = seg[4] ? (SUBJECT_MAP[seg[4]] || seg[4]) : '';
+    o.area = [sidoKr, gugunKr, name || seg[3], subject, '과외'].filter(Boolean).join(' ');
     return o;
   }
   if (p0 === 'academy') {
@@ -443,8 +479,11 @@ async function tgNotify(env, type, page, ref, ua) {
   L.push((type === 'tel' ? '📞 ' : '📝 ') + label);
   L.push('');
   L.push('사이트: 올케어스터디 (allcarestudy.com)');
-  L.push('페이지: https://allcarestudy.com' + page);
-  L.push('검색 키워드: ' + ko);
+  L.push('주소: https://allcarestudy.com' + page);
+  L.push('페이지: ' + ko);
+  /* ref 에서 뽑은 진짜 검색어 — 없으면 줄 자체를 넣지 않는다 */
+  const __kw = tkKeyword(ref);
+  if (__kw) L.push('검색어: ' + __kw);
   L.push('유입: ' + tgRef(ref));
   L.push('기기: ' + (/Mobile|Android|iPhone|iPad/i.test(ua || '') ? '모바일' : 'PC'));
   L.push('시각: ' + tgTime() + ' (KST)');
