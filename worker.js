@@ -2154,7 +2154,17 @@ const _gugunRomanCache = {};
 function gugunFromRoman(sidoEn, gugunRoman) {
   const cacheKey = sidoEn + '/' + gugunRoman;
   if (_gugunRomanCache[cacheKey] !== undefined) return _gugunRomanCache[cacheKey];
-  
+
+  /* 링크·사이트맵은 gugunEn() 으로 만드는데 그쪽은 DISTRICT_EN_BY_SIDO 를 먼저 본다.
+     여기서 그 맵을 빼먹어 'seo-incheon' 'nam-busan' 같은 시도별 슬러그가 풀리지 않았고,
+     사이트맵에 실린 /school/... 의 약 8%가 404 로 떨어졌다. */
+  const bySido = DISTRICT_EN_BY_SIDO[sidoEn];
+  if (bySido) {
+    for (const [k, v] of Object.entries(bySido)) {
+      if (v === gugunRoman) { _gugunRomanCache[cacheKey] = k; return k; }
+    }
+  }
+
   for (const [k, v] of Object.entries(DISTRICT_EN)) {
     if (v === gugunRoman) { _gugunRomanCache[cacheKey] = k; return k; }
   }
@@ -3156,7 +3166,7 @@ function makeListPage() {
   const subj = ['math','english','korean','science','social','coding','essay','gsd']
     .map(k => a('/subject/' + k, (SUBJECT_MAP_KR[k] || k) + ' 과외')).join('');
   const grade = [['elementary','초등'],['middle','중등'],['high','고등']]
-    .map(x => a('/grade/' + x[0], x[1] + ' 과외')).join('');
+    .map(x => a('/grade/' + x[0] + '/1', x[1] + ' 과외')).join('');
   const conv = [['english','영어'],['chinese','중국어'],['japanese','일본어']]
     .map(x => a('/conversation/' + x[0], x[1] + ' 회화')).join('');
 
@@ -10328,7 +10338,7 @@ function serveSitemapByKey(key, opts) {
     const SUBJ_SLUGS={math:['elem-basics','mid-function','high-math1','calculus','probability','geometry','suneung-killer','descriptive','supo-escape','grade1','gifted','olympiad','mid-shape','sequence','trigonometry','past-exam','fraction','mid-linear','concept-total','math-essay','competition','elem-calc','mid-advance','high-advance','sat-math','habit','elem-writing','mid-naesin','mock-exam','track-guide'],english:['elem-basics','mid-grammar','high-reading','suneung-1','grade1','descriptive','phonics','listening','writing','toeic-toefl','mid-advance','high-advance','blank-type','order-insert','vocabulary','grammar-total','reading-skill','elem-reading','mid-naesin','mock-strategy','speaking','essay-writing','competition','sat-eng','suneung-listen','mid-reading','high-grammar','performance','textbook','vacation'],korean:['elem-reading','mid-literature','high-nonlit','suneung-1','grade1','speech-writing','lang-media','modern-poem','modern-novel','classic','descriptive','past-exam','nonlit-skill','grammar','reading-essay','elem-writing','mid-naesin','high-naesin','suneung-lit','vocabulary','mid-advance','high-advance','mock-strategy','performance','textbook','history-link','essay-writing','reading-habit','concept-total','vacation'],science:['elem-explore','mid-basics','physics1','chemistry1','biology1','earth1','physics2','chemistry2','biology2','earth2','grade1','suneung-killer','descriptive','lab-report','mid-advance','high-advance','integrated','lab-perform','elem-lab','olympiad','mid-naesin','high-naesin','mock-analysis','mechanics','reaction','genetics','astronomy','concept-total','ap-science','med-prep'],social:['elem-basics','mid-basics','korean-history','world-history','korean-geo','world-geo','life-ethics','ethics-thought','politics-law','economics','society-culture','grade1','suneung-high','descriptive','history-perfect','mid-history','mid-naesin','high-naesin','integrated','performance','current-events','mid-advance','high-advance','mock-analysis','east-asia','law-deep','econ-graph','concept-total','essay-bg','vacation'],coding:['start','scratch','python-basic','python-mid','java','c-lang','web-html','javascript','olympiad','cos-cert','elem-coding','mid-info','high-info','app-dev','game-dev','ai-basic','data-analysis','algorithm','thinking','robot','arduino','sw-special','univ-task','coding-test','react','database','linux','portfolio','excel-vba','gifted'],essay:['basics','univ-types','humanities','math-essay','science-essay','snu','yonsei','korea-u','med-essay','edu-essay','current','book-debate','elem-essay','mid-essay','self-intro','interview','critical','correction','logical','human-deep','science-deep','oral-exam','nat-interview','mock-essay','topic-practice','integrated-essay','newspaper','desc-training','susi','jeongsi'],gsd:['korean','english','math','social','science','history','middle-level','high-level','3month','self-study','past-exam','math-strategy','eng-strategy','ethics','tech-home','pass-strategy','univ-after','suneung-after','sci-memo','soc-memo','worker','schedule','elem-level','mock','summary','math-formula','eng-vocab','kor-reading','one-on-one','online-guide']};
     for(const[subj,slugs] of Object.entries(SUBJ_SLUGS)){slugs.forEach(s=>parts.push(u('/subject/'+subj+'/'+s)));}
     
-    ['elementary','middle','high'].forEach(g=>parts.push(u('/grade/'+g)));
+    ['elementary','middle','high'].forEach(g=>parts.push(u('/grade/'+g+'/1')));
     
     Object.keys(EN_CATS).forEach(cat=>parts.push(u('/conversation/english/'+cat)));
     Object.keys(EN_TOPICS).forEach(k=>parts.push(u('/conversation/english/'+k)));
@@ -10612,7 +10622,7 @@ function buildAllIndexNowUrls() {
   urls.push('/conversation/english', '/conversation/chinese', '/conversation/japanese');
   urls.push('/study-guide', '/engineer-lab', '/video-lesson');
   for (const s of ['math','english','korean','science','social','coding','essay','gsd']) urls.push('/subject/'+s);
-  for (const g of ['elementary','middle','high']) urls.push('/grade/'+g);
+  for (const g of ['elementary','middle','high']) urls.push('/grade/'+g+'/1');
   for (const [sido, reg] of Object.entries(REGIONS)) {
     const se = SIDO_EN[sido]||sido;
     urls.push('/'+se);
@@ -11163,7 +11173,7 @@ export default {
     }
     if (path === '/dashboard') return new Response(makeDashboardPage(), { headers: { 'Content-Type':'text/html; charset=utf-8' } });
 if (path === '/llms.txt' || path === '/llms-full.txt') return new Response(llmsTxt(), { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' } });
-    if (path === '/robots.txt') return new Response('User-agent: Googlebot\nDisallow: /*/*/*/elementary/*\nDisallow: /*/*/*/middle/*\nDisallow: /*/*/*/high/*\n\nUser-agent: Yandex\nDisallow: /\n\nUser-agent: YandexBot\nDisallow: /\n\nUser-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\nCrawl-delay: 10\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Claude-Web\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nUser-agent: bingbot\nAllow: /\n\n# SEO 분석 크롤러 — 색인에 도움 안 되므로 차단\nUser-agent: SemrushBot\nDisallow: /\nUser-agent: AhrefsBot\nDisallow: /\nUser-agent: AhrefsSiteAudit\nDisallow: /\nUser-agent: MJ12bot\nDisallow: /\nUser-agent: DotBot\nDisallow: /\nUser-agent: DataForSeoBot\nDisallow: /\nUser-agent: BLEXBot\nDisallow: /\nUser-agent: rogerbot\nDisallow: /\nUser-agent: SEOkicks\nDisallow: /\nUser-agent: Barkrowler\nDisallow: /\nUser-agent: serpstatbot\nDisallow: /\n\n# 전체 목록: https://allcarestudy.com/list\n# llms.txt: https://allcarestudy.com/llms.txt\nLlms-txt: https://allcarestudy.com/llms.txt\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    if (path === '/robots.txt') return new Response('User-agent: Yandex\nDisallow: /\n\nUser-agent: YandexBot\nDisallow: /\n\nUser-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\nCrawl-delay: 10\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Claude-Web\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nUser-agent: bingbot\nAllow: /\n\n# SEO 분석 크롤러 — 색인에 도움 안 되므로 차단\nUser-agent: SemrushBot\nDisallow: /\nUser-agent: AhrefsBot\nDisallow: /\nUser-agent: AhrefsSiteAudit\nDisallow: /\nUser-agent: MJ12bot\nDisallow: /\nUser-agent: DotBot\nDisallow: /\nUser-agent: DataForSeoBot\nDisallow: /\nUser-agent: BLEXBot\nDisallow: /\nUser-agent: rogerbot\nDisallow: /\nUser-agent: SEOkicks\nDisallow: /\nUser-agent: Barkrowler\nDisallow: /\nUser-agent: serpstatbot\nDisallow: /\n\n# 전체 목록: https://allcarestudy.com/list\n# llms.txt: https://allcarestudy.com/llms.txt\nLlms-txt: https://allcarestudy.com/llms.txt\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     if (path === '/BingSiteAuth.xml') return new Response('<?xml version="1.0"?>\n<users>\n\t<user>76CD7730D8D678F6A94139ED4D8A344D</user>\n</users>', { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 
     
