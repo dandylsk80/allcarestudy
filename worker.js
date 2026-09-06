@@ -1504,6 +1504,9 @@ function seedHash(str) {
   for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
   return h;
 }
+/* 32비트 LCG. h*1103515245 는 2^53 을 넘겨 double 정밀도가 깨지므로
+   반드시 Math.imul 을 쓴다 (그냥 * 로 두면 저비트가 뭉개져 선택이 몇 값에
+   몰린다. thecardpos 에서는 같은 실수가 무한 루프까지 갔다). */
 // 배열에서 N개를 시드 기반으로 선택 (중복 없이, 순서도 시드별로 달라짐)
 function seedPickN(seed, arr, n) {
   if (!arr || !arr.length) return [];
@@ -1512,7 +1515,7 @@ function seedPickN(seed, arr, n) {
   let h = seed;
   const pickCount = Math.min(n, pool.length);
   for (let i = 0; i < pickCount; i++) {
-    h = (h * 1103515245 + 12345) >>> 0;
+    h = (Math.imul(h, 1103515245) + 12345) >>> 0;
     const idx = h % pool.length;
     result.push(pool.splice(idx, 1)[0]);
   }
@@ -1523,7 +1526,7 @@ function seedShuffle(seed, arr) {
   const a = arr.slice();
   let h = seed;
   for (let i = a.length - 1; i > 0; i--) {
-    h = (h * 1103515245 + 12345) >>> 0;
+    h = (Math.imul(h, 1103515245) + 12345) >>> 0;
     const j = h % (i + 1);
     [a[i], a[j]] = [a[j], a[i]];
   }
