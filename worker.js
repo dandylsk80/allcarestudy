@@ -8717,12 +8717,14 @@ function load(range,btn){
     drawCats();drawSites();
     if(TRENDDATA===null) loadTrend(TRENDRANGE, document.querySelector('#trendTabs button.on'));
     var rec=d.recent||[];var hh='';
-    for(var j=0;j<rec.length;j++){var e=rec[j];var tm=(e.ts||'').replace('T',' ').slice(5,16);
+    for(var j=0;j<rec.length;j++){var e=rec[j];var tm=kstTime(e.ts);
       hh+='<tr><td>'+tm+'</td><td>'+siteLabel(e.site)+'</td><td><span class="tag '+esc(e.type)+'">'+typeLabel(e.type)+'</span></td><td>'+esc(e.page||'')+'</td><td>'+(e.ref?(e.ref.indexOf('naver')>=0?'네이버':e.ref.indexOf('google')>=0?'구글':e.ref.indexOf('daum')>=0?'다음':'기타'):'직접')+'</td></tr>';}
     document.getElementById('hist').innerHTML=hh||'<tr><td colspan="5" style="color:#9ca3af">이력 없음</td></tr>';
   }).catch(function(){document.getElementById('err').style.display='block';});
 }
 
+/* 저장값은 UTC(ISO). 화면에만 한국시각(+9시간)으로 바꿔 'MM-DD HH:MM' 으로 보인다 */
+function kstTime(t){if(!t)return '';var x=new Date(t);if(isNaN(x.getTime()))return String(t).replace('T',' ').slice(5,16);return new Date(x.getTime()+32400000).toISOString().replace('T',' ').slice(5,16);}
 /* ===== 방문 상세 ===== */
 var VDATA=null, VPAGE=0; var VPER=25;
 function closeVisits(){document.getElementById('vmodal').style.display='none';VDATA=null;}
@@ -8761,7 +8763,7 @@ function renderVisits(){
   if(VPAGE>=pages)VPAGE=pages-1;
   var st=VPAGE*VPER, part=rows.slice(st,st+VPER), b='';
   for(var j=0;j<part.length;j++){var r=part[j];
-    var tm=(r.ts||'').replace('T',' ').slice(5,16);
+    var tm=kstTime(r.ts);
     b+='<tr><td>'+esc(tm)+'</td><td>'+esc(srcLabel(r.source||'unknown'))+'</td><td>'+esc(r.keyword||'-')+'</td><td>'+esc(devLabel(r.device||'unknown'))+'</td><td title="'+esc(r.page||'')+'">'+esc(r.page||'')+'</td><td>'+esc(r.ip||'')+'</td></tr>';
   }
   document.getElementById('vbody').innerHTML=b||'<tr><td colspan="6" class="muted">방문 기록 없음</td></tr>';
