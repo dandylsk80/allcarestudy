@@ -43,6 +43,17 @@ function tkDevice(ua){
   if(/mobile|iphone|ipod|android|blackberry|iemobile|opera mini|webos/i.test(ua)) return "mobile";
   return "pc";
 }
+/* ===== 대시보드 집계 제외 IP =====
+   운영자 본인 접속·기능 검증용 트래픽처럼 D1 에는 남겨 두되 대시보드 수치에서만
+   빼고 싶은 IP 를 여기 적는다. 원본 데이터는 지우지 않는다 — 조회할 때만 걸러낸다.
+   나중에 추가하려면 배열에 문자열만 더 넣으면 된다. 빈 배열이면 아무것도 걸러내지 않는다.
+   적용 대상은 /api/dashboard 의 events 조회 전부. 진단용 ua_probe 조회는 자기 접속이
+   어떻게 판정되는지 봐야 하므로 일부러 제외하지 않는다. */
+const DASH_SKIP_IPS = ["175.198.190.81"];
+const DASH_SKIP_SQL = DASH_SKIP_IPS.length
+  ? " AND COALESCE(ip,'') NOT IN (" + DASH_SKIP_IPS.map(function(x){ return "'" + String(x).replace(/[^0-9a-fA-F.:]/g, "") + "'"; }).join(",") + ") "
+  : "";
+
 /* ===== 생성형 AI 유입 판별 =====
    ref(리퍼러 호스트) 또는 utm_source/ref 쿼리값에 AI 서비스가 있으면
    source 를 'ai' 로, 세부 서비스명은 keyword 자리에 넣는다. */
@@ -11184,13 +11195,13 @@ export default {
             return new Response(JSON.stringify({ok:true, done:'ua_probe ready'}), { headers: { 'Content-Type':'application/json' } });
           }
           if (b.op === 'pages') {
-            q = await env.DB.prepare("SELECT page, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY page ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
+            q = await env.DB.prepare("SELECT page, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND site = ? AND type = 'view' GROUP BY page ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
           } else if (b.op === 'refs') {
-            q = await env.DB.prepare("SELECT ref, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY ref ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
+            q = await env.DB.prepare("SELECT ref, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND site = ? AND type = 'view' GROUP BY ref ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
           } else if (b.op === 'ips') {
-            q = await env.DB.prepare("SELECT ip, COUNT(*) cnt, COUNT(DISTINCT page) pages, MIN(ts) first, MAX(ts) last FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' GROUP BY ip ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
+            q = await env.DB.prepare("SELECT ip, COUNT(*) cnt, COUNT(DISTINCT page) pages, MIN(ts) first, MAX(ts) last FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND site = ? AND type = 'view' GROUP BY ip ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
           } else if (b.op === 'visits') {
-            const W = " FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' ";
+            const W = " FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND site = ? AND type = 'view' ";
             const rows = await env.DB.prepare("SELECT ts, source, keyword, device, page, ip" + W + "ORDER BY ts DESC LIMIT 200").bind(sinceIso, upto, site).all();
             const src  = await env.DB.prepare("SELECT COALESCE(NULLIF(source,''),'unknown') k, COUNT(*) cnt" + W + "GROUP BY k ORDER BY cnt DESC").bind(sinceIso, upto, site).all();
             const dev  = await env.DB.prepare("SELECT COALESCE(NULLIF(device,''),'unknown') k, COUNT(*) cnt" + W + "GROUP BY k ORDER BY cnt DESC").bind(sinceIso, upto, site).all();
@@ -11202,17 +11213,17 @@ export default {
             // ts 는 UTC ISO 문자열이다. SQLite 가 확실히 파싱하도록 'T'/'Z' 를 없앤 뒤
             // +9시간을 더해 KST 기준 날짜로 묶는다 (대시보드의 '오늘' 경계와 맞춘다).
             const DAY = "substr(datetime(replace(replace(ts,'T',' '),'Z',''),'+9 hours'),1,10)";
-            q = await env.DB.prepare("SELECT " + DAY + " d, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ? GROUP BY d, type ORDER BY d").bind(sinceIso, upto).all();
+            q = await env.DB.prepare("SELECT " + DAY + " d, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " GROUP BY d, type ORDER BY d").bind(sinceIso, upto).all();
           } else if (b.op === 'direct') {
             // 유입경로가 direct 인 view 트래픽을 IP·UA·페이지로 쪼개 본다 (봇 판별용)
             const SRC = b.src || 'direct';
-            const W = " FROM events WHERE ts >= ? AND ts < ? AND site = ? AND type = 'view' AND COALESCE(source,'') = ? ";
+            const W = " FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND site = ? AND type = 'view' AND COALESCE(source,'') = ? ";
             const ips = await env.DB.prepare("SELECT ip, COUNT(*) cnt, COUNT(DISTINCT page) pages, COUNT(DISTINCT ua) uas, MAX(ua) ua, MIN(ts) first, MAX(ts) last" + W + "GROUP BY ip ORDER BY cnt DESC LIMIT 60").bind(sinceIso, upto, site, SRC).all();
             const uas = await env.DB.prepare("SELECT COALESCE(NULLIF(ua,''),'(없음)') ua, COUNT(*) cnt, COUNT(DISTINCT ip) uniq" + W + "GROUP BY ua ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site, SRC).all();
             const pgs = await env.DB.prepare("SELECT page, COUNT(*) cnt, COUNT(DISTINCT ip) uniq" + W + "GROUP BY page ORDER BY cnt DESC LIMIT 30").bind(sinceIso, upto, site, SRC).all();
             return new Response(JSON.stringify({ok:true, op:'direct', src:SRC, ips:ips.results||[], uas:uas.results||[], pages:pgs.results||[]}), { headers: { 'Content-Type':'application/json' } });
           } else if (b.op === 'page') {
-            q = await env.DB.prepare("SELECT site, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ? AND page = ? GROUP BY site, type").bind(sinceIso, upto, b.page || '').all();
+            q = await env.DB.prepare("SELECT site, type, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND page = ? GROUP BY site, type").bind(sinceIso, upto, b.page || '').all();
           } else if (b.op === 'ua') {
             q = await env.DB.prepare("SELECT ua, bot, COUNT(*) cnt, COUNT(DISTINCT ip) uniq FROM ua_probe WHERE ts >= ? AND site = ? GROUP BY ua, bot ORDER BY cnt DESC LIMIT 60").bind(sinceIso, site).all();
           } else {
@@ -11223,8 +11234,8 @@ export default {
 
         let rows = { results: [] }, recent = { results: [] };
         if (env && env.DB) {
-          rows = await env.DB.prepare("SELECT site, type, COUNT(*) as cnt, COUNT(DISTINCT ip) as uniq FROM events WHERE ts >= ? AND ts < ? GROUP BY site, type").bind(sinceIso, upto).all();
-          recent = await env.DB.prepare("SELECT site,type,page,ref,ts FROM events WHERE ts >= ? AND ts < ? AND type != 'view' ORDER BY ts DESC LIMIT 50").bind(sinceIso, upto).all();
+          rows = await env.DB.prepare("SELECT site, type, COUNT(*) as cnt, COUNT(DISTINCT ip) as uniq FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " GROUP BY site, type").bind(sinceIso, upto).all();
+          recent = await env.DB.prepare("SELECT site,type,page,ref,ts FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND type != 'view' ORDER BY ts DESC LIMIT 50").bind(sinceIso, upto).all();
         }
         return new Response(JSON.stringify({ok:true, rows: rows.results||[], recent: recent.results||[]}), { headers: { 'Content-Type':'application/json' } });
       } catch(e) {
