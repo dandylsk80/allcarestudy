@@ -43,7 +43,37 @@ function tkDevice(ua){
   if(/mobile|iphone|ipod|android|blackberry|iemobile|opera mini|webos/i.test(ua)) return "mobile";
   return "pc";
 }
-function tkSource(ref, selfHost){
+/* ===== 생성형 AI 유입 판별 =====
+   ref(리퍼러 호스트) 또는 utm_source/ref 쿼리값에 AI 서비스가 있으면
+   source 를 'ai' 로, 세부 서비스명은 keyword 자리에 넣는다. */
+const AI_SRC = [
+  ["chatgpt", "ChatGPT"], ["openai", "ChatGPT"],
+  ["perplexity", "Perplexity"], ["gemini", "Gemini"],
+  ["claude.ai", "Claude"], ["claude", "Claude"],
+  ["copilot", "Copilot"]
+];
+function aiName(v){
+  if(!v) return "";
+  v = String(v).toLowerCase();
+  for(var i=0;i<AI_SRC.length;i++){ if(v.indexOf(AI_SRC[i][0]) >= 0) return AI_SRC[i][1]; }
+  return "";
+}
+/* qs 는 랜딩 URL 의 쿼리스트링(location.search). 비콘이 함께 보낸다. */
+function tkAi(ref, qs){
+  if(qs){
+    try{
+      var p = new URLSearchParams(String(qs));
+      var n = aiName(p.get("utm_source") || "") || aiName(p.get("ref") || "");
+      if(n) return n;
+    }catch(e){}
+  }
+  if(ref){
+    try{ return aiName(new URL(ref).hostname); }catch(e){}
+  }
+  return "";
+}
+function tkSource(ref, selfHost, qs){
+  if(tkAi(ref, qs)) return "ai";
   if(!ref) return "direct";
   var h = "";
   try{ h = new URL(ref).hostname.toLowerCase(); }catch(e){ return "etc"; }
@@ -54,7 +84,9 @@ function tkSource(ref, selfHost){
   if(h.indexOf("daum") >= 0 || h.indexOf("kakao") >= 0) return "daum";
   return "etc";
 }
-function tkKeyword(ref){
+function tkKeyword(ref, qs){
+  var __ai = tkAi(ref, qs);
+  if(__ai) return __ai;
   if(!ref) return "";
   try{
     var p = new URL(ref).searchParams;
@@ -140,8 +172,8 @@ function skipViewCf(request, ip){
   if (cc && cc !== "KR") return true;             /* 국내가 아니면 방문 집계 제외 */
   return false;
 }
-function tkMeta(ua, ref, selfHost){
-  return [ (ua||"").slice(0,250), tkDevice(ua), tkSource(ref, selfHost), tkKeyword(ref) ];
+function tkMeta(ua, ref, selfHost, qs){
+  return [ (ua||"").slice(0,250), tkDevice(ua), tkSource(ref, selfHost, qs), tkKeyword(ref, qs) ];
 }
 
 /* IndexNow 폴백: api.indexnow.org / www.bing.com 은 Cloudflare Workers 의 공용
@@ -482,7 +514,7 @@ async function tkDup(env, site, type, page, ip) {
   } catch (e) { return false; }
 }
 
-async function tgNotify(env, type, page, ref, ua, btn) {
+async function tgNotify(env, type, page, ref, ua, btn, qs) {
   const TG_TOKEN = env && env.TG_TOKEN;
   const TG_CHAT = env && env.TG_CHAT;
   if (!TG_TOKEN || !TG_CHAT) return;
@@ -502,9 +534,10 @@ async function tgNotify(env, type, page, ref, ua, btn) {
   /* 라벨이 '상담' 인데 실제로는 sms:/tel: 링크인 버튼이 있어 눌린 버튼 이름을 그대로 싣는다 */
   if (btn) L.push('버튼: ' + btn);
   /* ref 에서 뽑은 진짜 검색어 — 없으면 줄 자체를 넣지 않는다 */
-  const __kw = tkKeyword(ref);
+  const __ai = tkAi(ref, qs);
+  const __kw = __ai ? '' : tkKeyword(ref);
   if (__kw) L.push('검색어: ' + __kw);
-  L.push('유입: ' + tgRef(ref));
+  L.push('유입: ' + (__ai ? 'AI · ' + __ai : tgRef(ref)));
   L.push('기기: ' + (/Mobile|Android|iPhone|iPad/i.test(ua || '') ? '모바일' : 'PC'));
   L.push('시각: ' + tgTime() + ' (KST)');
   {
@@ -1310,7 +1343,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 ${bcSchema}${faqSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
-</head><body>${HEADER}${bodyWithDate}${FOOTER}<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "1cbcc1a46d6c230";if(window.wcs) { wcs_do(); }</script><script>(function(){var U="/api/track",S={},W=30000;function K(ty){return "tk_"+ty+"_"+location.pathname;}function seen(ty){var k=K(ty),n=Date.now();if(S[k]&&n-S[k]<W)return 1;try{var v=sessionStorage.getItem(k);if(v&&n-(+v)<W)return 1;}catch(e){}return 0;}function mark(ty){var k=K(ty),n=Date.now();S[k]=n;try{sessionStorage.setItem(k,""+n);}catch(e){}}function t(ty,b){try{var d=JSON.stringify({type:ty,page:location.pathname,ref:document.referrer,b:b||""}),ok=false;if(navigator.sendBeacon){try{ok=navigator.sendBeacon(U,new Blob([d],{type:"application/json"}));}catch(e){}}if(!ok){try{fetch(U,{method:"POST",headers:{"Content-Type":"application/json"},body:d,keepalive:true}).catch(function(){});}catch(e){}}}catch(e){}}function c(ty,b){if(seen(ty))return;mark(ty);t(ty,b);}function L(a){try{var s=(a.getAttribute&&a.getAttribute("aria-label"))||a.textContent||"";var o="",sp=0,i,ch;for(i=0;i<s.length;i++){ch=s.charCodeAt(i);if(ch===32||ch===9||ch===10||ch===13){if(!sp){o+=" ";sp=1;}}else{o+=s.charAt(i);sp=0;}}return o.trim().slice(0,40);}catch(e){return "";}}function WV(v){try{if(navigator.userAgent.indexOf("; wv)")<0)return;var i=v.indexOf(":");if(i<0)return;var sch=v.slice(0,i),num="",j,ch;if(sch!=="tel"&&sch!=="sms")return;for(j=i+1;j<v.length;j++){ch=v.charCodeAt(j);if(ch>=48&&ch<=57)num+=v.charAt(j);}if(!num)return;var sc=sch==="tel"?"tel":"smsto",ac=sch==="tel"?"DIAL":"SENDTO",done=0;var f=function(){done=1;};document.addEventListener("visibilitychange",f,{once:true});window.addEventListener("pagehide",f,{once:true});setTimeout(function(){if(done||document.visibilityState!=="visible")return;location.href="intent://"+num+"#Intent;scheme="+sc+";action=android.intent.action."+ac+";end";},800);}catch(e){}}function h(e,early){var a=e.target&&e.target.closest&&e.target.closest("a,button,[data-tk]");if(!a)return;var k=(a.getAttribute&&a.getAttribute("data-tk"))||"",v=(a.getAttribute&&a.getAttribute("href"))||"";if(!k&&!v&&a.closest){var p=a.closest("a[href]");if(p){a=p;v=p.getAttribute("href")||"";}}if(k==="tel"||v.indexOf("tel:")===0){c("tel",L(a));if(!early)WV(v);}else if(k==="sms"||v.indexOf("sms:")===0){c("sms",L(a));if(!early)WV(v);}else if(!early&&k==="contact")c("contact",L(a));}document.addEventListener("pointerdown",function(e){h(e,1);},true);document.addEventListener("click",function(e){h(e,0);},true);if(location.pathname.indexOf("/dashboard")!==0&&location.pathname.indexOf("/api/")!==0)t("view");})();</script></body></html>`;
+</head><body>${HEADER}${bodyWithDate}${FOOTER}<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "1cbcc1a46d6c230";if(window.wcs) { wcs_do(); }</script><script>(function(){var U="/api/track",S={},W=30000;function K(ty){return "tk_"+ty+"_"+location.pathname;}function seen(ty){var k=K(ty),n=Date.now();if(S[k]&&n-S[k]<W)return 1;try{var v=sessionStorage.getItem(k);if(v&&n-(+v)<W)return 1;}catch(e){}return 0;}function mark(ty){var k=K(ty),n=Date.now();S[k]=n;try{sessionStorage.setItem(k,""+n);}catch(e){}}function t(ty,b){try{var d=JSON.stringify({type:ty,page:location.pathname,ref:document.referrer,q:location.search,b:b||""}),ok=false;if(navigator.sendBeacon){try{ok=navigator.sendBeacon(U,new Blob([d],{type:"application/json"}));}catch(e){}}if(!ok){try{fetch(U,{method:"POST",headers:{"Content-Type":"application/json"},body:d,keepalive:true}).catch(function(){});}catch(e){}}}catch(e){}}function c(ty,b){if(seen(ty))return;mark(ty);t(ty,b);}function L(a){try{var s=(a.getAttribute&&a.getAttribute("aria-label"))||a.textContent||"";var o="",sp=0,i,ch;for(i=0;i<s.length;i++){ch=s.charCodeAt(i);if(ch===32||ch===9||ch===10||ch===13){if(!sp){o+=" ";sp=1;}}else{o+=s.charAt(i);sp=0;}}return o.trim().slice(0,40);}catch(e){return "";}}function WV(v){try{if(navigator.userAgent.indexOf("; wv)")<0)return;var i=v.indexOf(":");if(i<0)return;var sch=v.slice(0,i),num="",j,ch;if(sch!=="tel"&&sch!=="sms")return;for(j=i+1;j<v.length;j++){ch=v.charCodeAt(j);if(ch>=48&&ch<=57)num+=v.charAt(j);}if(!num)return;var sc=sch==="tel"?"tel":"smsto",ac=sch==="tel"?"DIAL":"SENDTO",done=0;var f=function(){done=1;};document.addEventListener("visibilitychange",f,{once:true});window.addEventListener("pagehide",f,{once:true});setTimeout(function(){if(done||document.visibilityState!=="visible")return;location.href="intent://"+num+"#Intent;scheme="+sc+";action=android.intent.action."+ac+";end";},800);}catch(e){}}function h(e,early){var a=e.target&&e.target.closest&&e.target.closest("a,button,[data-tk]");if(!a)return;var k=(a.getAttribute&&a.getAttribute("data-tk"))||"",v=(a.getAttribute&&a.getAttribute("href"))||"";if(!k&&!v&&a.closest){var p=a.closest("a[href]");if(p){a=p;v=p.getAttribute("href")||"";}}if(k==="tel"||v.indexOf("tel:")===0){c("tel",L(a));if(!early)WV(v);}else if(k==="sms"||v.indexOf("sms:")===0){c("sms",L(a));if(!early)WV(v);}else if(!early&&k==="contact")c("contact",L(a));}document.addEventListener("pointerdown",function(e){h(e,1);},true);document.addEventListener("click",function(e){h(e,0);},true);if(location.pathname.indexOf("/dashboard")!==0&&location.pathname.indexOf("/api/")!==0)t("view");})();</script></body></html>`;
 }
 
 function wrapDark(title,desc,canonical,body){
@@ -8506,7 +8539,7 @@ function makeAcademyPage(sidoEn) {
     if (!agree)   { showMErr('개인정보 수집 및 이용에 동의해주세요.'); return; }
     fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address:road+(detail?' '+detail:''),message})})
     .then(r=>r.json()).then(data=>{
-      if(data.ok){document.getElementById('modal-form').style.display='none';document.getElementById('modal-success').style.display='block';try{navigator.sendBeacon('/api/track',new Blob([JSON.stringify({type:'contact',page:location.pathname,ref:document.referrer,b:'상담 신청 접수'})],{type:'application/json'}));}catch(e){}}
+      if(data.ok){document.getElementById('modal-form').style.display='none';document.getElementById('modal-success').style.display='block';try{navigator.sendBeacon('/api/track',new Blob([JSON.stringify({type:'contact',page:location.pathname,ref:document.referrer,q:location.search,b:'상담 신청 접수'})],{type:'application/json'}));}catch(e){}}
       else showMErr('전송 중 오류가 발생했습니다.');
     }).catch(()=>showMErr('네트워크 오류가 발생했습니다.'));
   }
@@ -8676,7 +8709,7 @@ var PW='';var CURRANGE='today';
 function doLogin(){PW=document.getElementById('pw').value;load('today',null);}
 function typeLabel(t){return t==='tel'?'전화 클릭':t==='contact'?'상담 클릭':t;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-function srcLabel(k){return k==='naver'?'네이버':k==='google'?'구글':k==='daum'?'다음':k==='direct'?'직접':k==='etc'?'기타':'기록 이전';}
+function srcLabel(k){return k==='ai'?'AI':k==='naver'?'네이버':k==='google'?'구글':k==='daum'?'다음':k==='direct'?'직접':k==='etc'?'기타':'기록 이전';}
 function devLabel(k){return k==='pc'?'PC':k==='mobile'?'모바일':k==='tablet'?'태블릿':'기록 이전';}
 var SITE_LIST=[["edu","allcarestudy","올케어스터디","allcarestudy.com","2026-03-06"],["edu","studyonlive","스터디온라이브","studyonlive.com","2026-06-03"],["edu","semogwa","세상의모든과외","semogwa.com","2026-06-30"],["edu","myclassup","우리동네과외","myclassup.com","2026-08-04"],["edu","king-study","공부끝판왕","king-study.com","2026-08-18"],["aca","semoacademy","세상의모든학원","semoacademy.com","2026-06-26"],["aca","classwawa","우리동네와와학원","classwawa.com","2026-07-13"],["ben","allpaystore","올페이스토어","allpaystore.com","2026-03-09"],["ben","thecardpos","더카드포스","thecardpos.com","2026-06-07"],["ben","danmalgi","단말기닷컴","danmalgi.com","2026-06-13"],["ben","24payshop","24페이","24payshop.com","2026-06-23"],["ben","365posmall","365포스","365posmall.com","2026-07-03"],["ben","primeposkorea","프라임 POS 코리아","primeposkorea.com","2026-09-08"],["ben","primecardkorea","프라임 CARD 코리아","primecardkorea.com","2026-09-13"],["ben","primepaykorea","프라임 PAY 코리아","primepaykorea.com","2026-09-13"],["ben","primebizkorea","프라임 BIZ 코리아","primebizkorea.com","2026-09-13"],["ben","primeshopkorea","프라임 SHOP 코리아","primeshopkorea.com","2026-09-13"],["pow","globaltalkup","글로벌톡업","globaltalkup.com","2026-08-25"]];
 var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][1]]=SITE_LIST[_i][2];
@@ -8718,7 +8751,7 @@ function load(range,btn){
     if(TRENDDATA===null) loadTrend(TRENDRANGE, document.querySelector('#trendTabs button.on'));
     var rec=d.recent||[];var hh='';
     for(var j=0;j<rec.length;j++){var e=rec[j];var tm=kstTime(e.ts);
-      hh+='<tr><td>'+tm+'</td><td>'+siteLabel(e.site)+'</td><td><span class="tag '+esc(e.type)+'">'+typeLabel(e.type)+'</span></td><td>'+esc(e.page||'')+'</td><td>'+(e.ref?(e.ref.indexOf('naver')>=0?'네이버':e.ref.indexOf('google')>=0?'구글':e.ref.indexOf('daum')>=0?'다음':'기타'):'직접')+'</td></tr>';}
+      hh+='<tr><td>'+tm+'</td><td>'+siteLabel(e.site)+'</td><td><span class="tag '+esc(e.type)+'">'+typeLabel(e.type)+'</span></td><td>'+esc(e.page||'')+'</td><td>'+(e.ref?(/chatgpt|openai|perplexity|gemini|claude|copilot/i.test(e.ref)?'AI':e.ref.indexOf('naver')>=0?'네이버':e.ref.indexOf('google')>=0?'구글':e.ref.indexOf('daum')>=0?'다음':'기타'):'직접')+'</td></tr>';}
     document.getElementById('hist').innerHTML=hh||'<tr><td colspan="5" style="color:#9ca3af">이력 없음</td></tr>';
   }).catch(function(){document.getElementById('err').style.display='block';});
 }
@@ -8740,6 +8773,7 @@ function openVisits(site){
     VDATA=d; VPAGE=0; renderVisits();
   }).catch(function(){document.getElementById('vsum').innerHTML='<div class="muted">불러오지 못했습니다.</div>';});
 }
+function withAi(rows){var i;for(i=0;i<rows.length;i++)if(rows[i].k==='ai')return rows;return rows.concat([{k:'ai',cnt:0}]);}
 function ratioCard(title,rows,labelFn){
   var tot=0,i; for(i=0;i<rows.length;i++)tot+=rows[i].cnt;
   var h='<div class="vcard"><h4>'+title+'</h4>';
@@ -8757,7 +8791,7 @@ function renderVisits(){
   if(!d.kw.length) kh+='<div class="muted">검색 키워드 없음<br><span style="font-size:11px">네이버·구글은 보안정책상 검색어를 넘겨주지 않는 경우가 많습니다</span></div>';
   for(var i=0;i<d.kw.length;i++) kh+='<div class="bar"><span>'+(i+1)+'. '+esc(d.kw[i].k)+'</span><b>'+d.kw[i].cnt+'</b></div>';
   kh+='</div></div>';
-  document.getElementById('vsum').innerHTML=ratioCard('유입경로 비율',d.src,srcLabel)+ratioCard('기기 비율',d.dev,devLabel)+kh;
+  document.getElementById('vsum').innerHTML=ratioCard('유입경로 비율',withAi(d.src),srcLabel)+ratioCard('기기 비율',d.dev,devLabel)+kh;
 
   var rows=d.rows, pages=Math.max(1,Math.ceil(rows.length/VPER));
   if(VPAGE>=pages)VPAGE=pages-1;
@@ -9211,7 +9245,7 @@ function submitContact(){
   fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,grade,phone,address,subject,message,type})})
   .then(r=>r.json()).then(function(data){
     if(data.ok){
-      try{navigator.sendBeacon('/api/track',new Blob([JSON.stringify({type:'contact',page:location.pathname,ref:document.referrer,b:'상담 신청 접수'})],{type:'application/json'}));}catch(e){}
+      try{navigator.sendBeacon('/api/track',new Blob([JSON.stringify({type:'contact',page:location.pathname,ref:document.referrer,q:location.search,b:'상담 신청 접수'})],{type:'application/json'}));}catch(e){}
       var form = document.getElementById('modal-form');
       var success = document.getElementById('modal-success');
       if(form) form.style.display = 'none';
@@ -10717,12 +10751,12 @@ export default {
         const isBot = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|yandex|baidu|duckduckbot|facebookexternalhit|semrush|ahrefs|mj12bot|dotbot|petalbot|bytespider|headlesschrome|python-requests|curl|wget|yeti|daumoa|cs\.daum\.net|compatible;\s*daum\/|lighthouse|pagespeed|inspectiontool|googleother|applebot|amazonbot|archiver|scrapy|node-fetch|okhttp|go-http|libwww|httpclient|dataforseo|serpstat|zoominfo|bubing|linkdex/i.test(ua);
         const ts = new Date().toISOString();
         if (!isBot && TG_LABEL[b.type]) {
-          const tgp = tgNotify(env, b.type, (b.page||'/').slice(0,300), b.ref||'', ua, String(b.b || "").slice(0, 40));
+          const tgp = tgNotify(env, b.type, (b.page||'/').slice(0,300), b.ref||'', ua, String(b.b || "").slice(0, 40), b.q||'');
           if (ctx && ctx.waitUntil) ctx.waitUntil(tgp); else await tgp;
         }
         if (env && env.DB && !(b.type === 'view' && isBot||(b.type==="view"&&skipViewCf(request, request.headers.get("CF-Connecting-IP")||""))) && (b.type === 'tel' || b.type === 'sms' || b.type === 'contact' || b.type === 'view')) {
           await env.DB.prepare('INSERT INTO events (site,type,page,ref,ip,ts,ua,device,source,keyword) VALUES (?,?,?,?,?,?,?,?,?,?)')
-            .bind('allcarestudy', b.type, (b.page||'').slice(0,300), (b.ref||'').slice(0,120), ip, ts, ...tkMeta(request.headers.get('User-Agent')||'', b.ref||'', 'allcarestudy.com')).run();
+            .bind('allcarestudy', b.type, (b.page||'').slice(0,300), (b.ref||'').slice(0,120), ip, ts, ...tkMeta(request.headers.get('User-Agent')||'', b.ref||'', 'allcarestudy.com', b.q||'')).run();
         }
         // 진단용: 어떤 UA가 view 를 발생시키는지 별도 테이블에 기록 (events 집계에는 영향 없음)
         if (env && env.DB && b.type === 'view') {
