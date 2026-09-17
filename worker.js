@@ -10845,7 +10845,9 @@ const POST_SITES = {
   studyonlive:    ['edu', '스터디온라이브', 'studyonlive.com'],
   semogwa:        ['edu', '세상의모든과외', 'semogwa.com'],
   myclassup:      ['edu', '우리동네과외', 'myclassup.com'],
-  'king-study':   ['edu', '공부끝판왕', 'king-study.com'],
+  /* 네 번째 값은 글 주소 끝의 '/'. king-study 만 사이트 전체가 뒤 슬래시를 떼는
+     규칙이라 여기서도 빼야 알림 링크가 301 을 타지 않는다. */
+  'king-study':   ['edu', '공부끝판왕', 'king-study.com', ''],
   semoacademy:    ['edu', '세상의모든학원', 'semoacademy.com'],
   classwawa:      ['edu', '우리동네와와학원', 'classwawa.com'],
   globaltalkup:   ['edu', '글로벌톡업', 'globaltalkup.com'],
@@ -10936,7 +10938,7 @@ async function publishDuePosts(env, opt) {
     const meta = POST_SITES[r.site];
     out.picked.push({ id: r.id, site: r.site, slug: r.slug, title: r.title,
       publish_on: r.publish_on || '', siteKo: meta[1], host: meta[2],
-      url: 'https://' + meta[2] + '/post/' + r.slug + '/' });
+      url: 'https://' + meta[2] + '/post/' + r.slug + (meta[3] === undefined ? '/' : meta[3]) });
   }
   if (o.dry) { out.note = 'dry — 전환하지 않음'; return out; }
 
