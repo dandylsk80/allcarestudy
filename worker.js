@@ -1051,7 +1051,7 @@ function closeMobNav(){document.getElementById('mob-nav').classList.remove('open
 
 const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;border-bottom:1px solid rgba(255,255,255,0.08)!important;box-shadow:none!important"><div class="hw"><a href="/" class="logo"><div class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="logo-name"><span class="logo-main" style="color:white"><em>올케어</em>스터디</span><span class="logo-sub" style="color:rgba(255,255,255,0.45)">ALLCARE STUDY</span></div></a><div class="vpill" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06)"><span class="vl" style="color:rgba(255,255,255,0.5)">누적 방문자</span><span class="vc" style="color:#60A5FA">353,112명</span></div><nav class="gnb"><div class="gi" id="gi-region"><button class="gb" onclick="toggleMega('region')" style="color:rgba(255,255,255,0.85)">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="mega-drop" id="mega-region"><div class="mega-tabs"><button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button><button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button><button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button></div><div class="mega-panel on" id="region-local"><div class="mega-btns"><a class="mega-btn" href="/seoul">🏙 서울</a><a class="mega-btn" href="/gyeonggi">🌿 경기</a><a class="mega-btn" href="/incheon">🌊 인천</a><a class="mega-btn" href="/busan">🐟 부산</a><a class="mega-btn" href="/daegu">🍎 대구</a><a class="mega-btn" href="/daejeon">🌾 대전</a><a class="mega-btn" href="/gwangju">🌸 광주</a><a class="mega-btn" href="/ulsan">⚙️ 울산</a><a class="mega-btn" href="/sejong">🏛 세종</a><a class="mega-btn" href="/gangwon">🏔 강원</a><a class="mega-btn" href="/chungbuk">🌻 충북</a><a class="mega-btn" href="/chungnam">🌊 충남</a><a class="mega-btn" href="/jeonbuk">🌾 전북</a><a class="mega-btn" href="/jeonnam">🍵 전남</a><a class="mega-btn" href="/gyeongbuk">🍎 경북</a><a class="mega-btn" href="/gyeongnam">🌊 경남</a><a class="mega-btn" href="/jeju">🌺 제주</a></div></div><div class="mega-panel" id="region-grade"><div class="mega-rt">🎒 초등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/elementary/1">초등 1학년</a><a class="mega-btn" href="/grade/elementary/2">초등 2학년</a><a class="mega-btn" href="/grade/elementary/3">초등 3학년</a><a class="mega-btn" href="/grade/elementary/4">초등 4학년</a><a class="mega-btn" href="/grade/elementary/5">초등 5학년</a><a class="mega-btn" href="/grade/elementary/6">초등 6학년</a></div><div class="mega-rt">📚 중학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/middle/1">중학교 1학년</a><a class="mega-btn" href="/grade/middle/2">중학교 2학년</a><a class="mega-btn" href="/grade/middle/3">중학교 3학년</a></div><div class="mega-rt">🎓 고등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/high/1">고등 1학년</a><a class="mega-btn" href="/grade/high/2">고등 2학년</a><a class="mega-btn" href="/grade/high/3">고등 3학년</a></div></div><div class="mega-panel" id="region-school"><div class="mega-rt">시도별 학교 과외</div><div class="mega-btns"><a class="mega-btn" href="/school/seoul">서울</a><a class="mega-btn" href="/school/gyeonggi">경기</a><a class="mega-btn" href="/school/incheon">인천</a><a class="mega-btn" href="/school/busan">부산</a><a class="mega-btn" href="/school/daegu">대구</a><a class="mega-btn" href="/school/gwangju">광주</a><a class="mega-btn" href="/school/daejeon">대전</a><a class="mega-btn" href="/school/ulsan">울산</a><a class="mega-btn" href="/school/sejong">세종</a><a class="mega-btn" href="/school/gangwon">강원</a><a class="mega-btn" href="/school/chungbuk">충북</a><a class="mega-btn" href="/school/chungnam">충남</a><a class="mega-btn" href="/school/jeonbuk">전북</a><a class="mega-btn" href="/school/jeonnam">전남</a><a class="mega-btn" href="/school/gyeongbuk">경북</a><a class="mega-btn" href="/school/gyeongnam">경남</a><a class="mega-btn" href="/school/jeju">제주</a></div></div></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/subject/math">📐 수학</a><a href="/subject/english">📖 영어</a><a href="/subject/korean">✍️ 국어</a><a href="/subject/science">🔬 과학</a><a href="/subject/social">🌏 사회</a><a href="/subject/coding">💻 코딩</a><a href="/subject/essay">📝 논술</a><a href="/subject/gsd">📋 검정고시</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/study-guide">📖 학습 가이드</a></div></div><div class="gi"><a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a></div></nav></div></header>`;
 
-const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px"><div style="max-width:1100px;margin:0 auto;padding:0 48px"><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px"><span>⚠️</span><span>안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:24px"><div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:20px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span></div><p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p></div><div style="text-align:right"><div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;flex-wrap:wrap"><div style="font-size:22px;font-weight:900;color:white;white-space:nowrap">010-6834-8080</div><a href="tel:01068348080" style="background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">전화 상담</a></div></div></div><div style="padding:24px 0 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:18px 28px;justify-content:center"><a href="/seoul" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">서울 과외</a><a href="/gyeonggi" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">경기 과외</a><a href="/busan" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">부산 과외</a><a href="/subject/math" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">수학 과외</a><a href="/subject/english" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">영어 과외</a><a href="/academy/all" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">센터 찾기</a><a href="/academy/intro" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">학원 소개</a><a href="/contact" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">문의하기</a><a href="/all-regions" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 지역</a><a href="/list" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 목록</a></div><div style="padding-top:20px;font-size:11px;color:rgba(255,255,255,0.3)"> © 2026 올케어스터디. All rights reserved. </div></div></footer><div class="floats" id="float-btns"><a class="fbtn fb1" href="tel:01068348080" title="전화상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a><a class="fbtn fb3" href="sms:01068348080" title="문자상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a><a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring" title="상담하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></a></div> <script>
+const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px"><div style="max-width:1100px;margin:0 auto;padding:0 48px"><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px"><span>⚠️</span><span>안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:24px"><div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:20px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span></div><p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p></div><div style="text-align:right"><div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;flex-wrap:wrap"><div style="font-size:22px;font-weight:900;color:white;white-space:nowrap">010-6834-8080</div><a href="tel:01068348080" style="background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">전화 상담</a></div></div></div><div style="padding:24px 0 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:18px 28px;justify-content:center"><a href="/seoul" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">서울 과외</a><a href="/gyeonggi" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">경기 과외</a><a href="/busan" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">부산 과외</a><a href="/subject/math" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">수학 과외</a><a href="/subject/english" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">영어 과외</a><a href="/academy/all" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">센터 찾기</a><a href="/academy/intro" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">학원 소개</a><a href="/contact" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">문의하기</a><a href="/post/" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">과외 정보</a><a href="/all-regions" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 지역</a><a href="/list" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 목록</a></div><div style="padding-top:20px;font-size:11px;color:rgba(255,255,255,0.3)"> © 2026 올케어스터디. All rights reserved. </div></div></footer><div class="floats" id="float-btns"><a class="fbtn fb1" href="tel:01068348080" title="전화상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a><a class="fbtn fb3" href="sms:01068348080" title="문자상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a><a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring" title="상담하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></a></div> <script>
 (function(){
   try {
     var path = window.location.pathname;
@@ -10367,6 +10367,7 @@ function serveSitemapByKey(key, opts) {
   
   if(key === 'static'){
     parts.push(u('/'));
+    parts.push(postSitemapXml());   /* 정보성 글 — lastmod 는 실제 발행일 */
     parts.push(u('/list'));
     parts.push(u('/all-regions'));
     parts.push(u('/academy/intro'));
@@ -10656,7 +10657,7 @@ function serveRSS() {
     <atom:link href="https://allcarestudy.com/rss.xml" rel="self" type="application/rss+xml"/>
     <managingEditor>contact@allcarestudy.com (올케어스터디)</managingEditor>
     <webMaster>contact@allcarestudy.com (올케어스터디)</webMaster>
-    <ttl>720</ttl>${itemXml}
+    <ttl>720</ttl>${postRssXml()}${itemXml}
   </channel>
 </rss>`;
 
@@ -10720,6 +10721,112 @@ async function submitIndexNowChunk(urlList) {
     indexnowFetch({ method: 'POST', headers, body }).then(r=>r.status).catch(()=>0)
   ]);
   return { naver, bing, count: urlList.length };
+}
+
+
+/* ===================== 정보성 글 (/post) =====================
+   글은 공용 D1 posts 테이블에 있고 이 사이트는 자기 글(published)만 읽는다.
+   발행 전환은 allcarestudy 워커의 크론 한 곳에서만 한다.
+
+   목록은 메모리에 5분 캐시한다 — 사이트맵·RSS·목록이 매 요청 D1 을 치면
+   응답이 느려지고 D1 읽기도 낭비된다. 본문은 상세 요청에서만 읽는다.
+   사이트맵·RSS 생성 함수는 동기라 인자로 넘기지 않고 이 캐시를 직접 읽는다.
+   (라우터가 응답을 만들기 직전 await loadPosts(env) 로 채워 준다) */
+const POST_SITE = "allcarestudy";
+const POST_ORIGIN = "https://allcarestudy.com";
+const POST_TTL = 300000;
+let POSTS_CACHE = { at: 0, rows: [] };
+async function loadPosts(env) {
+  if (Date.now() - POSTS_CACHE.at < POST_TTL) return POSTS_CACHE.rows;
+  if (!env || !env.DB) return POSTS_CACHE.rows;
+  try {
+    const r = await env.DB.prepare(
+      "SELECT slug,title,summary,published_at FROM posts WHERE site=? AND status='published' ORDER BY published_at DESC LIMIT 200"
+    ).bind(POST_SITE).all();
+    POSTS_CACHE = { at: Date.now(), rows: r.results || [] };
+  } catch (e) { POSTS_CACHE = { at: Date.now(), rows: POSTS_CACHE.rows }; }
+  return POSTS_CACHE.rows;
+}
+async function getPost(env, slug) {
+  if (!env || !env.DB) return null;
+  try {
+    return await env.DB.prepare(
+      "SELECT slug,title,summary,body_html,published_at FROM posts WHERE site=? AND slug=? AND status='published'"
+    ).bind(POST_SITE, slug).first();
+  } catch (e) { return null; }
+}
+const postEsc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const postDate = (p) => String((p && p.published_at) || "").slice(0, 10);
+
+/* 목록·상세 본문 — 사이트 CSS 에 의존하지 않도록 인라인 스타일만 쓴다.
+   바깥 컨테이너만 그 사이트의 클래스를 그대로 빌린다(고정 헤더 여백 때문). */
+function postCards(posts) {
+  if (!posts.length) return '<p style="color:#666">아직 등록된 글이 없습니다.</p>';
+  return posts.map((p) =>
+    '<a href="/post/' + postEsc(p.slug) + '/" style="display:block;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px 22px;margin-bottom:12px">'
+    + '<div style="font-size:17px;font-weight:800;line-height:1.4">' + postEsc(p.title) + '</div>'
+    + '<p style="font-size:14px;color:#555;line-height:1.7;margin:8px 0 0">' + postEsc(p.summary || "") + '</p>'
+    + '<div style="font-size:12px;color:#999;margin-top:8px">' + postEsc(postDate(p)) + '</div></a>').join("");
+}
+function postArticle(p) {
+  return '<div style="font-size:12px;color:#999;margin-bottom:18px">' + postEsc(postDate(p)) + ' · 올케어스터디</div>'
+    + '<div class="post-body" style="font-size:15px;line-height:1.85;color:#333">' + p.body_html + '</div>'
+    + '<style>.post-body h2{font-size:19px;font-weight:800;line-height:1.4;margin:32px 0 12px;color:#111}'
+    + '.post-body h3{font-size:16px;font-weight:700;margin:22px 0 8px;color:#111}'
+    + '.post-body p{margin:0 0 14px}</style>';
+}
+
+/* 사이트맵·RSS 조각 — lastmod·pubDate 는 실제 발행일을 쓴다
+   (지역 페이지처럼 해시로 돌리면 글의 신선도 신호가 사라진다) */
+function postSitemapXml() {
+  const ps = POSTS_CACHE.rows || [];
+  const top = ps.length ? postDate(ps[0]) : new Date().toISOString().slice(0, 10);
+  return '<url><loc>' + POST_ORIGIN + '/post/</loc><lastmod>' + top + '</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>'
+    + ps.map((p) => '<url><loc>' + POST_ORIGIN + '/post/' + p.slug + '/</loc><lastmod>' + postDate(p)
+      + '</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>').join("");
+}
+function postRssXml() {
+  return (POSTS_CACHE.rows || []).map((p) => {
+    const dt = p.published_at ? new Date(p.published_at) : new Date();
+    const u = POST_ORIGIN + '/post/' + postEsc(p.slug) + '/';
+    return '<item><title>' + postEsc(p.title) + '</title><link>' + u + '</link>'
+      + '<guid isPermaLink="true">' + u + '</guid><pubDate>' + dt.toUTCString() + '</pubDate>'
+      + '<description>' + postEsc(p.summary || p.title) + '</description></item>';
+  }).join("");
+}
+/* 캐시 무효화 토큰 — 사이트맵을 Cache API 에 넣는 사이트는 키에 이 값을 붙인다.
+   글이 늘거나 새로 발행되면 값이 바뀌어 하루짜리 캐시를 기다리지 않아도 된다. */
+function postVer() {
+  const ps = POSTS_CACHE.rows || [];
+  return ps.length ? ps.length + "-" + postDate(ps[0]) : "0";
+}
+/* IndexNow — 최근 7일 안에 발행된 글은 배치 앞에 실어 색인을 앞당긴다 */
+function postFreshUrls() {
+  const fresh = (POSTS_CACHE.rows || [])
+    .filter((p) => p.published_at && Date.now() - Date.parse(p.published_at) < 7 * 86400000)
+    .map((p) => POST_ORIGIN + '/post/' + p.slug + '/');
+  return fresh.length ? fresh.concat([POST_ORIGIN + '/post/']) : [];
+}
+
+/* 목록·상세 — 사이트 공통 wrap() 을 그대로 쓴다(헤더·푸터·추적 스크립트 포함) */
+function pagePostList(posts) {
+  const body = '<div class="wrap"><div class="bc"><a href="/">홈</a> › 과외 정보</div>'
+    + '<h1 class="art-title">과외 정보</h1>'
+    + '<p style="color:#374151;font-size:15px;line-height:1.85;margin:10px 0 28px">과외를 고르고 준비하는 데 도움이 되는 글을 정리해 올립니다. 선생님 고르는 법, 첫 수업 점검, 성적이 흔들릴 때의 대응처럼 상담에서 자주 나오는 질문을 다룹니다.</p>'
+    + postCards(posts) + '</div>';
+  return wrap('과외 정보 | 올케어스터디',
+    '과외를 고르고 준비하는 데 필요한 정보를 정리했습니다. 선생님 선택, 첫 수업 점검, 성적 관리까지 올케어스터디가 한 편씩 올리는 과외 가이드입니다.',
+    '/post/', body, [{ name: '홈', url: '/' }, { name: '과외 정보', url: '/post/' }]);
+}
+function pagePost(p) {
+  const t = postEsc(p.title);
+  const body = '<div class="wrap"><div class="bc"><a href="/">홈</a> › <a href="/post/">과외 정보</a> › ' + t + '</div>'
+    + '<div class="art-tag">과외 정보</div><h1 class="art-title">' + t + '</h1>'
+    + postArticle(p)
+    + '<div class="tag-wrap" style="margin-top:30px"><a href="/post/">과외 정보 전체</a> · <a href="/list">전체 목록</a> · <a href="/contact">무료 상담</a></div></div>';
+  return wrap(t + ' | 올케어스터디', postEsc(p.summary || p.title), '/post/' + p.slug + '/', body,
+    [{ name: '홈', url: '/' }, { name: '과외 정보', url: '/post/' }, { name: t, url: '/post/' + p.slug + '/' }]);
 }
 
 /* ── 정보성 글 예약 발행 크론 ──────────────────────────────────
@@ -11165,6 +11272,8 @@ export default {
     }
     if (path === '/engineer-lab') return new Response(makeEngineerLabPage(), { headers: h });
     if(path==="/og.svg") return new Response(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F2044"/><stop offset="1" stop-color="#3B82F6"/></linearGradient></defs><rect width="1200" height="630" fill="url(#g)"/><rect x="60" y="60" width="1080" height="510" rx="28" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2"/><text x="600" y="300" text-anchor="middle" font-family="Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif" font-size="86" font-weight="800" fill="#ffffff">올케어스터디</text><text x="600" y="378" text-anchor="middle" font-family="Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif" font-size="34" font-weight="500" fill="rgba(255,255,255,.88)">전국 지역별 1:1 과외·학원 정보</text><text x="600" y="530" text-anchor="middle" font-family="Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif" font-size="28" font-weight="600" fill="rgba(255,255,255,.72)">allcarestudy.com</text></svg>`,{headers:{"content-type":"image/svg+xml; charset=UTF-8","cache-control":"public, max-age=86400"}});
+    /* 사이트맵·RSS 생성 함수는 동기라 POSTS_CACHE 를 먼저 채워 준다 */
+    if (path.startsWith('/sitemap') || path === '/rss.xml' || path === '/feed' || path === '/feed.xml' || path === '/atom.xml' || path === '/atom') await loadPosts(env);
     if (path === '/sitemap.xml') return serveSitemapIndex();
     if (path === '/sitemap-naver.xml') return serveSitemapIndex(true);
     if (path === '/sitemap-priority.xml') return servePrioritySitemap();
@@ -11384,6 +11493,22 @@ export default {
       }
     }
     if (path === '/dashboard') return new Response(makeDashboardPage(), { headers: { 'Content-Type':'text/html; charset=utf-8' } });
+    /* 정보성 글 — 지역 슬러그 판정보다 앞에 둔다.
+       목록은 POSTS_CACHE 와 같은 5분으로 맞춘다(더 길면 새 글이 늦게 보인다). */
+    if (path === '/post' || path === '/post/') {
+      return new Response(pagePostList(await loadPosts(env)),
+        { headers: { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'public, max-age=300' } });
+    }
+    if (path.startsWith('/post/')) {
+      const __slug = path.slice(6).replace(/\/+$/, '');
+      if (__slug && __slug.indexOf('/') < 0) {
+        const __po = await getPost(env, __slug);
+        if (__po) return new Response(pagePost(__po), { headers: h });
+      }
+      /* 없는 슬러그는 아래 지역 라우팅으로 흘려보내지 않고 바로 404 로 끝낸다 */
+      return new Response(wrap('페이지를 찾을 수 없습니다 | 올케어스터디', '요청하신 글이 없거나 이동되었습니다. 과외 정보 목록에서 다시 찾아보세요.', '/post/', '<div class="wrap"><h1 class="art-title">페이지를 찾을 수 없습니다</h1><p style="color:#374151;margin-top:12px">요청하신 글이 없거나 이동되었습니다.</p><p style="margin-top:20px"><a href="/post/" style="color:#1D4ED8;font-weight:700">과외 정보 목록으로</a></p></div>', null),
+        { status: 404, headers: { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'no-store' } });
+    }
 if (path === '/llms.txt' || path === '/llms-full.txt') return new Response(llmsTxt(), { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' } });
     if (path === '/robots.txt') return new Response('User-agent: Yandex\nDisallow: /\n\nUser-agent: YandexBot\nDisallow: /\n\nUser-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\nCrawl-delay: 10\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Claude-Web\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Yeti\nAllow: /\nCrawl-delay: 1\n\nUser-agent: Daumoa\nAllow: /\n\nUser-agent: bingbot\nAllow: /\n\n# SEO 분석 크롤러 — 색인에 도움 안 되므로 차단\nUser-agent: SemrushBot\nDisallow: /\nUser-agent: AhrefsBot\nDisallow: /\nUser-agent: AhrefsSiteAudit\nDisallow: /\nUser-agent: MJ12bot\nDisallow: /\nUser-agent: DotBot\nDisallow: /\nUser-agent: DataForSeoBot\nDisallow: /\nUser-agent: BLEXBot\nDisallow: /\nUser-agent: rogerbot\nDisallow: /\nUser-agent: SEOkicks\nDisallow: /\nUser-agent: Barkrowler\nDisallow: /\nUser-agent: serpstatbot\nDisallow: /\n\n# 전체 목록: https://allcarestudy.com/list\n# llms.txt: https://allcarestudy.com/llms.txt\nLlms-txt: https://allcarestudy.com/llms.txt\n\nSitemap: https://allcarestudy.com/sitemap.xml\nSitemap: https://allcarestudy.com/rss.xml\n\n#DaumWebMasterTool:8af2d7949096b0fa4a9fc039e96a3e79e00c2574d234c0f6e76cad69120ff51c:mnbfnUfBcH3+tkC3lYI3ZA==', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     if (path === '/BingSiteAuth.xml') return new Response('<?xml version="1.0"?>\n<users>\n\t<user>76CD7730D8D678F6A94139ED4D8A344D</user>\n</users>', { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
@@ -11508,17 +11633,19 @@ ${HEADER}<div class="wrap" style="text-align:center;padding-top:80px">
 </div>${FOOTER}</body></html>`, { status: 404, headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
   },
   async scheduled(event, env, ctx) {
-    /* 예약 글 발행이 먼저다 — IndexNow 배치보다 가볍고, 실패해도 서로 막지 않는다 */
-    ctx.waitUntil(publishDuePosts(env, { now: event.scheduledTime })
-      .then((r) => console.log('발행 크론 ' + r.day + ' groups=' + r.groups.join(',') +
-        ' 발행=' + r.published.length + ' 알림=' + r.notified + (r.note ? ' (' + r.note + ')' : '')))
-      .catch((e) => console.log('발행 크론 실패: ' + (e && e.message))));
+    /* 예약 글 발행을 먼저 끝낸다 — 방금 발행된 글을 이번 IndexNow 배치에 실어야 한다 */
+    try {
+      const r = await publishDuePosts(env, { now: event.scheduledTime });
+      console.log('발행 크론 ' + r.day + ' groups=' + r.groups.join(',') +
+        ' 발행=' + r.published.length + ' 알림=' + r.notified + (r.note ? ' (' + r.note + ')' : ''));
+    } catch (e) { console.log('발행 크론 실패: ' + (e && e.message)); }
+    try { POSTS_CACHE.at = 0; await loadPosts(env); } catch (e) {}
     const all = buildAllIndexNowUrls();
     const CHUNK = 9500;
     const total = Math.ceil(all.length / CHUNK);
     const hour = Math.floor(event.scheduledTime / 3600000);
     const idx = hour % total;
     const slice = all.slice(idx * CHUNK, (idx + 1) * CHUNK);
-    ctx.waitUntil(submitIndexNowChunk(slice));
+    ctx.waitUntil(submitIndexNowChunk(postFreshUrls().concat(slice)));
   }
 };
