@@ -10907,7 +10907,10 @@ async function tgPostNotify(env, p) {
    force = 요일 조건 무시, dry = 전환·알림 없이 대상만 확인. */
 async function publishDuePosts(env, opt) {
   const o = opt || {};
-  const ms = o.now || Date.now();
+  /* o.day 는 진단용 날짜 대입 — 앞으로의 주에 무엇이 나갈지 미리 보려는 것이라
+     dry 일 때만 받는다(라우터에서 막는다). 요일 게이트와 publish_on 비교가 함께 움직여야
+     실제 그날과 같은 결과가 나오므로 now 자체를 옮긴다. */
+  const ms = o.day ? Date.parse(o.day + "T00:00:00Z") + 12 * 3600000 : (o.now || Date.now());
   const today = postKstDate(ms);
   let groups = o.force ? Object.keys(POST_EVERY) : postGroupsDue(ms);
   /* 수동 트리거에서 한 사업군만 돌리고 싶을 때 (force 로 남의 차례까지 끌어오지 않게) */
@@ -11404,7 +11407,10 @@ export default {
       const __r = await publishDuePosts(env, {
         force: url.searchParams.get('force') === '1',
         dry: url.searchParams.get('dry') === '1',
-        group: url.searchParams.get('group') || ''
+        group: url.searchParams.get('group') || '',
+        /* day 는 dry 에서만 — 아직 오지 않은 주의 글을 실수로 내보내지 않게 */
+        day: url.searchParams.get('dry') === '1' && /^\d{4}-\d{2}-\d{2}$/.test(url.searchParams.get('day') || '')
+          ? url.searchParams.get('day') : ''
       });
       return new Response(JSON.stringify(Object.assign({ ok: true }, __r), null, 2),
         { headers: { 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
