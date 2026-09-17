@@ -10722,6 +10722,131 @@ async function submitIndexNowChunk(urlList) {
   return { naver, bing, count: urlList.length };
 }
 
+/* ── 정보성 글 예약 발행 크론 ──────────────────────────────────
+   글은 공용 D1 `posts` 에 status='ready' 로 쌓이고, 각 사이트 워커는 자기
+   사이트의 published 글만 서비스한다. 발행 스위치는 이 워커 한 곳에만 둔다 —
+   18개 워커에 흩어 두면 주기가 어긋나고 중복 발행을 막을 방법이 없다.
+
+   주기: 교육 8개는 매주 월요일, 결제단말기 10개는 격주 월요일.
+   기준일 POST_ANCHOR = 2026-09-21(월). cron 은 매일 KST 10:00 에 돌지만
+   실제 전환은 자기 차례인 날에만 한다(사이트당 1편). */
+const POST_ANCHOR = 20717;                 /* 2026-09-21(월) 의 KST 기준 일수 */
+const POST_EVERY = { edu: 7, pay: 14 };    /* posts.mjs 의 EVERY_DAYS 와 같은 값 */
+/* site → [사업군, 표시 이름, 도메인]. 도메인이 site+'.com' 이 아닌 곳이 셋 있다. */
+const POST_SITES = {
+  allcarestudy:   ['edu', '올케어스터디', 'allcarestudy.com'],
+  studyonlive:    ['edu', '스터디온라이브', 'studyonlive.com'],
+  semogwa:        ['edu', '세상의모든과외', 'semogwa.com'],
+  myclassup:      ['edu', '우리동네과외', 'myclassup.com'],
+  'king-study':   ['edu', '공부끝판왕', 'king-study.com'],
+  semoacademy:    ['edu', '세상의모든학원', 'semoacademy.com'],
+  classwawa:      ['edu', '우리동네와와학원', 'classwawa.com'],
+  globaltalkup:   ['edu', '글로벌톡업', 'globaltalkup.com'],
+  allpaystore:    ['pay', '올페이스토어', 'allpaystore.com'],
+  thecardpos:     ['pay', '더카드포스', 'thecardpos.com'],
+  danmalgi:       ['pay', '단말기닷컴', 'danmalgi.com'],
+  '24payshop':    ['pay', '24페이', '24payshop.com'],
+  '365posmall':   ['pay', '365포스', '365posmall.com'],
+  primeposkorea:  ['pay', '프라임 POS 코리아', 'primeposkorea.com'],
+  primecardkorea: ['pay', '프라임 CARD 코리아', 'primecardkorea.com'],
+  primepaykorea:  ['pay', '프라임 PAY 코리아', 'primepaykorea.com'],
+  primebizkorea:  ['pay', '프라임 BIZ 코리아', 'primebizkorea.com'],
+  primeshopkorea: ['pay', '프라임 SHOP 코리아', 'primeshopkorea.com'],
+};
+
+const postKstDay = (ms) => Math.floor((ms + 9 * 3600000) / 86400000);
+const postKstDate = (ms) => new Date(ms + 9 * 3600000).toISOString().slice(0, 10);
+
+/* 오늘이 발행 차례인 사업군. 나머지 연산이 음수가 되지 않게 한 번 더 감싼다
+   (기준일 이전 날짜로 수동 호출할 때 -1 % 7 = -1 이 되어 조건이 어긋난다). */
+function postGroupsDue(ms) {
+  const d = postKstDay(ms);
+  return Object.keys(POST_EVERY).filter((g) => {
+    const n = POST_EVERY[g];
+    return ((((d - POST_ANCHOR) % n) + n) % n) === 0;
+  });
+}
+
+/* 발행 알림 — 전환 알림(tgNotify)과 성격이 달라 따로 보낸다.
+   글 하나에 메시지 하나여야 링크를 바로 누를 수 있다. */
+async function tgPostNotify(env, p) {
+  const TG_TOKEN = env && env.TG_TOKEN;
+  const TG_CHAT = env && env.TG_CHAT;
+  if (!TG_TOKEN || !TG_CHAT) return false;
+  const L = ['📰 정보성 글 발행', '',
+    '사이트: ' + p.siteKo + ' (' + p.host + ')',
+    '제목: ' + p.title,
+    '링크: ' + p.url,
+    '시각: ' + tgTime() + ' (KST)'];
+  const body = JSON.stringify({ chat_id: TG_CHAT, text: L.join('\n'), disable_web_page_preview: true });
+  for (let i = 0; i < 3; i++) {
+    let st = 0;
+    try {
+      const r = await fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body
+      });
+      if (r && r.ok) return true;
+      st = r ? r.status : 0;
+    } catch (e) { st = -1; }
+    console.log('tgPostNotify 실패 site=' + p.site + ' slug=' + p.slug + ' status=' + st + ' try=' + (i + 1));
+    if (i < 2) await new Promise(function (s) { setTimeout(s, 400 * (i + 1)); });
+  }
+  return false;
+}
+
+/* opt: { now, force, dry }
+   force = 요일 조건 무시, dry = 전환·알림 없이 대상만 확인. */
+async function publishDuePosts(env, opt) {
+  const o = opt || {};
+  const ms = o.now || Date.now();
+  const today = postKstDate(ms);
+  let groups = o.force ? Object.keys(POST_EVERY) : postGroupsDue(ms);
+  /* 수동 트리거에서 한 사업군만 돌리고 싶을 때 (force 로 남의 차례까지 끌어오지 않게) */
+  if (o.group) groups = groups.filter((g) => g === o.group);
+  const out = { day: today, groups, picked: [], published: [], notified: 0, note: '' };
+  if (!groups.length) { out.note = '오늘은 발행 요일이 아님'; return out; }
+  if (!env || !env.DB) { out.note = 'DB 바인딩 없음'; return out; }
+
+  const sites = Object.keys(POST_SITES).filter((s) => groups.includes(POST_SITES[s][0]));
+  const marks = sites.map(() => '?').join(',');
+  let rows = [];
+  try {
+    /* publish_on 이 비어 있는 글은 '다음 차례에' 라는 뜻으로 본다.
+       ORDER BY 에서도 빈 값이 먼저 와서 오래 묵은 글부터 나간다. */
+    const r = await env.DB.prepare(
+      "SELECT id,site,slug,title,publish_on FROM posts WHERE status='ready'"
+      + " AND (publish_on IS NULL OR publish_on='' OR publish_on<=?)"
+      + " AND site IN (" + marks + ") ORDER BY site, publish_on, id"
+    ).bind(today, ...sites).all();
+    rows = r.results || [];
+  } catch (e) { out.note = 'D1 조회 실패: ' + (e && e.message); return out; }
+
+  /* 사이트별 1편만 — 위 정렬에서 각 사이트의 첫 행이 가장 이른 글이다 */
+  const seen = new Set();
+  for (const r of rows) {
+    if (seen.has(r.site)) continue;
+    seen.add(r.site);
+    const meta = POST_SITES[r.site];
+    out.picked.push({ id: r.id, site: r.site, slug: r.slug, title: r.title,
+      publish_on: r.publish_on || '', siteKo: meta[1], host: meta[2],
+      url: 'https://' + meta[2] + '/post/' + r.slug + '/' });
+  }
+  if (o.dry) { out.note = 'dry — 전환하지 않음'; return out; }
+
+  const ts = new Date(ms).toISOString();
+  for (const p of out.picked) {
+    try {
+      /* status='ready' 조건을 남겨 둔다 — 크론과 수동 트리거가 겹쳐도 두 번 발행되지 않는다 */
+      const u = await env.DB.prepare(
+        "UPDATE posts SET status='published', published_at=? WHERE id=? AND status='ready'"
+      ).bind(ts, p.id).run();
+      if (((u && u.meta && u.meta.changes) || 0) > 0) out.published.push(p);
+    } catch (e) { console.log('발행 전환 실패 ' + p.site + '/' + p.slug + ': ' + (e && e.message)); }
+  }
+  for (const p of out.published) if (await tgPostNotify(env, p)) out.notified++;
+  return out;
+}
+
 
 /* ── 스크래퍼 차단 ──────────────────────────────────────────
    라우팅·렌더링 전에 끊는다. 계정에 WAF 쓰기 권한이 없어 워커에서 처리한다.
@@ -11157,6 +11282,22 @@ export default {
           </svg>`;
       return new Response(svgLogo, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
     }
+    /* === 정보성 글 발행 크론 수동 트리거 ===
+       크론이 건너뛴 주를 되돌리거나 새 글을 바로 내보낼 때 쓴다.
+       키는 CRON_KEY 시크릿, 없으면 대시보드 비밀번호(DASH_PW)도 받는다.
+       ?force=1 이면 요일 조건을 무시하고, ?dry=1 이면 전환 없이 대상만 본다. */
+    if (path === '/api/post-cron') {
+      const __k = url.searchParams.get('key') || '';
+      const __ok = __k && (__k === ((env && env.CRON_KEY) || '\u0000') || __k === ((env && env.DASH_PW) || '\u0000'));
+      if (!__ok) return new Response(JSON.stringify({ ok: false }), { status: 401, headers: { 'Content-Type': 'application/json', 'cache-control': 'no-store' } });
+      const __r = await publishDuePosts(env, {
+        force: url.searchParams.get('force') === '1',
+        dry: url.searchParams.get('dry') === '1',
+        group: url.searchParams.get('group') || ''
+      });
+      return new Response(JSON.stringify(Object.assign({ ok: true }, __r), null, 2),
+        { headers: { 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
+    }
     // === 대시보드 데이터 API (비번 확인 후 D1 집계 반환) ===
     if (path === '/api/dashboard' && request.method === 'POST') {
       try {
@@ -11367,6 +11508,11 @@ ${HEADER}<div class="wrap" style="text-align:center;padding-top:80px">
 </div>${FOOTER}</body></html>`, { status: 404, headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
   },
   async scheduled(event, env, ctx) {
+    /* 예약 글 발행이 먼저다 — IndexNow 배치보다 가볍고, 실패해도 서로 막지 않는다 */
+    ctx.waitUntil(publishDuePosts(env, { now: event.scheduledTime })
+      .then((r) => console.log('발행 크론 ' + r.day + ' groups=' + r.groups.join(',') +
+        ' 발행=' + r.published.length + ' 알림=' + r.notified + (r.note ? ' (' + r.note + ')' : '')))
+      .catch((e) => console.log('발행 크론 실패: ' + (e && e.message))));
     const all = buildAllIndexNowUrls();
     const CHUNK = 9500;
     const total = Math.ceil(all.length / CHUNK);
