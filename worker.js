@@ -1,3 +1,12 @@
+/* ---------- 파비콘 (18개 공통 규격: ico 16·32·48 / favicon-32.png / apple-touch-icon 180) ----------
+   경로마다 제 형식의 바이트를 돌려준다. 예전엔 세 경로를 한 응답(SVG)으로 묶어 PNG 로 선언해 놓고
+   SVG 를 내보내고 있었다. 이미지는 tools/gen.mjs 로 생성한다. */
+const ICON_ICO  = "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";
+const ICON_P16  = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAADsOAAA7DgHMtqGDAAABE0lEQVQ4y2NgAAIp/9uysn431sj63vgEpP/jxWA119dL+V1XZ4Br9r3xlqBGNCzjd+MdSC8D2GYSNSMZsooBl7N9ix/8n7PxHZjGbcD1jwzYNO49/QWMMzqfwtm4DEIxoGPR6/+fvv79H179CEURiA8SB8njNUA97Nb/+tkv/19/8ON/3/I3/43j76DwNSNu4TegbeGr/wu3vv/vkHXvf+v8V/+v3vsBpkF8kDhIHq8B8v43wP6+dOc7WAPI3yAaxAeJg+QJhgEowPxKHoA17DzxGUyD+CBxgmFAcSyQmg4gBhCT/nElJN/rHxhAGYP8pHx9JQMoV4EyBskG+N54Ix14SwaeI0EZA5S2ibD1I8hmmGYATQtfT4wX6tQAAAAASUVORK5CYII=";
+const ICON_P32  = "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAADsOAAA7DgHMtqGDAAACBklEQVRYw81XPUvDYBDOov6J1EHrUnVydRBEUCQR/Fj8AQVBB+ng5OqmNPiFoz/A0cnaTRBxENqatKLtZP0a7Ac6NO3r+8Q2tGlSk7xp48HRkL5399w9l+SO4wzCL8jjvKBIvKgkA6JSpkoYtQxf1GeUn78f46wkOJsZ4EX5KCDIVQ+Cmqsgq1QPQivJ/rbgAUGJdy2wQWmily0gaHmOexW8Sfd1zrta9o50pEaRveRD9r9UCPIeBSCn3BhPrT1pyggiwdHmKzkxmtnIkvOrIqnWiKa4xj13NChFjiWwF0D+BDC9niVn8QJRq4TUaKDYTYnMbeZs/+8awNjqg6MMzSoEH64BCJGc5ghyl/m2VV6cwVkIbOGDiQK75WWhwVYTWgVg5b8jgMnwI7lOfpHtk1cyvJQ25dmsP3AWNrCFDyYAzx8Vjc88/TUCQeZQY+B83Qa2TACgQ4tpsnX4ogN5/1TJzukbGVlOOzrjGkCw7sSYXaMiZvcaVQqyAsAjVFFrpvw2glrRAxvYMj2GnV5ECBaR8ppaNSjzi8j3V/G/+Rh19XPsBoDHAwnBQFL0bSQT5YLrkcwjTWAojfo4lO5yWJe0EdmHsXxQzIS03QDrUu+zVyR9M8KaRBsi1sPSX0yEb/ta9kOAwLrUVTqob2TeFrxZsC5hY0GHOt0ZLGZ/+Eig4XTOm+QHIBNsCgv46uAAAAAASUVORK5CYII=";
+const ICON_P180 = "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";
+function iconBin(b64){ const s=atob(b64), u=new Uint8Array(s.length); for(let i=0;i<s.length;i++) u[i]=s.charCodeAt(i); return u; }
+function iconResp(b64, ct){ return new Response(iconBin(b64), {headers:{'Content-Type':ct,'Cache-Control':'public,max-age=604800'}}); }
 function reEsc(x){ return x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
 /* 이름 뒤 조사를 받침에 맞게 고른다 (danmalgi 검증본을 13개 공통으로 사용) */
 function josaFor(word,j){
@@ -1331,10 +1340,9 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 <meta name="description" content="${descShort}">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="${canonicalUrl}">
+<link rel="icon" href="https://allcarestudy.com/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="https://allcarestudy.com/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://allcarestudy.com/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="https://allcarestudy.com/apple-touch-icon.png">
-<link rel="shortcut icon" href="https://allcarestudy.com/favicon.ico">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${descShort}">
 <meta property="og:type" content="article">
@@ -11356,21 +11364,11 @@ export default {
       // 그 외는 기존 동작 (학원 이름 등 - 보호 영역)
       return new Response(makeAcademyPage(), {headers:h});
     }
-    if (path === '/favicon.ico' || path === '/favicon-32.png' || path === '/favicon-16.png') {
-      
-      const svgFavicon = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-        <rect width="32" height="32" rx="8" fill="#1D4ED8"/>
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="translate(6,6) scale(0.75)"/>
-      </svg>`;
-      return new Response(svgFavicon, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
-    }
-    if (path === '/apple-touch-icon.png') {
-      const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
-        <rect width="180" height="180" rx="40" fill="#0F2044"/>
-        <path d="M90 20L20 55l70 35 70-35-70-35zM20 125l70 35 70-35M20 90l70 35 70-35" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      </svg>`;
-      return new Response(svgIcon, {headers:{'Content-Type':'image/svg+xml','Cache-Control':'public,max-age=86400'}});
-    }
+    if (path === '/favicon.ico')     return iconResp(ICON_ICO,  'image/x-icon');
+    if (path === '/favicon-32.png')  return iconResp(ICON_P32,  'image/png');
+    if (path === '/favicon-16.png')  return iconResp(ICON_P16,  'image/png');
+    if (path === '/apple-touch-icon.png' || path === '/apple-touch-icon-precomposed.png')
+      return iconResp(ICON_P180, 'image/png');
     if (path === '/logo.png' || path === '/og-image.png') {
       
       const isOg = path === '/og-image.png';
