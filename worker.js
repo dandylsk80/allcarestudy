@@ -1084,6 +1084,8 @@ const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px"><div styl
     function update(){
       try {
         if(!el || !footer) return;
+        /* 모바일은 CSS 가 세로 중앙에 고정한다 — JS 가 인라인 bottom 을 덮어쓰면 위치가 틀어진다 */
+        if(window.innerWidth <= 768){ el.style.position=''; el.style.bottom=''; el.style.top=''; return; }
         var footerTop = footer.getBoundingClientRect().top;
         var winH = window.innerHeight;
         var elH = el.offsetHeight || 0;
@@ -10161,6 +10163,8 @@ function switchFind(tab){
   function adjustFloats(){
     try {
       if(!floats || !footer) return;
+      /* 모바일은 CSS 가 세로 중앙에 고정한다 */
+      if(window.innerWidth <= 768){ floats.style.bottom=''; return; }
       var footerTop = footer.getBoundingClientRect().top;
       var windowH = window.innerHeight;
       if(footerTop < windowH){
