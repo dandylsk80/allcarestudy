@@ -8714,6 +8714,17 @@ th{color:#64748b;font-weight:600}
     <div class="chnote">막대를 클릭하면 그 사이트의 방문 상세가 열립니다.</div>
   </div>
   <div class="grid" id="sites"></div>
+  <div class="hist" style="margin-bottom:16px">
+    <div class="chhead"><h3 style="font-size:14px">전환 만든 페이지 TOP 20</h3>
+      <div id="convTabs">
+        <button data-r="30d" onclick="loadConv('30d',this)">30일</button>
+        <button data-r="90d" class="on" onclick="loadConv('90d',this)">90일</button>
+      </div>
+    </div>
+    <label style="font-size:12px;color:#64748b;display:block;margin:8px 0 12px;cursor:pointer"><input type="checkbox" id="convMin" onchange="loadConv(CONVRANGE,null)" style="vertical-align:-1px"> 전환 2건 이상만 보기</label>
+    <table><thead><tr><th>#</th><th>사이트</th><th>페이지</th><th>전환</th><th>순전환</th><th>전화</th><th>문자</th><th>상담</th><th>조회</th><th>전환율</th></tr></thead><tbody id="convBody"><tr><td colspan="10" style="color:#9ca3af">불러오는 중…</td></tr></tbody></table>
+    <div class="chnote">상단 기간 탭과 별개로 동작합니다. 조회수·전환율은 같은 기간의 view 기준입니다.</div>
+  </div>
   <div class="hist">
     <h3 style="font-size:14px;margin-bottom:12px">최근 전환 이력 (최대 50건)</h3>
     <table><thead><tr><th>시간</th><th>사이트</th><th>전환</th><th>페이지</th><th>유입</th></tr></thead><tbody id="hist"></tbody></table>
@@ -8774,11 +8785,39 @@ function load(range,btn){
     document.getElementById('catsLegend').innerHTML=chLegend();
     drawCats();drawSites();
     if(TRENDDATA===null) loadTrend(TRENDRANGE, document.querySelector('#trendTabs button.on'));
+    if(!CONVLOADED){CONVLOADED=1;loadConv(CONVRANGE,null);}
     var rec=d.recent||[];var hh='';
     for(var j=0;j<rec.length;j++){var e=rec[j];var tm=kstTime(e.ts);
       hh+='<tr><td>'+tm+'</td><td>'+siteLabel(e.site)+'</td><td><span class="tag '+esc(e.type)+'">'+typeLabel(e.type)+'</span></td><td>'+esc(e.page||'')+'</td><td>'+(e.ref?(/chatgpt|openai|perplexity|gemini|claude|copilot/i.test(e.ref)?'AI':e.ref.indexOf('naver')>=0?'네이버':e.ref.indexOf('google')>=0?'구글':e.ref.indexOf('daum')>=0?'다음':'기타'):'직접')+'</td></tr>';}
     document.getElementById('hist').innerHTML=hh||'<tr><td colspan="5" style="color:#9ca3af">이력 없음</td></tr>';
   }).catch(function(){document.getElementById('err').style.display='block';});
+}
+
+/* ===== 전환 만든 페이지 TOP 20 ===== */
+var CONVRANGE='90d', CONVLOADED=0;
+var SITE_DOMAIN={};for(var _d=0;_d<SITE_LIST.length;_d++)SITE_DOMAIN[SITE_LIST[_d][1]]=SITE_LIST[_d][3];
+function loadConv(range,btn){
+  CONVRANGE=range;
+  if(btn){var bs=document.querySelectorAll('#convTabs button');for(var i=0;i<bs.length;i++)bs[i].className='';btn.className='on';}
+  var min=document.getElementById('convMin').checked?2:1;
+  var body=document.getElementById('convBody');
+  body.innerHTML='<tr><td colspan="10" style="color:#9ca3af">불러오는 중…</td></tr>';
+  fetch('/api/dashboard',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pw:PW,range:range,op:'convpages',min:min})})
+  .then(function(r){return r.json();}).then(function(d){
+    if(!d.ok){body.innerHTML='<tr><td colspan="10" style="color:#9ca3af">불러오지 못했습니다.</td></tr>';return;}
+    var vw={},vs=d.views||[];
+    for(var i=0;i<vs.length;i++) vw[vs[i].site+'|'+vs[i].page]=vs[i].vw;
+    var rows=d.rows||[],h='';
+    for(var j=0;j<rows.length;j++){
+      var r=rows[j], v=vw[r.site+'|'+r.page]||0;
+      var dom=SITE_DOMAIN[r.site]||'', url=dom?('https://'+dom+r.page):'';
+      var cell=url?('<a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(r.page)+'</a>'):esc(r.page);
+      h+='<tr><td>'+(j+1)+'</td><td>'+esc(siteLabel(r.site))+'</td><td>'+cell+'</td>'
+       +'<td><b>'+r.conv+'</b></td><td>'+r.uniq+'</td><td>'+r.tel+'</td><td>'+r.sms+'</td><td>'+r.contact+'</td>'
+       +'<td>'+(v||'—')+'</td><td>'+(v?((r.conv/v*100).toFixed(1)+'%'):'—')+'</td></tr>';
+    }
+    body.innerHTML=h||'<tr><td colspan="10" style="color:#9ca3af">해당 기간·조건에 맞는 전환이 없습니다.</td></tr>';
+  }).catch(function(){body.innerHTML='<tr><td colspan="10" style="color:#9ca3af">불러오지 못했습니다.</td></tr>';});
 }
 
 /* 저장값은 UTC(ISO). 화면에만 한국시각(+9시간)으로 바꿔 'MM-DD HH:MM' 으로 보인다 */
@@ -11472,6 +11511,34 @@ export default {
             const kw   = await env.DB.prepare("SELECT keyword k, COUNT(*) cnt" + W + "AND keyword IS NOT NULL AND keyword <> '' GROUP BY k ORDER BY cnt DESC LIMIT 20").bind(sinceIso, upto, site).all();
             return new Response(JSON.stringify({ok:true, op:'visits', site:site,
               rows: rows.results||[], src: src.results||[], dev: dev.results||[], kw: kw.results||[]}),
+              { headers: { 'Content-Type':'application/json' } });
+          } else if (b.op === 'convpages') {
+            /* 전환(tel/sms/contact)을 만든 페이지 TOP 20.
+               조회수는 같은 조건으로 한 번 더 물어 클라이언트에서 붙인다.
+               D1 에서 셀프 조인하면 events 35만 행 스캔이 두 배가 된다. */
+            const MIN = Math.max(1, Math.min(50, (b.min | 0) || 1));
+            const cq = await env.DB.prepare(
+              "SELECT site, page, COUNT(*) conv, COUNT(DISTINCT ip) uniq," +
+              " SUM(CASE WHEN type='tel' THEN 1 ELSE 0 END) tel," +
+              " SUM(CASE WHEN type='sms' THEN 1 ELSE 0 END) sms," +
+              " SUM(CASE WHEN type='contact' THEN 1 ELSE 0 END) contact" +
+              " FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL +
+              " AND type IN ('tel','sms','contact') GROUP BY site, page" +
+              " HAVING conv >= ? ORDER BY conv DESC, uniq DESC LIMIT 20"
+            ).bind(sinceIso, upto, MIN).all();
+            const crows = cq.results || [];
+            let views = [];
+            if (crows.length) {
+              const ph = crows.map(function(){ return "?"; }).join(",");
+              const vst = env.DB.prepare(
+                "SELECT site, page, COUNT(*) vw FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL +
+                " AND type = 'view' AND page IN (" + ph + ") GROUP BY site, page"
+              );
+              /* bind 를 apply 로 부르면 this 가 끊긴다. 인자를 펼쳐서 넘긴다 */
+              const vq = await vst.bind(sinceIso, upto, ...crows.map(function(r){ return r.page; })).all();
+              views = vq.results || [];
+            }
+            return new Response(JSON.stringify({ok:true, op:'convpages', min:MIN, rows:crows, views:views}),
               { headers: { 'Content-Type':'application/json' } });
           } else if (b.op === 'series') {
             // ts 는 UTC ISO 문자열이다. SQLite 가 확실히 파싱하도록 'T'/'Z' 를 없앤 뒤
