@@ -8621,7 +8621,7 @@ function makeDashboardPage() {
 .site:nth-child(9n+7){border-top-color:#ef4444}
 .site:nth-child(9n+8){border-top-color:#84cc16}
 .site:nth-child(9n){border-top-color:#6366f1}
-.site h3{font-size:15px;margin-bottom:3px;color:#0f172a}.site .meta{font-size:11px;color:#94a3b8;line-height:1.5}.site .meta:last-of-type{margin-bottom:10px}
+.site h3{font-size:15px;margin-bottom:3px;color:#0f172a}.site a.slink{color:inherit;text-decoration:none}.site a.slink:hover{text-decoration:underline;color:#2563eb}.site .meta{font-size:11px;color:#94a3b8;line-height:1.5}.site .meta:last-of-type{margin-bottom:10px}
 .site .row{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid #f1f5f9;font-size:14px}
 .site .row:first-of-type{border-top:0}
 .site .v{font-weight:800;color:#0f172a}
@@ -8770,7 +8770,7 @@ function load(range,btn){
       var g=SITE_LIST[k][0];var sk=SITE_LIST[k][1];var types=bySite[sk]||{};
       if(g!==lastG){var _gc=0;for(var _q=0;_q<SITE_LIST.length;_q++)if(SITE_LIST[_q][0]===g)_gc++;html+='<div class="grouphdr">'+(GROUP_NAME[g]||g)+' <span class="gcnt">'+_gc+'개</span></div>';lastG=g;}
       var tel=types.tel||{cnt:0,uniq:0};var sms=types.sms||{cnt:0,uniq:0};var con=types.contact||{cnt:0,uniq:0};var vw=types.view||{cnt:0,uniq:0};
-      html+='<div class="site"><h3>'+SITE_LIST[k][2]+'</h3>'+'<div class="meta">'+SITE_LIST[k][3]+'</div>'+'<div class="meta">개설 '+SITE_LIST[k][4]+'</div>';
+      var _url='https://'+SITE_LIST[k][3]+'/';html+='<div class="site"><h3><a class="slink" href="'+_url+'" target="_blank" rel="noopener">'+SITE_LIST[k][2]+'</a></h3>'+'<div class="meta"><a class="slink" href="'+_url+'" target="_blank" rel="noopener">'+SITE_LIST[k][3]+'</a></div>'+'<div class="meta">개설 '+SITE_LIST[k][4]+'</div>';
       html+='<div class="row vrow" data-vsite="'+sk+'" title="클릭하면 방문 상세를 볼 수 있습니다"><span>방문자<span class="more">상세 ▸</span></span><span class="v">'+vw.cnt+' <span class="u">(순 '+vw.uniq+')</span></span></div>';
       html+='<div class="row"><span>전화 클릭</span><span class="v">'+tel.cnt+' <span class="u">(순 '+tel.uniq+')</span></span></div>';
       html+='<div class="row"><span>문자 클릭</span><span class="v">'+sms.cnt+' <span class="u">(순 '+sms.uniq+')</span></span></div>';
