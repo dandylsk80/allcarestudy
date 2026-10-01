@@ -8748,6 +8748,19 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){retur
 function srcLabel(k){return k==='ai'?'AI':k==='naver'?'네이버':k==='google'?'구글':k==='daum'?'다음':k==='direct'?'직접':k==='etc'?'기타':'기록 이전';}
 function devLabel(k){return k==='pc'?'PC':k==='mobile'?'모바일':k==='tablet'?'태블릿':'기록 이전';}
 var SITE_LIST=[["edu","allcarestudy","올케어스터디","allcarestudy.com","2026-03-06"],["edu","studyonlive","스터디온라이브","studyonlive.com","2026-06-03"],["edu","semogwa","세상의모든과외","semogwa.com","2026-06-30"],["edu","myclassup","우리동네과외","myclassup.com","2026-08-04"],["edu","king-study","공부끝판왕","king-study.com","2026-08-18"],["aca","semoacademy","세상의모든학원","semoacademy.com","2026-06-26"],["aca","classwawa","우리동네와와학원","classwawa.com","2026-07-13"],["ben","allpaystore","올페이스토어","allpaystore.com","2026-03-09"],["ben","thecardpos","더카드포스","thecardpos.com","2026-06-07"],["ben","danmalgi","단말기닷컴","danmalgi.com","2026-06-13"],["ben","24payshop","24페이","24payshop.com","2026-06-23"],["ben","365posmall","365포스","365posmall.com","2026-07-03"],["ben","primeposkorea","프라임 POS 코리아","primeposkorea.com","2026-09-08"],["ben","primecardkorea","프라임 CARD 코리아","primecardkorea.com","2026-09-13"],["ben","primepaykorea","프라임 PAY 코리아","primepaykorea.com","2026-09-13"],["ben","primebizkorea","프라임 BIZ 코리아","primebizkorea.com","2026-09-13"],["ben","primeshopkorea","프라임 SHOP 코리아","primeshopkorea.com","2026-09-13"],["pow","globaltalkup","글로벌톡업","globaltalkup.com","2026-08-25"],["pow","powerlandschool","파워랜드 우리아이 회화수업","powerlandschool.com","2026-09-19"],["pow","powerlandprep","파워랜드 특목고 회화수업","powerlandprep.com","2026-09-20"],["pow","powerlandtest","파워랜드 자격증대비","powerlandtest.com","2026-09-20"],["pow","powerlandbiz","파워랜드 비즈니스회화","powerlandbiz.com","2026-09-20"]];
+/* 사이트별 방문자 막대: 사이트 → 상품군 매핑 (이 순서대로 묶어 보여 준다) */
+var SITE_GROUP_ORDER=[["tutor","과외"],["academy","학원"],["pay","결제/POS"],["lang","어학(파워랜드)"]];
+var SITE_GROUP={allcarestudy:"tutor",studyonlive:"tutor",semogwa:"tutor",myclassup:"tutor","king-study":"tutor",
+  semoacademy:"academy",classwawa:"academy",
+  allpaystore:"pay",thecardpos:"pay",danmalgi:"pay","24payshop":"pay","365posmall":"pay",primeposkorea:"pay",primecardkorea:"pay",primepaykorea:"pay",primebizkorea:"pay",primeshopkorea:"pay",
+  globaltalkup:"lang",powerlandschool:"lang",powerlandprep:"lang",powerlandtest:"lang",powerlandbiz:"lang"};
+var SITE_GROUP_TOTAL=22;
+/* 매핑 검사: SITE_LIST 22개가 전부 매핑됐는지, 매핑에 없는 사이트·없는 상품군이 없는지 */
+var SITE_GROUP_ERR=(function(){var e=[],gk={},i,k,seen={};for(i=0;i<SITE_GROUP_ORDER.length;i++)gk[SITE_GROUP_ORDER[i][0]]=1;
+  if(SITE_LIST.length!==SITE_GROUP_TOTAL)e.push('SITE_LIST '+SITE_LIST.length+'개 (기대 '+SITE_GROUP_TOTAL+')');
+  for(i=0;i<SITE_LIST.length;i++){k=SITE_LIST[i][1];seen[k]=1;if(!SITE_GROUP[k])e.push('매핑 없음: '+k);else if(!gk[SITE_GROUP[k]])e.push('없는 상품군: '+k+'→'+SITE_GROUP[k]);}
+  for(k in SITE_GROUP)if(!seen[k])e.push('SITE_LIST에 없음: '+k);
+  if(e.length&&window.console)console.error('[SITE_GROUP]',e);return e;})();
 var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][1]]=SITE_LIST[_i][2];
 function siteLabel(s){return SITE_NAME[s]||s;}
 function load(range,btn){
@@ -8972,22 +8985,34 @@ function drawCats(){
 /* 3. 사이트별 비교 (가로 막대) */
 function drawSites(){
   var el=document.getElementById('chSites');if(!el)return;
-  var by=siteAgg(),items=[],i;
-  for(i=0;i<SITE_LIST.length;i++){var sk=SITE_LIST[i][1];items.push({key:sk,name:SITE_LIST[i][2],val:((by[sk]||{}).view)||0});}
-  items.sort(function(a,b){return b.val-a.val;});
-  var W=chWidth(el),rowH=W<520?24:28,H=items.length*rowH+8;
-  var labelW=W<520?96:132,padR=46,mx=niceMax(items.length?items[0].val:0);
-  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
-  for(i=0;i<items.length;i++){
-    var y=i*rowH+4,bw=mx?(W-labelW-padR)*(items[i].val/mx):0;
-    if(items[i].val>0&&bw<2)bw=2;
+  var by=siteAgg(),i,j,rows=[],mxv=0;
+  for(i=0;i<SITE_GROUP_ORDER.length;i++){var gid=SITE_GROUP_ORDER[i][0],its=[];
+    for(j=0;j<SITE_LIST.length;j++){var sk=SITE_LIST[j][1];if(SITE_GROUP[sk]!==gid)continue;
+      var v=((by[sk]||{}).view)||0;if(v>mxv)mxv=v;its.push({key:sk,name:SITE_LIST[j][2],val:v});}
+    its.sort(function(a,b){return b.val-a.val;});
+    var gsum=0;for(j=0;j<its.length;j++)gsum+=its[j].val;
+    rows.push({hdr:SITE_GROUP_ORDER[i][1],cnt:its.length,sum:gsum});
+    for(j=0;j<its.length;j++)rows.push(its[j]);}
+  var W=chWidth(el),rowH=W<520?24:28,hdrH=W<520?26:30,H=8,labelW=W<520?96:132,padR=46,mx=niceMax(mxv);
+  for(i=0;i<rows.length;i++)H+=rows[i].hdr?hdrH:rowH;
+  if(SITE_GROUP_ERR.length)H+=16;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="xMidYMid meet">',y=4;
+  for(i=0;i<rows.length;i++){var it=rows[i];
+    if(it.hdr){var hy=y+hdrH-9;
+      s+='<text x="0" y="'+hy+'" font-size="'+(W<520?11:12)+'" font-weight="800" fill="#0f172a">'+svgEsc(it.hdr)+' <tspan font-weight="600" fill="#94a3b8">'+it.cnt+'개 · '+it.sum+'</tspan></text>';
+      s+='<line x1="0" x2="'+W+'" y1="'+(hy+5)+'" y2="'+(hy+5)+'" stroke="#e2e8f0"/>';
+      y+=hdrH;continue;}
+    var bw=mx?(W-labelW-padR)*(it.val/mx):0;
+    if(it.val>0&&bw<2)bw=2;
     var cy=y+(rowH-4)/2+4;
-    s+='<g data-csite="'+svgEsc(items[i].key)+'" style="cursor:pointer">';
+    s+='<g data-csite="'+svgEsc(it.key)+'" style="cursor:pointer">';
     s+='<rect x="0" y="'+y+'" width="'+W+'" height="'+(rowH-4)+'" fill="#ffffff" fill-opacity="0"/>';
-    s+='<text x="0" y="'+cy+'" font-size="'+(W<520?10:11)+'" fill="#334155">'+svgEsc(items[i].name)+'</text>';
+    s+='<text x="0" y="'+cy+'" font-size="'+(W<520?10:11)+'" fill="#334155">'+svgEsc(it.name)+'</text>';
     s+='<rect x="'+labelW+'" y="'+(y+3)+'" width="'+bw.toFixed(1)+'" height="'+(rowH-10)+'" rx="3" fill="'+CH_COLORS.view+'"/>';
-    s+='<text x="'+(labelW+bw+6).toFixed(1)+'" y="'+cy+'" font-size="10" fill="#64748b">'+items[i].val+'</text>';
-    s+='<title>'+svgEsc(items[i].name)+' 방문자 '+items[i].val+' · 클릭하면 방문 상세</title></g>';}
+    s+='<text x="'+(labelW+bw+6).toFixed(1)+'" y="'+cy+'" font-size="10" fill="#64748b">'+it.val+'</text>';
+    s+='<title>'+svgEsc(it.name)+' 방문자 '+it.val+' · 클릭하면 방문 상세</title></g>';
+    y+=rowH;}
+  if(SITE_GROUP_ERR.length)s+='<text x="0" y="'+(H-2)+'" font-size="10" fill="#dc2626">매핑 오류: '+svgEsc(SITE_GROUP_ERR.join(', '))+'</text>';
   el.innerHTML=s+'</svg>';
   var gs=el.querySelectorAll('[data-csite]');
   for(i=0;i<gs.length;i++) gs[i].onclick=function(){openVisits(this.getAttribute('data-csite'));};
