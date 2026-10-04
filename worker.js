@@ -8756,11 +8756,18 @@ var SITE_GROUP={allcarestudy:"tutor",studyonlive:"tutor",semogwa:"tutor",myclass
   allpaystore:"pay",thecardpos:"pay",danmalgi:"pay","24payshop":"pay","365posmall":"pay",primeposkorea:"pay",primecardkorea:"pay",primepaykorea:"pay",primebizkorea:"pay",primeshopkorea:"pay",
   globaltalkup:"lang",powerlandschool:"lang",powerlandprep:"lang",powerlandtest:"lang",powerlandbiz:"lang"};
 var SITE_GROUP_TOTAL=22;
+/* 사이트별로 실제 /api/track 에 보내는 전환 종류 — 사이트 카드에 이 줄만 보인다. 버튼·폼을 추가하면 여기만 고친다 */
+var TC="tel,sms,contact".split(","),TS="tel,sms".split(",");
+var SITE_CONVERSIONS={allcarestudy:TC,studyonlive:TC,semogwa:TC,myclassup:TC,"king-study":TC,
+  semoacademy:TC,classwawa:TC,
+  allpaystore:TC,thecardpos:TS,danmalgi:TS,"24payshop":TS,"365posmall":TS,primeposkorea:TS,primecardkorea:TS,primepaykorea:TS,primebizkorea:TS,primeshopkorea:TS,
+  globaltalkup:TC,powerlandschool:TS,powerlandprep:TS,powerlandtest:TS,powerlandbiz:TS};
 /* 매핑 검사: SITE_LIST 22개가 전부 매핑됐는지, 매핑에 없는 사이트·없는 상품군이 없는지 */
 var SITE_GROUP_ERR=(function(){var e=[],gk={},i,k,seen={};for(i=0;i<SITE_GROUP_ORDER.length;i++)gk[SITE_GROUP_ORDER[i][0]]=1;
   if(SITE_LIST.length!==SITE_GROUP_TOTAL)e.push('SITE_LIST '+SITE_LIST.length+'개 (기대 '+SITE_GROUP_TOTAL+')');
   for(i=0;i<SITE_LIST.length;i++){k=SITE_LIST[i][1];seen[k]=1;if(!SITE_GROUP[k])e.push('매핑 없음: '+k);else if(!gk[SITE_GROUP[k]])e.push('없는 상품군: '+k+'→'+SITE_GROUP[k]);}
   for(k in SITE_GROUP)if(!seen[k])e.push('SITE_LIST에 없음: '+k);
+  for(k in seen)if(!SITE_CONVERSIONS[k])e.push('전환 종류 없음: '+k);
   if(e.length&&window.console)console.error('[SITE_GROUP]',e);return e;})();
 var SITE_NAME={};for(var _i=0;_i<SITE_LIST.length;_i++)SITE_NAME[SITE_LIST[_i][1]]=SITE_LIST[_i][2];
 function siteLabel(s){return SITE_NAME[s]||s;}
@@ -8786,9 +8793,10 @@ function load(range,btn){
       var tel=types.tel||{cnt:0,uniq:0};var sms=types.sms||{cnt:0,uniq:0};var con=types.contact||{cnt:0,uniq:0};var vw=types.view||{cnt:0,uniq:0};
       var _url='https://'+SITE_LIST[k][3]+'/';html+='<div class="site"><h3><a class="slink" href="'+_url+'" target="_blank" rel="noopener">'+SITE_LIST[k][2]+'</a></h3>'+'<div class="meta"><a class="slink" href="'+_url+'" target="_blank" rel="noopener">'+SITE_LIST[k][3]+'</a></div>'+'<div class="meta">개설 '+SITE_LIST[k][4]+'</div>';
       html+='<div class="row vrow" data-vsite="'+sk+'" title="클릭하면 방문 상세를 볼 수 있습니다"><span>방문자<span class="more">상세 ▸</span></span><span class="v">'+vw.cnt+' <span class="u">(순 '+vw.uniq+')</span></span></div>';
-      html+='<div class="row"><span>전화 클릭</span><span class="v">'+tel.cnt+' <span class="u">(순 '+tel.uniq+')</span></span></div>';
-      html+='<div class="row"><span>문자 클릭</span><span class="v">'+sms.cnt+' <span class="u">(순 '+sms.uniq+')</span></span></div>';
-      html+='<div class="row"><span>상담 클릭</span><span class="v">'+con.cnt+' <span class="u">(순 '+con.uniq+')</span></span></div>';
+      var cv=SITE_CONVERSIONS[sk]||TC;
+      if(cv.indexOf('tel')>=0)html+='<div class="row"><span>전화 클릭</span><span class="v">'+tel.cnt+' <span class="u">(순 '+tel.uniq+')</span></span></div>';
+      if(cv.indexOf('sms')>=0)html+='<div class="row"><span>문자 클릭</span><span class="v">'+sms.cnt+' <span class="u">(순 '+sms.uniq+')</span></span></div>';
+      if(cv.indexOf('contact')>=0)html+='<div class="row"><span>상담 클릭</span><span class="v">'+con.cnt+' <span class="u">(순 '+con.uniq+')</span></span></div>';
       html+='</div>';
     }
     document.getElementById('sites').innerHTML=html;
