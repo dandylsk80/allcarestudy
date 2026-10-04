@@ -8749,7 +8749,8 @@ function srcLabel(k){return k==='ai'?'AI':k==='naver'?'네이버':k==='google'?'
 function devLabel(k){return k==='pc'?'PC':k==='mobile'?'모바일':k==='tablet'?'태블릿':'기록 이전';}
 var SITE_LIST=[["edu","allcarestudy","올케어스터디","allcarestudy.com","2026-03-06"],["edu","studyonlive","스터디온라이브","studyonlive.com","2026-06-03"],["edu","semogwa","세상의모든과외","semogwa.com","2026-06-30"],["edu","myclassup","우리동네과외","myclassup.com","2026-08-04"],["edu","king-study","공부끝판왕","king-study.com","2026-08-18"],["aca","semoacademy","세상의모든학원","semoacademy.com","2026-06-26"],["aca","classwawa","우리동네와와학원","classwawa.com","2026-07-13"],["ben","allpaystore","올페이스토어","allpaystore.com","2026-03-09"],["ben","thecardpos","더카드포스","thecardpos.com","2026-06-07"],["ben","danmalgi","단말기닷컴","danmalgi.com","2026-06-13"],["ben","24payshop","24페이","24payshop.com","2026-06-23"],["ben","365posmall","365포스","365posmall.com","2026-07-03"],["ben","primeposkorea","프라임 POS 코리아","primeposkorea.com","2026-09-08"],["ben","primecardkorea","프라임 CARD 코리아","primecardkorea.com","2026-09-13"],["ben","primepaykorea","프라임 PAY 코리아","primepaykorea.com","2026-09-13"],["ben","primebizkorea","프라임 BIZ 코리아","primebizkorea.com","2026-09-13"],["ben","primeshopkorea","프라임 SHOP 코리아","primeshopkorea.com","2026-09-13"],["pow","globaltalkup","글로벌톡업","globaltalkup.com","2026-08-25"],["pow","powerlandschool","파워랜드 우리아이 회화수업","powerlandschool.com","2026-09-19"],["pow","powerlandprep","파워랜드 특목고 회화수업","powerlandprep.com","2026-09-20"],["pow","powerlandtest","파워랜드 자격증대비","powerlandtest.com","2026-09-20"],["pow","powerlandbiz","파워랜드 비즈니스회화","powerlandbiz.com","2026-09-20"]];
 /* 사이트별 방문자 막대: 사이트 → 상품군 매핑 (이 순서대로 묶어 보여 준다) */
-var SITE_GROUP_ORDER=[["tutor","과외"],["academy","학원"],["pay","결제/POS"],["lang","어학(파워랜드)"]];
+/* [키, 이름, 묶음 바탕(파스텔), 막대·제목 색] */
+var SITE_GROUP_ORDER=[["tutor","과외","#EEF3FF","#4F7BE8"],["academy","학원","#EEF9F0","#3FA76B"],["pay","결제/POS","#FFF4EA","#E8873A"],["lang","어학(파워랜드)","#F6EEFF","#8E5BD8"]];
 var SITE_GROUP={allcarestudy:"tutor",studyonlive:"tutor",semogwa:"tutor",myclassup:"tutor","king-study":"tutor",
   semoacademy:"academy",classwawa:"academy",
   allpaystore:"pay",thecardpos:"pay",danmalgi:"pay","24payshop":"pay","365posmall":"pay",primeposkorea:"pay",primecardkorea:"pay",primepaykorea:"pay",primebizkorea:"pay",primeshopkorea:"pay",
@@ -8991,24 +8992,27 @@ function drawSites(){
       var v=((by[sk]||{}).view)||0;if(v>mxv)mxv=v;its.push({key:sk,name:SITE_LIST[j][2],val:v});}
     its.sort(function(a,b){return b.val-a.val;});
     var gsum=0;for(j=0;j<its.length;j++)gsum+=its[j].val;
-    rows.push({hdr:SITE_GROUP_ORDER[i][1],cnt:its.length,sum:gsum});
-    for(j=0;j<its.length;j++)rows.push(its[j]);}
-  var W=chWidth(el),rowH=W<520?24:28,hdrH=W<520?26:30,H=8,labelW=W<520?96:132,padR=46,mx=niceMax(mxv);
-  for(i=0;i<rows.length;i++)H+=rows[i].hdr?hdrH:rowH;
+    var gc=SITE_GROUP_ORDER[i];
+    rows.push({hdr:gc[1],cnt:its.length,sum:gsum,bg:gc[2],bar:gc[3]});
+    for(j=0;j<its.length;j++){its[j].bar=gc[3];rows.push(its[j]);}}
+  var W=chWidth(el),rowH=W<520?24:28,hdrH=W<520?26:30,gap=10,px=8,labelW=(W<520?96:132)+px,padR=46+px,mx=niceMax(mxv),H=0,y=0,bands=[];
+  for(i=0;i<rows.length;i++){if(rows[i].hdr){if(bands.length)y+=gap;bands.push({y:y,bg:rows[i].bg});}
+    rows[i].y=y;y+=rows[i].hdr?hdrH:rowH;bands[bands.length-1].h=y-bands[bands.length-1].y+2;}
+  H=y+4;
   if(SITE_GROUP_ERR.length)H+=16;
-  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="xMidYMid meet">',y=4;
-  for(i=0;i<rows.length;i++){var it=rows[i];
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
+  for(i=0;i<bands.length;i++)s+='<rect x="0" y="'+bands[i].y+'" width="'+W+'" height="'+bands[i].h+'" rx="8" fill="'+bands[i].bg+'"/>';
+  for(i=0;i<rows.length;i++){var it=rows[i];y=it.y+2;
     if(it.hdr){var hy=y+hdrH-9;
-      s+='<text x="0" y="'+hy+'" font-size="'+(W<520?11:12)+'" font-weight="800" fill="#0f172a">'+svgEsc(it.hdr)+' <tspan font-weight="600" fill="#94a3b8">'+it.cnt+'개 · '+it.sum+'</tspan></text>';
-      s+='<line x1="0" x2="'+W+'" y1="'+(hy+5)+'" y2="'+(hy+5)+'" stroke="#e2e8f0"/>';
-      y+=hdrH;continue;}
+      s+='<text x="'+px+'" y="'+hy+'" font-size="'+(W<520?11:12)+'" font-weight="800" fill="'+it.bar+'">'+svgEsc(it.hdr)+' <tspan font-weight="600" fill="#64748b">'+it.cnt+'개 · '+it.sum+'</tspan></text>';
+      continue;}
     var bw=mx?(W-labelW-padR)*(it.val/mx):0;
     if(it.val>0&&bw<2)bw=2;
     var cy=y+(rowH-4)/2+4;
     s+='<g data-csite="'+svgEsc(it.key)+'" style="cursor:pointer">';
     s+='<rect x="0" y="'+y+'" width="'+W+'" height="'+(rowH-4)+'" fill="#ffffff" fill-opacity="0"/>';
-    s+='<text x="0" y="'+cy+'" font-size="'+(W<520?10:11)+'" fill="#334155">'+svgEsc(it.name)+'</text>';
-    s+='<rect x="'+labelW+'" y="'+(y+3)+'" width="'+bw.toFixed(1)+'" height="'+(rowH-10)+'" rx="3" fill="'+CH_COLORS.view+'"/>';
+    s+='<text x="'+px+'" y="'+cy+'" font-size="'+(W<520?10:11)+'" fill="#334155">'+svgEsc(it.name)+'</text>';
+    s+='<rect x="'+labelW+'" y="'+(y+3)+'" width="'+bw.toFixed(1)+'" height="'+(rowH-10)+'" rx="3" fill="'+it.bar+'"/>';
     s+='<text x="'+(labelW+bw+6).toFixed(1)+'" y="'+cy+'" font-size="10" fill="#64748b">'+it.val+'</text>';
     s+='<title>'+svgEsc(it.name)+' 방문자 '+it.val+' · 클릭하면 방문 상세</title></g>';
     y+=rowH;}
