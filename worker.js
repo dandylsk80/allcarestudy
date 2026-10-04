@@ -8751,10 +8751,11 @@ var SITE_LIST=[["edu","allcarestudy","올케어스터디","allcarestudy.com","20
 /* 사이트별 방문자 막대: 사이트 → 상품군 매핑 (이 순서대로 묶어 보여 준다) */
 /* [키, 이름, 묶음 바탕(파스텔), 막대·제목 색] */
 var SITE_GROUP_ORDER=[["tutor","과외","#DCE8FF","#4F7BE8"],["academy","학원","#D9F2E0","#3FA76B"],["pay","결제/POS","#FFE3CC","#E8873A"],["lang","어학(파워랜드)","#EADCFF","#8E5BD8"]];
+/* 묶음 안 순서 = 적힌 순서 = 만든 순서(저장소 첫 커밋 날짜). 새 사이트는 해당 묶음 끝에 추가한다 */
 var SITE_GROUP={allcarestudy:"tutor",studyonlive:"tutor",semogwa:"tutor",myclassup:"tutor","king-study":"tutor",
   semoacademy:"academy",classwawa:"academy",
   allpaystore:"pay",thecardpos:"pay",danmalgi:"pay","24payshop":"pay","365posmall":"pay",primeposkorea:"pay",primecardkorea:"pay",primepaykorea:"pay",primebizkorea:"pay",primeshopkorea:"pay",
-  globaltalkup:"lang",powerlandschool:"lang",powerlandprep:"lang",powerlandtest:"lang",powerlandbiz:"lang"};
+  globaltalkup:"lang",powerlandprep:"lang",powerlandtest:"lang",powerlandbiz:"lang",powerlandschool:"lang"};
 var SITE_GROUP_TOTAL=22;
 /* 사이트별로 실제 /api/track 에 보내는 전환 종류 — 사이트 카드에 이 줄만 보인다. 버튼·폼을 추가하면 여기만 고친다 */
 var TC="tel,sms,contact".split(","),TS="tel,sms".split(",");
@@ -8995,10 +8996,10 @@ function drawCats(){
 function drawSites(){
   var el=document.getElementById('chSites');if(!el)return;
   var by=siteAgg(),i,j,rows=[],mxv=0;
+  var nm={};for(j=0;j<SITE_LIST.length;j++)nm[SITE_LIST[j][1]]=SITE_LIST[j][2];
   for(i=0;i<SITE_GROUP_ORDER.length;i++){var gid=SITE_GROUP_ORDER[i][0],its=[];
-    for(j=0;j<SITE_LIST.length;j++){var sk=SITE_LIST[j][1];if(SITE_GROUP[sk]!==gid)continue;
-      var v=((by[sk]||{}).view)||0;if(v>mxv)mxv=v;its.push({key:sk,name:SITE_LIST[j][2],val:v});}
-    its.sort(function(a,b){return b.val-a.val;});
+    for(var sk in SITE_GROUP){if(SITE_GROUP[sk]!==gid||!nm[sk])continue;
+      var v=((by[sk]||{}).view)||0;if(v>mxv)mxv=v;its.push({key:sk,name:nm[sk],val:v});}
     var gsum=0;for(j=0;j<its.length;j++)gsum+=its[j].val;
     var gc=SITE_GROUP_ORDER[i];
     rows.push({hdr:gc[1],cnt:its.length,sum:gsum,bg:gc[2],bar:gc[3]});
