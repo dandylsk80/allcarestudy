@@ -10928,11 +10928,11 @@ function pagePost(p) {
    사이트의 published 글만 서비스한다. 발행 스위치는 이 워커 한 곳에만 둔다 —
    18개 워커에 흩어 두면 주기가 어긋나고 중복 발행을 막을 방법이 없다.
 
-   주기: 교육 8개는 매주 월요일, 결제단말기 10개는 격주 월요일.
+   주기: 교육 8개는 매주 월요일, 결제단말기 10개·파워랜드 어학 4개는 격주 월요일.
    기준일 POST_ANCHOR = 2026-09-21(월). cron 은 매일 KST 10:00 에 돌지만
    실제 전환은 자기 차례인 날에만 한다(사이트당 1편). */
 const POST_ANCHOR = 20717;                 /* 2026-09-21(월) 의 KST 기준 일수 */
-const POST_EVERY = { edu: 7, pay: 14 };    /* posts.mjs 의 EVERY_DAYS 와 같은 값 */
+const POST_EVERY = { edu: 7, pay: 14, lang: 14 };    /* posts.mjs 의 EVERY_DAYS 와 같은 값 (lang = 파워랜드 어학 4곳, 격주) */
 /* site → [사업군, 표시 이름, 도메인]. 도메인이 site+'.com' 이 아닌 곳이 셋 있다. */
 const POST_SITES = {
   allcarestudy:   ['edu', '올케어스터디', 'allcarestudy.com'],
@@ -10955,6 +10955,10 @@ const POST_SITES = {
   primepaykorea:  ['pay', '프라임 PAY 코리아', 'primepaykorea.com'],
   primebizkorea:  ['pay', '프라임 BIZ 코리아', 'primebizkorea.com'],
   primeshopkorea: ['pay', '프라임 SHOP 코리아', 'primeshopkorea.com'],
+  powerlandprep:   ['lang', '파워랜드 특목고 회화수업', 'powerlandprep.com'],
+  powerlandtest:   ['lang', '파워랜드 자격증대비', 'powerlandtest.com'],
+  powerlandbiz:    ['lang', '파워랜드 비즈니스회화', 'powerlandbiz.com'],
+  powerlandschool: ['lang', '파워랜드 우리아이 회화수업', 'powerlandschool.com'],
 };
 
 const postKstDay = (ms) => Math.floor((ms + 9 * 3600000) / 86400000);
