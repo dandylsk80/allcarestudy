@@ -1135,8 +1135,17 @@ function today(){
   return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
 }
 
+
+/* 모든 페이지 <title> 을 "설명 | 사이트명" 하나로 정규화 (2026-10-08 사이트명 통일) */
+function siteTitle(t){
+  const N="올케어스터디"; const esc=N.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); const SEP="(?:\\s*[-|·—–:]\\s*)";
+  let s=String(t||"").trim();
+  s=s.replace(new RegExp("^"+esc+SEP),"").replace(new RegExp(SEP+esc+"$"),"");
+  s=s.replace(/\s*\|\s*/g," — ").trim();
+  return (s?s+" | ":"")+N;
+}
 function wrap(title, desc, canonical, body, breadcrumbs){
-  
+  title = siteTitle(title);
   const canonicalUrl = `https://allcarestudy.com${canonical}`;
   
   const descShort = desc.length > 150 ? desc.slice(0, 147) + '...' : desc;
@@ -1365,7 +1374,7 @@ function wrap(title, desc, canonical, body, breadcrumbs){
 <meta name="naver-site-verification" content="a1c57425042478220780bb530f8511e3eec2a1fd">
 <meta name="google-site-verification" content="st8_MGU2mfnaomGNCLUGBmiQsZD50WNTWEUxzfmJ47E">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${title}","description":"${descShort}","url":"${canonicalUrl}","image":["${ogImage}"],"publisher":{"@type":"Organization","name":"올케어스터디","url":"https://allcarestudy.com","telephone":"010-6834-8080","logo":{"@type":"ImageObject","url":"https://allcarestudy.com/logo.png","width":200,"height":60}},"datePublished":"${pubIso}","dateModified":"${modIso}","inLanguage":"ko-KR"}</script>
-${bcSchema}${faqSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
+${canonical==='/'?'<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"올케어스터디","url":"https://allcarestudy.com/","inLanguage":"ko-KR"}</script>':''}${bcSchema}${faqSchema}<link rel="alternate" type="application/rss+xml" title="올케어스터디 RSS" href="https://allcarestudy.com/rss.xml">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>${CSS}</style>
 </head><body>${HEADER}${bodyWithDate}${FOOTER}<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "1cbcc1a46d6c230";if(window.wcs) { wcs_do(); }</script><script>(function(){var U="/api/track",S={},W=30000;function K(ty){return "tk_"+ty+"_"+location.pathname;}function seen(ty){var k=K(ty),n=Date.now();if(S[k]&&n-S[k]<W)return 1;try{var v=sessionStorage.getItem(k);if(v&&n-(+v)<W)return 1;}catch(e){}return 0;}function mark(ty){var k=K(ty),n=Date.now();S[k]=n;try{sessionStorage.setItem(k,""+n);}catch(e){}}function t(ty,b){try{var d=JSON.stringify({type:ty,page:location.pathname,ref:document.referrer,q:location.search,b:b||""}),ok=false;if(navigator.sendBeacon){try{ok=navigator.sendBeacon(U,new Blob([d],{type:"application/json"}));}catch(e){}}if(!ok){try{fetch(U,{method:"POST",headers:{"Content-Type":"application/json"},body:d,keepalive:true}).catch(function(){});}catch(e){}}}catch(e){}}function c(ty,b){if(seen(ty))return;mark(ty);t(ty,b);}function L(a){try{var s=(a.getAttribute&&a.getAttribute("aria-label"))||a.textContent||"";var o="",sp=0,i,ch;for(i=0;i<s.length;i++){ch=s.charCodeAt(i);if(ch===32||ch===9||ch===10||ch===13){if(!sp){o+=" ";sp=1;}}else{o+=s.charAt(i);sp=0;}}return o.trim().slice(0,40);}catch(e){return "";}}function WV(v){try{if(navigator.userAgent.indexOf("; wv)")<0)return;var i=v.indexOf(":");if(i<0)return;var sch=v.slice(0,i),num="",j,ch;if(sch!=="tel"&&sch!=="sms")return;for(j=i+1;j<v.length;j++){ch=v.charCodeAt(j);if(ch>=48&&ch<=57)num+=v.charAt(j);}if(!num)return;var sc=sch==="tel"?"tel":"smsto",ac=sch==="tel"?"DIAL":"SENDTO",done=0;var f=function(){done=1;};document.addEventListener("visibilitychange",f,{once:true});window.addEventListener("pagehide",f,{once:true});setTimeout(function(){if(done||document.visibilityState!=="visible")return;location.href="intent://"+num+"#Intent;scheme="+sc+";action=android.intent.action."+ac+";end";},800);}catch(e){}}function h(e,early){var a=e.target&&e.target.closest&&e.target.closest("a,button,[data-tk]");if(!a)return;var k=(a.getAttribute&&a.getAttribute("data-tk"))||"",v=(a.getAttribute&&a.getAttribute("href"))||"";if(!k&&!v&&a.closest){var p=a.closest("a[href]");if(p){a=p;v=p.getAttribute("href")||"";}}if(k==="tel"||v.indexOf("tel:")===0){c("tel",L(a));if(!early)WV(v);}else if(k==="sms"||v.indexOf("sms:")===0){c("sms",L(a));if(!early)WV(v);}else if(!early&&k==="contact")c("contact",L(a));}document.addEventListener("pointerdown",function(e){h(e,1);},true);document.addEventListener("click",function(e){h(e,0);},true);if(location.pathname.indexOf("/dashboard")!==0&&location.pathname.indexOf("/api/")!==0)t("view");})();</script></body></html>`;
@@ -5678,7 +5687,7 @@ function makeCnTopicPage(fullSlug) {
   <div class="cta-box"><h3>📞 중국어 과외 무료 상담</h3><p>1:1 맞춤 중국어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">중국어과외</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
 </div>`;
-  return wrap(T+' | 올케어스터디 중국어과외', desc, canonical, body, bc);
+  return wrap(T+' — 중국어과외', desc, canonical, body, bc);
 }
 
 
@@ -6204,7 +6213,7 @@ function makeJpTopicPage(fullSlug) {
   <div class="cta-box"><h3>📞 일본어과외 무료 상담</h3><p>1:1 맞춤 일본어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">일본어과외</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
 </div>`;
-  return wrap(T+' | 올케어스터디 일본어과외', desc, canonical, body, bc);
+  return wrap(T+' — 일본어과외', desc, canonical, body, bc);
 }
 
 
@@ -6735,7 +6744,7 @@ function makeEnTopicPage(fullSlug) {
   <div class="cta-box"><h3>📞 영어과외 무료 상담</h3><p>1:1 맞춤 영어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">영어과외</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
 </div>`;
-  return wrap(T+' | 올케어스터디 영어과외', desc, canonical, body, bc);
+  return wrap(T+' — 영어과외', desc, canonical, body, bc);
 }
 
 
@@ -7601,7 +7610,7 @@ function makeGuideTopicPage(fullSlug) {
   <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>1:1 맞춤 학습 코칭 · 전문 코치 매칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">학습 가이드</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
 </div>`;
-  return wrap(T+' | 올케어스터디 학습 가이드', desc, canonical, body, bc);
+  return wrap(T+' — 학습 가이드', desc, canonical, body, bc);
 }
 
 function makeStudyGuideSubPage(slug) {
@@ -9039,7 +9048,7 @@ window.addEventListener('resize',function(){clearTimeout(CHRZ);CHRZ=setTimeout(d
 function makeContactPage(type) {
   const isAcademy = (type||'tutoring') === 'academy';
   const canonical = '/contact';
-  const title = '올케어스터디 무료 상담 문의 | 1:1 맞춤 과외·학원 코칭';
+  const title = '무료 상담 문의 | 1:1 맞춤 과외·학원 코칭';
   const desc = '올케어스터디 무료 상담. 과외·학원 코칭 문의. 빠르게 답변. 010-6834-8080';
   const bc = [{name:'홈',url:'/'},{name:'문의하기',url:'/contact'}];
 
@@ -11748,7 +11757,7 @@ if (path === '/llms.txt' || path === '/llms-full.txt') return new Response(llmsT
     }
 
     
-    return new Response(`<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>404 - 올케어스터디</title><style>${CSS}</style></head><body>
+    return new Response(`<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>페이지를 찾을 수 없습니다 | 올케어스터디</title><style>${CSS}</style></head><body>
 ${HEADER}<div class="wrap" style="text-align:center;padding-top:80px">
 <div style="font-size:64px;margin-bottom:20px">🔍</div>
 <h1 class="art-title">페이지를 찾을 수 없습니다</h1>
