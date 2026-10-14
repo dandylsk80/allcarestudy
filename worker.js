@@ -1059,6 +1059,13 @@ section h2{font-size:24px !important;letter-spacing:-1px !important;line-height:
 .di-item{padding:24px 20px !important}
 .rv-stat-bar{grid-template-columns:1fr !important}
 }
+
+/* PC(769px~)는 전화를 걸 수 없으니 tel: 버튼을 숨기고 번호를 일반 텍스트로 보인다. 모바일은 그대로 */
+.telt{display:none}
+@media(min-width:769px){a[href^="tel:"]{display:none!important}.telt{display:inline-flex;align-items:center}
+.floats{align-items:flex-end}.telf{background:var(--navy);color:#fff;font-weight:700;font-size:13px;padding:8px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.2);white-space:nowrap}
+.telb{color:#fff;font-weight:800;font-size:15px;padding:14px 6px;white-space:nowrap}
+.telw{color:#fff;font-weight:700;font-size:13px;padding:10px 4px;white-space:nowrap}}
 `;
 
 const HEADER = `<header><div class="hw"><a href="/" class="logo"><div class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="logo-name"><span class="logo-main"><em>올케어</em>스터디</span><span class="logo-sub">ALLCARE STUDY</span></div></a><div class="vpill"><span class="vl">누적 방문자</span><span class="vc">353,112명</span></div><nav class="gnb"><div class="gi" id="gi-region"><button class="gb" onclick="toggleMega('region')">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="mega-drop" id="mega-region"><div class="mega-tabs"><button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button><button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button><button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button></div><div class="mega-panel on" id="region-local"><div class="mega-btns"><a class="mega-btn" href="/seoul">🏙 서울</a><a class="mega-btn" href="/gyeonggi">🌿 경기</a><a class="mega-btn" href="/incheon">🌊 인천</a><a class="mega-btn" href="/busan">🐟 부산</a><a class="mega-btn" href="/daegu">🍎 대구</a><a class="mega-btn" href="/daejeon">🌾 대전</a><a class="mega-btn" href="/gwangju">🌸 광주</a><a class="mega-btn" href="/ulsan">⚙️ 울산</a><a class="mega-btn" href="/sejong">🏛 세종</a><a class="mega-btn" href="/gangwon">🏔 강원</a><a class="mega-btn" href="/chungbuk">🌻 충북</a><a class="mega-btn" href="/chungnam">🌊 충남</a><a class="mega-btn" href="/jeonbuk">🌾 전북</a><a class="mega-btn" href="/jeonnam">🍵 전남</a><a class="mega-btn" href="/gyeongbuk">🍎 경북</a><a class="mega-btn" href="/gyeongnam">🌊 경남</a><a class="mega-btn" href="/jeju">🌺 제주</a></div></div><div class="mega-panel" id="region-grade"><div class="mega-rt">🎒 초등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/elementary/1">초등 1학년</a><a class="mega-btn" href="/grade/elementary/2">초등 2학년</a><a class="mega-btn" href="/grade/elementary/3">초등 3학년</a><a class="mega-btn" href="/grade/elementary/4">초등 4학년</a><a class="mega-btn" href="/grade/elementary/5">초등 5학년</a><a class="mega-btn" href="/grade/elementary/6">초등 6학년</a></div><div class="mega-rt">📚 중학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/middle/1">중학교 1학년</a><a class="mega-btn" href="/grade/middle/2">중학교 2학년</a><a class="mega-btn" href="/grade/middle/3">중학교 3학년</a></div><div class="mega-rt">🎓 고등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/high/1">고등 1학년</a><a class="mega-btn" href="/grade/high/2">고등 2학년</a><a class="mega-btn" href="/grade/high/3">고등 3학년</a></div></div><div class="mega-panel" id="region-school"><div class="mega-rt">시도별 학교 과외</div><div class="mega-btns"><a class="mega-btn" href="/school/seoul">서울</a><a class="mega-btn" href="/school/gyeonggi">경기</a><a class="mega-btn" href="/school/incheon">인천</a><a class="mega-btn" href="/school/busan">부산</a><a class="mega-btn" href="/school/daegu">대구</a><a class="mega-btn" href="/school/gwangju">광주</a><a class="mega-btn" href="/school/daejeon">대전</a><a class="mega-btn" href="/school/ulsan">울산</a><a class="mega-btn" href="/school/sejong">세종</a><a class="mega-btn" href="/school/gangwon">강원</a><a class="mega-btn" href="/school/chungbuk">충북</a><a class="mega-btn" href="/school/chungnam">충남</a><a class="mega-btn" href="/school/jeonbuk">전북</a><a class="mega-btn" href="/school/jeonnam">전남</a><a class="mega-btn" href="/school/gyeongbuk">경북</a><a class="mega-btn" href="/school/gyeongnam">경남</a><a class="mega-btn" href="/school/jeju">제주</a></div></div></div></div><div class="gi"><button class="gb">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/subject/math">📐 수학</a><a href="/subject/english">📖 영어</a><a href="/subject/korean">✍️ 국어</a><a href="/subject/science">🔬 과학</a><a href="/subject/social">🌏 사회</a><a href="/subject/coding">💻 코딩</a><a href="/subject/essay">📝 논술</a><a href="/subject/gsd">📋 검정고시</a></div></div><div class="gi"><button class="gb" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div></div><div class="gi"><button class="gb">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div></div><div class="gi"><button class="gb">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/study-guide">📖 학습 가이드</a></div></div><div class="gi"><a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#1D4ED8;font-weight:800">문의하기</a></div></nav><button class="mob-menu-btn" onclick="openMobNav()" aria-label="메뉴열기" style="margin-left:auto"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F2044" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></header><div class="mob-overlay" id="mob-overlay" onclick="closeMobNav()"></div><nav class="mob-nav" id="mob-nav"><div class="mob-nav-head"><a href="/" class="mob-nav-logo"><em>올케어</em>스터디</a><button class="mob-close" onclick="closeMobNav()">✕</button></div><div class="mob-nav-section">과목별 과외</div><div class="mob-subj-grid"><a class="mob-subj-btn" href="/subject/math"><span>📐</span><span>수학</span></a><a class="mob-subj-btn" href="/subject/english"><span>📖</span><span>영어</span></a><a class="mob-subj-btn" href="/subject/korean"><span>✍️</span><span>국어</span></a><a class="mob-subj-btn" href="/subject/science"><span>🔬</span><span>과학</span></a><a class="mob-subj-btn" href="/subject/social"><span>🌏</span><span>사회</span></a><a class="mob-subj-btn" href="/subject/coding"><span>💻</span><span>코딩</span></a><a class="mob-subj-btn" href="/subject/essay"><span>📝</span><span>논술</span></a><a class="mob-subj-btn" href="/subject/gsd"><span>📋</span><span>검정고시</span></a></div><div class="mob-nav-section">회화 수업</div><div class="mob-subj-grid"><a class="mob-subj-btn" href="/conversation/english"><span>📚</span><span>영어회화</span></a><a class="mob-subj-btn" href="/conversation/chinese"><span>🇨🇳</span><span>중국어회화</span></a><a class="mob-subj-btn" href="/conversation/japanese"><span>🇯🇵</span><span>일본어회화</span></a></div><div class="mob-nav-section">기타교육</div><div class="mob-subj-grid"><a class="mob-subj-btn" href="/engineer-lab"><span>🔧</span><span>엔지니어랩</span></a><a class="mob-subj-btn" href="/study-guide"><span>📖</span><span>학습 가이드</span></a></div><div class="mob-nav-section">학원 & 기타</div><div class="mob-subj-grid"><a class="mob-subj-btn" href="/academy/intro"><span>🏢</span><span>학원소개</span></a><a class="mob-subj-btn" href="/academy/all"><span>🏫</span><span>학원찾기</span></a><a class="mob-subj-btn" href="/school"><span>🏛</span><span>학교별과외</span></a></div><div class="mob-nav-section">지역별 과외</div><div class="mob-sido-grid"><a class="mob-sido-btn" href="/seoul">서울</a><a class="mob-sido-btn" href="/gyeonggi">경기</a><a class="mob-sido-btn" href="/incheon">인천</a><a class="mob-sido-btn" href="/busan">부산</a><a class="mob-sido-btn" href="/daegu">대구</a><a class="mob-sido-btn" href="/daejeon">대전</a><a class="mob-sido-btn" href="/gwangju">광주</a><a class="mob-sido-btn" href="/ulsan">울산</a><a class="mob-sido-btn" href="/sejong">세종</a><a class="mob-sido-btn" href="/gangwon">강원</a><a class="mob-sido-btn" href="/chungbuk">충북</a><a class="mob-sido-btn" href="/chungnam">충남</a><a class="mob-sido-btn" href="/jeonbuk">전북</a><a class="mob-sido-btn" href="/jeonnam">전남</a><a class="mob-sido-btn" href="/gyeongbuk">경북</a><a class="mob-sido-btn" href="/gyeongnam">경남</a><a class="mob-sido-btn" href="/jeju">제주</a></div><div class="mob-nav-section">학년별 과외</div><a class="mob-nav-item" href="/grade/elementary/1">🎒 초등 과외</a><a class="mob-nav-item" href="/grade/middle/1">📚 중등 과외</a><a class="mob-nav-item" href="/grade/high/1">🎓 고등 과외</a><a class="mob-contact-btn" href="/contact?type=tutoring">✉️ 무료 상담하기</a><a class="mob-contact-btn" href="tel:01068348080" style="background:rgba(255,255,255,.1);margin-top:8px">📞 010-6834-8080</a></nav> <script>
@@ -1068,7 +1075,7 @@ function closeMobNav(){document.getElementById('mob-nav').classList.remove('open
 
 const HEADER_DARK = `<header style="background:rgba(15,32,68,0.97)!important;border-bottom:1px solid rgba(255,255,255,0.08)!important;box-shadow:none!important"><div class="hw"><a href="/" class="logo"><div class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="logo-name"><span class="logo-main" style="color:white"><em>올케어</em>스터디</span><span class="logo-sub" style="color:rgba(255,255,255,0.45)">ALLCARE STUDY</span></div></a><div class="vpill" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06)"><span class="vl" style="color:rgba(255,255,255,0.5)">누적 방문자</span><span class="vc" style="color:#60A5FA">353,112명</span></div><nav class="gnb"><div class="gi" id="gi-region"><button class="gb" onclick="toggleMega('region')" style="color:rgba(255,255,255,0.85)">지역별수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="mega-drop" id="mega-region"><div class="mega-tabs"><button class="mega-tab on" onclick="switchTab('region','local')">📍 지역별 과외</button><button class="mega-tab" onclick="switchTab('region','grade')">🎓 학년별 과외</button><button class="mega-tab" onclick="switchTab('region','school')">🏫 학교별 과외</button></div><div class="mega-panel on" id="region-local"><div class="mega-btns"><a class="mega-btn" href="/seoul">🏙 서울</a><a class="mega-btn" href="/gyeonggi">🌿 경기</a><a class="mega-btn" href="/incheon">🌊 인천</a><a class="mega-btn" href="/busan">🐟 부산</a><a class="mega-btn" href="/daegu">🍎 대구</a><a class="mega-btn" href="/daejeon">🌾 대전</a><a class="mega-btn" href="/gwangju">🌸 광주</a><a class="mega-btn" href="/ulsan">⚙️ 울산</a><a class="mega-btn" href="/sejong">🏛 세종</a><a class="mega-btn" href="/gangwon">🏔 강원</a><a class="mega-btn" href="/chungbuk">🌻 충북</a><a class="mega-btn" href="/chungnam">🌊 충남</a><a class="mega-btn" href="/jeonbuk">🌾 전북</a><a class="mega-btn" href="/jeonnam">🍵 전남</a><a class="mega-btn" href="/gyeongbuk">🍎 경북</a><a class="mega-btn" href="/gyeongnam">🌊 경남</a><a class="mega-btn" href="/jeju">🌺 제주</a></div></div><div class="mega-panel" id="region-grade"><div class="mega-rt">🎒 초등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/elementary/1">초등 1학년</a><a class="mega-btn" href="/grade/elementary/2">초등 2학년</a><a class="mega-btn" href="/grade/elementary/3">초등 3학년</a><a class="mega-btn" href="/grade/elementary/4">초등 4학년</a><a class="mega-btn" href="/grade/elementary/5">초등 5학년</a><a class="mega-btn" href="/grade/elementary/6">초등 6학년</a></div><div class="mega-rt">📚 중학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/middle/1">중학교 1학년</a><a class="mega-btn" href="/grade/middle/2">중학교 2학년</a><a class="mega-btn" href="/grade/middle/3">중학교 3학년</a></div><div class="mega-rt">🎓 고등학교</div><div class="mega-btns"><a class="mega-btn" href="/grade/high/1">고등 1학년</a><a class="mega-btn" href="/grade/high/2">고등 2학년</a><a class="mega-btn" href="/grade/high/3">고등 3학년</a></div></div><div class="mega-panel" id="region-school"><div class="mega-rt">시도별 학교 과외</div><div class="mega-btns"><a class="mega-btn" href="/school/seoul">서울</a><a class="mega-btn" href="/school/gyeonggi">경기</a><a class="mega-btn" href="/school/incheon">인천</a><a class="mega-btn" href="/school/busan">부산</a><a class="mega-btn" href="/school/daegu">대구</a><a class="mega-btn" href="/school/gwangju">광주</a><a class="mega-btn" href="/school/daejeon">대전</a><a class="mega-btn" href="/school/ulsan">울산</a><a class="mega-btn" href="/school/sejong">세종</a><a class="mega-btn" href="/school/gangwon">강원</a><a class="mega-btn" href="/school/chungbuk">충북</a><a class="mega-btn" href="/school/chungnam">충남</a><a class="mega-btn" href="/school/jeonbuk">전북</a><a class="mega-btn" href="/school/jeonnam">전남</a><a class="mega-btn" href="/school/gyeongbuk">경북</a><a class="mega-btn" href="/school/gyeongnam">경남</a><a class="mega-btn" href="/school/jeju">제주</a></div></div></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">과목수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/subject/math">📐 수학</a><a href="/subject/english">📖 영어</a><a href="/subject/korean">✍️ 국어</a><a href="/subject/science">🔬 과학</a><a href="/subject/social">🌏 사회</a><a href="/subject/coding">💻 코딩</a><a href="/subject/essay">📝 논술</a><a href="/subject/gsd">📋 검정고시</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)" onclick="this.parentElement.classList.toggle('open')">학원수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/academy/intro">학원소개</a><a href="/academy/all">센터찾기</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">회화수업<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/conversation/english">영어회화</a><a href="/conversation/chinese">중국어회화</a><a href="/conversation/japanese">일본어회화</a></div></div><div class="gi"><button class="gb" style="color:rgba(255,255,255,0.85)">기타교육<svg class="arr" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="drop"><a href="/engineer-lab">🔧 엔지니어랩</a><a href="/study-guide">📖 학습 가이드</a></div></div><div class="gi"><a href="/contact" class="gb" style="text-decoration:none;display:flex;align-items:center;color:#60A5FA;font-weight:800">문의하기</a></div></nav></div></header>`;
 
-const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px"><div style="max-width:1100px;margin:0 auto;padding:0 48px"><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px"><span>⚠️</span><span>안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:24px"><div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:20px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span></div><p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p></div><div style="text-align:right"><div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;flex-wrap:wrap"><div style="font-size:22px;font-weight:900;color:white;white-space:nowrap">010-6834-8080</div><a href="tel:01068348080" style="background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">전화 상담</a></div></div></div><div style="padding:24px 0 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:18px 28px;justify-content:center"><a href="/seoul" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">서울 과외</a><a href="/gyeonggi" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">경기 과외</a><a href="/busan" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">부산 과외</a><a href="/subject/math" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">수학 과외</a><a href="/subject/english" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">영어 과외</a><a href="/academy/all" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">센터 찾기</a><a href="/academy/intro" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">학원 소개</a><a href="/contact" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">문의하기</a><a href="/post/" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">과외 정보</a><a href="/all-regions" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 지역</a><a href="/list" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 목록</a></div><div style="padding-top:20px;font-size:11px;color:rgba(255,255,255,0.3)"> © 2026 올케어스터디. All rights reserved. </div></div></footer><div class="floats" id="float-btns"><a class="fbtn fb1" href="tel:01068348080" title="전화상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a><a class="fbtn fb3" href="sms:01068348080" title="문자상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a><a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring" title="상담하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></a></div> <script>
+const FOOTER = `<footer style="background:#0F2044;padding:40px 0 28px"><div style="max-width:1100px;margin:0 auto;padding:0 48px"><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 16px;margin-bottom:32px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px"><span>⚠️</span><span>안내사항 · 본 사이트의 모든 콘텐츠는 정보 제공 목적이며, 학습 효과를 보장하지 않습니다.</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:24px"><div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:20px;font-weight:900;letter-spacing:2px;color:white"><em style="font-style:normal;color:#60A5FA">올케어</em>스터디</span></div><p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7">초등학생부터 고등학생까지<br>학습에 필요한 모든 정보를 한곳에서</p></div><div style="text-align:right"><div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;flex-wrap:wrap"><div style="font-size:22px;font-weight:900;color:white;white-space:nowrap">010-6834-8080</div><a href="tel:01068348080" style="background:#3B82F6;color:white;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">전화 상담</a></div></div></div><div style="padding:24px 0 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:18px 28px;justify-content:center"><a href="/seoul" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">서울 과외</a><a href="/gyeonggi" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">경기 과외</a><a href="/busan" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">부산 과외</a><a href="/subject/math" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">수학 과외</a><a href="/subject/english" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">영어 과외</a><a href="/academy/all" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">센터 찾기</a><a href="/academy/intro" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">학원 소개</a><a href="/contact" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">문의하기</a><a href="/post/" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">과외 정보</a><a href="/all-regions" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 지역</a><a href="/list" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:none">전체 목록</a></div><div style="padding-top:20px;font-size:11px;color:rgba(255,255,255,0.3)"> © 2026 올케어스터디. All rights reserved. </div></div></footer><div class="floats" id="float-btns"><a class="fbtn fb1" href="tel:01068348080" title="전화상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a><span class="telt telf">010-6834-8080</span><a class="fbtn fb3" href="sms:01068348080" title="문자상담 010-6834-8080"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a><a class="fbtn fb2" id="float-contact-btn" href="/contact?type=tutoring" title="상담하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></a></div> <script>
 (function(){
   try {
     var path = window.location.pathname;
@@ -1844,7 +1851,7 @@ function makeDongMainPage(sidoEn, guEn, dongName) {
     <h3>${dong} 과외 무료 상담</h3>
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
@@ -2168,7 +2175,7 @@ function makeDongPageByName(sidoEn, guEn, dongName, subjectEn, gradeEn) {
     <h3>${dong} ${grade} ${subject}과외 무료 상담</h3>
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
@@ -2443,7 +2450,7 @@ function makeSubjectPage(subjectEn) {
       ${(function(){const L={math:[['elem-basics','초등 수학 기초 다지기'],['mid-function','중학 함수 완벽 정리'],['high-math1','고등 수학1'],['calculus','미적분'],['probability','확률과 통계'],['geometry','기하와 벡터'],['suneung-killer','수능 킬러문항'],['descriptive','서술형 답안'],['supo-escape','수포자 탈출'],['grade1','내신 1등급'],['gifted','사고력·영재 수학'],['olympiad','올림피아드'],['mid-shape','중학 도형'],['sequence','수열 정리'],['trigonometry','삼각함수'],['past-exam','수능 기출'],['fraction','분수·소수'],['mid-linear','일차·이차함수'],['concept-total','개념 총정리'],['math-essay','수리논술'],['competition','경시대회'],['elem-calc','연산 속도'],['mid-advance','중학 선행'],['high-advance','고등 선행'],['sat-math','SAT Math'],['habit','학습 습관'],['elem-writing','초등 서술형'],['mid-naesin','중등 내신'],['mock-exam','모의고사'],['track-guide','문과·이과 가이드']],english:[['elem-basics','초등 영어 기초'],['mid-grammar','중학 문법'],['high-reading','고등 독해'],['suneung-1','수능 1등급'],['grade1','내신 1등급'],['descriptive','서술형 답안'],['phonics','파닉스'],['listening','듣기 만점'],['writing','영작문'],['toeic-toefl','토익·토플'],['mid-advance','중학 선행'],['high-advance','고등 선행'],['blank-type','빈칸추론'],['order-insert','순서·삽입'],['vocabulary','어휘력'],['grammar-total','영문법 총정리'],['reading-skill','독해 분석'],['elem-reading','초등 리딩'],['mid-naesin','중등 내신'],['mock-strategy','모의고사'],['speaking','스피킹'],['essay-writing','에세이'],['competition','경시대회'],['sat-eng','SAT English'],['suneung-listen','수능 듣기'],['mid-reading','중학 독해'],['high-grammar','고등 어법'],['performance','수행평가'],['textbook','교과서 분석'],['vacation','방학 집중']],korean:[['elem-reading','초등 독해력'],['mid-literature','중학 문학'],['high-nonlit','비문학 독해'],['suneung-1','수능 1등급'],['grade1','내신 1등급'],['speech-writing','화법과 작문'],['lang-media','언어와 매체'],['modern-poem','현대시'],['modern-novel','현대소설'],['classic','고전문학'],['descriptive','서술형'],['past-exam','기출 분석'],['nonlit-skill','비문학 스킬'],['grammar','문법 총정리'],['reading-essay','독서 논술'],['elem-writing','초등 글쓰기'],['mid-naesin','중등 내신'],['high-naesin','고등 내신'],['suneung-lit','수능 문학'],['vocabulary','어휘력'],['mid-advance','중학 선행'],['high-advance','고등 선행'],['mock-strategy','모의고사'],['performance','수행평가'],['textbook','교과서 분석'],['history-link','한국사 연계'],['essay-writing','논술 글쓰기'],['reading-habit','독서 습관'],['concept-total','개념 정리'],['vacation','방학 집중']],science:[['elem-explore','초등 탐구'],['mid-basics','중학 기초'],['physics1','물리학1'],['chemistry1','화학1'],['biology1','생명과학1'],['earth1','지구과학1'],['physics2','물리학2'],['chemistry2','화학2'],['biology2','생명과학2'],['earth2','지구과학2'],['grade1','내신 1등급'],['suneung-killer','킬러문항'],['descriptive','서술형'],['lab-report','실험 보고서'],['mid-advance','중학 선행'],['high-advance','고등 선행'],['integrated','통합과학'],['lab-perform','수행평가'],['elem-lab','초등 실험'],['olympiad','올림피아드'],['mid-naesin','중등 내신'],['high-naesin','고등 내신'],['mock-analysis','모의고사'],['mechanics','물리 역학'],['reaction','화학 반응식'],['genetics','유전 정복'],['astronomy','천체'],['concept-total','개념 총정리'],['ap-science','AP Science'],['med-prep','의대·약대']],social:[['elem-basics','초등 사회'],['mid-basics','중학 사회'],['korean-history','한국사'],['world-history','세계사'],['korean-geo','한국지리'],['world-geo','세계지리'],['life-ethics','생활과 윤리'],['ethics-thought','윤리와 사상'],['politics-law','정치와 법'],['economics','경제'],['society-culture','사회문화'],['grade1','내신 1등급'],['suneung-high','수능 고득점'],['descriptive','서술형'],['history-perfect','한국사 만점'],['mid-history','중학 역사'],['mid-naesin','중등 내신'],['high-naesin','고등 내신'],['integrated','통합사회'],['performance','수행평가'],['current-events','시사 상식'],['mid-advance','중학 선행'],['high-advance','고등 선행'],['mock-analysis','모의고사'],['east-asia','동아시아사'],['law-deep','법과 정치'],['econ-graph','경제 그래프'],['concept-total','개념 총정리'],['essay-bg','논술 배경지식'],['vacation','방학 집중']],coding:[['start','처음 시작'],['scratch','스크래치'],['python-basic','파이썬 기초'],['python-mid','파이썬 심화'],['java','자바'],['c-lang','C언어'],['web-html','HTML·CSS'],['javascript','자바스크립트'],['olympiad','정보올림피아드'],['cos-cert','자격증(COS)'],['elem-coding','초등 코딩'],['mid-info','중등 정보'],['high-info','고등 정보'],['app-dev','앱 개발'],['game-dev','게임 개발'],['ai-basic','AI 기초'],['data-analysis','데이터 분석'],['algorithm','알고리즘'],['thinking','코딩 사고력'],['robot','로봇 코딩'],['arduino','아두이노'],['sw-special','SW특기자'],['univ-task','대학 과제'],['coding-test','코딩 테스트'],['react','리액트'],['database','데이터베이스'],['linux','리눅스·서버'],['portfolio','포트폴리오'],['excel-vba','엑셀·VBA'],['gifted','영재원']],essay:[['basics','기초 글쓰기'],['univ-types','대학별 유형'],['humanities','인문논술'],['math-essay','수리논술'],['science-essay','과학논술'],['snu','서울대'],['yonsei','연세대'],['korea-u','고려대'],['med-essay','의대'],['edu-essay','교대'],['current','시사논술'],['book-debate','독서토론'],['elem-essay','초등 논술'],['mid-essay','중등 논술'],['self-intro','자기소개서'],['interview','면접 대비'],['critical','비판적 사고'],['correction','첨삭 수업'],['logical','논리적 글쓰기'],['human-deep','인문계 심화'],['science-deep','이공계 심화'],['oral-exam','구술 면접'],['nat-interview','자연계 면접'],['mock-essay','모의고사'],['topic-practice','주제별 연습'],['integrated-essay','통합교과'],['newspaper','신문 활용'],['desc-training','서술형 훈련'],['susi','수시 전략'],['jeongsi','정시 전략']],gsd:[['korean','국어'],['english','영어'],['math','수학'],['social','사회'],['science','과학'],['history','한국사'],['middle-level','중졸 대비'],['high-level','고졸 대비'],['3month','3개월 완성'],['self-study','독학 가이드'],['past-exam','기출 분석'],['math-strategy','수학 공략'],['eng-strategy','영어 공략'],['ethics','도덕'],['tech-home','기술가정'],['pass-strategy','합격 전략'],['univ-after','대학 진학'],['suneung-after','수능 준비'],['sci-memo','과학 암기'],['soc-memo','사회 암기'],['worker','직장인'],['schedule','시험 일정'],['elem-level','초졸 대비'],['mock','모의고사'],['summary','핵심 요약'],['math-formula','수학 공식'],['eng-vocab','영어 어휘'],['kor-reading','국어 독해'],['one-on-one','1:1 맞춤'],['online-guide','온라인 가이드']]};const list=L[subjectEn]||[];return list.map(([s,t])=>'<a href="/subject/'+subjectEn+'/'+s+'" style="display:flex;align-items:center;gap:10px;background:white;border:1.5px solid #E5E7EB;border-radius:10px;padding:12px 14px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+color+'\';this.style.background=\''+lightColor+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'white\'"><span style="font-size:13px;font-weight:700;color:#0F2044">'+t+'</span></a>').join('');})()}
     </div>
   </section>
-  <div class="cta-box"><h3>${ko} 과외 무료 상담</h3><p>검증된 ${ko} 전문 선생님을 빠르게 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
+  <div class="cta-box"><h3>${ko} 과외 무료 상담</h3><p>검증된 ${ko} 전문 선생님을 빠르게 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
 </div>`;
   return wrap(title, desc, canonical, body, bc);
 }
@@ -2550,7 +2557,7 @@ function makeGradePage(gradeType, gradeNum) {
     <p style="font-size:14px;color:#374151;line-height:1.9;margin:16px 0">서울·경기·인천·부산·대구·광주·대전·울산·세종·강원·충북·충남·전북·전남·경북·경남·제주 전국 모든 지역에서 ${label} 과외가 가능합니다. 온라인 과외도 지원합니다.</p>
     <div class="keyword-box"><div class="keyword-title">🔍 관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${label} 공부법</span><span class="keyword-tag">${label} 과외</span><span class="keyword-tag">${label} 수학</span><span class="keyword-tag">${label} 영어</span><span class="keyword-tag">${label} 내신</span><span class="keyword-tag">${label} 1:1과외</span></div></div>
   </div>
-  <div class="cta-box"><h3>${label} 맞춤 과외 무료 상담</h3><p>${label} 전문 선생님을 빠르게 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
+  <div class="cta-box"><h3>${label} 맞춤 과외 무료 상담</h3><p>${label} 전문 선생님을 빠르게 매칭해드립니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
 </div>`;
   return wrap(title, desc, canonical, body, bc);
 }
@@ -2609,7 +2616,7 @@ function makeSchoolSidoPage(sidoEn) {
     <h3>${sidoKr} 학교 과외 무료 상담</h3>
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
@@ -2663,7 +2670,7 @@ function makeSchoolGugunPage(sidoEn, gugunRoman) {
     <h3>${gugunKr} 학교 과외 무료 상담</h3>
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
@@ -2802,7 +2809,7 @@ function makeSchoolMainPage(sidoEn, gugunRoman, schoolRoman, gradeCode) {
     <h3>${name} 과외 무료 상담</h3>
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
@@ -2942,7 +2949,7 @@ function makeSchoolSubjectPage(sidoEn, gugunRoman, schoolRoman, gradeCode, subje
     <h3>${name} ${subject}과외 무료 상담</h3>
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
@@ -3139,7 +3146,7 @@ function makeAreaPage(rk, ak) {
     <h3>${ak} 맞춤 과외 신청</h3>
     <p>무료 상담을 신청하시면 전문 코디네이터가 연결해드립니다</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
@@ -3215,7 +3222,7 @@ function makeArticlePage(rk, ak, gk, sk) {
     <h3>${ak} ${gk} ${sk}과외 무료 상담</h3>
     <p>24시간 내 전문 코디네이터가 연락드립니다</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">📞 전화 상담 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a>
     </div>
   </div>
@@ -3964,7 +3971,7 @@ function makeCenterPage(slug) {
     <p style="font-size:13px;color:rgba(255,255,255,.7);margin:0 0 18px">${addr}</p>
     <div style="display:flex;flex-wrap:wrap;gap:8px">
       <a href="/contact?type=academy&center=${encodeURIComponent(fullName)}" class="u36">무료 상담 신청</a>
-      <a href="tel:01068348080" style="background:rgba(255,255,255,.15);color:white;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,.3)">010-6834-8080</a>
+      <a href="tel:01068348080" style="background:rgba(255,255,255,.15);color:white;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,.3)">010-6834-8080</a><span class="telt telw">전화 010-6834-8080</span>
     </div>
   </div>
 
@@ -4030,7 +4037,7 @@ function makeCenterPage(slug) {
       <div style="font-size:14px;font-weight:900;color:white;margin-bottom:4px">무료 상담 신청</div>
       <div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:14px">첫 수업 무료 · 빠르게 매칭</div>
       <a href="/contact?type=academy&center=${encodeURIComponent(fullName)}" style="display:block;background:white;color:#0F2044;padding:11px;border-radius:9px;font-size:13px;font-weight:900;text-decoration:none;margin-bottom:7px">온라인 상담 신청</a>
-      <a href="tel:01068348080" style="display:block;background:rgba(255,255,255,.15);color:white;padding:11px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none">010-6834-8080</a>
+      <a href="tel:01068348080" style="display:block;background:rgba(255,255,255,.15);color:white;padding:11px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none">010-6834-8080</a><span class="telt telw">전화 010-6834-8080</span>
     </div>
     <div style="background:white;border:1.5px solid #E5E7EB;border-radius:16px;padding:16px;margin-bottom:12px">
       <div class="u27">수업 가능 과목</div>
@@ -4046,7 +4053,7 @@ function makeCenterPage(slug) {
     <h3>${dong} ${fullName} 무료 상담</h3>
     <p>${dist} ${dong} · 초·중·고 수학·영어·국어 1:1 코칭 · 첫 수업 무료</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=academy&center=${encodeURIComponent(fullName)}">무료 상담 신청</a>
     </div>
   </div>
@@ -4171,7 +4178,7 @@ function makeCenterSchoolPage(grade, schoolSlug) {
     <h3>${foundSchool} ${gLabel} 무료 상담</h3>
     <p>수학·영어·국어 과목별 내신 코칭 · 첫 수업 무료</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=academy&school=${encodeURIComponent(foundSchool)}">무료 상담 신청</a>
     </div>
   </div>
@@ -4339,7 +4346,7 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
     <p style="font-size:13px;color:rgba(255,255,255,.8);margin:0 0 18px">연계 센터 ${matchedCenters.length}곳 · ${foundSchool} 기출 완벽 분석 · 첫 수업 무료</p>
     <div style="display:flex;flex-wrap:wrap;gap:8px">
       <a href="/contact?type=academy&school=${encodeURIComponent(foundSchool)}&subject=${subjectEn}" class="u36">무료 상담 신청</a>
-      <a href="tel:01068348080" style="background:rgba(255,255,255,.15);color:white;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,.3)">010-6834-8080</a>
+      <a href="tel:01068348080" style="background:rgba(255,255,255,.15);color:white;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,.3)">010-6834-8080</a><span class="telt telw">전화 010-6834-8080</span>
     </div>
   </div>
 
@@ -4406,7 +4413,7 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
       <div style="font-size:14px;font-weight:900;margin-bottom:3px">${foundSchool} ${subjKo}</div>
       <div style="font-size:11px;opacity:.7;margin-bottom:14px">${gLabel} ${subjKo.replace('학원','')} 내신 전문</div>
       <a href="/contact?type=academy&school=${encodeURIComponent(foundSchool)}&subject=${subjectEn}" style="display:block;background:white;color:#0F2044;padding:10px;border-radius:8px;font-size:12px;font-weight:900;text-decoration:none;margin-bottom:6px">무료 상담 신청</a>
-      <a href="tel:01068348080" style="display:block;background:rgba(255,255,255,.15);color:white;padding:10px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none">010-6834-8080</a>
+      <a href="tel:01068348080" style="display:block;background:rgba(255,255,255,.15);color:white;padding:10px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none">010-6834-8080</a><span class="telt telw">전화 010-6834-8080</span>
     </div>
     <div style="background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px">
       <div style="font-size:12px;font-weight:800;color:#0F2044;margin-bottom:10px">과목별 전환</div>
@@ -4419,7 +4426,7 @@ function makeCenterSchoolSubjectPage(grade, schoolSlug, subjectEn) {
     <h3>${foundSchool} ${subjKo} 무료 상담</h3>
     <p>${gLabel} ${subjKo.replace('학원','')} 내신 기출 분석 · 첫 수업 무료 · 빠르게 매칭</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=academy&school=${encodeURIComponent(foundSchool)}&subject=${subjectEn}">무료 상담 신청</a>
     </div>
   </div>
@@ -4786,7 +4793,7 @@ function makeConversationPage(lang) {
     <h3>${ko} 무료 상담</h3>
     <p>1:1 맞춤 ${ko} 코칭 · 첫 수업 무료 · 빠르게 코치 매칭</p>
     <div class="cta-btns">
-      <a class="btn-p" href="tel:01068348080">010-6834-8080</a>
+      <a class="btn-p" href="tel:01068348080">010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span>
       <a class="btn-o" href="/contact?type=tutoring&subject=conversation_${lang}">무료 상담 신청</a>
     </div>
   </div>
@@ -5518,7 +5525,7 @@ function makeCnCategoryPage(catKey) {
     ${topics.map(([k,v])=>'<a href="/conversation/chinese/'+k+'" style="display:block;padding:16px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
     ${legacyItems.map(([k,v])=>'<a href="/conversation/chinese/'+k+'" style="display:flex;align-items:center;gap:10px;padding:16px;background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#FDE68A\'"><span style="font-size:18px">'+v.icon+'</span><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
   </div>
-  <div class="cta-box"><h3>중국어 과외 무료 상담</h3><p>1:1 맞춤 중국어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>중국어 과외 무료 상담</h3><p>1:1 맞춤 중국어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
 </div>`;
   return wrap(title,desc,canonical,body,bc);
 }
@@ -5688,7 +5695,7 @@ function makeCnTopicPage(fullSlug) {
   </section>
 
   <!-- CTA -->
-  <div class="cta-box"><h3>📞 중국어 과외 무료 상담</h3><p>1:1 맞춤 중국어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>📞 중국어 과외 무료 상담</h3><p>1:1 맞춤 중국어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">중국어과외</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
 </div>`;
   return wrap(T+' — 중국어과외', desc, canonical, body, bc);
@@ -6050,7 +6057,7 @@ function makeJpCategoryPage(catKey) {
     ${topics.map(([k,v])=>'<a href="/conversation/japanese/'+k+'" style="display:block;padding:16px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
     ${legacyItems.map(([k,v])=>'<a href="/conversation/japanese/'+k+'" style="display:flex;align-items:center;gap:10px;padding:16px;background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#FDE68A\'"><span style="font-size:18px">'+v.icon+'</span><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
   </div>
-  <div class="cta-box"><h3>일본어 과외 무료 상담</h3><p>1:1 맞춤 일본어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>일본어 과외 무료 상담</h3><p>1:1 맞춤 일본어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
 </div>`;
   return wrap(title,desc,canonical,body,bc);
 }
@@ -6214,7 +6221,7 @@ function makeJpTopicPage(fullSlug) {
   </section>
 
   <!-- CTA -->
-  <div class="cta-box"><h3>📞 일본어과외 무료 상담</h3><p>1:1 맞춤 일본어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>📞 일본어과외 무료 상담</h3><p>1:1 맞춤 일본어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">일본어과외</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
 </div>`;
   return wrap(T+' — 일본어과외', desc, canonical, body, bc);
@@ -6580,7 +6587,7 @@ function makeEnCategoryPage(catKey) {
     ${topics.map(([k,v])=>'<a href="/conversation/english/'+k+'" style="display:block;padding:16px;background:white;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
     ${legacyItems.map(([k,v])=>'<a href="/conversation/english/'+k+'" style="display:flex;align-items:center;gap:10px;padding:16px;background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:12px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+cat.color+'\'" onmouseout="this.style.borderColor=\'#FDE68A\'"><span style="font-size:18px">'+v.icon+'</span><div style="font-size:14px;font-weight:700;color:#0F2044;line-height:1.5">'+v.t+'</div></a>').join('')}
   </div>
-  <div class="cta-box"><h3>영어 과외 무료 상담</h3><p>1:1 맞춤 영어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>영어 과외 무료 상담</h3><p>1:1 맞춤 영어 수업 · 외고 대비 전문</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
 </div>`;
   return wrap(title,desc,canonical,body,bc);
 }
@@ -6745,7 +6752,7 @@ function makeEnTopicPage(fullSlug) {
   </section>
 
   <!-- CTA -->
-  <div class="cta-box"><h3>📞 영어과외 무료 상담</h3><p>1:1 맞춤 영어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>📞 영어과외 무료 상담</h3><p>1:1 맞춤 영어 수업 · 외고 대비 전문 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">영어과외</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
 </div>`;
   return wrap(T+' — 영어과외', desc, canonical, body, bc);
@@ -7364,7 +7371,7 @@ function makeStudyGuidePage() {
       ${Object.entries(GUIDE_CATS).map(([k,v])=>{const cnt=Object.values(GUIDE_TOPICS).filter(t=>t.c===k).length;return '<a href="/study-guide/'+k+'" style="display:flex;align-items:center;gap:12px;background:white;border:1.5px solid #E5E7EB;border-radius:14px;padding:16px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\''+v.color+'\';this.style.background=\''+v.color+'11\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.background=\'white\'"><span style="font-size:26px;flex-shrink:0">'+v.icon+'</span><div style="flex:1"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.n+'</div><div style="font-size:11px;color:#6B7280;margin-top:2px">'+v.d.slice(0,25)+'...</div></div><span style="background:'+v.color+'15;color:'+v.color+';font-size:12px;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap">'+cnt+'개</span></a>';}).join('')}
     </div>
   </section>
-  <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>올케어스터디 전문 코치가 맞춤 학습 전략을 설계합니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>올케어스터디 전문 코치가 맞춤 학습 전략을 설계합니다</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
 </div>`;
   return wrap(title,desc,canonical,body,bc);
 }
@@ -7392,7 +7399,7 @@ function makeGuideCategoryPage(catKey) {
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:28px">
     ${topics.map(([k,v],i)=>{const num=(i+1).toString().padStart(2,'0');return '<a href="/study-guide/'+k+'" style="position:relative;display:flex;align-items:center;gap:14px;padding:18px;background:linear-gradient(135deg,white 0%,'+cat.color+'05 100%);border:1.5px solid #E5E7EB;border-radius:14px;text-decoration:none;transition:all .25s;overflow:hidden" onmouseover="this.style.borderColor=\''+cat.color+'\';this.style.transform=\'translateY(-2px)\';this.style.boxShadow=\'0 8px 20px -8px '+cat.color+'40\'" onmouseout="this.style.borderColor=\'#E5E7EB\';this.style.transform=\'translateY(0)\';this.style.boxShadow=\'none\'"><div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:linear-gradient(135deg,'+cat.color+','+cat.color+'CC);border-radius:10px;color:white;font-size:13px;font-weight:900;box-shadow:0 4px 12px -4px '+cat.color+'80">'+num+'</div><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span style="font-size:10px;background:'+cat.color+'15;color:'+cat.color+';padding:2px 7px;border-radius:10px;font-weight:700">'+cat.icon+' '+cat.n+'</span></div><div style="font-size:14px;font-weight:800;color:#0F2044;line-height:1.4">'+v.t+'</div></div><div style="flex-shrink:0;color:'+cat.color+';font-size:18px;font-weight:900">→</div></a>';}).join('')}
   </div>
-  <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>${cat.n} 관련 전문 코치와 무료 상담</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>${cat.n} 관련 전문 코치와 무료 상담</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
 </div>`;
   return wrap(title,desc,canonical,body,bc);
 }
@@ -7611,7 +7618,7 @@ function makeGuideTopicPage(fullSlug) {
     </div>
   </section>
 
-  <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>1:1 맞춤 학습 코칭 · 전문 코치 매칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>📞 1:1 맞춤 학습 상담</h3><p>1:1 맞춤 학습 코칭 · 전문 코치 매칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">학습 가이드</span><span class="keyword-tag">${cat.n}</span><span class="keyword-tag">올케어스터디</span><span class="keyword-tag">1:1 과외</span></div></div>
 </div>`;
   return wrap(T+' — 학습 가이드', desc, canonical, body, bc);
@@ -8083,7 +8090,7 @@ function makeSubjectSubPage(subjectEn, slug) {
   <section class="u9"><h2 class="u30">📈 ${T} 학습 효과</h2><p class="u25">${effect}</p></section>
   <section class="u9"><h2 class="u30">❓ ${T} 자주 묻는 질문</h2>${faq.map(([q,a])=>'<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F1F5F9"><div style="font-size:15px;font-weight:800;color:#0F2044;margin-bottom:8px">Q. '+q+'</div><div style="font-size:14px;color:#374151;line-height:1.85">A. '+a+'</div></div>').join('')}</section>
   <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 ${S} 수업</h2>${otherTopics.map(v=>'<a href="/subject/'+subjectEn+'/'+v.s+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\''+color+'\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.t+'</div></a>').join('')}</section>
-  <div class="cta-box"><h3>${T} 무료 상담</h3><p>1:1 맞춤 ${S} "${T}" 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>${T} 무료 상담</h3><p>1:1 맞춤 ${S} "${T}" 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags"><span class="keyword-tag">${T}</span><span class="keyword-tag">${S} ${T}</span><span class="keyword-tag">${T} 과외</span><span class="keyword-tag">${T} 1:1</span></div></div>
 </div>`;
   return wrap(fullTitle+' - 올케어스터디',desc,canonical,body,bc);
@@ -8176,7 +8183,7 @@ function makeJpSubPage(slug) {
   <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 일본어 수업</h2>
     ${Object.entries(P).filter(([k])=>k!==slug).slice(0,6).map(([k,v])=>'<a href="/conversation/japanese/'+k+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\'#9F1239\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.em+' '+v.t+'</div></a>').join('')}
   </section>
-  <div class="cta-box"><h3>일본어 회화 무료 상담</h3><p>1:1 맞춤 일본어 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>일본어 회화 무료 상담</h3><p>1:1 맞춤 일본어 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags">${pg.kw.map(k=>'<span class="keyword-tag">'+k+'</span>').join('')}<span class="keyword-tag">일본어 회화</span><span class="keyword-tag">1:1 일본어</span></div></div>
 </div>`;
   return wrap(pg.t+' | 일본어 회화 - 올케어스터디',desc,canonical,body,bc);
@@ -8266,7 +8273,7 @@ function makeEnSubPage(slug) {
   <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 영어 수업</h2>
     ${Object.entries(P).filter(([k])=>k!==slug).slice(0,6).map(([k,v])=>'<a href="/conversation/english/'+k+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\'#1D4ED8\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.em+' '+v.t+'</div></a>').join('')}
   </section>
-  <div class="cta-box"><h3>영어 회화 무료 상담</h3><p>1:1 맞춤 영어 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>영어 회화 무료 상담</h3><p>1:1 맞춤 영어 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags">${pg.kw.map(k=>'<span class="keyword-tag">'+k+'</span>').join('')}<span class="keyword-tag">영어 회화</span><span class="keyword-tag">1:1 영어</span></div></div>
 </div>`;
   return wrap(pg.t+' | 영어 회화 - 올케어스터디',desc,canonical,body,bc);
@@ -8348,7 +8355,7 @@ function makeCnSubPage(slug) {
   <section class="u9"><h2 style="font-size:18px;font-weight:900;color:#0F2044;margin:0 0 14px">다른 중국어 수업</h2>
     ${Object.entries(P).filter(([k])=>k!==slug).slice(0,6).map(([k,v])=>'<a href="/conversation/chinese/'+k+'" style="display:block;padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;text-decoration:none;margin-bottom:8px;transition:border-color .2s" onmouseover="this.style.borderColor=\'#DC2626\'" onmouseout="this.style.borderColor=\'#E5E7EB\'"><div style="font-size:14px;font-weight:800;color:#0F2044">'+v.em+' '+v.t+'</div></a>').join('')}
   </section>
-  <div class="cta-box"><h3>중국어 회화 무료 상담</h3><p>1:1 맞춤 중국어 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
+  <div class="cta-box"><h3>중국어 회화 무료 상담</h3><p>1:1 맞춤 중국어 코칭 · 첫 수업 무료</p><div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 무료 상담 신청</a></div></div>
   <div class="keyword-box" style="margin-top:20px"><div class="keyword-title">관련 검색어</div><div class="keyword-tags">${pg.kw.map(k=>'<span class="keyword-tag">'+k+'</span>').join('')}<span class="keyword-tag">중국어 회화</span><span class="keyword-tag">1:1 중국어</span></div></div>
 </div>`;
   return wrap(pg.t+' | 중국어 회화 - 올케어스터디',desc,canonical,body,bc);
@@ -11748,7 +11755,7 @@ if (path === '/llms.txt' || path === '/llms-full.txt') return new Response(llmsT
 <h1 class="art-title">${ak} ${gk} 과외 | 과목 선택</h1>
 <div class="art-body"><h2>과목을 선택하세요</h2><div class="subj-grid">${subjLinks}</div></div>
 <div class="cta-box"><h3>${ak} ${gk} 맞춤 과외</h3><p>무료 상담 신청</p>
-<div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
+<div class="cta-btns"><a class="btn-p" href="tel:01068348080">📞 010-6834-8080</a><span class="telt telb">전화 010-6834-8080</span><a class="btn-o" href="/contact?type=tutoring">✉️ 과외 상담하기</a></div></div>
 </div>`;
         const canon = `/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}/${GRADE_EN[gk]||gk}`;
         const bc3 = [{name:'홈',url:'/'},{name:region.label,url:`/${SIDO_EN[rk]||rk}`},{name:ak,url:`/${SIDO_EN[rk]||rk}/${gugunEn(SIDO_EN[rk]||rk, ak)||ak}`},{name:`${gk} 과외`,url:canon}];
