@@ -11108,7 +11108,7 @@ export default {
     // === 전환 추적 수집 API (상담 코드와 무관, 독립 동작) ===
     if (path === '/api/track' && request.method === 'POST') {
       try {
-        const b = await request.json();
+        const b = await request.json(); const __task=(async()=>{ try{
     /* 같은 방문자가 같은 버튼을 반복해 눌러도 1건만 기록·발송한다 */
     if (await tkDup(env, 'allcarestudy', b.type, (b.page || '').slice(0, 300), request.headers.get('CF-Connecting-IP') || '')) {
       return new Response(JSON.stringify({ ok: true, dup: 1 }), { headers: { 'content-type': 'application/json', 'access-control-allow-origin': '*' } });
@@ -11132,7 +11132,7 @@ export default {
             .bind(ts, 'allcarestudy', ua.slice(0,250), ip, (b.page||'').slice(0,200), isBot ? 1 : 0).run().catch(function(){});
           if (ctx && ctx.waitUntil) ctx.waitUntil(probe);
         }
-      } catch(e) {}
+      }catch(e){ console.log('[track] fail', e&&e.message); } })(); if(ctx&&ctx.waitUntil) ctx.waitUntil(__task); else await __task; } catch(e) {}
       return new Response(JSON.stringify({ok:true}), { headers: { 'Content-Type':'application/json', 'Access-Control-Allow-Origin':'*' } });
     }
     if (path === '/api/track' && request.method === 'OPTIONS') {
