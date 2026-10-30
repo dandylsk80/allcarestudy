@@ -10832,10 +10832,9 @@ async function submitIndexNowChunk(urlList) {
     urlList
   });
   const headers = {'Content-Type': 'application/json; charset=utf-8'};
-  const [naver, bing] = await Promise.all([
-    fetch('https://searchadvisor.naver.com/indexnow', { method: 'POST', headers, body }).then(r=>r.status).catch(()=>0),
-    indexnowFetch({ method: 'POST', headers, body }).then(r=>r.status).catch(()=>0)
-  ]);
+  /* 2026-10-30 네이버 IndexNow 중단 — 새 정보성 글만 publishDuePosts 가 하루 10건까지 보낸다 */
+  const naver = 'off';
+  const bing = await indexnowFetch({ method: 'POST', headers, body }).then(r=>r.status).catch(()=>0);
   return { naver, bing, count: urlList.length };
 }
 
@@ -11079,7 +11078,51 @@ async function publishDuePosts(env, opt) {
     } catch (e) { console.log('발행 전환 실패 ' + p.site + '/' + p.slug + ': ' + (e && e.message)); }
   }
   for (const p of out.published) if (await tgPostNotify(env, p)) out.notified++;
+  out.naver = await naverSubmitPosts(env, out.published, today);
   return out;
+}
+
+/* 2026-10-30 부터 네이버 IndexNow 는 25곳 모두 끄고, 새로 발행된 정보성 글만 여기서 보낸다.
+   전 사이트 합쳐 KST 하루 10건까지 — 센 수는 site_state(allcarestudy, naver_posts_YYYY-MM-DD)에 남긴다.
+   키는 각 사이트 루트 /{key}.txt 로 공개되는 값이다. *fit 3곳은 키 파일이 없어 뺐다. */
+const NAVER_POST_DAILY_MAX = 10;
+const NAVER_POST_KEYS = {
+  'allcarestudy.com': '82576028bc8743f5869b54199452e4b4', 'studyonlive.com': '5d130e0f97260fad8124615334dcd8c8',
+  'semogwa.com': '41990cbcc27241c6b899d18d983370a3', 'myclassup.com': 'cc1751e5774748319f8a8ffca05a3f05',
+  'king-study.com': '75a5ac2bb2094bf9aa566c75b4c03b91', 'semoacademy.com': 'a90672a3fd264464a1115bf3af116709',
+  'classwawa.com': '06428c67121444d98950184927cd1324', 'globaltalkup.com': 'ed8128cdf2e741588641135eb5a1a584',
+  'allpaystore.com': '822a08bd2bba4c3cb62c6fba162a9cb3', 'thecardpos.com': 'f5e28b581e6272970e3d64735e14e513',
+  'danmalgi.com': 'a7f3c1e9b2d84056f1a9c3e7b5d20496', '24payshop.com': '6b7600c4c073409e8ff9914ae0ac47e7',
+  '365posmall.com': 'f2b7d4a1c8e35096b1d7f4a2c9e05387', 'primeposkorea.com': 'f5e28b581e6272970e3d64735e14e513',
+  'primecardkorea.com': '9c41d7b0e85a4f2ab63d1e7f04c8a5d3', 'primepaykorea.com': '4e70b2c9d1f8437ea59c6b02d83f1a67',
+  'primebizkorea.com': 'b83f1e60a24d7c95ef3821b70d5a6c4e', 'primeshopkorea.com': '7a25c8d43be9106f2ad4e1c93b8574fe',
+  'powerlandprep.com': '5f2c8e1a9b7d4c63a0e4b18d2f6c9a75', 'powerlandtest.com': 'b7e04d2c6a1f4e8d93c5a0f27d18e6b4',
+  'powerlandbiz.com': '3d91f6a2c84b4e57a0b6e2c9d5f7a813', 'powerlandschool.com': '8a4c2e6f1b9d4a7e85c3f0d2b6e9a471',
+};
+async function naverSubmitPosts(env, posts, day) {
+  const res = [];
+  if (!posts.length || !env || !env.DB) return res;
+  const key = 'naver_posts_' + day;
+  let used = 0;
+  try {
+    const r = await env.DB.prepare("SELECT value FROM site_state WHERE site='allcarestudy' AND key=?").bind(key).first();
+    used = Number(r && r.value) || 0;
+  } catch (e) {}
+  for (const p of posts) {
+    const k = NAVER_POST_KEYS[p.host];
+    if (!k) { res.push({ url: p.url, status: 'no-key' }); continue; }
+    if (used >= NAVER_POST_DAILY_MAX) { res.push({ url: p.url, status: 'cap' }); continue; }
+    const body = JSON.stringify({ host: p.host, key: k, keyLocation: 'https://' + p.host + '/' + k + '.txt', urlList: [p.url] });
+    let status = 0;
+    try { status = (await fetch('https://searchadvisor.naver.com/indexnow', { method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' }, body })).status; } catch (e) {}
+    used++;
+    res.push({ url: p.url, status });
+  }
+  try {
+    await env.DB.prepare("INSERT INTO site_state (site,key,value,ts) VALUES ('allcarestudy',?,?,?) ON CONFLICT(site,key) DO UPDATE SET value=excluded.value, ts=excluded.ts")
+      .bind(key, String(used), new Date().toISOString()).run();
+  } catch (e) {}
+  return res;
 }
 
 
@@ -11204,18 +11247,10 @@ export default {
       const fullUrls = allUrls.map(u=>'https://allcarestudy.com'+u);
 
       
-      const naverRes = await fetch('https://searchadvisor.naver.com/indexnow', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json; charset=utf-8'},
-        body: JSON.stringify({
-          host: 'allcarestudy.com',
-          key: INDEXNOW_KEY,
-          keyLocation: 'https://allcarestudy.com/' + INDEXNOW_KEY + '.txt',
-          urlList: fullUrls
-        })
-      });
+      /* 2026-10-30 네이버 IndexNow 중단 — 새 정보성 글만 publishDuePosts 가 하루 10건까지 보낸다 */
+      const naverRes = { status: 'off' };
 
-      
+
       const bingRes = await indexnowFetch({
         method: 'POST',
         headers: {'Content-Type': 'application/json; charset=utf-8'},
