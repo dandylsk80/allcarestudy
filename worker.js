@@ -1,12 +1,20 @@
-/* 2026-10-30 IndexNow 일시 중지(네이버·Bing·yandex 전부) — KST 11/3 까지, 11/4 00:00 KST 부터 자동 재개(네이버는 계속 꺼짐).
-   제출 함수가 사이트마다 달라 이 모듈의 fetch 를 한 곳에서 거른다. IndexNow 엔드포인트만 막고 나머지 요청·사이트맵은 그대로. */
-const INDEXNOW_PAUSE_UNTIL = Date.parse("2026-11-03T15:00:00Z");
-const INDEXNOW_HOST_RE = /^https:\/\/(api\.indexnow\.org|(www\.)?bing\.com|yandex\.com|search\.seznam\.cz|searchadvisor\.naver\.com)\/indexnow/;
-const fetch = (input, init) => {
+/* 2026-10-30 IndexNow 중지 — 재개는 사용자 지시가 있을 때만(날짜로 자동 재개하지 않는다).
+   이 워커가 25곳 IndexNow 관문이다(indexnowGate · /api/indexnow-gate). 다른 워커는 IndexNow 요청을 여기로 보내고,
+   이 워커 자신의 요청은 같은 함수를 직접 부른다. 재개 여부·하루 200건·바뀐 페이지만은 관문이 정한다. 네이버는 항상 막는다. */
+const INDEXNOW_HOST_RE = /^https:\/\/(api\.indexnow\.org|(www\.)?bing\.com|yandex\.com|search\.seznam\.cz)\/indexnow/;
+const INDEXNOW_NAVER_RE = /^https:\/\/searchadvisor\.naver\.com\/indexnow/;
+let INDEXNOW_ENV = null;   /* fetch·scheduled 진입 때 채운다 — 관문이 D1 을 쓴다 */
+let indexnowLast = null;   /* 폴백 체인이 같은 배치를 엔드포인트마다 다시 보내므로 직전 배치의 관문 응답을 다시 쓴다 */
+const fetch = async (input, init) => {
   const u = typeof input === "string" ? input : (input && input.url) || "";
-  if (Date.now() < INDEXNOW_PAUSE_UNTIL && INDEXNOW_HOST_RE.test(u))
-    return Promise.resolve(new Response("IndexNow paused until 2026-11-03 KST", { status: 503 }));
-  return globalThis.fetch(input, init);
+  if (INDEXNOW_NAVER_RE.test(u)) return new Response("naver IndexNow off", { status: 503 });
+  if (!INDEXNOW_HOST_RE.test(u)) return globalThis.fetch(input, init);
+  const body = init && typeof init.body === "string" ? init.body : "";
+  if (indexnowLast && indexnowLast.body === body) return new Response(indexnowLast.text, { status: indexnowLast.status });
+  let status = 503, text = "IndexNow paused";
+  try { [status, text] = await indexnowGate(INDEXNOW_ENV, body); } catch (e) {}
+  indexnowLast = { body, status, text };
+  return new Response(text, { status });
 };
 
 /* ---------- 파비콘 (18개 공통 규격: ico 16·32·48 / favicon-32.png / apple-touch-icon 180) ----------
@@ -11093,7 +11101,7 @@ async function publishDuePosts(env, opt) {
   return out;
 }
 
-/* 2026-10-30 부터 25곳 IndexNow 는 모두 멈췄고(맨 위 INDEXNOW_PAUSE_UNTIL, 네이버는 계속 꺼짐), 새로 발행된 정보성 글만
+/* 2026-10-30 부터 25곳 IndexNow 는 모두 멈췄고(맨 위 fetch 래퍼 → indexnowGate, 네이버는 계속 꺼짐), 새로 발행된 정보성 글만
    여기서 Bing·yandex 로 보낸다. 일시 중지를 거치지 않도록 globalThis.fetch 를 직접 쓴다.
    전 사이트 합쳐 KST 하루 10건까지 — 센 수는 site_state(allcarestudy, post_indexnow_YYYY-MM-DD)에 남긴다.
    키는 각 사이트 루트 /{key}.txt 로 공개되는 값이다. *fit 3곳은 키 파일이 없어 뺐다. */
@@ -11138,6 +11146,90 @@ async function postIndexNowSubmit(env, posts, day) {
       .bind(key, String(used), new Date().toISOString()).run();
   } catch (e) {}
   return res;
+}
+
+/* ── IndexNow 관문 ────────────────────────────────────────────
+   25곳 워커의 IndexNow 요청이 모두 여기로 온다(각 워커 맨 위 fetch 래퍼). 지금은 INDEXNOW_RESUME_SITES 가 비어 있어 전부 503.
+   재개는 사용자 지시가 있을 때 한 번에 한 곳씩 'host': '재개일(KST)' 을 넣고 배포한다. 재개된 사이트는
+   - 하루(KST) 최대 200건(site_state <host>/gate_sent_YYYY-MM-DD)
+   - 바뀐 페이지만: 워커가 고른 주소 중 앞 40개를 실제로 받아 본문 지문을 indexnow_fp 와 비교해 달라진 것만 보낸다
+   - 처음 보는 주소는 지문만 남기고 보내지 않는다 → 멈춘 동안 쌓인 변경을 재개 첫날 한꺼번에 내보내지 않는다
+   - 보내는 곳은 Bing·yandex(POST_INDEXNOW_EPS). 네이버는 없다.
+   새 정보성 글은 postIndexNowSubmit 이 따로 맡는다(첫 지문 규칙에 걸려 안 나가는 일이 없게).
+   키는 POST_INDEXNOW_KEYS 와 맞아야 한다(키 파일이 없는 *fit 3곳은 403). */
+const INDEXNOW_RESUME_SITES = {};
+const INDEXNOW_GATE_DAILY_MAX = 200;
+const INDEXNOW_GATE_CHECK_MAX = 40;   /* 한 번에 받아 볼 페이지 수 — 하위 요청 한도 안에서 */
+const GATE_CTX = { waitUntil() {}, passThroughOnException() {} };
+
+/* 날짜·스크립트를 빼고 본문(article → main → 전체)만 해시 — 날짜 표기 때문에 매일 바뀐 것으로 잡히지 않게 */
+function gateFingerprint(html) {
+  const h = String(html || '');
+  const m = h.match(/<article[\s\S]*?<\/article>/) || h.match(/<main[\s\S]*?<\/main>/);
+  const t = (m ? m[0] : h).replace(/<script[\s\S]*?<\/script>/g, '')
+    .replace(/\d{4}-\d{2}-\d{2}(T[0-9:.]+Z?)?/g, 'D').replace(/\d{4}\s*[.년]\s*\d{1,2}\s*[.월]\s*\d{1,2}\s*일?/g, 'D');
+  let x = 0x811c9dc5;
+  for (let i = 0; i < t.length; i++) { x ^= t.charCodeAt(i); x = Math.imul(x, 16777619) >>> 0; }
+  return x.toString(36) + '-' + t.length;
+}
+
+async function indexnowGate(env, bodyText) {
+  let b = null;
+  try { b = JSON.parse(bodyText); } catch (e) {}
+  const host = b && b.host, key = b && b.key;
+  if (!host || !POST_INDEXNOW_KEYS[host] || POST_INDEXNOW_KEYS[host] !== key) return [403, 'unknown host/key'];
+  const since = INDEXNOW_RESUME_SITES[host];
+  const day = postKstDate(Date.now());
+  if (!since || day < since) return [503, 'IndexNow paused (' + host + ')'];
+  if (!env || !env.DB) return [503, 'no DB'];
+  const capKey = 'gate_sent_' + day;
+  let used = 0;
+  try {
+    const r = await env.DB.prepare("SELECT value FROM site_state WHERE site=? AND key=?").bind(host, capKey).first();
+    used = Number(r && r.value) || 0;
+  } catch (e) {}
+  if (used >= INDEXNOW_GATE_DAILY_MAX) return [429, 'daily cap ' + INDEXNOW_GATE_DAILY_MAX];
+  const prefix = 'https://' + host + '/';
+  const cand = [...new Set((Array.isArray(b.urlList) ? b.urlList : []).filter((u) => typeof u === 'string' && u.startsWith(prefix)))]
+    .slice(0, INDEXNOW_GATE_CHECK_MAX);
+  const stored = new Map();
+  if (cand.length) {
+    const r = await env.DB.prepare("SELECT url,fp FROM indexnow_fp WHERE site=? AND url IN (" + cand.map(() => '?').join(',') + ")")
+      .bind(host, ...cand).all();
+    for (const x of (r.results || [])) stored.set(x.url, x.fp);
+  }
+  const send = [], writes = [], stat = { baseline: 0, same: 0, changed: 0, skip: 0 };
+  const ts = new Date().toISOString();
+  for (const u of cand) {
+    if (used + send.length >= INDEXNOW_GATE_DAILY_MAX) break;
+    let html = '';
+    try {
+      const r = host === 'allcarestudy.com'
+        ? await ALLCARE_WORKER.fetch(new Request(u), env, GATE_CTX)
+        : await globalThis.fetch(u, { redirect: 'manual' });
+      if (r.status !== 200) { stat.skip++; continue; }
+      html = await r.text();
+    } catch (e) { stat.skip++; continue; }
+    const fp = gateFingerprint(html), old = stored.get(u);
+    if (old === fp) { stat.same++; continue; }
+    writes.push(env.DB.prepare("INSERT INTO indexnow_fp (site,url,fp,ts) VALUES (?,?,?,?) ON CONFLICT(site,url) DO UPDATE SET fp=excluded.fp, ts=excluded.ts")
+      .bind(host, u, fp, ts));
+    if (old === undefined) { stat.baseline++; continue; }
+    stat.changed++;
+    send.push(u);
+  }
+  if (writes.length) await env.DB.batch(writes);
+  const engines = {};
+  if (send.length) {
+    const body = JSON.stringify({ host, key, keyLocation: prefix + key + '.txt', urlList: send });
+    for (const [name, ep] of POST_INDEXNOW_EPS) {
+      try { engines[name] = (await globalThis.fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' }, body })).status; }
+      catch (e) { engines[name] = 0; }
+    }
+    await env.DB.prepare("INSERT INTO site_state (site,key,value,ts) VALUES (?,?,?,?) ON CONFLICT(site,key) DO UPDATE SET value=excluded.value, ts=excluded.ts")
+      .bind(host, capKey, String(used + send.length), ts).run();
+  }
+  return [200, JSON.stringify(Object.assign({ host, sent: send.length, used: used + send.length, max: INDEXNOW_GATE_DAILY_MAX, engines }, stat))];
 }
 
 
@@ -11269,8 +11361,14 @@ function blockScraper(request){
   return null;
 }
 
-export default {
+const ALLCARE_WORKER = {
   async fetch(request, env, ctx) {
+    INDEXNOW_ENV = env;
+    /* 다른 워커의 IndexNow 요청 관문 — 아래 indexnowGate 주석 참고 */
+    if (new URL(request.url).pathname === '/api/indexnow-gate' && request.method === 'POST') {
+      const [__s, __t] = await indexnowGate(env, await request.text());
+      return new Response(__t, { status: __s, headers: { 'Content-Type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' } });
+    }
     const __blk = blockScraper(request); if(__blk) return __blk;
     const url = new URL(request.url);
     const path = decodeURIComponent(url.pathname);
@@ -11964,6 +12062,7 @@ ${HEADER}<div class="wrap" style="text-align:center;padding-top:80px">
 </div>${FOOTER}</body></html>`, { status: 404, headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
   },
   async scheduled(event, env, ctx) {
+    INDEXNOW_ENV = env;
     /* 09:00 KST 크론은 일일 네이버 요약만 보낸다 — 발행·IndexNow 는 10:00 KST 크론의 몫 */
     if (event.cron === DAILY_REPORT_CRON) {
       try { await dailyNaverReport(env, event.scheduledTime); } catch (e) { console.log('일일 요약 실패: ' + (e && e.message)); }
@@ -11985,3 +12084,4 @@ ${HEADER}<div class="wrap" style="text-align:center;padding-top:80px">
     ctx.waitUntil(submitIndexNowChunk(postFreshUrls().concat(slice)));
   }
 };
+export default ALLCARE_WORKER;
