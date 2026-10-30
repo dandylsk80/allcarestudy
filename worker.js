@@ -1,3 +1,14 @@
+/* 2026-10-30 IndexNow 일시 중지(네이버·Bing·yandex 전부) — KST 11/3 까지, 11/4 00:00 KST 부터 자동 재개(네이버는 계속 꺼짐).
+   제출 함수가 사이트마다 달라 이 모듈의 fetch 를 한 곳에서 거른다. IndexNow 엔드포인트만 막고 나머지 요청·사이트맵은 그대로. */
+const INDEXNOW_PAUSE_UNTIL = Date.parse("2026-11-03T15:00:00Z");
+const INDEXNOW_HOST_RE = /^https:\/\/(api\.indexnow\.org|(www\.)?bing\.com|yandex\.com|search\.seznam\.cz|searchadvisor\.naver\.com)\/indexnow/;
+const fetch = (input, init) => {
+  const u = typeof input === "string" ? input : (input && input.url) || "";
+  if (Date.now() < INDEXNOW_PAUSE_UNTIL && INDEXNOW_HOST_RE.test(u))
+    return Promise.resolve(new Response("IndexNow paused until 2026-11-03 KST", { status: 503 }));
+  return globalThis.fetch(input, init);
+};
+
 /* ---------- 파비콘 (18개 공통 규격: ico 16·32·48 / favicon-32.png / apple-touch-icon 180) ----------
    경로마다 제 형식의 바이트를 돌려준다. 예전엔 세 경로를 한 응답(SVG)으로 묶어 PNG 로 선언해 놓고
    SVG 를 내보내고 있었다. 이미지는 tools/gen.mjs 로 생성한다. */
@@ -11078,15 +11089,17 @@ async function publishDuePosts(env, opt) {
     } catch (e) { console.log('발행 전환 실패 ' + p.site + '/' + p.slug + ': ' + (e && e.message)); }
   }
   for (const p of out.published) if (await tgPostNotify(env, p)) out.notified++;
-  out.naver = await naverSubmitPosts(env, out.published, today);
+  out.indexnow = await postIndexNowSubmit(env, out.published, today);
   return out;
 }
 
-/* 2026-10-30 부터 네이버 IndexNow 는 25곳 모두 끄고, 새로 발행된 정보성 글만 여기서 보낸다.
-   전 사이트 합쳐 KST 하루 10건까지 — 센 수는 site_state(allcarestudy, naver_posts_YYYY-MM-DD)에 남긴다.
+/* 2026-10-30 부터 25곳 IndexNow 는 모두 멈췄고(맨 위 INDEXNOW_PAUSE_UNTIL, 네이버는 계속 꺼짐), 새로 발행된 정보성 글만
+   여기서 Bing·yandex 로 보낸다. 일시 중지를 거치지 않도록 globalThis.fetch 를 직접 쓴다.
+   전 사이트 합쳐 KST 하루 10건까지 — 센 수는 site_state(allcarestudy, post_indexnow_YYYY-MM-DD)에 남긴다.
    키는 각 사이트 루트 /{key}.txt 로 공개되는 값이다. *fit 3곳은 키 파일이 없어 뺐다. */
-const NAVER_POST_DAILY_MAX = 10;
-const NAVER_POST_KEYS = {
+const POST_INDEXNOW_DAILY_MAX = 10;
+const POST_INDEXNOW_EPS = [['bing', 'https://www.bing.com/indexnow'], ['yandex', 'https://yandex.com/indexnow']];
+const POST_INDEXNOW_KEYS = {
   'allcarestudy.com': '82576028bc8743f5869b54199452e4b4', 'studyonlive.com': '5d130e0f97260fad8124615334dcd8c8',
   'semogwa.com': '41990cbcc27241c6b899d18d983370a3', 'myclassup.com': 'cc1751e5774748319f8a8ffca05a3f05',
   'king-study.com': '75a5ac2bb2094bf9aa566c75b4c03b91', 'semoacademy.com': 'a90672a3fd264464a1115bf3af116709',
@@ -11099,22 +11112,24 @@ const NAVER_POST_KEYS = {
   'powerlandprep.com': '5f2c8e1a9b7d4c63a0e4b18d2f6c9a75', 'powerlandtest.com': 'b7e04d2c6a1f4e8d93c5a0f27d18e6b4',
   'powerlandbiz.com': '3d91f6a2c84b4e57a0b6e2c9d5f7a813', 'powerlandschool.com': '8a4c2e6f1b9d4a7e85c3f0d2b6e9a471',
 };
-async function naverSubmitPosts(env, posts, day) {
+async function postIndexNowSubmit(env, posts, day) {
   const res = [];
   if (!posts.length || !env || !env.DB) return res;
-  const key = 'naver_posts_' + day;
+  const key = 'post_indexnow_' + day;
   let used = 0;
   try {
     const r = await env.DB.prepare("SELECT value FROM site_state WHERE site='allcarestudy' AND key=?").bind(key).first();
     used = Number(r && r.value) || 0;
   } catch (e) {}
   for (const p of posts) {
-    const k = NAVER_POST_KEYS[p.host];
+    const k = POST_INDEXNOW_KEYS[p.host];
     if (!k) { res.push({ url: p.url, status: 'no-key' }); continue; }
-    if (used >= NAVER_POST_DAILY_MAX) { res.push({ url: p.url, status: 'cap' }); continue; }
+    if (used >= POST_INDEXNOW_DAILY_MAX) { res.push({ url: p.url, status: 'cap' }); continue; }
     const body = JSON.stringify({ host: p.host, key: k, keyLocation: 'https://' + p.host + '/' + k + '.txt', urlList: [p.url] });
-    let status = 0;
-    try { status = (await fetch('https://searchadvisor.naver.com/indexnow', { method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' }, body })).status; } catch (e) {}
+    const status = {};
+    for (const [name, ep] of POST_INDEXNOW_EPS) {
+      try { status[name] = (await globalThis.fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' }, body })).status; } catch (e) { status[name] = 0; }
+    }
     used++;
     res.push({ url: p.url, status });
   }
@@ -11123,6 +11138,115 @@ async function naverSubmitPosts(env, posts, day) {
       .bind(key, String(used), new Date().toISOString()).run();
   } catch (e) {}
   return res;
+}
+
+
+/* ── 일일 네이버 요약 (매일 09:00 KST, 텔레그램) ─────────────────
+   2026-10-30 네이버 유입 급감 뒤 추적용. 어제(KST) 25곳 합계를 그제·지난주 같은 요일과 한 줄씩 비교한다.
+   - 네이버 유입: events view, source='naver' (리퍼러 기준)
+   - 네이버 앱: events view, ua 에 NAVER (리퍼러와 무관)
+   - 전환: events tel·sms·contact
+   - Yeti: Cloudflare GraphQL httpRequestsAdaptiveGroups(requestSource eyeball, UA %Yeti%).
+     워커 크롤러 기록(crawl_hits)은 몇 곳만 남겨 25곳 합계로 못 쓴다. CF_API_TOKEN(Analytics:Read) 시크릿이 없으면 이 줄만 빠진다. */
+const DAILY_REPORT_CRON = '0 0 * * *';
+const REPORT_ZONES = {
+  '24payshop': '865f036c180e1e30d6e2ed356d539298', '365posmall': 'bd23fb642427a55eeff2461dcfe13521',
+  allcarestudy: 'ab1f51d26b5af5015ca3ec1c41e902cb', allpaystore: 'fc4a87a0eb8eecfc5256ade81aabf09b',
+  classwawa: 'aa81aa72246f192ed902c912e2c221ff', danmalgi: '1cbc872bf183b19981635c26507d5954',
+  globaltalkup: '8daf30c737f02b249cfdcddf3aaa205e', 'king-study': '78a768988c29fd832ec63bbe40ac6216',
+  myclassup: '715f73a02b2ca3feb770ce401bd902e6', powerlandbiz: 'c7a0c8cdf666a891f4f37fc6f71eeaa0',
+  powerlandprep: '3527904fffbe8e0370fb9be72aecb2f7', powerlandschool: 'c50075fceb4a9da24c3ff06a4f7b0069',
+  powerlandtest: 'd5f45f3a53e24bd9dc6fe91504c0d957', primebizkorea: '3fb1455ed52dceee4814bb989327e643',
+  primecardkorea: '49b28ac25d677bdb7beb933f236da787', primepaykorea: '1b07ae1d895782f7d61d6a79b309210e',
+  primeposkorea: '382d858b7a435cdbf0aa55adb9e2eb7e', primeshopkorea: '3604f23a85bfb0e4cf6cb4e6e2d0561c',
+  semoacademy: '2d5339fafe6b9677fc6d3dc372f00c04', semogwa: '47badb9dd721b752883035f59e3ecd29',
+  studyclassfit: 'e7740f1a1b7071640768af339635ae6e', studycoachfit: 'be205f7d8c4b3cb4afa31f2e044cdb59',
+  studyonlive: '385da8b5dc5a1aa2f1e7e05a5710046a', studyschoolfit: '2f759c0533eb9e3aab6ba3115326fc22',
+  thecardpos: '0f5b893e1b034f238294e4d6ba79f613',
+};
+
+/* KST 날짜 d 하루의 UTC 경계 [시작, 끝) */
+function reportDayRange(d) {
+  const s = Date.parse(d + 'T00:00:00Z') - 9 * 3600000;
+  return [new Date(s).toISOString(), new Date(s + 86400000).toISOString()];
+}
+
+async function reportD1Counts(env, d) {
+  const [a, b] = reportDayRange(d);
+  const r = await env.DB.prepare(
+    "SELECT site,"
+    + " SUM(type='view' AND source='naver') nv,"
+    + " SUM(type='view' AND ua LIKE '%NAVER%') app,"
+    + " SUM(type IN ('tel','sms','contact')) conv"
+    + " FROM events WHERE ts>=? AND ts<? GROUP BY site"
+  ).bind(a, b).all();
+  const out = { nv: 0, app: 0, conv: 0, bySite: {} };
+  for (const x of (r.results || [])) {
+    out.nv += x.nv || 0; out.app += x.app || 0; out.conv += x.conv || 0;
+    out.bySite[x.site] = x.nv || 0;
+  }
+  return out;
+}
+
+/* 세 날짜의 Yeti 요청 수 합계. 존을 5개씩 묶어 한 쿼리에 세 날짜를 별칭으로 묻는다 */
+async function reportYeti(env, days) {
+  if (!env.CF_API_TOKEN) return null;
+  const ids = Object.values(REPORT_ZONES);
+  const sum = days.map(() => 0);
+  for (let i = 0; i < ids.length; i += 5) {
+    const part = ids.slice(i, i + 5).map((z) => '"' + z + '"').join(',');
+    const al = days.map((d, j) => {
+      const [a, b] = reportDayRange(d);
+      return 'd' + j + ':httpRequestsAdaptiveGroups(limit:1,filter:{datetime_geq:"' + a + '",datetime_lt:"' + b
+        + '",requestSource:"eyeball",userAgent_like:"%Yeti%"}){count}';
+    }).join(' ');
+    const r = await (await fetch('https://api.cloudflare.com/client/v4/graphql', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + env.CF_API_TOKEN, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: 'query{viewer{zones(filter:{zoneTag_in:[' + part + ']}){' + al + '}}}' })
+    })).json();
+    if (r.errors) throw new Error('GraphQL ' + JSON.stringify(r.errors).slice(0, 200));
+    for (const z of r.data.viewer.zones) days.forEach((_, j) => { sum[j] += (z['d' + j][0] && z['d' + j][0].count) || 0; });
+  }
+  return sum;
+}
+
+function reportLine(label, cur, prev, week) {
+  const pct = (a, b) => b ? ((a - b) / b * 100 >= 0 ? '+' : '') + Math.round((a - b) / b * 100) + '%' : '-';
+  return label + ' ' + cur.toLocaleString('en-US') + ' (전날 ' + prev.toLocaleString('en-US') + ' ' + pct(cur, prev)
+    + ' · 지난주 ' + week.toLocaleString('en-US') + ' ' + pct(cur, week) + ')';
+}
+
+async function dailyNaverReport(env, ms, opt) {
+  const o = opt || {};
+  const day = postKstDate(ms - 86400000);          /* 어제(KST) */
+  const prev = postKstDate(ms - 2 * 86400000);
+  const week = postKstDate(ms - 8 * 86400000);     /* 어제와 같은 요일 */
+  const [c, p, w] = await Promise.all([reportD1Counts(env, day), reportD1Counts(env, prev), reportD1Counts(env, week)]);
+  let yeti = null, yetiErr = '';
+  try { yeti = await reportYeti(env, [day, prev, week]); } catch (e) { yetiErr = String(e && e.message).slice(0, 120); }
+  const L = ['📊 네이버 일일 요약 ' + day + ' (25곳)', ''];
+  L.push(reportLine('네이버 유입', c.nv, p.nv, w.nv));
+  L.push(reportLine('네이버 앱 방문', c.app, p.app, w.app));
+  L.push(yeti ? reportLine('Yeti', yeti[0], yeti[1], yeti[2]) : 'Yeti — ' + (yetiErr || 'CF_API_TOKEN 시크릿 없음'));
+  L.push(reportLine('전환(전화·문자·문의)', c.conv, p.conv, w.conv));
+  /* 사이트별 네이버 유입: 어제 또는 지난주 같은 요일에 1건이라도 있던 곳만 */
+  const sites = Object.keys(Object.assign({}, c.bySite, w.bySite))
+    .filter((s) => (c.bySite[s] || 0) + (w.bySite[s] || 0) > 0)
+    .sort((a, b) => (w.bySite[b] || 0) - (w.bySite[a] || 0));
+  if (sites.length) {
+    L.push('');
+    L.push('사이트별 네이버 유입 (어제/지난주)');
+    L.push(sites.map((s) => s + ' ' + (c.bySite[s] || 0) + '/' + (w.bySite[s] || 0)).join(' · '));
+  }
+  const text = L.join('\n');
+  if (o.dry || !env.TG_TOKEN || !env.TG_CHAT) return text;
+  const r = await fetch('https://api.telegram.org/bot' + env.TG_TOKEN + '/sendMessage', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: env.TG_CHAT, text, disable_web_page_preview: true })
+  });
+  if (!r.ok) console.log('일일 요약 텔레그램 실패 ' + r.status);
+  return text;
 }
 
 
@@ -11577,6 +11701,14 @@ export default {
       return new Response(JSON.stringify(Object.assign({ ok: true }, __r), null, 2),
         { headers: { 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
     }
+    /* === 일일 네이버 요약 수동 실행 === 키는 /api/post-cron 과 같다. ?dry=1 이면 텔레그램 없이 본문만 돌려준다 */
+    if (path === '/api/daily-report') {
+      const __k = url.searchParams.get('key') || '';
+      const __ok = __k && (__k === ((env && env.CRON_KEY) || '\u0000') || __k === ((env && env.DASH_PW) || '\u0000'));
+      if (!__ok) return new Response(JSON.stringify({ ok: false }), { status: 401, headers: { 'Content-Type': 'application/json', 'cache-control': 'no-store' } });
+      const __t = await dailyNaverReport(env, Date.now(), { dry: url.searchParams.get('dry') === '1' });
+      return new Response(__t, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' } });
+    }
     // === 대시보드 데이터 API (비번 확인 후 D1 집계 반환) ===
     if (path === '/api/dashboard' && request.method === 'POST') {
       try {
@@ -11832,6 +11964,11 @@ ${HEADER}<div class="wrap" style="text-align:center;padding-top:80px">
 </div>${FOOTER}</body></html>`, { status: 404, headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
   },
   async scheduled(event, env, ctx) {
+    /* 09:00 KST 크론은 일일 네이버 요약만 보낸다 — 발행·IndexNow 는 10:00 KST 크론의 몫 */
+    if (event.cron === DAILY_REPORT_CRON) {
+      try { await dailyNaverReport(env, event.scheduledTime); } catch (e) { console.log('일일 요약 실패: ' + (e && e.message)); }
+      return;
+    }
     /* 예약 글 발행을 먼저 끝낸다 — 방금 발행된 글을 이번 IndexNow 배치에 실어야 한다 */
     try {
       const r = await publishDuePosts(env, { now: event.scheduledTime });
