@@ -8726,6 +8726,11 @@ th{color:#64748b;font-weight:600}
 .srct .up{color:#16a34a;font-size:11px;margin-left:3px}
 .srct .dn{color:#dc2626;font-size:11px;margin-left:3px}
 .srct .eq{color:#94a3b8;font-size:11px;margin-left:3px}
+.srct tr.grow{cursor:pointer;background:#f1f5f9}
+.srct tr.grow td{font-weight:700;color:#0f172a}
+.srct tr.grow:hover{background:#e2e8f0}
+.srct .gtog{display:inline-block;width:14px;color:#64748b}
+.srct .gn{font-size:11px;color:#94a3b8;font-weight:400}
 @media(max-width:520px){.chart{padding:12px}.chart h3{font-size:13px}#trendTabs button{padding:5px 8px;font-size:11px;margin-left:4px}}
 </style></head><body>
 <div id="login" class="login">
@@ -8890,6 +8895,7 @@ function load(range,btn){
 /* ===== 전환 만든 페이지 TOP 20 ===== */
 var CONVRANGE='90d', CONVLOADED=0;
 var SITE_DOMAIN={};for(var _d=0;_d<SITE_LIST.length;_d++)SITE_DOMAIN[SITE_LIST[_d][1]]=SITE_LIST[_d][3];
+var SRCGROUPS=[['tutor','과외',['allcarestudy','studyonlive','semogwa','myclassup','king-study']],['academy','학원',['semoacademy','classwawa','hakwon1','hakwon2','hakwon3']],['pay','더세이브(결제/POS)',['allpaystore','thecardpos','danmalgi','24payshop','365posmall','primeposkorea','primecardkorea','primepaykorea','primebizkorea','primeshopkorea']],['lang','파워(어학)',['globaltalkup','powerlandprep','powerlandtest','powerlandbiz','powerlandschool']]],SRCOPEN={};
 var SRCRANGE='today',SRCLOADED=0,SRCCOLS=[['naver','네이버'],['daum','다음'],['google','구글'],['ai','AI'],['etc','기타']];
 function srcDelta(c,p){
   if(c===p) return c?'<span class="eq">–</span>':'';
@@ -8905,27 +8911,32 @@ function loadSrc(range,btn){
     var cur={},prev={},i,j,k;
     for(i=0;i<SITE_LIST.length;i++){cur[SITE_LIST[i][1]]={};prev[SITE_LIST[i][1]]={};}
     for(i=0;i<d.rows.length;i++){var r=d.rows[i];var m=r.per==='c'?cur:prev;if(!m[r.site])continue;m[r.site][r.k]=(m[r.site][r.k]||0)+r.cnt;}
-    var list=[];
-    for(i=0;i<SITE_LIST.length;i++){var sk=SITE_LIST[i][1],tc=0,tp=0;for(j=0;j<SRCCOLS.length;j++){tc+=cur[sk][SRCCOLS[j][0]]||0;tp+=prev[sk][SRCCOLS[j][0]]||0;}list.push({sk:sk,nm:SITE_LIST[i][2],tc:tc,tp:tp});}
-    list.sort(function(a,b){return b.tc-a.tc||b.tp-a.tp||(a.nm<b.nm?-1:1);});
+    /* 그룹·사이트 순서 고정(합계순 정렬 없음). 그룹 줄을 누르면 사이트가 펼쳐지고 다시 누르면 접힌다. 전체 합계 줄은 항상 보인다. */
+    var row=function(m,sk,kk){return (m[sk]&&m[sk][kk])||0;};
+    var cell=function(c,p,cls){return '<td'+(cls?' class="'+cls+'"':(c?'':' class="z"'))+'>'+c+srcDelta(c,p)+'</td>';};
     var h='<table class="srct"><thead><tr><th>사이트</th>';
     for(j=0;j<SRCCOLS.length;j++)h+='<th>'+SRCCOLS[j][1]+'</th>';
     h+='<th class="tot">합계</th></tr></thead><tbody>';
     var sc={},sp={},stc=0,stp=0;
-    for(i=0;i<list.length;i++){var o=list[i];
-      h+='<tr><td><a data-vsite="'+esc(o.sk)+'">'+esc(o.nm)+'</a></td>';
-      for(j=0;j<SRCCOLS.length;j++){k=SRCCOLS[j][0];var c=cur[o.sk][k]||0,p=prev[o.sk][k]||0;sc[k]=(sc[k]||0)+c;sp[k]=(sp[k]||0)+p;
-        h+='<td'+(c?'':' class="z"')+'>'+c+srcDelta(c,p)+'</td>';}
-      stc+=o.tc;stp+=o.tp;
-      h+='<td class="tot">'+o.tc+srcDelta(o.tc,o.tp)+'</td></tr>';
-    }
-    h+='</tbody><tfoot><tr><td>합계</td>';
+    for(var g=0;g<SRCGROUPS.length;g++){var G=SRCGROUPS[g],gc={},gp={},gtc=0,gtp=0,body='';
+      for(i=0;i<G[2].length;i++){var sk=G[2][i],tc=0,tp=0;
+        body+='<tr class="srow" data-g="'+g+'" style="display:'+(SRCOPEN[g]?'table-row':'none')+'"><td style="padding-left:22px"><a data-vsite="'+esc(sk)+'">'+esc(SITE_NAME[sk]||sk)+'</a></td>';
+        for(j=0;j<SRCCOLS.length;j++){k=SRCCOLS[j][0];var c=row(cur,sk,k),p=row(prev,sk,k);tc+=c;tp+=p;gc[k]=(gc[k]||0)+c;gp[k]=(gp[k]||0)+p;body+=cell(c,p);}
+        body+=cell(tc,tp,'tot')+'</tr>';gtc+=tc;gtp+=tp;}
+      h+='<tr class="grow" data-g="'+g+'"><td><span class="gtog">'+(SRCOPEN[g]?'▾':'▸')+'</span>'+esc(G[1])+' <span class="gn">'+G[2].length+'곳</span></td>';
+      for(j=0;j<SRCCOLS.length;j++){k=SRCCOLS[j][0];h+=cell(gc[k]||0,gp[k]||0);sc[k]=(sc[k]||0)+(gc[k]||0);sp[k]=(sp[k]||0)+(gp[k]||0);}
+      h+=cell(gtc,gtp,'tot')+'</tr>'+body;stc+=gtc;stp+=gtp;}
+    h+='</tbody><tfoot><tr><td>전체 합계</td>';
     for(j=0;j<SRCCOLS.length;j++){k=SRCCOLS[j][0];h+='<td>'+(sc[k]||0)+srcDelta(sc[k]||0,sp[k]||0)+'</td>';}
     h+='<td class="tot">'+stc+srcDelta(stc,stp)+'</td></tr></tfoot></table>';
     document.getElementById('srcTable').innerHTML=h;
     var as=document.querySelectorAll('#srcTable a[data-vsite]');
     for(i=0;i<as.length;i++) as[i].onclick=function(){openVisits(this.getAttribute('data-vsite'));};
-    document.getElementById('srcNote').innerHTML=esc(d.label)+' · 사람 방문만(봇 제외) · 같은 사이트 안 이동과 직접 방문은 빼고 외부에서 들어온 첫 방문만 셉니다 · ▲▼는 '+esc(d.prevLabel)+' 대비 · 사이트 이름을 누르면 방문 상세가 열립니다 · 기타 = 빙·카카오톡·그 밖의 사이트.';
+    var gs=document.querySelectorAll('#srcTable tr.grow');
+    for(i=0;i<gs.length;i++) gs[i].onclick=function(){var g=+this.getAttribute('data-g');SRCOPEN[g]=!SRCOPEN[g];
+      var rs=document.querySelectorAll('#srcTable tr.srow[data-g="'+g+'"]');for(var x=0;x<rs.length;x++)rs[x].style.display=SRCOPEN[g]?'table-row':'none';
+      this.querySelector('.gtog').textContent=SRCOPEN[g]?'▾':'▸';};
+    document.getElementById('srcNote').innerHTML=esc(d.label)+' · 사람 방문만(봇 제외) · 같은 사이트 안 이동과 직접 방문은 빼고 외부에서 들어온 첫 방문만 셉니다 · ▲▼는 '+esc(d.prevLabel)+' 대비 · 그룹 줄을 누르면 사이트가 펼쳐지고, 사이트 이름을 누르면 방문 상세가 열립니다 · 기타 = 빙·카카오톡·그 밖의 사이트.';
   }).catch(function(){document.getElementById('srcTable').innerHTML='<div class="chmuted">불러오지 못했습니다.</div>';});
 }
 function loadConv(range,btn){
