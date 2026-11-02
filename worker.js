@@ -82,6 +82,9 @@ function tkDevice(ua){
    적용 대상은 /api/dashboard 의 events 조회 전부. 진단용 ua_probe 조회는 자기 접속이
    어떻게 판정되는지 봐야 하므로 일부러 제외하지 않는다. */
 const DASH_SKIP_IPS = ["175.198.190.81"];
+/* 유입경로 읽기 규칙 — 다른 워커 24곳은 같은 사이트 안 이동도 source='direct' 로 적는다(리퍼러는 남음).
+   tkSource 는 리퍼러가 있으면 자기 호스트일 때만 direct 를 주므로, direct 인데 ref 가 있으면 내부 이동이다. 워커는 그대로 두고 조회할 때만 나눈다. */
+const SRC_SQL = "CASE WHEN COALESCE(source,'') IN ('direct','internal') AND COALESCE(ref,'') <> '' THEN 'internal' ELSE COALESCE(NULLIF(source,''),'unknown') END";
 const DASH_SKIP_SQL = DASH_SKIP_IPS.length
   ? " AND COALESCE(ip,'') NOT IN (" + DASH_SKIP_IPS.map(function(x){ return "'" + String(x).replace(/[^0-9a-fA-F.:]/g, "") + "'"; }).join(",") + ") "
   : "";
@@ -121,7 +124,7 @@ function tkSource(ref, selfHost, qs){
   var h = "";
   try{ h = new URL(ref).hostname.toLowerCase(); }catch(e){ return "etc"; }
   if(!h) return "etc";
-  if(selfHost && (h === selfHost || h === "www." + selfHost)) return "direct"; /* 사이트 내부 이동 */
+  if(selfHost && (h === selfHost || h === "www." + selfHost)) return "internal"; /* 사이트 내부 이동 — 2026-11-02 부터 direct 와 분리(이 워커 기록만. 다른 24곳은 direct+ref 로 남고 대시보드가 SRC_SQL 로 나눠 읽는다) */
   if(h.indexOf("naver") >= 0) return "naver";
   if(h.indexOf("google") >= 0) return "google";
   if(h.indexOf("daum") >= 0 || h.indexOf("kakao") >= 0) return "daum";
@@ -8786,7 +8789,7 @@ var PW='';var CURRANGE='today';
 function doLogin(){PW=document.getElementById('pw').value;load('today',null);}
 function typeLabel(t){return t==='tel'?'전화 클릭':t==='contact'?'상담 클릭':t;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-function srcLabel(k){return k==='ai'?'AI':k==='naver'?'네이버':k==='google'?'구글':k==='daum'?'다음':k==='direct'?'직접':k==='etc'?'기타':'기록 이전';}
+function srcLabel(k){return k==='ai'?'AI':k==='naver'?'네이버':k==='google'?'구글':k==='daum'?'다음':k==='direct'?'직접':k==='internal'?'내부 이동':k==='etc'?'기타':'기록 이전';}
 function devLabel(k){return (k==='pc'||k==='PC')?'PC':(k==='mobile'||k==='모바일')?'모바일':(k==='tablet'||k==='태블릿')?'태블릿':'기록 이전';}
 var SITE_LIST=[["edu","allcarestudy","올케어스터디","allcarestudy.com","2026-03-06"],["edu","studyonlive","스터디온라이브","studyonlive.com","2026-06-03"],["edu","semogwa","세상의모든과외","semogwa.com","2026-06-30"],["edu","myclassup","우리동네과외","myclassup.com","2026-08-04"],["edu","king-study","공부끝판왕","king-study.com","2026-08-18"],["aca","semoacademy","세상의모든학원","semoacademy.com","2026-06-26"],["aca","classwawa","우리동네와와학원","classwawa.com","2026-07-13"],["aca","hakwon1","스터디스쿨핏","studyschoolfit.com","2026-10-13"],["aca","hakwon2","스터디클래스핏","studyclassfit.com","2026-10-13"],["aca","hakwon3","스터디코치핏","studycoachfit.com","2026-10-13"],["ben","allpaystore","올페이스토어","allpaystore.com","2026-03-09"],["ben","thecardpos","더카드포스","thecardpos.com","2026-06-07"],["ben","danmalgi","단말기닷컴","danmalgi.com","2026-06-13"],["ben","24payshop","24페이","24payshop.com","2026-06-23"],["ben","365posmall","365포스","365posmall.com","2026-07-03"],["ben","primeposkorea","프라임 POS 코리아","primeposkorea.com","2026-09-08"],["ben","primecardkorea","프라임 CARD 코리아","primecardkorea.com","2026-09-13"],["ben","primepaykorea","프라임 PAY 코리아","primepaykorea.com","2026-09-13"],["ben","primebizkorea","프라임 BIZ 코리아","primebizkorea.com","2026-09-13"],["ben","primeshopkorea","프라임 SHOP 코리아","primeshopkorea.com","2026-09-13"],["pow","globaltalkup","글로벌톡업","globaltalkup.com","2026-08-25"],["pow","powerlandschool","파워랜드 우리아이 회화수업","powerlandschool.com","2026-09-19"],["pow","powerlandprep","파워랜드 특목고 회화수업","powerlandprep.com","2026-09-20"],["pow","powerlandtest","파워랜드 자격증대비","powerlandtest.com","2026-09-20"],["pow","powerlandbiz","파워랜드 비즈니스회화","powerlandbiz.com","2026-09-20"]];
 /* 사이트별 방문자 막대: 사이트 → 상품군 매핑 (이 순서대로 묶어 보여 준다) */
@@ -8919,7 +8922,7 @@ function renderVisits(){
   if(!d.kw.length) kh+='<div class="muted">검색 키워드 없음<br><span style="font-size:11px">네이버·구글은 보안정책상 검색어를 넘겨주지 않는 경우가 많습니다</span></div>';
   for(var i=0;i<d.kw.length;i++) kh+='<div class="bar"><span>'+(i+1)+'. '+esc(d.kw[i].k)+'</span><b>'+d.kw[i].cnt+'</b></div>';
   kh+='</div></div>';
-  document.getElementById('vsum').innerHTML=ratioCard('유입경로 비율',withAi(d.src),srcLabel)+ratioCard('기기 비율',d.dev,devLabel)+kh;
+  document.getElementById('vsum').innerHTML=ratioCard('유입경로 비율',withAi(d.src),srcLabel).slice(0,-6)+(d.internal?'<div class="muted" style="font-size:11px;margin-top:6px">같은 사이트 안 이동 '+d.internal+'회는 비율에서 뺐습니다</div>':'')+'</div>'+ratioCard('기기 비율',d.dev,devLabel)+kh;
 
   var rows=d.rows, pages=Math.max(1,Math.ceil(rows.length/VPER));
   if(VPAGE>=pages)VPAGE=pages-1;
@@ -11852,13 +11855,13 @@ const ALLCARE_WORKER = {
             q = await env.DB.prepare("SELECT ip, COUNT(*) cnt, COUNT(DISTINCT page) pages, MIN(ts) first, MAX(ts) last FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND site = ? AND type = 'view' GROUP BY ip ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site).all();
           } else if (b.op === 'visits') {
             const W = " FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND site = ? AND type = 'view' ";
-            const rows = await env.DB.prepare("SELECT ts, source, keyword, device, page, ip" + W + "ORDER BY ts DESC LIMIT 200").bind(sinceIso, upto, site).all();
-            const src  = await env.DB.prepare("SELECT COALESCE(NULLIF(source,''),'unknown') k, COUNT(*) cnt" + W + "GROUP BY k ORDER BY cnt DESC").bind(sinceIso, upto, site).all();
+            const rows = await env.DB.prepare("SELECT ts, " + SRC_SQL + " source, keyword, device, page, ip" + W + "ORDER BY ts DESC LIMIT 200").bind(sinceIso, upto, site).all();
+            const src  = await env.DB.prepare("SELECT " + SRC_SQL + " k, COUNT(*) cnt" + W + "GROUP BY k ORDER BY cnt DESC").bind(sinceIso, upto, site).all();
             /* device 는 워커마다 영문(pc/mobile/tablet) 또는 한글(PC/모바일/태블릿)로 저장돼 있다 — 대시보드에서만 합쳐 읽는다(워커 22곳은 그대로) */
             const dev  = await env.DB.prepare("SELECT CASE WHEN device IN ('mobile','모바일') THEN 'mobile' WHEN device IN ('pc','PC') THEN 'pc' WHEN device IN ('tablet','태블릿') THEN 'tablet' ELSE 'unknown' END k, COUNT(*) cnt" + W + "GROUP BY k ORDER BY cnt DESC").bind(sinceIso, upto, site).all();
             const kw   = await env.DB.prepare("SELECT keyword k, COUNT(*) cnt" + W + "AND keyword IS NOT NULL AND keyword <> '' GROUP BY k ORDER BY cnt DESC LIMIT 20").bind(sinceIso, upto, site).all();
             return new Response(JSON.stringify({ok:true, op:'visits', site:site,
-              rows: rows.results||[], src: src.results||[], dev: dev.results||[], kw: kw.results||[]}),
+              rows: rows.results||[], src: (src.results||[]).filter(function(x){ return x.k !== 'internal'; }), internal: ((src.results||[]).find(function(x){ return x.k === 'internal'; }) || {cnt:0}).cnt, dev: dev.results||[], kw: kw.results||[]}),
               { headers: { 'Content-Type':'application/json' } });
           } else if (b.op === 'convpages') {
             /* 전환(tel/sms/contact)을 만든 페이지 TOP 20.
@@ -11896,7 +11899,7 @@ const ALLCARE_WORKER = {
           } else if (b.op === 'direct') {
             // 유입경로가 direct 인 view 트래픽을 IP·UA·페이지로 쪼개 본다 (봇 판별용)
             const SRC = b.src || 'direct';
-            const W = " FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND site = ? AND type = 'view' AND COALESCE(source,'') = ? ";
+            const W = " FROM events WHERE ts >= ? AND ts < ?" + DASH_SKIP_SQL + " AND site = ? AND type = 'view' AND " + SRC_SQL + " = ? ";
             const ips = await env.DB.prepare("SELECT ip, COUNT(*) cnt, COUNT(DISTINCT page) pages, COUNT(DISTINCT ua) uas, MAX(ua) ua, MIN(ts) first, MAX(ts) last" + W + "GROUP BY ip ORDER BY cnt DESC LIMIT 60").bind(sinceIso, upto, site, SRC).all();
             const uas = await env.DB.prepare("SELECT COALESCE(NULLIF(ua,''),'(없음)') ua, COUNT(*) cnt, COUNT(DISTINCT ip) uniq" + W + "GROUP BY ua ORDER BY cnt DESC LIMIT 40").bind(sinceIso, upto, site, SRC).all();
             const pgs = await env.DB.prepare("SELECT page, COUNT(*) cnt, COUNT(DISTINCT ip) uniq" + W + "GROUP BY page ORDER BY cnt DESC LIMIT 30").bind(sinceIso, upto, site, SRC).all();
