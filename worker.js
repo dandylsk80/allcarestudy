@@ -81,7 +81,7 @@ function tkDevice(ua){
    나중에 추가하려면 배열에 문자열만 더 넣으면 된다. 빈 배열이면 아무것도 걸러내지 않는다.
    적용 대상은 /api/dashboard 의 events 조회 전부. 진단용 ua_probe 조회는 자기 접속이
    어떻게 판정되는지 봐야 하므로 일부러 제외하지 않는다. */
-const DASH_SKIP_IPS = ["175.198.190.81"];
+const DASH_SKIP_IPS = ["175.198.190.81", "1.214.33.210"];  /* 1.214.33.210 = 운영자 윈도우 PC(2026-11-02 사용자 확인) */
 /* 유입경로 읽기 규칙 — 다른 워커 24곳은 같은 사이트 안 이동도 source='direct' 로 적는다(리퍼러는 남음).
    tkSource 는 리퍼러가 있으면 자기 호스트일 때만 direct 를 주므로, direct 인데 ref 가 있으면 내부 이동이다. 워커는 그대로 두고 조회할 때만 나눈다. */
 const SRC_SQL = "CASE WHEN COALESCE(source,'') IN ('direct','internal') AND COALESCE(ref,'') <> '' THEN 'internal' ELSE COALESCE(NULLIF(source,''),'unknown') END";
@@ -8712,6 +8712,20 @@ th{color:#64748b;font-weight:600}
 .chnote{font-size:11px;color:#94a3b8;margin-top:8px}
 #trendTabs button{background:#fff;border:1px solid #e2e8f0;color:#64748b;padding:5px 10px;border-radius:7px;margin-left:5px;cursor:pointer;font-size:12px}
 #trendTabs button.on{background:#2563eb;border-color:#2563eb;color:#fff}
+#srcTabs button{background:#fff;border:1px solid #e2e8f0;color:#64748b;padding:5px 10px;border-radius:7px;margin-left:5px;cursor:pointer;font-size:12px}
+#srcTabs button.on{background:#2563eb;border-color:#2563eb;color:#fff}
+.srcwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.srct{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}
+.srct th,.srct td{padding:7px 8px;border-bottom:1px solid #f1f5f9;text-align:right;white-space:nowrap}
+.srct th{background:#f8fafc;color:#475569;font-weight:700;font-size:12px}
+.srct th:first-child,.srct td:first-child{text-align:left}
+.srct td:first-child a{color:#1d4ed8;cursor:pointer;text-decoration:none;font-weight:600}
+.srct td.tot,.srct th.tot{font-weight:800;background:#f8fafc}
+.srct tfoot td{font-weight:800;border-top:2px solid #cbd5e1;background:#f8fafc}
+.srct .z{color:#cbd5e1}
+.srct .up{color:#16a34a;font-size:11px;margin-left:3px}
+.srct .dn{color:#dc2626;font-size:11px;margin-left:3px}
+.srct .eq{color:#94a3b8;font-size:11px;margin-left:3px}
 @media(max-width:520px){.chart{padding:12px}.chart h3{font-size:13px}#trendTabs button{padding:5px 8px;font-size:11px;margin-left:4px}}
 </style></head><body>
 <div id="login" class="login">
@@ -8729,6 +8743,18 @@ th{color:#64748b;font-weight:600}
       <button data-r="7d" onclick="load('7d',this)">7일</button>
       <button data-r="30d" onclick="load('30d',this)">30일</button>
     </div>
+  </div>
+  <div class="chart" id="srcBox">
+    <div class="chhead"><h3>유입 한눈에 보기</h3>
+      <div id="srcTabs">
+        <button data-r="today" class="on" onclick="loadSrc('today',this)">오늘</button>
+        <button data-r="yesterday" onclick="loadSrc('yesterday',this)">어제</button>
+        <button data-r="7d" onclick="loadSrc('7d',this)">7일</button>
+        <button data-r="30d" onclick="loadSrc('30d',this)">30일</button>
+      </div>
+    </div>
+    <div class="srcwrap" id="srcTable"><div class="chmuted">불러오는 중…</div></div>
+    <div class="chnote" id="srcNote">사람 방문만(봇 제외) · 같은 사이트 안 이동과 직접 방문은 빼고 외부에서 들어온 첫 방문만 셉니다 · ▲▼는 직전 같은 기간 대비 · 사이트 이름을 누르면 방문 상세가 열립니다.</div>
   </div>
   <div class="summary">
     <div class="card"><div class="label">전체 방문자</div><div class="num" id="totView">0</div></div>
@@ -8853,6 +8879,7 @@ function load(range,btn){
     drawCats();drawSites();
     if(TRENDDATA===null) loadTrend(TRENDRANGE, document.querySelector('#trendTabs button.on'));
     if(!CONVLOADED){CONVLOADED=1;loadConv(CONVRANGE,null);}
+    if(!SRCLOADED){SRCLOADED=1;loadSrc(SRCRANGE,null);}
     var rec=d.recent||[];var hh='';
     for(var j=0;j<rec.length;j++){var e=rec[j];var tm=kstTime(e.ts);
       hh+='<tr><td>'+tm+'</td><td>'+siteLabel(e.site)+'</td><td><span class="tag '+esc(e.type)+'">'+typeLabel(e.type)+'</span></td><td>'+esc(e.page||'')+'</td><td>'+(e.ref?(/chatgpt|openai|perplexity|gemini|claude|copilot/i.test(e.ref)?'AI':e.ref.indexOf('naver')>=0?'네이버':e.ref.indexOf('google')>=0?'구글':e.ref.indexOf('daum')>=0?'다음':'기타'):'직접')+'</td></tr>';}
@@ -8863,6 +8890,44 @@ function load(range,btn){
 /* ===== 전환 만든 페이지 TOP 20 ===== */
 var CONVRANGE='90d', CONVLOADED=0;
 var SITE_DOMAIN={};for(var _d=0;_d<SITE_LIST.length;_d++)SITE_DOMAIN[SITE_LIST[_d][1]]=SITE_LIST[_d][3];
+var SRCRANGE='today',SRCLOADED=0,SRCCOLS=[['naver','네이버'],['daum','다음'],['google','구글'],['ai','AI'],['etc','기타']];
+function srcDelta(c,p){
+  if(c===p) return c?'<span class="eq">–</span>':'';
+  var d=c-p; return d>0?'<span class="up">▲'+d+'</span>':'<span class="dn">▼'+(-d)+'</span>';
+}
+function loadSrc(range,btn){
+  SRCRANGE=range;
+  if(btn){var bs=document.querySelectorAll('#srcTabs button');for(var i=0;i<bs.length;i++)bs[i].className='';btn.className='on';}
+  document.getElementById('srcTable').innerHTML='<div class="chmuted">불러오는 중…</div>';
+  fetch('/api/dashboard',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pw:PW,range:range,op:'srcmatrix'})})
+  .then(function(r){return r.json();}).then(function(d){
+    if(!d.ok){document.getElementById('srcTable').innerHTML='<div class="chmuted">불러오지 못했습니다.</div>';return;}
+    var cur={},prev={},i,j,k;
+    for(i=0;i<SITE_LIST.length;i++){cur[SITE_LIST[i][1]]={};prev[SITE_LIST[i][1]]={};}
+    for(i=0;i<d.rows.length;i++){var r=d.rows[i];var m=r.per==='c'?cur:prev;if(!m[r.site])continue;m[r.site][r.k]=(m[r.site][r.k]||0)+r.cnt;}
+    var list=[];
+    for(i=0;i<SITE_LIST.length;i++){var sk=SITE_LIST[i][1],tc=0,tp=0;for(j=0;j<SRCCOLS.length;j++){tc+=cur[sk][SRCCOLS[j][0]]||0;tp+=prev[sk][SRCCOLS[j][0]]||0;}list.push({sk:sk,nm:SITE_LIST[i][2],tc:tc,tp:tp});}
+    list.sort(function(a,b){return b.tc-a.tc||b.tp-a.tp||(a.nm<b.nm?-1:1);});
+    var h='<table class="srct"><thead><tr><th>사이트</th>';
+    for(j=0;j<SRCCOLS.length;j++)h+='<th>'+SRCCOLS[j][1]+'</th>';
+    h+='<th class="tot">합계</th></tr></thead><tbody>';
+    var sc={},sp={},stc=0,stp=0;
+    for(i=0;i<list.length;i++){var o=list[i];
+      h+='<tr><td><a data-vsite="'+esc(o.sk)+'">'+esc(o.nm)+'</a></td>';
+      for(j=0;j<SRCCOLS.length;j++){k=SRCCOLS[j][0];var c=cur[o.sk][k]||0,p=prev[o.sk][k]||0;sc[k]=(sc[k]||0)+c;sp[k]=(sp[k]||0)+p;
+        h+='<td'+(c?'':' class="z"')+'>'+c+srcDelta(c,p)+'</td>';}
+      stc+=o.tc;stp+=o.tp;
+      h+='<td class="tot">'+o.tc+srcDelta(o.tc,o.tp)+'</td></tr>';
+    }
+    h+='</tbody><tfoot><tr><td>합계</td>';
+    for(j=0;j<SRCCOLS.length;j++){k=SRCCOLS[j][0];h+='<td>'+(sc[k]||0)+srcDelta(sc[k]||0,sp[k]||0)+'</td>';}
+    h+='<td class="tot">'+stc+srcDelta(stc,stp)+'</td></tr></tfoot></table>';
+    document.getElementById('srcTable').innerHTML=h;
+    var as=document.querySelectorAll('#srcTable a[data-vsite]');
+    for(i=0;i<as.length;i++) as[i].onclick=function(){openVisits(this.getAttribute('data-vsite'));};
+    document.getElementById('srcNote').innerHTML=esc(d.label)+' · 사람 방문만(봇 제외) · 같은 사이트 안 이동과 직접 방문은 빼고 외부에서 들어온 첫 방문만 셉니다 · ▲▼는 '+esc(d.prevLabel)+' 대비 · 사이트 이름을 누르면 방문 상세가 열립니다 · 기타 = 빙·카카오톡·그 밖의 사이트.';
+  }).catch(function(){document.getElementById('srcTable').innerHTML='<div class="chmuted">불러오지 못했습니다.</div>';});
+}
 function loadConv(range,btn){
   CONVRANGE=range;
   if(btn){var bs=document.querySelectorAll('#convTabs button');for(var i=0;i<bs.length;i++)bs[i].className='';btn.className='on';}
@@ -11832,6 +11897,23 @@ const ALLCARE_WORKER = {
         if (b.op) {
           if (!env || !env.DB) return new Response(JSON.stringify({ok:false, error:'no DB'}), { headers: { 'Content-Type':'application/json' } });
           const site = b.site || 'allcarestudy';
+          if (b.op === 'srcmatrix') {
+            /* 유입 한눈에 보기 — 사이트 × 외부 유입원(네이버·다음·구글·AI·기타), 지금 기간과 직전 같은 길이 기간.
+               direct·internal·기록 이전은 뺀다. 카카오(톡) 리퍼러는 워커가 daum 으로 적지만 여기선 기타로 읽는다.
+               KST 자정은 직접 계산한다(위 since 는 KST 0~9시에 하루 어긋난다). */
+            const DAY = 864e5, nowMs = now.getTime(), kst0 = Math.floor((nowMs + 9*36e5) / DAY) * DAY - 9*36e5;
+            let cs, ce, ps, label, prevLabel;
+            if (range === 'today') { cs = kst0; ce = nowMs; ps = cs - (ce - cs); label = '오늘(0시~지금)'; prevLabel = '어제 같은 시각까지'; }
+            else if (range === 'yesterday') { cs = kst0 - DAY; ce = kst0; ps = cs - DAY; label = '어제'; prevLabel = '그제'; }
+            else if (range === '7d') { cs = nowMs - 7*DAY; ce = nowMs; ps = cs - 7*DAY; label = '최근 7일'; prevLabel = '그 전 7일'; }
+            else { cs = nowMs - 30*DAY; ce = nowMs; ps = cs - 30*DAY; label = '최근 30일'; prevLabel = '그 전 30일'; }
+            const iso = x => new Date(x).toISOString();
+            const SK = "CASE WHEN source='ai' THEN 'ai' WHEN source='naver' THEN 'naver' WHEN source='google' THEN 'google'"
+              + " WHEN source='daum' AND lower(COALESCE(ref,'')) LIKE '%kakao%' THEN 'etc' WHEN source='daum' THEN 'daum' WHEN source='etc' THEN 'etc' ELSE '' END";
+            const mx = await env.DB.prepare("SELECT site, " + SK + " k, CASE WHEN ts >= ? THEN 'c' ELSE 'p' END per, COUNT(*) cnt FROM events WHERE ts >= ? AND ts < ?"
+              + DASH_SKIP_SQL + " AND type = 'view' AND source IN ('ai','naver','google','daum','etc') GROUP BY site, k, per").bind(iso(cs), iso(ps), iso(ce)).all();
+            return new Response(JSON.stringify({ok:true, op:'srcmatrix', range, label, prevLabel, cur:[iso(cs), iso(ce)], prev:[iso(ps), iso(cs)], rows:(mx.results||[]).filter(x => x.k)}), { headers: { 'Content-Type':'application/json' } });
+          }
           let q;
           if (b.op === 'migrate') {
             // events 테이블에 방문 상세용 컬럼 추가 (이미 있으면 건너뜀 · 기존 행은 NULL 유지)
